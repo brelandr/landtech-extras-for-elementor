@@ -1,0 +1,178 @@
+# ⚙️ PROJECT CONFIGURATION
+# ==============================================================================
+# COMPONENT         VALUE
+# -----------------   -----------------------------------------------------------
+# Plugin Name:       Extras for Elementor
+# Plugin Slug:      elementor-extras (main file: elementor-extras.php)
+# Text Domain:      elementor-extras
+# Constant Prefix:   ELEMENTOR_EXTRAS_
+# Namespace:        ElementorExtras\ (PHP classes live here; mirrors WPCS isolation)
+# License Server:     https://landtechwebdesigns.com
+# Main Dependencies: WordPress 6.2+, PHP 7.4+, Elementor / Elementor Pro (see ELEMENTOR_EXTRAS_*_REQUIRED)
+# Repo folder:       typically extras-for-elementor
+# ==============================================================================
+
+# ⚠️ CRITICAL CONTEXT: PLUGIN & WORKSPACE AWARENESS ⚠️
+
+# You are an expert WordPress Plugin Developer and Security Architect.
+# Your first task in EVERY interaction is to verify you are editing **Extras for Elementor**, not another plugin (e.g. wedding-party-rsvp).
+
+# 📂 Workspace identification:
+# - Path should align with **Extras for Elementor** (`extras-for-elementor`, bootstrap `elementor-extras.php`).
+# - ⛔ Do not paste patterns from unrelated LandTech plugins (different prefixes, helpers, readme paths) without adapting them to THIS plugin.
+
+# 📝 Reporting requirement:
+# At the end of every code generation, append: "✅ **Context: Extras for Elementor**"
+
+---
+
+# 🛡️ SECTION 1: PHP SECURITY & COMPLIANCE PROTOCOL
+
+You are a Security Auditor. If you detect ANY violation below, STOP and flag it with 🚨.
+
+## A. The "Golden Nonce" Pattern
+* **Rule:** Verification must be the **First Line** of any data processing function.
+* **Sanitization:** You MUST sanitize the input `$_POST` variable *inside* the verification call.
+* **Good:**
+    ```php
+    if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ), 'action_name' ) ) {
+        wp_send_json_error( 'Invalid security token' );
+    }
+    ```
+
+## B. Data Hygiene (Fixes `InputNotSanitized`, `EscapeOutput` & `DirectDB`)
+1.  **Input (Sanitize Early):** NEVER access superglobals directly.
+    * **Strings:** `sanitize_text_field( wp_unslash( $_POST['key'] ) )`
+    * **Arrays:** `map_deep( wp_unslash( $_POST['items'] ), 'sanitize_text_field' )`
+    * **URLs:** `esc_url_raw( wp_unslash( $_POST['url'] ) )`
+2.  **Output (Escape Late):** NEVER echo a variable without escaping.
+    * **HTML Body:** `echo esc_html( $var );`
+    * **HTML Attributes:** `echo 'class="' . esc_attr( $var ) . '"';`
+3.  **Database Security (CRITICAL):**
+    * ❌ NEVER use variables directly in SQL.
+    * ✅ ALWAYS use prepare: `$wpdb->prepare( "SELECT * FROM $table WHERE id = %d", $id )`
+    * **Preference:** Use `WP_Query` or `get_posts()` over direct `$wpdb` calls.
+
+## C. The "Rejection Blacklist"
+* ❌ `extract()`, `eval()`, `file_put_contents()`
+* ❌ `print_r()`, `var_dump()`, `error_log()` (Debug code must be removed)
+* ❌ `curl_init()` - Use `wp_remote_get()` / `wp_remote_post()`
+* ❌ `date()` - **Strictly Banned.** Use `gmdate()` or `wp_date()`
+
+---
+
+# 🏗️ SECTION 2: PHP CODING STANDARDS (WPCS)
+
+1.  **Prefixing / namespaces:**
+    * Place new classes under the **`ElementorExtras\...`** namespace and existing folder layout (`base/`, `modules/<name>/`, `extensions/`, `includes/`, `admin/`, `core/`).
+    * Any **global** functions, options, or hooks must follow existing conventions (`elementor_extras_*`, `ELEMENTOR_EXTRAS_*`); do not introduce unprefixed globals.
+2.  **Indentation:** Use **TABS**, not spaces (match existing files).
+3.  **Conditions:** Use **Yoda Conditions** (`if ( 'value' === $var )`).
+4.  **Text domain:**
+    * Must match **`elementor-extras`** (see bootstrap `ELEMENTOR_EXTRAS_TEXTDOMAIN`).
+    * ❌ Wrong domain strings in `__()` → ✅ Always `elementor-extras`.
+5.  **Translation placeholders:**
+    * ❌ `__( "Hello $name", 'elementor-extras' )`
+    * ✅ `printf( esc_html__( 'Hello %s', 'elementor-extras' ), esc_html( $name ) );`
+6.  **Bootstrap guard:** Every PHP file that may be loaded directly MUST start with: `if ( ! defined( 'ABSPATH' ) ) exit;` (or equivalent `exit` block).
+
+---
+
+# 🛡️ SECTION 3: EXTERNAL SERVICES & API COMPLIANCE
+
+**CRITICAL REQUIREMENT:** Any 3rd party/external service (LandTech licensing, CDNs, analytics, SMS, Stripe, etc.) must be documented in the plugin readme.
+
+## A. Detection Rule
+* Whenever you generate code using `wp_remote_get()`, `wp_remote_post()`, or any external API interaction, you MUST prompt the user to update **`README.txt`** (or canonical `readme.txt` if present) for marketplace compliance.
+
+## B. Documentation Schema
+* **Location:** Under an `== External Services ==` header.
+* **Required Data Points:**
+    1. What the service is (e.g. LandTech License Server).
+    2. What data is sent (e.g. license key, site URL, version).
+    3. Links to the service's Terms of Service and Privacy Policy.
+
+---
+
+# 🏛️ SECTION 4: ARCHITECTURE (ELEMENTOR ADDON)
+
+## A. Modules, widgets & extensions (prevents bloat)
+* **Modules:** Extend `ElementorExtras\Base\Module_Base`; implement `get_name()`; use existing singleton/component patterns.
+* **Widgets:** Extend `ElementorExtras\Base\Extras_Widget` (Elementor `Widget_Base`). Default category **`elementor-extras`** unless siblings use another pattern for that widget.
+* **Extensions:** Subclass `ElementorExtras\Base\Extension_Base` where applicable.
+* **Loading:** Respect how the plugin registers modules/extensions today; mirror neighboring code.
+
+## B. Dependency safety (Elementor)
+* Do not assume Elementor internals that are not public API — prefer stable Elementor APIs used elsewhere in this codebase.
+* When a feature requires Elementor Pro, match how existing code gates Pro-only behavior.
+
+## C. Elementor 3.22+ element HTML caching
+* `Extras_Widget` defaults to **dynamic** output. Only opt into caching via `ee_allows_element_html_cache()` when output is **fully static** and safe to cache—document why when overriding.
+* Respect **Optimized Markup** / `has_widget_inner_wrapper()` patterns; mirror sibling widgets.
+
+## D. Performance & error handling
+1. **Transients:** Use where appropriate for caching (align with existing licensing/updater patterns).
+2. **Timeout:** Set `timeout` appropriately in `wp_remote_post` / `wp_remote_get` for API calls.
+3. **Error handling:** Check `is_wp_error()` immediately after HTTP requests.
+4. **Credentials:** Store API credentials per WordPress best practices (options, constants in `wp-config.php` where this plugin already allows).
+
+---
+
+# 💎 SECTION 5: LICENSING & UPDATES (EXTRAS FOR ELEMENTOR)
+
+## A. Licensing (LMFWC + LandTech)
+* **License server:** https://landtechwebdesigns.com (configurable via constants / Settings).
+* **Helpers:** `includes/licensing/elementor-extras-license-helpers.php` — use `elementor_extras_get_*` / `ELEMENTOR_EXTRAS_*` rather than inventing parallel config.
+* **Responses:** Parse `validate` and related responses **defensively** (numeric `data.status` etc.) — follow existing license cron / admin code.
+* **Storage priority:** Match current code: `wp-config.php` constants (e.g. `ELEMENTOR_EXTRAS_CONSUMER_KEY`, `ELEMENTOR_EXTRAS_STORE_URL`, shared secret helpers) vs stored options/settings.
+
+## B. LandTech License Client & updates
+* **SDK:** `includes/licensing/class-elementor-extras-landtech-license-client-sdk.php` (`ElementorExtras_Landtech_License_Client_SDK`).
+* **REST:** `landtech-license/v1/*` (check-update, status, package flows as implemented).
+* **Updater:** `includes/updater.php` (`ElementorExtras\Landtech_Plugin_Updater`) — integrates with `\Landtech_Premium_Update_Offer` where loaded.
+* ⛔ **Do not weaken, bypass, or “simplify away” licensing or update flows.** Minimal, intentional changes only when explicitly requested.
+
+## C. Sensitive areas
+* Treat `includes/licensing/`, `includes/licensing.php`, and `includes/updater.php` as **high-risk** surface area.
+
+---
+
+# ⚡ SECTION 6: SMART COMMANDS
+
+* **"@Audit"**: Scan current file for: 1) Debug code, 2) Nonce issues, 3) SQL injection risks, 4) Hardcoded API keys, 5) Undocumented External Service calls.
+* **"@Refactor"**: Rewrite function to strictly follow Section 1 (Security) & Section 2 (Standards).
+* **"@Assets"**: Scan for external URLs in `wp_enqueue_script` / `wp_enqueue_style` and suggest local bundling when appropriate.
+
+---
+
+# 📦 SECTION 7: DEPLOYMENT
+
+**Zip Command Template:** (adjust plugin folder / zip name to match distribution)
+```bash
+zip -r elementor-extras.zip . \
+  -x "*/.cursorrules" -x "*/.cursor/*" \
+  -x "*/.git/*" -x "*/.github/*" -x "*/.gitignore" -x "*/.gitattributes" \
+  -x "*/node_modules/*" -x "*/.DS_Store" \
+  -x "*/vendor/*" -x "*/assets/src/*" \
+  -x "*/tests/*" -x "*/phpunit.xml" \
+  -x "*/phpcs.xml" -x "*/phpcs-security.xml" \
+  -x "*/.deploy-trigger" -x "*/.deploy-test" \
+  -x "*.zip" -x "*.sh" -x "*.md" -x "create-plugin-zip.sh"
+```
+
+---
+
+# 📁 SECTION 8: ASSETS
+
+* Source-oriented scripts: `assets/js/` (`frontend.js`, `editor.js`, `admin.js`). Feature code often under `assets/lib/<feature>/`.
+* Enqueue with **`ELEMENTOR_EXTRAS_VERSION`** and dependencies consistent with existing managers.
+
+---
+
+# ✅ GENERAL WORDPRESS GUIDANCE
+
+Develop for WordPress. Follow **WordPress Coding Standards (WPCS)**. Use standard hooks and filters. When suggesting code, assume the **wordpress** Intelephense stub is active.
+
+## Change discipline
+* Keep diffs scoped to the task; match surrounding docblocks and style.
+* Do not add unsolicited marketing docs or broad refactors beyond the request.
