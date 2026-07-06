@@ -4,7 +4,7 @@ Contributors: brelandr
 Tags: elementor, page-builder, widgets, addons, extensions
 Requires at least: 6.2
 Tested up to: 7.0
-Stable tag: 2.2.79
+Stable tag: 2.2.80
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -147,6 +147,12 @@ From the plugin root, after **`npm install`**, run **`npm run build:assets`** to
 Before publishing a public GitHub mirror, verify any **Repository** or **Source** URL in this readme returns HTTP 200 (WordPress.org reviewers check linked URLs).
 
 == Changelog ==
+
+= 2.2.80 =
+
+* Fix: Playground demo pages (including Switcher Demo) resolve at pretty permalinks after seeding via `flush_rewrite_rules()`.
+* Fix: Switcher and Toggle Element demo pages seed with default panel content instead of empty widget settings.
+* Fix: Demo pages save Elementor canvas data through the Elementor document API when available.
 
 = 2.2.79 =
 
