@@ -4,7 +4,7 @@ Contributors: brelandr
 Tags: elementor, page-builder, widgets, addons, extensions
 Requires at least: 6.2
 Tested up to: 7.0
-Stable tag: 2.2.77
+Stable tag: 2.2.79
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -21,7 +21,7 @@ Elementor compatibility is documented in the main plugin PHP header (Elementor t
 
 == Try It Live - Preview This Plugin Instantly ==
 
-Experience LandTech Extras for Elementor without installation: the blueprint installs **Elementor** and this plugin from **WordPress.org**, skips Elementor onboarding, creates a demo page ready for the Elementor editor, and opens **Elementor → LandTech Extras** settings. Log in as **admin** / **password** to explore wp-admin and the Elementor editor.
+Experience LandTech Extras for Elementor without installation: the blueprint installs **Elementor** and this plugin from **WordPress.org**, seeds **sample images and blog posts**, builds a **demo homepage** with links to every widget, creates a **dedicated demo page per feature** (gallery, search form, posts grid, maps, navigation widgets, and more), and registers a **navigation menu** grouping all demos. Log in as **admin** / **password** to edit pages with Elementor or open **Elementor → LandTech Extras** settings.
 
 [Preview on WordPress Playground](https://playground.wordpress.net/?blueprint-url=https://plugins.svn.wordpress.org/landtech-extras-for-elementor/assets/blueprints/blueprint.json)
 
@@ -147,6 +147,15 @@ From the plugin root, after **`npm install`**, run **`npm run build:assets`** to
 Before publishing a public GitHub mirror, verify any **Repository** or **Source** URL in this readme returns HTTP 200 (WordPress.org reviewers check linked URLs).
 
 == Changelog ==
+
+= 2.2.79 =
+
+* Fix: Gallery Slider — initialize Swiper through Elementor's async loader, correct thumbnail `slideTo` / `slideToLoop` handling, and guard against uninitialized instances.
+* Fix: `anime.js` unminified build no longer throws `module is not defined` in the browser when `SCRIPT_DEBUG` is enabled.
+
+= 2.2.78 =
+
+* **Try It Live demos** — Playground blueprint seeds a demo homepage, one Elementor page per free widget (28 demos), sample media/posts, and a grouped navigation menu via `includes/playground-demo-seeder.php`.
 
 = 2.2.77 =
 

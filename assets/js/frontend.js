@@ -3027,45 +3027,56 @@
 			}
 
 			ee.GallerySlider.init = function() {
-				var sliderArgs = ee.Carousel( $swiperSlider, sliderSettings );
+				var sliderArgs = ee.Carousel( $swiperSlider, sliderSettings ),
+					carouselArgs,
+					sliderEl = $swiperSlider[0];
 
-				if ( hasCarousel ) {
-					var carouselArgs = ee.Carousel( $swiperCarousel, carouselSettings );
+				if ( ! sliderEl || ! sliderArgs ) {
+					return;
 				}
 
-				if ( 'undefined' === typeof Swiper ) {
-					const asyncSwiper = elementorFrontend.utils.swiper;
-	 
-					new asyncSwiper( $swiperSlider, sliderArgs ).then( function( sliderSwiperInstance ) {
+				if ( hasCarousel ) {
+					carouselArgs = ee.Carousel( $swiperCarousel, carouselSettings );
+				}
 
+				var finishInit = function( sliderInstance, carouselInstance ) {
+					ee.GallerySlider.initSliders( $scope, sliderInstance, carouselInstance || false );
+					ee.Carousel.onAfterInit( $swiperSlider, sliderInstance, sliderSettings );
+
+					if ( hasCarousel && carouselInstance ) {
+						ee.Carousel.onAfterInit( $swiperCarousel, carouselInstance, carouselSettings );
+					}
+				};
+
+				if ( elementorFrontend.utils && elementorFrontend.utils.swiper ) {
+					var asyncSwiper = elementorFrontend.utils.swiper;
+
+					new asyncSwiper( sliderEl, sliderArgs ).then( function( sliderSwiperInstance ) {
 						if ( ! hasCarousel ) {
-							ee.GallerySlider.initSliders( $scope, sliderSwiperInstance, false );
-
-							ee.Carousel.onAfterInit( $swiperSlider, sliderSwiperInstance, sliderSettings );
-						} else {
-							new asyncSwiper( $swiperCarousel, carouselArgs ).then( function( carouselSwiperInstance ) {
-								ee.GallerySlider.initSliders( $scope, sliderSwiperInstance, carouselSwiperInstance );
-								
-								ee.Carousel.onAfterInit( $swiperSlider, sliderSwiperInstance, sliderSettings );
-								ee.Carousel.onAfterInit( $swiperCarousel, carouselSwiperInstance, carouselSettings );
-							} );
+							finishInit( sliderSwiperInstance, false );
+							return;
 						}
+
+						var carouselEl = $swiperCarousel[0];
+
+						if ( ! carouselEl || ! carouselArgs ) {
+							finishInit( sliderSwiperInstance, false );
+							return;
+						}
+
+						new asyncSwiper( carouselEl, carouselArgs ).then( function( carouselSwiperInstance ) {
+							finishInit( sliderSwiperInstance, carouselSwiperInstance );
+						} );
 					} );
 
-				} else {
-					swiperSlider = new Swiper( $swiperSlider, sliderArgs );
+				} else if ( 'undefined' !== typeof Swiper ) {
+					swiperSlider = new Swiper( sliderEl, sliderArgs );
 
-					if ( hasCarousel ) {
-						swiperCarousel = new Swiper( $swiperCarousel, carouselArgs );
+					if ( hasCarousel && $swiperCarousel[0] && carouselArgs ) {
+						swiperCarousel = new Swiper( $swiperCarousel[0], carouselArgs );
 					}
 
-					ee.GallerySlider.initSliders( $scope, swiperSlider, swiperCarousel );
-
-					ee.Carousel.onAfterInit( $swiperSlider, swiperSlider, sliderSettings );
-
-					if ( hasCarousel ) {
-						ee.Carousel.onAfterInit( $swiperCarousel, swiperCarousel, carouselSettings );
-					}
+					finishInit( swiperSlider, swiperCarousel );
 				}
 			};
 
@@ -3088,26 +3099,45 @@
 				ee.GallerySlider.events( data );
 			};
 
+			ee.GallerySlider.slideToIndex = function( swiper, index, useLoop ) {
+				if ( ! swiper || 'function' !== typeof swiper.slideTo ) {
+					return;
+				}
+
+				if ( useLoop && 'function' === typeof swiper.slideToLoop ) {
+					swiper.slideToLoop( index );
+					return;
+				}
+
+				swiper.slideTo( index );
+			};
+
 			ee.GallerySlider.events = function( data ) {
 				var $thumbs = data.scope.find('.ee-gallery__item');
 
-				data.slider.on('slideChange', function( instance ) {
+				if ( ! data.slider || 'function' !== typeof data.slider.on ) {
+					return;
+				}
+
+				data.slider.on('slideChange', function() {
 					ee.GallerySlider.onSlideChange( data );
 				} );
 
-				$thumbs.on( 'click', function() {
-					var offset 	= sliderSettings.element.loop ? 1 : 0;
-
-					event.preventDefault();
-					data.slider.slideTo( $(this).index() + offset );
+				$thumbs.on( 'click', function( e ) {
+					e.preventDefault();
+					ee.GallerySlider.slideToIndex( data.slider, $thumbs.index( this ), sliderSettings.element.loop );
 				});
 			};
 
 			ee.GallerySlider.onSlideChange = function( data ) {
+				if ( ! data.slider ) {
+					return;
+				}
+
 				var activeIndex = sliderSettings.element.loop ? data.slider.realIndex : data.slider.activeIndex;
 
-				if ( hasCarousel ) {
-					data.carousel.slideTo( activeIndex );
+				if ( hasCarousel && data.carousel ) {
+					ee.GallerySlider.slideToIndex( data.carousel, activeIndex, false );
 				}
 
 				var $thumbs = data.scope.find('.ee-gallery__item');

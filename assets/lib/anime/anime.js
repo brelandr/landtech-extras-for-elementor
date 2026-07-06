@@ -1310,4 +1310,10 @@ anime.easing = parseEasings;
 anime.penner = penner;
 anime.random = function (min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; };
 
-module.exports = anime;
+if ( 'undefined' !== typeof module && 'undefined' !== typeof module.exports ) {
+  module.exports = anime;
+} else if ( 'function' === typeof define && define.amd ) {
+  define( function () { return anime; } );
+} else {
+  window.anime = anime;
+}
