@@ -151,7 +151,7 @@ class Posts extends Posts_Base {
 	 * @return bool
 	 */
 	public static function requires_elementor_pro() {
-		return true;
+		return false;
 	}
 
 	/**

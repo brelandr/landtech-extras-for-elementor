@@ -256,7 +256,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 
 		$wp_query = $this->parent->get_query();
 
-		if ( ! $wp_query->found_posts ) {
+		if ( ! $wp_query instanceof \WP_Query || ! $wp_query->found_posts ) {
 			$this->render_not_found();
 			return;
 		}

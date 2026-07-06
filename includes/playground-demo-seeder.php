@@ -389,10 +389,7 @@ function landtech_extras_playground_get_demo_definitions( array $images ) {
 			'widgets' => array(
 				landtech_extras_playground_widget(
 					'posts-extra',
-					array(
-						'_skin'          => 'classic',
-						'posts_per_page' => 6,
-					)
+					landtech_extras_playground_posts_extra_settings()
 				),
 			),
 		),
@@ -620,6 +617,27 @@ function landtech_extras_playground_get_demo_definitions( array $images ) {
 				landtech_extras_playground_widget( 'ee-inline-svg', array() ),
 			),
 		),
+	);
+}
+
+/**
+ * Default Posts Extra widget settings for Playground demos.
+ *
+ * @return array<string,mixed>
+ */
+function landtech_extras_playground_posts_extra_settings() {
+	return array(
+		'_skin'               => 'classic',
+		'posts_per_page'      => 6,
+		'posts_post_type'     => 'post',
+		'posts_orderby'       => 'date',
+		'posts_order'         => 'desc',
+		'columns'             => '3',
+		'columns_tablet'      => '2',
+		'columns_mobile'      => '1',
+		'layout'              => 'default',
+		'post_media'          => 'yes',
+		'post_title_position' => 'body',
 	);
 }
 

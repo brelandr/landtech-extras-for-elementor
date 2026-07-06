@@ -4,7 +4,7 @@ Contributors: brelandr
 Tags: elementor, page-builder, widgets, addons, extensions
 Requires at least: 6.2
 Tested up to: 7.0
-Stable tag: 2.2.80
+Stable tag: 2.2.81
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -147,6 +147,11 @@ From the plugin root, after **`npm install`**, run **`npm run build:assets`** to
 Before publishing a public GitHub mirror, verify any **Repository** or **Source** URL in this readme returns HTTP 200 (WordPress.org reviewers check linked URLs).
 
 == Changelog ==
+
+= 2.2.81 =
+
+* Fix: Posts Extra demo works on WordPress Playground (free Elementor) via a standard `WP_Query` fallback when Elementor Pro query controls are unavailable; demo seeder now includes full grid/query settings.
+* Fix: Posts Extra registers on free Elementor installs for basic post grids; advanced Query panel still requires Elementor Pro.
 
 = 2.2.80 =
 

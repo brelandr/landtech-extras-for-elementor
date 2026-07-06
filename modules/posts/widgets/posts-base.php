@@ -261,6 +261,28 @@ abstract class Posts_Base extends Extras_Widget {
 	public function set_query( $query_args ) {
 
 		if ( ! landtech_extras_is_elementor_pro_active() ) {
+			$post_type = $this->get_settings( 'posts_post_type' );
+
+			if ( empty( $post_type ) || in_array( $post_type, array( 'current_query', 'related', 'by_id' ), true ) ) {
+				$post_type = 'post';
+			}
+
+			$fallback_args = wp_parse_args(
+				$query_args,
+				array(
+					'post_type'           => $post_type,
+					'post_status'         => 'publish',
+					'posts_per_page'      => $this->get_posts_per_page(),
+					'paged'               => $this->get_current_page(),
+					'ignore_sticky_posts' => 1,
+					'orderby'             => 'date',
+					'order'               => 'DESC',
+				)
+			);
+
+			$this->_query = new \WP_Query( $fallback_args );
+			$this->_query = apply_filters( 'landtech_extras/widgets/posts/query', $this->_query );
+
 			return;
 		}
 
