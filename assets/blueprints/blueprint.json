@@ -1,0 +1,39 @@
+{
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"landingPage": "/wp-admin/admin.php?page=landtech-extras",
+	"preferredVersions": {
+		"php": "8.2",
+		"wp": "latest"
+	},
+	"steps": [
+		{
+			"step": "login",
+			"username": "admin",
+			"password": "password"
+		},
+		{
+			"step": "installPlugin",
+			"options": {
+				"activate": true
+			},
+			"pluginData": {
+				"resource": "wordpress.org/plugins",
+				"slug": "elementor"
+			}
+		},
+		{
+			"step": "installPlugin",
+			"options": {
+				"activate": true
+			},
+			"pluginData": {
+				"resource": "wordpress.org/plugins",
+				"slug": "landtech-extras-for-elementor"
+			}
+		},
+		{
+			"step": "runPHP",
+			"code": "<?php\nrequire_once '/wordpress/wp-load.php';\nupdate_option( 'elementor_onboarded', true );\nupdate_option( 'elementor_experiment-container', 'active' );\n$page_id = wp_insert_post(\n\tarray(\n\t\t'post_title'   => 'LandTech Extras Demo',\n\t\t'post_status'  => 'publish',\n\t\t'post_type'    => 'page',\n\t\t'post_content' => '<p>Demo page for LandTech Extras widgets. Edit with Elementor to explore the LandTech Extras category.</p>',\n\t)\n);\nif ( $page_id && ! is_wp_error( $page_id ) ) {\n\tupdate_post_meta( $page_id, '_elementor_edit_mode', 'builder' );\n\tupdate_post_meta( $page_id, '_elementor_template_type', 'wp-page' );\n\tif ( defined( 'ELEMENTOR_VERSION' ) ) {\n\t\tupdate_post_meta( $page_id, '_elementor_version', ELEMENTOR_VERSION );\n\t}\n}"
+		}
+	]
+}
