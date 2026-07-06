@@ -1,8 +1,9 @@
 <?php
-namespace ElementorExtras\Modules\DisplayConditions\Conditions;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\DisplayConditions\Conditions;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Condition;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Condition;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -49,7 +50,7 @@ class Date extends Condition {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Current Date', 'elementor-extras' );
+		return __( 'Current Date', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -61,12 +62,12 @@ class Date extends Condition {
 	 * @return string
 	 */
 	public function get_value_control() {
-		$default_date_start = date( 'Y-m-d', strtotime( '-3 day' ) + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ) );
-		$default_date_end 	= date( 'Y-m-d', strtotime( '+3 day' ) + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ) );
+		$default_date_start = wp_date( 'Y-m-d', strtotime( '-3 day', current_time( 'timestamp' ) ) );
+		$default_date_end   = wp_date( 'Y-m-d', strtotime( '+3 day', current_time( 'timestamp' ) ) );
 		$default_interval 	= $default_date_start . ' to ' . $default_date_end;
 
 		return [
-			'label'		=> __( 'In interval', 'elementor-extras' ),
+			'label'		=> __( 'In interval', 'landtech-extras-for-elementor' ),
 			'type' 		=> \Elementor\Controls_Manager::DATE_TIME,
 			'picker_options' => [
 				'enableTime'	=> false,

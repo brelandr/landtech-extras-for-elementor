@@ -1,9 +1,10 @@
 <?php
-namespace ElementorExtras\Modules\QueryControl\Types;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\QueryControl\Types;
 
-// Extras for Elementor Classes
-use ElementorExtras\Utils;
-use ElementorExtras\Modules\QueryControl\Types\Meta_Base;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Utils;
+use LandTechExtras\Modules\QueryControl\Types\Meta_Base;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -35,7 +36,7 @@ class Acf extends Meta_Base {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'ACF', 'elementor-extras' );
+		return __( 'ACF', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -60,11 +61,11 @@ class Acf extends Meta_Base {
 			$query_params['post_parent__not_in'] = $options_pages;
 		}
 
-		add_filter( 'posts_where', ['\ElementorExtras\Utils', 'posts_where_by_title_name'], 10, 2 );
+		add_filter( 'posts_where', ['\LandTechExtras\Utils', 'posts_where_by_title_name'], 10, 2 );
 
 		$query = new \WP_Query( $query_params );
 
-		remove_filter( 'posts_where', ['\ElementorExtras\Utils', 'posts_where_by_title_name'], 10, 2 );
+		remove_filter( 'posts_where', ['\LandTechExtras\Utils', 'posts_where_by_title_name'], 10, 2 );
 
 		$query_results = $this->get_query_results( $query, $options );
 

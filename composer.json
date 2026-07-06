@@ -1,0 +1,23 @@
+{
+	"name": "landtech-web-designs/extras-for-elementor-dev",
+	"description": "Developer dependencies (PHPCS / WPCS) for LandTech Extras for Elementor CI and local linting.",
+	"type": "wordpress-plugin-support",
+	"license": "GPL-3.0-or-later",
+	"require-dev": {
+		"squizlabs/php_codesniffer": "^3.10",
+		"wp-coding-standards/wpcs": "^3.1"
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		},
+		"sort-packages": true
+	},
+	"scripts": {
+		"phpcs": "@php vendor/bin/phpcs --standard=phpcs.xml.dist",
+		"phpcbf": "@php vendor/bin/phpcbf --standard=phpcs.xml.dist",
+		"lint": "@php vendor/bin/phpcs --standard=phpcs.xml.dist -n -q",
+		"fix": "@phpcbf",
+		"lint:security": "@php vendor/bin/phpcs --standard=phpcs.security.xml"
+	}
+}

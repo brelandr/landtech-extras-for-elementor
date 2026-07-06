@@ -1,0 +1,14 @@
+{
+	"name": "landtech-extras-for-elementor",
+	"private": true,
+	"scripts": {
+		"build:infinite-scroll": "node scripts/build-infinite-scroll.mjs",
+		"build:assets": "node scripts/build-infinite-scroll.mjs && node scripts/build-min.mjs"
+	},
+	"devDependencies": {
+		"esbuild": "^0.24.2",
+		"ev-emitter": "^2.1.2",
+		"fizzy-ui-utils": "^3.0.0",
+		"infinite-scroll": "^4.0.1"
+	}
+}

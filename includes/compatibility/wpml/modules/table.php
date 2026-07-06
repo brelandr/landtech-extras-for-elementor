@@ -1,5 +1,6 @@
 <?php
-namespace ElementorExtras\Compatibility\WPML;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Compatibility\WPML;
 
 use WPML_Elementor_Module_With_Items;
 
@@ -47,15 +48,15 @@ class Table extends WPML_Elementor_Module_With_Items {
 	 */
 	protected function get_title( $field ) {
 		if ( 'cell_text' === $field ) {
-			return esc_html__( 'Table: Cell Text', 'elementor-extras' );
+			return esc_html__( 'Table: Cell Text', 'landtech-extras-for-elementor' );
 		}
 
 		if ( 'cell_header' === $field ) {
-			return esc_html__( 'Table: Cell Mobile Header', 'elementor-extras' );
+			return esc_html__( 'Table: Cell Mobile Header', 'landtech-extras-for-elementor' );
 		}
 
 		if ( 'url' === $field ) {
-			return esc_html__( 'Table: Cell Link', 'elementor-extras' );
+			return esc_html__( 'Table: Cell Link', 'landtech-extras-for-elementor' );
 		}
 
 		return '';

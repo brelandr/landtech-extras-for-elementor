@@ -1,9 +1,10 @@
 <?php
-namespace ElementorExtras\Modules\Table\Widgets;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Table\Widgets;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Extras_Widget;
-use ElementorExtras\Group_Control_Transition;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Extras_Widget;
+use LandTechExtras\Group_Control_Transition;
 
 // Elementor Classes
 use Elementor\Repeater;
@@ -55,7 +56,7 @@ class Table extends Extras_Widget {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Table', 'elementor-extras' );
+		return __( 'Table', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -79,7 +80,7 @@ class Table extends Extras_Widget {
 	 * @return array
 	 */
 	public function get_script_depends() {
-		return [ 'tablesorter' ];
+		return [ 'landtech-extras-tablesorter' ];
 	}
 
 	/**
@@ -93,11 +94,11 @@ class Table extends Extras_Widget {
 		$repeater->add_control(
 			'cell_content',
 			[
-				'label' 		=> __( 'Cell Content', 'elementor-extras' ),
+				'label' 		=> __( 'Cell Content', 'landtech-extras-for-elementor' ),
 				'type'		=> Controls_Manager::SELECT,
 				'default'	=> 'text',
 				'options' 	=> [
-					'text' 		=> __( 'Text', 'elementor-extras' ),
+					'text' 		=> __( 'Text', 'landtech-extras-for-elementor' ),
 				],
 				'condition'	=> array_merge( $condition, [] ),
 			]
@@ -106,7 +107,7 @@ class Table extends Extras_Widget {
 		$repeater->add_control(
 			'cell_text',
 			[
-				'label' 		=> __( 'Cell Text', 'elementor-extras' ),
+				'label' 		=> __( 'Cell Text', 'landtech-extras-for-elementor' ),
 				'type' 			=> Controls_Manager::TEXT,
 				'dynamic' 		=> [ 'active' => true ],
 				'condition'		=> array_merge(
@@ -120,7 +121,7 @@ class Table extends Extras_Widget {
 		$repeater->add_control(
 			'selected_cell_icon',
 			[
-				'label' 		=> __( 'Icon', 'elementor-extras' ),
+				'label' 		=> __( 'Icon', 'landtech-extras-for-elementor' ),
 				'type' 			=> Controls_Manager::ICONS,
 				'fa4compatibility' => 'cell_icon',
 				'condition'		=> array_merge(
@@ -134,12 +135,12 @@ class Table extends Extras_Widget {
 		$repeater->add_control(
 			'cell_icon_align',
 			[
-				'label' 	=> __( 'Icon Position', 'elementor-extras' ),
+				'label' 	=> __( 'Icon Position', 'landtech-extras-for-elementor' ),
 				'type' 		=> Controls_Manager::SELECT,
 				'default' 	=> 'left',
 				'options' 	=> [
-					'left' 		=> __( 'Before', 'elementor-extras' ),
-					'right' 	=> __( 'After', 'elementor-extras' ),
+					'left' 		=> __( 'Before', 'landtech-extras-for-elementor' ),
+					'right' 	=> __( 'After', 'landtech-extras-for-elementor' ),
 				],
 				'condition'		=> array_merge(
 					$condition, [
@@ -153,7 +154,7 @@ class Table extends Extras_Widget {
 		$repeater->add_control(
 			'cell_icon_indent',
 			[
-				'label' 	=> __( 'Icon Spacing', 'elementor-extras' ),
+				'label' 	=> __( 'Icon Spacing', 'landtech-extras-for-elementor' ),
 				'type' 		=> Controls_Manager::NUMBER,
 				'dynamic' 	=> [ 'active' => true ],
 				'min'		=> 0,
@@ -176,8 +177,8 @@ class Table extends Extras_Widget {
 		$repeater->add_control(
 			'cell_span',
 			[
-				'label'   		=> __( 'Column Span', 'elementor-extras' ),
-				'title' 		=> __( 'How many columns should this column span across.', 'elementor-extras' ),
+				'label'   		=> __( 'Column Span', 'landtech-extras-for-elementor' ),
+				'title' 		=> __( 'How many columns should this column span across.', 'landtech-extras-for-elementor' ),
 				'type'    		=> Controls_Manager::NUMBER,
 				'dynamic' 		=> [ 'active' => true ],
 				'default' 		=> 1,
@@ -191,8 +192,8 @@ class Table extends Extras_Widget {
 		$repeater->add_control(
 			'cell_row_span',
 			[
-				'label'   		=> __( 'Row Span', 'elementor-extras' ),
-				'title' 		=> __( 'How many rows should this column span across.', 'elementor-extras' ),
+				'label'   		=> __( 'Row Span', 'landtech-extras-for-elementor' ),
+				'title' 		=> __( 'How many rows should this column span across.', 'landtech-extras-for-elementor' ),
 				'type'    		=> Controls_Manager::NUMBER,
 				'dynamic' 		=> [ 'active' => true ],
 				'default' 		=> 1,
@@ -207,25 +208,25 @@ class Table extends Extras_Widget {
 		$repeater->add_control(
 			'_item_id',
 			[
-				'label' 		=> __( 'CSS ID', 'elementor-extras' ),
+				'label' 		=> __( 'CSS ID', 'landtech-extras-for-elementor' ),
 				'type' 			=> Controls_Manager::TEXT,
 				'dynamic' 		=> [ 'active' => true ],
 				'default' 		=> '',
 				'label_block' 	=> false,
-				'title' 		=> __( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'elementor-extras' ),
+				'title' 		=> __( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'landtech-extras-for-elementor' ),
 			]
 		);
 
 		$repeater->add_control(
 			'css_classes',
 			[
-				'label' 		=> __( 'CSS Classes', 'elementor-extras' ),
+				'label' 		=> __( 'CSS Classes', 'landtech-extras-for-elementor' ),
 				'type' 			=> Controls_Manager::TEXT,
 				'dynamic' 		=> [ 'active' => true ],
 				'default' 		=> '',
 				'prefix_class' 	=> '',
 				'label_block' 	=> false,
-				'title' 		=> __( 'Add your custom class WITHOUT the dot. e.g: my-class', 'elementor-extras' ),
+				'title' 		=> __( 'Add your custom class WITHOUT the dot. e.g: my-class', 'landtech-extras-for-elementor' ),
 			]
 		);
 
@@ -242,19 +243,19 @@ class Table extends Extras_Widget {
 		$this->start_controls_section(
 			'section_header',
 			[
-				'label' => __( 'Header', 'elementor-extras' ),
+				'label' => __( 'Header', 'landtech-extras-for-elementor' ),
 			]
 		);
 
 			$this->add_control(
 				'sortable',
 				[
-					'label' 		=> __( 'Sortable', 'elementor-extras' ),
+					'label' 		=> __( 'Sortable', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'yes',
-					'description'   => __( 'Enables sorting rows by clicking on header cells.', 'elementor-extras' ),
+					'description'   => __( 'Enables sorting rows by clicking on header cells.', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -262,12 +263,12 @@ class Table extends Extras_Widget {
 			$this->add_control(
 				'responsive',
 				[
-					'label' 		=> __( 'Responsive', 'elementor-extras' ),
-					'description'   => __( 'Converts the header row into individual headers for each cell on mobile.', 'elementor-extras' ),
+					'label' 		=> __( 'Responsive', 'landtech-extras-for-elementor' ),
+					'description'   => __( 'Converts the header row into individual headers for each cell on mobile.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default'		=> 'responsive',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'responsive',
 					'prefix_class'	=> 'ee-table--'
 				]
@@ -276,12 +277,12 @@ class Table extends Extras_Widget {
 			$this->add_control(
 				'mobile_headers_hide',
 				[
-					'label' 		=> __( 'Hide on Mobile', 'elementor-extras' ),
+					'label' 		=> __( 'Hide on Mobile', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'hide',
-					'description'   => __( 'Hide headers completely on mobile.', 'elementor-extras' ),
+					'description'   => __( 'Hide headers completely on mobile.', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 					'prefix_class'	=> 'ee-table-mobile-header--',
 					'condition'		=> [
@@ -293,13 +294,13 @@ class Table extends Extras_Widget {
 			$this->add_control(
 				'mobile_headers_auto',
 				[
-					'label' 		=> __( 'Auto Mobile Headers', 'elementor-extras' ),
+					'label' 		=> __( 'Auto Mobile Headers', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'yes',
 					'default'		=> 'yes',
-					'description'   => __( 'Try to automatically fetch corresponding headers content on mobile. Works only when column span values are not used.', 'elementor-extras' ),
+					'description'   => __( 'Try to automatically fetch corresponding headers content on mobile. Works only when column span values are not used.', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 					'condition'		=> [
 						'responsive'			=> 'responsive',
@@ -311,16 +312,16 @@ class Table extends Extras_Widget {
 			$this->add_control(
 				'mobile_headers_display',
 				[
-					'label' 		=> __( 'Mobile Display', 'elementor-extras' ),
+					'label' 		=> __( 'Mobile Display', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> 'row',
 					'options' 		=> [
 						'row'    	=> [
-							'title' 	=> __( 'Column', 'elementor-extras' ),
+							'title' 	=> __( 'Column', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'nicon nicon-inline',
 						],
 						'column' 		=> [
-							'title' 	=> __( 'Row', 'elementor-extras' ),
+							'title' 	=> __( 'Row', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'nicon nicon-block',
 						],
 					],
@@ -340,17 +341,17 @@ class Table extends Extras_Widget {
 			$this->add_control(
 				'header_cells',
 				[
-					'label' 	=> __( 'Columns', 'elementor-extras' ),
+					'label' 	=> __( 'Columns', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::REPEATER,
 					'default' 	=> [
 						[
-							'cell_text' 	=> __( 'First header', 'elementor-extras' ),
+							'cell_text' 	=> __( 'First header', 'landtech-extras-for-elementor' ),
 						],
 						[
-							'cell_text' 	=> __( 'Second header', 'elementor-extras' ),
+							'cell_text' 	=> __( 'Second header', 'landtech-extras-for-elementor' ),
 						],
 						[
-							'cell_text' 	=> __( 'Third header', 'elementor-extras' ),
+							'cell_text' 	=> __( 'Third header', 'landtech-extras-for-elementor' ),
 						],
 					],
 					'prevent_empty'		=> true,
@@ -364,7 +365,7 @@ class Table extends Extras_Widget {
 		$this->start_controls_section(
 			'section_content',
 			[
-				'label' => __( 'Body', 'elementor-extras' ),
+				'label' => __( 'Body', 'landtech-extras-for-elementor' ),
 			]
 		);
 
@@ -373,12 +374,12 @@ class Table extends Extras_Widget {
 			$repeater_elements->add_control(
 				'type',
 				[
-					'label'		=> __( 'Start new', 'elementor-extras' ),
+					'label'		=> __( 'Start new', 'landtech-extras-for-elementor' ),
 					'type'		=> Controls_Manager::SELECT,
 					'default'	=> 'cell',
 					'options' 	=> [
-						'row' 		=> __( 'Row', 'elementor-extras' ),
-						'cell' 		=> __( 'Cell', 'elementor-extras' ),
+						'row' 		=> __( 'Row', 'landtech-extras-for-elementor' ),
+						'cell' 		=> __( 'Cell', 'landtech-extras-for-elementor' ),
 					],
 
 				]
@@ -387,12 +388,12 @@ class Table extends Extras_Widget {
 			$repeater_elements->add_control(
 				'cell_type',
 				[
-					'label' 		=> __( 'Cell Type', 'elementor-extras' ),
+					'label' 		=> __( 'Cell Type', 'landtech-extras-for-elementor' ),
 					'type'		=> Controls_Manager::SELECT,
 					'default'	=> 'td',
 					'options' 	=> [
-						'td' 	=> __( 'Default', 'elementor-extras' ),
-						'th' 	=> __( 'Header', 'elementor-extras' ),
+						'td' 	=> __( 'Default', 'landtech-extras-for-elementor' ),
+						'th' 	=> __( 'Header', 'landtech-extras-for-elementor' ),
 					],
 					'condition'	=> [
 						'type'		=> 'cell',
@@ -403,9 +404,9 @@ class Table extends Extras_Widget {
 			$repeater_elements->add_control(
 				'cell_header',
 				[
-					'label' 		=> __( 'Mobile Header', 'elementor-extras' ),
-					'description'	=> __( 'Overrides value set by Auto Mobile Header option.', 'elementor-extras' ),
-					'title' 		=> __( 'Specify the header text for this cell to appear on mobile', 'elementor-extras' ),
+					'label' 		=> __( 'Mobile Header', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Overrides value set by Auto Mobile Header option.', 'landtech-extras-for-elementor' ),
+					'title' 		=> __( 'Specify the header text for this cell to appear on mobile', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::TEXT,
 					'dynamic' 		=> [ 'active' => true ],
 					'condition'	=> [
@@ -419,7 +420,7 @@ class Table extends Extras_Widget {
 			$repeater_elements->add_control(
 				'link',
 				[
-					'label' 		=> __( 'Link', 'elementor-extras' ),
+					'label' 		=> __( 'Link', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::URL,
 					'dynamic' 		=> [ 'active' => true ],
 					'label_block'	=> false,
@@ -433,7 +434,7 @@ class Table extends Extras_Widget {
 			$this->add_control(
 				'rows',
 				[
-					'label' 	=> __( 'Rows', 'elementor-extras' ),
+					'label' 	=> __( 'Rows', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::REPEATER,
 					'default' 	=> [
 						[
@@ -441,17 +442,17 @@ class Table extends Extras_Widget {
 						],
 						[
 							'type' 			=> 'cell',
-							'cell_text' 	=> __( 'First column', 'elementor-extras' ),
+							'cell_text' 	=> __( 'First column', 'landtech-extras-for-elementor' ),
 							'cell_type'		=> 'td',
 						],
 						[
 							'type' 			=> 'cell',
-							'cell_text' 	=> __( 'Second column', 'elementor-extras' ),
+							'cell_text' 	=> __( 'Second column', 'landtech-extras-for-elementor' ),
 							'cell_type'		=> 'td',
 						],
 						[
 							'type' 			=> 'cell',
-							'cell_text' 	=> __( 'Third column', 'elementor-extras' ),
+							'cell_text' 	=> __( 'Third column', 'landtech-extras-for-elementor' ),
 							'cell_type'		=> 'td',
 						],
 						[
@@ -459,15 +460,15 @@ class Table extends Extras_Widget {
 						],
 						[
 							'type' 			=> 'cell',
-							'cell_text' 	=> __( 'First column', 'elementor-extras' ),
+							'cell_text' 	=> __( 'First column', 'landtech-extras-for-elementor' ),
 						],
 						[
 							'type' 			=> 'cell',
-							'cell_text' 	=> __( 'Second column', 'elementor-extras' ),
+							'cell_text' 	=> __( 'Second column', 'landtech-extras-for-elementor' ),
 						],
 						[
 							'type' 			=> 'cell',
-							'cell_text' 	=> __( 'Third column', 'elementor-extras' ),
+							'cell_text' 	=> __( 'Third column', 'landtech-extras-for-elementor' ),
 						],
 					],
 					'fields' 			=> $repeater_elements->get_controls(),
@@ -480,7 +481,7 @@ class Table extends Extras_Widget {
 		$this->start_controls_section(
 			'section_table_style',
 			[
-				'label' 	=> __( 'Table', 'elementor-extras' ),
+				'label' 	=> __( 'Table', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -488,7 +489,7 @@ class Table extends Extras_Widget {
 			$this->add_responsive_control(
 				'size',
 				[
-					'label' => __( 'Maximum Size', 'elementor-extras' ),
+					'label' => __( 'Maximum Size', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::SLIDER,
 					'default' => [
 						'size' => 100,
@@ -514,20 +515,20 @@ class Table extends Extras_Widget {
 			$this->add_responsive_control(
 				'align',
 				[
-					'label' 		=> __( 'Alignment', 'elementor-extras' ),
+					'label' 		=> __( 'Alignment', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default'		=> 'center',
 					'options' 		=> [
 						'flex-start' 		=> [
-							'title' => __( 'Left', 'elementor-extras' ),
+							'title' => __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'eicon-h-align-left',
 						],
 						'center' 	=> [
-							'title' => __( 'Center', 'elementor-extras' ),
+							'title' => __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'eicon-h-align-center',
 						],
 						'flex-end' 	=> [
-							'title' => __( 'Right', 'elementor-extras' ),
+							'title' => __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'eicon-h-align-right',
 						],
 					],
@@ -555,7 +556,7 @@ class Table extends Extras_Widget {
 		$this->start_controls_section(
 			'section_rows_style',
 			[
-				'label' 	=> __( 'Rows', 'elementor-extras' ),
+				'label' 	=> __( 'Rows', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -564,7 +565,7 @@ class Table extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'row_border',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '{{WRAPPER}} .ee-table__row',
 				]
 			);
@@ -572,12 +573,12 @@ class Table extends Extras_Widget {
 			$this->add_control(
 				'row_alternate',
 				[
-					'label'		=> __( 'Alternate', 'elementor-extras' ),
+					'label'		=> __( 'Alternate', 'landtech-extras-for-elementor' ),
 					'type'		=> Controls_Manager::SELECT,
 					'default'	=> 'even',
 					'options' 	=> [
-						'even' 	=> __( 'Even', 'elementor-extras' ),
-						'odd' 	=> __( 'Odd', 'elementor-extras' ),
+						'even' 	=> __( 'Even', 'landtech-extras-for-elementor' ),
+						'odd' 	=> __( 'Odd', 'landtech-extras-for-elementor' ),
 					],
 
 				]
@@ -585,12 +586,12 @@ class Table extends Extras_Widget {
 
 			$this->start_controls_tabs( 'tabs_row_style' );
 
-			$this->start_controls_tab( 'tab_row_default_style', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'tab_row_default_style', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'row_style_heading',
 					[
-						'label'		=> __( 'Default', 'elementor-extras' ),
+						'label'		=> __( 'Default', 'landtech-extras-for-elementor' ),
 						'type'		=> Controls_Manager::HEADING,
 					]
 				);
@@ -598,7 +599,7 @@ class Table extends Extras_Widget {
 				$this->add_responsive_control(
 					'row_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'global' => [
 							'default' => Global_Colors::COLOR_TEXT,
@@ -612,7 +613,7 @@ class Table extends Extras_Widget {
 				$this->add_responsive_control(
 					'row_background',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-table__row' => 'background-color: {{VALUE}};',
@@ -623,7 +624,7 @@ class Table extends Extras_Widget {
 				$this->add_control(
 					'row_style_hover_heading',
 					[
-						'label'		=> __( 'Hover', 'elementor-extras' ),
+						'label'		=> __( 'Hover', 'landtech-extras-for-elementor' ),
 						'type'		=> Controls_Manager::HEADING,
 					]
 				);
@@ -631,7 +632,7 @@ class Table extends Extras_Widget {
 				$this->add_control(
 					'row_hover_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'(desktop+){{WRAPPER}} .ee-table__row:hover .ee-table__text' => 'color: {{VALUE}};',
@@ -642,7 +643,7 @@ class Table extends Extras_Widget {
 				$this->add_control(
 					'row_hover_background',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'(desktop+){{WRAPPER}} .ee-table__row:hover' => 'background-color: {{VALUE}};',
@@ -652,12 +653,12 @@ class Table extends Extras_Widget {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'tab_row_alternate_style', [ 'label' => __( 'Alternate', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'tab_row_alternate_style', [ 'label' => __( 'Alternate', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'row_style_alternate_heading',
 					[
-						'label'		=> __( 'Default', 'elementor-extras' ),
+						'label'		=> __( 'Default', 'landtech-extras-for-elementor' ),
 						'type'		=> Controls_Manager::HEADING,
 					]
 				);
@@ -665,7 +666,7 @@ class Table extends Extras_Widget {
 				$this->add_responsive_control(
 					'row_alternate_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-table--odd .ee-table__row:nth-child(odd) .ee-table__text,
@@ -677,7 +678,7 @@ class Table extends Extras_Widget {
 				$this->add_responsive_control(
 					'row_alternate_background',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-table--odd .ee-table__row:nth-child(odd),
@@ -689,7 +690,7 @@ class Table extends Extras_Widget {
 				$this->add_control(
 					'row_style_alternate_hover_heading',
 					[
-						'label'		=> __( 'Hover', 'elementor-extras' ),
+						'label'		=> __( 'Hover', 'landtech-extras-for-elementor' ),
 						'type'		=> Controls_Manager::HEADING,
 					]
 				);
@@ -697,7 +698,7 @@ class Table extends Extras_Widget {
 				$this->add_control(
 					'row_alternate_hover_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'(desktop+){{WRAPPER}} .ee-table--odd .ee-table__row:nth-child(odd):hover .ee-table__text,
@@ -709,7 +710,7 @@ class Table extends Extras_Widget {
 				$this->add_control(
 					'row_alternate_hover_background',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'(desktop+){{WRAPPER}} .ee-table--odd .ee-table__row:nth-child(odd):hover,
@@ -727,7 +728,7 @@ class Table extends Extras_Widget {
 		$this->start_controls_section(
 			'section_cells_style',
 			[
-				'label' 	=> __( 'Cells', 'elementor-extras' ),
+				'label' 	=> __( 'Cells', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -736,7 +737,7 @@ class Table extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'cell_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -746,12 +747,12 @@ class Table extends Extras_Widget {
 
 			$this->start_controls_tabs( 'tabs_cell_colors' );
 
-			$this->start_controls_tab( 'tab_cell_colors', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'tab_cell_colors', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_responsive_control(
 					'cell_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'global' => [
 							'default' => Global_Colors::COLOR_TEXT,
@@ -765,7 +766,7 @@ class Table extends Extras_Widget {
 				$this->add_responsive_control(
 					'cell_background',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-table__cell' => 'background-color: {{VALUE}};',
@@ -775,12 +776,12 @@ class Table extends Extras_Widget {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'tab_cell_hover_colors', [ 'label' => __( 'Hover', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'tab_cell_hover_colors', [ 'label' => __( 'Hover', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'cell_hover_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'(desktop+){{WRAPPER}} .ee-table__cell:hover .ee-table__text' => 'color: {{VALUE}};',
@@ -791,7 +792,7 @@ class Table extends Extras_Widget {
 				$this->add_control(
 					'cell_hover_background',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'(desktop+){{WRAPPER}} .ee-table__cell:hover' => 'background-color: {{VALUE}};',
@@ -805,12 +806,12 @@ class Table extends Extras_Widget {
 
 			$this->start_controls_tabs( 'tabs_cell_style' );
 
-			$this->start_controls_tab( 'tab_cell_default_style', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'tab_cell_default_style', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_responsive_control(
 					'cell_padding',
 					[
-						'label' 		=> __( 'Padding', 'elementor-extras' ),
+						'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::DIMENSIONS,
 						'size_units' 	=> [ 'px', 'em', '%' ],
 						'selectors' 	=> [
@@ -822,20 +823,20 @@ class Table extends Extras_Widget {
 				$this->add_responsive_control(
 					'cell_align',
 					[
-						'label' 		=> __( 'Align Text', 'elementor-extras' ),
+						'label' 		=> __( 'Align Text', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::CHOOSE,
 						'default' 		=> '',
 						'options' 		=> [
 							'flex-start'    		=> [
-								'title' 	=> __( 'Left', 'elementor-extras' ),
+								'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 								'icon' 		=> 'fa fa-align-left',
 							],
 							'center' 		=> [
-								'title' 	=> __( 'Center', 'elementor-extras' ),
+								'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 								'icon' 		=> 'fa fa-align-center',
 							],
 							'flex-end' 		=> [
-								'title' 	=> __( 'Right', 'elementor-extras' ),
+								'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 								'icon' 		=> 'fa fa-align-right',
 							],
 						],
@@ -849,19 +850,19 @@ class Table extends Extras_Widget {
 					Group_Control_Border::get_type(),
 					[
 						'name' 		=> 'cell_border',
-						'label' 	=> __( 'Border', 'elementor-extras' ),
+						'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 						'selector' 	=> '{{WRAPPER}} .ee-table__cell',
 					]
 				);
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'tab_cell_first_style', [ 'label' => __( 'First', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'tab_cell_first_style', [ 'label' => __( 'First', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_responsive_control(
 					'cell_first_padding',
 					[
-						'label' 		=> __( 'Padding', 'elementor-extras' ),
+						'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::DIMENSIONS,
 						'size_units' 	=> [ 'px', 'em', '%' ],
 						'selectors' 	=> [
@@ -873,20 +874,20 @@ class Table extends Extras_Widget {
 				$this->add_responsive_control(
 					'cell_first_align',
 					[
-						'label' 		=> __( 'Align Text', 'elementor-extras' ),
+						'label' 		=> __( 'Align Text', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::CHOOSE,
 						'default' 		=> '',
 						'options' 		=> [
 							'flex-start'    		=> [
-								'title' 	=> __( 'Left', 'elementor-extras' ),
+								'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 								'icon' 		=> 'fa fa-align-left',
 							],
 							'center' 		=> [
-								'title' 	=> __( 'Center', 'elementor-extras' ),
+								'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 								'icon' 		=> 'fa fa-align-center',
 							],
 							'flex-end' 		=> [
-								'title' 	=> __( 'Right', 'elementor-extras' ),
+								'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 								'icon' 		=> 'fa fa-align-right',
 							],
 						],
@@ -900,19 +901,19 @@ class Table extends Extras_Widget {
 					Group_Control_Border::get_type(),
 					[
 						'name' 		=> 'cell_first_border',
-						'label' 	=> __( 'Border', 'elementor-extras' ),
+						'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 						'selector' 	=> '(tablet+){{WRAPPER}} .ee-table__cell:first-child',
 					]
 				);
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'tab_cell_last_style', [ 'label' => __( 'Last', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'tab_cell_last_style', [ 'label' => __( 'Last', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_responsive_control(
 					'cell_last_padding',
 					[
-						'label' 		=> __( 'Padding', 'elementor-extras' ),
+						'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::DIMENSIONS,
 						'size_units' 	=> [ 'px', 'em', '%' ],
 						'selectors' 	=> [
@@ -924,20 +925,20 @@ class Table extends Extras_Widget {
 				$this->add_responsive_control(
 					'cell_last_align',
 					[
-						'label' 		=> __( 'Align Text', 'elementor-extras' ),
+						'label' 		=> __( 'Align Text', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::CHOOSE,
 						'default' 		=> '',
 						'options' 		=> [
 							'flex-start'    		=> [
-								'title' 	=> __( 'Left', 'elementor-extras' ),
+								'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 								'icon' 		=> 'fa fa-align-left',
 							],
 							'center' 		=> [
-								'title' 	=> __( 'Center', 'elementor-extras' ),
+								'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 								'icon' 		=> 'fa fa-align-center',
 							],
 							'flex-end' 		=> [
-								'title' 	=> __( 'Right', 'elementor-extras' ),
+								'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 								'icon' 		=> 'fa fa-align-right',
 							],
 						],
@@ -951,7 +952,7 @@ class Table extends Extras_Widget {
 					Group_Control_Border::get_type(),
 					[
 						'name' 		=> 'cell_last_border',
-						'label' 	=> __( 'Border', 'elementor-extras' ),
+						'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 						'selector' 	=> '(tablet+){{WRAPPER}} .ee-table__cell:last-child',
 					]
 				);
@@ -965,7 +966,7 @@ class Table extends Extras_Widget {
 		$this->start_controls_section(
 			'section_header_style',
 			[
-				'label' 	=> __( 'Headers', 'elementor-extras' ),
+				'label' 	=> __( 'Headers', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -973,7 +974,7 @@ class Table extends Extras_Widget {
 			$this->add_control(
 				'mobile_headers_size',
 				[
-					'label' => __( 'Mobile Width (%)', 'elementor-extras' ),
+					'label' => __( 'Mobile Width (%)', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::SLIDER,
 					'default' => [
 						'size' => 50,
@@ -998,7 +999,7 @@ class Table extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'header_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_ACCENT,
 					],
@@ -1008,12 +1009,12 @@ class Table extends Extras_Widget {
 
 			$this->start_controls_tabs( 'tabs_header_colors' );
 
-			$this->start_controls_tab( 'tab_header_colors', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'tab_header_colors', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_responsive_control(
 					'header_cell_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '#FFFFFF',
 						'selectors' => [
@@ -1026,7 +1027,7 @@ class Table extends Extras_Widget {
 				$this->add_responsive_control(
 					'header_cell_background',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'global' => [
 							'default' => Global_Colors::COLOR_PRIMARY,
@@ -1040,12 +1041,12 @@ class Table extends Extras_Widget {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'tab_header_hover_colors', [ 'label' => __( 'Hover', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'tab_header_hover_colors', [ 'label' => __( 'Hover', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'header_cell_hover_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'(tablet+){{WRAPPER}} th.ee-table__cell:hover .ee-table__text' => 'color: {{VALUE}};',
@@ -1056,7 +1057,7 @@ class Table extends Extras_Widget {
 				$this->add_control(
 					'header_cell_hover_background',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'(tablet+){{WRAPPER}} th.ee-table__cell:hover' => 'background-color: {{VALUE}};',
@@ -1070,12 +1071,12 @@ class Table extends Extras_Widget {
 
 			$this->start_controls_tabs( 'tabs_header_style' );
 
-			$this->start_controls_tab( 'tab_header_default_style', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'tab_header_default_style', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_responsive_control(
 					'header_cell_padding',
 					[
-						'label' 		=> __( 'Padding', 'elementor-extras' ),
+						'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::DIMENSIONS,
 						'size_units' 	=> [ 'px', 'em', '%' ],
 						'selectors' 	=> [
@@ -1089,7 +1090,7 @@ class Table extends Extras_Widget {
 					Group_Control_Border::get_type(),
 					[
 						'name' 		=> 'header_cell_border',
-						'label' 	=> __( 'Border', 'elementor-extras' ),
+						'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 						'selector' 	=>
 							'{{WRAPPER}} th.ee-table__cell, {{WRAPPER}} .ee-table__cell[data-title]:before',
 					]
@@ -1097,12 +1098,12 @@ class Table extends Extras_Widget {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'tab_header_first_style', [ 'label' => __( 'First', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'tab_header_first_style', [ 'label' => __( 'First', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_responsive_control(
 					'header_cell_first_padding',
 					[
-						'label' 		=> __( 'Padding', 'elementor-extras' ),
+						'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::DIMENSIONS,
 						'size_units' 	=> [ 'px', 'em', '%' ],
 						'selectors' 	=> [
@@ -1116,7 +1117,7 @@ class Table extends Extras_Widget {
 					Group_Control_Border::get_type(),
 					[
 						'name' 		=> 'header_cell_first_border',
-						'label' 	=> __( 'Border', 'elementor-extras' ),
+						'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 						'selector' 	=>
 							'(tablet+){{WRAPPER}} th.ee-table__cell:first-child, {{WRAPPER}} .ee-table__cell:first-child[data-title]:before',
 					]
@@ -1124,12 +1125,12 @@ class Table extends Extras_Widget {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'tab_header_last_style', [ 'label' => __( 'Last', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'tab_header_last_style', [ 'label' => __( 'Last', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_responsive_control(
 					'header_cell_last_padding',
 					[
-						'label' 		=> __( 'Padding', 'elementor-extras' ),
+						'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::DIMENSIONS,
 						'size_units' 	=> [ 'px', 'em', '%' ],
 						'selectors' 	=> [
@@ -1143,7 +1144,7 @@ class Table extends Extras_Widget {
 					Group_Control_Border::get_type(),
 					[
 						'name' 		=> 'header_cell_last_border',
-						'label' 	=> __( 'Border', 'elementor-extras' ),
+						'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 						'selector' 	=>
 							'(tablet+){{WRAPPER}} th.ee-table__cell:last-child, {{WRAPPER}} .ee-table__cell:last-child[data-title]:before',
 					]
@@ -1158,7 +1159,7 @@ class Table extends Extras_Widget {
 		$this->start_controls_section(
 			'section_columns_style',
 			[
-				'label' 	=> __( 'Columns', 'elementor-extras' ),
+				'label' 	=> __( 'Columns', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -1168,8 +1169,8 @@ class Table extends Extras_Widget {
 			$repeater_columns->add_control(
 				'span',
 				[
-					'label' 		=> __( 'Span', 'elementor-extras' ),
-					'title'			=> __( 'Rule applies to this number of columns starting after the previous rule.', 'elementor-extras' ),
+					'label' 		=> __( 'Span', 'landtech-extras-for-elementor' ),
+					'title'			=> __( 'Rule applies to this number of columns starting after the previous rule.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::NUMBER,
 					'default' 		=> 1,
 					'min' 			=> 1,
@@ -1181,7 +1182,7 @@ class Table extends Extras_Widget {
 			$repeater_columns->add_control(
 				'column_background',
 				[
-					'label' 	=> __( 'Background Color', 'elementor-extras' ),
+					'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'selectors' => [
 						'(tablet+){{WRAPPER}} {{CURRENT_ITEM}}' => 'background-color: {{VALUE}};',
@@ -1193,7 +1194,7 @@ class Table extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'column_border',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '(tablet+){{WRAPPER}} {{CURRENT_ITEM}}',
 				]
 			);
@@ -1201,7 +1202,7 @@ class Table extends Extras_Widget {
 			$repeater_columns->add_control(
 				'column_size',
 				[
-					'label' => __( 'Width', 'elementor-extras' ),
+					'label' => __( 'Width', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::SLIDER,
 					'size_units' => [ '%', 'px' ],
 					'range' => [
@@ -1223,7 +1224,7 @@ class Table extends Extras_Widget {
 			$this->add_control(
 				'rules',
 				[
-					'label' 			=> __( 'Column Rules', 'elementor-extras' ),
+					'label' 			=> __( 'Column Rules', 'landtech-extras-for-elementor' ),
 					'type' 				=> Controls_Manager::REPEATER,
 					'fields' 			=> $repeater_columns->get_controls(),
 					'prevent_empty'		=> true,
@@ -1274,7 +1275,7 @@ class Table extends Extras_Widget {
 			$this->add_render_attribute( 'table', 'class', 'ee-table--rules' );
 		} ?>
 		
-		<table <?php echo $this->get_render_attribute_string( 'table' ); ?>>
+		<table <?php $this->print_render_attribute_string( 'table' ); ?>>
 
 			<?php
 
@@ -1284,7 +1285,7 @@ class Table extends Extras_Widget {
 			?><tbody><?php
 
 				if ( $this->is_invalid_first_row() ) {
-					?><tr <?php echo $this->get_render_attribute_string( 'body-row' ); ?>><?php
+					?><tr <?php $this->print_render_attribute_string( 'body-row' ); ?>><?php
 				}
 
 				foreach ( $settings['rows'] as $index => $row ) {
@@ -1326,7 +1327,7 @@ class Table extends Extras_Widget {
 		if ( $settings['rules'] ) { ?>
 			<colgroup>
 				<?php foreach( $settings['rules'] as $rule ) { ?>
-				<col span="<?php echo $rule['span']; ?>" class="elementor-repeater-item-<?php echo $rule['_id']; ?>">
+				<col span="<?php echo esc_attr( (string) $rule['span'] ); ?>" class="<?php echo esc_attr( 'elementor-repeater-item-' . $rule['_id'] ); ?>">
 				<?php } ?>
 			</colgroup>
 		<?php }
@@ -1371,7 +1372,7 @@ class Table extends Extras_Widget {
 		] );
 
 		?><thead>
-			<tr <?php echo $this->get_render_attribute_string( 'header-row' ); ?>>
+			<tr <?php $this->print_render_attribute_string( 'header-row' ); ?>>
 
 			<?php foreach ( $settings['header_cells'] as $index => $item ) {
 
@@ -1409,19 +1410,19 @@ class Table extends Extras_Widget {
 				$this->add_inline_editing_attributes( $header_cell_inner_text_key, 'basic' );
 
 				// Output header contents
-				?><th <?php echo $this->get_render_attribute_string( $header_cell_key ); ?>>
-					<span <?php echo $this->get_render_attribute_string( $header_cell_text_key ); ?>><?php
+				?><th <?php $this->print_render_attribute_string( $header_cell_key ); ?>>
+					<span <?php $this->print_render_attribute_string( $header_cell_text_key ); ?>><?php
 
 						$this->render_cell_icon( $index, $item, 'header-cell' );
 
-						?><span <?php echo $this->get_render_attribute_string( $header_cell_inner_text_key ); ?>><?php
-							echo $item['cell_text'];
+						?><span <?php $this->print_render_attribute_string( $header_cell_inner_text_key ); ?>><?php
+							echo wp_kses_post( $item['cell_text'] );
 						?></span>
 
 						<?php if ( 'yes' === $settings['sortable'] ) { ?>
-							<span <?php echo $this->get_render_attribute_string( 'sort' ); ?>></span>
-							<span <?php echo $this->get_render_attribute_string( 'sort-up' ); ?>></span>
-							<span <?php echo $this->get_render_attribute_string( 'sort-down' ); ?>></span>
+							<span <?php $this->print_render_attribute_string( 'sort' ); ?>></span>
+							<span <?php $this->print_render_attribute_string( 'sort-up' ); ?>></span>
+							<span <?php $this->print_render_attribute_string( 'sort-down' ); ?>></span>
 						<?php } ?>
 
 					</span>
@@ -1516,17 +1517,17 @@ class Table extends Extras_Widget {
 		$this->add_inline_editing_attributes( $cell_text_inner_key, 'basic' );
 
 		// Output cell contents
-		?><<?php echo $row['cell_type']; ?> <?php echo $this->get_render_attribute_string( $cell_key ); ?>>
-			<<?php echo $text_tag; ?> <?php echo $this->get_render_attribute_string( $cell_text_key ); ?>><?php
+		?><<?php echo esc_html( tag_escape( $row['cell_type'] ) ); ?> <?php $this->print_render_attribute_string( $cell_key ); ?>>
+			<<?php echo esc_html( tag_escape( $text_tag ) ); ?> <?php $this->print_render_attribute_string( $cell_text_key ); ?>><?php
 
 				$this->render_cell_icon( $index, $row, 'body-cell' );
 
-				?><span <?php echo $this->get_render_attribute_string( $cell_text_inner_key ); ?>><?php
-					echo $row['cell_text'];
+				?><span <?php $this->print_render_attribute_string( $cell_text_inner_key ); ?>><?php
+					echo wp_kses_post( $row['cell_text'] );
 				?></span>
 
-			</<?php echo $text_tag; ?>>
-		</<?php echo $row['cell_type']; ?>><?php
+			</<?php echo esc_html( tag_escape( $text_tag ) ); ?>>
+		</<?php echo esc_html( tag_escape( $row['cell_type'] ) ); ?>><?php
 	}
 
 	/**
@@ -1564,10 +1565,10 @@ class Table extends Extras_Widget {
 		if ( $counter > 1 && $counter < $row_count ) {
 
 			// Break into new row
-			?></tr><tr <?php echo $this->get_render_attribute_string( $row_key ); ?>>
+			?></tr><tr <?php $this->print_render_attribute_string( $row_key ); ?>>
 
 		<?php } else if ( 1 === $counter && false === $this->is_invalid_first_row() ) {
-			?><tr <?php echo $this->get_render_attribute_string( $row_key ); ?>>
+			?><tr <?php $this->print_render_attribute_string( $row_key ); ?>>
 		<?php }
 
 		$this->cell_counter = 0;
@@ -1610,11 +1611,11 @@ class Table extends Extras_Widget {
 				] );
 			}
 
-			?><span <?php echo $this->get_render_attribute_string( $icon_wrapper_key ); ?>><?php
+			?><span <?php $this->print_render_attribute_string( $icon_wrapper_key ); ?>><?php
 				if ( $is_new || $migrated ) {
 					Icons_Manager::render_icon( $item['selected_cell_icon'], [ 'aria-hidden' => 'true' ] );
 				} else {
-					?><i <?php echo $this->get_render_attribute_string( $icon_key ); ?>></i><?php
+					?><i <?php $this->print_render_attribute_string( $icon_key ); ?>></i><?php
 				}
 			?></span><?php
 		}

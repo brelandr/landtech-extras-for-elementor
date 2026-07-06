@@ -1,8 +1,9 @@
 <?php
-namespace ElementorExtras\Modules\ScrollIndicator\Skins;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\ScrollIndicator\Skins;
 
-// Extras for Elementor Classes
-use ElementorExtras\Group_Control_Transition;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Group_Control_Transition;
 
 // Elementor Classes
 use Elementor\Controls_Stack;
@@ -41,7 +42,7 @@ class Skin_Bullets extends Skin_Base {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Bullets', 'elementor-extras' );
+		return __( 'Bullets', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -100,7 +101,12 @@ class Skin_Bullets extends Skin_Base {
 				'notice',
 				[
 					'type' 				=> Controls_Manager::RAW_HTML,
-					'raw' 				=> sprintf( __( '%1$sImportant note:%2$s You can position the bullets as fixed on the page using the Elementor Custom Positioning controls.', 'elementor-extras' ), '<strong>', '</strong>' ),
+					'raw' 				=> sprintf(
+						/* translators: 1: Opening strong tag, 2: Closing strong tag. */
+						__( '%1$sImportant note:%2$s You can position the bullets as fixed on the page using the Elementor Custom Positioning controls.', 'landtech-extras-for-elementor' ),
+						'<strong>',
+						'</strong>'
+					),
 					'content_classes' 	=> 'elementor-panel-alert elementor-panel-alert-info',
 				]
 			);
@@ -116,11 +122,11 @@ class Skin_Bullets extends Skin_Base {
 			$this->add_control(
 				'tooltips',
 				[
-					'label' 		=> __( 'Enable Tooltips', 'elementor-extras' ),
+					'label' 		=> __( 'Enable Tooltips', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -134,12 +140,12 @@ class Skin_Bullets extends Skin_Base {
 			$this->add_responsive_control(
 				'direction',
 				[
-					'label' 	=> __( 'Direction', 'elementor-extras' ),
+					'label' 	=> __( 'Direction', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'vertical',
 					'options'	=> [
-						'vertical' 		=> __( 'Vertical', 'elementor-extras' ),
-						'horizontal' 	=> __( 'Horizontal', 'elementor-extras' ),
+						'vertical' 		=> __( 'Vertical', 'landtech-extras-for-elementor' ),
+						'horizontal' 	=> __( 'Horizontal', 'landtech-extras-for-elementor' ),
 					],
 					'prefix_class' => 'ee-scroll-indicator-direction%s--',
 				]
@@ -160,7 +166,7 @@ class Skin_Bullets extends Skin_Base {
 		$this->start_controls_section(
 			'section_position',
 			[
-				'label' 	=> __( 'Custom Positioning', 'elementor-extras' ),
+				'label' 	=> __( 'Custom Positioning', 'landtech-extras-for-elementor' ),
 				'tab'   	=> Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'_position' => 'fixed',
@@ -173,7 +179,7 @@ class Skin_Bullets extends Skin_Base {
 				'notice_fixed',
 				[
 					'type' 	=> Controls_Manager::RAW_HTML,
-					'raw' 	=> __( 'You have chosen to set the position of the widget to fixed. Here you can modify the height of widget for better positioning.', 'elementor-extras' ),
+					'raw' 	=> __( 'You have chosen to set the position of the widget to fixed. Here you can modify the height of widget for better positioning.', 'landtech-extras-for-elementor' ),
 					'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 					'condition' => [
 						'_position' => 'fixed',
@@ -185,14 +191,14 @@ class Skin_Bullets extends Skin_Base {
 			$this->add_responsive_control(
 				'wrapper_height',
 				[
-					'label' 	=> __( 'Height', 'elementor-extras' ),
+					'label' 	=> __( 'Height', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> '',
 					'options' 	=> [
-						'' 			=> __( 'Default', 'elementor-extras' ),
-						'inherit' 	=> __( 'Full Height', 'elementor-extras' ) . ' (100%)',
-						'auto' 		=> __( 'Inline', 'elementor-extras' ) . ' (auto)',
-						'initial' 	=> __( 'Custom', 'elementor-extras' ),
+						'' 			=> __( 'Default', 'landtech-extras-for-elementor' ),
+						'inherit' 	=> __( 'Full Height', 'landtech-extras-for-elementor' ) . ' (100%)',
+						'auto' 		=> __( 'Inline', 'landtech-extras-for-elementor' ) . ' (auto)',
+						'initial' 	=> __( 'Custom', 'landtech-extras-for-elementor' ),
 					],
 					'selectors_dictionary' => [
 						'inherit' 	=> '100%',
@@ -211,7 +217,7 @@ class Skin_Bullets extends Skin_Base {
 			$this->add_responsive_control(
 				'custom_height',
 				[
-					'label' 	=> __( 'Custom Height', 'elementor-extras' ),
+					'label' 	=> __( 'Custom Height', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -262,7 +268,7 @@ class Skin_Bullets extends Skin_Base {
 		$this->start_controls_section(
 			'section_bullets_style',
 			[
-				'label' => __( 'Bullets', 'elementor-extras' ),
+				'label' => __( 'Bullets', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -270,18 +276,18 @@ class Skin_Bullets extends Skin_Base {
 			$this->add_control(
 				'square',
 				[
-					'label' 		=> __( 'Square', 'elementor-extras' ),
+					'label' 		=> __( 'Square', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 			$this->add_responsive_control(
 				'width',
 				[
-					'label' 	=> __( 'Width (px)', 'elementor-extras' ),
+					'label' 	=> __( 'Width (px)', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -301,7 +307,7 @@ class Skin_Bullets extends Skin_Base {
 			$this->add_responsive_control(
 				'height',
 				[
-					'label' 	=> __( 'Height (px)', 'elementor-extras' ),
+					'label' 	=> __( 'Height (px)', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -321,7 +327,7 @@ class Skin_Bullets extends Skin_Base {
 			$this->add_responsive_control(
 				'size',
 				[
-					'label' 	=> __( 'Size (px)', 'elementor-extras' ),
+					'label' 	=> __( 'Size (px)', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -341,7 +347,7 @@ class Skin_Bullets extends Skin_Base {
 			$this->add_control(
 				'border_radius',
 				[
-					'label' 	=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 	=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'em' 	=> [
@@ -375,7 +381,7 @@ class Skin_Bullets extends Skin_Base {
 			$this->add_control(
 				'spacing',
 				[
-					'label' 	=> __( 'Spacing (px)', 'elementor-extras' ),
+					'label' 	=> __( 'Spacing (px)', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default'	=> [
 						'size' 	=> 0,
@@ -397,8 +403,8 @@ class Skin_Bullets extends Skin_Base {
 			$this->add_control(
 				'padding',
 				[
-					'label' 		=> __( 'Padding (px)', 'elementor-extras' ),
-					'description' 	=> __( 'Padding makes the hoverable area bigger which is useful for smaller bullets', 'elementor-extras' ),
+					'label' 		=> __( 'Padding (px)', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'Padding makes the hoverable area bigger which is useful for smaller bullets', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -416,8 +422,8 @@ class Skin_Bullets extends Skin_Base {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'bullets',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
-					'exclude'	=> [ 'color' ],
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
+					'exclude'	=> [ 'color' ], // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor control schema.
 					'selector' 	=> '{{WRAPPER}} .ee-scroll-indicator__element__wrapper',
 				]
 			);
@@ -433,12 +439,12 @@ class Skin_Bullets extends Skin_Base {
 
 			$this->start_controls_tabs( 'indicators' );
 
-			$this->start_controls_tab( 'indicators_default', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'indicators_default', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-scroll-indicator__element__wrapper' => 'background-color: {{VALUE}};',
@@ -449,7 +455,7 @@ class Skin_Bullets extends Skin_Base {
 				$this->add_control(
 					'border_color',
 					[
-						'label' 	=> __( 'Border Color', 'elementor-extras' ),
+						'label' 	=> __( 'Border Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-scroll-indicator__element__wrapper' => 'border-color: {{VALUE}};',
@@ -462,12 +468,12 @@ class Skin_Bullets extends Skin_Base {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'indicators_hover', [ 'label' => __( 'Hover', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'indicators_hover', [ 'label' => __( 'Hover', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'background_color_hover',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-scroll-indicator__element__link:hover .ee-scroll-indicator__element__wrapper' => 'background-color: {{VALUE}};',
@@ -478,7 +484,7 @@ class Skin_Bullets extends Skin_Base {
 				$this->add_control(
 					'border_color_hover',
 					[
-						'label' 	=> __( 'Border Color', 'elementor-extras' ),
+						'label' 	=> __( 'Border Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-scroll-indicator__element__link:hover .ee-scroll-indicator__element__wrapper' => 'border-color: {{VALUE}};',
@@ -492,7 +498,7 @@ class Skin_Bullets extends Skin_Base {
 				$this->add_control(
 					'scale_hover',
 					[
-						'label' 	=> __( 'Scale', 'elementor-extras' ),
+						'label' 	=> __( 'Scale', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SLIDER,
 						'range' 	=> [
 							'px' 	=> [
@@ -509,12 +515,12 @@ class Skin_Bullets extends Skin_Base {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'indicators_reading', [ 'label' => __( 'Reading', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'indicators_reading', [ 'label' => __( 'Reading', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'background_color_reading',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-scroll-indicator__element__link.is--reading .ee-scroll-indicator__element__wrapper' => 'background-color: {{VALUE}};',
@@ -525,7 +531,7 @@ class Skin_Bullets extends Skin_Base {
 				$this->add_control(
 					'border_color_reading',
 					[
-						'label' 	=> __( 'Border Color', 'elementor-extras' ),
+						'label' 	=> __( 'Border Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-scroll-indicator__element__link.is--reading .ee-scroll-indicator__element__wrapper' => 'border-color: {{VALUE}};',
@@ -539,7 +545,7 @@ class Skin_Bullets extends Skin_Base {
 				$this->add_control(
 					'scale_reading',
 					[
-						'label' 	=> __( 'Scale', 'elementor-extras' ),
+						'label' 	=> __( 'Scale', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SLIDER,
 						'range' 	=> [
 							'px' 	=> [
@@ -556,12 +562,12 @@ class Skin_Bullets extends Skin_Base {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'indicators_read', [ 'label' => __( 'Read', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'indicators_read', [ 'label' => __( 'Read', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'background_color_read',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'global' => [
 							'default' => Global_Colors::COLOR_ACCENT,
@@ -575,7 +581,7 @@ class Skin_Bullets extends Skin_Base {
 				$this->add_control(
 					'border_color_read',
 					[
-						'label' 	=> __( 'Border Color', 'elementor-extras' ),
+						'label' 	=> __( 'Border Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-scroll-indicator__element__link.is--read .ee-scroll-indicator__element__wrapper' => 'border-color: {{VALUE}};',
@@ -589,7 +595,7 @@ class Skin_Bullets extends Skin_Base {
 				$this->add_control(
 					'scale_read',
 					[
-						'label' 	=> __( 'Scale', 'elementor-extras' ),
+						'label' 	=> __( 'Scale', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SLIDER,
 						'range' 	=> [
 							'px' 	=> [
@@ -611,7 +617,7 @@ class Skin_Bullets extends Skin_Base {
 			$this->add_control(
 				'progress_heading',
 				[
-					'label'		=> __( 'Progress', 'elementor-extras' ),
+					'label'		=> __( 'Progress', 'landtech-extras-for-elementor' ),
 					'type' 		=> \Elementor\Controls_Manager::HEADING,
 					'separator'	=> 'before',
 				]
@@ -620,7 +626,7 @@ class Skin_Bullets extends Skin_Base {
 			$this->add_control(
 				'background_color_progress',
 				[
-					'label' 	=> __( 'Background Color', 'elementor-extras' ),
+					'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'global' => [
 						'default' => Global_Colors::COLOR_PRIMARY,
@@ -710,13 +716,13 @@ class Skin_Bullets extends Skin_Base {
 		}
 
 		?>
-		<a <?php echo $this->parent->get_render_attribute_string( $link_key ); ?>>
-			<div <?php echo $this->parent->get_render_attribute_string( $wrapper_key ); ?>>
-				<div <?php echo $this->parent->get_render_attribute_string( $progress_key ); ?>></div>
+		<a <?php $this->parent->print_render_attribute_string( $link_key ); ?>>
+			<div <?php $this->parent->print_render_attribute_string( $wrapper_key ); ?>>
+				<div <?php $this->parent->print_render_attribute_string( $progress_key ); ?>></div>
 
 				<?php if ( '' !== $this->get_instance_value( 'tooltips' ) ) { ?>
-				<span <?php echo $this->parent->get_render_attribute_string( $tooltip_content_key ); ?>>
-					<?php echo $this->parent->_parse_text_editor( $section['title'] ); ?>
+				<span <?php $this->parent->print_render_attribute_string( $tooltip_content_key ); ?>>
+					<?php echo wp_kses_post( $this->parent->_parse_text_editor( $section['title'] ) ); ?>
 				</span>
 				<?php } ?>
 			</div>

@@ -1,8 +1,9 @@
 <?php
-namespace ElementorExtras\Modules\DisplayConditions\Conditions;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\DisplayConditions\Conditions;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Condition;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Condition;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -49,7 +50,7 @@ class Shortcode extends Condition {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Shortcode', 'elementor-extras' );
+		return __( 'Shortcode', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -64,7 +65,7 @@ class Shortcode extends Condition {
 		return [
 			'type' 			=> Controls_Manager::TEXT,
 			'default' 		=> '',
-			'placeholder'	=> __( '[shortcode attribute="value"]', 'elementor-extras' ),
+			'placeholder'	=> __( '[shortcode attribute="value"]', 'landtech-extras-for-elementor' ),
 			'label_block' 	=> true,
 		];
 	}
@@ -81,7 +82,7 @@ class Shortcode extends Condition {
 		return [
 			'type' 			=> Controls_Manager::TEXTAREA,
 			'default' 		=> '',
-			'description'	=> __( 'Enter the string that the shortcode needs to return in order for the condition to apply.', 'elementor-extras' ),
+			'description'	=> __( 'Enter the string that the shortcode needs to return in order for the condition to apply.', 'landtech-extras-for-elementor' ),
 		];
 	}
 

@@ -1,8 +1,9 @@
 <?php
-namespace ElementorExtras;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras;
 
-// Extras for Elementor Classes
-use ElementorExtras\Modules\CustomFields;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Modules\CustomFields;
 
 // Elementor Classes
 use \Elementor\Control_Select2;

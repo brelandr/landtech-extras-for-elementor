@@ -1,8 +1,9 @@
 <?php
-namespace ElementorExtras\Modules\CircleProgress\Widgets;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\CircleProgress\Widgets;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Extras_Widget;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Extras_Widget;
 
 // Elementor Classes
 use Elementor\Icons_Manager;
@@ -48,7 +49,7 @@ class Circle_Progress extends Extras_Widget {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Circle Progress', 'elementor-extras' );
+		return __( 'Circle Progress', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -73,9 +74,9 @@ class Circle_Progress extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
-			'circle-progress',
-			'jquery-appear',
-			'jquery-easing',
+			'landtech-extras-circle-progress',
+			'landtech-extras-jquery-appear',
+			'landtech-extras-jquery-easing',
 		];
 	}
 
@@ -90,14 +91,14 @@ class Circle_Progress extends Extras_Widget {
 		$this->start_controls_section(
 			'section_circle',
 			[
-				'label' => __( 'Circle', 'elementor-extras' ),
+				'label' => __( 'Circle', 'landtech-extras-for-elementor' ),
 			]
 		);
 
 			$this->add_control(
 				'value_heading',
 				[
-					'label'			=> __( 'Value', 'elementor-extras' ),
+					'label'			=> __( 'Value', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::HEADING,
 					'separator'		=> 'before',
 				]
@@ -106,14 +107,14 @@ class Circle_Progress extends Extras_Widget {
 			$this->add_control(
 				'value_progress',
 				[
-					'label' 		=> __( 'Progress Value', 'elementor-extras' ),
-					'description'	=> __( 'Choose absolute if you want to manually define the maximum value and display the entered value instead of the percentage.', 'elementor-extras' ),
+					'label' 		=> __( 'Progress Value', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Choose absolute if you want to manually define the maximum value and display the entered value instead of the percentage.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT,
 					'default' 		=> 'percentage',
 					'frontend_available' => true,
 					'options' 		=> [
-						'percentage'	=> __( 'Percentage', 'elementor-extras' ),
-						'absolute' 		=> __( 'Absolute', 'elementor-extras' ),
+						'percentage'	=> __( 'Percentage', 'landtech-extras-for-elementor' ),
+						'absolute' 		=> __( 'Absolute', 'landtech-extras-for-elementor' ),
 					],
 				]
 			);
@@ -121,9 +122,9 @@ class Circle_Progress extends Extras_Widget {
 			$this->add_control(
 				'value',
 				[
-					'label' 	=> __( 'Value', 'elementor-extras' ),
+					'label' 	=> __( 'Value', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXT,
-					'title'		=> __( 'Accepted value formats are: 50, 0.50, 0,50, 50/100', 'elementor-extras' ),
+					'title'		=> __( 'Accepted value formats are: 50, 0.50, 0,50, 50/100', 'landtech-extras-for-elementor' ),
 					'default' 	=> '75',
 					'frontend_available' => true,
 					'dynamic'	=> [
@@ -136,8 +137,8 @@ class Circle_Progress extends Extras_Widget {
 			$this->add_control(
 				'value_decimal_move',
 				[
-					'label' 		=> __( 'Move Decimal', 'elementor-extras' ),
-					'description'	=> __( 'Move the decimal point of the number shown, keeping the progress to the default value.', 'elementor-extras' ),
+					'label' 		=> __( 'Move Decimal', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Move the decimal point of the number shown, keeping the progress to the default value.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 0,
@@ -156,7 +157,7 @@ class Circle_Progress extends Extras_Widget {
 			$this->add_control(
 				'value_max',
 				[
-					'label' 	=> __( 'Max. Value', 'elementor-extras' ),
+					'label' 	=> __( 'Max. Value', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::NUMBER,
 					'default' 	=> 100,
 					'min'		=> 0,
@@ -171,14 +172,14 @@ class Circle_Progress extends Extras_Widget {
 			$this->add_control(
 				'value_position',
 				[
-					'label'			=> __( 'Value Position', 'elementor-extras' ),
-					'description'	=> __( 'Position of the value relative to circle.', 'elementor-extras' ),
+					'label'			=> __( 'Value Position', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Position of the value relative to circle.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT,
 					'default' 		=> 'inside',
 					'options' 		=> [
-						'inside' 	=> __( 'Inside', 'elementor-extras' ),
-						'below' 	=> __( 'Below', 'elementor-extras' ),
-						'hide' 		=> __( 'Hide', 'elementor-extras' ),
+						'inside' 	=> __( 'Inside', 'landtech-extras-for-elementor' ),
+						'below' 	=> __( 'Below', 'landtech-extras-for-elementor' ),
+						'hide' 		=> __( 'Hide', 'landtech-extras-for-elementor' ),
 					],
 				]
 			);
@@ -186,7 +187,7 @@ class Circle_Progress extends Extras_Widget {
 			$this->add_control(
 				'selected_icon',
 				[
-					'label' => __( 'Icon', 'elementor-extras' ),
+					'label' => __( 'Icon', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::ICONS,
 					'fa4compatibility' => 'icon',
 					'separator'		=> 'before',
@@ -199,7 +200,7 @@ class Circle_Progress extends Extras_Widget {
 			$this->add_control(
 				'suffix_heading',
 				[
-					'label'			=> __( 'Suffix', 'elementor-extras' ),
+					'label'			=> __( 'Suffix', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::HEADING,
 					'separator'		=> 'before',
 				]
@@ -209,7 +210,7 @@ class Circle_Progress extends Extras_Widget {
 				'suffix',
 				[
 					'type'		=> Controls_Manager::TEXT,
-					'label' 	=> __( 'Text', 'elementor-extras' ),
+					'label' 	=> __( 'Text', 'landtech-extras-for-elementor' ),
 					'default'	=> '%',
 					'separator' => 'none'
 				]
@@ -218,12 +219,12 @@ class Circle_Progress extends Extras_Widget {
 			$this->add_control(
 				'suffix_position',
 				[
-					'label'		=> __( 'Position', 'elementor-extras' ),
+					'label'		=> __( 'Position', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'after',
 					'options' 	=> [
-						'after' 	=> __( 'After', 'elementor-extras' ),
-						'before' 	=> __( 'Before', 'elementor-extras' ),
+						'after' 	=> __( 'After', 'landtech-extras-for-elementor' ),
+						'before' 	=> __( 'Before', 'landtech-extras-for-elementor' ),
 					],
 					'prefix_class'	=> 'ee-circle-progress-suffix--'
 				]
@@ -232,24 +233,24 @@ class Circle_Progress extends Extras_Widget {
 			$this->add_responsive_control(
 				'suffix_vertical_align',
 				[
-					'label' 		=> __( 'Alignment', 'elementor-extras' ),
+					'label' 		=> __( 'Alignment', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> 'top',
 					'options' 		=> [
 						'top'    		=> [
-							'title' 	=> __( 'Top', 'elementor-extras' ),
+							'title' 	=> __( 'Top', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-top',
 						],
 						'middle' 		=> [
-							'title' 	=> __( 'Middle', 'elementor-extras' ),
+							'title' 	=> __( 'Middle', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-middle',
 						],
 						'bottom' 		=> [
-							'title' 	=> __( 'Bottom', 'elementor-extras' ),
+							'title' 	=> __( 'Bottom', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-bottom',
 						],
 						'stretch' 		=> [
-							'title' 	=> __( 'Stretch', 'elementor-extras' ),
+							'title' 	=> __( 'Stretch', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-stretch',
 						],
 					],
@@ -260,7 +261,7 @@ class Circle_Progress extends Extras_Widget {
 			$this->add_control(
 				'suffix_top_adjustment',
 				[
-					'label' 		=> __( 'Top Offset', 'elementor-extras' ),
+					'label' 		=> __( 'Top Offset', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> '0.5',
@@ -284,7 +285,7 @@ class Circle_Progress extends Extras_Widget {
 			$this->add_control(
 				'animation_heading',
 				[
-					'label'			=> __( 'Settings', 'elementor-extras' ),
+					'label'			=> __( 'Settings', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::HEADING,
 					'separator'		=> 'before',
 				]
@@ -293,11 +294,11 @@ class Circle_Progress extends Extras_Widget {
 			$this->add_control(
 				'animate',
 				[
-					'label' 		=> __( 'Animate', 'elementor-extras' ),
+					'label' 		=> __( 'Animate', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'yes',
 					'frontend_available' => true
 				]
@@ -306,40 +307,40 @@ class Circle_Progress extends Extras_Widget {
 			$this->add_control(
 				'easing',
 				[
-					'label'		=> __( 'Easing', 'elementor-extras' ),
+					'label'		=> __( 'Easing', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'easeInOutCubic',
 					'options' 	=> [
-						'easeInQuad' 			=> __( 'easeInQuad', 'elementor-extras' ),
-						'easeOutQuad' 			=> __( 'easeOutQuad', 'elementor-extras' ),
-						'easeInOutQuad' 		=> __( 'easeInOutQuad', 'elementor-extras' ),
-						'easeInCubic' 			=> __( 'easeInCubic', 'elementor-extras' ),
-						'easeOutCubic' 			=> __( 'easeOutCubic', 'elementor-extras' ),
-						'easeInOutCubic'		=> __( 'easeInOutCubic', 'elementor-extras' ),
-						'easeInQuart' 			=> __( 'easeInQuart', 'elementor-extras' ),
-						'easeOutQuart' 			=> __( 'easeOutQuart', 'elementor-extras' ),
-						'easeInOutQuart' 		=> __( 'easeInOutQuart', 'elementor-extras' ),
-						'easeInQuint' 			=> __( 'easeInQuint', 'elementor-extras' ),
-						'easeOutQuint' 			=> __( 'easeOutQuint', 'elementor-extras' ),
-						'easeInOutQuint' 		=> __( 'easeInOutQuint', 'elementor-extras' ),
-						'easeInSine' 			=> __( 'easeInSine', 'elementor-extras' ),
-						'easeOutSine' 			=> __( 'easeOutSine', 'elementor-extras' ),
-						'easeInOutSine' 		=> __( 'easeInOutSine', 'elementor-extras' ),
-						'easeInExpo' 			=> __( 'easeInExpo', 'elementor-extras' ),
-						'easeOutExpo' 			=> __( 'easeOutExpo', 'elementor-extras' ),
-						'easeInOutExpo' 		=> __( 'easeInOutExpo', 'elementor-extras' ),
-						'easeInCirc' 			=> __( 'easeInCirc', 'elementor-extras' ),
-						'easeOutCirc' 			=> __( 'easeOutCirc', 'elementor-extras' ),
-						'easeInOutCirc' 		=> __( 'easeInOutCirc', 'elementor-extras' ),
-						'easeInElastic' 		=> __( 'easeInElastic', 'elementor-extras' ),
-						'easeOutElastic' 		=> __( 'easeOutElastic', 'elementor-extras' ),
-						'easeInOutElastic' 		=> __( 'easeInOutElastic', 'elementor-extras' ),
-						'easeInBack' 			=> __( 'easeInBack', 'elementor-extras' ),
-						'easeOutBack' 			=> __( 'easeOutBack', 'elementor-extras' ),
-						'easeInOutBack' 		=> __( 'easeInOutBack', 'elementor-extras' ),
-						'easeInBounce' 			=> __( 'easeInBounce', 'elementor-extras' ),
-						'easeOutBounce' 		=> __( 'easeOutBounce', 'elementor-extras' ),
-						'easeInOutBounce' 		=> __( 'easeInOutBounce', 'elementor-extras' ),
+						'easeInQuad' 			=> __( 'easeInQuad', 'landtech-extras-for-elementor' ),
+						'easeOutQuad' 			=> __( 'easeOutQuad', 'landtech-extras-for-elementor' ),
+						'easeInOutQuad' 		=> __( 'easeInOutQuad', 'landtech-extras-for-elementor' ),
+						'easeInCubic' 			=> __( 'easeInCubic', 'landtech-extras-for-elementor' ),
+						'easeOutCubic' 			=> __( 'easeOutCubic', 'landtech-extras-for-elementor' ),
+						'easeInOutCubic'		=> __( 'easeInOutCubic', 'landtech-extras-for-elementor' ),
+						'easeInQuart' 			=> __( 'easeInQuart', 'landtech-extras-for-elementor' ),
+						'easeOutQuart' 			=> __( 'easeOutQuart', 'landtech-extras-for-elementor' ),
+						'easeInOutQuart' 		=> __( 'easeInOutQuart', 'landtech-extras-for-elementor' ),
+						'easeInQuint' 			=> __( 'easeInQuint', 'landtech-extras-for-elementor' ),
+						'easeOutQuint' 			=> __( 'easeOutQuint', 'landtech-extras-for-elementor' ),
+						'easeInOutQuint' 		=> __( 'easeInOutQuint', 'landtech-extras-for-elementor' ),
+						'easeInSine' 			=> __( 'easeInSine', 'landtech-extras-for-elementor' ),
+						'easeOutSine' 			=> __( 'easeOutSine', 'landtech-extras-for-elementor' ),
+						'easeInOutSine' 		=> __( 'easeInOutSine', 'landtech-extras-for-elementor' ),
+						'easeInExpo' 			=> __( 'easeInExpo', 'landtech-extras-for-elementor' ),
+						'easeOutExpo' 			=> __( 'easeOutExpo', 'landtech-extras-for-elementor' ),
+						'easeInOutExpo' 		=> __( 'easeInOutExpo', 'landtech-extras-for-elementor' ),
+						'easeInCirc' 			=> __( 'easeInCirc', 'landtech-extras-for-elementor' ),
+						'easeOutCirc' 			=> __( 'easeOutCirc', 'landtech-extras-for-elementor' ),
+						'easeInOutCirc' 		=> __( 'easeInOutCirc', 'landtech-extras-for-elementor' ),
+						'easeInElastic' 		=> __( 'easeInElastic', 'landtech-extras-for-elementor' ),
+						'easeOutElastic' 		=> __( 'easeOutElastic', 'landtech-extras-for-elementor' ),
+						'easeInOutElastic' 		=> __( 'easeInOutElastic', 'landtech-extras-for-elementor' ),
+						'easeInBack' 			=> __( 'easeInBack', 'landtech-extras-for-elementor' ),
+						'easeOutBack' 			=> __( 'easeOutBack', 'landtech-extras-for-elementor' ),
+						'easeInOutBack' 		=> __( 'easeInOutBack', 'landtech-extras-for-elementor' ),
+						'easeInBounce' 			=> __( 'easeInBounce', 'landtech-extras-for-elementor' ),
+						'easeOutBounce' 		=> __( 'easeOutBounce', 'landtech-extras-for-elementor' ),
+						'easeInOutBounce' 		=> __( 'easeInOutBounce', 'landtech-extras-for-elementor' ),
 					],
 					'condition' 	=> [
 						'animate!'	=> '',
@@ -351,11 +352,11 @@ class Circle_Progress extends Extras_Widget {
 			$this->add_control(
 				'reverse',
 				[
-					'label' 		=> __( 'Reverse', 'elementor-extras' ),
+					'label' 		=> __( 'Reverse', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'yes',
 					'frontend_available' => true,
 				]
@@ -364,7 +365,7 @@ class Circle_Progress extends Extras_Widget {
 			$this->add_control(
 				'duration',
 				[
-					'label' 		=> __( 'Duration (ms)', 'elementor-extras' ),
+					'label' 		=> __( 'Duration (ms)', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> '',
@@ -386,8 +387,8 @@ class Circle_Progress extends Extras_Widget {
 			$this->add_control(
 				'appear_offset',
 				[
-					'label' 		=> __( 'Appear Offset', 'elementor-extras' ),
-					'description'	=> __( 'Specifies the offset, relative to when the widget enteres the viewport, after which the animation starts', 'elementor-extras' ),
+					'label' 		=> __( 'Appear Offset', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Specifies the offset, relative to when the widget enteres the viewport, after which the animation starts', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> '',
@@ -407,7 +408,7 @@ class Circle_Progress extends Extras_Widget {
 			$this->add_control(
 				'angle',
 				[
-					'label' 		=> __( 'Start Angle', 'elementor-extras' ),
+					'label' 		=> __( 'Start Angle', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> '',
@@ -428,7 +429,7 @@ class Circle_Progress extends Extras_Widget {
 		$this->start_controls_section(
 			'section_text',
 			[
-				'label' => __( 'Text', 'elementor-extras' ),
+				'label' => __( 'Text', 'landtech-extras-for-elementor' ),
 			]
 		);
 
@@ -437,7 +438,7 @@ class Circle_Progress extends Extras_Widget {
 				[
 					'label' => '',
 					'type' => Controls_Manager::WYSIWYG,
-					'default' => __( 'I am text block. Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.', 'elementor-extras' ),
+					'default' => __( 'I am text block. Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.', 'landtech-extras-for-elementor' ),
 				]
 			);
 
@@ -446,7 +447,7 @@ class Circle_Progress extends Extras_Widget {
 		$this->start_controls_section(
 			'section_circle_style',
 			[
-				'label' => __( 'Circle', 'elementor-extras' ),
+				'label' => __( 'Circle', 'landtech-extras-for-elementor' ),
 				'tab' 	=> Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -454,7 +455,7 @@ class Circle_Progress extends Extras_Widget {
 			$this->add_control(
 				'size',
 				[
-					'label' 		=> __( 'Size', 'elementor-extras' ),
+					'label' 		=> __( 'Size', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 100,
@@ -472,7 +473,7 @@ class Circle_Progress extends Extras_Widget {
 			$this->add_control(
 				'thickness',
 				[
-					'label' 		=> __( 'Thickness (%)', 'elementor-extras' ),
+					'label' 		=> __( 'Thickness (%)', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 10,
@@ -490,13 +491,13 @@ class Circle_Progress extends Extras_Widget {
 			$this->add_control(
 				'lineCap',
 				[
-					'label'		=> __( 'Line Cap', 'elementor-extras' ),
+					'label'		=> __( 'Line Cap', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'butt',
 					'options' 	=> [
-						'butt' 		=> __( 'Butt', 'elementor-extras' ),
-						'round' 	=> __( 'Round', 'elementor-extras' ),
-						'square' 	=> __( 'Square', 'elementor-extras' ),
+						'butt' 		=> __( 'Butt', 'landtech-extras-for-elementor' ),
+						'round' 	=> __( 'Round', 'landtech-extras-for-elementor' ),
+						'square' 	=> __( 'Square', 'landtech-extras-for-elementor' ),
 					],
 					'frontend_available' => true
 				]
@@ -507,7 +508,7 @@ class Circle_Progress extends Extras_Widget {
 			$gradient->add_control(
 				'color',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 				]
 			);
@@ -515,7 +516,7 @@ class Circle_Progress extends Extras_Widget {
 			$this->add_control(
 				'fill',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::REPEATER,
 					'fields' 		=> $gradient->get_controls(),
 					'title_field' 	=> '{{{ color }}}'
@@ -525,13 +526,13 @@ class Circle_Progress extends Extras_Widget {
 			$this->add_control(
 				'gradient_angle',
 				[
-					'label'		=> __( 'Gradient Angle (&deg;)', 'elementor-extras' ),
+					'label'		=> __( 'Gradient Angle (&deg;)', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> '2',
 					'options' 	=> [
-						'2' 	=> __( '0', 'elementor-extras' ),
-						'4' 	=> __( '45', 'elementor-extras' ),
-						'0.5' 	=> __( '90', 'elementor-extras' ),
+						'2' 	=> __( '0', 'landtech-extras-for-elementor' ),
+						'4' 	=> __( '45', 'landtech-extras-for-elementor' ),
+						'0.5' 	=> __( '90', 'landtech-extras-for-elementor' ),
 					],
 					'frontend_available' => true
 				]
@@ -540,7 +541,7 @@ class Circle_Progress extends Extras_Widget {
 			$this->add_control(
 				'emptyFill',
 				[
-					'label' 	=> __( 'Empty Fill', 'elementor-extras' ),
+					'label' 	=> __( 'Empty Fill', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'global' => [
 						'default' => Global_Colors::COLOR_PRIMARY,
@@ -554,7 +555,7 @@ class Circle_Progress extends Extras_Widget {
 		$this->start_controls_section(
 			'section_value_style',
 			[
-				'label' => __( 'Value', 'elementor-extras' ),
+				'label' => __( 'Value', 'landtech-extras-for-elementor' ),
 				'tab' 	=> Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -562,7 +563,7 @@ class Circle_Progress extends Extras_Widget {
 			$this->add_control(
 				'value_color',
 				[
-					'label' 	=> __( 'Value Color', 'elementor-extras' ),
+					'label' 	=> __( 'Value Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'default' 	=> '',
 					'selectors' => [
@@ -577,7 +578,7 @@ class Circle_Progress extends Extras_Widget {
 			$this->add_control(
 				'suffix_color',
 				[
-					'label' 	=> __( 'Suffix Color', 'elementor-extras' ),
+					'label' 	=> __( 'Suffix Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'default' 	=> '',
 					'selectors' => [
@@ -592,7 +593,7 @@ class Circle_Progress extends Extras_Widget {
 			$this->add_control(
 				'value_spacing',
 				[
-					'label' 		=> __( 'Value Spacing', 'elementor-extras' ),
+					'label' 		=> __( 'Value Spacing', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> '',
@@ -636,7 +637,7 @@ class Circle_Progress extends Extras_Widget {
 		$this->start_controls_section(
 			'section_icon_style',
 			[
-				'label' => __( 'Icon', 'elementor-extras' ),
+				'label' => __( 'Icon', 'landtech-extras-for-elementor' ),
 				'tab' 	=> Controls_Manager::TAB_STYLE,
 				'condition'		=> [
 					'value_position!' 	=> 'inside',
@@ -648,7 +649,7 @@ class Circle_Progress extends Extras_Widget {
 			$this->add_control(
 				'icon_color',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'default' 	=> '',
 					'selectors' => [
@@ -667,7 +668,7 @@ class Circle_Progress extends Extras_Widget {
 			$this->add_control(
 				'icon_size',
 				[
-					'label' 		=> __( 'Size', 'elementor-extras' ),
+					'label' 		=> __( 'Size', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> '',
@@ -708,7 +709,7 @@ class Circle_Progress extends Extras_Widget {
 		$this->start_controls_section(
 			'section_text_style',
 			[
-				'label' => __( 'Text', 'elementor-extras' ),
+				'label' => __( 'Text', 'landtech-extras-for-elementor' ),
 				'tab' 	=> Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -716,7 +717,7 @@ class Circle_Progress extends Extras_Widget {
 			$this->add_control(
 				'text_color',
 				[
-					'label' 	=> __( 'Text Color', 'elementor-extras' ),
+					'label' 	=> __( 'Text Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'default' 	=> '',
 					'selectors' => [
@@ -799,12 +800,15 @@ class Circle_Progress extends Extras_Widget {
 			}
 
 			if ( count( $circle_progress_fill ) > 0 ) {
-				$circle_progress_settings['fill'] = json_encode( $circle_progress_fill );
+				$circle_progress_settings['fill'] = wp_json_encode(
+					$circle_progress_fill,
+					JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT
+				);
 				$this->add_render_attribute( 'wrapper', 'data-fill', $circle_progress_settings['fill'] );
 			}
 		}
 
-		?><div <?php echo $this->get_render_attribute_string( 'wrapper' ); ?>><?php
+		?><div <?php $this->print_render_attribute_string( 'wrapper' ); ?>><?php
 			if ( ( ! empty( $settings['icon'] ) || ! empty( $settings['selected_icon']['value'] ) ) && 'inside' !== $settings['value_position'] ) { $this->render_icon(); }
 			if ( 'inside' === $settings['value_position'] ) { $this->render_value( $settings ); }
 		?></div><?php
@@ -841,11 +845,11 @@ class Circle_Progress extends Extras_Widget {
 			],
 		] );
 
-		?><span <?php echo $this->get_render_attribute_string( 'icon-wrapper' ); ?>><?php
+		?><span <?php $this->print_render_attribute_string( 'icon-wrapper' ); ?>><?php
 			if ( $is_new || $migrated ) {
 				Icons_Manager::render_icon( $settings['selected_icon'], [ 'aria-hidden' => 'true' ] );
 			} else {
-				?><i <?php echo $this->get_render_attribute_string( 'icon' ); ?>></i><?php
+				?><i <?php $this->print_render_attribute_string( 'icon' ); ?>></i><?php
 			}
 		?></span><?php
 	}
@@ -884,11 +888,11 @@ class Circle_Progress extends Extras_Widget {
 			$this->add_render_attribute( 'value-wrapper', 'data-cp-value', $settings['value'] );
 		}
 
-		?><div <?php echo $this->get_render_attribute_string( 'value-wrapper' ); ?>>
-			<span <?php echo $this->get_render_attribute_string( 'value' ); ?>></span><?php
+		?><div <?php $this->print_render_attribute_string( 'value-wrapper' ); ?>>
+			<span <?php $this->print_render_attribute_string( 'value' ); ?>></span><?php
 			if ( $settings['suffix'] ) {
-				?><span <?php echo $this->get_render_attribute_string( 'suffix' ); ?>>
-					<?php echo $settings['suffix']; ?>
+				?><span <?php $this->print_render_attribute_string( 'suffix' ); ?>>
+					<?php echo esc_html( $settings['suffix'] ); ?>
 				</span><?php
 			}
 		?></div><?php
@@ -907,8 +911,8 @@ class Circle_Progress extends Extras_Widget {
 		$this->add_inline_editing_attributes( 'text', 'advanced' );
 		$this->add_render_attribute( 'text', 'class', 'ee-circle-progress__text' );
 
-		?><div <?php echo $this->get_render_attribute_string( 'text' ); ?>>
-			<?php echo $this->parse_text_editor( $settings['text'] ); ?>
+		?><div <?php $this->print_render_attribute_string( 'text' ); ?>>
+			<?php echo wp_kses_post( $this->parse_text_editor( $settings['text'] ) ); ?>
 		</div><?php
 	}
 

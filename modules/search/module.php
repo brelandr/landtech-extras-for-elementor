@@ -1,10 +1,11 @@
 <?php
-namespace ElementorExtras\Modules\Search;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Search;
 
-// Extras for Elementor Classes
-use ElementorExtras\Utils;
-use ElementorExtras\Base\Module_Base;
-use ElementorExtras\Modules\Search\Conditions;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Utils;
+use LandTechExtras\Base\Module_Base;
+use LandTechExtras\Modules\Search\Conditions;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -32,10 +33,10 @@ class Module extends Module_Base {
 		add_action( 'pre_get_posts', [ $this, 'pre_get_posts' ], 1 );
 
 		if (  is_plugin_active( 'relevanssi/relevanssi.php' ) ) {
-			add_filter( 'elementor_extras/widgets/posts/query', [ $this, 'add_relevanssi_compatibility' ], 10, 1 );
+			add_filter( 'landtech_extras/widgets/posts/query', [ $this, 'add_relevanssi_compatibility' ], 10, 1 );
 		}
 
-		if ( is_elementor_pro_active() ) {
+		if ( landtech_extras_is_elementor_pro_active() ) {
 			add_action( 'elementor/theme/register_conditions', [ $this, 'register_conditions' ] );
 		}
 	}
@@ -74,8 +75,8 @@ class Module extends Module_Base {
 	 * @link   https://codex.wordpress.org/Plugin_API/Filter_Reference/query_vars
 	 */
 	public function register_query_vars( $vars ) {
-		$vars[] = 'ee_search_query';
-		$vars[] = 'ee_search_id';
+		$vars[] = 'ltxe_search_query';
+		$vars[] = 'ltxe_search_id';
 
 		return $vars;
 	}
@@ -111,15 +112,15 @@ class Module extends Module_Base {
 		// Save query vars separately
 		$query_vars = $query->query_vars;
 
-		if ( ! array_key_exists( 'ee_search_query', $query_vars ) ) {
+		if ( ! array_key_exists( 'ltxe_search_query', $query_vars ) ) {
 			return;
 		}
 
 		// Check if search query get var exists
-		if ( $query_vars['ee_search_query'] ) {
+		if ( $query_vars['ltxe_search_query'] ) {
 
 			// Decode both url and json
-			$search_query = json_decode( stripcslashes( $query_vars['ee_search_query'] ), JSON_UNESCAPED_SLASHES );
+			$search_query = json_decode( stripcslashes( $query_vars['ltxe_search_query'] ), JSON_UNESCAPED_SLASHES );
 
 			if ( ! is_array( $search_query ) ) {
 				return;
@@ -195,7 +196,7 @@ class Module extends Module_Base {
 	 * @link   https://codex.wordpress.org/Plugin_API/Filter_Reference/query_vars
 	 */
 	public function add_relevanssi_compatibility( $query ) {
-		if ( function_exists( 'relevanssi_do_query' ) && is_search() && get_query_var( 'ee_search_id' ) ) {
+		if ( function_exists( 'relevanssi_do_query' ) && is_search() && get_query_var( 'ltxe_search_id' ) ) {
 			$relevanssi_query = new \WP_Query();
 			$relevanssi_query->parse_query( $query->query_vars );
 			relevanssi_do_query( $relevanssi_query );

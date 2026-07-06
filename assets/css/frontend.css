@@ -623,6 +623,15 @@
 .ee-grid__item--sizer {
   position: absolute;
 }
+/* Packery (Metro tiles): first loop item width — Classic skin control overrides per breakpoint. */
+.ee-grid--packery .ltxee-packery-featured {
+  width: 66.666% !important;
+  z-index: 1;
+}
+.ee-grid--packery .ltxee-packery-second {
+  width: 33.333% !important;
+  z-index: 0;
+}
 .ee-grid__notice--not-found {
   display: none;
 }
@@ -3813,6 +3822,19 @@ li:last-child .ee-post__terms__separator {
   padding: 0;
   cursor: pointer;
   border-radius: 0px;
+}
+.glightbox-hide,
+.mfp-hide {
+  display: none !important;
+}
+.glightbox-container.ee-mfp-popup .gslide-inline {
+  background: transparent;
+}
+.glightbox-container.ee-mfp-popup .goverlay {
+  background: rgba(0, 0, 0, 0.8);
+}
+.glightbox-container.ee-mfp-popup--no-overlay .goverlay {
+  background: transparent;
 }
 .mfp-figure .ee-popup__close.mfp-close {
   width: auto;
@@ -8595,5 +8617,152 @@ body.ee-offcanvas--open [canvas] {
   }
   [off-canvas] {
     display: none !important;
+  }
+}
+
+/*
+ * Posts Extra — preset skins (see modules/posts/skins/presets/)
+ *
+ * Scoped to the widget wrapper (`.elementor-widget.elementor-widget-posts-extra`, same node as `_wrapper`)
+ * plus modifier `ee-posts-extra-skin--*`. Do not prefix with `.elementor` — it lives on ancestors, not the widget.
+ */
+
+.elementor-widget.elementor-widget-posts-extra[class*="ee-posts-extra-skin--"] article.ee-post {
+  overflow: visible;
+}
+
+/* Editorial — roomy type & thin frame */
+.elementor-widget.elementor-widget-posts-extra.ee-posts-extra-skin--editorial article.ee-post {
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-radius: 2px;
+  box-shadow: 0 22px 50px rgba(15, 23, 42, 0.05);
+}
+.elementor-widget.elementor-widget-posts-extra.ee-posts-extra-skin--editorial .ee-post .ee-post__title {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.22;
+}
+
+/* Studio — cinematic bottom gradient wash */
+.elementor-widget.elementor-widget-posts-extra.ee-posts-extra-skin--studio .ee-media {
+  overflow: hidden;
+}
+.elementor-widget.elementor-widget-posts-extra.ee-posts-extra-skin--studio .ee-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    rgba(15, 23, 42, 0.86) 0%,
+    rgba(15, 23, 42, 0.25) 40%,
+    rgba(255, 255, 255, 0) 75%
+  );
+}
+.elementor-widget.elementor-widget-posts-extra.ee-posts-extra-skin--studio .ee-media__content .ee-post__title,
+.elementor-widget.elementor-widget-posts-extra.ee-posts-extra-skin--studio .ee-media__content .ee-post__excerpt,
+.elementor-widget.elementor-widget-posts-extra.ee-posts-extra-skin--studio .ee-media__content .ee-post__terms a {
+  color: #fff;
+}
+
+/* Brutalist — hard slab + mono accent */
+.elementor-widget.elementor-widget-posts-extra.ee-posts-extra-skin--brutalist article.ee-post {
+  border: 3px solid #0f172a;
+  border-radius: 0;
+  box-shadow: 7px 7px 0 #0ea5e9;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.elementor-widget.elementor-widget-posts-extra.ee-posts-extra-skin--brutalist article.ee-post:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 11px 11px 0 #0ea5e9;
+}
+.elementor-widget.elementor-widget-posts-extra.ee-posts-extra-skin--brutalist .ee-post__title {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 800;
+}
+
+/* Minimal Line — hairline separators, reduced chrome */
+.elementor-widget.elementor-widget-posts-extra.ee-posts-extra-skin--minimal article.ee-post {
+  border-bottom: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: 0;
+  padding-bottom: 1.75rem;
+  box-shadow: none;
+}
+.elementor-widget.elementor-widget-posts-extra.ee-posts-extra-skin--minimal .ee-loop > .ee-loop__item:last-child article.ee-post {
+  border-bottom-width: 0;
+}
+
+/* Glass — translucent card (fallback: soft glow) */
+.elementor-widget.elementor-widget-posts-extra.ee-posts-extra-skin--glass article.ee-post {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 16px;
+  -webkit-backdrop-filter: saturate(165%) blur(14px);
+  backdrop-filter: saturate(165%) blur(14px);
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.1);
+}
+
+/* Magazine — hero first row on wide layouts */
+@media (min-width: 881px) {
+  .elementor-widget.elementor-widget-posts-extra.ee-posts-extra-skin--magazine .ee-loop > .ee-loop__item:first-of-type {
+    -ms-flex-preferred-size: 100%;
+    flex-basis: 100%;
+    max-width: 100%;
+    width: 100%;
+    margin-bottom: 1.75rem;
+  }
+}
+
+/* Lift — hover elevation */
+.elementor-widget.elementor-widget-posts-extra.ee-posts-extra-skin--lift article.ee-post {
+  border-radius: 12px;
+  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.1);
+  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.32s ease;
+  will-change: transform;
+}
+.elementor-widget.elementor-widget-posts-extra.ee-posts-extra-skin--lift article.ee-post:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 24px 50px rgba(15, 23, 42, 0.16);
+}
+
+/* Capsule — chunky radius + padded frame */
+.elementor-widget.elementor-widget-posts-extra.ee-posts-extra-skin--capsule article.ee-post {
+  border-radius: 24px;
+  padding: clamp(14px, 2vw, 22px);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  overflow: hidden;
+}
+.elementor-widget.elementor-widget-posts-extra.ee-posts-extra-skin--capsule .ee-media {
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+/* Cinema — high-contrast night mode card */
+.elementor-widget.elementor-widget-posts-extra.ee-posts-extra-skin--cinema article.ee-post {
+  background-color: #0b0f17;
+  color: rgba(246, 250, 255, 0.92);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.elementor-widget.elementor-widget-posts-extra.ee-posts-extra-skin--cinema article.ee-post a {
+  color: #7dd3fc;
+}
+.elementor-widget.elementor-widget-posts-extra.ee-posts-extra-skin--cinema .ee-post__terms a,
+.elementor-widget.elementor-widget-posts-extra.ee-posts-extra-skin--cinema .ee-post__metas__list a {
+  color: rgba(226, 232, 240, 0.9);
+}
+
+/* Soft — bubbly pastel shell */
+.elementor-widget.elementor-widget-posts-extra.ee-posts-extra-skin--soft article.ee-post {
+  border-radius: 999px;
+  border: 1px solid rgba(236, 72, 153, 0.32);
+  background: rgba(253, 242, 248, 0.65);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75), 0 16px 40px rgba(236, 72, 153, 0.12);
+}
+
+@media (max-width: 880px) {
+  .elementor-widget.elementor-widget-posts-extra.ee-posts-extra-skin--soft article.ee-post {
+    border-radius: 28px;
   }
 }

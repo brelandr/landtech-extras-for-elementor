@@ -1,5 +1,6 @@
 <?php
-namespace ElementorExtras\Modules\ScrollIndicator\Skins;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\ScrollIndicator\Skins;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -36,7 +37,7 @@ class Skin_Bar extends Skin_Base {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Bar', 'elementor-extras' );
+		return __( 'Bar', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -72,7 +73,12 @@ class Skin_Bar extends Skin_Base {
 				'notice',
 				[
 					'type' 				=> Controls_Manager::RAW_HTML,
-					'raw' 				=> sprintf( __( '%1$sImportant note:%2$s Use the Elementor or Extras sticky functionality to keep the bar in view.', 'elementor-extras' ), '<strong>', '</strong>' ),
+					'raw' 				=> sprintf(
+						/* translators: 1: Opening strong tag, 2: Closing strong tag. */
+						__( '%1$sImportant note:%2$s Use the Elementor or Extras sticky functionality to keep the bar in view.', 'landtech-extras-for-elementor' ),
+						'<strong>',
+						'</strong>'
+					),
 					'content_classes' 	=> 'elementor-panel-alert elementor-panel-alert-info',
 				]
 			);
@@ -91,7 +97,7 @@ class Skin_Bar extends Skin_Base {
 		$this->start_controls_section(
 			'section_bar_style',
 			[
-				'label' => __( 'Bar', 'elementor-extras' ),
+				'label' => __( 'Bar', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -99,7 +105,7 @@ class Skin_Bar extends Skin_Base {
 			$this->add_control(
 				'height',
 				[
-					'label' 	=> __( 'Height (px)', 'elementor-extras' ),
+					'label' 	=> __( 'Height (px)', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -116,7 +122,7 @@ class Skin_Bar extends Skin_Base {
 			$this->add_control(
 				'spacing',
 				[
-					'label' 	=> __( 'Spacing (px)', 'elementor-extras' ),
+					'label' 	=> __( 'Spacing (px)', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default'	=> [
 						'size' 	=> 0,
@@ -136,12 +142,12 @@ class Skin_Bar extends Skin_Base {
 
 			$this->start_controls_tabs( 'indicators' );
 
-			$this->start_controls_tab( 'indicators_default', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'indicators_default', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-scroll-indicator__element__wrapper' => 'background-color: {{VALUE}};',
@@ -151,12 +157,12 @@ class Skin_Bar extends Skin_Base {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'indicators_progress', [ 'label' => __( 'Progress', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'indicators_progress', [ 'label' => __( 'Progress', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'background_color_progress',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'global' => [
 							'default' => Global_Colors::COLOR_PRIMARY,
@@ -169,12 +175,12 @@ class Skin_Bar extends Skin_Base {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'indicators_reading', [ 'label' => __( 'Reading', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'indicators_reading', [ 'label' => __( 'Reading', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'background_color_reading',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-scroll-indicator__element__link.is--reading .ee-scroll-indicator__element__wrapper' => 'background-color: {{VALUE}};',
@@ -184,12 +190,12 @@ class Skin_Bar extends Skin_Base {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'indicators_read', [ 'label' => __( 'Read', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'indicators_read', [ 'label' => __( 'Read', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'background_color_read',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'global' => [
 							'default' => Global_Colors::COLOR_ACCENT,
@@ -273,9 +279,9 @@ class Skin_Bar extends Skin_Base {
 		}
 
 		?>
-		<a <?php echo $this->parent->get_render_attribute_string( $link_key ); ?>>
-			<div <?php echo $this->parent->get_render_attribute_string( $wrapper_key ); ?>>
-				<div <?php echo $this->parent->get_render_attribute_string( $progress_key ); ?>></div>
+		<a <?php $this->parent->print_render_attribute_string( $link_key ); ?>>
+			<div <?php $this->parent->print_render_attribute_string( $wrapper_key ); ?>>
+				<div <?php $this->parent->print_render_attribute_string( $progress_key ); ?>></div>
 			</div>
 		</a>
 		<?php

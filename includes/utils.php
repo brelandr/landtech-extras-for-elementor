@@ -1,5 +1,6 @@
 <?php
-namespace ElementorExtras;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras;
 
 // Elementor Classes
 use Elementor\Widget_Button;
@@ -24,7 +25,7 @@ class Utils {
 		$post_types = [];
 		$post_type_args = wp_parse_args( $args, $defaults );
 
-		if ( $any ) $post_types['any'] = __( 'Any', 'elementor-extras' );
+		if ( $any ) $post_types['any'] = __( 'Any', 'landtech-extras-for-elementor' );
 
 		if ( ! function_exists( 'get_post_types' ) )
 			return $post_types;
@@ -67,7 +68,7 @@ class Utils {
 		}
 
 		if ( empty( $options ) ) {
-			$options[0] = __( 'No taxonomies found', 'elementor-extras' );
+			$options[0] = __( 'No taxonomies found', 'landtech-extras-for-elementor' );
 			return $options;
 		}
 
@@ -110,7 +111,7 @@ class Utils {
 	public static function get_terms_options( $taxonomy, $key = 'slug', $all = true ) {
 
 		if ( false !== $all ) {
-			$all = ( true === $all ) ? __( 'All', 'elementor-extras' ) : $all;
+			$all = ( true === $all ) ? __( 'All', 'landtech-extras-for-elementor' ) : $all;
 			$options = [ '' => $all ];
 		}
 
@@ -119,7 +120,7 @@ class Utils {
 		));
 
 		if ( empty( $terms ) ) {
-			$options[ '' ] = sprintf( __( 'No terms found', 'elementor-extras' ), $taxonomy );
+			$options[ '' ] = sprintf( __( 'No terms found', 'landtech-extras-for-elementor' ), $taxonomy );
 			return $options;
 		}
 
@@ -180,7 +181,7 @@ class Utils {
 		) );
 
 		if ( empty( $pages ) ) {
-			$options[ '' ] = __( 'No pages found', 'elementor-extras' );
+			$options[ '' ] = __( 'No pages found', 'landtech-extras-for-elementor' );
 			return $options;
 		}
 
@@ -205,7 +206,7 @@ class Utils {
 		) );
 
 		if ( empty( $users ) ) {
-			$options[ '' ] = __( 'No users found', 'elementor-extras' );
+			$options[ '' ] = __( 'No users found', 'landtech-extras-for-elementor' );
 			return $options;
 		}
 
@@ -325,9 +326,24 @@ class Utils {
 	 */
 	public static function posts_where_by_title_name( $where, &$wp_query ) {
 		global $wpdb;
-		if ( $s = $wp_query->get( 'search_title_name' ) ) {
-			$where .= ' AND (' . $wpdb->posts . '.post_title LIKE \'%' . esc_sql( $wpdb->esc_like( $s ) ) . '%\' OR ' . $wpdb->posts . '.post_name LIKE \'%' . esc_sql( $wpdb->esc_like( $s ) ) . '%\')';
+		$s_raw = $wp_query->get( 'search_title_name' );
+
+		if ( ! is_scalar( $s_raw ) ) {
+			return $where;
 		}
+
+		$s = sanitize_text_field( wp_unslash( (string) $s_raw ) );
+		if ( '' === $s ) {
+			return $where;
+		}
+
+		$s_like = '%' . $wpdb->esc_like( $s ) . '%';
+		$where .= $wpdb->prepare(
+			" AND ( {$wpdb->posts}.post_title LIKE %s OR {$wpdb->posts}.post_name LIKE %s )",
+			$s_like,
+			$s_like
+		);
+
 		return $where;
 	}
 
@@ -420,14 +436,23 @@ class Utils {
 		return '<div class="elementor-nerd-box">
 			<i class="elementor-nerd-box-icon eicon-hypster"></i>
 			<div class="elementor-nerd-box-title">' .
-				__( 'Oups, hang on!', 'elementor-extras' ) .
+				__( 'Oups, hang on!', 'landtech-extras-for-elementor' ) .
 			'</div>
 			<div class="elementor-nerd-box-message">' .
-				__( 'This feature is only available if you have Elementor Pro.', 'elementor-extras' ) .
+				__( 'This feature is only available if you have Elementor Pro.', 'landtech-extras-for-elementor' ) .
 			'</div>
 			<a class="elementor-nerd-box-link elementor-button elementor-button-default elementor-go-pro" href="https://elementor.com/pro/" target="_blank">' .
-			__( 'Go Pro', 'elementor-extras' ) .
+			__( 'Go Pro', 'landtech-extras-for-elementor' ) .
 			'</a>
 		</div>';
 	}
+}
+
+/**
+ * Excerpt length default for Elementor controls (honors `excerpt_length` filters).
+ *
+ * @return int
+ */
+function landtech_extras_get_default_excerpt_length_for_control() {
+	return (int) apply_filters( 'excerpt_length', 25 ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Core WordPress filter API.
 }

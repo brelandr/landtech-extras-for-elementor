@@ -1,11 +1,12 @@
 <?php
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
 
-namespace ElementorExtras\Extensions;
+namespace LandTechExtras\Extensions;
 
-// Elementor Extras classes
-use ElementorExtras\Utils;
-use ElementorExtras\Base\Extension_Base;
-use ElementorExtras\Group_Control_Tooltip;
+// LandTech Extras classes
+use LandTechExtras\Utils;
+use LandTechExtras\Base\Extension_Base;
+use LandTechExtras\Group_Control_Tooltip;
 
 // Elementor classes
 use Elementor\Controls_Manager;
@@ -45,7 +46,7 @@ class Extension_Tooltip extends Extension_Base {
 	 **/
 	public function get_script_depends() {
 		return [
-			'hotips',
+			'landtech-extras-hotips',
 			'resize',
 		];
 	}
@@ -56,7 +57,7 @@ class Extension_Tooltip extends Extension_Base {
 	 * @since 1.8.0
 	 **/
 	public static function get_description() {
-		return __( 'Adds the option to show a tooltip for any widget and the ability to customise them globally. Can be found under Advanced &rarr; Extras &rarr; Tooltip for any widget.', 'elementor-extras' );
+		return __( 'Adds the option to show a tooltip for any widget and the ability to customise them globally. Can be found under Advanced &rarr; Extras &rarr; Tooltip for any widget.', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -91,11 +92,11 @@ class Extension_Tooltip extends Extension_Base {
 		$element->add_control(
 			'tooltip_enable',
 			[
-				'label'			=> __( 'Tooltip', 'elementor-extras' ),
+				'label'			=> __( 'Tooltip', 'landtech-extras-for-elementor' ),
 				'type' 			=> Controls_Manager::SWITCHER,
 				'default' 		=> '',
-				'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-				'label_off' 	=> __( 'No', 'elementor-extras' ),
+				'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+				'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 				'return_value' 	=> 'yes',
 				'separator'		=> 'before',
 				'frontend_available'	=> true,
@@ -105,7 +106,7 @@ class Extension_Tooltip extends Extension_Base {
 		$element->start_controls_tabs( 'tooltip' );
 
 			$element->start_controls_tab( 'tooltip_settings', [
-				'label' 	=> __( 'Settings', 'elementor-extras' ),
+				'label' 	=> __( 'Settings', 'landtech-extras-for-elementor' ),
 				'condition'	=> [
 					'tooltip_enable!' => '',
 				],
@@ -135,7 +136,7 @@ class Extension_Tooltip extends Extension_Base {
 			$element->end_controls_tab();
 
 			$element->start_controls_tab( 'tooltip_style', [
-				'label' 	=> __( 'Style', 'elementor-extras' ),
+				'label' 	=> __( 'Style', 'landtech-extras-for-elementor' ),
 				'condition'	=> [
 					'tooltip_enable!' => '',
 				],
@@ -144,7 +145,7 @@ class Extension_Tooltip extends Extension_Base {
 				$element->add_control(
 					'tooltip_width',
 					[
-						'label' 		=> __( 'Max Width', 'elementor-extras' ),
+						'label' 		=> __( 'Max Width', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SLIDER,
 						'default' 	=> [
 							'size' 	=> '',
@@ -164,7 +165,7 @@ class Extension_Tooltip extends Extension_Base {
 				$element->add_control(
 					'tooltip_distance',
 					[
-						'label' 		=> __( 'Distance', 'elementor-extras' ),
+						'label' 		=> __( 'Distance', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SLIDER,
 						'size_units' 	=> [ 'px' ],
 						'selectors'		=> [
@@ -179,8 +180,8 @@ class Extension_Tooltip extends Extension_Base {
 				$element->add_control(
 					'tooltip_offset',
 					[
-						'label' 		=> __( 'Offset', 'elementor-extras' ),
-						'description' 	=> __( 'Adjust offset to align arrow with target.', 'elementor-extras' ),
+						'label' 		=> __( 'Offset', 'landtech-extras-for-elementor' ),
+						'description' 	=> __( 'Adjust offset to align arrow with target.', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SLIDER,
 						'default' 	=> [
 							'size' 	=> 0,
@@ -206,12 +207,12 @@ class Extension_Tooltip extends Extension_Base {
 				$element->add_control(
 					'tooltip_arrow',
 					[
-						'label'		=> __( 'Arrow', 'elementor-extras' ),
+						'label'		=> __( 'Arrow', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SELECT,
 						'default' 	=> '',
 						'options' 	=> [
-							'' 		=> __( 'Show', 'elementor-extras' ),
-							'none' 	=> __( 'Hide', 'elementor-extras' ),
+							'' 		=> __( 'Show', 'landtech-extras-for-elementor' ),
+							'none' 	=> __( 'Hide', 'landtech-extras-for-elementor' ),
 						],
 						'selectors' => [
 							'.ee-tooltip.ee-tooltip-{{ID}}:after' => 'content: {{VALUE}};',
@@ -222,19 +223,19 @@ class Extension_Tooltip extends Extension_Base {
 				$element->add_control(
 					'tooltip_align',
 					[
-						'label' 	=> __( 'Text Align', 'elementor-extras' ),
+						'label' 	=> __( 'Text Align', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::CHOOSE,
 						'options' 	=> [
 							'left' 	=> [
-								'title' 	=> __( 'Left', 'elementor-extras' ),
+								'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 								'icon' 		=> 'fa fa-align-left',
 							],
 							'center' 	=> [
-								'title' => __( 'Center', 'elementor-extras' ),
+								'title' => __( 'Center', 'landtech-extras-for-elementor' ),
 								'icon' 	=> 'fa fa-align-center',
 							],
 							'right' 	=> [
-								'title' => __( 'Right', 'elementor-extras' ),
+								'title' => __( 'Right', 'landtech-extras-for-elementor' ),
 								'icon'	=> 'fa fa-align-right',
 							],
 						],
@@ -247,7 +248,7 @@ class Extension_Tooltip extends Extension_Base {
 				$element->add_control(
 					'tooltip_padding',
 					[
-						'label' 		=> __( 'Padding', 'elementor-extras' ),
+						'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::DIMENSIONS,
 						'size_units' 	=> [ 'px', 'em', '%' ],
 						'selectors' 	=> [
@@ -259,7 +260,7 @@ class Extension_Tooltip extends Extension_Base {
 				$element->add_control(
 					'tooltip_border_radius',
 					[
-						'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+						'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::DIMENSIONS,
 						'size_units' 	=> [ 'px', '%' ],
 						'selectors' 	=> [
@@ -271,8 +272,8 @@ class Extension_Tooltip extends Extension_Base {
 				$element->add_control(
 					'tooltip_zindex',
 					[
-						'label'			=> __( 'zIndex', 'elementor-extras' ),
-						'description'   => __( 'Adjust the z-index of the tooltip. Defaults to 999', 'elementor-extras' ),
+						'label'			=> __( 'zIndex', 'landtech-extras-for-elementor' ),
+						'description'   => __( 'Adjust the z-index of the tooltip. Defaults to 999', 'landtech-extras-for-elementor' ),
 						'type'			=> Controls_Manager::NUMBER,
 						'default'		=> '',
 						'min'			=> -9999999,
@@ -295,7 +296,7 @@ class Extension_Tooltip extends Extension_Base {
 				$element->add_control(
 					'tooltip_background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => Utils::get_tooltip_background_selectors(),
 					]
@@ -304,7 +305,7 @@ class Extension_Tooltip extends Extension_Base {
 				$element->add_control(
 					'tooltip_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'.ee-tooltip.ee-tooltip-{{ID}}' 		=> 'color: {{VALUE}};',
@@ -337,7 +338,7 @@ class Extension_Tooltip extends Extension_Base {
 	protected function add_actions() {
 
 		// Activate controls for widgets
-		add_action( 'elementor/element/common/section_elementor_extras_advanced/before_section_end', function( $element, $args ) {
+		add_action( 'elementor/element/common/section_landtech_extras_advanced/before_section_end', function( $element, $args ) {
 
 			$this->add_controls( $element, $args );
 
@@ -368,8 +369,8 @@ class Extension_Tooltip extends Extension_Base {
 
 			ob_start();
 
-			?><span <?php echo $element->get_render_attribute_string( 'tooltip' ); ?>>
-				<?php echo $this->parse_text_editor( $settings['tooltip_content'], $element ); ?>
+			?><span <?php $element->print_render_attribute_string( 'tooltip' ); ?>>
+				<?php echo wp_kses_post( $this->parse_text_editor( $settings['tooltip_content'], $element ) ); ?>
 			</span><?php
 
 			$widget_content .= ob_get_clean();
@@ -424,7 +425,7 @@ class Extension_Tooltip extends Extension_Base {
 	 */
 	protected function parse_text_editor( $content, $element ) {
 		/** This filter is documented in wp-includes/widgets/class-wp-widget-text.php */
-		$content = apply_filters( 'widget_text', $content, $element->get_settings() );
+		$content = apply_filters( 'widget_text', $content, $element->get_settings() ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Core widget_text filter (compat with shortcodes in legacy widgets).
 
 		$content = shortcode_unautop( $content );
 		$content = do_shortcode( $content );

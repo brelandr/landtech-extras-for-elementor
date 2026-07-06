@@ -1,13 +1,14 @@
 <?php
-namespace ElementorExtras\Modules\Popup\Widgets;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Popup\Widgets;
 
-// Extras for Elementor Classes
-use ElementorExtras\Group_Control_Transition;
-use ElementorExtras\Base\Extras_Widget;
-use ElementorExtras\Modules\Popup\Skins;
-use ElementorExtras\Modules\Popup\Module as Module;
-use ElementorExtras\Modules\Image\Module as ImageModule;
-use ElementorExtras\Modules\TemplatesControl\Module as TemplatesControl;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Group_Control_Transition;
+use LandTechExtras\Base\Extras_Widget;
+use LandTechExtras\Modules\Popup\Skins;
+use LandTechExtras\Modules\Popup\Module as Module;
+use LandTechExtras\Modules\Image\Module as ImageModule;
+use LandTechExtras\Modules\TemplatesControl\Module as TemplatesControl;
 
 // Elementor Classes
 use Elementor\Utils;
@@ -58,7 +59,7 @@ class Popup extends Extras_Widget {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Popup', 'elementor-extras' );
+		return __( 'Popup', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -83,7 +84,7 @@ class Popup extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
-			'magnific-popup',
+			'landtech-extras-glightbox',
 		];
 	}
 
@@ -97,7 +98,7 @@ class Popup extends Extras_Widget {
 	 */
 	public function get_style_depends() {
 		return [
-			'magnific-popup',
+			'landtech-extras-glightbox',
 		];
 	}
 
@@ -132,7 +133,7 @@ class Popup extends Extras_Widget {
 		$this->start_controls_section(
 			'section_settings',
 			[
-				'label' => __( 'Settings', 'elementor-extras' ),
+				'label' => __( 'Settings', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -140,11 +141,11 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_open',
 				[
-					'label' 		=> __( 'Keep Open in Editor', 'elementor-extras' ),
+					'label' 		=> __( 'Keep Open in Editor', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -153,12 +154,12 @@ class Popup extends Extras_Widget {
 				$this->add_control(
 					'popup_open_admin',
 					[
-						'label' 		=> __( 'Always Show for Admins', 'elementor-extras' ),
-						'description' 	=> __( 'Have the popup open every time you visit the page if you\'re an Admin. This will help you test the functionality on the frontend without actually losing the popup if it\'s not persistent.', 'elementor-extras' ),	
+						'label' 		=> __( 'Always Show for Admins', 'landtech-extras-for-elementor' ),
+						'description' 	=> __( 'Have the popup open every time you visit the page if you\'re an Admin. This will help you test the functionality on the frontend without actually losing the popup if it\'s not persistent.', 'landtech-extras-for-elementor' ),	
 						'type' 			=> Controls_Manager::SWITCHER,
 						'default' 		=> 'yes',
-						'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-						'label_off' 	=> __( 'No', 'elementor-extras' ),
+						'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+						'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 						'frontend_available' => true,
 					]
 				);
@@ -167,8 +168,8 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'refresh_widgets',
 				[
-					'label' 		=> __( 'Refresh Popup Widgets', 'elementor-extras' ),
-					'description'	=> __( 'If you are using templates as content for the popup, this option will refresh any frontend functionality for all elements inside the popup when opened. Turn this off if you notice strange behaviour or broken elements inside the popup.', 'elementor-extras' ),
+					'label' 		=> __( 'Refresh Popup Widgets', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'If you are using templates as content for the popup, this option will refresh any frontend functionality for all elements inside the popup when opened. Turn this off if you notice strange behaviour or broken elements inside the popup.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
 					'frontend_available' => true,
@@ -178,13 +179,13 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_disable_on',
 				[
-					'label' 	=> __( 'Disable on', 'elementor-extras' ),
+					'label' 	=> __( 'Disable on', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default'	=> '',
 					'options' 	=> [
-						'' 		=> __( 'None', 'elementor-extras' ),
-						'1025' 	=> __( 'Mobile & Tablet', 'elementor-extras' ),
-						'768' 	=> __( 'Mobile', 'elementor-extras' ),
+						'' 		=> __( 'None', 'landtech-extras-for-elementor' ),
+						'1025' 	=> __( 'Mobile & Tablet', 'landtech-extras-for-elementor' ),
+						'768' 	=> __( 'Mobile', 'landtech-extras-for-elementor' ),
 					],
 					'separator' => 'before',
 					'frontend_available' => true,
@@ -194,7 +195,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_animation',
 				[
-					'label' 	=> __( 'Animation', 'elementor-extras' ),
+					'label' 	=> __( 'Animation', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default'	=> 'zoom-in',
 					'options' 	=> Module::get_animation_options(),
@@ -205,12 +206,12 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_preloader',
 				[
-					'label' 		=> __( 'Preloader', 'elementor-extras' ),
+					'label' 		=> __( 'Preloader', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
 					'separator'		=> 'before',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -218,11 +219,11 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_prevent_scroll',
 				[
-					'label' 		=> __( 'Prevent Page Scroll', 'elementor-extras' ),
+					'label' 		=> __( 'Prevent Page Scroll', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -230,11 +231,11 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_fixed',
 				[
-					'label' 		=> __( 'Fix On Scroll', 'elementor-extras' ),
+					'label' 		=> __( 'Fix On Scroll', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -242,11 +243,11 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_no_overlay',
 				[
-					'label' 		=> __( 'Remove Overlay', 'elementor-extras' ),
+					'label' 		=> __( 'Remove Overlay', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -254,11 +255,11 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_close_on_content',
 				[
-					'label' 		=> __( 'Close On Content Click', 'elementor-extras' ),
+					'label' 		=> __( 'Close On Content Click', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 					'condition'	=> [
 						'popup_type!' => 'iframe',
@@ -269,11 +270,11 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_close_on_bg',
 				[
-					'label' 		=> __( 'Close On Overlay Click', 'elementor-extras' ),
+					'label' 		=> __( 'Close On Overlay Click', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 					'condition' => [
 						'popup_no_overlay' => ''
@@ -284,11 +285,11 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_close_on_escape',
 				[
-					'label' 		=> __( 'Close On Escape Key', 'elementor-extras' ),
+					'label' 		=> __( 'Close On Escape Key', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -296,11 +297,11 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_vertical_fit',
 				[
-					'label' 		=> __( 'Fit Vertically', 'elementor-extras' ),
+					'label' 		=> __( 'Fit Vertically', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 					'condition'	=> [
 						'popup_type' => 'image',
@@ -313,7 +314,7 @@ class Popup extends Extras_Widget {
 		$this->start_controls_section(
 			'section_trigger',
 			[
-				'label' => __( 'Trigger', 'elementor-extras' ),
+				'label' => __( 'Trigger', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -321,14 +322,14 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_trigger',
 				[
-					'label' 	=> __( 'Trigger', 'elementor-extras' ),
+					'label' 	=> __( 'Trigger', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default'	=> 'click',
 					'options' 	=> [
-						'click' 	=> __( 'Click', 'elementor-extras' ),
-						'instant' 	=> __( 'Instant', 'elementor-extras' ),
-						'scroll' 	=> __( 'Scroll', 'elementor-extras' ),
-						'intent' 	=> __( 'Exit Intent', 'elementor-extras' ),
+						'click' 	=> __( 'Click', 'landtech-extras-for-elementor' ),
+						'instant' 	=> __( 'Instant', 'landtech-extras-for-elementor' ),
+						'scroll' 	=> __( 'Scroll', 'landtech-extras-for-elementor' ),
+						'intent' 	=> __( 'Exit Intent', 'landtech-extras-for-elementor' ),
 					],
 					'frontend_available' => true,
 				]
@@ -337,13 +338,13 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_click_target',
 				[
-					'label' 	=> __( 'Click Target', 'elementor-extras' ),
+					'label' 	=> __( 'Click Target', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default'	=> 'text',
 					'options' 	=> [
-						'text' 	=> __( 'Text', 'elementor-extras' ),
-						'id' 	=> __( 'Element ID', 'elementor-extras' ),
-						'class' => __( 'Element Class', 'elementor-extras' ),
+						'text' 	=> __( 'Text', 'landtech-extras-for-elementor' ),
+						'id' 	=> __( 'Element ID', 'landtech-extras-for-elementor' ),
+						'class' => __( 'Element Class', 'landtech-extras-for-elementor' ),
 					],
 					'condition'	=> [
 						'popup_trigger' => 'click',
@@ -355,13 +356,13 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_click_element_id',
 				[
-					'label' 		=> __( 'Element CSS ID', 'elementor-extras' ),
+					'label' 		=> __( 'Element CSS ID', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::TEXT,
 					'dynamic'		=> [ 'active' => true ],
 					'default' 		=> '',
 					'label_block' 	=> false,
 					'frontend_available' => true,
-					'title' 		=> __( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'elementor-extras' ),
+					'title' 		=> __( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'landtech-extras-for-elementor' ),
 					'condition'	=> [
 						'popup_trigger' => 'click',
 						'popup_click_target' => 'id',
@@ -372,13 +373,13 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_click_element_class',
 				[
-					'label' 		=> __( 'Element CSS Class', 'elementor-extras' ),
+					'label' 		=> __( 'Element CSS Class', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::TEXT,
 					'dynamic'		=> [ 'active' => true ],
 					'default' 		=> '',
 					'label_block' 	=> false,
 					'frontend_available' => true,
-					'title' 		=> __( 'Add your custom class WITHOUT the DOT key. e.g: my-class', 'elementor-extras' ),
+					'title' 		=> __( 'Add your custom class WITHOUT the DOT key. e.g: my-class', 'landtech-extras-for-elementor' ),
 					'condition'	=> [
 						'popup_trigger' => 'click',
 						'popup_click_target' => 'class',
@@ -389,13 +390,13 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_scroll_type',
 				[
-					'label'			=> __( 'Scroll', 'elementor-extras' ),
+					'label'			=> __( 'Scroll', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default'	=> 'amount',
 					'separator' => 'before',
 					'options' 	=> [
-						'amount' 	=> __( 'Amount', 'elementor-extras' ),
-						'element' 	=> __( 'Element', 'elementor-extras' ),
+						'amount' 	=> __( 'Amount', 'landtech-extras-for-elementor' ),
+						'element' 	=> __( 'Element', 'landtech-extras-for-elementor' ),
 					],
 					'condition'	=> [
 						'popup_trigger' => 'scroll',
@@ -407,7 +408,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_scroll_amount',
 				[
-					'label'			=> __( 'Amount (px)', 'elementor-extras' ),
+					'label'			=> __( 'Amount (px)', 'landtech-extras-for-elementor' ),
 					'type'			=> Controls_Manager::NUMBER,
 					'dynamic'		=> [ 'active' => true ],
 					'default'		=> 200,
@@ -424,13 +425,13 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_scroll_element',
 				[
-					'label' 		=> __( 'Element CSS ID', 'elementor-extras' ),
+					'label' 		=> __( 'Element CSS ID', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::TEXT,
 					'dynamic'		=> [ 'active' => true ],
 					'default' 		=> '',
 					'label_block' 	=> false,
 					'frontend_available' => true,
-					'title' 		=> __( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'elementor-extras' ),
+					'title' 		=> __( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'landtech-extras-for-elementor' ),
 					'condition'	=> [
 						'popup_trigger' => 'scroll',
 						'popup_scroll_type' => 'element',
@@ -441,7 +442,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_delay',
 				[
-					'label'			=> __( 'Delay (ms)', 'elementor-extras' ),
+					'label'			=> __( 'Delay (ms)', 'landtech-extras-for-elementor' ),
 					'type'			=> Controls_Manager::NUMBER,
 					'separator' 	=> 'before',
 					'default'		=> 3000,
@@ -457,7 +458,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_intent_sensitivity',
 				[
-					'label' 		=> __( 'Intent Sensitivity', 'elementor-extras' ),
+					'label' 		=> __( 'Intent Sensitivity', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'separator'		=> 'before',
 					'range' 		=> [
@@ -476,9 +477,9 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_persist',
 				[
-					'label' 		=> __( 'Persist', 'elementor-extras' ),
+					'label' 		=> __( 'Persist', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
-					'description'	=> __( 'Turn this off if you want the popup to not show again after opening a number of times.', 'elementor-extras' ),
+					'description'	=> __( 'Turn this off if you want the popup to not show again after opening a number of times.', 'landtech-extras-for-elementor' ),
 					'default' 		=> 'yes',
 					'frontend_available' => true,
 					'condition'	=> [
@@ -490,8 +491,8 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_times',
 				[
-					'label'			=> __( 'Max. Times to Show', 'elementor-extras' ),
-					'description'   => __( 'How many times should the popup show at most for the specified trigger.', 'elementor-extras' ),
+					'label'			=> __( 'Max. Times to Show', 'landtech-extras-for-elementor' ),
+					'description'   => __( 'How many times should the popup show at most for the specified trigger.', 'landtech-extras-for-elementor' ),
 					'type'			=> Controls_Manager::NUMBER,
 					'default'		=> 1,
 					'min'			=> 1,
@@ -506,8 +507,8 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_days',
 				[
-					'label'			=> __( 'Days', 'elementor-extras' ),
-					'description'   => __( 'How many days should the popup not show for a user after last open.', 'elementor-extras' ),
+					'label'			=> __( 'Days', 'landtech-extras-for-elementor' ),
+					'description'   => __( 'How many days should the popup not show for a user after last open.', 'landtech-extras-for-elementor' ),
 					'type'			=> Controls_Manager::NUMBER,
 					'default'		=> '30',
 					'min'			=> 0,
@@ -523,7 +524,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_trigger_heading',
 				[
-					'label' 	=> __( 'Content', 'elementor-extras' ),
+					'label' 	=> __( 'Content', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 					'condition'	=> [
@@ -536,10 +537,10 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_trigger_text',
 				[
-					'label' 	=> __( 'Text', 'elementor-extras' ),
+					'label' 	=> __( 'Text', 'landtech-extras-for-elementor' ),
 					'dynamic'	=> [ 'active' => true ],
 					'type' 		=> Controls_Manager::TEXT,
-					'default'	=> __( 'Open modal', 'elementor-extras' ),
+					'default'	=> __( 'Open modal', 'landtech-extras-for-elementor' ),
 					'condition'	=> [
 						'popup_trigger' => 'click',
 						'popup_click_target' => 'text',
@@ -552,7 +553,7 @@ class Popup extends Extras_Widget {
 		$this->start_controls_section(
 			'section_content',
 			[
-				'label' => __( 'Content', 'elementor-extras' ),
+				'label' => __( 'Content', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -560,15 +561,15 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_type',
 				[
-					'label' 	=> __( 'Type', 'elementor-extras' ),
+					'label' 	=> __( 'Type', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default'	=> 'text',
 					'options' 	=> [
-						'text' 		=> __( 'Text', 'elementor-extras' ),
-						'image' 	=> __( 'Image', 'elementor-extras' ),
-						'template' 	=> __( 'Template', 'elementor-extras' ),
-						'iframe' 	=> __( 'Iframe', 'elementor-extras' ),
-						'url' 		=> __( 'URL', 'elementor-extras' ),
+						'text' 		=> __( 'Text', 'landtech-extras-for-elementor' ),
+						'image' 	=> __( 'Image', 'landtech-extras-for-elementor' ),
+						'template' 	=> __( 'Template', 'landtech-extras-for-elementor' ),
+						'iframe' 	=> __( 'Iframe', 'landtech-extras-for-elementor' ),
+						'url' 		=> __( 'URL', 'landtech-extras-for-elementor' ),
 					],
 					'frontend_available' => true,
 				]
@@ -577,10 +578,10 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_title',
 				[
-					'label' 	=> __( 'Title', 'elementor-extras' ),
+					'label' 	=> __( 'Title', 'landtech-extras-for-elementor' ),
 					'dynamic'	=> [ 'active' => true ],
 					'type' 		=> Controls_Manager::TEXT,
-					'default'	=> __( 'Popup Title', 'elementor-extras' ),
+					'default'	=> __( 'Popup Title', 'landtech-extras-for-elementor' ),
 					'separator' => 'before',
 					'condition'	=> [
 						'popup_type' => 'text',
@@ -591,18 +592,18 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_title_tag',
 				[
-					'label' 	=> __( 'Title HTML Tag', 'elementor-extras' ),
+					'label' 	=> __( 'Title HTML Tag', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'options' 	=> [
-						'h1' 	=> __( 'H1', 'elementor-extras' ),
-						'h2' 	=> __( 'H2', 'elementor-extras' ),
-						'h3' 	=> __( 'H3', 'elementor-extras' ),
-						'h4' 	=> __( 'H4', 'elementor-extras' ),
-						'h5' 	=> __( 'H5', 'elementor-extras' ),
-						'h6' 	=> __( 'H6', 'elementor-extras' ),
-						'div' 	=> __( 'div', 'elementor-extras' ),
-						'span' 	=> __( 'span', 'elementor-extras' ),
-						'p' 	=> __( 'p', 'elementor-extras' ),
+						'h1' 	=> __( 'H1', 'landtech-extras-for-elementor' ),
+						'h2' 	=> __( 'H2', 'landtech-extras-for-elementor' ),
+						'h3' 	=> __( 'H3', 'landtech-extras-for-elementor' ),
+						'h4' 	=> __( 'H4', 'landtech-extras-for-elementor' ),
+						'h5' 	=> __( 'H5', 'landtech-extras-for-elementor' ),
+						'h6' 	=> __( 'H6', 'landtech-extras-for-elementor' ),
+						'div' 	=> __( 'div', 'landtech-extras-for-elementor' ),
+						'span' 	=> __( 'span', 'landtech-extras-for-elementor' ),
+						'p' 	=> __( 'p', 'landtech-extras-for-elementor' ),
 					],
 					'default' => 'h1',
 					'condition'	=> [
@@ -614,10 +615,10 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_content',
 				[
-					'label' 	=> __( 'Content', 'elementor-extras' ),
+					'label' 	=> __( 'Content', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::WYSIWYG,
 					'dynamic'	=> [ 'active' => true ],
-					'default' 	=> __( 'I am the content of a popup', 'elementor-extras' ),
+					'default' 	=> __( 'I am the content of a popup', 'landtech-extras-for-elementor' ),
 					'condition'	=> [
 						'popup_type' => 'text',
 					]
@@ -627,11 +628,11 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_iframe_type',
 				[
-					'label' => __( 'Iframe Type', 'elementor-extras' ),
+					'label' => __( 'Iframe Type', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::SELECT,
 					'options' 	=> [
-						'video' => __( 'Video', 'elementor-extras' ),
-						'map' 	=> __( 'Google Map', 'elementor-extras' ),
+						'video' => __( 'Video', 'landtech-extras-for-elementor' ),
+						'map' 	=> __( 'Google Map', 'landtech-extras-for-elementor' ),
 					],
 					'separator' => 'before',
 					'default' => 'video',
@@ -644,7 +645,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_video_url',
 				[
-					'label' 	=> __( 'YouTube Video URL', 'elementor-extras' ),
+					'label' 	=> __( 'YouTube Video URL', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXT,
 					'dynamic'	=> [ 'active' => true ],
 					'default'	=> 'https://www.youtube.com/watch?v=9uOETcuFjbE',
@@ -658,7 +659,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_map_url',
 				[
-					'label' 	=> __( 'Google Map URL', 'elementor-extras' ),
+					'label' 	=> __( 'Google Map URL', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXT,
 					'dynamic'	=> [ 'active' => true ],
 					'default'	=> 'https://maps.google.com/maps?q=221B+Baker+Street,+London,+United+Kingdom&hl=en&t=v&hnear=221B+Baker+St,+London+NW1+6XE,+United+Kingdom',
@@ -672,7 +673,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_image',
 				[
-					'label' 		=> __( 'Choose Image', 'elementor-extras' ),
+					'label' 		=> __( 'Choose Image', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::MEDIA,
 					'dynamic' 		=> [
 						'active' 	=> true,
@@ -702,14 +703,14 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_image_caption_type',
 				[
-					'label' 		=> __( 'Caption', 'elementor-extras' ),
+					'label' 		=> __( 'Caption', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT,
 					'default' 		=> '',
 					'options' 		=> [
-						'' 				=> __( 'None', 'elementor-extras' ),
-						'title' 		=> __( 'Title', 'elementor-extras' ),
-						'caption' 		=> __( 'Caption', 'elementor-extras' ),
-						'description' 	=> __( 'Description', 'elementor-extras' ),
+						'' 				=> __( 'None', 'landtech-extras-for-elementor' ),
+						'title' 		=> __( 'Title', 'landtech-extras-for-elementor' ),
+						'caption' 		=> __( 'Caption', 'landtech-extras-for-elementor' ),
+						'description' 	=> __( 'Description', 'landtech-extras-for-elementor' ),
 					],
 					'condition'	=> [
 						'popup_type' => 'image',
@@ -720,7 +721,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_template',
 				[
-					'label' 		=> __( 'Template', 'elementor-extras' ),
+					'label' 		=> __( 'Template', 'landtech-extras-for-elementor' ),
 					'type' 			=> 'ee-query',
 					'query_type' 	=> 'templates',
 					'label_block' 	=> false,
@@ -734,7 +735,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_url',
 				[
-					'label' 	=> __( 'URL', 'elementor-extras' ),
+					'label' 	=> __( 'URL', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::URL,
 					'separator' => 'before',
 					'dynamic'	=> [ 'active' => true ],
@@ -750,12 +751,12 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_url_container',
 				[
-					'label' 		=> __( 'Content Selector', 'elementor-extras' ),
+					'label' 		=> __( 'Content Selector', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::TEXT,
 					'dynamic'		=> [ 'active' => true ],
 					'default' 		=> '',
 					'frontend_available' => true,
-					'title' 		=> __( 'If you want to restrict content from the fetched url to a certain container, add a selector for that container here.', 'elementor-extras' ),
+					'title' 		=> __( 'If you want to restrict content from the fetched url to a certain container, add a selector for that container here.', 'landtech-extras-for-elementor' ),
 					'condition'	=> [
 						'popup_type' => 'url',
 					],
@@ -768,7 +769,7 @@ class Popup extends Extras_Widget {
 		$this->start_controls_section(
 			'section_close',
 			[
-				'label' => __( 'Close', 'elementor-extras' ),
+				'label' => __( 'Close', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -776,7 +777,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_close_icon_heading',
 				[
-					'label' => __( 'Icon', 'elementor-extras' ),
+					'label' => __( 'Icon', 'landtech-extras-for-elementor' ),
 					'type' 	=> Controls_Manager::HEADING,
 				]
 			);
@@ -784,13 +785,13 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_close_position',
 				[
-					'label' 		=> __( 'Position', 'elementor-extras' ),
+					'label' 		=> __( 'Position', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT,
 					'default' 		=> 'outside',
 					'options' 		=> [
-						''	 			=> __( 'Hide', 'elementor-extras' ),
-						'inside' 		=> __( 'Inside', 'elementor-extras' ),
-						'outside' 		=> __( 'Outside', 'elementor-extras' ),
+						''	 			=> __( 'Hide', 'landtech-extras-for-elementor' ),
+						'inside' 		=> __( 'Inside', 'landtech-extras-for-elementor' ),
+						'outside' 		=> __( 'Outside', 'landtech-extras-for-elementor' ),
 					],
 					'frontend_available' => true,
 				]
@@ -799,20 +800,20 @@ class Popup extends Extras_Widget {
 			$this->add_responsive_control(
 				'popup_close_halign',
 				[
-					'label' 		=> __( 'Horizontal Placement', 'elementor-extras' ),
+					'label' 		=> __( 'Horizontal Placement', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> 'right',
 					'options' 		=> [
 						'left'    		=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-right',
 						],
 					],
@@ -826,16 +827,16 @@ class Popup extends Extras_Widget {
 			$this->add_responsive_control(
 				'popup_close_valign',
 				[
-					'label' 		=> __( 'Vertical Placement', 'elementor-extras' ),
+					'label' 		=> __( 'Vertical Placement', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> 'top',
 					'options' 		=> [
 						'top'    		=> [
-							'title' 	=> __( 'Top', 'elementor-extras' ),
+							'title' 	=> __( 'Top', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-top',
 						],
 						'bottom' 		=> [
-							'title' 	=> __( 'Bottom', 'elementor-extras' ),
+							'title' 	=> __( 'Bottom', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-bottom',
 						],
 					],
@@ -849,7 +850,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_close_button_heading',
 				[
-					'label' => __( 'Button', 'elementor-extras' ),
+					'label' => __( 'Button', 'landtech-extras-for-elementor' ),
 					'type' 	=> Controls_Manager::HEADING,
 					'separator' => 'before',
 					'condition' => [
@@ -861,13 +862,13 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_close_button_position',
 				[
-					'label' 		=> __( 'Position', 'elementor-extras' ),
+					'label' 		=> __( 'Position', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT,
 					'default' 		=> 'default',
 					'options' 		=> [
-						'' 				=> __( 'Hide', 'elementor-extras' ),
-						'default' 		=> __( 'In Footer', 'elementor-extras' ),
-						'custom' 		=> __( 'Custom Selector', 'elementor-extras' ),
+						'' 				=> __( 'Hide', 'landtech-extras-for-elementor' ),
+						'default' 		=> __( 'In Footer', 'landtech-extras-for-elementor' ),
+						'custom' 		=> __( 'Custom Selector', 'landtech-extras-for-elementor' ),
 					],
 					'condition' => [
 						'popup_type!' => [ 'image', 'iframe' ],
@@ -879,10 +880,10 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_close_button_text',
 				[
-					'label' 	=> __( 'Button Text', 'elementor-extras' ),
+					'label' 	=> __( 'Button Text', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXT,
 					'dynamic'	=> [ 'active' => true ],
-					'default'	=> __( 'Close', 'elementor-extras' ),
+					'default'	=> __( 'Close', 'landtech-extras-for-elementor' ),
 					'condition' => [
 						'popup_type!' => [ 'image', 'iframe' ],
 						'popup_close_button_position' => 'default',
@@ -895,7 +896,7 @@ class Popup extends Extras_Widget {
 				[
 					'label' => false,
 					'type' 	=> Controls_Manager::RAW_HTML,
-					'raw' 	=> __( 'Add your custom selector below and make sure the element resides inside the content of the popup. If you\'re using a template, edit it with Elementor and add the class to an element inside it.', 'elementor-extras' ),
+					'raw' 	=> __( 'Add your custom selector below and make sure the element resides inside the content of the popup. If you\'re using a template, edit it with Elementor and add the class to an element inside it.', 'landtech-extras-for-elementor' ),
 					'content_classes' 	=> 'elementor-panel-alert elementor-panel-alert-info',
 					'condition' => [
 						'popup_type!' => [ 'image', 'iframe' ],
@@ -907,13 +908,13 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_close_button_selector',
 				[
-					'label' 		=> __( 'Element Selector', 'elementor-extras' ),
+					'label' 		=> __( 'Element Selector', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::TEXT,
 					'dynamic'		=> [ 'active' => true ],
 					'default' 		=> '',
 					'label_block' 	=> false,
 					'frontend_available' => true,
-					'title' 		=> __( 'Add your custom id or class WITH the Pound or Dot key. e.g: #my-id or .my-class', 'elementor-extras' ),
+					'title' 		=> __( 'Add your custom id or class WITH the Pound or Dot key. e.g: #my-id or .my-class', 'landtech-extras-for-elementor' ),
 					'condition' => [
 						'popup_type!' => [ 'image', 'iframe' ],
 						'popup_close_button_position' => 'custom',
@@ -926,7 +927,7 @@ class Popup extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_popup',
 			[
-				'label' => __( 'Popup', 'elementor-extras' ),
+				'label' => __( 'Popup', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -934,20 +935,20 @@ class Popup extends Extras_Widget {
 			$this->add_responsive_control(
 				'popup_valign',
 				[
-					'label' 		=> __( 'Vertical Placement', 'elementor-extras' ),
+					'label' 		=> __( 'Vertical Placement', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> 'middle',
 					'options' 		=> [
 						'top'    		=> [
-							'title' 	=> __( 'Top', 'elementor-extras' ),
+							'title' 	=> __( 'Top', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-top',
 						],
 						'middle' 		=> [
-							'title' 	=> __( 'Middle', 'elementor-extras' ),
+							'title' 	=> __( 'Middle', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-middle',
 						],
 						'bottom' 		=> [
-							'title' 	=> __( 'Bottom', 'elementor-extras' ),
+							'title' 	=> __( 'Bottom', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-bottom',
 						],
 					],
@@ -958,7 +959,7 @@ class Popup extends Extras_Widget {
 			$this->add_responsive_control(
 				'popup_width',
 				[
-					'label' 		=> __( 'Max. Width', 'elementor-extras' ),
+					'label' 		=> __( 'Max. Width', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'size_units' 	=> [ 'px', '%' ],
 					'range' 		=> [
@@ -981,7 +982,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -1000,7 +1001,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_background',
 				[
-					'label' 	=> __( 'Background Color', 'elementor-extras' ),
+					'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'default'	=> '',
 					'selectors' => [
@@ -1013,7 +1014,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -1027,7 +1028,7 @@ class Popup extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'popup_border',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '.ee-mfp-popup-{{ID}} .ee-popup__content,
 									.ee-mfp-popup-{{ID}} .mfp-figure,
 									.ee-mfp-popup-{{ID}} .mfp-iframe',
@@ -1047,7 +1048,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_overlay_heading',
 				[
-					'label' 	=> __( 'Overlay', 'elementor-extras' ),
+					'label' 	=> __( 'Overlay', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 					'condition' => [
@@ -1059,7 +1060,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_overlay_background',
 				[
-					'label' 	=> __( 'Background Color', 'elementor-extras' ),
+					'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'default'	=> '',
 					'selectors' => [
@@ -1074,7 +1075,7 @@ class Popup extends Extras_Widget {
 			$this->add_responsive_control(
 				'popup_overlay_opacity',
 				[
-					'label' 	=> __( 'Opacity (%)', 'elementor-extras' ),
+					'label' 	=> __( 'Opacity (%)', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 0.8,
@@ -1109,19 +1110,19 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_overlay_blend',
 				[
-					'label' 		=> __( 'Blend mode', 'elementor-extras' ),
+					'label' 		=> __( 'Blend mode', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT,
 					'default' 		=> 'normal',
 					'options' => [
-						'normal'			=> __( 'Normal', 'elementor-extras' ),
-						'multiply'			=> __( 'Multiply', 'elementor-extras' ),
-						'screen'			=> __( 'Screen', 'elementor-extras' ),
-						'overlay'			=> __( 'Overlay', 'elementor-extras' ),
-						'darken'			=> __( 'Darken', 'elementor-extras' ),
-						'lighten'			=> __( 'Lighten', 'elementor-extras' ),
-						'color'				=> __( 'Color', 'elementor-extras' ),
-						'color-dodge'		=> __( 'Color Dodge', 'elementor-extras' ),
-						'hue'				=> __( 'Hue', 'elementor-extras' ),
+						'normal'			=> __( 'Normal', 'landtech-extras-for-elementor' ),
+						'multiply'			=> __( 'Multiply', 'landtech-extras-for-elementor' ),
+						'screen'			=> __( 'Screen', 'landtech-extras-for-elementor' ),
+						'overlay'			=> __( 'Overlay', 'landtech-extras-for-elementor' ),
+						'darken'			=> __( 'Darken', 'landtech-extras-for-elementor' ),
+						'lighten'			=> __( 'Lighten', 'landtech-extras-for-elementor' ),
+						'color'				=> __( 'Color', 'landtech-extras-for-elementor' ),
+						'color-dodge'		=> __( 'Color Dodge', 'landtech-extras-for-elementor' ),
+						'hue'				=> __( 'Hue', 'landtech-extras-for-elementor' ),
 					],
 					'selectors' 	=> [
 						'.mfp-bg.ee-mfp-popup-{{ID}}' => 'mix-blend-mode: {{VALUE}};',
@@ -1137,7 +1138,7 @@ class Popup extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_trigger',
 			[
-				'label' => __( 'Trigger', 'elementor-extras' ),
+				'label' => __( 'Trigger', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 				'condition'		=> [
 					'popup_trigger'	=> 'click',
@@ -1149,20 +1150,20 @@ class Popup extends Extras_Widget {
 			$this->add_responsive_control(
 				'trigger_align',
 				[
-					'label' 		=> __( 'Text Align', 'elementor-extras' ),
+					'label' 		=> __( 'Text Align', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'left' 			=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -1179,7 +1180,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'trigger_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -1196,7 +1197,7 @@ class Popup extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'popup_trigger',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -1211,7 +1212,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'trigger_border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -1245,7 +1246,7 @@ class Popup extends Extras_Widget {
 			$this->start_controls_tabs( 'trigger_default' );
 
 			$this->start_controls_tab( 'trigger_tab_default', [
-				'label' 	=> __( 'Default', 'elementor-extras' ),
+				'label' 	=> __( 'Default', 'landtech-extras-for-elementor' ),
 				'selector' 	=> '{{WRAPPER}} .ee-popup__trigger',
 				'condition'	=> [
 					'popup_trigger'	=> 'click',
@@ -1256,7 +1257,7 @@ class Popup extends Extras_Widget {
 				$this->add_control(
 					'trigger_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -1272,7 +1273,7 @@ class Popup extends Extras_Widget {
 				$this->add_control(
 					'trigger_background',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -1288,7 +1289,7 @@ class Popup extends Extras_Widget {
 			$this->end_controls_tab();
 
 			$this->start_controls_tab( 'trigger_tab_hover', [
-				'label' 	=> __( 'Hover', 'elementor-extras' ),
+				'label' 	=> __( 'Hover', 'landtech-extras-for-elementor' ),
 				'selector' 	=> '{{WRAPPER}} .ee-popup__trigger',
 				'condition'	=> [
 					'popup_trigger'	=> 'click',
@@ -1299,7 +1300,7 @@ class Popup extends Extras_Widget {
 				$this->add_control(
 					'trigger_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -1315,7 +1316,7 @@ class Popup extends Extras_Widget {
 				$this->add_control(
 					'trigger_background_hover',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -1335,7 +1336,7 @@ class Popup extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_header',
 			[
-				'label' => __( 'Header', 'elementor-extras' ),
+				'label' => __( 'Header', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 				'conditions'	=> $this->get_inline_conditions(),
 			]
@@ -1344,7 +1345,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_header_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -1357,7 +1358,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_header_background',
 				[
-					'label' 	=> __( 'Background Color', 'elementor-extras' ),
+					'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'default'	=> '',
 					'selectors' => [
@@ -1371,7 +1372,7 @@ class Popup extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'popup_header_border',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '.ee-mfp-popup-{{ID}} .ee-popup__header',
 					'conditions'	=> $this->get_inline_conditions(),
 				]
@@ -1380,7 +1381,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_title_heading',
 				[
-					'label' 	=> __( 'Title', 'elementor-extras' ),
+					'label' 	=> __( 'Title', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 					'conditions'	=> $this->get_inline_conditions(),
@@ -1390,20 +1391,20 @@ class Popup extends Extras_Widget {
 			$this->add_responsive_control(
 				'popup_title_align',
 				[
-					'label' 		=> __( 'Text Align', 'elementor-extras' ),
+					'label' 		=> __( 'Text Align', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'left' 			=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -1418,7 +1419,7 @@ class Popup extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'popup_title_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
 					],
@@ -1430,7 +1431,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_title_color',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'default'	=> '',
 					'selectors' => [
@@ -1443,7 +1444,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_title_background',
 				[
-					'label' 	=> __( 'Background', 'elementor-extras' ),
+					'label' 	=> __( 'Background', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'default'	=> '',
 					'selectors' => [
@@ -1456,7 +1457,7 @@ class Popup extends Extras_Widget {
 			$this->add_responsive_control(
 				'popup_title_distance',
 				[
-					'label' 		=> __( 'Distance', 'elementor-extras' ),
+					'label' 		=> __( 'Distance', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -1476,7 +1477,7 @@ class Popup extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_body',
 			[
-				'label' => __( 'Body', 'elementor-extras' ),
+				'label' => __( 'Body', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 				'conditions'	=> $this->get_inline_conditions(),
 			]
@@ -1485,20 +1486,20 @@ class Popup extends Extras_Widget {
 			$this->add_responsive_control(
 				'popup_body_align',
 				[
-					'label' 		=> __( 'Text Align', 'elementor-extras' ),
+					'label' 		=> __( 'Text Align', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'left' 			=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -1512,7 +1513,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_body_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -1527,7 +1528,7 @@ class Popup extends Extras_Widget {
 				[
 					'name' 		=> 'popup_body_border',
 					'separator' => 'before',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '.ee-mfp-popup-{{ID}} .ee-popup__content__body',
 					'conditions'	=> $this->get_inline_conditions(),
 				]
@@ -1536,7 +1537,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_body_color',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'separator' => 'before',
 					'type' 		=> Controls_Manager::COLOR,
 					'default'	=> '',
@@ -1550,7 +1551,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_body_background',
 				[
-					'label' 	=> __( 'Background', 'elementor-extras' ),
+					'label' 	=> __( 'Background', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'default'	=> '',
 					'selectors' => [
@@ -1564,7 +1565,7 @@ class Popup extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'popup_body_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '.ee-mfp-popup-{{ID}} .ee-popup__content__body',
 					'conditions'	=> $this->get_inline_conditions(),
 				]
@@ -1583,7 +1584,7 @@ class Popup extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_footer',
 			[
-				'label' => __( 'Footer', 'elementor-extras' ),
+				'label' => __( 'Footer', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 				'conditions'	=> $this->get_inline_conditions( $footer_conditions ),
 			]
@@ -1592,7 +1593,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_footer_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -1605,7 +1606,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_footer_background',
 				[
-					'label' 	=> __( 'Background Color', 'elementor-extras' ),
+					'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'default'	=> '',
 					'selectors' => [
@@ -1619,7 +1620,7 @@ class Popup extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'popup_footer_border',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '.ee-mfp-popup-{{ID}} .ee-popup__footer',
 					'conditions'	=> $this->get_inline_conditions( $footer_conditions ),
 				]
@@ -1630,7 +1631,7 @@ class Popup extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_image',
 			[
-				'label' => __( 'Image', 'elementor-extras' ),
+				'label' => __( 'Image', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 				'condition'	=> [
 					'popup_type' => 'image',
@@ -1641,7 +1642,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_image_heading',
 				[
-					'label' 	=> __( 'Image', 'elementor-extras' ),
+					'label' 	=> __( 'Image', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'condition'	=> [
 						'popup_type' => 'image',
@@ -1660,7 +1661,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_caption_heading',
 				[
-					'label' 	=> __( 'Caption', 'elementor-extras' ),
+					'label' 	=> __( 'Caption', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'condition'	=> [
 						'popup_type' => 'image',
@@ -1672,7 +1673,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_caption_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -1688,7 +1689,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_caption_margin',
 				[
-					'label' 		=> __( 'Margin', 'elementor-extras' ),
+					'label' 		=> __( 'Margin', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -1705,7 +1706,7 @@ class Popup extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'popup_caption_border',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '.ee-mfp-popup-{{ID}} .mfp-bottom-bar',
 					'condition'	=> [
 						'popup_type' => 'image',
@@ -1717,7 +1718,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_caption_color',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'separator' => 'before',
 					'type' 		=> Controls_Manager::COLOR,
 					'default'	=> '',
@@ -1731,7 +1732,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_caption_background',
 				[
-					'label' 	=> __( 'Background Color', 'elementor-extras' ),
+					'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'default'	=> '',
 					'selectors' => [
@@ -1747,19 +1748,19 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_caption_blend',
 				[
-					'label' 		=> __( 'Blend mode', 'elementor-extras' ),
+					'label' 		=> __( 'Blend mode', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT,
 					'default' 		=> 'normal',
 					'options' => [
-						'normal'			=> __( 'Normal', 'elementor-extras' ),
-						'multiply'			=> __( 'Multiply', 'elementor-extras' ),
-						'screen'			=> __( 'Screen', 'elementor-extras' ),
-						'overlay'			=> __( 'Overlay', 'elementor-extras' ),
-						'darken'			=> __( 'Darken', 'elementor-extras' ),
-						'lighten'			=> __( 'Lighten', 'elementor-extras' ),
-						'color'				=> __( 'Color', 'elementor-extras' ),
-						'color-dodge'		=> __( 'Color Dodge', 'elementor-extras' ),
-						'hue'				=> __( 'Hue', 'elementor-extras' ),
+						'normal'			=> __( 'Normal', 'landtech-extras-for-elementor' ),
+						'multiply'			=> __( 'Multiply', 'landtech-extras-for-elementor' ),
+						'screen'			=> __( 'Screen', 'landtech-extras-for-elementor' ),
+						'overlay'			=> __( 'Overlay', 'landtech-extras-for-elementor' ),
+						'darken'			=> __( 'Darken', 'landtech-extras-for-elementor' ),
+						'lighten'			=> __( 'Lighten', 'landtech-extras-for-elementor' ),
+						'color'				=> __( 'Color', 'landtech-extras-for-elementor' ),
+						'color-dodge'		=> __( 'Color Dodge', 'landtech-extras-for-elementor' ),
+						'hue'				=> __( 'Hue', 'landtech-extras-for-elementor' ),
 					],
 					'selectors' 	=> [
 						'.ee-mfp-popup-{{ID}} .mfp-bottom-bar' => 'background-blend-mode: {{VALUE}};',
@@ -1771,7 +1772,7 @@ class Popup extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'popup_caption_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '.ee-mfp-popup-{{ID}} .mfp-bottom-bar',
 					'condition'	=> [
 						'popup_type' => 'image',
@@ -1785,7 +1786,7 @@ class Popup extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_close',
 			[
-				'label' => __( 'Close', 'elementor-extras' ),
+				'label' => __( 'Close', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 				'conditions' => [
 					'relation'	=> 'or',
@@ -1808,7 +1809,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_style_icon_heading',
 				[
-					'label' 	=> __( 'Icon', 'elementor-extras' ),
+					'label' 	=> __( 'Icon', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'condition'	=> [
 						'popup_close_position!' => '',
@@ -1819,7 +1820,7 @@ class Popup extends Extras_Widget {
 			$this->add_responsive_control(
 				'popup_icon_size',
 				[
-					'label' 		=> __( 'Size', 'elementor-extras' ),
+					'label' 		=> __( 'Size', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -1841,7 +1842,7 @@ class Popup extends Extras_Widget {
 			$this->add_responsive_control(
 				'popup_icon_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -1862,7 +1863,7 @@ class Popup extends Extras_Widget {
 			$this->add_responsive_control(
 				'popup_icon_margin',
 				[
-					'label' 		=> __( 'Distance', 'elementor-extras' ),
+					'label' 		=> __( 'Distance', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -1882,7 +1883,7 @@ class Popup extends Extras_Widget {
 			$this->add_responsive_control(
 				'popup_icon_margins',
 				[
-					'label' 		=> __( 'Margin', 'elementor-extras' ),
+					'label' 		=> __( 'Margin', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -1897,7 +1898,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_icon_border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
@@ -1924,7 +1925,7 @@ class Popup extends Extras_Widget {
 			$this->start_controls_tabs( 'icon_tabs_hover' );
 
 			$this->start_controls_tab( 'icon_tab_default', [
-				'label' => __( 'Default', 'elementor-extras' ),
+				'label' => __( 'Default', 'landtech-extras-for-elementor' ),
 				'condition'	=> [
 					'popup_close_position!' => '',
 				],
@@ -1933,7 +1934,7 @@ class Popup extends Extras_Widget {
 				$this->add_control(
 					'popup_icon_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -1948,7 +1949,7 @@ class Popup extends Extras_Widget {
 				$this->add_control(
 					'popup_icon_background',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -1963,7 +1964,7 @@ class Popup extends Extras_Widget {
 			$this->end_controls_tab();
 
 			$this->start_controls_tab( 'icon_tab_hover', [
-				'label' => __( 'Hover', 'elementor-extras' ),
+				'label' => __( 'Hover', 'landtech-extras-for-elementor' ),
 				'condition'	=> [
 					'popup_close_position!' => '',
 				],
@@ -1972,7 +1973,7 @@ class Popup extends Extras_Widget {
 				$this->add_control(
 					'popup_icon_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -1987,7 +1988,7 @@ class Popup extends Extras_Widget {
 				$this->add_control(
 					'popup_icon_background_hover',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -2006,7 +2007,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_style_button_heading',
 				[
-					'label' 	=> __( 'Button', 'elementor-extras' ),
+					'label' 	=> __( 'Button', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 					'condition' => [
@@ -2019,20 +2020,20 @@ class Popup extends Extras_Widget {
 			$this->add_responsive_control(
 				'popup_style_button_align',
 				[
-					'label' 		=> __( 'Align', 'elementor-extras' ),
+					'label' 		=> __( 'Align', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'flex-start' 	=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'flex-end' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -2049,7 +2050,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_button_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -2065,7 +2066,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_button_margin',
 				[
-					'label' 		=> __( 'Margin', 'elementor-extras' ),
+					'label' 		=> __( 'Margin', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -2081,7 +2082,7 @@ class Popup extends Extras_Widget {
 			$this->add_control(
 				'popup_button_border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
@@ -2098,7 +2099,7 @@ class Popup extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'popup_button_border',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '.ee-mfp-popup-{{ID}} .ee-popup__footer__button .ee-button',
 					'condition' => [
 						'popup_type!' => [ 'image', 'iframe' ],
@@ -2111,7 +2112,7 @@ class Popup extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'popup_button_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '.ee-mfp-popup-{{ID}} .ee-popup__footer__button .ee-button',
 					'condition' => [
 						'popup_type!' => [ 'image', 'iframe' ],
@@ -2136,7 +2137,7 @@ class Popup extends Extras_Widget {
 			$this->start_controls_tabs( 'button_tabs_hover' );
 
 			$this->start_controls_tab( 'button_tab_default', [
-				'label' => __( 'Default', 'elementor-extras' ),
+				'label' => __( 'Default', 'landtech-extras-for-elementor' ),
 				'condition' => [
 					'popup_type!' => [ 'image', 'iframe' ],
 					'popup_close_button_position' => 'default',
@@ -2146,7 +2147,7 @@ class Popup extends Extras_Widget {
 				$this->add_control(
 					'popup_button_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -2162,7 +2163,7 @@ class Popup extends Extras_Widget {
 				$this->add_control(
 					'popup_button_background',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -2178,7 +2179,7 @@ class Popup extends Extras_Widget {
 			$this->end_controls_tab();
 
 			$this->start_controls_tab( 'button_tab_hover', [
-				'label' => __( 'Hover', 'elementor-extras' ),
+				'label' => __( 'Hover', 'landtech-extras-for-elementor' ),
 				'condition' => [
 					'popup_type!' => [ 'image', 'iframe' ],
 					'popup_close_button_position' => 'default',
@@ -2188,7 +2189,7 @@ class Popup extends Extras_Widget {
 				$this->add_control(
 					'popup_button_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -2204,7 +2205,7 @@ class Popup extends Extras_Widget {
 				$this->add_control(
 					'popup_button_background_hover',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -2272,7 +2273,7 @@ class Popup extends Extras_Widget {
 		$settings = $this->get_settings_for_display();
 
 		$has_inline_trigger = 'click' === $settings['popup_trigger'] && 'text' == $settings['popup_click_target'];
-		$content_link = '#ee_popup__trigger-' . $this->get_id();
+		$content_link = '#ltxe_popup__trigger-' . $this->get_id();
 
 		if ( 'iframe' === $settings['popup_type'] ) {
 
@@ -2314,9 +2315,9 @@ class Popup extends Extras_Widget {
 				'class' 	=> [
 					'ee-popup__content',
 					'zoom-anim-dialog',
-					'mfp-hide',
+					'mfp-hide glightbox-hide',
 				],
-				'id'		=> 'ee_popup__trigger-' . $this->get_id(),
+				'id'		=> 'ltxe_popup__trigger-' . $this->get_id(),
 			],
 		] );
 
@@ -2334,19 +2335,21 @@ class Popup extends Extras_Widget {
 			$this->add_render_attribute( 'popup-content', 'data-ee-popup-url', $settings['popup_url']['url'] );
 		}
 
-		?><div <?php echo $this->get_render_attribute_string( 'popup' ) ; ?>><?php 
-			
-			if ( 'click' !== $settings['popup_trigger'] || 'text' !== $settings['popup_click_target'] )
-				echo $this->render_placeholder( [
-				'body' => __( 'This area will not appear on the front-end.', 'elementor-extras' ),
-			] ); ?>
+		?><div <?php $this->print_render_attribute_string( 'popup' ) ; ?>><?php
 
-			<a <?php echo $this->get_render_attribute_string( 'popup-trigger' ) ; ?>><?php
+			if ( 'click' !== $settings['popup_trigger'] || 'text' !== $settings['popup_click_target'] ) {
+				$this->render_placeholder( [
+					'body' => __( 'This area will not appear on the front-end.', 'landtech-extras-for-elementor' ),
+				] );
+			}
+			?>
+
+			<a <?php $this->print_render_attribute_string( 'popup-trigger' ) ; ?>><?php
 				if ( $has_inline_trigger ) 
-					echo $settings['popup_trigger_text'];
+					echo esc_html( $settings['popup_trigger_text'] );
 			?></a>
 
-			<div <?php echo $this->get_render_attribute_string( 'popup-content' ) ; ?>>
+			<div <?php $this->print_render_attribute_string( 'popup-content' ) ; ?>>
 				<?php $this->render_header(); ?>
 				<?php $this->render_body(); ?>
 				<?php $this->render_footer(); ?>
@@ -2372,10 +2375,10 @@ class Popup extends Extras_Widget {
 		$this->add_render_attribute( 'popup-header', 'class', 'ee-popup__header' );
 		$this->add_render_attribute( 'popup-content-title', 'class', 'ee-popup__header__title' );
 
-		?><div <?php echo $this->get_render_attribute_string( 'popup-header' ) ; ?>>
-			<<?php echo $title_tag; ?> <?php echo $this->get_render_attribute_string( 'popup-content-title' ) ; ?>>
-				<?php echo $settings['popup_title']; ?>
-			</<?php echo $title_tag; ?>>
+		?><div <?php $this->print_render_attribute_string( 'popup-header' ) ; ?>>
+			<<?php echo esc_html( $this->ltxe_sanitize_heading_tag( $title_tag ) ); ?> <?php $this->print_render_attribute_string( 'popup-content-title' ) ; ?>>
+				<?php echo wp_kses_post( $settings['popup_title'] ); ?>
+			</<?php echo esc_html( $this->ltxe_sanitize_heading_tag( $title_tag ) ); ?>>
 		</div><?php
 	}
 
@@ -2390,11 +2393,11 @@ class Popup extends Extras_Widget {
 
 		$this->add_render_attribute( 'popup-content-body', 'class', 'ee-popup__content__body' );
 
-		?><div <?php echo $this->get_render_attribute_string( 'popup-content-body' ) ; ?>><?php
+		?><div <?php $this->print_render_attribute_string( 'popup-content-body' ) ; ?>><?php
 
 			switch ( $settings['popup_type'] ) {
 				case 'text':
-					echo $this->parse_text_editor( $settings['popup_content'] );
+					echo wp_kses_post( $this->parse_text_editor( $settings['popup_content'] ) );
 					break;
 				case 'template':
 					TemplatesControl::render_template_content( $settings['popup_template'], $this );
@@ -2431,11 +2434,11 @@ class Popup extends Extras_Widget {
 		] );
 		$this->add_render_attribute( 'popup-button-content', 'class', 'ee-button-content-wrapper' );
 
-		?><div <?php echo $this->get_render_attribute_string( 'popup-footer' ) ; ?>>
-			<a <?php echo $this->get_render_attribute_string( 'popup-button-wrapper' ) ; ?>>
-				<span <?php echo $this->get_render_attribute_string( 'popup-button' ) ; ?>>
-					<span <?php echo $this->get_render_attribute_string( 'popup-button-content' ) ; ?>>
-						<?php echo $settings['popup_close_button_text']; ?>
+		?><div <?php $this->print_render_attribute_string( 'popup-footer' ) ; ?>>
+			<a <?php $this->print_render_attribute_string( 'popup-button-wrapper' ) ; ?>>
+				<span <?php $this->print_render_attribute_string( 'popup-button' ) ; ?>>
+					<span <?php $this->print_render_attribute_string( 'popup-button-content' ) ; ?>>
+						<?php echo esc_html( $settings['popup_close_button_text'] ); ?>
 					</span>
 				</span>
 			</a>

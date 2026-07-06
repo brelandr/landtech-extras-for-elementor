@@ -1,9 +1,10 @@
 <?php
-namespace ElementorExtras\Modules\CustomFields\Fields;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\CustomFields\Fields;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Module_Base;
-use ElementorExtras\Modules\CustomFields\Fields\Field_Base;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Module_Base;
+use LandTechExtras\Modules\CustomFields\Fields\Field_Base;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -35,7 +36,7 @@ class Toolset extends Field_Base {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Toolset', 'elementor-extras' );
+		return __( 'Toolset', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -129,7 +130,7 @@ class Toolset extends Field_Base {
 
 			$timestamp = (int)$timestamp;
 
-			$value = date( 'Y-m-d', $timestamp );
+			$value = wp_date( 'Y-m-d', $timestamp );
 		}
 
 		return wp_kses_post( $value );

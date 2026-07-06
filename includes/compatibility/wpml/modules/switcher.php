@@ -1,5 +1,6 @@
 <?php
-namespace ElementorExtras\Compatibility\WPML;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Compatibility\WPML;
 
 use WPML_Elementor_Module_With_Items;
 
@@ -41,15 +42,15 @@ class Switcher extends WPML_Elementor_Module_With_Items {
 	 */
 	protected function get_title( $field ) {
 		if ( 'title' === $field ) {
-			return esc_html__( 'Switcher: Title', 'elementor-extras' );
+			return esc_html__( 'Switcher: Title', 'landtech-extras-for-elementor' );
 		}
 
 		if ( 'label' === $field ) {
-			return esc_html__( 'Switcher: Navigation Label', 'elementor-extras' );
+			return esc_html__( 'Switcher: Navigation Label', 'landtech-extras-for-elementor' );
 		}
 
 		if ( 'description' === $field ) {
-			return esc_html__( 'Switcher: Description', 'elementor-extras' );
+			return esc_html__( 'Switcher: Description', 'landtech-extras-for-elementor' );
 		}
 
 		return '';

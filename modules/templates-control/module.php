@@ -1,9 +1,10 @@
 <?php
-namespace ElementorExtras\Modules\TemplatesControl;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\TemplatesControl;
 
-// Extras for Elementor Classes
-use ElementorExtras\Utils;
-use ElementorExtras\Base\Module_Base;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Utils;
+use LandTechExtras\Base\Module_Base;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -48,10 +49,16 @@ class Module extends Module_Base {
 	 * @return string
 	 */
 	protected static function empty_templates_message( $template_type = '' ) {
+		$title = sprintf(
+			/* translators: %s: Template type name prefix with trailing space (e.g. "Section "). */
+			__( 'You Haven’t Saved %sTemplates Yet.', 'landtech-extras-for-elementor' ),
+			ucfirst( $template_type ) . ' '
+		);
+
 		return '<div id="elementor-widget-template-empty-templates">
 				<div class="elementor-widget-template-empty-templates-icon"><i class="eicon-nerd"></i></div>
-				<div class="elementor-widget-template-empty-templates-title">' . sprintf( __( 'You Haven’t Saved %sTemplates Yet.', 'elementor-extras' ), ucfirst( $template_type ) . ' ' ) . '</div>
-				<div class="elementor-widget-template-empty-templates-footer">' . __( 'Want to learn more about Elementor library?', 'elementor-extras' ) . ' <a class="elementor-widget-template-empty-templates-footer-url" href="https://go.elementor.com/docs-library/" target="_blank">' . __( 'Click Here', 'elementor-extras' ) . '</a>
+				<div class="elementor-widget-template-empty-templates-title">' . $title . '</div>
+				<div class="elementor-widget-template-empty-templates-footer">' . __( 'Want to learn more about Elementor library?', 'landtech-extras-for-elementor' ) . ' <a class="elementor-widget-template-empty-templates-footer-url" href="https://go.elementor.com/docs-library/" target="_blank">' . __( 'Click Here', 'landtech-extras-for-elementor' ) . '</a>
 				</div>
 				</div>';
 	}
@@ -128,13 +135,13 @@ class Module extends Module_Base {
 		$object->add_control(
 			$args['prefix'] . 'template_type',
 			[
-				'label'		=> __( 'Template Type', 'elementor-extras' ),
+				'label'		=> __( 'Template Type', 'landtech-extras-for-elementor' ),
 				'type' 		=> Controls_Manager::SELECT,
 				'default' 	=> 'section',
 				'options' 	=> [
-					'section'	=> __( 'Section', 'elementor-extras' ),
-					'page'		=> __( 'Page', 'elementor-extras' ),
-					'widget'	=> __( 'Widget', 'elementor-extras' ),
+					'section'	=> __( 'Section', 'landtech-extras-for-elementor' ),
+					'page'		=> __( 'Page', 'landtech-extras-for-elementor' ),
+					'widget'	=> __( 'Widget', 'landtech-extras-for-elementor' ),
 				],
 				'condition' 	=> $args['condition'],
 			]
@@ -181,7 +188,11 @@ class Module extends Module_Base {
 			return;
 		}
 
-		$options['0'] = '— ' . sprintf( __( 'Select %s', 'elementor-extras' ), $type ) . ' —';
+		$options['0'] = '— ' . sprintf(
+			/* translators: %s: Elementor template section type (e.g. section, page). */
+			__( 'Select %s', 'landtech-extras-for-elementor' ),
+			$type
+		) . ' —';
 
 		foreach ( $templates as $template ) {
 			$options[ $template['template_id'] ] = $template['title'] . ' (' . $template['type'] . ')';
@@ -190,7 +201,11 @@ class Module extends Module_Base {
 		$object->add_control(
 			$templates_key,
 			[
-				'label' 		=> sprintf( __( 'Choose %s', 'elementor-extras' ), $type ),
+				'label' 		=> sprintf(
+					/* translators: %s: Elementor template section type (e.g. section, page). */
+					__( 'Choose %s', 'landtech-extras-for-elementor' ),
+					$type
+				),
 				'type' 			=> Controls_Manager::SELECT,
 				'default' 		=> '0',
 				'options' 		=> $options,
@@ -207,10 +222,10 @@ class Module extends Module_Base {
 	 * Renders the content of an Elementor template for with the specified post ID
 	 *
 	 * @param int 									$template_id 	The template post ID
-	 * @param \ElementorExtras\Base\Extras_Widget 	$widget 		The widget instance
+	 * @param \LandTechExtras\Base\Extras_Widget 	$widget 		The widget instance
 	 * @since 2.0.0
 	 */
-	public static function render_template_content( $template_id, \ElementorExtras\Base\Extras_Widget $widget, $in_loop = false ) {
+	public static function render_template_content( $template_id, \LandTechExtras\Base\Extras_Widget $widget, $in_loop = false ) {
 
 		if ( 'publish' !== get_post_status( $template_id ) || ! method_exists( '\Elementor\Frontend', 'get_builder_content_for_display' ) ) {
 			return;
@@ -220,11 +235,11 @@ class Module extends Module_Base {
 			if ( method_exists( $widget, 'render_placeholder' ) ) {
 				$widget->render_placeholder([
 					'title_tag' => 'h5',
-					'title' 	=> __( 'Missing Template', 'elementor-extras' ),
-					'body'		=> __( 'Set the skin template you want to use in the widget settings.', 'elementor-extras' ),
+					'title' 	=> __( 'Missing Template', 'landtech-extras-for-elementor' ),
+					'body'		=> __( 'Set the skin template you want to use in the widget settings.', 'landtech-extras-for-elementor' ),
 				]);
 			} else {
-				_e( 'No template selected.', 'elementor-extras' );
+				esc_html_e( 'No template selected.', 'landtech-extras-for-elementor' );
 			}
 		} else {
 
@@ -270,7 +285,9 @@ class Module extends Module_Base {
 				$wp_query = $old_query;
 			}
 
-			?><div class="elementor-template"><?php echo $template; ?></div><?php
+			?><div class="elementor-template"><?php
+			echo $template; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Full HTML from Elementor Frontend::get_builder_content_for_display().
+			?></div><?php
 		}
 	}
 }

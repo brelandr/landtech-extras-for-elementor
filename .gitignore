@@ -16,9 +16,21 @@ vendor/
 
 # Archives (use create-plugin-zip.sh for distribution)
 *.zip
+DIST/
 
 # Cursor local state (keep .cursorrules tracked)
 .cursor/
 
+# WP Plugin Check dev tool (local only — never submit to WP.org or GitHub)
+.plugin-check/
+
+# Release scratch marker
+.release
+
 # PHPUnit cache
 .phpunit.result.cache
+
+# Plugin Check / PHPCS markdown exports (timestamped). Regenerate with the project security ruleset
+# (e.g. phpcs --standard=phpcs.security.xml) and export; optionally copy the clean result to
+# scripts/plugin-check-report-latest.md for a single tracked snapshot.
+scripts/landtech-extras-for-elementor-*-php-*.md

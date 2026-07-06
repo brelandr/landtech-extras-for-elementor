@@ -1,12 +1,14 @@
 <?php
-namespace ElementorExtras\Modules\Gallery\Widgets;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Gallery\Widgets;
 
-// Extras for Elementor Classes
-use ElementorExtras\ElementorExtrasPlugin as Plugin;
-use ElementorExtras\Group_Control_Transition;
-use ElementorExtras\Base\Extras_Widget;
-use ElementorExtras\Modules\Gallery\Module;
-use ElementorExtras\Modules\Image\Module as ImageModule;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\LandTechExtrasPlugin as Plugin;
+use LandTechExtras\Group_Control_Transition;
+use LandTechExtras\Base\Extras_Widget;
+use LandTechExtras\Gallery\ACF_Gallery_Bridge;
+use LandTechExtras\Modules\Gallery\Module;
+use LandTechExtras\Modules\Image\Module as ImageModule;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -76,7 +78,7 @@ class Gallery extends Extras_Widget {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Gallery', 'elementor-extras' );
+		return __( 'Gallery', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -101,11 +103,10 @@ class Gallery extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
-			'tilt',
-			'parallax-gallery',
-			'jquery-resize-ee',
-			'isotope',
-			'packery-mode',
+			'landtech-extras-tilt',
+			'landtech-extras-parallax-gallery',
+			'landtech-extras-jquery-resize',
+			'landtech-extras-isotope',
 			'imagesloaded',
 		];
 	}
@@ -121,33 +122,39 @@ class Gallery extends Extras_Widget {
 		$this->start_controls_section(
 			'section_gallery',
 			[
-				'label' => __( 'Gallery', 'elementor-extras' ),
+				'label' => __( 'Gallery', 'landtech-extras-for-elementor' ),
 			]
 		);
+
+			$gallery_type_options = [
+				'wordpress'	=> __( 'Wordpress', 'landtech-extras-for-elementor' ),
+				'manual' 		=> __( 'Manual', 'landtech-extras-for-elementor' ),
+				'instagram' 	=> __( 'Instagram', 'landtech-extras-for-elementor' ),
+			];
+
+			if ( ACF_Gallery_Bridge::is_enabled() ) {
+				$gallery_type_options['acf_gallery'] = __( 'ACF Gallery', 'landtech-extras-for-elementor' );
+			}
 
 			$this->add_control(
 				'gallery_type',
 				[
-					'label' 	=> __( 'Type', 'elementor-extras' ),
+					'label' 	=> __( 'Type', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'wordpress',
-					'options' 	=> [
-						'wordpress'	=> __( 'Wordpress', 'elementor-extras' ),
-						'manual' 	=> __( 'Manual', 'elementor-extras' ),
-						'instagram' => __( 'Instagram', 'elementor-extras' ),
-					],
+					'options' 	=> $gallery_type_options,
 				]
 			);
 
 			$this->add_control(
 				'insta_display',
 				[
-					'label' 	=> __( 'Display', 'elementor-extras' ),
+					'label' 	=> __( 'Display', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'feed',
 					'options' 	=> [
-						'feed'	=> __( 'My Photos', 'elementor-extras' ),
-						'tags'	=> __( 'Tagged Photos', 'elementor-extras' ),
+						'feed'	=> __( 'My Photos', 'landtech-extras-for-elementor' ),
+						'tags'	=> __( 'Tagged Photos', 'landtech-extras-for-elementor' ),
 					],
 					'condition' => [
 						'gallery_type' => 'instagram',
@@ -161,8 +168,9 @@ class Gallery extends Extras_Widget {
 					[
 						'type' 				=> Controls_Manager::RAW_HTML,
 						'raw'  				=> sprintf(
-												__( 'The global Instagram access token is missing. You can use a custom one below or add it %1$shere%2$s. Find out %3$show to get your access token%4$s.', 'elementor-extras' ),
-												'<a target="_blank" href="' . admin_url( 'admin.php?page=elementor-extras#elementor_extras_apis' ) . '">',
+												/* translators: 1–2: link to APIs settings, 3–4: link to Instagram token documentation. */
+												__( 'The global Instagram access token is missing. You can use a custom one below or add it %1$shere%2$s. Find out %3$show to get your access token%4$s.', 'landtech-extras-for-elementor' ),
+												'<a target="_blank" href="' . admin_url( 'admin.php?page=landtech-extras#landtech_extras_apis' ) . '">',
 												'</a>',
 												'<a target="_blank" href="' . Plugin::$instance->get_link('docs_ig_token') . '">',
 												'</a>'
@@ -179,8 +187,13 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'access_token',
 				[
-					'label' 		=> __( 'Override Global Access Token', 'elementor-extras' ),
-					'description'	=> sprintf( __( 'Leave blank to use the global token set under Elementor > Extras > APIs. %1$sHow to get an access token%2$s', 'elementor-extras' ), '<a target="_blank" href="' . Plugin::$instance->get_link('docs_ig_token') . '">', '</a>' ),
+					'label' 		=> __( 'Override Global Access Token', 'landtech-extras-for-elementor' ),
+					'description'	=> sprintf(
+						/* translators: 1–2: opening and closing link markup to Instagram token documentation. */
+						__( 'Leave blank to use the global token set under Elementor > Extras > APIs. %1$sHow to get an access token%2$s', 'landtech-extras-for-elementor' ),
+						'<a target="_blank" href="' . Plugin::$instance->get_link('docs_ig_token') . '">',
+						'</a>'
+					),
 					'label_block'	=> true,
 					'default'		=> '',
 					'type'			=> Controls_Manager::TEXT,
@@ -194,8 +207,8 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'insta_hashtag',
 				[
-					'label' 			=> __( 'Hashtag', 'elementor-extras' ),
-					'description' 		=> __( 'Enter without the # symbol', 'elementor-extras' ),
+					'label' 			=> __( 'Hashtag', 'landtech-extras-for-elementor' ),
+					'description' 		=> __( 'Enter without the # symbol', 'landtech-extras-for-elementor' ),
 					'type'  			=> Controls_Manager::TEXT,
 					'condition' 		=> [
 						'gallery_type' 	=> 'instagram',
@@ -215,7 +228,7 @@ class Gallery extends Extras_Widget {
 			$gallery_items->add_control(
 				'image',
 				[
-					'label' 	=> __( 'Choose Image', 'elementor-extras' ),
+					'label' 	=> __( 'Choose Image', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::MEDIA,
 					'default' 	=> [
 						'url' 	=> Utils::get_placeholder_image_src(),
@@ -226,14 +239,14 @@ class Gallery extends Extras_Widget {
 			$gallery_items->add_control(
 				'link',
 				[
-					'label' 	=> __( 'Link to', 'elementor-extras' ),
+					'label' 	=> __( 'Link to', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'file',
 					'options' 	=> [
-						'file' 			=> __( 'Media File', 'elementor-extras' ),
-						'attachment' 	=> __( 'Attachment Page', 'elementor-extras' ),
-						'custom' 		=> __( 'Custom URL', 'elementor-extras' ),
-						'' 				=> __( 'None', 'elementor-extras' ),
+						'file' 			=> __( 'Media File', 'landtech-extras-for-elementor' ),
+						'attachment' 	=> __( 'Attachment Page', 'landtech-extras-for-elementor' ),
+						'custom' 		=> __( 'Custom URL', 'landtech-extras-for-elementor' ),
+						'' 				=> __( 'None', 'landtech-extras-for-elementor' ),
 					],
 				]
 			);
@@ -241,7 +254,7 @@ class Gallery extends Extras_Widget {
 			$gallery_items->add_control(
 				'link_url',
 				[
-					'label' 		=> __( 'Link', 'elementor-extras' ),
+					'label' 		=> __( 'Link', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::URL,
 					'placeholder' 	=> esc_url( home_url( '/' ) ),
 					'default' 		=> [
@@ -258,18 +271,18 @@ class Gallery extends Extras_Widget {
 				$gallery_items->start_controls_tab(
 					'custom_desktop',
 					[
-						'label' => __( 'Desktop', 'elementor-extras' ),
+						'label' => __( 'Desktop', 'landtech-extras-for-elementor' ),
 					]
 				);
 
 					$gallery_items->add_control(
 						'custom_size',
 						[
-							'label'			=> __( 'Custom Size', 'elementor-extras' ),
+							'label'			=> __( 'Custom Size', 'landtech-extras-for-elementor' ),
 							'type' 			=> Controls_Manager::SWITCHER,
 							'default' 		=> '',
-							'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-							'label_off' 	=> __( 'No', 'elementor-extras' ),
+							'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+							'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 							'return_value' 	=> 'yes',
 						]
 					);
@@ -277,24 +290,24 @@ class Gallery extends Extras_Widget {
 					$gallery_items->add_control(
 						'width',
 						[
-							'label' 		=> __( 'Width', 'elementor-extras' ),
+							'label' 		=> __( 'Width', 'landtech-extras-for-elementor' ),
 							'type' 			=> Controls_Manager::SELECT,
 							'label_block' 	=> true,
 							'default' 		=> '',
 							'options' 		=> [
-								'' 			=> __( 'Default', 'elementor-extras' ),
-								'100%' 		=> __( 'Full Width', 'elementor-extras' ),
-								'50%' 		=> __( 'One Half', 'elementor-extras' ),
-								'33.3333%' 	=> __( 'One Third', 'elementor-extras' ),
-								'66.6666%' 	=> __( 'Two Thirds', 'elementor-extras' ),
-								'25%' 		=> __( 'One Quarter', 'elementor-extras' ),
-								'75%' 		=> __( 'Three Quarters', 'elementor-extras' ),
-								'20%' 		=> __( 'One Fifth', 'elementor-extras' ),
-								'40%' 		=> __( 'Two Fifths', 'elementor-extras' ),
-								'60%' 		=> __( 'Three Fifths', 'elementor-extras' ),
-								'80%' 		=> __( 'Four Fifths', 'elementor-extras' ),
-								'16.6666%' 	=> __( 'One Sixth', 'elementor-extras' ),
-								'83.3333%' 	=> __( 'Five Sixths', 'elementor-extras' ),
+								'' 			=> __( 'Default', 'landtech-extras-for-elementor' ),
+								'100%' 		=> __( 'Full Width', 'landtech-extras-for-elementor' ),
+								'50%' 		=> __( 'One Half', 'landtech-extras-for-elementor' ),
+								'33.3333%' 	=> __( 'One Third', 'landtech-extras-for-elementor' ),
+								'66.6666%' 	=> __( 'Two Thirds', 'landtech-extras-for-elementor' ),
+								'25%' 		=> __( 'One Quarter', 'landtech-extras-for-elementor' ),
+								'75%' 		=> __( 'Three Quarters', 'landtech-extras-for-elementor' ),
+								'20%' 		=> __( 'One Fifth', 'landtech-extras-for-elementor' ),
+								'40%' 		=> __( 'Two Fifths', 'landtech-extras-for-elementor' ),
+								'60%' 		=> __( 'Three Fifths', 'landtech-extras-for-elementor' ),
+								'80%' 		=> __( 'Four Fifths', 'landtech-extras-for-elementor' ),
+								'16.6666%' 	=> __( 'One Sixth', 'landtech-extras-for-elementor' ),
+								'83.3333%' 	=> __( 'Five Sixths', 'landtech-extras-for-elementor' ),
 							],
 							'selectors' => [
 								'(desktop+){{WRAPPER}} {{CURRENT_ITEM}}.ee-grid__item--custom-size' => 'width: {{VALUE}};',
@@ -308,7 +321,7 @@ class Gallery extends Extras_Widget {
 					$gallery_items->add_control(
 						'height_ratio',
 						[
-							'label' 	=> __( 'Image Size Ratio', 'elementor-extras' ),
+							'label' 	=> __( 'Image Size Ratio', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::SLIDER,
 							'default'	=> [
 								'size'	=> '',
@@ -333,18 +346,18 @@ class Gallery extends Extras_Widget {
 				$gallery_items->start_controls_tab(
 					'custom_tablet',
 					[
-						'label' => __( 'Tablet', 'elementor-extras' ),
+						'label' => __( 'Tablet', 'landtech-extras-for-elementor' ),
 					]
 				);
 
 					$gallery_items->add_control(
 						'custom_size_tablet',
 						[
-							'label'			=> __( 'Custom Size', 'elementor-extras' ),
+							'label'			=> __( 'Custom Size', 'landtech-extras-for-elementor' ),
 							'type' 			=> Controls_Manager::SWITCHER,
 							'default' 		=> '',
-							'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-							'label_off' 	=> __( 'No', 'elementor-extras' ),
+							'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+							'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 							'return_value' 	=> 'yes',
 						]
 					);
@@ -352,24 +365,24 @@ class Gallery extends Extras_Widget {
 					$gallery_items->add_control(
 						'width_tablet',
 						[
-							'label' 		=> __( 'Width', 'elementor-extras' ),
+							'label' 		=> __( 'Width', 'landtech-extras-for-elementor' ),
 							'type' 			=> Controls_Manager::SELECT,
 							'default' 		=> '',
 							'label_block' 	=> true,
 							'options' 		=> [
-								'' 			=> __( 'Default', 'elementor-extras' ),
-								'100%' 		=> __( 'Full Width', 'elementor-extras' ),
-								'50%' 		=> __( 'One Half', 'elementor-extras' ),
-								'33.3333%' 	=> __( 'One Third', 'elementor-extras' ),
-								'66.6666%' 	=> __( 'Two Thirds', 'elementor-extras' ),
-								'25%' 		=> __( 'One Quarter', 'elementor-extras' ),
-								'75%' 		=> __( 'Three Quarters', 'elementor-extras' ),
-								'20%' 		=> __( 'One Fifth', 'elementor-extras' ),
-								'40%' 		=> __( 'Two Fifths', 'elementor-extras' ),
-								'60%' 		=> __( 'Three Fifths', 'elementor-extras' ),
-								'80%' 		=> __( 'Four Fifths', 'elementor-extras' ),
-								'16.6666%' 	=> __( 'One Sixth', 'elementor-extras' ),
-								'83.3333%' 	=> __( 'Five Sixths', 'elementor-extras' ),
+								'' 			=> __( 'Default', 'landtech-extras-for-elementor' ),
+								'100%' 		=> __( 'Full Width', 'landtech-extras-for-elementor' ),
+								'50%' 		=> __( 'One Half', 'landtech-extras-for-elementor' ),
+								'33.3333%' 	=> __( 'One Third', 'landtech-extras-for-elementor' ),
+								'66.6666%' 	=> __( 'Two Thirds', 'landtech-extras-for-elementor' ),
+								'25%' 		=> __( 'One Quarter', 'landtech-extras-for-elementor' ),
+								'75%' 		=> __( 'Three Quarters', 'landtech-extras-for-elementor' ),
+								'20%' 		=> __( 'One Fifth', 'landtech-extras-for-elementor' ),
+								'40%' 		=> __( 'Two Fifths', 'landtech-extras-for-elementor' ),
+								'60%' 		=> __( 'Three Fifths', 'landtech-extras-for-elementor' ),
+								'80%' 		=> __( 'Four Fifths', 'landtech-extras-for-elementor' ),
+								'16.6666%' 	=> __( 'One Sixth', 'landtech-extras-for-elementor' ),
+								'83.3333%' 	=> __( 'Five Sixths', 'landtech-extras-for-elementor' ),
 							],
 							'selectors' => [
 								'(tablet+)(tablet-){{WRAPPER}} {{CURRENT_ITEM}}.ee-grid__item--custom-size' => 'width: {{VALUE}};',
@@ -383,7 +396,7 @@ class Gallery extends Extras_Widget {
 					$gallery_items->add_control(
 						'height_ratio_tablet',
 						[
-							'label' 	=> __( 'Image Size Ratio', 'elementor-extras' ),
+							'label' 	=> __( 'Image Size Ratio', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::SLIDER,
 							'default'	=> [
 								'size'	=> '',
@@ -408,18 +421,18 @@ class Gallery extends Extras_Widget {
 				$gallery_items->start_controls_tab(
 					'custom_mobile',
 					[
-						'label' => __( 'Mobile', 'elementor-extras' ),
+						'label' => __( 'Mobile', 'landtech-extras-for-elementor' ),
 					]
 				);
 
 					$gallery_items->add_control(
 						'custom_size_mobile',
 						[
-							'label'			=> __( 'Custom Size', 'elementor-extras' ),
+							'label'			=> __( 'Custom Size', 'landtech-extras-for-elementor' ),
 							'type' 			=> Controls_Manager::SWITCHER,
 							'default' 		=> '',
-							'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-							'label_off' 	=> __( 'No', 'elementor-extras' ),
+							'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+							'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 							'return_value' 	=> 'yes',
 						]
 					);
@@ -427,24 +440,24 @@ class Gallery extends Extras_Widget {
 					$gallery_items->add_control(
 						'width_mobile',
 						[
-							'label' 		=> __( 'Width', 'elementor-extras' ),
+							'label' 		=> __( 'Width', 'landtech-extras-for-elementor' ),
 							'type' 			=> Controls_Manager::SELECT,
 							'default' 		=> '',
 							'label_block' 	=> true,
 							'options' 		=> [
-								'' 			=> __( 'Default', 'elementor-extras' ),
-								'100%' 		=> __( 'Full Width', 'elementor-extras' ),
-								'50%' 		=> __( 'One Half', 'elementor-extras' ),
-								'33.3333%' 	=> __( 'One Third', 'elementor-extras' ),
-								'66.6666%' 	=> __( 'Two Thirds', 'elementor-extras' ),
-								'25%' 		=> __( 'One Quarter', 'elementor-extras' ),
-								'75%' 		=> __( 'Three Quarters', 'elementor-extras' ),
-								'20%' 		=> __( 'One Fifth', 'elementor-extras' ),
-								'40%' 		=> __( 'Two Fifths', 'elementor-extras' ),
-								'60%' 		=> __( 'Three Fifths', 'elementor-extras' ),
-								'80%' 		=> __( 'Four Fifths', 'elementor-extras' ),
-								'16.6666%' 	=> __( 'One Sixth', 'elementor-extras' ),
-								'83.3333%' 	=> __( 'Five Sixths', 'elementor-extras' ),
+								'' 			=> __( 'Default', 'landtech-extras-for-elementor' ),
+								'100%' 		=> __( 'Full Width', 'landtech-extras-for-elementor' ),
+								'50%' 		=> __( 'One Half', 'landtech-extras-for-elementor' ),
+								'33.3333%' 	=> __( 'One Third', 'landtech-extras-for-elementor' ),
+								'66.6666%' 	=> __( 'Two Thirds', 'landtech-extras-for-elementor' ),
+								'25%' 		=> __( 'One Quarter', 'landtech-extras-for-elementor' ),
+								'75%' 		=> __( 'Three Quarters', 'landtech-extras-for-elementor' ),
+								'20%' 		=> __( 'One Fifth', 'landtech-extras-for-elementor' ),
+								'40%' 		=> __( 'Two Fifths', 'landtech-extras-for-elementor' ),
+								'60%' 		=> __( 'Three Fifths', 'landtech-extras-for-elementor' ),
+								'80%' 		=> __( 'Four Fifths', 'landtech-extras-for-elementor' ),
+								'16.6666%' 	=> __( 'One Sixth', 'landtech-extras-for-elementor' ),
+								'83.3333%' 	=> __( 'Five Sixths', 'landtech-extras-for-elementor' ),
 							],
 							'selectors' => [
 								'(mobile){{WRAPPER}} {{CURRENT_ITEM}}.ee-grid__item--custom-size' => 'width: {{VALUE}};',
@@ -458,7 +471,7 @@ class Gallery extends Extras_Widget {
 					$gallery_items->add_control(
 						'height_ratio_mobile',
 						[
-							'label' 	=> __( 'Image Size Ratio', 'elementor-extras' ),
+							'label' 	=> __( 'Image Size Ratio', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::SLIDER,
 							'default'	=> [
 								'size'	=> '',
@@ -485,7 +498,7 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'gallery',
 				[
-					'label' 	=> __( 'Images', 'elementor-extras' ),
+					'label' 	=> __( 'Images', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::REPEATER,
 					'default' 	=> [
 						[],
@@ -505,34 +518,68 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'images_heading',
 				[
-					'label' 	=> __( 'Images', 'elementor-extras' ),
+					'label' 	=> __( 'Images', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'condition'	=> [
-						'gallery_type' => 'wordpress',
-					]
+						'gallery_type' => [ 'wordpress', 'acf_gallery' ],
+					],
 				]
 			);
 
 			$this->add_control(
 				'wp_gallery',
 				[
-					'label' 	=> __( 'Add Images', 'elementor-extras' ),
+					'label' 	=> __( 'Add Images', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::GALLERY,
 					'dynamic'	=> [
 						'active' => true,
 					],
 					'condition'	=> [
 						'gallery_type' => 'wordpress',
-					]
+					],
 				]
 			);
+
+			if ( ACF_Gallery_Bridge::is_enabled() ) {
+				$this->add_control(
+					'acf_field_name',
+					[
+						'label'       => __( 'ACF Field Name', 'landtech-extras-for-elementor' ),
+						'type'        => Controls_Manager::TEXT,
+						'description' => __( 'Name of the ACF Gallery field (not the label).', 'landtech-extras-for-elementor' ),
+						'dynamic'     => [
+							'active' => true,
+						],
+						'condition'   => [
+							'gallery_type' => 'acf_gallery',
+						],
+					]
+				);
+
+				$this->add_control(
+					'acf_post_id',
+					[
+						'label'       => __( 'Post ID', 'landtech-extras-for-elementor' ),
+						'type'        => Controls_Manager::NUMBER,
+						'description' => __( 'Leave empty to use the current post.', 'landtech-extras-for-elementor' ),
+						'dynamic'     => [
+							'active' => true,
+						],
+						'min'         => 0,
+						'default'     => 0,
+						'condition'   => [
+							'gallery_type' => 'acf_gallery',
+						],
+					]
+				);
+			}
 
 		$this->end_controls_section();
 
 		$this->start_controls_section(
 			'section_gallery_settings',
 			[
-				'label' => __( 'Settings', 'elementor-extras' ),
+				'label' => __( 'Settings', 'landtech-extras-for-elementor' ),
 			]
 		);
 
@@ -550,14 +597,14 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'insta_image_size',
 				[
-					'label'   => __( 'Image Size', 'elementor-extras' ),
+					'label'   => __( 'Image Size', 'landtech-extras-for-elementor' ),
 					'type'    => Controls_Manager::SELECT,
 					'default' => 'standard',
 					'options' => [
-						'thumbnail' => __( 'Thumbnail (150x150)', 'elementor-extras' ),
-						'low'       => __( 'Low (320x320)', 'elementor-extras' ),
-						'standard'  => __( 'Standard (640x640)', 'elementor-extras' ),
-						'high'      => __( 'High (original)', 'elementor-extras' ),
+						'thumbnail' => __( 'Thumbnail (150x150)', 'landtech-extras-for-elementor' ),
+						'low'       => __( 'Low (320x320)', 'landtech-extras-for-elementor' ),
+						'standard'  => __( 'Standard (640x640)', 'landtech-extras-for-elementor' ),
+						'high'      => __( 'High (original)', 'landtech-extras-for-elementor' ),
 					],
 					'condition'	=> [
 						'gallery_type'	 => 'instagram',
@@ -568,7 +615,7 @@ class Gallery extends Extras_Widget {
 			$this->add_responsive_control(
 				'columns',
 				[
-					'label' 	=> __( 'Columns', 'elementor-extras' ),
+					'label' 	=> __( 'Columns', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> '3',
 					'tablet_default' 	=> '2',
@@ -590,7 +637,7 @@ class Gallery extends Extras_Widget {
 				'columns_notice',
 				[
 					'type' 				=> Controls_Manager::RAW_HTML,
-					'raw' 				=> __( 'If you are specifying the widths for each image individually, set this to correspond to the lowest width in your gallery.', 'elementor-extras' ),
+					'raw' 				=> __( 'If you are specifying the widths for each image individually, set this to correspond to the lowest width in your gallery.', 'landtech-extras-for-elementor' ),
 					'content_classes' 	=> 'elementor-panel-alert elementor-panel-alert-info',
 					'condition'			=> [
 						'gallery_type'	 => 'manual',
@@ -601,30 +648,30 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'gallery_link',
 				[
-					'label' 	=> __( 'Link to', 'elementor-extras' ),
+					'label' 	=> __( 'Link to', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'file',
 					'options' 	=> [
-						'file' 			=> __( 'Media File', 'elementor-extras' ),
-						'attachment' 	=> __( 'Attachment Page', 'elementor-extras' ),
-						'' 				=> __( 'None', 'elementor-extras' ),
+						'file' 			=> __( 'Media File', 'landtech-extras-for-elementor' ),
+						'attachment' 	=> __( 'Attachment Page', 'landtech-extras-for-elementor' ),
+						'' 				=> __( 'None', 'landtech-extras-for-elementor' ),
 					],
 					'condition'	=> [
-						'gallery_type'	=> [ 'wordpress', 'instagram' ],
-					]
+						'gallery_type'	=> [ 'wordpress', 'instagram', 'acf_gallery' ],
+					],
 				]
 			);
 
 			$this->add_control(
 				'open_lightbox',
 				[
-					'label' 	=> __( 'Lightbox', 'elementor-extras' ),
+					'label' 	=> __( 'Lightbox', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'default',
 					'options' 	=> [
-						'default' 	=> __( 'Default', 'elementor-extras' ),
-						'yes' 		=> __( 'Yes', 'elementor-extras' ),
-						'no' 		=> __( 'No', 'elementor-extras' ),
+						'default' 	=> __( 'Default', 'landtech-extras-for-elementor' ),
+						'yes' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+						'no' 		=> __( 'No', 'landtech-extras-for-elementor' ),
 					],
 					'condition' => [
 						'gallery_link' => 'file',
@@ -635,7 +682,7 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'lightbox_slideshow',
 				[
-					'label' 	=> __( 'Lightbox Slideshow', 'elementor-extras' ),
+					'label' 	=> __( 'Lightbox Slideshow', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SWITCHER,
 					'default' 	=> 'yes',
 					'condition' => [
@@ -648,11 +695,11 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'gallery_rand',
 				[
-					'label' 	=> __( 'Ordering', 'elementor-extras' ),
+					'label' 	=> __( 'Ordering', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'options' 	=> [
-						'' 		=> __( 'Default', 'elementor-extras' ),
-						'rand' 	=> __( 'Random', 'elementor-extras' ),
+						'' 		=> __( 'Default', 'landtech-extras-for-elementor' ),
+						'rand' 	=> __( 'Random', 'landtech-extras-for-elementor' ),
 					],
 					'default' 	=> '',
 				]
@@ -661,12 +708,12 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'gallery_display_caption',
 				[
-					'label' 	=> __( 'Caption', 'elementor-extras' ),
+					'label' 	=> __( 'Caption', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> '',
 					'options' 	=> [
-						'' 		=> __( 'Show', 'elementor-extras' ),
-						'none' 	=> __( 'Hide', 'elementor-extras' ),
+						'' 		=> __( 'Show', 'landtech-extras-for-elementor' ),
+						'none' 	=> __( 'Hide', 'landtech-extras-for-elementor' ),
 					],
 					'selectors' => [
 						'{{WRAPPER}} .ee-gallery__media__caption' => 'display: {{VALUE}};',
@@ -677,13 +724,13 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'gallery_caption',
 				[
-					'label' 	=> __( 'Caption Type', 'elementor-extras' ),
+					'label' 	=> __( 'Caption Type', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'caption',
 					'options' 	=> [
-						'title' 		=> __( 'Title', 'elementor-extras' ),
-						'caption' 		=> __( 'Caption', 'elementor-extras' ),
-						'description' 	=> __( 'Description', 'elementor-extras' ),
+						'title' 		=> __( 'Title', 'landtech-extras-for-elementor' ),
+						'caption' 		=> __( 'Caption', 'landtech-extras-for-elementor' ),
+						'description' 	=> __( 'Description', 'landtech-extras-for-elementor' ),
 					],
 					'condition' => [
 						'gallery_display_caption' 	=> '',
@@ -695,7 +742,7 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'view',
 				[
-					'label' 	=> __( 'View', 'elementor-extras' ),
+					'label' 	=> __( 'View', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HIDDEN,
 					'default' 	=> 'traditional',
 				]
@@ -706,7 +753,7 @@ class Gallery extends Extras_Widget {
 		$this->start_controls_section(
 			'section_gallery_instagram',
 			[
-				'label' 	=> __( 'Instagram', 'elementor-extras' ),
+				'label' 	=> __( 'Instagram', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_CONTENT,
 				'condition'	=> [
 					'gallery_type' => 'instagram',
@@ -718,11 +765,11 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'insta_counter_comments',
 				[
-					'label'			=> __( 'Show Comments', 'elementor-extras' ),
+					'label'			=> __( 'Show Comments', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
-					'label_on' 		=> __( 'Show', 'elementor-extras' ),
-					'label_off' 	=> __( 'Hide', 'elementor-extras' ),
+					'label_on' 		=> __( 'Show', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'Hide', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 					'condition'		=> [
 						'gallery_type' => 'instagram',
@@ -734,11 +781,11 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'insta_counter_likes',
 				[
-					'label'			=> __( 'Show Likes', 'elementor-extras' ),
+					'label'			=> __( 'Show Likes', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
-					'label_on' 		=> __( 'Show', 'elementor-extras' ),
-					'label_off' 	=> __( 'Hide', 'elementor-extras' ),
+					'label_on' 		=> __( 'Show', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'Hide', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 					'condition'		=> [
 						'gallery_type' => 'instagram',
@@ -750,11 +797,11 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'insta_counter_caption',
 				[
-					'label'			=> __( 'Show Caption', 'elementor-extras' ),
+					'label'			=> __( 'Show Caption', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
-					'label_on' 		=> __( 'Show', 'elementor-extras' ),
-					'label_off' 	=> __( 'Hide', 'elementor-extras' ),
+					'label_on' 		=> __( 'Show', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'Hide', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 					'condition'		=> [
 						'gallery_type' => 'instagram',
@@ -766,7 +813,7 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'insta_caption_length',
 				[
-					'label' 			=> __( 'Caption Length', 'elementor-extras' ),
+					'label' 			=> __( 'Caption Length', 'landtech-extras-for-elementor' ),
 					'type'  			=> Controls_Manager::NUMBER,
 					'default'			=> 30,
 					'condition' 		=> [
@@ -781,7 +828,7 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'insta_posts_counter',
 				[
-					'label' 			=> __( 'Number of Posts', 'elementor-extras' ),
+					'label' 			=> __( 'Number of Posts', 'landtech-extras-for-elementor' ),
 					'type'  			=> Controls_Manager::NUMBER,
 					'default'			=> 10,
 					'condition' 		=> [
@@ -798,7 +845,7 @@ class Gallery extends Extras_Widget {
 		$this->start_controls_section(
 			'section_gallery_parallax',
 			[
-				'label' 	=> __( 'Parallax', 'elementor-extras' ),
+				'label' 	=> __( 'Parallax', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -806,11 +853,11 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'parallax_enable',
 				[
-					'label'			=> __( 'Parallax', 'elementor-extras' ),
+					'label'			=> __( 'Parallax', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'yes',
 					'separator'		=> 'before',
 					'frontend_available' => true,
@@ -820,13 +867,13 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'parallax_disable_on',
 				[
-					'label' 	=> __( 'Disable for', 'elementor-extras' ),
+					'label' 	=> __( 'Disable for', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'mobile',
 					'options' 			=> [
-						'none' 		=> __( 'None', 'elementor-extras' ),
-						'tablet' 	=> __( 'Mobile and tablet', 'elementor-extras' ),
-						'mobile' 	=> __( 'Mobile only', 'elementor-extras' ),
+						'none' 		=> __( 'None', 'landtech-extras-for-elementor' ),
+						'tablet' 	=> __( 'Mobile and tablet', 'landtech-extras-for-elementor' ),
+						'mobile' 	=> __( 'Mobile only', 'landtech-extras-for-elementor' ),
 					],
 					'condition' => [
 						'parallax_enable' => 'yes',
@@ -838,7 +885,7 @@ class Gallery extends Extras_Widget {
 			$this->add_responsive_control(
 				'parallax_speed',
 				[
-					'label' 	=> __( 'Parallax speed', 'elementor-extras' ),
+					'label' 	=> __( 'Parallax speed', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default'	=> [
 						'size'	=> 0.5
@@ -866,7 +913,7 @@ class Gallery extends Extras_Widget {
 			$this->add_responsive_control(
 				'image_distance',
 				[
-					'label' 	=> __( 'Parallax Distance (%)', 'elementor-extras' ),
+					'label' 	=> __( 'Parallax Distance (%)', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -892,7 +939,7 @@ class Gallery extends Extras_Widget {
 		$this->start_controls_section(
 			'section_gallery_masonry',
 			[
-				'label' 	=> __( 'Masonry', 'elementor-extras' ),
+				'label' 	=> __( 'Masonry', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_CONTENT,
 				'condition' 	=> [
 					'parallax_enable!' 		=> 'yes',
@@ -903,11 +950,11 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'masonry_enable',
 				[
-					'label'			=> __( 'Enable', 'elementor-extras' ),
+					'label'			=> __( 'Enable', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'yes',
 					'frontend_available' => true,
 					'separator'		=> 'before',
@@ -920,16 +967,16 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'masonry_layout',
 				[
-					'label' 		=> __( 'Layout', 'elementor-extras' ),
+					'label' 		=> __( 'Layout', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> 'columns',
 					'options' 		=> [
 						'columns'    	=> [
-							'title' 	=> __( 'Columns', 'elementor-extras' ),
+							'title' 	=> __( 'Columns', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'nicon nicon-masonry-columns',
 						],
 						'mixed' 		=> [
-							'title' 	=> __( 'Mixed', 'elementor-extras' ),
+							'title' 	=> __( 'Mixed', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'nicon nicon-masonry-mixed',
 						],
 					],
@@ -947,7 +994,7 @@ class Gallery extends Extras_Widget {
 		$this->start_controls_section(
 			'section_gallery_tilt',
 			[
-				'label' 	=> __( 'Tilt', 'elementor-extras' ),
+				'label' 	=> __( 'Tilt', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -955,11 +1002,11 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'tilt_enable',
 				[
-					'label'			=> __( 'Enable', 'elementor-extras' ),
+					'label'			=> __( 'Enable', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'yes',
 					'frontend_available' => true,
 				]
@@ -968,11 +1015,11 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'tilt_depth',
 				[
-					'label'			=> __( 'Depth', 'elementor-extras' ),
+					'label'			=> __( 'Depth', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'yes',
 					'frontend_available' => true,
 					'condition'		=> [
@@ -985,7 +1032,7 @@ class Gallery extends Extras_Widget {
 				'tile_depth_warning',
 				[
 					'type' 				=> Controls_Manager::RAW_HTML,
-					'raw'  				=> __( 'Depth disables CSS overflow: hidden which disables border radius for thumbnails.', 'elementor-extras' ),
+					'raw'  				=> __( 'Depth disables CSS overflow: hidden which disables border radius for thumbnails.', 'landtech-extras-for-elementor' ),
 					'content_classes' 	=> 'elementor-panel-alert elementor-panel-alert-warning',
 					'condition' 		=> [
 						'tilt_enable!' 	=> '',
@@ -997,13 +1044,13 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'tilt_axis',
 				[
-					'label'			=> __( 'Axis', 'elementor-extras' ),
+					'label'			=> __( 'Axis', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT,
 					'default' 		=> '',
 					'options' 			=> [
-						'' 		=> __( 'Both', 'elementor-extras' ),
-						'x' 	=> __( 'X Only', 'elementor-extras' ),
-						'y' 	=> __( 'Y Only', 'elementor-extras' ),
+						'' 		=> __( 'Both', 'landtech-extras-for-elementor' ),
+						'x' 	=> __( 'X Only', 'landtech-extras-for-elementor' ),
+						'y' 	=> __( 'Y Only', 'landtech-extras-for-elementor' ),
 					],
 					'frontend_available' => true,
 					'condition' => [
@@ -1015,7 +1062,7 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'tilt_amount',
 				[
-					'label' 	=> __( 'Amount', 'elementor-extras' ),
+					'label' 	=> __( 'Amount', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -1036,7 +1083,7 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'tilt_caption_depth',
 				[
-					'label' 	=> __( 'Depth', 'elementor-extras' ),
+					'label' 	=> __( 'Depth', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -1060,7 +1107,7 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'tilt_scale',
 				[
-					'label' 	=> __( 'Scale', 'elementor-extras' ),
+					'label' 	=> __( 'Scale', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -1082,7 +1129,7 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'tilt_speed',
 				[
-					'label' 	=> __( 'Speed', 'elementor-extras' ),
+					'label' 	=> __( 'Speed', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -1106,7 +1153,7 @@ class Gallery extends Extras_Widget {
 		$this->start_controls_section(
 			'section_gallery_layout',
 			[
-				'label' 	=> __( 'Layout', 'elementor-extras' ),
+				'label' 	=> __( 'Layout', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -1114,20 +1161,20 @@ class Gallery extends Extras_Widget {
 			$this->add_responsive_control(
 				'image_align',
 				[
-					'label' 		=> __( 'Horizontal Align', 'elementor-extras' ),
+					'label' 		=> __( 'Horizontal Align', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> 'left',
 					'options' 		=> [
 						'left'    		=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-right',
 						],
 					],
@@ -1141,24 +1188,24 @@ class Gallery extends Extras_Widget {
 			$this->add_responsive_control(
 				'image_vertical_align',
 				[
-					'label' 		=> __( 'Vertical Align', 'elementor-extras' ),
+					'label' 		=> __( 'Vertical Align', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> 'top',
 					'options' 		=> [
 						'top'    			=> [
-							'title' 	=> __( 'Top', 'elementor-extras' ),
+							'title' 	=> __( 'Top', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-top',
 						],
 						'middle' 		=> [
-							'title' 	=> __( 'Middle', 'elementor-extras' ),
+							'title' 	=> __( 'Middle', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-middle',
 						],
 						'bottom' 		=> [
-							'title' 	=> __( 'Bottom', 'elementor-extras' ),
+							'title' 	=> __( 'Bottom', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-bottom',
 						],
 						'stretch' 		=> [
-							'title' 	=> __( 'Stretch', 'elementor-extras' ),
+							'title' 	=> __( 'Stretch', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-stretch',
 						],
 					],
@@ -1172,7 +1219,7 @@ class Gallery extends Extras_Widget {
 			$this->add_responsive_control(
 				'image_stretch_ratio',
 				[
-					'label' 	=> __( 'Image Size Ratio', 'elementor-extras' ),
+					'label' 	=> __( 'Image Size Ratio', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default'	=> [
 						'size'	=> '100'
@@ -1198,13 +1245,13 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'image_horizontal_space',
 				[
-					'label' 	=> __( 'Horizontal Spacing', 'elementor-extras' ),
+					'label' 	=> __( 'Horizontal Spacing', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'custom',
 					'options' 	=> [
-						'none' 		=> __( 'None', 'elementor-extras' ),
-						'custom' 	=> __( 'Custom', 'elementor-extras' ),
-						'overlap' 	=> __( 'Overlap', 'elementor-extras' ),
+						'none' 		=> __( 'None', 'landtech-extras-for-elementor' ),
+						'custom' 	=> __( 'Custom', 'landtech-extras-for-elementor' ),
+						'overlap' 	=> __( 'Overlap', 'landtech-extras-for-elementor' ),
 					],
 					'condition'		=> [
 						'masonry_layout!' => 'mixed',
@@ -1215,7 +1262,7 @@ class Gallery extends Extras_Widget {
 			$this->add_responsive_control(
 				'image_horizontal_spacing',
 				[
-					'label' 	=> __( 'Horizontal Spacing', 'elementor-extras' ),
+					'label' 	=> __( 'Horizontal Spacing', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -1240,7 +1287,7 @@ class Gallery extends Extras_Widget {
 			$this->add_responsive_control(
 				'image_overlap',
 				[
-					'label' 	=> __( 'Horizontal Overlap', 'elementor-extras' ),
+					'label' 	=> __( 'Horizontal Overlap', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -1265,7 +1312,7 @@ class Gallery extends Extras_Widget {
 			$this->add_responsive_control(
 				'image_vertical_spacing',
 				[
-					'label' 	=> __( 'Vertical Spacing', 'elementor-extras' ),
+					'label' 	=> __( 'Vertical Spacing', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -1288,7 +1335,7 @@ class Gallery extends Extras_Widget {
 			$this->add_responsive_control(
 				'image_mixed_masonry_spacing',
 				[
-					'label' 	=> __( 'Spacing', 'elementor-extras' ),
+					'label' 	=> __( 'Spacing', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -1313,15 +1360,15 @@ class Gallery extends Extras_Widget {
 			$this->add_responsive_control(
 				'overflow',
 				[
-					'label'			=> __( 'Overflow', 'elementor-extras' ),
-					'description'	=> __( 'Hiding overflow solves the horizontal scroll issue on mobile devices, but affects shadows and tilt effects which will be hidden outside the grid area.', 'elementor-extras' ),
+					'label'			=> __( 'Overflow', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Hiding overflow solves the horizontal scroll issue on mobile devices, but affects shadows and tilt effects which will be hidden outside the grid area.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'separator'		=> 'before',
 					'default' 		=> '',
 					'tablet_default'=> 'yes',
 					'mobile_default'=> 'yes',
-					'label_on' 		=> __( 'Hidden', 'elementor-extras' ),
-					'label_off' 	=> __( 'Visible', 'elementor-extras' ),
+					'label_on' 		=> __( 'Hidden', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'Visible', 'landtech-extras-for-elementor' ),
 					'prefix_class'	=> 'ee-gallery-overflow%s--',
 				]
 			);
@@ -1331,7 +1378,7 @@ class Gallery extends Extras_Widget {
 		$this->start_controls_section(
 			'section_gallery_images',
 			[
-				'label' 	=> __( 'Thumbnails', 'elementor-extras' ),
+				'label' 	=> __( 'Thumbnails', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -1340,7 +1387,7 @@ class Gallery extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'image_border',
-					'label' 	=> __( 'Image Border', 'elementor-extras' ),
+					'label' 	=> __( 'Image Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '{{WRAPPER}} .ee-gallery__media-wrapper',
 					'separator' => '',
 				]
@@ -1349,7 +1396,7 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'image_border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
@@ -1361,7 +1408,7 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'image_background_color',
 				[
-					'label' 	=> __( 'Background Color', 'elementor-extras' ),
+					'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'selectors' => [
 						'{{WRAPPER}} .ee-gallery__media__thumbnail' => 'background-color: {{VALUE}};',
@@ -1374,7 +1421,7 @@ class Gallery extends Extras_Widget {
 		$this->start_controls_section(
 			'section_content',
 			[
-				'label' 	=> __( 'Captions', 'elementor-extras' ),
+				'label' 	=> __( 'Captions', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'gallery_display_caption' => '',
@@ -1385,19 +1432,19 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'align',
 				[
-					'label' 	=> __( 'Text Align', 'elementor-extras' ),
+					'label' 	=> __( 'Text Align', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::CHOOSE,
 					'options' 	=> [
 						'left' 	=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -1414,19 +1461,19 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'vertical_align',
 				[
-					'label' 	=> __( 'Vertical Align', 'elementor-extras' ),
+					'label' 	=> __( 'Vertical Align', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::CHOOSE,
 					'options' 	=> [
 						'top' 	=> [
-							'title' 	=> __( 'Top', 'elementor-extras' ),
+							'title' 	=> __( 'Top', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-top',
 						],
 						'middle' 		=> [
-							'title' 	=> __( 'Middle', 'elementor-extras' ),
+							'title' 	=> __( 'Middle', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-middle',
 						],
 						'bottom' 		=> [
-							'title' 	=> __( 'Bottom', 'elementor-extras' ),
+							'title' 	=> __( 'Bottom', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-bottom',
 						],
 					],
@@ -1441,23 +1488,23 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'horizontal_align',
 				[
-					'label' 	=> __( 'Horizontal Align', 'elementor-extras' ),
+					'label' 	=> __( 'Horizontal Align', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::CHOOSE,
 					'options' 	=> [
 						'left' 	=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-right',
 						],
 						'justify' 		=> [
-							'title' 	=> __( 'Justify', 'elementor-extras' ),
+							'title' 	=> __( 'Justify', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-stretch',
 						],
 					],
@@ -1473,7 +1520,7 @@ class Gallery extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -1487,7 +1534,7 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'text_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
@@ -1502,7 +1549,7 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'text_margin',
 				[
-					'label' 		=> __( 'Margin', 'elementor-extras' ),
+					'label' 		=> __( 'Margin', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
@@ -1519,7 +1566,7 @@ class Gallery extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'text_border',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '{{WRAPPER}} .ee-gallery__media__caption',
 					'condition' => [
 						'gallery_display_caption' => '',
@@ -1530,7 +1577,7 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'text_border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
@@ -1547,7 +1594,7 @@ class Gallery extends Extras_Widget {
 		$this->start_controls_section(
 			'section_instagram_style',
 			[
-				'label' 	=> __( 'Instagram', 'elementor-extras' ),
+				'label' 	=> __( 'Instagram', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_STYLE,
 				'condition'	=> [
 					'gallery_type' => 'instagram',
@@ -1559,7 +1606,7 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'insta_counters_heading',
 				[
-					'label' 	=> __( 'Counters', 'elementor-extras' ),
+					'label' 	=> __( 'Counters', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'condition'	=> [
 						'gallery_type' => 'instagram',
@@ -1571,21 +1618,21 @@ class Gallery extends Extras_Widget {
 			$this->add_responsive_control(
 				'insta_counters_align',
 				[
-					'label' 		=> __( 'Horizontal Align', 'elementor-extras' ),
+					'label' 		=> __( 'Horizontal Align', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> 'center',
 					'label_block'	=> false,
 					'options' 		=> [
 						'flex-start'    => [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-center',
 						],
 						'flex-end' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-right',
 						],
 					],
@@ -1602,7 +1649,7 @@ class Gallery extends Extras_Widget {
 			$this->add_responsive_control(
 				'insta_counters_distance',
 				[
-					'label' 		=> __( 'Distance', 'elementor-extras' ),
+					'label' 		=> __( 'Distance', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -1623,7 +1670,7 @@ class Gallery extends Extras_Widget {
 			$this->add_responsive_control(
 				'insta_counters_spacing',
 				[
-					'label' 	=> __( 'Spacing', 'elementor-extras' ),
+					'label' 	=> __( 'Spacing', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -1644,7 +1691,7 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'insta_icons_heading',
 				[
-					'label' 	=> __( 'Icons', 'elementor-extras' ),
+					'label' 	=> __( 'Icons', 'landtech-extras-for-elementor' ),
 					'separator' => 'before',
 					'type' 		=> Controls_Manager::HEADING,
 				]
@@ -1653,17 +1700,17 @@ class Gallery extends Extras_Widget {
 			$this->add_responsive_control(
 				'insta_icons_style',
 				[
-					'label' 		=> __( 'Style', 'elementor-extras' ),
+					'label' 		=> __( 'Style', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> 'center',
 					'label_block'	=> false,
 					'options' 		=> [
 						'solid'    		=> [
-							'title' 	=> __( 'Solid', 'elementor-extras' ),
+							'title' 	=> __( 'Solid', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-comment',
 						],
 						'outline' 		=> [
-							'title' 	=> __( 'Outline', 'elementor-extras' ),
+							'title' 	=> __( 'Outline', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-comment-o',
 						],
 					],
@@ -1677,7 +1724,7 @@ class Gallery extends Extras_Widget {
 			$this->add_responsive_control(
 				'insta_icons_spacing',
 				[
-					'label' 	=> __( 'Spacing', 'elementor-extras' ),
+					'label' 	=> __( 'Spacing', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -1698,7 +1745,7 @@ class Gallery extends Extras_Widget {
 			$this->add_responsive_control(
 				'insta_icons_size',
 				[
-					'label' 	=> __( 'Size', 'elementor-extras' ),
+					'label' 	=> __( 'Size', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -1722,7 +1769,7 @@ class Gallery extends Extras_Widget {
 		$this->start_controls_section(
 			'section_hover_effects',
 			[
-				'label' 	=> __( 'Hover Effects', 'elementor-extras' ),
+				'label' 	=> __( 'Hover Effects', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -1730,7 +1777,7 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'hover_images_heading',
 				[
-					'label' 	=> __( 'Images', 'elementor-extras' ),
+					'label' 	=> __( 'Images', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 				]
 			);
@@ -1750,14 +1797,14 @@ class Gallery extends Extras_Widget {
 				$this->start_controls_tab(
 					'image_style_default',
 					[
-						'label' => __( 'Default', 'elementor-extras' ),
+						'label' => __( 'Default', 'landtech-extras-for-elementor' ),
 					]
 				);
 
 					$this->add_responsive_control(
 						'image_opacity',
 						[
-							'label' 	=> __( 'Opacity (%)', 'elementor-extras' ),
+							'label' 	=> __( 'Opacity (%)', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::SLIDER,
 							'default' 	=> [
 								'size' 	=> 1,
@@ -1778,7 +1825,7 @@ class Gallery extends Extras_Widget {
 					$this->add_responsive_control(
 						'image_scale',
 						[
-							'label' 		=> __( 'Scale', 'elementor-extras' ),
+							'label' 		=> __( 'Scale', 'landtech-extras-for-elementor' ),
 							'type' 			=> Controls_Manager::SLIDER,
 							'range' 		=> [
 								'px' 		=> [
@@ -1818,14 +1865,14 @@ class Gallery extends Extras_Widget {
 				$this->start_controls_tab(
 					'image_style_hover',
 					[
-						'label' 	=> __( 'Hover', 'elementor-extras' ),
+						'label' 	=> __( 'Hover', 'landtech-extras-for-elementor' ),
 					]
 				);
 
 					$this->add_responsive_control(
 						'image_opacity_hover',
 						[
-							'label' 	=> __( 'Opacity (%)', 'elementor-extras' ),
+							'label' 	=> __( 'Opacity (%)', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::SLIDER,
 							'default' 	=> [
 								'size' 	=> 1,
@@ -1846,7 +1893,7 @@ class Gallery extends Extras_Widget {
 					$this->add_responsive_control(
 						'image_scale_hover',
 						[
-							'label' 		=> __( 'Scale', 'elementor-extras' ),
+							'label' 		=> __( 'Scale', 'landtech-extras-for-elementor' ),
 							'type' 			=> Controls_Manager::SLIDER,
 							'range' 		=> [
 								'px' 		=> [
@@ -1876,7 +1923,7 @@ class Gallery extends Extras_Widget {
 					$this->add_control(
 						'image_border_color_hover',
 						[
-							'label' 	=> __( 'Border Color', 'elementor-extras' ),
+							'label' 	=> __( 'Border Color', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::COLOR,
 							'selectors' => [
 								'{{WRAPPER}} .ee-gallery__media:hover .ee-gallery__media-wrapper' => 'border-color: {{VALUE}};',
@@ -1899,7 +1946,7 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'hover_overlay_heading',
 				[
-					'label' 	=> __( 'Overlay', 'elementor-extras' ),
+					'label' 	=> __( 'Overlay', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator'	=> 'before',
 				]
@@ -1915,12 +1962,12 @@ class Gallery extends Extras_Widget {
 
 			$this->start_controls_tabs( 'overlay_style' );
 
-				$this->start_controls_tab( 'overlay_style_default', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+				$this->start_controls_tab( 'overlay_style_default', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 					$this->add_control(
 						'overlay_background_color',
 						[
-							'label' 	=> __( 'Background Color', 'elementor-extras' ),
+							'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::COLOR,
 							'selectors' => [
 								'{{WRAPPER}} .ee-gallery__media__overlay' => 'background-color: {{VALUE}};',
@@ -1931,20 +1978,20 @@ class Gallery extends Extras_Widget {
 					$this->add_control(
 						'overlay_blend',
 						[
-							'label' 		=> __( 'Blend mode', 'elementor-extras' ),
-							'description'	=> __( 'Using blend mode removes the impact of depth properties from the tilt effect.', 'elementor-extras' ),
+							'label' 		=> __( 'Blend mode', 'landtech-extras-for-elementor' ),
+							'description'	=> __( 'Using blend mode removes the impact of depth properties from the tilt effect.', 'landtech-extras-for-elementor' ),
 							'type' 			=> Controls_Manager::SELECT,
 							'default' 		=> 'normal',
 							'options' => [
-								'normal'			=> __( 'Normal', 'elementor-extras' ),
-								'multiply'			=> __( 'Multiply', 'elementor-extras' ),
-								'screen'			=> __( 'Screen', 'elementor-extras' ),
-								'overlay'			=> __( 'Overlay', 'elementor-extras' ),
-								'darken'			=> __( 'Darken', 'elementor-extras' ),
-								'lighten'			=> __( 'Lighten', 'elementor-extras' ),
-								'color'				=> __( 'Color', 'elementor-extras' ),
-								'color-dodge'		=> __( 'Color Dodge', 'elementor-extras' ),
-								'hue'				=> __( 'Hue', 'elementor-extras' ),
+								'normal'			=> __( 'Normal', 'landtech-extras-for-elementor' ),
+								'multiply'			=> __( 'Multiply', 'landtech-extras-for-elementor' ),
+								'screen'			=> __( 'Screen', 'landtech-extras-for-elementor' ),
+								'overlay'			=> __( 'Overlay', 'landtech-extras-for-elementor' ),
+								'darken'			=> __( 'Darken', 'landtech-extras-for-elementor' ),
+								'lighten'			=> __( 'Lighten', 'landtech-extras-for-elementor' ),
+								'color'				=> __( 'Color', 'landtech-extras-for-elementor' ),
+								'color-dodge'		=> __( 'Color Dodge', 'landtech-extras-for-elementor' ),
+								'hue'				=> __( 'Hue', 'landtech-extras-for-elementor' ),
 							],
 							'selectors' 	=> [
 								'{{WRAPPER}} .ee-gallery__media__overlay' => 'mix-blend-mode: {{VALUE}};',
@@ -1956,7 +2003,12 @@ class Gallery extends Extras_Widget {
 						'overlay_blend_notice',
 						[
 							'type' 				=> Controls_Manager::RAW_HTML,
-							'raw' 				=> sprintf( __( 'Please check blend mode support for your browser %1$s here %2$s', 'elementor-extras' ), '<a href="https://caniuse.com/#search=mix-blend-mode" target="_blank">', '</a>' ),
+							'raw' 				=> sprintf(
+								/* translators: 1–2: link markup to caniuse.com mix-blend-mode. */
+								__( 'Please check blend mode support for your browser %1$s here %2$s', 'landtech-extras-for-elementor' ),
+								'<a href="https://caniuse.com/#search=mix-blend-mode" target="_blank">',
+								'</a>'
+							),
 							'content_classes' 	=> 'elementor-panel-alert elementor-panel-alert-warning',
 							'condition' 		=> [
 								'overlay_blend!' => 'normal'
@@ -1967,7 +2019,7 @@ class Gallery extends Extras_Widget {
 					$this->add_responsive_control(
 						'overlay_margin',
 						[
-							'label' 	=> __( 'Margin', 'elementor-extras' ),
+							'label' 	=> __( 'Margin', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::SLIDER,
 							'range' 	=> [
 								'px' 	=> [
@@ -1985,7 +2037,7 @@ class Gallery extends Extras_Widget {
 					$this->add_responsive_control(
 						'overlay_opacity',
 						[
-							'label' 	=> __( 'Opacity (%)', 'elementor-extras' ),
+							'label' 	=> __( 'Opacity (%)', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::SLIDER,
 							'default' 	=> [
 								'size' 	=> 1,
@@ -2007,19 +2059,19 @@ class Gallery extends Extras_Widget {
 						Group_Control_Border::get_type(),
 						[
 							'name' 		=> 'overlay_border',
-							'label' 	=> __( 'Border', 'elementor-extras' ),
+							'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 							'selector' 	=> '{{WRAPPER}} .ee-gallery__media__overlay',
 						]
 					);
 
 				$this->end_controls_tab();
 
-				$this->start_controls_tab( 'overlay_style_hover', [ 'label' => __( 'Hover', 'elementor-extras' ) ] );
+				$this->start_controls_tab( 'overlay_style_hover', [ 'label' => __( 'Hover', 'landtech-extras-for-elementor' ) ] );
 
 					$this->add_control(
 						'overlay_background_color_hover',
 						[
-							'label' 	=> __( 'Background Color', 'elementor-extras' ),
+							'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::COLOR,
 							'selectors' => [
 								'{{WRAPPER}} .ee-gallery__media:hover .ee-gallery__media__overlay' => 'background-color: {{VALUE}};',
@@ -2030,7 +2082,7 @@ class Gallery extends Extras_Widget {
 					$this->add_responsive_control(
 						'overlay_margin_hover',
 						[
-							'label' 	=> __( 'Margin', 'elementor-extras' ),
+							'label' 	=> __( 'Margin', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::SLIDER,
 							'range' 	=> [
 								'px' 	=> [
@@ -2048,7 +2100,7 @@ class Gallery extends Extras_Widget {
 					$this->add_responsive_control(
 						'overlay_opacity_hover',
 						[
-							'label' 	=> __( 'Opacity (%)', 'elementor-extras' ),
+							'label' 	=> __( 'Opacity (%)', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::SLIDER,
 							'default' 	=> [
 								'size' 	=> 1,
@@ -2070,7 +2122,7 @@ class Gallery extends Extras_Widget {
 						Group_Control_Border::get_type(),
 						[
 							'name' 		=> 'overlay_border_hover',
-							'label' 	=> __( 'Border', 'elementor-extras' ),
+							'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 							'selector' 	=> '{{WRAPPER}} .ee-gallery__media:hover .ee-gallery__media__overlay',
 						]
 					);
@@ -2082,7 +2134,7 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'hover_captions_heading',
 				[
-					'label' 	=> __( 'Captions', 'elementor-extras' ),
+					'label' 	=> __( 'Captions', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator'	=> 'before',
 				]
@@ -2107,29 +2159,29 @@ class Gallery extends Extras_Widget {
 			$this->add_control(
 				'content_effect',
 				[
-					'label' 	=> __( 'Effect', 'elementor-extras' ),
+					'label' 	=> __( 'Effect', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> '',
 					'options' => [
-						''					=> __( 'None', 'elementor-extras' ),
-						'fade-in'			=> __( 'Fade In', 'elementor-extras' ),
-						'fade-out'			=> __( 'Fade Out', 'elementor-extras' ),
-						'from-top'			=> __( 'From Top', 'elementor-extras' ),
-						'from-right'		=> __( 'From Right', 'elementor-extras' ),
-						'from-bottom'		=> __( 'From Bottom', 'elementor-extras' ),
-						'from-left'			=> __( 'From Left', 'elementor-extras' ),
-						'fade-from-top'		=> __( 'Fade From Top', 'elementor-extras' ),
-						'fade-from-right'	=> __( 'Fade From Right', 'elementor-extras' ),
-						'fade-from-bottom'	=> __( 'Fade From Bottom', 'elementor-extras' ),
-						'fade-from-left'	=> __( 'Fade From Left', 'elementor-extras' ),
-						'to-top'			=> __( 'To Top', 'elementor-extras' ),
-						'to-right'			=> __( 'To Right', 'elementor-extras' ),
-						'to-bottom'			=> __( 'To Bottom', 'elementor-extras' ),
-						'to-left'			=> __( 'To Left', 'elementor-extras' ),
-						'fade-to-top'		=> __( 'Fade To Top', 'elementor-extras' ),
-						'fade-to-right'		=> __( 'Fade To Right', 'elementor-extras' ),
-						'fade-to-bottom'	=> __( 'Fade To Bottom', 'elementor-extras' ),
-						'fade-to-left'		=> __( 'Fade To Left', 'elementor-extras' ),
+						''					=> __( 'None', 'landtech-extras-for-elementor' ),
+						'fade-in'			=> __( 'Fade In', 'landtech-extras-for-elementor' ),
+						'fade-out'			=> __( 'Fade Out', 'landtech-extras-for-elementor' ),
+						'from-top'			=> __( 'From Top', 'landtech-extras-for-elementor' ),
+						'from-right'		=> __( 'From Right', 'landtech-extras-for-elementor' ),
+						'from-bottom'		=> __( 'From Bottom', 'landtech-extras-for-elementor' ),
+						'from-left'			=> __( 'From Left', 'landtech-extras-for-elementor' ),
+						'fade-from-top'		=> __( 'Fade From Top', 'landtech-extras-for-elementor' ),
+						'fade-from-right'	=> __( 'Fade From Right', 'landtech-extras-for-elementor' ),
+						'fade-from-bottom'	=> __( 'Fade From Bottom', 'landtech-extras-for-elementor' ),
+						'fade-from-left'	=> __( 'Fade From Left', 'landtech-extras-for-elementor' ),
+						'to-top'			=> __( 'To Top', 'landtech-extras-for-elementor' ),
+						'to-right'			=> __( 'To Right', 'landtech-extras-for-elementor' ),
+						'to-bottom'			=> __( 'To Bottom', 'landtech-extras-for-elementor' ),
+						'to-left'			=> __( 'To Left', 'landtech-extras-for-elementor' ),
+						'fade-to-top'		=> __( 'Fade To Top', 'landtech-extras-for-elementor' ),
+						'fade-to-right'		=> __( 'Fade To Right', 'landtech-extras-for-elementor' ),
+						'fade-to-bottom'	=> __( 'Fade To Bottom', 'landtech-extras-for-elementor' ),
+						'fade-to-left'		=> __( 'Fade To Left', 'landtech-extras-for-elementor' ),
 					],
 					'prefix_class'	=> 'ee-media-effect__content--',
 					'condition' 	=> [
@@ -2143,7 +2195,7 @@ class Gallery extends Extras_Widget {
 			$this->start_controls_tabs( 'caption_style' );
 
 				$this->start_controls_tab( 'caption_style_default', [
-					'label' 	=> __( 'Default', 'elementor-extras' ),
+					'label' 	=> __( 'Default', 'landtech-extras-for-elementor' ),
 					'condition' => [
 						'gallery_display_caption' => '',
 					],
@@ -2152,7 +2204,7 @@ class Gallery extends Extras_Widget {
 					$this->add_control(
 						'text_color',
 						[
-							'label' 	=> __( 'Color', 'elementor-extras' ),
+							'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::COLOR,
 							'default' 	=> '',
 							'selectors' => [
@@ -2167,7 +2219,7 @@ class Gallery extends Extras_Widget {
 					$this->add_control(
 						'text_background_color',
 						[
-							'label' 	=> __( 'Background', 'elementor-extras' ),
+							'label' 	=> __( 'Background', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::COLOR,
 							'default' 	=> '',
 							'selectors' => [
@@ -2182,7 +2234,7 @@ class Gallery extends Extras_Widget {
 					$this->add_control(
 						'text_opacity',
 						[
-							'label' 	=> __( 'Opacity (%)', 'elementor-extras' ),
+							'label' 	=> __( 'Opacity (%)', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::SLIDER,
 							'default' 	=> [
 								'size' 	=> 1,
@@ -2218,7 +2270,7 @@ class Gallery extends Extras_Widget {
 				$this->end_controls_tab();
 
 				$this->start_controls_tab( 'caption_style_hover', [
-					'label' 	=> __( 'Hover', 'elementor-extras' ),
+					'label' 	=> __( 'Hover', 'landtech-extras-for-elementor' ),
 					'condition' => [
 						'gallery_display_caption' => '',
 					],
@@ -2227,7 +2279,7 @@ class Gallery extends Extras_Widget {
 					$this->add_control(
 						'text_color_hover',
 						[
-							'label' 	=> __( 'Color', 'elementor-extras' ),
+							'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::COLOR,
 							'default' 	=> '',
 							'selectors' => [
@@ -2242,7 +2294,7 @@ class Gallery extends Extras_Widget {
 					$this->add_control(
 						'text_background_color_hover',
 						[
-							'label' 	=> __( 'Background', 'elementor-extras' ),
+							'label' 	=> __( 'Background', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::COLOR,
 							'default' 	=> '',
 							'selectors' => [
@@ -2257,7 +2309,7 @@ class Gallery extends Extras_Widget {
 					$this->add_control(
 						'text_opacity_hover',
 						[
-							'label' 	=> __( 'Opacity (%)', 'elementor-extras' ),
+							'label' 	=> __( 'Opacity (%)', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::SLIDER,
 							'default' 	=> [
 								'size' 	=> 1,
@@ -2281,7 +2333,7 @@ class Gallery extends Extras_Widget {
 					$this->add_control(
 						'text_border_color_hover',
 						[
-							'label' 	=> __( 'Border Color', 'elementor-extras' ),
+							'label' 	=> __( 'Border Color', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::COLOR,
 							'default' 	=> '',
 							'selectors' => [
@@ -2320,6 +2372,11 @@ class Gallery extends Extras_Widget {
 	protected function render() {
 		$settings = $this->get_settings();
 
+		$caption_type_key = $settings['gallery_type'];
+		if ( 'acf_gallery' === $caption_type_key ) {
+			$caption_type_key = 'wordpress';
+		}
+
 		$this->add_render_attribute( [
 			'wrapper' => [
 				'class' => 'ee-gallery-wrapper',
@@ -2356,15 +2413,49 @@ class Gallery extends Extras_Widget {
 					'ee-media__content__caption',
 					'ee-gallery__media__caption',
 					'ee-caption',
-					'ee-caption--' . $settings['gallery_type'],
+					'ee-caption--' . $caption_type_key,
 				],
 			],
 		] );
+
+		if ( 'acf_gallery' === $settings['gallery_type'] && ACF_Gallery_Bridge::is_enabled() ) {
+			$this->add_render_attribute( 'wrapper', 'data-ltx-acf-gallery', '1' );
+		}
+
+		if (
+			$this->_is_edit_mode
+			&& isset( $settings['masonry_enable'], $settings['parallax_enable'] )
+			&& 'yes' === $settings['masonry_enable']
+			&& 'yes' !== $settings['parallax_enable']
+		) {
+			$this->add_render_attribute( 'gallery', 'data-ee-editor-masonry', '1' );
+		}
 
 		if ( 'manual' === $settings['gallery_type'] ) {
 			$this->render_gallery();
 		} elseif ( 'wordpress' === $settings['gallery_type'] ) {
 			$this->render_wp_gallery();
+		} elseif ( 'acf_gallery' === $settings['gallery_type'] ) {
+			if ( ! ACF_Gallery_Bridge::is_enabled() ) {
+				if ( $this->_is_edit_mode ) {
+					echo '<div class="ee-gallery--editor-notice">';
+					esc_html_e( 'ACF Gallery requires Advanced Custom Fields (ACF) and a valid Gallery field on the target post.', 'landtech-extras-for-elementor' );
+					echo '</div>';
+				}
+				return;
+			}
+			$acf_post = isset( $settings['acf_post_id'] ) ? absint( $settings['acf_post_id'] ) : 0;
+			$dataset  = ACF_Gallery_Bridge::get_items(
+				isset( $settings['acf_field_name'] ) ? $settings['acf_field_name'] : '',
+				$acf_post
+			);
+			if ( empty( $dataset ) && $this->_is_edit_mode ) {
+				echo '<div class="ee-gallery--editor-notice">';
+				esc_html_e( 'No gallery images found. Check the ACF field name, Post ID, and that the field contains images on that post.', 'landtech-extras-for-elementor' );
+				echo '</div>';
+				return;
+			}
+			$this->render_wp_gallery_from_dataset( $dataset );
 		} elseif ( 'instagram' === $settings['gallery_type'] ) {
 			$this->render_instagram_gallery();
 		}
@@ -2379,8 +2470,8 @@ class Gallery extends Extras_Widget {
 	 * @return void
 	 */
 	protected function render_gallery_start() {
-		?><div <?php echo $this->get_render_attribute_string( 'wrapper' ); ?>>
-			<div <?php echo $this->get_render_attribute_string( 'gallery' ); ?>><?php
+		?><div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
+			<div <?php $this->print_render_attribute_string( 'gallery' ); ?>><?php
 				$this->render_grid_sizer();
 	}
 
@@ -2395,8 +2486,6 @@ class Gallery extends Extras_Widget {
 	protected function render_gallery_end() {
 			?></div>
 		</div><?php
-
-		$this->render_masonry_script();
 	}
 
 	/**
@@ -2511,14 +2600,14 @@ class Gallery extends Extras_Widget {
 
 			?>
 
-			<div <?php echo $this->get_render_attribute_string( $item_key ); ?>>
-				<<?php echo $media_tag; ?> <?php echo $this->get_render_attribute_string( $media_key ); ?>>
-					<div <?php echo $this->get_render_attribute_string( $media_wrapper_key ); ?>><?php
+			<div <?php $this->print_render_attribute_string( $item_key ); ?>>
+				<<?php echo esc_html( $this->get_gallery_media_tag_name( $media_tag ) ); ?> <?php $this->print_render_attribute_string( $media_key ); ?>>
+					<div <?php $this->print_render_attribute_string( $media_wrapper_key ); ?>><?php
 						$this->render_image_thumbnail( $item, $index );
 						$this->render_image_overlay();
 						$this->render_image_caption( $item, $index );
 					?></div>
-				</<?php echo $media_tag; ?>>
+				</<?php echo esc_html( $this->get_gallery_media_tag_name( $media_tag ) ); ?>>
 			</div>
 
 		<?php }
@@ -2536,9 +2625,25 @@ class Gallery extends Extras_Widget {
 	 */
 	protected function render_wp_gallery() {
 
-		$settings 	= $this->get_settings();
+		$gallery = $this->get_settings_for_display( 'wp_gallery' );
+		if ( ! is_array( $gallery ) ) {
+			$gallery = array();
+		}
 
-		$gallery 	= $this->get_settings_for_display( 'wp_gallery' );
+		$this->render_wp_gallery_from_dataset( $gallery );
+	}
+
+	/**
+	 * Render gallery items from an Elementor-style dataset (attachment id + url per row).
+	 *
+	 * @since 2.2.54
+	 *
+	 * @param array<int, array<string, int|string>> $gallery Gallery rows with `id` and optional `url`.
+	 * @return void
+	 */
+	protected function render_wp_gallery_from_dataset( array $gallery ) {
+
+		$settings 	= $this->get_settings();
 		$media_tag 	= 'figure';
 
 		if ( ! empty( $settings['gallery_rand'] ) ) {
@@ -2557,10 +2662,14 @@ class Gallery extends Extras_Widget {
 
 		foreach ( $gallery as $index => $item ) {
 
+			if ( ! isset( $item['id'] ) || $item['id'] < 1 ) {
+				continue;
+			}
+
 			$gallery_media_key 			= 'gallery-media' . $index;
 			$gallery_media_wrapper_key 	= 'gallery-media-wrapper' . $index;
 			$gallery_item_key 			= 'gallery-item' . $index;
-			$item_url 					= ( in_array( 'url', $item ) ) ? $item['url'] : '';
+			$item_url = isset( $item['url'] ) ? $item['url'] : '';
 
 			$item['image'] = Module::get_image_info( $item['id'], $item_url, $settings['thumbnail_size'] );
 
@@ -2618,14 +2727,14 @@ class Gallery extends Extras_Widget {
 				}
 			}
 
-			?><div <?php echo $this->get_render_attribute_string( $gallery_item_key ); ?>>
-				<<?php echo $media_tag; ?> <?php echo $this->get_render_attribute_string( $gallery_media_key ); ?>>
-					<div <?php echo $this->get_render_attribute_string( $gallery_media_wrapper_key ); ?>><?php
+			?><div <?php $this->print_render_attribute_string( $gallery_item_key ); ?>>
+				<<?php echo esc_html( $this->get_gallery_media_tag_name( $media_tag ) ); ?> <?php $this->print_render_attribute_string( $gallery_media_key ); ?>>
+					<div <?php $this->print_render_attribute_string( $gallery_media_wrapper_key ); ?>><?php
 						$this->render_image_thumbnail( $item, $index );
 						$this->render_image_overlay();
 						$this->render_image_caption( $item, $index );
 					?></div>
-				</<?php echo $media_tag; ?>>
+				</<?php echo esc_html( $this->get_gallery_media_tag_name( $media_tag ) ); ?>>
 			</div><?php
 		}
 
@@ -2643,11 +2752,13 @@ class Gallery extends Extras_Widget {
 		$settings = $this->get_settings();
 
 		if ( 'tags' === $settings['insta_display'] && empty( $settings['insta_hashtag'] ) ) {
-			return _e( 'Please enter a hashtag.', 'elementor-extras' );
+			esc_html_e( 'Please enter a hashtag.', 'landtech-extras-for-elementor' );
+			return;
 		}
 
 		if ( 'feed' === $settings['insta_display'] && ! $this->get_insta_access_token() ) {
-			return _e( 'Please enter your Instagram access token.', 'elementor-extras' );
+			esc_html_e( 'Please enter your Instagram access token.', 'landtech-extras-for-elementor' );
+			return;
 		}
 
 		$media_tag 	= 'figure';
@@ -2695,9 +2806,12 @@ class Gallery extends Extras_Widget {
 		$gallery = $this->get_insta_posts( $settings );
 
 		if ( empty( $gallery ) || is_wp_error( $gallery ) ) {
-			$message = is_wp_error( $gallery ) ? $gallery->get_error_message() : esc_html__( 'No Posts Found', 'elementor-extras' );
+			if ( is_wp_error( $gallery ) ) {
+				echo esc_html( $gallery->get_error_message() );
+			} else {
+				echo esc_html__( 'No Posts Found', 'landtech-extras-for-elementor' );
+			}
 
-			echo $message;
 			return;
 		}
 
@@ -2773,14 +2887,14 @@ class Gallery extends Extras_Widget {
 				}
 			}
 
-			?><div <?php echo $this->get_render_attribute_string( $item_key ); ?>>
-				<<?php echo $media_tag; ?> <?php echo $this->get_render_attribute_string( $media_key ); ?>>
-					<div <?php echo $this->get_render_attribute_string( $media_wrapper_key ); ?>>
+			?><div <?php $this->print_render_attribute_string( $item_key ); ?>>
+				<<?php echo esc_html( $this->get_gallery_media_tag_name( $media_tag ) ); ?> <?php $this->print_render_attribute_string( $media_key ); ?>>
+					<div <?php $this->print_render_attribute_string( $media_wrapper_key ); ?>>
 						<?php $this->render_image_thumbnail( $item, $index ); ?>
 						<?php $this->render_image_overlay(); ?>
 						<?php $this->render_image_caption( $item, $index ); ?>
 					</div>
-				</<?php echo $media_tag; ?>>				
+				</<?php echo esc_html( $this->get_gallery_media_tag_name( $media_tag ) ); ?>>				
 			</div><?php
 		}
 
@@ -2828,8 +2942,8 @@ class Gallery extends Extras_Widget {
 			$this->add_render_attribute( $image_key, 'title', $thumbnail_title );
 		}
 
-		?><div <?php echo $this->get_render_attribute_string( 'gallery-thumbnail' ); ?>>
-			<img <?php echo $this->get_render_attribute_string( $image_key ); ?> />
+		?><div <?php $this->print_render_attribute_string( 'gallery-thumbnail' ); ?>>
+			<img <?php $this->print_render_attribute_string( $image_key ); ?> />
 		</div><?php
 	}
 
@@ -2846,9 +2960,9 @@ class Gallery extends Extras_Widget {
 		if ( ! $caption )
 			return;
 
-		?><figcaption <?php echo $this->get_render_attribute_string( 'gallery-content' ); ?>>
-			<div <?php echo $this->get_render_attribute_string( 'gallery-caption' ); ?>>
-				<?php echo $caption; ?>
+		?><figcaption <?php $this->print_render_attribute_string( 'gallery-content' ); ?>>
+			<div <?php $this->print_render_attribute_string( 'gallery-caption' ); ?>>
+				<?php echo wp_kses_post( $caption ); ?>
 			</div>
 		</figcaption><?php
 	}
@@ -2860,7 +2974,7 @@ class Gallery extends Extras_Widget {
 	 * @return void
 	 */
 	protected function render_image_overlay() {
-		?><div <?php echo $this->get_render_attribute_string( 'gallery-overlay' ); ?>></div><?php
+		?><div <?php $this->print_render_attribute_string( 'gallery-overlay' ); ?>></div><?php
 	}
 
 	/**
@@ -2912,7 +3026,7 @@ class Gallery extends Extras_Widget {
 		if ( $this->is_instagram_gallery() )
 			return $item['caption'];
 
-		return trim( strip_tags( get_post_meta( $item['image']['id'], '_wp_attachment_image_alt', true) ) );
+		return trim( wp_strip_all_tags( get_post_meta( $item['image']['id'], '_wp_attachment_image_alt', true) ) );
 	}
 
 	/**
@@ -2925,7 +3039,7 @@ class Gallery extends Extras_Widget {
 		if ( $this->is_instagram_gallery() )
 			return $item['caption'];
 
-		return trim( strip_tags( get_the_title( $item['image']['id'] ) ) );
+		return trim( wp_strip_all_tags( get_the_title( $item['image']['id'] ) ) );
 	}
 
 	/**
@@ -2957,21 +3071,21 @@ class Gallery extends Extras_Widget {
 		ob_start();
 
 		if ( '' !== $settings['insta_counter_caption'] ) {
-			?><div <?php echo $this->get_render_attribute_string( 'caption-text' ); ?>><?php echo $item['caption']; ?></div><?php
+			?><div <?php $this->print_render_attribute_string( 'caption-text' ); ?>><?php echo wp_kses_post( $item['caption'] ); ?></div><?php
 		}
 
 		if ( '' !== $settings['insta_counter_comments'] || '' !== $settings['insta_counter_likes'] ) {
-			?><div <?php echo $this->get_render_attribute_string( 'caption-insta' ); ?>><?php
+			?><div <?php $this->print_render_attribute_string( 'caption-insta' ); ?>><?php
 
 			if ( '' !== $settings['insta_counter_comments'] ) {
-				?><span <?php echo $this->get_render_attribute_string( 'insta-counter-comments' ); ?>>
-					<i <?php echo $this->get_render_attribute_string( 'insta-counter-comments-icon' ); ?>></i><?php echo $item['comments']; ?>
+				?><span <?php $this->print_render_attribute_string( 'insta-counter-comments' ); ?>>
+					<i <?php $this->print_render_attribute_string( 'insta-counter-comments-icon' ); ?>></i><?php echo esc_html( (string) $item['comments'] ); ?>
 				</span><?php
 			}
 
 			if ( '' !== $settings['insta_counter_likes'] ) {
-				?><span <?php echo $this->get_render_attribute_string( 'insta-counter-likes' ); ?>>
-					<i <?php echo $this->get_render_attribute_string( 'insta-counter-likes-icon' ); ?>></i><?php echo $item['likes']; ?>
+				?><span <?php $this->print_render_attribute_string( 'insta-counter-likes' ); ?>>
+					<i <?php $this->print_render_attribute_string( 'insta-counter-likes-icon' ); ?>></i><?php echo esc_html( (string) $item['likes'] ); ?>
 				</span><?php
 			}
 			
@@ -2993,60 +3107,6 @@ class Gallery extends Extras_Widget {
 	}
 
 	/**
-	 * Render Masonry script
-	 *
-	 * @since  2.1.0
-	 * @return void
-	 */
-	protected function render_masonry_script() {
-
-		if ( ! $this->_is_edit_mode )
-			return;
-
-		if ( 'yes' !== $this->get_settings( 'masonry_enable' ) || 'yes' === $this->get_settings( 'parallax_enable' ) )
-			return;
-
-		?><script type="text/javascript">
-        	jQuery( document ).ready( function( $ ) {
-
-				$( '.ee-gallery' ).each( function() {
-
-					var $scope_id = '<?php echo $this->get_id(); ?>',
-        				$scope = $( '[data-id="' + $scope_id + '"]' );
-
-        			// Don't move forward if this is not our widget
-        			if ( $(this).closest( $scope ).length < 1 ) {
-        				return;
-        			}
-
-					var $gallery 	= $(this),
-						isotopeArgs = {
-							itemSelector	: '.ee-gallery__item',
-			  				percentPosition : true,
-			  				hiddenStyle 	: {
-			  					opacity 	: 0,
-			  				},
-						};
-
-					var $isotope = $gallery.isotope( isotopeArgs );
-
-					$isotope.masonry();
-
-					$gallery.find('.ee-gallery__item')._resize( function() {
-						$isotope.masonry();
-					});
-
-					$(window).resize( function() {
-						$isotope.masonry();
-					});
-
-				} );
-				
-        	} );
-		</script><?php
-	}
-
-	/**
 	 * Check if gallery source is Instagram
 	 *
 	 * @since  2.1.0
@@ -3064,59 +3124,136 @@ class Gallery extends Extras_Widget {
 	}
 
 	/**
-	 * Retrieve Instagram posts.
+	 * Fetches normalized Instagram gallery items for rendering, with transient caching.
+	 *
+	 * Wraps Instagram Graph/unofficial hashtag HTTP access with `get_insta_remote()` and caches successes
+	 * (and benign empty payloads) under `landtech_extras_instagram_posts_*` transient keys.
 	 *
 	 * @since  2.1.0
-	 * @param  array $settings
-	 * @return array
+	 *
+	 * @param array<string,mixed> $settings Widget settings array (expects `insta_display`, hashtag fields).
+	 *
+	 * @return array<mixed>|(\WP_Error) Normalized gallery items list or WP_Error from the remote layer.
 	 */
 	public function get_insta_posts( $settings ) {
 
-		// $user = $this->get_insta_user_id();
-		// $user_media = $this->get_insta_user_media( $user['id'] );
+		$url       = $this->get_fetch_url();
+		$cache_key = 'landtech_extras_instagram_posts_' . md5(
+			wp_json_encode(
+				array(
+					'd'          => isset( $settings['insta_display'] ) ? (string) $settings['insta_display'] : '',
+					't'          => isset( $settings['insta_hashtag'] ) ? (string) $settings['insta_hashtag'] : '',
+					'tkn'        => wp_hash( (string) $this->get_insta_access_token(), 'landtech_extras_ig_posts' ),
+					'endpoint_h' => (string) wp_parse_url( (string) $url, PHP_URL_HOST ),
+				)
+			)
+		);
 
-		// foreach( $user_media['data'] as $media ) {
-		// 	$media_object = $this->get_insta_media( $media['id'] );
-		// }
+		$cached = get_transient( $cache_key );
 
-		$response = $this->get_insta_remote( $this->get_fetch_url() );
+		if ( false !== $cached && is_array( $cached ) ) {
+			if ( ! empty( $cached['_landtech_extras_wp_error'] ) ) {
+				$error_code = isset( $cached['code'] ) ? $cached['code'] : '';
+
+				return new \WP_Error(
+					$error_code,
+					isset( $cached['message'] ) ? $cached['message'] : '',
+					array_key_exists( 'error_data', $cached ) ? $cached['error_data'] : null
+				);
+			}
+
+			return $cached;
+		}
+
+		$response = $this->get_insta_remote( $url );
 
 		if ( is_wp_error( $response ) ) {
+			set_transient(
+				$cache_key,
+				array(
+					'_landtech_extras_wp_error' => 1,
+					'code'                       => $response->get_error_code(),
+					'message'                    => $response->get_error_message(),
+					'error_data'                 => $response->get_error_data(),
+				),
+				MINUTE_IN_SECONDS * 15
+			);
+
 			return $response;
 		}
 
 		$data = ( 'tags' === $settings['insta_display'] ) ? $this->get_insta_tags_response_data( $response ) : $this->get_insta_feed_response_data( $response );
 
 		if ( empty( $data ) ) {
+			set_transient( $cache_key, array(), MINUTE_IN_SECONDS * 60 );
 			return array();
 		}
+
+		set_transient( $cache_key, $data, DAY_IN_SECONDS );
 
 		return $data;
 	}
 
 	/**
-	 * Retrieve response from API
+	 * Executes a validated HTTP GET to Instagram endpoints and returns JSON-decoded payload.
+	 *
+	 * Uses WordPress HTTP API (`wp_safe_remote_get`) after normalizing the URL. Non-200 responses and
+	 * transport failures return `WP_Error`. Remote error messages from the JSON body are sanitized
+	 * before being attached to errors (they may be surfaced in logs or admin UI).
+	 *
+	 * Documented under readme.txt **External Services → Instagram**.
 	 *
 	 * @since  2.1.0
-	 * @return array|WP_Error
+	 *
+	 * @param string $url Fully qualified Instagram Graph or instagram.com URL.
+	 *
+	 * @return array<mixed>|(\WP_Error) Decoded associative array or error.
 	 */
 	public function get_insta_remote( $url ) {
-		$response 		= wp_remote_get( $url, array(
-			'timeout'   => 60,
-			'sslverify' => false
-		) );
 
-		$response_code 	= wp_remote_retrieve_response_code( $response );
-		$result 		= json_decode( wp_remote_retrieve_body( $response ), true );
+		$url = esc_url_raw( (string) $url );
 
-		if ( 200 !== $response_code ) {
-			$message = is_array( $result ) && isset( $result['error']['message'] ) ? $result['error']['message'] : __( 'No posts found', 'elementor-extras' );
-
-			return new \WP_Error( $response_code, $message );
+		if ( '' === $url ) {
+			return new \WP_Error(
+				'landtech_extras_insta_bad_url',
+				__( 'Invalid Instagram request URL.', 'landtech-extras-for-elementor' )
+			);
 		}
 
-		if ( ! is_array( $result ) ) {
-			return new \WP_Error( 'error', __( 'Data Error', 'elementor-extras' ) );
+		$response = wp_safe_remote_get(
+			$url,
+			array(
+				'timeout'   => 60,
+				'sslverify' => true,
+			)
+		);
+
+		if ( is_wp_error( $response ) ) {
+			return $response;
+		}
+
+		$response_code = (int) wp_remote_retrieve_response_code( $response );
+		$raw_body      = wp_remote_retrieve_body( $response );
+		$result        = json_decode( $raw_body, true );
+
+		$decode_ok = ( JSON_ERROR_NONE === json_last_error() );
+
+		if ( 200 !== $response_code ) {
+			$api_message = '';
+			if ( $decode_ok && is_array( $result ) && isset( $result['error']['message'] ) ) {
+				$api_message = sanitize_text_field( wp_strip_all_tags( (string) $result['error']['message'] ) );
+			}
+			$user_message = '' !== $api_message ? $api_message : __( 'No posts found', 'landtech-extras-for-elementor' );
+			$error_code   = ( 0 !== $response_code ) ? 'http_' . (string) $response_code : 'http_error';
+
+			return new \WP_Error( $error_code, $user_message );
+		}
+
+		if ( ! $decode_ok || ! is_array( $result ) ) {
+			return new \WP_Error(
+				'landtech_extras_insta_json',
+				__( 'Data Error', 'landtech-extras-for-elementor' )
+			);
 		}
 
 		return $result;
@@ -3227,17 +3364,20 @@ class Gallery extends Extras_Widget {
 	}
 
 	/**
-	 * Get data from response
+	 * Normalizes Official Instagram Graph `/me/media` payload for widget rendering.
 	 *
-	 * @param $response
+	 * Sanitizes all fields copied from the remote JSON before they are echoed in templates or cached.
+	 *
 	 * @since  2.1.0
 	 *
-	 * @return array
+	 * @param array<mixed> $response Decoded Graph API payload.
+	 *
+	 * @return array<int,array<string,mixed>> List of sanitized post stubs.
 	 */
 	public function get_insta_feed_response_data( $response ) {
 
-		if ( ! array_key_exists( 'data', $response ) ) { // Avoid PHP notices
-			return;
+		if ( ! is_array( $response ) || ! isset( $response['data'] ) || ! is_array( $response['data'] ) ) {
+			return array();
 		}
 
 		$response_posts = $response['data'];
@@ -3246,22 +3386,39 @@ class Gallery extends Extras_Widget {
 			return array();
 		}
 
-		$return_data  = array();
-		$posts = array_slice( $response_posts, 0, $this->get_settings('insta_posts_counter'), true );
+		$return_data = array();
+		$posts       = array_slice( $response_posts, 0, $this->get_settings( 'insta_posts_counter' ), true );
 
 		foreach ( $posts as $post ) {
-			$_post				= array();
+			if ( ! is_array( $post ) ) {
+				continue;
+			}
 
-			$_post['id'] 		= $post['id'];
-			$_post['link']		= $post['permalink'];
-			$_post['caption']	= '';
-			$_post['image'] 	= 'VIDEO' === $post['media_type'] ? $post['thumbnail_url'] : $post['media_url'];
-			$_post['comments']	= ! empty( $post['comments_count'] ) ? $post['comments_count'] : 0;
-			$_post['likes']		= ! empty( $post['likes_count'] ) ? $post['likes_count'] : 0;;
+			$mid          = isset( $post['id'] ) ? sanitize_text_field( (string) $post['id'] ) : '';
+			$permalink    = isset( $post['permalink'] ) ? esc_url_raw( (string) $post['permalink'] ) : '';
+			$media_type   = isset( $post['media_type'] ) ? sanitize_text_field( (string) $post['media_type'] ) : '';
+			$thumb_url    = isset( $post['thumbnail_url'] ) ? esc_url_raw( (string) $post['thumbnail_url'] ) : '';
+			$media_url_u  = isset( $post['media_url'] ) ? esc_url_raw( (string) $post['media_url'] ) : '';
+			$image_url    = ( 'VIDEO' === $media_type && '' !== $thumb_url ) ? $thumb_url : $media_url_u;
+
+			if ( '' === $mid ) {
+				continue;
+			}
+
+			$_post               = array();
+			$_post['id']         = $mid;
+			$_post['link']       = '' !== $permalink ? $permalink : '';
+			$_post['caption']    = '';
+			$_post['image']      = $image_url;
+			$_post['comments']   = isset( $post['comments_count'] ) ? absint( $post['comments_count'] ) : 0;
+			$_post['likes']      = isset( $post['likes_count'] ) ? absint( $post['likes_count'] ) : 0;
 			$_post['thumbnail'] = $this->get_insta_feed_thumbnail_data( $post );
 
 			if ( ! empty( $post['caption'] ) ) {
-				$_post['caption'] = wp_html_excerpt( $post['caption'], $this->get_settings('insta_caption_length'), '&hellip;' );
+				$caption_plain = sanitize_text_field( wp_strip_all_tags( (string) $post['caption'] ) );
+				if ( '' !== $caption_plain ) {
+					$_post['caption'] = wp_html_excerpt( $caption_plain, $this->get_settings( 'insta_caption_length' ), '&hellip;' );
+				}
 			}
 
 			$return_data[] = $_post;
@@ -3271,42 +3428,58 @@ class Gallery extends Extras_Widget {
 	}
 
 	/**
-	 * Get thumbnail data from response data
+	 * Builds a sanitized thumbnail size map from Legacy `images` object (unused by current Graph endpoint but kept for payloads that include it).
 	 *
-	 * @param $post
 	 * @since 2.1.0
 	 *
-	 * @return array
+	 * @param array<string,mixed> $post Raw media item from Instagram API.
+	 * @return array<string,mixed|array<string,int|string>> Nested src / dimension records.
 	 */
 	public function get_insta_feed_thumbnail_data( $post ) {
 		$thumbnail = array(
 			'thumbnail' => false,
 			'low'       => false,
 			'standard'  => false,
-			'high'		=> false,
+			'high'      => false,
 		);
 
-		if ( ! empty( $post['images'] ) && is_array( $post['images'] ) ) {
+		if ( empty( $post['images'] ) || ! is_array( $post['images'] ) ) {
+			return $thumbnail;
+		}
 
-			$data = $post['images'];
+		$data = $post['images'];
 
-			$thumbnail['thumbnail'] = [
-				'src'           => $data['thumbnail']['url'],
-				'config_width'  => $data['thumbnail']['width'],
-				'config_height' => $data['thumbnail']['height'],
-			];
+		$t = isset( $data['thumbnail']['url'], $data['thumbnail']['width'], $data['thumbnail']['height'] ) && is_array( $data['thumbnail'] )
+			? $data['thumbnail']
+			: null;
+		if ( $t ) {
+			$thumbnail['thumbnail'] = array(
+				'src'           => esc_url_raw( (string) $t['url'] ),
+				'config_width'  => absint( $t['width'] ),
+				'config_height' => absint( $t['height'] ),
+			);
+		}
 
-			$thumbnail['low'] = [
-				'src'           => $data['low_resolution']['url'],
-				'config_width'  => $data['low_resolution']['width'],
-				'config_height' => $data['low_resolution']['height'],
-			];
+		$l = isset( $data['low_resolution']['url'], $data['low_resolution']['width'], $data['low_resolution']['height'] ) && is_array( $data['low_resolution'] )
+			? $data['low_resolution']
+			: null;
+		if ( $l ) {
+			$thumbnail['low'] = array(
+				'src'           => esc_url_raw( (string) $l['url'] ),
+				'config_width'  => absint( $l['width'] ),
+				'config_height' => absint( $l['height'] ),
+			);
+		}
 
-			$thumbnail['standard'] = [
-				'src'           => $data['standard_resolution']['url'],
-				'config_width'  => $data['standard_resolution']['width'],
-				'config_height' => $data['standard_resolution']['height'],
-			];
+		$s = isset( $data['standard_resolution']['url'], $data['standard_resolution']['width'], $data['standard_resolution']['height'] ) && is_array( $data['standard_resolution'] )
+			? $data['standard_resolution']
+			: null;
+		if ( $s ) {
+			$thumbnail['standard'] = array(
+				'src'           => esc_url_raw( (string) $s['url'] ),
+				'config_width'  => absint( $s['width'] ),
+				'config_height' => absint( $s['height'] ),
+			);
 
 			$thumbnail['high'] = $thumbnail['standard'];
 		}
@@ -3315,36 +3488,75 @@ class Gallery extends Extras_Widget {
 	}
 
 	/**
-	 * Get data from response
+	 * Normalizes unofficial hashtag GraphQL payload edges for gallery rendering (legacy scraper compatibility).
 	 *
-	 * @param  $response
+	 * Validates nested keys and sanitizes every field taken from upstream JSON before output or transient cache.
+	 *
 	 * @since  2.1.0
 	 *
-	 * @return array
+	 * @param array<mixed> $response Decoded instagram.com graphql-style payload.
+	 *
+	 * @return array<int,array<string,mixed>>
 	 */
 	public function get_insta_tags_response_data( $response ) {
 
 		$settings = $this->get_settings();
-		$response_posts = $response['graphql']['hashtag']['edge_hashtag_to_media']['edges'];
 
-		if ( empty( $response_posts ) ) {
+		$response_posts = array();
+		if ( is_array( $response ) && isset( $response['graphql']['hashtag']['edge_hashtag_to_media']['edges'] ) && is_array( $response['graphql']['hashtag']['edge_hashtag_to_media']['edges'] ) ) {
+			$response_posts = $response['graphql']['hashtag']['edge_hashtag_to_media']['edges'];
+		}
+		if ( empty( $response_posts ) && isset( $response['graphql']['hashtag']['edge_hashtag_to_top_posts']['edges'] ) && is_array( $response['graphql']['hashtag']['edge_hashtag_to_top_posts']['edges'] ) ) {
 			$response_posts = $response['graphql']['hashtag']['edge_hashtag_to_top_posts']['edges'];
 		}
 
-		$return_data  = array();
-		$posts = array_slice( $response_posts, 0, $settings['insta_posts_counter'], true );
+		if ( empty( $response_posts ) || ! is_array( $response_posts ) ) {
+			return array();
+		}
+
+		$return_data = array();
+		$posts       = array_slice( $response_posts, 0, $settings['insta_posts_counter'], true );
 
 		foreach ( $posts as $post ) {
-			$_post				= array();
+			if ( ! is_array( $post ) || empty( $post['node']['shortcode'] ) ) {
+				continue;
+			}
 
-			$_post['link']		= sprintf( $this->insta_api_url . 'p/%s/', $post['node']['shortcode'] );
-			$_post['caption']	= '';
-			$_post['comments']	= $post['node']['edge_media_to_comment']['count'];
-			$_post['likes']		= $post['node']['edge_liked_by']['count'];
+			$shortcode = sanitize_text_field( (string) $post['node']['shortcode'] );
+			if ( ! preg_match( '/^[A-Za-z0-9_-]+$/', $shortcode ) ) {
+				continue;
+			}
+
+			$permalink = esc_url_raw(
+				sprintf( '%sp/%s/', untrailingslashit( esc_url_raw( $this->insta_api_url ) ), $shortcode )
+			);
+			if ( '' === $permalink ) {
+				continue;
+			}
+
+			$node           = isset( $post['node'] ) && is_array( $post['node'] ) ? $post['node'] : array();
+			$comments_count = isset( $node['edge_media_to_comment']['count'] ) ? absint( $node['edge_media_to_comment']['count'] ) : 0;
+			$likes_count    = isset( $node['edge_liked_by']['count'] ) ? absint( $node['edge_liked_by']['count'] ) : 0;
+
+			$_post               = array();
+			$_post['id']         = $shortcode;
+			$_post['link']       = $permalink;
+			$_post['caption']    = '';
+			$_post['comments']   = $comments_count;
+			$_post['likes']      = $likes_count;
 			$_post['thumbnail'] = $this->get_insta_tags_thumbnail_data( $post );
 
-			if ( isset( $post['node']['edge_media_to_caption']['edges'][0]['node']['text'] ) ) {
-				$_post['caption'] = wp_html_excerpt( $post['node']['edge_media_to_caption']['edges'][0]['node']['text'], $settings['insta_caption_length'], '&hellip;' );
+			$caption_node = isset( $node['edge_media_to_caption']['edges'][0]['node']['text'] ) ? $node['edge_media_to_caption']['edges'][0]['node']['text'] : '';
+			if ( $caption_node ) {
+				$caption_plain = sanitize_text_field( wp_strip_all_tags( (string) $caption_node ) );
+				if ( '' !== $caption_plain ) {
+					$_post['caption'] = wp_html_excerpt( $caption_plain, $settings['insta_caption_length'], '&hellip;' );
+				}
+			}
+
+			// Optional image URL parity with feed items when display_url exists.
+			if ( ! empty( $node['display_url'] ) ) {
+				$_post['image'] = esc_url_raw( (string) $node['display_url'] );
 			}
 
 			$return_data[] = $_post;
@@ -3354,49 +3566,62 @@ class Gallery extends Extras_Widget {
 	}
 
 	/**
-	 * Generate thumbnail resources.
+	 * Sanitized thumbnail presets from hashtag graphql `thumbnail_resources`.
 	 *
 	 * @since 2.1.0
-	 * @param $post_data
 	 *
-	 * @return array
+	 * @param array<string,mixed> $post_data Edge wrapping a `node` array.
+	 * @return array<string,mixed|array<string,int|string>>
 	 */
-	public function get_insta_tags_thumbnail_data( $post ) {
-		$post = $post['node'];
+	public function get_insta_tags_thumbnail_data( $post_data ) {
+		$post = isset( $post_data['node'] ) && is_array( $post_data['node'] ) ? $post_data['node'] : array();
 
 		$thumbnail = array(
 			'thumbnail' => false,
 			'low'       => false,
 			'standard'  => false,
-			'high'		=> false,
+			'high'      => false,
 		);
 
-		if ( is_array( $post['thumbnail_resources'] ) && ! empty( $post['thumbnail_resources'] ) ) {
-			foreach ( $post['thumbnail_resources'] as $key => $resources_data ) {
-
-				if ( 150 === $resources_data['config_width'] ) {
-					$thumbnail['thumbnail'] = $resources_data;
+		if ( ! empty( $post['thumbnail_resources'] ) && is_array( $post['thumbnail_resources'] ) ) {
+			foreach ( $post['thumbnail_resources'] as $resources_data ) {
+				if ( ! is_array( $resources_data ) || ! isset( $resources_data['config_width'], $resources_data['src'] ) ) {
 					continue;
 				}
 
-				if ( 320 === $resources_data['config_width'] ) {
-					$thumbnail['low'] = $resources_data;
+				$src    = esc_url_raw( (string) $resources_data['src'] );
+				$config = absint( $resources_data['config_width'] );
+				if ( '' === $src ) {
 					continue;
 				}
 
-				if ( 640 === $resources_data['config_width'] ) {
-					$thumbnail['standard'] = $resources_data;
-					continue;
+				$row = array(
+					'src'           => $src,
+					'config_width'  => $config,
+					'config_height' => isset( $resources_data['config_height'] ) ? absint( $resources_data['config_height'] ) : 0,
+				);
+
+				if ( 150 === $config ) {
+					$thumbnail['thumbnail'] = $row;
+				}
+
+				if ( 320 === $config ) {
+					$thumbnail['low'] = $row;
+				}
+
+				if ( 640 === $config ) {
+					$thumbnail['standard'] = $row;
 				}
 			}
 		}
 
-		if ( ! empty( $post['display_url'] ) ) {
+		if ( ! empty( $post['display_url'] ) && isset( $post['dimensions']['width'], $post['dimensions']['height'] ) ) {
+			$durl          = esc_url_raw( (string) $post['display_url'] );
 			$thumbnail['high'] = array(
-				'src'           => $post['display_url'],
-				'config_width'  => $post['dimensions']['width'],
-				'config_height' => $post['dimensions']['height'],
-			) ;
+				'src'           => $durl,
+				'config_width'  => absint( $post['dimensions']['width'] ),
+				'config_height' => absint( $post['dimensions']['height'] ),
+			);
 		}
 
 		return $thumbnail;
@@ -3431,7 +3656,7 @@ class Gallery extends Extras_Widget {
 	 * @return string
 	 */
 	public function get_insta_global_access_token() {
-		return \ElementorExtras\ElementorExtrasPlugin::$instance->settings->get_option( 'instagram_access_token', 'elementor_extras_apis', false );
+		return \LandTechExtras\LandTechExtrasPlugin::$instance->settings->get_option( 'instagram_access_token', 'landtech_extras_apis', false );
 	}
 
 	/**

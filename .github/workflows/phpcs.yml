@@ -1,0 +1,76 @@
+name: PHPCS
+
+on:
+  push:
+    branches: [ trunk, master, main, develop ]
+  pull_request:
+
+jobs:
+  phpcs-i18n:
+    name: I18n (text domain — errors fail CI)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer
+          coverage: none
+
+      - name: Composer install
+        run: composer install --no-progress --prefer-dist --no-interaction
+
+      - name: PHPCS — WordPress.WP.I18n (warnings ignored; errors block)
+        run: composer lint --no-interaction
+
+  phpcs-security:
+    name: Security (informational until baseline cleaned)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer
+          coverage: none
+
+      - run: composer install --no-progress --prefer-dist --no-interaction
+
+      - name: PHPCS — WordPress.Security (full legacy baseline)
+        run: composer run lint:security --no-interaction
+
+  plugin-check-phpcs:
+    name: Plugin Check (WordPress.org PHPCS sniffs)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout plugin
+        uses: actions/checkout@v4
+
+      - name: Checkout WordPress Plugin Check (coding standard)
+        uses: actions/checkout@v4
+        with:
+          repository: WordPress/plugin-check
+          ref: trunk
+          path: .plugin-check
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer
+          coverage: none
+
+      - name: Install Plugin Check PHPCS dependencies
+        working-directory: .plugin-check/phpcs-sniffs
+        run: composer install --no-progress --prefer-dist --no-interaction
+
+      - name: PHPCS — PluginCheck standard (errors fail CI)
+        run: .plugin-check/phpcs-sniffs/vendor/bin/phpcs --standard=PluginCheck --extensions=php --ignore='*/vendor/*,*/node_modules/*,*/scripts/*' -p -n .

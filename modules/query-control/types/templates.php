@@ -1,9 +1,10 @@
 <?php
-namespace ElementorExtras\Modules\QueryControl\Types;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\QueryControl\Types;
 
-// Extras for Elementor Classes
-use ElementorExtras\Modules\QueryControl\Types\Type_Base;
-use ElementorExtras\Utils;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Modules\QueryControl\Types\Type_Base;
+use LandTechExtras\Utils;
 
 // Elementor Classes
 use Elementor\Core\Base\Document;
@@ -49,6 +50,7 @@ class Templates extends Type_Base {
 			'posts_per_page' 	=> -1,
 			'orderby' 			=> 'meta_value',
 			'order' 			=> 'ASC',
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- Template library autocomplete; narrow meta_query on Elementor document type key.
 			'meta_query' => [
 				[
 					'key' 		=> Document::TYPE_META_KEY,

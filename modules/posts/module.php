@@ -1,9 +1,10 @@
 <?php
-namespace ElementorExtras\Modules\Posts;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Posts;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Module_Base;
-use ElementorExtras\Modules\Posts\Widgets\Posts_Base;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Module_Base;
+use LandTechExtras\Modules\Posts\Widgets\Posts_Base;
 
 use ElementorPro\Modules\ThemeBuilder\Module as ThemeBuilder;
 
@@ -64,7 +65,7 @@ class Module extends Module_Base {
 			'button',
 		];
 
-		if ( is_woocommerce_active() ) {
+		if ( landtech_extras_is_woocommerce_active() ) {
 			$content_parts[] = 'price';
 		}
 
@@ -126,7 +127,7 @@ class Module extends Module_Base {
 			// 'custom_fields',
 		];
 
-		if ( is_woocommerce_active() ) {
+		if ( landtech_extras_is_woocommerce_active() ) {
 			$meta_parts[] = 'price';
 		}
 
@@ -154,8 +155,16 @@ class Module extends Module_Base {
 	public function handle_pagination_404( $preempt, $wp_query ) {
 		// Conditions leave our posts built with Elementor
 		// since widgets can also be present on theme builder
-		if ( ! $preempt && ! empty( $wp_query->query_vars['ee-page'] ) && self::is_custom_pagination() ) {
-			$preempt = true;
+		if ( ! $preempt && self::is_custom_pagination() ) {
+			$page = 0;
+			if ( ! empty( $wp_query->query_vars['ltxe-page'] ) ) {
+				$page = (int) $wp_query->query_vars['ltxe-page'];
+			} elseif ( ! empty( $wp_query->query_vars['ee-page'] ) ) {
+				$page = (int) $wp_query->query_vars['ee-page'];
+			}
+			if ( $page > 0 ) {
+				$preempt = true;
+			}
 		}
 
 		return $preempt;
@@ -170,7 +179,7 @@ class Module extends Module_Base {
 	 */
 	public function add_pagination_query_var( $request ) {
 		if ( ! empty( $request['page'] ) && intval( $request['page'] ) > 1 ) {
-			$request['ee-page'] = $request['page'];
+			$request['ltxe-page'] = $request['page'];
 		}
 
 		return $request;
@@ -183,6 +192,7 @@ class Module extends Module_Base {
 	 * @return array
 	 */
 	public function register_pagination_query_var( $vars ) {
+		$vars[] = 'ltxe-page';
 		$vars[] = 'ee-page';
 		return $vars;
 	}

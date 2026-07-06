@@ -1,8 +1,9 @@
 <?php
-namespace ElementorExtras\Modules\DisplayConditions\Conditions;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\DisplayConditions\Conditions;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Condition;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Condition;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -49,7 +50,7 @@ class Page extends Condition {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Page', 'elementor-extras' );
+		return __( 'Page', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -64,8 +65,8 @@ class Page extends Condition {
 		return [
 			'type' 			=> 'ee-query',
 			'default' 		=> '',
-			'placeholder'	=> __( 'Any', 'elementor-extras' ),
-			'description'	=> __( 'Leave blank for any page.', 'elementor-extras' ),
+			'placeholder'	=> __( 'Any', 'landtech-extras-for-elementor' ),
+			'description'	=> __( 'Leave blank for any page.', 'landtech-extras-for-elementor' ),
 			'label_block' 	=> true,
 			'multiple'		=> true,
 			'query_type'	=> 'posts',

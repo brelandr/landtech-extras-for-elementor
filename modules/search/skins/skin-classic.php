@@ -1,5 +1,6 @@
 <?php
-namespace ElementorExtras\Modules\Search\Skins;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Search\Skins;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -36,7 +37,7 @@ class Skin_Classic extends Skin_Base {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Classic', 'elementor-extras' );
+		return __( 'Classic', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -95,7 +96,7 @@ class Skin_Classic extends Skin_Base {
 			$this->add_control(
 				'heading_label_content',
 				[
-					'label' 	=> __( 'Label', 'elementor-extras' ),
+					'label' 	=> __( 'Label', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 				]
 			);
@@ -103,20 +104,20 @@ class Skin_Classic extends Skin_Base {
 			$this->add_control(
 				'button_label',
 				[
-					'label' 	=> __( 'Show Label', 'elementor-extras' ),
+					'label' 	=> __( 'Show Label', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SWITCHER,
 					'default'	=> 'yes',
-					'label_off' => __( 'Hide', 'elementor-extras' ),
-					'label_on' 	=> __( 'Show', 'elementor-extras' ),
+					'label_off' => __( 'Hide', 'landtech-extras-for-elementor' ),
+					'label_on' 	=> __( 'Show', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 			$this->add_control(
 				'button_label_text',
 				[
-					'label' 	=> __( 'Label', 'elementor-extras' ),
+					'label' 	=> __( 'Label', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXT,
-					'default' 	=> __( 'Search', 'elementor-extras' ),
+					'default' 	=> __( 'Search', 'landtech-extras-for-elementor' ),
 					'separator' => 'after',
 					'condition' => [
 						$this->get_control_id( 'button_label!' ) => '',
@@ -134,29 +135,29 @@ class Skin_Classic extends Skin_Base {
 			$this->add_control(
 				'icon',
 				[
-					'label' 		=> __( 'Icon', 'elementor-extras' ),
+					'label' 		=> __( 'Icon', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'label_block' 	=> false,
 					'default' 		=> 'search',
 					'options' 		=> [
 						''				=> [
-							'title'		=> __( 'Hide', 'elementor-extras' ),
+							'title'		=> __( 'Hide', 'landtech-extras-for-elementor' ),
 							'icon'		=> 'fa fa-eye-slash',
 						],
 						'search' 	=> [
-							'title' => __( 'Search', 'elementor-extras' ),
+							'title' => __( 'Search', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'nicon nicon-search',
 						],
 						'arrow' 	=> [
-							'title' => __( 'Arrow', 'elementor-extras' ),
+							'title' => __( 'Arrow', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'nicon nicon-arrow-right',
 						],
 						'angle' 	=> [
-							'title' => __( 'Angle', 'elementor-extras' ),
+							'title' => __( 'Angle', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'nicon nicon-angle-right',
 						],
 						'triangle' 	=> [
-							'title' => __( 'Triangle', 'elementor-extras' ),
+							'title' => __( 'Triangle', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'nicon nicon-triangle-right',
 						],
 					],
@@ -175,16 +176,16 @@ class Skin_Classic extends Skin_Base {
 			$this->add_control(
 				'icon_position',
 				[
-					'label' 	=> __( 'Position', 'elementor-extras' ),
+					'label' 	=> __( 'Position', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::CHOOSE,
 					'default' 	=> 'right',
 					'options' 	=> [
 						'left'    	=> [
-							'title' => __( 'Left', 'elementor-extras' ),
+							'title' => __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'eicon-h-align-left',
 						],
 						'right' 	=> [
-							'title' => __( 'Right', 'elementor-extras' ),
+							'title' => __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'eicon-h-align-right',
 						],
 					],
@@ -200,7 +201,7 @@ class Skin_Classic extends Skin_Base {
 			$this->add_control(
 				'icon_distance',
 				[
-					'label' 		=> __( 'Spacing', 'elementor-pro' ),
+					'label' 		=> __( 'Spacing', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 		=> [
 						'size' 		=> 12,
@@ -237,8 +238,8 @@ class Skin_Classic extends Skin_Base {
 			$this->add_responsive_control(
 				'form_border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
-					'description'	=> __( 'For perfectly rounded corners set this to half of the height', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'For perfectly rounded corners set this to half of the height', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> '',
@@ -285,7 +286,7 @@ class Skin_Classic extends Skin_Base {
 			$this->add_responsive_control(
 				'form_width',
 				[
-					'label' 	=> __( 'Width', 'elementor-extras' ),
+					'label' 	=> __( 'Width', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -314,14 +315,14 @@ class Skin_Classic extends Skin_Base {
 			$this->add_control(
 				'fields_wrap',
 				[
-					'label' 		=> __( 'Wrap on', 'elementor-extras' ),
+					'label' 		=> __( 'Wrap on', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT,
 					'default' 		=> '',
 					'options' 		=> [
-						''			=> __( 'None', 'elementor-extras' ),
-						'desktop'	=> __( 'Desktop', 'elementor-extras' ),
-						'tablet'	=> __( 'Tablet', 'elementor-extras' ),
-						'mobile'	=> __( 'Mobile', 'elementor-extras' ),
+						''			=> __( 'None', 'landtech-extras-for-elementor' ),
+						'desktop'	=> __( 'Desktop', 'landtech-extras-for-elementor' ),
+						'tablet'	=> __( 'Tablet', 'landtech-extras-for-elementor' ),
+						'mobile'	=> __( 'Mobile', 'landtech-extras-for-elementor' ),
 					],
 					'prefix_class'	=> 'ee-search-form-fields-wrap--',
 				]
@@ -366,7 +367,7 @@ class Skin_Classic extends Skin_Base {
 			$this->add_responsive_control(
 				'button_width',
 				[
-					'label' 	=> __( 'Width', 'elementor-extras' ),
+					'label' 	=> __( 'Width', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> '',

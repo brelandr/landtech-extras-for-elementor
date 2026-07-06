@@ -1,8 +1,9 @@
 <?php
-namespace ElementorExtras\Modules\DisplayConditions\Conditions;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\DisplayConditions\Conditions;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Condition;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Condition;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -59,7 +60,7 @@ class Edd_Cart extends Condition {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Cart', 'elementor-extras' );
+		return __( 'Cart', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -76,7 +77,7 @@ class Edd_Cart extends Condition {
 			'default' 		=> 'empty',
 			'label_block' 	=> true,
 			'options' 		=> [
-				'empty'		=> __( 'Empty', 'elementor-extras' ),
+				'empty'		=> __( 'Empty', 'landtech-extras-for-elementor' ),
 			],
 		];
 	}

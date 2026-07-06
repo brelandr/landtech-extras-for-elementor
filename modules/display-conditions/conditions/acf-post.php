@@ -1,8 +1,9 @@
 <?php
-namespace ElementorExtras\Modules\DisplayConditions\Conditions;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\DisplayConditions\Conditions;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Condition;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Condition;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -37,7 +38,7 @@ class Acf_Post extends Acf_Base {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'ACF Post', 'elementor-extras' );
+		return __( 'ACF Post', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -50,8 +51,8 @@ class Acf_Post extends Acf_Base {
 	 */
 	public function get_name_control() {
 		return wp_parse_args( [
-			'description'	=> __( 'Search ACF "Post Object" and "Relationship" fields by label.', 'elementor-extras' ),
-			'placeholder'	=> __( 'Search Fields', 'elementor-extras' ),
+			'description'	=> __( 'Search ACF "Post Object" and "Relationship" fields by label.', 'landtech-extras-for-elementor' ),
+			'placeholder'	=> __( 'Search Fields', 'landtech-extras-for-elementor' ),
 		], $this->get_name_control_options() );
 	}
 
@@ -81,8 +82,8 @@ class Acf_Post extends Acf_Base {
 		return [
 			'type' 			=> 'ee-query',
 			'default' 		=> '',
-			'placeholder'	=> __( 'Search Posts', 'elementor-extras' ),
-			'description'	=> __( 'Select multiple posts to match for any of them. Leave blank to check if the field is set.', 'elementor-extras' ),
+			'placeholder'	=> __( 'Search Posts', 'landtech-extras-for-elementor' ),
+			'description'	=> __( 'Select multiple posts to match for any of them. Leave blank to check if the field is set.', 'landtech-extras-for-elementor' ),
 			'label_block' 	=> true,
 			'multiple'		=> true,
 			'query_type'	=> 'posts',

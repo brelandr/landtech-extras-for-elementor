@@ -1,8 +1,9 @@
 <?php
-namespace ElementorExtras\Modules\DisplayConditions\Conditions;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\DisplayConditions\Conditions;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Condition;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Condition;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -49,7 +50,7 @@ class Post_Meta extends Condition {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Post Meta', 'elementor-extras' );
+		return __( 'Post Meta', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -64,7 +65,7 @@ class Post_Meta extends Condition {
 		return [
 			'type' 			=> Controls_Manager::TEXT,
 			'default' 		=> '',
-			'placeholder'	=> __('meta_key', 'elementor-extras'),
+			'placeholder'	=> __('meta_key', 'landtech-extras-for-elementor'),
 			'label_block' 	=> true,
 		];
 	}
@@ -81,8 +82,8 @@ class Post_Meta extends Condition {
 		return [
 			'type' 			=> Controls_Manager::TEXT,
 			'default' 		=> '',
-			'placeholder'	=> __('meta_value', 'elementor-extras'),
-			'description'	=> __('Leave empty to check if the current post has any meta value for the selected key.', 'elementor-extras'),
+			'placeholder'	=> __('meta_value', 'landtech-extras-for-elementor'),
+			'description'	=> __('Leave empty to check if the current post has any meta value for the selected key.', 'landtech-extras-for-elementor'),
 			'label_block' 	=> true,
 		];
 	}

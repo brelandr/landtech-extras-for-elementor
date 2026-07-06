@@ -1,8 +1,9 @@
 <?php
-namespace ElementorExtras\Modules\DisplayConditions\Conditions;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\DisplayConditions\Conditions;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Condition;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Condition;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -40,7 +41,7 @@ class Var_Base extends Condition {
 		return [
 			'type' 			=> Controls_Manager::TEXT,
 			'default' 		=> '',
-			'placeholder'	=> __( 'Name', 'elementor-extras' ),
+			'placeholder'	=> __( 'Name', 'landtech-extras-for-elementor' ),
 			'label_block' 	=> true,
 		];
 	}
@@ -57,9 +58,23 @@ class Var_Base extends Condition {
 		return [
 			'type' 			=> Controls_Manager::TEXT,
 			'default' 		=> '',
-			'description'	=> __( 'Leave blank to accept any value.', 'elementor-extras' ),
-			'placeholder'	=> __( 'Value', 'elementor-extras' ),
+			'description'	=> __( 'Leave blank to accept any value.', 'landtech-extras-for-elementor' ),
+			'placeholder'	=> __( 'Value', 'landtech-extras-for-elementor' ),
 			'label_block' 	=> true,
 		];
+	}
+
+	/**
+	 * Sanitize a REQUEST variable name configured in the widget (prevent arbitrary superglobal traversal).
+	 *
+	 * @param mixed $name Control value from the editor.
+	 * @return string Safe key or empty string.
+	 */
+	protected function sanitize_request_var_key( $name ) {
+		if ( null === $name ) {
+			return '';
+		}
+		$key = preg_replace( '/[^A-Za-z0-9_-]/', '', (string) $name );
+		return strlen( $key ) > 64 ? '' : $key;
 	}
 }

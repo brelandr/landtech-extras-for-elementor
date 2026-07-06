@@ -1,5 +1,6 @@
 <?php
-namespace ElementorExtras\Modules\Navigation\Skins;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Navigation\Skins;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -31,7 +32,7 @@ class Skin_Classic extends Skin_Base {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Classic', 'elementor-extras' );
+		return __( 'Classic', 'landtech-extras-for-elementor' );
 	}
 
 	/**

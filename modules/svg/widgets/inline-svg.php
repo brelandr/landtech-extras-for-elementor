@@ -1,9 +1,10 @@
 <?php
-namespace ElementorExtras\Modules\Svg\Widgets;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Svg\Widgets;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Extras_Widget;
-use ElementorExtras\Group_Control_Transition;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Extras_Widget;
+use LandTechExtras\Group_Control_Transition;
 
 // Elementor Classes
 use Elementor\Utils;
@@ -42,7 +43,7 @@ class Inline_Svg extends Extras_Widget {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Inline SVG', 'elementor-extras' );
+		return __( 'Inline SVG', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -66,7 +67,7 @@ class Inline_Svg extends Extras_Widget {
 	 * @return array
 	 */
 	public function get_script_depends() {
-		return [ 'elementor-extras' ];
+		return [ 'landtech-extras' ];
 	}
 
 	/**
@@ -80,14 +81,14 @@ class Inline_Svg extends Extras_Widget {
 		$this->start_controls_section(
 			'section_content',
 			[
-				'label' => __( 'Graphic', 'elementor-extras' ),
+				'label' => __( 'Graphic', 'landtech-extras-for-elementor' ),
 			]
 		);
 
 			$this->add_control(
 				'svg',
 				[
-					'label' 	=> __( 'Choose file', 'elementor-extras' ),
+					'label' 	=> __( 'Choose file', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::MEDIA,
 					'dynamic' 	=> [ 'active' => true ],
 					'frontend_available' => true,
@@ -97,8 +98,8 @@ class Inline_Svg extends Extras_Widget {
 			$this->add_control(
 				'link',
 				[
-					'label' 		=> __( 'Link', 'elementor-extras' ),
-					'description' 	=> __( 'Active only when tolltips\' Trigger is set to Hover', 'elementor-extras' ),
+					'label' 		=> __( 'Link', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'Active only when tolltips\' Trigger is set to Hover', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::URL,
 					'dynamic' 		=> [ 'active' => true ],
 					'placeholder' 	=> 'http://your-link.com',
@@ -115,7 +116,7 @@ class Inline_Svg extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style',
 			[
-				'label' => __( 'Graphic', 'elementor-extras' ),
+				'label' => __( 'Graphic', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -123,19 +124,19 @@ class Inline_Svg extends Extras_Widget {
 			$this->add_responsive_control(
 				'align',
 				[
-					'label' => __( 'Alignment', 'elementor-extras' ),
+					'label' => __( 'Alignment', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::CHOOSE,
 					'options' => [
 						'left' => [
-							'title' => __( 'Left', 'elementor-extras' ),
+							'title' => __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' => 'fa fa-align-left',
 						],
 						'center' => [
-							'title' => __( 'Center', 'elementor-extras' ),
+							'title' => __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' => 'fa fa-align-center',
 						],
 						'right' => [
-							'title' => __( 'Right', 'elementor-extras' ),
+							'title' => __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' => 'fa fa-align-right',
 						],
 					],
@@ -148,12 +149,12 @@ class Inline_Svg extends Extras_Widget {
 			$this->add_control(
 				'sizing',
 				[
-					'label' 		=> __( 'Sizing', 'elementor-extras' ),
-					'description'	=> __( 'Makes contents responsive and allows you to change maximum width and aspect ratio', 'elementor-extras' ),
+					'label' 		=> __( 'Sizing', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Makes contents responsive and allows you to change maximum width and aspect ratio', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'yes',
 				]
 			);
@@ -161,12 +162,12 @@ class Inline_Svg extends Extras_Widget {
 			$this->add_control(
 				'maintain_ratio',
 				[
-					'label' 		=> __( 'Keep aspect ratio', 'elementor-extras' ),
-					'description'	=> __( 'Maintains width / height ratio intact. Note: Use this feature carefully as it might distort elements inside the SVG.', 'elementor-extras' ),
+					'label' 		=> __( 'Keep aspect ratio', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Maintains width / height ratio intact. Note: Use this feature carefully as it might distort elements inside the SVG.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'yes',
 					'condition'		=> [
 						'sizing'	=> 'yes'
@@ -178,8 +179,8 @@ class Inline_Svg extends Extras_Widget {
 			$this->add_responsive_control(
 				'width',
 				[
-					'label' 		=> __( 'Width', 'elementor-extras' ),
-					'description'	=> __( 'Set the maximum width', 'elementor-extras' ),
+					'label' 		=> __( 'Width', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Set the maximum width', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 		=> [
 						'size' 		=> '',
@@ -209,7 +210,7 @@ class Inline_Svg extends Extras_Widget {
 			$this->add_responsive_control(
 				'height',
 				[
-					'label' 		=> __( 'Height', 'elementor-extras' ),
+					'label' 		=> __( 'Height', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 		=> [
 						'size' 		=> '',
@@ -239,12 +240,12 @@ class Inline_Svg extends Extras_Widget {
 			$this->add_control(
 				'remove_inline_css',
 				[
-					'label' 		=> __( 'Convert CSS to attributes', 'elementor-extras' ),
-					'description'	=> __( 'Sometimes a SVG might have internal or inline CSS styling preventing you to set a custom color. This happens usually when exporting artwork from Illustrator. Keeping this option on will prevent strange color behaviour when multiple Inline SVG widgets are on the same page.', 'elementor-extras' ),
+					'label' 		=> __( 'Convert CSS to attributes', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Sometimes a SVG might have internal or inline CSS styling preventing you to set a custom color. This happens usually when exporting artwork from Illustrator. Keeping this option on will prevent strange color behaviour when multiple Inline SVG widgets are on the same page.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'yes',
 					'frontend_available' => true,
 				]
@@ -253,13 +254,13 @@ class Inline_Svg extends Extras_Widget {
 			$this->add_control(
 				'override_colors',
 				[
-					'label' 		=> __( 'Override Color', 'elementor-extras' ),
-					'description'	=> __( 'Specify the color for all svg elements that have a fill or stroke color set.', 'elementor-extras' ),
+					'label' 		=> __( 'Override Color', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Specify the color for all svg elements that have a fill or stroke color set.', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 				]
 			);
 
@@ -278,7 +279,7 @@ class Inline_Svg extends Extras_Widget {
 			$this->add_control(
 				'color',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'global' => [
 						'default' => Global_Colors::COLOR_PRIMARY,
@@ -295,7 +296,7 @@ class Inline_Svg extends Extras_Widget {
 			$this->add_control(
 				'color_hover',
 				[
-					'label' 	=> __( 'Hover Color', 'elementor-extras' ),
+					'label' 	=> __( 'Hover Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'global' => [
 						'default' => Global_Colors::COLOR_SECONDARY,
@@ -325,7 +326,7 @@ class Inline_Svg extends Extras_Widget {
 		$tag 		= 'div';
 
 		if ( empty( $settings['svg']['url'] ) ) {
-			echo $this->render_placeholder( ['body' => __( 'Select your SVG file.', 'elementor-extras' ) ] );
+			$this->render_placeholder( [ 'body' => __( 'Select your SVG file.', 'landtech-extras-for-elementor' ) ] );
 			return;
 		}
 
@@ -355,8 +356,8 @@ class Inline_Svg extends Extras_Widget {
 			}
 		}
 
-		?><div <?php echo $this->get_render_attribute_string( 'wrapper' ); ?>>
-			<<?php echo $tag ?> <?php echo $this->get_render_attribute_string( 'svg' ); ?>></<?php echo $tag; ?>>
+		?><div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
+			<<?php echo esc_html( $tag ); ?> <?php $this->print_render_attribute_string( 'svg' ); ?>></<?php echo esc_html( $tag ); ?>>
 		</div><?php
 	}
 

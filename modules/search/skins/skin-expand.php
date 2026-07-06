@@ -1,5 +1,6 @@
 <?php
-namespace ElementorExtras\Modules\Search\Skins;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Search\Skins;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -34,7 +35,7 @@ class Skin_Expand extends Skin_Base {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Expand', 'elementor-extras' );
+		return __( 'Expand', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -68,12 +69,12 @@ class Skin_Expand extends Skin_Base {
 			$this->add_control(
 				'input_position',
 				[
-					'label' 	=> __( 'Position', 'elementor-extras' ),
+					'label' 	=> __( 'Position', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'left',
 					'options' 	=> [
-						'left'    		=> __( 'Left', 'elementor-extras' ),
-						'right' 		=> __( 'Right', 'elementor-extras' ),
+						'left'    		=> __( 'Left', 'landtech-extras-for-elementor' ),
+						'right' 		=> __( 'Right', 'landtech-extras-for-elementor' ),
 					],
 					'label_block' 	=> false,
 					'prefix_class' 	=> 'ee-search-form-input-position--'
@@ -103,7 +104,7 @@ class Skin_Expand extends Skin_Base {
 			$this->add_control(
 				'icon',
 				[
-					'label' => __( 'Icon', 'elementor-extras' ),
+					'label' => __( 'Icon', 'landtech-extras-for-elementor' ),
 					'type' => \Elementor\Controls_Manager::HIDDEN,
 					'default' => 'search',
 				]
@@ -141,7 +142,7 @@ class Skin_Expand extends Skin_Base {
 			$this->add_responsive_control(
 				'input_width',
 				[
-					'label' => __( 'Expand Width', 'elementor-extras' ),
+					'label' => __( 'Expand Width', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::SLIDER,
 					'default' => [
 						'size' => 400,
@@ -187,8 +188,8 @@ class Skin_Expand extends Skin_Base {
 			$this->add_responsive_control(
 				'form_border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
-					'description'	=> __( 'For perfectly rounded corners set this to half of the height', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'For perfectly rounded corners set this to half of the height', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> '',

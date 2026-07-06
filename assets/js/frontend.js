@@ -21,7 +21,6 @@
 				'ee-toggle-element.classic':	ee.ToggleElement,
 				'ee-switcher.classic': 			ee.Switcher,
 				'ee-inline-svg.default': 		ee.InlineSvg,
-				'posts-extra.classic': 			ee.PostsClassic,
 				'posts-extra.carousel': 		ee.PostsCarousel,
 				'table.default': 				ee.Table,
 				'unfold.default': 				ee.Unfold,
@@ -43,6 +42,12 @@
 				'ee-search-form.expand': 		[ ee.SearchFormExpand, ee.SearchFormFilters ],
 				'ee-search-form.fullscreen': 	[ ee.SearchFormExpand, ee.SearchFormFilters ],
 			};
+
+			var postsExtraClassicFamilySkins = [ 'classic', 'editorial', 'studio', 'brutalist', 'minimal', 'glass', 'magazine', 'lift', 'capsule', 'cinema', 'soft' ];
+
+			$.each( postsExtraClassicFamilySkins, function( _index, skinSlug ) {
+				widgets[ 'posts-extra.' + skinSlug ] = ee.PostsClassic;
+			});
 
 			var globals = {
 				'sticky': 						ee.Sticky,
@@ -74,10 +79,10 @@
 		},
 
 		getRefreshableWidgets : function() {
-			if ( ! elementorExtrasFrontendConfig )
+			if ( ! landtechExtrasFrontendConfig )
 				return false;
 			
-			return elementorExtrasFrontendConfig.refreshableWidgets;
+			return landtechExtrasFrontendConfig.refreshableWidgets;
 		},
 
 		getGlobalSettings : function( section ) {
@@ -89,22 +94,22 @@
 			} else if ( 'extras' === section ) { // Quick fix until transition to kit settings
 				
 				return {
-					ee_tooltips_position : 'top',
-					ee_tooltips_arrow_position_h : '',
-					ee_tooltips_arrow_position_v : '',
-					ee_tooltips_delay_in : {
+					ltxe_tooltips_position : 'top',
+					ltxe_tooltips_arrow_position_h : '',
+					ltxe_tooltips_arrow_position_v : '',
+					ltxe_tooltips_delay_in : {
 						'size' : 0,
 						'unit' : 'px',
 					},
-					ee_tooltips_delay_out : {
+					ltxe_tooltips_delay_out : {
 						'size' : 0,
 						'unit' : 'px',
 					},
-					ee_tooltips_duration : {
+					ltxe_tooltips_duration : {
 						'size' : 0.2,
 						'unit' : 'px',
 					},
-					ee_tooltips_disable : '',
+					ltxe_tooltips_disable : '',
 				};
 			}
 
@@ -302,7 +307,7 @@
 			var elementSettings = ee.getElementSettings( $scope ),
 				scopeId 		= $scope.data('id'),
 				$form 			= $scope.find( '.ee-search-form' ),
-				$query 			= $scope.find( 'input[type=hidden][name=ee_search_query]' ),
+				$query 			= $scope.find( 'input[type=hidden][name=ltxe_search_query]' ),
 				$input 			= $scope.find( '.ee-search-form__input' ),
 				$submit 		= $scope.find( '.ee-search-form__submit' ),
 				$container 		= $scope.find( '.ee-search-form__container' ),
@@ -387,7 +392,7 @@
 			};
 
 			var setHiddenField = function() {
-				var data = JSON.stringify( ElementorExtrasUtils.serializeObject( $searchFields ) );
+				var data = JSON.stringify( LandTechExtrasUtils.serializeObject( $searchFields ) );
 				$query.val( data.replace(/\\/g, "") );
 			};
 
@@ -1187,7 +1192,7 @@
 					$items.removeClass( 'ee--is-active' );
 					$(this).addClass( 'ee--is-active' );
 
-					var marker = ElementorExtrasUtils.findObjectByKey( markers, 'id', $(this).data('id') );
+					var marker = LandTechExtrasUtils.findObjectByKey( markers, 'id', $(this).data('id') );
 
 					if ( marker ) {
 						var navZoom = settings.navigation_zoom ? settings.navigation_zoom.size : 18;
@@ -1535,7 +1540,7 @@
 			var scopeId 			= $scope.data('id'),
 				$trigger 			= $scope.find( '.ee-popup__trigger' ),
 				$content 			= $scope.find( '.ee-popup__content' ),
-				storageID 			= 'ee_PopupShown_' + scopeId,
+				storageID 			= 'ltxe_PopupShown_' + scopeId,
 				timesShow 			= ee.Popup.elementSettings.popup_times,
 				$window 			= ee.getWindow(),
 				$html 				= elementorFrontend.isEditMode() ? $window.find('html') : $('html'),
@@ -1548,108 +1553,118 @@
 				closeVAlignClass 	= 'mfp-close--valign-' + ee.Popup.elementSettings.popup_close_valign,
 				noOverlayClass 	 	= 'yes' === ee.Popup.elementSettings.popup_no_overlay ? 'ee-mfp-popup--no-overlay' : 'ee-mfp-popup--overlay',
 
-				popupArgs 			= {
-					autoFocusLast 		: false,
-					mainClass 			: 'ee-mfp-popup ee-mfp-popup-' + scopeId + ' ' + noOverlayClass + ' ' + popupVAlignClass + ' ' + ee.Popup.elementSettings.popup_animation,
-					type 				: 'inline',
-					disableOn 			: ee.Popup.elementSettings.popup_disable_on,
-					fixedContentPos		: 'yes' === ee.Popup.elementSettings.popup_fixed || 'yes' === ee.Popup.elementSettings.popup_prevent_scroll,
-					preloader			: 'yes' === ee.Popup.elementSettings.popup_preloader,
-					closeOnContentClick : 'yes' === ee.Popup.elementSettings.popup_close_on_content,
-					closeOnBgClick 		: 'yes' === ee.Popup.elementSettings.popup_close_on_bg,
-					enableEscapeKey 	: 'yes' === ee.Popup.elementSettings.popup_close_on_escape,
-					closeBtnInside 		: 'inside' === ee.Popup.elementSettings.popup_close_position,
-					showCloseBtn 		: ee.Popup.elementSettings.popup_close_position || false,
-					focus 				: '.no-focus',
-					closeMarkup 		: '<button title="%title%" type="button" class="ee-popup__close mfp-close ' + closeHAlignClass + ' ' + closeVAlignClass + ' eicon-close"></button>',
-					callbacks			: {
-						open : function() {
-							var instance = $.magnificPopup.instance;
+				glightboxInstance 	= null;
 
-							ee.Popup.onOpen( instance, instance.st.el );
-						},
-						beforeOpen : function() {},
+			ee.Popup.buildGlightbox = function() {
+				var popupType 	= ee.Popup.elementSettings.popup_type,
+					elements 	= [],
+					slide 		= {},
+					containerClass = 'ee-mfp-popup ee-mfp-popup-' + scopeId + ' ' + noOverlayClass + ' ' + popupVAlignClass + ' ' + ee.Popup.elementSettings.popup_animation;
+
+				if ( 'iframe' === popupType ) {
+					slide = {
+						href: $trigger.attr( 'href' ) || $content.data( 'ee-popup-url' ),
+						type: 'iframe',
+					};
+				} else if ( 'image' === popupType ) {
+					slide = {
+						href: $trigger.attr( 'href' ) || $content.data( 'ee-popup-url' ),
+						type: 'image',
+					};
+				} else if ( 'url' === popupType ) {
+					slide = {
+						href: $content.data( 'ee-popup-url' ),
+						type: 'ajax',
+					};
+				} else {
+					slide = {
+						content: $content.get( 0 ),
+						type: 'inline',
+					};
+				}
+
+				elements.push( slide );
+
+				return GLightbox( {
+					elements: elements,
+					closeButton: ee.Popup.elementSettings.popup_close_position || false,
+					touchNavigation: true,
+					loop: false,
+					autoplayVideos: false,
+					openEffect: '' !== ee.Popup.elementSettings.popup_animation ? 'zoom' : 'fade',
+					closeEffect: '' !== ee.Popup.elementSettings.popup_animation ? 'zoom' : 'fade',
+					closeOnOutsideClick: 'yes' === ee.Popup.elementSettings.popup_close_on_bg,
+					keyboardNavigation: 'yes' === ee.Popup.elementSettings.popup_close_on_escape,
+					cssClasses: {
+						container: 'glightbox-container ' + containerClass,
 					},
-				};
+					slideHTML: '<div class="gslide"><div class="gslide-inner-content"><div class="ginner-container"><div class="gslide-media"></div></div></div><button class="gclose gbtn ee-popup__close mfp-close ' + closeHAlignClass + ' ' + closeVAlignClass + ' eicon-close" title="Close"></button></div>',
+					afterOpen: function() {
+						ee.Popup.onOpen( glightboxInstance, $trigger );
+					},
+					beforeClose: function() {
+						if ( 'yes' !== ee.Popup.elementSettings.popup_prevent_scroll ) {
+							$html.css( { overflow: '' } );
+						}
+					},
+					onSlideBeforeLoad: function( data ) {
+						if ( 'ajax' !== data.slideType || 'url' !== popupType ) {
+							return;
+						}
+
+						var xhr = data.xhr;
+
+						if ( ! xhr || ! xhr.responseText ) {
+							return;
+						}
+
+						var $clone = $content.clone(),
+							container = ( '' !== ee.Popup.elementSettings.popup_url_container ) ? ee.Popup.elementSettings.popup_url_container : false,
+							$appendedContent = LandTechExtrasUtils.parseAjaxResponse( xhr.responseText, container );
+
+						$clone.removeClass( 'mfp-hide glightbox-hide' ).find( '.ee-popup__content__body' ).append( $appendedContent );
+						data.slideNode.querySelector( '.gslide-media' ).appendChild( $clone.get( 0 ) );
+					},
+				} );
+			};
+
+			ee.Popup.openLightbox = function() {
+				if ( ! glightboxInstance ) {
+					glightboxInstance = ee.Popup.buildGlightbox();
+				}
+				glightboxInstance.open();
+			};
+
+			ee.Popup.closeLightbox = function() {
+				if ( glightboxInstance ) {
+					glightboxInstance.close();
+				}
+			};
+
+			ee.Popup.isOpen = function() {
+				return document.body.classList.contains( 'glightbox-open' );
+			};
 
 			ee.Popup.init = function() {
 
 				if ( $scope.is(':not(:visible)') )
 					return;
 
-				if ( ! elementorFrontend.isEditMode() && '' !== ee.Popup.elementSettings.popup_animation ) {
-					popupArgs.removalDelay = 500;
-				}
-
 				if ( $closeButton.length ) {
 					$closeButton.on( 'click', function( e ) {
 						e.preventDefault();
 						e.stopPropagation();
-						$trigger.magnificPopup( 'close' );
+						ee.Popup.closeLightbox();
 					});
 				}
 
-				if ( 'iframe' === ee.Popup.elementSettings.popup_type ) {
-
-					popupArgs.type = 'iframe';
-
-					if ( '' !== ee.Popup.elementSettings.popup_animation ) {
-						popupArgs.callbacks.beforeOpen = function() {
-							// just a hack that adds mfp-anim class to markup 
-							this.st.iframe.markup = this.st.iframe.markup.replace('class="mfp-iframe"', 'class="mfp-iframe mfp-with-anim"');
-						};
-					}
-
-				} else if ( 'image' === ee.Popup.elementSettings.popup_type ) {
-
-					popupArgs.type = 'image';
-					popupArgs.image = {
-						verticalFit : 'yes' === ee.Popup.elementSettings.popup_vertical_fit
-					};
-
-					if ( '' !== ee.Popup.elementSettings.popup_animation ) {
-						popupArgs.callbacks.beforeOpen = function() {
-							// just a hack that adds mfp-anim class to markup 
-							this.st.image.markup = this.st.image.markup.replace('mfp-figure', 'mfp-figure mfp-with-anim');
-						};
-					}
-
-				} else if ( 'url' === ee.Popup.elementSettings.popup_type ) {
-
-					popupArgs.type = 'ajax';
-					popupArgs.items = {
-						src 	: $content.data('ee-popup-url'),
-					};
-					popupArgs.callbacks = {
-						parseAjax: function ( mfpResponse ) {
-
-							var $clone 				= $content.clone(),
-								container 			= ( '' !== ee.Popup.elementSettings.popup_url_container ) ? ee.Popup.elementSettings.popup_url_container : false,
-								$appendedContent 	= ElementorExtrasUtils.parseAjaxResponse( mfpResponse.data, container );
-
-							// Append content inside the clones popup content container
-							$clone.removeClass('mfp-hide').find( '.ee-popup__content__body' ).append( $appendedContent );
-
-							// Replace the response data
-							mfpResponse.data = $clone.get(0);
-						},
-					};
-
-				} else { // Default
-
-					popupArgs.items = {
-						src 	: $content,
-					};
-				}
-
 				if ( elementorFrontend.isEditMode() ) {
-					$trigger.magnificPopup( 'close' ).magnificPopup( popupArgs );
+					ee.Popup.closeLightbox();
+					glightboxInstance = ee.Popup.buildGlightbox();
 
 					if ( 'yes' === ee.Popup.elementSettings.popup_open )
-						$trigger.magnificPopup( 'open' );
+						ee.Popup.openLightbox();
 				} else {
-
-					$trigger.magnificPopup( popupArgs );
 					ee.Popup.behaviour();
 				}
 			};
@@ -1693,7 +1708,6 @@
 						_selector = '.' + $trigger.data('trigger-class');
 					}
 
-					// Check if widget is inside template and inside loop
 					if ( $template.length && $scope.data( 'ee-template-widget-id' ) ) {
 						$selector = $template.find( _selector );
 					} else {
@@ -1706,9 +1720,14 @@
 						$custom_trigger.on( 'click', function( e ) {
 							e.preventDefault();
 							e.stopPropagation();
-							$trigger.magnificPopup( 'open' );
+							ee.Popup.openLightbox();
 						});
 					}
+				} else {
+					$trigger.on( 'click', function( e ) {
+						e.preventDefault();
+						ee.Popup.openLightbox();
+					} );
 				}
 			};
 
@@ -1750,9 +1769,9 @@
 
 			ee.Popup.onOpen = function( instance, element ) {
 
-				// Refresh refreshable widgets
-				if ( 'yes' === ee.Popup.elementSettings.refresh_widgets ) {
-					ee.refreshElements( instance.content, true );
+				if ( 'yes' === ee.Popup.elementSettings.refresh_widgets && instance && instance.activeSlide ) {
+					var slideNode = instance.activeSlide.slideNode || instance.activeSlide;
+					ee.refreshElements( $( slideNode ), true );
 				}
 
 				if ( 'yes' !== ee.Popup.elementSettings.popup_prevent_scroll ) {
@@ -1761,7 +1780,7 @@
 			};
 
 			ee.Popup.open = function() {
-				if ( jQuery.magnificPopup.instance.isOpen ) {
+				if ( ee.Popup.isOpen() ) {
 					return;
 				}
 
@@ -1776,15 +1795,12 @@
 						times : timesShown,
 					},
 					storedString = localStorage.getItem( storageID ),
-					storedData 	= ElementorExtrasUtils.isJson( storedString ) ? JSON.parse( storedString ) : storedString;
+					storedData 	= LandTechExtrasUtils.isJson( storedString ) ? JSON.parse( storedString ) : storedString;
 
 				if ( ! persist /* && ! isAdmin */ ) {
-					if ( storedData !== null ) { // Stored data exists
-						// Get the date last shown, fallback for old storage method
-						dateShown = ElementorExtrasUtils.isJson( storedString ) ? Date.parse( storedData.date ) : storedString;
-
-						// Get the times shown, revert to 0 if old storage method
-						timesShown = ElementorExtrasUtils.isJson( storedString ) ? storedData.times : timesShown;
+					if ( storedData !== null ) {
+						dateShown = LandTechExtrasUtils.isJson( storedString ) ? Date.parse( storedData.date ) : storedString;
+						timesShown = LandTechExtrasUtils.isJson( storedString ) ? storedData.times : timesShown;
 					}
 
 					timesPassed = timesShown >= timesShow;
@@ -1792,24 +1808,14 @@
 					canShow 	= ! dateShown || ! timesPassed || ( timesPassed && datePassed );
 
 					if ( canShow ) {
-
-						// Open the popup
-						$trigger.magnificPopup('open');
-
-						// Update the times count incrementing with one
+						ee.Popup.openLightbox();
 						storageData.times = timesShown + 1;
-
-						// Update the last date shown
 						storageData.date = now;
-
 						localStorage.setItem( storageID, JSON.stringify( storageData ) );
 					}
 				} else {
-					// Always remove any existing stored data
 					localStorage.removeItem( storageID );
-
-					// Open the popup
-					$trigger.magnificPopup('open');
+					ee.Popup.openLightbox();
 				}
 			};
 
@@ -1831,42 +1837,58 @@
 				$popup 				= $scope.find( '.ee-popup__content' ),
 				$age 				= $scope.find( '[name=ee-age-gate-age]'),
 				$denied 			= $scope.find( '.ee-notification--error' ),
-				storageID 			= 'ee_AgeGate',
+				storageID 			= 'ltxe_AgeGate',
 				isAdmin 			= 'undefined' !== typeof ee.AgeGate.elementSettings.popup_open_admin && 'yes' === ee.AgeGate.elementSettings.popup_open_admin,
 				popupVAlignClass 	= 'mfp-popup--valign-' + ee.AgeGate.elementSettings.popup_valign,
-				popupArgs 			= {
-					mainClass 			: 'ee-mfp-popup ee-mfp-popup-' + scopeId + ' ' + popupVAlignClass + ' ' + ee.AgeGate.elementSettings.popup_animation,
-					type 				: 'inline',
-					showCloseBtn 		: false,
-					modal 				: ( elementorFrontend.isEditMode() ) ? false : true,
-					focus 				: ( elementorFrontend.isEditMode() ) ? '.no-focus' : '.ee-age-gate__form__age',
-					autoFocusLast 		: false,
-				};
+				glightboxInstance 	= null;
+
+			ee.AgeGate.buildGlightbox = function() {
+				return GLightbox( {
+					elements: [
+						{
+							content: $popup.get( 0 ),
+							type: 'inline',
+						},
+					],
+					closeButton: false,
+					touchNavigation: false,
+					loop: false,
+					closeOnOutsideClick: elementorFrontend.isEditMode(),
+					keyboardNavigation: elementorFrontend.isEditMode(),
+					cssClasses: {
+						container: 'glightbox-container ee-mfp-popup ee-mfp-popup-' + scopeId + ' ' + popupVAlignClass + ' ' + ee.AgeGate.elementSettings.popup_animation,
+					},
+				} );
+			};
+
+			ee.AgeGate.openLightbox = function() {
+				if ( ! glightboxInstance ) {
+					glightboxInstance = ee.AgeGate.buildGlightbox();
+				}
+				glightboxInstance.open();
+			};
+
+			ee.AgeGate.closeLightbox = function() {
+				if ( glightboxInstance ) {
+					glightboxInstance.close();
+				}
+			};
 
 			ee.AgeGate.init = function() {
 				if ( elementorFrontend.isEditMode() ) {
-
-					popupArgs.closeOnBgClick = true;
-					popupArgs.enableEscapeKey = true;
-
-					$trigger.magnificPopup( 'close' ).magnificPopup( popupArgs );
+					ee.AgeGate.closeLightbox();
+					glightboxInstance = ee.AgeGate.buildGlightbox();
 
 					if ( 'yes' === ee.AgeGate.elementSettings.popup_open )
-						$trigger.magnificPopup( 'open' );
+						ee.AgeGate.openLightbox();
 
 				} else {
-
-					$trigger.magnificPopup( popupArgs );
 
 					if ( isAdmin )
 						localStorage.removeItem( storageID );
 
 					if ( ! localStorage.getItem( storageID ) || localStorage.getItem( storageID ) < ee.AgeGate.elementSettings.age ) {
-
-						if ( '' !== ee.AgeGate.elementSettings.popup_animation ) { popupArgs.removalDelay = 500; }
-						
-						$trigger.magnificPopup( 'open' );
-
+						ee.AgeGate.openLightbox();
 						$form.on('submit', ee.AgeGate.onSubmit );
 					}
 				}
@@ -1878,7 +1900,7 @@
 				var age = $age.val();
 				
 				if ( age >= Math.abs( parseFloat( ee.AgeGate.elementSettings.age ) ) ) {
-					$trigger.magnificPopup( 'close' );
+					ee.AgeGate.closeLightbox();
 
 					if ( ! isAdmin )
 						localStorage.setItem( storageID, age );
@@ -2161,18 +2183,36 @@
 
 			ee.PostsClassic.elementSettings 	= ee.getElementSettings( $scope );
 
-			var scopeId 		= $scope.data('id'),
-				$loop 			= $scope.find('.ee-loop'),
-				$filters 		= $scope.find('.ee-filters'),
-				$currentFilter 	= null,
-				$triggers 		= $filters.find( '[data-filter]' ),
+			var skin 				= ee.getElementSkin( $scope ) || 'classic';
+			if ( 'carousel' === skin ) {
+				return;
+			}
 
-				elementClass 	= '.elementor-element-' + scopeId,
-				isLayout 		= 'default' !== ee.PostsClassic.elementSettings.classic_layout && 1 < ee.PostsClassic.elementSettings.columns,
-				isInfinite 		= 'yes' === ee.PostsClassic.elementSettings.classic_infinite_scroll,
-				isFiltered 		= 'yes' === ee.PostsClassic.elementSettings.classic_filters,
-				hasHistory 		= 'yes' === ee.PostsClassic.elementSettings.classic_infinite_scroll_history ? 'replace' : false,
-				isotopeInstance = null;
+			var sk 					= skin + '_',
+				layoutSettingKey 	= sk + 'layout',
+				layoutModeVal 		= ee.PostsClassic.elementSettings[ layoutSettingKey ];
+			if ( 'undefined' === typeof layoutModeVal || null === layoutModeVal || '' === layoutModeVal ) {
+				layoutModeVal = 'default';
+			}
+			var isoLayoutMode = layoutModeVal;
+			if ( 'metro' === layoutModeVal ) {
+				isoLayoutMode = 'fitRows';
+			} else if ( 'packery' === layoutModeVal ) {
+				isoLayoutMode = 'packery';
+			}
+			var scopeId 			= $scope.data('id'),
+				$loop 				= $scope.find('.ee-loop'),
+				$filters 			= $scope.find('.ee-filters'),
+				$currentFilter 		= null,
+				$triggers 			= $filters.find( '[data-filter]' ),
+
+				elementClass 		= '.elementor-element-' + scopeId,
+				isLayout 			= 'default' !== layoutModeVal && 1 < ee.PostsClassic.elementSettings.columns,
+				isInfinite 			= 'yes' === ee.PostsClassic.elementSettings[ sk + 'infinite_scroll' ],
+				isFiltered 			= 'yes' === ee.PostsClassic.elementSettings[ sk + 'filters' ],
+				hasHistory 			= 'yes' === ee.PostsClassic.elementSettings[ sk + 'infinite_scroll_history' ] ? 'replace' : false,
+				isotopeInstance 	= null,
+				infScrollInstance 	= null;
 
 			if ( ! $scope.find('.ee-pagination').length )
 					isInfinite = false;
@@ -2188,8 +2228,7 @@
 					isotopeArgs = {
 						isOriginLeft 	: elementorFrontend.config.is_rtl ? false : true,
 						itemSelector	: elementClass + ' .ee-loop__item',
-						layoutMode 		: isLayout ? ee.PostsClassic.elementSettings.classic_layout : 'masonry',
-						masonry			: isLayout ? { columnWidth: elementClass + ' .ee-grid__item--sizer' } : '',
+						layoutMode 		: isLayout ? isoLayoutMode : 'masonry',
 						percentPosition : true,
 						hiddenStyle 	: {
 							opacity 	: 0,
@@ -2203,6 +2242,13 @@
 						notFound 			: $scope.find('.ee-grid__notice--not-found'),
 					};
 
+				if ( isLayout && 'masonry' === layoutModeVal ) {
+					isotopeArgs.masonry = { columnWidth: elementClass + ' .ee-grid__item--sizer' };
+				}
+				if ( isLayout && 'packery' === layoutModeVal ) {
+					isotopeArgs.packery = { columnWidth: elementClass + ' .ee-grid__item--sizer' };
+				}
+
 			ee.PostsClassic.init = function() {
 
 				ee.PostsClassic.infinitescroll();
@@ -2214,26 +2260,30 @@
 				}
 			};
 
+			ee.PostsClassic.bindInfiniteScrollEvents = function( infScroll ) {
+				if ( ! infScroll ) {
+					return;
+				}
+
+				infScroll.on( 'request', function( path ) {
+					$loop.addClass( 'ee-loop--loading' );
+					$scope.find( '.ee-load-button' ).hide();
+				} );
+
+				infScroll.on( 'load', function( response, path ) {
+					$loop.addClass( 'ee-loop--loaded' );
+					$scope.find( '.ee-load-button' ).show();
+				} );
+
+				infScroll.on( 'append', function( response, path, items ) {
+					$loop.removeClass( 'ee-loop--loading ee-loop--loaded' ).addClass( 'ee-loop--added' );
+					ee.refreshElements( $( items ), false );
+				} );
+			};
+
 			ee.PostsClassic.infinitescroll = function() {
 				if ( isInfinite ) {
-
-					$loop.on( 'request.infiniteScroll', function( event, path ) {
-						$(this).addClass('ee-loop--loading');
-						$scope.find( '.ee-load-button' ).hide();
-					});
-
-					$loop.on( 'load.infiniteScroll', function( event, response, path ) {
-						$(this).addClass('ee-loop--loaded');
-						$scope.find( '.ee-load-button' ).show();
-					});
-
-					$loop.on( 'append.infiniteScroll', function( event, response, path, items ) {
-						$(this).removeClass('ee-loop--loading ee-loop--loaded').addClass('ee-loop--added');
-						// Refresh refreshable widgets
-						ee.refreshElements( $( items ), false );
-					});
-
-					if ( 'yes' === ee.PostsClassic.elementSettings.classic_infinite_scroll_button ) {
+					if ( 'yes' === ee.PostsClassic.elementSettings[ sk + 'infinite_scroll_button' ] ) {
 						infiniteScrollArgs.loadOnScroll 	= false;
 						infiniteScrollArgs.scrollThreshold 	= false;
 						infiniteScrollArgs.button 			= '.ee-load-button__trigger--' + scopeId;
@@ -2241,8 +2291,10 @@
 				}
 
 				if ( isInfinite && ! isLayout ) {
-
-						$loop.infiniteScroll( infiniteScrollArgs );
+					if ( 'undefined' !== typeof window.InfiniteScroll ) {
+						infScrollInstance = new window.InfiniteScroll( $loop[0], infiniteScrollArgs );
+						ee.PostsClassic.bindInfiniteScrollEvents( infScrollInstance );
+					}
 
 				} else if ( isLayout ) {
 
@@ -2252,23 +2304,40 @@
 						$isotope.isotope('layout');
 					});
 
-					var isotopeInstance = $loop.data( 'isotope' );
+					var ltxeIsoRelayoutTimer = null;
+					var scheduleLtxeIsoRelayout = function() {
+						window.clearTimeout( ltxeIsoRelayoutTimer );
+						ltxeIsoRelayoutTimer = window.setTimeout( function() {
+							if ( $loop.data( 'isotope' ) ) {
+								$loop.isotope( 'layout' );
+							}
+						}, 120 );
+					};
+
+					$( window ).on( 'resize.ltxePostsIso.' + scopeId, scheduleLtxeIsoRelayout );
+
+					if ( 'undefined' !== typeof window.ResizeObserver && $loop[0] ) {
+						var ltxePostsLoopResizeObserver = new window.ResizeObserver( scheduleLtxeIsoRelayout );
+						ltxePostsLoopResizeObserver.observe( $loop[0] );
+					}
+
+					isotopeInstance = $loop.data( 'isotope' );
 
 					if ( isInfinite ) {
-
-						var $filters 	= $scope.find('.ee-filters');
-
 						if ( ! isFiltered || ! $triggers.length ) {
 							infiniteScrollArgs.outlayer = isotopeInstance;
 						}
 
-						$isotope.infiniteScroll( infiniteScrollArgs );
+						if ( 'undefined' !== typeof window.InfiniteScroll ) {
+							infScrollInstance = new window.InfiniteScroll( $loop[0], infiniteScrollArgs );
+							ee.PostsClassic.bindInfiniteScrollEvents( infScrollInstance );
 
-						$isotope.on( 'append.infiniteScroll', function( event, response, path, items ) {
-							$isotope.imagesLoaded().always( function() {
-								$isotope.isotope('layout');
-							});
-						});
+							infScrollInstance.on( 'append', function( response, path, items ) {
+								$isotope.imagesLoaded().always( function() {
+									$isotope.isotope( 'layout' );
+								} );
+							} );
+						}
 					}
 				}
 			};
@@ -2292,9 +2361,9 @@
 						$(this).addClass('ee--active');
 					});
 
-					if ( isInfinite ) { // Infinite scroll active
+					if ( isInfinite && infScrollInstance ) {
 
-						$loop.on( 'load.infiniteScroll', function( event, response, path ) {
+						infScrollInstance.on( 'load', function( response, path ) {
 							var $items = $( response ).find( elementClass + ' .ee-loop__item' );
 
 							$( response ).imagesLoaded( function() {
@@ -2309,11 +2378,11 @@
 
 					var filteryInstance = $filters.data( 'filtery' );
 
-					if ( isInfinite ) {
-						
-						$loop.on( 'load.infiniteScroll', function( event, response, path ) {
+					if ( isInfinite && infScrollInstance ) {
+
+						infScrollInstance.on( 'load', function( response, path ) {
 							var $items = $( response ).find( elementClass + ' .ee-loop__item' );
-							
+
 							$( response ).imagesLoaded( function() {
 								filteryInstance.update();
 								$loop.append( $items );
@@ -3396,9 +3465,9 @@
 			var hotipsArgs 	= {
 					id 				: scopeId,
 					fixed 			: 'fixed' === ee.Tooltips.elementSettings[ skin + 'css_position' ],
-					position 		: ee.Tooltips.elementSettings[ skin + 'position' ] || ee.Tooltips.globalSettings.ee_tooltips_position,
-					arrowPositionH 	: ee.Tooltips.elementSettings[ skin + 'arrow_position_h' ] || ee.Tooltips.globalSettings.ee_tooltips_arrow_position_h,
-					arrowPositionV 	: ee.Tooltips.elementSettings[ skin + 'arrow_position_v' ] || ee.Tooltips.globalSettings.ee_tooltips_arrow_position_v,
+					position 		: ee.Tooltips.elementSettings[ skin + 'position' ] || ee.Tooltips.globalSettings.ltxe_tooltips_position,
+					arrowPositionH 	: ee.Tooltips.elementSettings[ skin + 'arrow_position_h' ] || ee.Tooltips.globalSettings.ltxe_tooltips_arrow_position_h,
+					arrowPositionV 	: ee.Tooltips.elementSettings[ skin + 'arrow_position_v' ] || ee.Tooltips.globalSettings.ltxe_tooltips_arrow_position_v,
 					trigger 		: {
 						desktop 	: ee.Tooltips.elementSettings[ skin + 'trigger' ],
 						tablet 		: ee.Tooltips.elementSettings[ skin + 'trigger_tablet' ],
@@ -3410,7 +3479,7 @@
 						mobile 		: ee.Tooltips.elementSettings[ skin + '_hide_mobile' ],
 					},
 					responsive 		: {
-						disable 	: ee.Tooltips.elementSettings[ skin + 'disable' ] || ee.Tooltips.globalSettings.ee_tooltips_disable,
+						disable 	: ee.Tooltips.elementSettings[ skin + 'disable' ] || ee.Tooltips.globalSettings.ltxe_tooltips_disable,
 						breakpoints		: {
 							'mobile' 	: elementorFrontend.config.breakpoints.xs,
 							'tablet'	: elementorFrontend.config.breakpoints.md,
@@ -3425,20 +3494,20 @@
 
 				if ( '' !== ee.Tooltips.elementSettings[ skin + 'delay_in' ].size ) {
 					hotipsArgs.delayIn = ee.Tooltips.elementSettings[ skin + 'delay_in' ].size;
-				} else if ( ee.Tooltips.globalSettings.ee_tooltips_delay_in.size ) {
-					hotipsArgs.delayIn = ee.Tooltips.globalSettings.ee_tooltips_delay_in.size;
+				} else if ( ee.Tooltips.globalSettings.ltxe_tooltips_delay_in.size ) {
+					hotipsArgs.delayIn = ee.Tooltips.globalSettings.ltxe_tooltips_delay_in.size;
 				}
 
 				if ( '' !== ee.Tooltips.elementSettings[ skin + 'delay_out' ].size ) {
 					hotipsArgs.delayOut = ee.Tooltips.elementSettings[ skin + 'delay_out' ].size;
-				} else if ( ee.Tooltips.globalSettings.ee_tooltips_delay_out.size ) {
-					hotipsArgs.delayOut = ee.Tooltips.globalSettings.ee_tooltips_delay_out.size;
+				} else if ( ee.Tooltips.globalSettings.ltxe_tooltips_delay_out.size ) {
+					hotipsArgs.delayOut = ee.Tooltips.globalSettings.ltxe_tooltips_delay_out.size;
 				}
 
 				if ( '' !== ee.Tooltips.elementSettings[ skin + 'duration' ].size ) {
 					hotipsArgs.speed = ee.Tooltips.elementSettings[ skin + 'duration' ].size;
-				} else if ( ee.Tooltips.globalSettings.ee_tooltips_duration.size ) {
-					hotipsArgs.speed = ee.Tooltips.globalSettings.ee_tooltips_duration.size;
+				} else if ( ee.Tooltips.globalSettings.ltxe_tooltips_duration.size ) {
+					hotipsArgs.speed = ee.Tooltips.globalSettings.ltxe_tooltips_duration.size;
 				}
 
 				if ( elementorFrontend.isEditMode() ) {
@@ -3515,7 +3584,7 @@
 				}
 
 				// Set SVG URL
-				url = elementorExtrasFrontendConfig.urls.assets + 'shapes/' + ee.Devices.elementSettings.device_type + '.svg';
+				url = landtechExtrasFrontendConfig.urls.assets + 'shapes/' + ee.Devices.elementSettings.device_type + '.svg';
 
 				// Get the file
 				jQuery.get( url, function( data ) {
@@ -3551,11 +3620,11 @@
 
 			var $value 			= $scope.find( '.ee-circle-progress__value .value' ),
 				$suffix 		= $scope.find( '.ee-circle-progress__value .suffix' ),
-				_value 			= ElementorExtrasUtils.parseValue( $scope.find( '.ee-circle-progress__value' ).data('cp-value'), 75 ),
+				_value 			= LandTechExtrasUtils.parseValue( $scope.find( '.ee-circle-progress__value' ).data('cp-value'), 75 ),
 				_move_decimal 	= 0,
 				_absolute 		= _value,
 				_max_value 		= 100,
-				_decimals 		= ElementorExtrasUtils.countDecimals( _value ),
+				_decimals 		= LandTechExtrasUtils.countDecimals( _value ),
 				cpArgs 			= {
 					value 		: 0.75,
 					reverse 	: 'yes' === elementSettings.reverse,
@@ -3664,7 +3733,7 @@
 					_stepValue = _stepValue.toFixed( _decimals );
 
 				if ( _move_decimal ) {
-					_stepValue = ElementorExtrasUtils.moveDecimal( _stepValue, _move_decimal );
+					_stepValue = LandTechExtrasUtils.moveDecimal( _stepValue, _move_decimal );
 				}
 
 				return _stepValue;
@@ -3688,11 +3757,11 @@
 				tooltips 	= new eeTooltips( $scope ),
 				hotipsArgs 	= {
 					fixed 			: 'fixed' === ee.GlobalTooltip.elementSettings.tooltip_css_position,
-					position 		: ee.GlobalTooltip.elementSettings.tooltip_position || ee.GlobalTooltip.globalSettings.ee_tooltips_position,
-					arrowPositionH 	: ee.GlobalTooltip.elementSettings.tooltip_arrow_position_h || ee.GlobalTooltip.globalSettings.ee_tooltips_arrow_positio_h,
-					arrowPositionV 	: ee.GlobalTooltip.elementSettings.tooltip_arrow_position_v || ee.GlobalTooltip.globalSettings.ee_tooltips_arrow_positio_v,
+					position 		: ee.GlobalTooltip.elementSettings.tooltip_position || ee.GlobalTooltip.globalSettings.ltxe_tooltips_position,
+					arrowPositionH 	: ee.GlobalTooltip.elementSettings.tooltip_arrow_position_h || ee.GlobalTooltip.globalSettings.ltxe_tooltips_arrow_positio_h,
+					arrowPositionV 	: ee.GlobalTooltip.elementSettings.tooltip_arrow_position_v || ee.GlobalTooltip.globalSettings.ltxe_tooltips_arrow_positio_v,
 					responsive 		: {
-						disable : ee.GlobalTooltip.elementSettings.tooltip_disable || ee.GlobalTooltip.globalSettings.ee_tooltips_disable,
+						disable : ee.GlobalTooltip.elementSettings.tooltip_disable || ee.GlobalTooltip.globalSettings.ltxe_tooltips_disable,
 						breakpoints		: {
 							'mobile' 	: elementorFrontend.config.breakpoints.xs,
 							'tablet'	: elementorFrontend.config.breakpoints.md,
@@ -3747,20 +3816,20 @@
 
 				if ( '' !== ee.GlobalTooltip.elementSettings.tooltip_delay_in.size ) {
 					hotipsArgs.delayIn = ee.GlobalTooltip.elementSettings.tooltip_delay_in.size;
-				} else if ( ee.GlobalTooltip.globalSettings.ee_tooltips_delay_in.size ) {
-					hotipsArgs.delayIn = ee.GlobalTooltip.globalSettings.ee_tooltips_delay_in.size;
+				} else if ( ee.GlobalTooltip.globalSettings.ltxe_tooltips_delay_in.size ) {
+					hotipsArgs.delayIn = ee.GlobalTooltip.globalSettings.ltxe_tooltips_delay_in.size;
 				}
 
 				if ( '' !== ee.GlobalTooltip.elementSettings.tooltip_delay_out.size ) {
 					hotipsArgs.delayOut = ee.GlobalTooltip.elementSettings.tooltip_delay_out.size;
-				} else if ( ee.GlobalTooltip.globalSettings.ee_tooltips_delay_out.size ) {
-					hotipsArgs.delayOut = ee.GlobalTooltip.globalSettings.ee_tooltips_delay_out.size;
+				} else if ( ee.GlobalTooltip.globalSettings.ltxe_tooltips_delay_out.size ) {
+					hotipsArgs.delayOut = ee.GlobalTooltip.globalSettings.ltxe_tooltips_delay_out.size;
 				}
 
 				if ( '' !== ee.GlobalTooltip.elementSettings.tooltip_duration.size ) {
 					hotipsArgs.speed = ee.GlobalTooltip.elementSettings.tooltip_duration.size;
-				} else if ( ee.GlobalTooltip.globalSettings.ee_tooltips_duration.size ) {
-					hotipsArgs.speed = ee.GlobalTooltip.globalSettings.ee_tooltips_duration.size;
+				} else if ( ee.GlobalTooltip.globalSettings.ltxe_tooltips_duration.size ) {
+					hotipsArgs.speed = ee.GlobalTooltip.globalSettings.ltxe_tooltips_duration.size;
 				}
 
 				if ( elementorFrontend.isEditMode() ) {
@@ -3780,7 +3849,7 @@
 		},
 	};
 
-	var ElementorExtrasUtils = {
+	var LandTechExtrasUtils = {
 
 		timer : null,
 
@@ -3853,8 +3922,8 @@
 				return;
 			}
 
-			if ( ElementorExtrasUtils.timer ) {
-				clearTimeout( ElementorExtrasUtils.timer );
+			if ( LandTechExtrasUtils.timer ) {
+				clearTimeout( LandTechExtrasUtils.timer );
 			}
 
 			if ( $.exitIntent.settings.sensitivity <= 0 ) {
@@ -3862,8 +3931,8 @@
 				return;
 			}
 
-			ElementorExtrasUtils.timer = setTimeout( function() {
-				ElementorExtrasUtils.timer = null;
+			LandTechExtrasUtils.timer = setTimeout( function() {
+				LandTechExtrasUtils.timer = null;
 				$.event.trigger( 'exitintent' );
 			}, $.exitIntent.settings.sensitivity );
 		},
@@ -3887,9 +3956,9 @@
 		},
 
 		trackEnter : function() {
-			if ( ElementorExtrasUtils.timer ) {
-				clearTimeout( ElementorExtrasUtils.timer );
-				ElementorExtrasUtils.timer = null;
+			if ( LandTechExtrasUtils.timer ) {
+				clearTimeout( LandTechExtrasUtils.timer );
+				LandTechExtrasUtils.timer = null;
 			}
 		},
 
@@ -3934,7 +4003,7 @@
 		},
 	};
 
-	window.ElementorExtrasOffcanvas = function() {
+	window.LandTechExtrasOffcanvas = function() {
 		var self = this;
 
 		self.initialized 	= false;
@@ -3947,7 +4016,7 @@
 		};
 	};
 
-	var offcanvas = new ElementorExtrasOffcanvas();
+	var offcanvas = new LandTechExtrasOffcanvas();
 
 	elementorFrontend.eeOffcanvas = offcanvas;
 
@@ -4137,12 +4206,12 @@
 		$.exitIntent.settings = $.extend($.exitIntent.settings, options);
 
 		if ( enable == 'enable' ) {
-			$(window).mouseleave( ElementorExtrasUtils.trackLeave );
-			$(window).mouseenter( ElementorExtrasUtils.trackEnter );
+			$(window).mouseleave( LandTechExtrasUtils.trackLeave );
+			$(window).mouseenter( LandTechExtrasUtils.trackEnter );
 		} else if ( enable == 'disable' ) {
 			trackEnter(); // Turn off any outstanding timer
-			$(window).unbind( 'mouseleave', ElementorExtrasUtils.trackLeave );
-			$(window).unbind( 'mouseenter', ElementorExtrasUtils.trackEnter );
+			$(window).unbind( 'mouseleave', LandTechExtrasUtils.trackLeave );
+			$(window).unbind( 'mouseenter', LandTechExtrasUtils.trackEnter );
 		} else {
 			throw "Invalid parameter to jQuery.exitIntent -- should be 'enable'/'disable'";
 		}

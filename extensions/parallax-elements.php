@@ -1,8 +1,9 @@
 <?php
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
 
-namespace ElementorExtras\Extensions;
+namespace LandTechExtras\Extensions;
 
-use ElementorExtras\Base\Extension_Base;
+use LandTechExtras\Base\Extension_Base;
 use Elementor\Controls_Manager;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -35,8 +36,8 @@ class Extension_Parallax_Elements extends Extension_Base {
 	 **/
 	public function get_script_depends() {
 		return [
-			'parallax-element',
-			'jquery-visible',
+			'landtech-extras-parallax-element',
+			'landtech-extras-jquery-visible',
 		];
 	}
 
@@ -52,7 +53,7 @@ class Extension_Parallax_Elements extends Extension_Base {
 	 * @return bool
 	 */
 	public static function is_default_disabled() {
-		if ( is_elementor_pro_active() ) {
+		if ( landtech_extras_is_elementor_pro_active() ) {
 			return true;
 		}
 		return false;
@@ -64,7 +65,7 @@ class Extension_Parallax_Elements extends Extension_Base {
 	 * @since 1.8.0
 	 **/
 	public static function get_description() {
-		return __( 'Adds options to move a column or a widget vertically asynchronously when scrolling the page. Can be found under Advanced &rarr; Extras &rarr; Parallax.', 'elementor-extras' );
+		return __( 'Adds options to move a column or a widget vertically asynchronously when scrolling the page. Can be found under Advanced &rarr; Extras &rarr; Parallax.', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -76,7 +77,7 @@ class Extension_Parallax_Elements extends Extension_Base {
 	 */
 	protected function add_common_sections_actions() {
 
-		$section_suffix = is_elementor_pro_active() ? '' : '_pro' ;
+		$section_suffix = landtech_extras_is_elementor_pro_active() ? '' : '_pro' ;
 
 		// Activate sections for widgets
 		add_action( 'elementor/element/common/section_custom_css' . $section_suffix . '/after_section_end', function( $element, $args ) {
@@ -113,11 +114,11 @@ class Extension_Parallax_Elements extends Extension_Base {
 
 		$element->add_control(
 			'parallax_element_enable', [
-				'label'			=> __( 'Parallax', 'elementor-extras' ),
+				'label'			=> __( 'Parallax', 'landtech-extras-for-elementor' ),
 				'type' 			=> Controls_Manager::SWITCHER,
 				'default' 		=> '',
-				'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-				'label_off' 	=> __( 'No', 'elementor-extras' ),
+				'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+				'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 				'return_value' 	=> 'yes',
 				'separator'		=> 'before',
 				'frontend_available' => true,
@@ -126,12 +127,12 @@ class Extension_Parallax_Elements extends Extension_Base {
 
 		$element->add_control(
 			'parallax_element_type', [
-				'label' 		=> __( 'Type', 'elementor-extras' ),
+				'label' 		=> __( 'Type', 'landtech-extras-for-elementor' ),
 				'type' 			=> Controls_Manager::SELECT,
 				'default' 		=> 'scroll',
 				'options' 			=> [
-					'scroll' 	=> __( 'Scroll', 'elementor-extras' ),
-					'mouse' 	=> __( 'Mouse', 'elementor-extras' ),
+					'scroll' 	=> __( 'Scroll', 'landtech-extras-for-elementor' ),
+					'mouse' 	=> __( 'Mouse', 'landtech-extras-for-elementor' ),
 				],
 				'condition' => [
 					'parallax_element_enable!' => '',
@@ -142,13 +143,13 @@ class Extension_Parallax_Elements extends Extension_Base {
 
 		$element->add_control(
 			'parallax_element_relative', [
-				'label' 		=> __( 'Relative to', 'elementor-extras' ),
-				'description' 	=> __( 'Use "Start position" when the element is visible inside the viewport before scroll.', 'elementor-extras' ),
+				'label' 		=> __( 'Relative to', 'landtech-extras-for-elementor' ),
+				'description' 	=> __( 'Use "Start position" when the element is visible inside the viewport before scroll.', 'landtech-extras-for-elementor' ),
 				'type' 			=> Controls_Manager::SELECT,
 				'default' 		=> 'middle',
 				'options' 			=> [
-					'middle' 		=> __( 'Viewport middle', 'elementor-extras' ),
-					'position' 		=> __( 'Start position', 'elementor-extras' ),
+					'middle' 		=> __( 'Viewport middle', 'landtech-extras-for-elementor' ),
+					'position' 		=> __( 'Start position', 'landtech-extras-for-elementor' ),
 				],
 				'condition' => [
 					'parallax_element_enable!' 	=> '',
@@ -160,12 +161,12 @@ class Extension_Parallax_Elements extends Extension_Base {
 
 		$element->add_control(
 			'parallax_element_pan_relative', [
-				'label' 		=> __( 'Relative to', 'elementor-extras' ),
+				'label' 		=> __( 'Relative to', 'landtech-extras-for-elementor' ),
 				'type' 			=> Controls_Manager::SELECT,
 				'default' 		=> 'element',
 				'options' 			=> [
-					'element' 		=> __( 'Element Center', 'elementor-extras' ),
-					'viewport' 		=> __( 'Viewport Center', 'elementor-extras' ),
+					'element' 		=> __( 'Element Center', 'landtech-extras-for-elementor' ),
+					'viewport' 		=> __( 'Viewport Center', 'landtech-extras-for-elementor' ),
 				],
 				'condition' => [
 					'parallax_element_enable!' 	=> '',
@@ -177,13 +178,13 @@ class Extension_Parallax_Elements extends Extension_Base {
 
 		$element->add_control(
 			'parallax_element_disable_on', [
-				'label' 	=> __( 'Disable for', 'elementor-extras' ),
+				'label' 	=> __( 'Disable for', 'landtech-extras-for-elementor' ),
 				'type' 		=> Controls_Manager::SELECT,
 				'default' 	=> 'mobile',
 				'options' 			=> [
-					'none' 		=> __( 'None', 'elementor-extras' ),
-					'tablet' 	=> __( 'Mobile and tablet', 'elementor-extras' ),
-					'mobile' 	=> __( 'Mobile only', 'elementor-extras' ),
+					'none' 		=> __( 'None', 'landtech-extras-for-elementor' ),
+					'tablet' 	=> __( 'Mobile and tablet', 'landtech-extras-for-elementor' ),
+					'mobile' 	=> __( 'Mobile only', 'landtech-extras-for-elementor' ),
 				],
 				'condition' => [
 					'parallax_element_enable!' 	=> '',
@@ -196,13 +197,13 @@ class Extension_Parallax_Elements extends Extension_Base {
 		$element->add_control(
 			'parallax_element_pan_axis',
 			[
-				'label' 	=> __( 'Axis', 'elementor-extras' ),
+				'label' 	=> __( 'Axis', 'landtech-extras-for-elementor' ),
 				'type' 		=> Controls_Manager::SELECT,
 				'default'	=> 'both',
 				'options' 	=> [
-					'both' 			=> __( 'Both', 'elementor-extras' ),
-					'vertical' 		=> __( 'Vertical', 'elementor-extras' ),
-					'horizontal' 	=> __( 'Horizontal', 'elementor-extras' ),
+					'both' 			=> __( 'Both', 'landtech-extras-for-elementor' ),
+					'vertical' 		=> __( 'Vertical', 'landtech-extras-for-elementor' ),
+					'horizontal' 	=> __( 'Horizontal', 'landtech-extras-for-elementor' ),
 				],
 				'frontend_available' => true,
 				'condition' => [
@@ -214,11 +215,11 @@ class Extension_Parallax_Elements extends Extension_Base {
 
 		$element->add_control(
 			'parallax_element_invert', [
-				'label'			=> __( 'Invert Direction', 'elementor-extras' ),
+				'label'			=> __( 'Invert Direction', 'landtech-extras-for-elementor' ),
 				'type' 			=> Controls_Manager::SWITCHER,
 				'default' 		=> '',
-				'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-				'label_off' 	=> __( 'No', 'elementor-extras' ),
+				'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+				'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 				'return_value' 	=> 'yes',
 				'frontend_available' => true,
 				'condition' => [
@@ -229,12 +230,12 @@ class Extension_Parallax_Elements extends Extension_Base {
 
 		$element->add_control(
 			'parallax_off_viewport', [
-				'label'			=> __( 'Move outside viewport', 'elementor-extras' ),
-				'description'	=> __( 'Move elements even if they are not visible', 'elementor-extras' ),
+				'label'			=> __( 'Move outside viewport', 'landtech-extras-for-elementor' ),
+				'description'	=> __( 'Move elements even if they are not visible', 'landtech-extras-for-elementor' ),
 				'type' 			=> Controls_Manager::SWITCHER,
 				'default' 		=> '',
-				'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-				'label_off' 	=> __( 'No', 'elementor-extras' ),
+				'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+				'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 				'return_value' 	=> 'yes',
 				'frontend_available' => true,
 				'condition' 	=> [
@@ -245,8 +246,8 @@ class Extension_Parallax_Elements extends Extension_Base {
 
 		$element->add_responsive_control(
 			'parallax_element_pan_distance', [
-				'label' 		=> __( 'Max Distance (px)', 'elementor-extras' ),
-				'description' 	=> __( 'The maximum distance from the center of the element and the mouse pointer. Enter 0 or empty to disable.', 'elementor-extras' ),
+				'label' 		=> __( 'Max Distance (px)', 'landtech-extras-for-elementor' ),
+				'description' 	=> __( 'The maximum distance from the center of the element and the mouse pointer. Enter 0 or empty to disable.', 'landtech-extras-for-elementor' ),
 				'type' 			=> Controls_Manager::SLIDER,
 				'range' 		=> [
 					'px' 		=> [
@@ -266,7 +267,7 @@ class Extension_Parallax_Elements extends Extension_Base {
 
 		$element->add_responsive_control(
 			'parallax_element_speed', [
-				'label' 		=> __( 'Amount', 'elementor-extras' ),
+				'label' 		=> __( 'Amount', 'landtech-extras-for-elementor' ),
 				'type' 			=> Controls_Manager::SLIDER,
 				'default'		=> [ 'size' => 0.15 ],
 				'range' 		=> [
@@ -295,14 +296,14 @@ class Extension_Parallax_Elements extends Extension_Base {
 	protected function add_actions() {
 
 		// Activate controls for widgets
-		add_action( 'elementor/element/common/section_elementor_extras_advanced/before_section_end', function( $element, $args ) {
+		add_action( 'elementor/element/common/section_landtech_extras_advanced/before_section_end', function( $element, $args ) {
 
 			$this->add_controls( $element, $args );
 
 		}, 10, 2 );
 
 		// Activate controls for columns
-		add_action( 'elementor/element/column/section_elementor_extras_advanced/before_section_end', function( $element, $args ) {
+		add_action( 'elementor/element/column/section_landtech_extras_advanced/before_section_end', function( $element, $args ) {
 
 			$this->add_controls( $element, $args );
 

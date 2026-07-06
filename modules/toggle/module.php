@@ -1,8 +1,9 @@
 <?php
-namespace ElementorExtras\Modules\Toggle;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Toggle;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Module_Base;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Module_Base;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 

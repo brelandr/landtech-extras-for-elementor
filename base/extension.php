@@ -1,6 +1,7 @@
 <?php
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
 
-namespace ElementorExtras\Base;
+namespace LandTechExtras\Base;
 
 use Elementor\Controls_Manager;
 
@@ -181,7 +182,7 @@ class Extension_Base {
 	protected final function add_common_sections( $element, $args ) {
 
 		// The name of the section
-		$section_name = 'section_elementor_extras_advanced';
+		$section_name = 'section_landtech_extras_advanced';
 
 		// Check if this section exists
 		$section_exists = \Elementor\Plugin::instance()->controls_manager->get_control_from_stack( $element->get_unique_name(), $section_name );
@@ -195,7 +196,7 @@ class Extension_Base {
 			$section_name,
 			[
 				'tab' 	=> Controls_Manager::TAB_ADVANCED,
-				'label' => __( 'Extras', 'elementor-extras' ),
+				'label' => __( 'LandTech Extras', 'landtech-extras-for-elementor' ),
 			]
 		);	
 

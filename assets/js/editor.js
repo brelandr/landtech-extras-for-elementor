@@ -149,7 +149,7 @@
 							object_type 	: self.model.get('object_type'),
 						};
 
-						return elementorCommon.ajax.addRequest('ee_query_control_filter_autocomplete', {
+						return elementorCommon.ajax.addRequest('ltxe_query_control_filter_autocomplete', {
 							data 	: data,
 							success : success,
 							error 	: failure,
@@ -184,7 +184,7 @@
 			}
 
 			elementorCommon.ajax.loadObjects({
-				action 	: 'ee_query_control_value_titles',
+				action 	: 'ltxe_query_control_value_titles',
 				ids 	: ids,
 				data 	: {
 					query_type 		: queryType,

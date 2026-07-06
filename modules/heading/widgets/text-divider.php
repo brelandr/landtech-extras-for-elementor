@@ -1,8 +1,9 @@
 <?php
-namespace ElementorExtras\Modules\Heading\Widgets;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Heading\Widgets;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Extras_Widget;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Extras_Widget;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -45,7 +46,7 @@ class Text_Divider extends Extras_Widget {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Text Divider', 'elementor-extras' );
+		return __( 'Text Divider', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -69,7 +70,7 @@ class Text_Divider extends Extras_Widget {
 	 * @return array
 	 */
 	public function get_script_depends() {
-		return [ 'elementor-extras' ];
+		return [ 'landtech-extras' ];
 	}
 
 	/**
@@ -83,16 +84,16 @@ class Text_Divider extends Extras_Widget {
 		$this->start_controls_section(
 			'section_text',
 			[
-				'label' => __( 'General', 'elementor-extras' ),
+				'label' => __( 'General', 'landtech-extras-for-elementor' ),
 			]
 		);
 		
 			$this->add_control(
 				'text',
 				[
-					'label'		=> __( 'Text', 'elementor-extras' ),
+					'label'		=> __( 'Text', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXT,
-					'default'	=> __( 'Text Divider', 'elementor-extras' ),
+					'default'	=> __( 'Text Divider', 'landtech-extras-for-elementor' ),
 					'dynamic'	=> [ 'active'=> true ],
 				]
 			);
@@ -100,18 +101,18 @@ class Text_Divider extends Extras_Widget {
 			$this->add_control(
 				'text_html_tag',
 				[
-					'label' => __( 'HTML Tag', 'elementor-extras' ),
+					'label' => __( 'HTML Tag', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::SELECT,
 					'options' 	=> [
-						'h1' 	=> __( 'H1', 'elementor-extras' ),
-						'h2' 	=> __( 'H2', 'elementor-extras' ),
-						'h3' 	=> __( 'H3', 'elementor-extras' ),
-						'h4' 	=> __( 'H4', 'elementor-extras' ),
-						'h5' 	=> __( 'H5', 'elementor-extras' ),
-						'h6' 	=> __( 'H6', 'elementor-extras' ),
-						'div' 	=> __( 'div', 'elementor-extras' ),
-						'span' 	=> __( 'span', 'elementor-extras' ),
-						'p' 	=> __( 'p', 'elementor-extras' ),
+						'h1' 	=> __( 'H1', 'landtech-extras-for-elementor' ),
+						'h2' 	=> __( 'H2', 'landtech-extras-for-elementor' ),
+						'h3' 	=> __( 'H3', 'landtech-extras-for-elementor' ),
+						'h4' 	=> __( 'H4', 'landtech-extras-for-elementor' ),
+						'h5' 	=> __( 'H5', 'landtech-extras-for-elementor' ),
+						'h6' 	=> __( 'H6', 'landtech-extras-for-elementor' ),
+						'div' 	=> __( 'div', 'landtech-extras-for-elementor' ),
+						'span' 	=> __( 'span', 'landtech-extras-for-elementor' ),
+						'p' 	=> __( 'p', 'landtech-extras-for-elementor' ),
 					],
 					'default' => 'h6',
 				]
@@ -120,7 +121,7 @@ class Text_Divider extends Extras_Widget {
 			$this->add_control(
 				'link',
 				[
-					'label' 		=> __( 'Link', 'elementor-extras' ),
+					'label' 		=> __( 'Link', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::URL,
 					'placeholder' 	=> esc_url( home_url( '/' ) ),
 					'default' 		=> [
@@ -133,20 +134,20 @@ class Text_Divider extends Extras_Widget {
 			$this->add_responsive_control(
 				'horizontal_align',
 				[
-					'label' 		=> __( 'Alignment', 'elementor-extras' ),
+					'label' 		=> __( 'Alignment', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> 'center',
 					'options' 		=> [
 						'flex-start'    => [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-center',
 						],
 						'flex-end' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-right',
 						],
 					],
@@ -162,7 +163,7 @@ class Text_Divider extends Extras_Widget {
 		$this->start_controls_section(
 			'section_text_style',
 			[
-				'label' => __( 'Text', 'elementor-extras' ),
+				'label' => __( 'Text', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -170,20 +171,20 @@ class Text_Divider extends Extras_Widget {
 			$this->add_responsive_control(
 				'align',
 				[
-					'label' 		=> __( 'Position', 'elementor-extras' ),
+					'label' 		=> __( 'Position', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'left'    		=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-right',
 						],
 					],
@@ -194,19 +195,19 @@ class Text_Divider extends Extras_Widget {
 			$this->add_control(
 				'text_align',
 				[
-					'label' 	=> __( 'Align', 'elementor-extras' ),
+					'label' 	=> __( 'Align', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::CHOOSE,
 					'options' 	=> [
 						'left' 	=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -220,7 +221,7 @@ class Text_Divider extends Extras_Widget {
 			$this->add_responsive_control(
 				'text_space',
 				[
-					'label' 	=> __( 'Text Spacing', 'elementor-extras' ),
+					'label' 	=> __( 'Text Spacing', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 6,
@@ -242,7 +243,7 @@ class Text_Divider extends Extras_Widget {
 			$this->add_responsive_control(
 				'text-padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', '%', 'em' ],
 					'selectors' 	=> [
@@ -254,7 +255,7 @@ class Text_Divider extends Extras_Widget {
 			$this->add_responsive_control(
 				'text_margin',
 				[
-					'label' 		=> __( 'Margin', 'elementor-extras' ),
+					'label' 		=> __( 'Margin', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', '%', 'em' ],
 					'selectors' 	=> [
@@ -266,7 +267,7 @@ class Text_Divider extends Extras_Widget {
 			$this->add_control(
 				'text_color',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'global' => [
 						'default' => Global_Colors::COLOR_SECONDARY,
@@ -281,7 +282,7 @@ class Text_Divider extends Extras_Widget {
 			$this->add_control(
 				'text_background_color',
 				[
-					'label' 	=> __( 'Background Color', 'elementor-extras' ),
+					'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'default'	=> '',
 					'selectors' => [
@@ -294,7 +295,7 @@ class Text_Divider extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'text_border',
-					'label' 	=> __( 'Text Border', 'elementor-extras' ),
+					'label' 	=> __( 'Text Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '{{WRAPPER}} .ee-text-divider__text',
 				]
 			);
@@ -302,7 +303,7 @@ class Text_Divider extends Extras_Widget {
 			$this->add_control(
 				'text_border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
@@ -343,7 +344,7 @@ class Text_Divider extends Extras_Widget {
 		$this->start_controls_section(
 			'section_divider_style',
 			[
-				'label' => __( 'Divider', 'elementor-extras' ),
+				'label' => __( 'Divider', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -351,24 +352,24 @@ class Text_Divider extends Extras_Widget {
 			$this->add_responsive_control(
 				'vertical_align',
 				[
-					'label' 		=> __( 'Vertical Alignment', 'elementor-extras' ),
+					'label' 		=> __( 'Vertical Alignment', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'flex-start'    => [
-							'title' 	=> __( 'Top', 'elementor-extras' ),
+							'title' 	=> __( 'Top', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-top',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Middle', 'elementor-extras' ),
+							'title' 	=> __( 'Middle', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-middle',
 						],
 						'flex-end' 		=> [
-							'title' 	=> __( 'Bottom', 'elementor-extras' ),
+							'title' 	=> __( 'Bottom', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-bottom',
 						],
 						'baseline' 		=> [
-							'title' 	=> __( 'Baseline', 'elementor-extras' ),
+							'title' 	=> __( 'Baseline', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'nicon nicon-v-align-baseline',
 						],
 					],
@@ -381,7 +382,7 @@ class Text_Divider extends Extras_Widget {
 			$this->add_control(
 				'divider_width',
 				[
-					'label' 	=> __( 'Width', 'elementor-extras' ),
+					'label' 	=> __( 'Width', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 1000,
@@ -402,7 +403,7 @@ class Text_Divider extends Extras_Widget {
 			$this->add_control(
 				'divider_height',
 				[
-					'label' 	=> __( 'Height', 'elementor-extras' ),
+					'label' 	=> __( 'Height', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 1,
@@ -423,7 +424,7 @@ class Text_Divider extends Extras_Widget {
 			$this->add_control(
 				'divider_background_color',
 				[
-					'label' 	=> __( 'Background Color', 'elementor-extras' ),
+					'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'global' => [
 						'default' => Global_Colors::COLOR_SECONDARY,
@@ -439,7 +440,7 @@ class Text_Divider extends Extras_Widget {
 			$this->start_controls_tab(
 				'divider_before_tab',
 				[
-					'label' 		=> __( 'Before', 'elementor-extras' ),
+					'label' 		=> __( 'Before', 'landtech-extras-for-elementor' ),
 					'condition'		=> [
 						'align!'	=> 'left',
 					]
@@ -463,7 +464,7 @@ class Text_Divider extends Extras_Widget {
 			$this->start_controls_tab(
 				'divider_after_tab',
 				[
-					'label' 		=> __( 'After', 'elementor-extras' ),
+					'label' 		=> __( 'After', 'landtech-extras-for-elementor' ),
 					'condition'		=> [
 						'align!'	=> 'right'
 					]
@@ -541,14 +542,14 @@ class Text_Divider extends Extras_Widget {
 		}
 
 		?>
-		<div <?php echo $this->get_render_attribute_string( 'wrapper' ); ?>>
-			<div <?php echo $this->get_render_attribute_string( 'before' ); ?>></div>
-			<<?php echo $settings['text_html_tag']; ?> <?php echo $this->get_render_attribute_string( 'text' ); ?>>
-				<?php if ( $has_link ) { ?><a <?php echo $this->get_render_attribute_string( 'link' ); ?>><?php } ?>
-						<?php echo $this->parse_text_editor( $settings['text'] ) ?>
+		<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
+			<div <?php $this->print_render_attribute_string( 'before' ); ?>></div>
+			<<?php echo esc_html( $this->ltxe_sanitize_heading_tag( $settings['text_html_tag'] ) ); ?> <?php $this->print_render_attribute_string( 'text' ); ?>>
+				<?php if ( $has_link ) { ?><a <?php $this->print_render_attribute_string( 'link' ); ?>><?php } ?>
+						<?php echo wp_kses_post( $this->parse_text_editor( $settings['text'] ) ); ?>
 				<?php if ( $has_link ) { ?></a><?php } ?>
-			</<?php echo $settings['text_html_tag']; ?>>
-			<div <?php echo $this->get_render_attribute_string( 'after' ); ?>></div>
+			</<?php echo esc_html( $this->ltxe_sanitize_heading_tag( $settings['text_html_tag'] ) ); ?>>
+			<div <?php $this->print_render_attribute_string( 'after' ); ?>></div>
 		</div>
 		<?php
 		
@@ -625,7 +626,7 @@ class Text_Divider extends Extras_Widget {
 			'fields'     => [
 				[
 					'field'       => 'text',
-					'type'        => __( 'Text Divider: heading', 'elementor-extras' ),
+					'type'        => __( 'Text Divider: heading', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE'
 				],
 			],

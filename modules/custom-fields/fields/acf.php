@@ -1,8 +1,9 @@
 <?php
-namespace ElementorExtras\Modules\CustomFields\Fields;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\CustomFields\Fields;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Module_Base;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Module_Base;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -34,7 +35,7 @@ class Acf extends Field_Base {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'ACF', 'elementor-extras' );
+		return __( 'ACF', 'landtech-extras-for-elementor' );
 	}
 
 	/**

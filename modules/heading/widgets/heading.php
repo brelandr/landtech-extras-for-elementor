@@ -1,9 +1,10 @@
 <?php
-namespace ElementorExtras\Modules\Heading\Widgets;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Heading\Widgets;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Extras_Widget;
-use ElementorExtras\Group_Control_Long_Shadow;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Extras_Widget;
+use LandTechExtras\Group_Control_Long_Shadow;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -44,7 +45,7 @@ class Heading extends Extras_Widget {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Heading Extra', 'elementor-extras' );
+		return __( 'Heading Extra', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -68,7 +69,7 @@ class Heading extends Extras_Widget {
 	 * @return array
 	 */
 	public function get_script_depends() {
-		return [ 'jquery-long-shadow' ];
+		return [ 'landtech-extras-jquery-long-shadow' ];
 	}
 
 	/**
@@ -82,17 +83,17 @@ class Heading extends Extras_Widget {
 		$this->start_controls_section(
 			'section_title',
 			[
-				'label' => __( 'Title', 'elementor-extras' ),
+				'label' => __( 'Title', 'landtech-extras-for-elementor' ),
 			]
 		);
 
 			$this->add_control(
 				'title',
 				[
-					'label' 		=> __( 'Title', 'elementor-extras' ),
+					'label' 		=> __( 'Title', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::TEXTAREA,
-					'placeholder' 	=> __( 'Enter your title', 'elementor-extras' ),
-					'default' 		=> __( 'This is heading element', 'elementor-extras' ),
+					'placeholder' 	=> __( 'Enter your title', 'landtech-extras-for-elementor' ),
+					'default' 		=> __( 'This is heading element', 'landtech-extras-for-elementor' ),
 					'dynamic' 		=> [
 						'active' 	=> true,
 					],
@@ -102,7 +103,7 @@ class Heading extends Extras_Widget {
 			$this->add_control(
 				'link',
 				[
-					'label' 		=> __( 'Link', 'elementor-extras' ),
+					'label' 		=> __( 'Link', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::URL,
 					'placeholder' 	=> esc_url( home_url( '/' ) ),
 					'default' 		=> [
@@ -118,16 +119,16 @@ class Heading extends Extras_Widget {
 			$this->add_control(
 				'size',
 				[
-					'label' 		=> __( 'Size', 'elementor-extras' ),
+					'label' 		=> __( 'Size', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT,
 					'default' 		=> 'default',
 					'options' 		=> [
-						'default' 	=> __( 'Default', 'elementor-extras' ),
-						'small' 	=> __( 'Small', 'elementor-extras' ),
-						'medium' 	=> __( 'Medium', 'elementor-extras' ),
-						'large' 	=> __( 'Large', 'elementor-extras' ),
-						'xl' 		=> __( 'XL', 'elementor-extras' ),
-						'xxl' 		=> __( 'XXL', 'elementor-extras' ),
+						'default' 	=> __( 'Default', 'landtech-extras-for-elementor' ),
+						'small' 	=> __( 'Small', 'landtech-extras-for-elementor' ),
+						'medium' 	=> __( 'Medium', 'landtech-extras-for-elementor' ),
+						'large' 	=> __( 'Large', 'landtech-extras-for-elementor' ),
+						'xl' 		=> __( 'XL', 'landtech-extras-for-elementor' ),
+						'xxl' 		=> __( 'XXL', 'landtech-extras-for-elementor' ),
 					],
 				]
 			);
@@ -135,18 +136,18 @@ class Heading extends Extras_Widget {
 			$this->add_control(
 				'header_size',
 				[
-					'label' 	=> __( 'HTML Tag', 'elementor-extras' ),
+					'label' 	=> __( 'HTML Tag', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'options' 	=> [
-						'h1' 	=> __( 'H1', 'elementor-extras' ),
-						'h2' 	=> __( 'H2', 'elementor-extras' ),
-						'h3' 	=> __( 'H3', 'elementor-extras' ),
-						'h4' 	=> __( 'H4', 'elementor-extras' ),
-						'h5' 	=> __( 'H5', 'elementor-extras' ),
-						'h6' 	=> __( 'H6', 'elementor-extras' ),
-						'div'	=> __( 'div', 'elementor-extras' ),
-						'span' 	=> __( 'span', 'elementor-extras' ),
-						'p' 	=> __( 'p', 'elementor-extras' ),
+						'h1' 	=> __( 'H1', 'landtech-extras-for-elementor' ),
+						'h2' 	=> __( 'H2', 'landtech-extras-for-elementor' ),
+						'h3' 	=> __( 'H3', 'landtech-extras-for-elementor' ),
+						'h4' 	=> __( 'H4', 'landtech-extras-for-elementor' ),
+						'h5' 	=> __( 'H5', 'landtech-extras-for-elementor' ),
+						'h6' 	=> __( 'H6', 'landtech-extras-for-elementor' ),
+						'div'	=> __( 'div', 'landtech-extras-for-elementor' ),
+						'span' 	=> __( 'span', 'landtech-extras-for-elementor' ),
+						'p' 	=> __( 'p', 'landtech-extras-for-elementor' ),
 					],
 					'default' => 'h1',
 				]
@@ -155,23 +156,23 @@ class Heading extends Extras_Widget {
 			$this->add_responsive_control(
 				'align',
 				[
-					'label' 		=> __( 'Alignment', 'elementor-extras' ),
+					'label' 		=> __( 'Alignment', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'options' 		=> [
 						'left' 		=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 	=> [
-							'title' => __( 'Center', 'elementor-extras' ),
+							'title' => __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'fa fa-align-center',
 						],
 						'right' 	=> [
-							'title' => __( 'Right', 'elementor-extras' ),
+							'title' => __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'fa fa-align-right',
 						],
 						'justify' 	=> [
-							'title' => __( 'Justified', 'elementor-extras' ),
+							'title' => __( 'Justified', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'fa fa-align-justify',
 						],
 					],
@@ -185,7 +186,7 @@ class Heading extends Extras_Widget {
 			$this->add_control(
 				'view',
 				[
-					'label' 	=> __( 'View', 'elementor-extras' ),
+					'label' 	=> __( 'View', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HIDDEN,
 					'default' 	=> 'traditional',
 				]
@@ -196,7 +197,7 @@ class Heading extends Extras_Widget {
 		$this->start_controls_section(
 			'section_title_fill',
 			[
-				'label' 	=> __( 'Fill', 'elementor-extras' ),
+				'label' 	=> __( 'Fill', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -204,11 +205,11 @@ class Heading extends Extras_Widget {
 			$this->add_control(
 				'title_fill',
 				[
-					'label' 	=> __( 'Fill', 'elementor-extras' ),
+					'label' 	=> __( 'Fill', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'options' 	=> [
-						'solid' 	=> __( 'Color', 'elementor-extras' ),
-						'gradient' 	=> __( 'Background', 'elementor-extras' ),
+						'solid' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
+						'gradient' 	=> __( 'Background', 'landtech-extras-for-elementor' ),
 					],
 					'default' 		=> 'solid',
 					'prefix_class'	=> 'ee-heading--'
@@ -231,7 +232,7 @@ class Heading extends Extras_Widget {
 			$this->add_control(
 				'title_color',
 				[
-					'label' 	=> __( 'Text Color', 'elementor-extras' ),
+					'label' 	=> __( 'Text Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'global' => [
 						'default' => Global_Colors::COLOR_PRIMARY,
@@ -250,7 +251,7 @@ class Heading extends Extras_Widget {
 		$this->start_controls_section(
 			'section_title_type',
 			[
-				'label' 	=> __( 'Typography', 'elementor-extras' ),
+				'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -271,7 +272,7 @@ class Heading extends Extras_Widget {
 		$this->start_controls_section(
 			'section_title_shadow',
 			[
-				'label' 	=> __( 'Shadow', 'elementor-extras' ),
+				'label' 	=> __( 'Shadow', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -332,14 +333,14 @@ class Heading extends Extras_Widget {
 		}
 
 		if ( ! empty( $settings['link']['url'] ) ) { 
-			?><a <?php echo $this->get_render_attribute_string( 'link' ); ?>><?php
+			?><a <?php $this->print_render_attribute_string( 'link' ); ?>><?php
 		} ?>
 
-			<<?php echo $settings['header_size']; ?> <?php echo $this->get_render_attribute_string('heading'); ?>><?php
-				echo $this->render_heading_text();
-				echo $this->render_heading_text_shadow();
-				echo $this->render_heading_long_shadow();
-			?></<?php echo $settings['header_size']; ?>>
+			<<?php echo esc_html( $this->ltxe_sanitize_heading_tag( $settings['header_size'] ) ); ?> <?php $this->print_render_attribute_string('heading'); ?>><?php
+				$this->render_heading_text();
+				$this->render_heading_text_shadow();
+				$this->render_heading_long_shadow();
+			?></<?php echo esc_html( $this->ltxe_sanitize_heading_tag( $settings['header_size'] ) ); ?>>
 
 		<?php if ( ! empty( $settings['link']['url'] ) ) {
 			?></a><?php
@@ -355,8 +356,8 @@ class Heading extends Extras_Widget {
 	protected function render_heading_text() {
 		$this->add_render_attribute( 'heading-text', 'class', 'ee-heading__text' );
 
-		?><span <?php echo $this->get_render_attribute_string( 'heading-text' ); ?>>
-			<?php echo $this->parse_text_editor( $this->get_settings_for_display('title') ); ?>
+		?><span <?php $this->print_render_attribute_string( 'heading-text' ); ?>>
+			<?php echo wp_kses_post( $this->parse_text_editor( $this->get_settings_for_display('title') ) ); ?>
 		</span><?php
 	}
 
@@ -372,8 +373,8 @@ class Heading extends Extras_Widget {
 
 		$this->add_render_attribute( 'heading-text-shadow', 'class', 'ee-heading__text-shadow' );
 
-		?><span <?php echo $this->get_render_attribute_string( 'heading-text-shadow' ); ?>>
-			<?php echo $this->parse_text_editor( $this->get_settings_for_display('title') ); ?>
+		?><span <?php $this->print_render_attribute_string( 'heading-text-shadow' ); ?>>
+			<?php echo wp_kses_post( $this->parse_text_editor( $this->get_settings_for_display('title') ) ); ?>
 		</span><?php
 	}
 
@@ -390,8 +391,8 @@ class Heading extends Extras_Widget {
 
 		$this->add_render_attribute( 'heading-long-shadow', 'class', 'ee-heading__long-shadow' );
 
-		?><span <?php echo $this->get_render_attribute_string( 'heading-long-shadow' ); ?>>
-			<?php echo $this->parse_text_editor( $this->get_settings_for_display('title') ); ?>
+		?><span <?php $this->print_render_attribute_string( 'heading-long-shadow' ); ?>>
+			<?php echo wp_kses_post( $this->parse_text_editor( $this->get_settings_for_display('title') ) ); ?>
 		</span><?php
 	}
 

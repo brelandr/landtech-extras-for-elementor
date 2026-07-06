@@ -1,10 +1,11 @@
 <?php
-namespace ElementorExtras\Modules\Buttons\Widgets;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Buttons\Widgets;
 
-// Extras for Elementor Classes
-use ElementorExtras\Utils;
-use ElementorExtras\Group_Control_Button_Effect;
-use ElementorExtras\Base\Extras_Widget;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Utils;
+use LandTechExtras\Group_Control_Button_Effect;
+use LandTechExtras\Base\Extras_Widget;
 
 // Elementor Classes
 use Elementor\Repeater;
@@ -46,7 +47,7 @@ class Button_Group extends Extras_Widget {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Buttons', 'elementor-extras' );
+		return __( 'Buttons', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -71,7 +72,7 @@ class Button_Group extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
-			'hotips',
+			'landtech-extras-hotips',
 			'resize',
 		];
 	}
@@ -86,7 +87,7 @@ class Button_Group extends Extras_Widget {
 		$this->start_controls_section(
 			'section_buttons',
 			[
-				'label' => __( 'Buttons', 'elementor-extras' ),
+				'label' => __( 'Buttons', 'landtech-extras-for-elementor' ),
 			]
 		);
 
@@ -96,7 +97,7 @@ class Button_Group extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '{{WRAPPER}} {{CURRENT_ITEM}} .ee-button-text',
 					'separator'	=> 'after',
 					'condition' => [
@@ -107,15 +108,15 @@ class Button_Group extends Extras_Widget {
 
 			$repeater->start_controls_tabs( 'buttons_repeater' );
 
-			$repeater->start_controls_tab( 'tab_content', [ 'label' => __( 'Content', 'elementor-extras' ) ] );
+			$repeater->start_controls_tab( 'tab_content', [ 'label' => __( 'Content', 'landtech-extras-for-elementor' ) ] );
 
 				$repeater->add_control(
 					'text',
 					[
-						'label' 		=> __( 'Text', 'elementor-extras' ),
+						'label' 		=> __( 'Text', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::TEXT,
-						'default' 		=> __( 'Click me', 'elementor-extras' ),
-						'placeholder' 	=> __( 'Click me', 'elementor-extras' ),
+						'default' 		=> __( 'Click me', 'landtech-extras-for-elementor' ),
+						'placeholder' 	=> __( 'Click me', 'landtech-extras-for-elementor' ),
 						'dynamic'		=> [ 'active' => true ],
 					]
 				);
@@ -123,11 +124,11 @@ class Button_Group extends Extras_Widget {
 				$repeater->add_control(
 					'tooltip',
 					[
-						'label' 		=> __( 'Enable Tooltip', 'elementor-extras' ),
+						'label' 		=> __( 'Enable Tooltip', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SWITCHER,
 						'default' 		=> '',
-						'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-						'label_off' 	=> __( 'No', 'elementor-extras' ),
+						'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+						'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 						'return_value' 	=> 'tooltip',
 					]
 				);
@@ -135,15 +136,15 @@ class Button_Group extends Extras_Widget {
 				$repeater->add_control(
 					'tooltip_position',
 					[
-						'label'		=> __( 'Show tooltip at', 'elementor-extras' ),
+						'label'		=> __( 'Show tooltip at', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SELECT,
 						'default' 	=> '',
 						'options' 	=> [
-							'' 			=> __( 'Global', 'elementor-extras' ),
-							'bottom' 	=> __( 'Bottom', 'elementor-extras' ),
-							'left' 		=> __( 'Left', 'elementor-extras' ),
-							'top' 		=> __( 'Top', 'elementor-extras' ),
-							'right' 	=> __( 'Right', 'elementor-extras' ),
+							'' 			=> __( 'Global', 'landtech-extras-for-elementor' ),
+							'bottom' 	=> __( 'Bottom', 'landtech-extras-for-elementor' ),
+							'left' 		=> __( 'Left', 'landtech-extras-for-elementor' ),
+							'top' 		=> __( 'Top', 'landtech-extras-for-elementor' ),
+							'right' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 						],
 						'condition'		=> [
 							'tooltip!'	=> ''
@@ -154,14 +155,14 @@ class Button_Group extends Extras_Widget {
 				$repeater->add_control(
 					'tooltip_arrow_position_h',
 					[
-						'label'		=> __( 'Tooltip Show at', 'elementor-extras' ),
+						'label'		=> __( 'Tooltip Show at', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SELECT,
 						'default' 	=> '',
 						'options' 	=> [
-							'' 			=> __( 'Default', 'elementor-extras' ),
-							'center' 	=> __( 'Center', 'elementor-extras' ),
-							'left' 		=> __( 'Left', 'elementor-extras' ),
-							'right' 	=> __( 'Right', 'elementor-extras' ),
+							'' 			=> __( 'Default', 'landtech-extras-for-elementor' ),
+							'center' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
+							'left' 		=> __( 'Left', 'landtech-extras-for-elementor' ),
+							'right' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 						],
 						'condition'	=> [
 							'tooltip_position' => [ 'top', 'bottom' ],
@@ -172,14 +173,14 @@ class Button_Group extends Extras_Widget {
 				$repeater->add_control(
 					'tooltip_arrow_position_v',
 					[
-						'label'		=> __( 'Tooltip Show at', 'elementor-extras' ),
+						'label'		=> __( 'Tooltip Show at', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SELECT,
 						'default' 	=> '',
 						'options' 	=> [
-							'' 			=> __( 'Default', 'elementor-extras' ),
-							'center' 	=> __( 'Center', 'elementor-extras' ),
-							'bottom' 	=> __( 'Bottom', 'elementor-extras' ),
-							'top' 		=> __( 'Top', 'elementor-extras' ),
+							'' 			=> __( 'Default', 'landtech-extras-for-elementor' ),
+							'center' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
+							'bottom' 	=> __( 'Bottom', 'landtech-extras-for-elementor' ),
+							'top' 		=> __( 'Top', 'landtech-extras-for-elementor' ),
 						],
 						'condition'	=> [
 							'tooltip_position' => [ 'left', 'right' ],
@@ -190,11 +191,11 @@ class Button_Group extends Extras_Widget {
 				$repeater->add_control(
 					'tooltip_content',
 					[
-						'label' 		=> __( 'Tooltip Content', 'elementor-extras' ),
+						'label' 		=> __( 'Tooltip Content', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::TEXTAREA,
-						'default' 		=> __( 'I am a tooltip for a button', 'elementor-extras' ),
-						'placeholder' 	=> __( 'I am a tooltip for a button', 'elementor-extras' ),
-						'title' 		=> __( 'Tooltip Content', 'elementor-extras' ),
+						'default' 		=> __( 'I am a tooltip for a button', 'landtech-extras-for-elementor' ),
+						'placeholder' 	=> __( 'I am a tooltip for a button', 'landtech-extras-for-elementor' ),
+						'title' 		=> __( 'Tooltip Content', 'landtech-extras-for-elementor' ),
 						'rows' 			=> 5,
 						'dynamic'		=> [ 'active' => true ],
 						'condition'		=> [
@@ -206,7 +207,7 @@ class Button_Group extends Extras_Widget {
 				$repeater->add_control(
 					'link',
 					[
-						'label' 		=> __( 'Link', 'elementor-extras' ),
+						'label' 		=> __( 'Link', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::URL,
 						'placeholder' 	=> esc_url( home_url( '/' ) ),
 						'dynamic'		=> [ 'active' => true ],
@@ -217,7 +218,7 @@ class Button_Group extends Extras_Widget {
 				$repeater->add_control(
 					'selected_icon',
 					[
-						'label' 		=> __( 'Icon', 'elementor-extras' ),
+						'label' 		=> __( 'Icon', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::ICONS,
 						'fa4compatibility' => 'icon',
 					]
@@ -226,12 +227,12 @@ class Button_Group extends Extras_Widget {
 				$repeater->add_control(
 					'icon_align',
 					[
-						'label' 	=> __( 'Icon Position', 'elementor-extras' ),
+						'label' 	=> __( 'Icon Position', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SELECT,
 						'default' 	=> 'left',
 						'options' 	=> [
-							'left' 		=> __( 'Before', 'elementor-extras' ),
-							'right' 	=> __( 'After', 'elementor-extras' ),
+							'left' 		=> __( 'Before', 'landtech-extras-for-elementor' ),
+							'right' 	=> __( 'After', 'landtech-extras-for-elementor' ),
 						],
 						'condition' => [
 							'selected_icon[value]!' => '',
@@ -242,7 +243,7 @@ class Button_Group extends Extras_Widget {
 				$repeater->add_control(
 					'icon_indent',
 					[
-						'label' 	=> __( 'Icon Spacing', 'elementor-extras' ),
+						'label' 	=> __( 'Icon Spacing', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SLIDER,
 						'range' 	=> [
 							'px' 	=> [
@@ -262,7 +263,7 @@ class Button_Group extends Extras_Widget {
 				$repeater->add_control(
 					'view',
 					[
-						'label' 	=> __( 'View', 'elementor-extras' ),
+						'label' 	=> __( 'View', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::HIDDEN,
 						'default' 	=> 'traditional',
 					]
@@ -271,35 +272,35 @@ class Button_Group extends Extras_Widget {
 				$repeater->add_control(
 					'_element_id',
 					[
-						'label' 		=> __( 'CSS ID', 'elementor-extras' ),
+						'label' 		=> __( 'CSS ID', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::TEXT,
 						'dynamic'		=> [ 'active' => true ],
 						'default' 		=> '',
 						'label_block' 	=> false,
-						'title' 		=> __( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'elementor-extras' ),
+						'title' 		=> __( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'landtech-extras-for-elementor' ),
 					]
 				);
 
 				$repeater->add_control(
 					'css_classes',
 					[
-						'label' 		=> __( 'CSS Classes', 'elementor-extras' ),
+						'label' 		=> __( 'CSS Classes', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::TEXT,
 						'dynamic'		=> [ 'active' => true ],
 						'default' 		=> '',
 						'label_block' 	=> false,
-						'title' 		=> __( 'Add your custom class WITHOUT the dot. e.g: my-class', 'elementor-extras' ),
+						'title' 		=> __( 'Add your custom class WITHOUT the dot. e.g: my-class', 'landtech-extras-for-elementor' ),
 					]
 				);
 
 			$repeater->end_controls_tab();
 
-			$repeater->start_controls_tab( 'tab_layout', [ 'label' => __( 'Layout', 'elementor-extras' ) ] );
+			$repeater->start_controls_tab( 'tab_layout', [ 'label' => __( 'Layout', 'landtech-extras-for-elementor' ) ] );
 
 				$repeater->add_control(
 					'size',
 					[
-						'label' 		=> __( 'Size', 'elementor-extras' ),
+						'label' 		=> __( 'Size', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SELECT,
 						'default' 		=> 'sm',
 						'options' 		=> Utils::get_button_sizes(),
@@ -309,7 +310,7 @@ class Button_Group extends Extras_Widget {
 				$repeater->add_responsive_control(
 					'label_min_width',
 					[
-						'label' 		=> __( 'Label Min Width', 'elementor-extras' ),
+						'label' 		=> __( 'Label Min Width', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SLIDER,
 						'range' 	=> [
 							'px' 	=> [
@@ -327,7 +328,7 @@ class Button_Group extends Extras_Widget {
 				$repeater->add_responsive_control(
 					'min_width',
 					[
-						'label' 		=> __( 'Button Min Width', 'elementor-extras' ),
+						'label' 		=> __( 'Button Min Width', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SLIDER,
 						'range' 	=> [
 							'px' 	=> [
@@ -345,20 +346,20 @@ class Button_Group extends Extras_Widget {
 				$repeater->add_control(
 					'text_align',
 					[
-						'label' 		=> __( 'Align Text', 'elementor-extras' ),
+						'label' 		=> __( 'Align Text', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::CHOOSE,
 						'default' 		=> '',
 						'options' 		=> [
 							'left'    		=> [
-								'title' 	=> __( 'Left', 'elementor-extras' ),
+								'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 								'icon' 		=> 'fa fa-align-left',
 							],
 							'center' 		=> [
-								'title' 	=> __( 'Center', 'elementor-extras' ),
+								'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 								'icon' 		=> 'fa fa-align-center',
 							],
 							'right' 		=> [
-								'title' 	=> __( 'Right', 'elementor-extras' ),
+								'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 								'icon' 		=> 'fa fa-align-right',
 							],
 						],
@@ -370,17 +371,17 @@ class Button_Group extends Extras_Widget {
 
 			$repeater->end_controls_tab();
 
-			$repeater->start_controls_tab( 'tab_style', [ 'label' => __( 'Style', 'elementor-extras' ) ] );
+			$repeater->start_controls_tab( 'tab_style', [ 'label' => __( 'Style', 'landtech-extras-for-elementor' ) ] );
 
 				$repeater->add_control(
 					'button_custom_style',
 					[
-						'label' 		=> __( 'Custom', 'elementor-extras' ),
+						'label' 		=> __( 'Custom', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SWITCHER,
-						'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-						'label_off' 	=> __( 'No', 'elementor-extras' ),
+						'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+						'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 						'return_value' 	=> 'yes',
-						'description'   => __( 'Set custom styles that will only affect this specific button.', 'elementor-extras' ),
+						'description'   => __( 'Set custom styles that will only affect this specific button.', 'landtech-extras-for-elementor' ),
 					]
 				);
 
@@ -388,7 +389,7 @@ class Button_Group extends Extras_Widget {
 					Group_Control_Button_Effect::get_type(),
 					[
 						'name' 		=> 'button_effect',
-						'label' 	=> __( 'Effect', 'elementor-extras' ),
+						'label' 	=> __( 'Effect', 'landtech-extras-for-elementor' ),
 						'selector' 	=> '{{WRAPPER}} {{CURRENT_ITEM}} .ee-button-wrapper',
 						'condition' => [
 							'button_custom_style!' => ''
@@ -400,7 +401,7 @@ class Button_Group extends Extras_Widget {
 					Group_Control_Border::get_type(),
 					[
 						'name' 		=> 'button_border',
-						'label' 	=> __( 'Border', 'elementor-extras' ),
+						'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 						'selector' 	=> '{{WRAPPER}} {{CURRENT_ITEM}} .ee-button',
 						'condition' => [
 							'button_custom_style!' => ''
@@ -412,7 +413,7 @@ class Button_Group extends Extras_Widget {
 					'border_radius',
 					[
 						'type' 			=> Controls_Manager::DIMENSIONS,
-						'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+						'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 						'size_units' 	=> [ 'px', '%' ],
 						'selectors' 	=> [
 							'{{WRAPPER}} {{CURRENT_ITEM}} .ee-button,
@@ -429,7 +430,7 @@ class Button_Group extends Extras_Widget {
 				$repeater->add_control(
 					'text_padding',
 					[
-						'label' 		=> __( 'Text Padding', 'elementor-extras' ),
+						'label' 		=> __( 'Text Padding', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::DIMENSIONS,
 						'size_units' 	=> [ 'px', 'em', '%' ],
 						'selectors' 	=> [
@@ -447,7 +448,7 @@ class Button_Group extends Extras_Widget {
 					'heading_style',
 					[
 						'type'		=> Controls_Manager::HEADING,
-						'label' 	=> __( 'Default', 'elementor-extras' ),
+						'label' 	=> __( 'Default', 'landtech-extras-for-elementor' ),
 						'separator' => 'before',
 						'condition' => [
 							'button_custom_style!' => ''
@@ -458,7 +459,7 @@ class Button_Group extends Extras_Widget {
 				$repeater->add_control(
 					'button_text_color',
 					[
-						'label' 	=> __( 'Text Color', 'elementor-extras' ),
+						'label' 	=> __( 'Text Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} {{CURRENT_ITEM}} .ee-button' => 'color: {{VALUE}};',
@@ -472,7 +473,7 @@ class Button_Group extends Extras_Widget {
 				$repeater->add_control(
 					'background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} {{CURRENT_ITEM}} .ee-button' => 'background-color: {{VALUE}};',
@@ -487,7 +488,7 @@ class Button_Group extends Extras_Widget {
 					'heading_hover_style',
 					[
 						'type'		=> Controls_Manager::HEADING,
-						'label' 	=> __( 'Hover', 'elementor-extras' ),
+						'label' 	=> __( 'Hover', 'landtech-extras-for-elementor' ),
 						'separator' => 'before',
 						'condition' => [
 							'button_custom_style!' => ''
@@ -498,7 +499,7 @@ class Button_Group extends Extras_Widget {
 				$repeater->add_control(
 					'hover_color',
 					[
-						'label' 	=> __( 'Text Color', 'elementor-extras' ),
+						'label' 	=> __( 'Text Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default' 	=> '',
 						'selectors' => [
@@ -513,7 +514,7 @@ class Button_Group extends Extras_Widget {
 				$repeater->add_control(
 					'button_background_hover_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} {{CURRENT_ITEM}} .ee-button-wrapper:hover .ee-button' => 'background-color: {{VALUE}};',
@@ -527,7 +528,7 @@ class Button_Group extends Extras_Widget {
 				$repeater->add_control(
 					'button_hover_border_color',
 					[
-						'label' 	=> __( 'Border Color', 'elementor-extras' ),
+						'label' 	=> __( 'Border Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'condition' => [
 							'button_border_border!' => '',
@@ -544,7 +545,7 @@ class Button_Group extends Extras_Widget {
 				$repeater->add_control(
 					'hover_animation',
 					[
-						'label' 	=> __( 'Animation', 'elementor-extras' ),
+						'label' 	=> __( 'Animation', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::HOVER_ANIMATION,
 						'condition' => [
 							'button_custom_style!' => ''
@@ -559,14 +560,14 @@ class Button_Group extends Extras_Widget {
 			$this->add_control(
 				'buttons',
 				[
-					'label' 	=> __( 'Buttons', 'elementor-extras' ),
+					'label' 	=> __( 'Buttons', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::REPEATER,
 					'default' 	=> [
 						[
-							'text' 	=> __( 'Button #1', 'elementor-extras' )
+							'text' 	=> __( 'Button #1', 'landtech-extras-for-elementor' )
 						],
 						[
-							'text' 	=> __( 'Button #2', 'elementor-extras' )
+							'text' 	=> __( 'Button #2', 'landtech-extras-for-elementor' )
 						],
 					],
 					'fields' 		=> $repeater->get_controls(),
@@ -579,22 +580,22 @@ class Button_Group extends Extras_Widget {
 		$this->start_controls_section(
 			'section_tooltips',
 			[
-				'label' => __( 'Tooltips', 'elementor-extras' ),
+				'label' => __( 'Tooltips', 'landtech-extras-for-elementor' ),
 			]
 		);
 
 			$this->add_responsive_control(
 				'trigger',
 				[
-					'label'		=> __( 'Trigger', 'elementor-extras' ),
+					'label'		=> __( 'Trigger', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'mouseenter',
 					'tablet_default' 	=> 'click_target',
 					'mobile_default' 	=> 'click_target',
 					'options' 	=> [
-						'mouseenter' 	=> __( 'Mouse Over', 'elementor-extras' ),
-						'click_target' 	=> __( 'Click Target', 'elementor-extras' ),
-						'load' 			=> __( 'Page Load', 'elementor-extras' ),
+						'mouseenter' 	=> __( 'Mouse Over', 'landtech-extras-for-elementor' ),
+						'click_target' 	=> __( 'Click Target', 'landtech-extras-for-elementor' ),
+						'load' 			=> __( 'Page Load', 'landtech-extras-for-elementor' ),
 					],
 					'frontend_available' => true
 				]
@@ -603,16 +604,16 @@ class Button_Group extends Extras_Widget {
 			$this->add_responsive_control(
 				'_hide',
 				[
-					'label'		=> __( 'Hide on', 'elementor-extras' ),
+					'label'		=> __( 'Hide on', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 			=> 'mouseleave',
 					'tablet_default' 	=> 'click_out',
 					'mobile_default' 	=> 'click_out',
 					'options' 	=> [
-						'mouseleave' 	=> __( 'Mouse Leave', 'elementor-extras' ),
-						'click_out' 	=> __( 'Click Outside', 'elementor-extras' ),
-						'click_target' 	=> __( 'Click Target', 'elementor-extras' ),
-						'click_any' 	=> __( 'Click Anywhere', 'elementor-extras' ),
+						'mouseleave' 	=> __( 'Mouse Leave', 'landtech-extras-for-elementor' ),
+						'click_out' 	=> __( 'Click Outside', 'landtech-extras-for-elementor' ),
+						'click_target' 	=> __( 'Click Target', 'landtech-extras-for-elementor' ),
+						'click_any' 	=> __( 'Click Anywhere', 'landtech-extras-for-elementor' ),
 					],
 					'frontend_available' => true
 				]
@@ -621,14 +622,14 @@ class Button_Group extends Extras_Widget {
 			$this->add_control(
 				'position',
 				[
-					'label'		=> __( 'Show to', 'elementor-extras' ),
+					'label'		=> __( 'Show to', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'bottom',
 					'options' 	=> [
-						'bottom' 	=> __( 'Bottom', 'elementor-extras' ),
-						'left' 		=> __( 'Left', 'elementor-extras' ),
-						'top' 		=> __( 'Top', 'elementor-extras' ),
-						'right' 	=> __( 'Right', 'elementor-extras' ),
+						'bottom' 	=> __( 'Bottom', 'landtech-extras-for-elementor' ),
+						'left' 		=> __( 'Left', 'landtech-extras-for-elementor' ),
+						'top' 		=> __( 'Top', 'landtech-extras-for-elementor' ),
+						'right' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 					],
 					'frontend_available' => true
 				]
@@ -637,13 +638,13 @@ class Button_Group extends Extras_Widget {
 			$this->add_control(
 				'arrow_position_h',
 				[
-					'label'		=> __( 'Show at', 'elementor-extras' ),
+					'label'		=> __( 'Show at', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> '',
 					'options' 	=> [
-						'' 			=> __( 'Center', 'elementor-extras' ),
-						'left' 		=> __( 'Left', 'elementor-extras' ),
-						'right' 	=> __( 'Right', 'elementor-extras' ),
+						'' 			=> __( 'Center', 'landtech-extras-for-elementor' ),
+						'left' 		=> __( 'Left', 'landtech-extras-for-elementor' ),
+						'right' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 					],
 					'condition'		=> [
 						'position' => [ 'top', 'bottom' ],
@@ -655,13 +656,13 @@ class Button_Group extends Extras_Widget {
 			$this->add_control(
 				'arrow_position_v',
 				[
-					'label'		=> __( 'Show at', 'elementor-extras' ),
+					'label'		=> __( 'Show at', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> '',
 					'options' 	=> [
-						'' 			=> __( 'Center', 'elementor-extras' ),
-						'top' 		=> __( 'Top', 'elementor-extras' ),
-						'bottom' 	=> __( 'Bottom', 'elementor-extras' ),
+						'' 			=> __( 'Center', 'landtech-extras-for-elementor' ),
+						'top' 		=> __( 'Top', 'landtech-extras-for-elementor' ),
+						'bottom' 	=> __( 'Bottom', 'landtech-extras-for-elementor' ),
 					],
 					'condition'		=> [
 						'position' => [ 'left', 'right' ],
@@ -673,7 +674,7 @@ class Button_Group extends Extras_Widget {
 			$this->add_control(
 				'css_position',
 				[
-					'label' 		=> __( 'CSS Position', 'elementor-extras' ),
+					'label' 		=> __( 'CSS Position', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT,
 					'default' 		=> '',
 					'options'		=> [
@@ -687,13 +688,13 @@ class Button_Group extends Extras_Widget {
 			$this->add_control(
 				'disable',
 				[
-					'label'		=> __( 'Disable On', 'elementor-extras' ),
+					'label'		=> __( 'Disable On', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> '',
 					'options' 	=> [
-						'' 			=> __( 'None', 'elementor-extras' ),
-						'tablet' 	=> __( 'Tablet & Mobile', 'elementor-extras' ),
-						'mobile' 	=> __( 'Mobile', 'elementor-extras' ),
+						'' 			=> __( 'None', 'landtech-extras-for-elementor' ),
+						'tablet' 	=> __( 'Tablet & Mobile', 'landtech-extras-for-elementor' ),
+						'mobile' 	=> __( 'Mobile', 'landtech-extras-for-elementor' ),
 					],
 					'frontend_available' => true
 				]
@@ -702,12 +703,12 @@ class Button_Group extends Extras_Widget {
 			$this->add_control(
 				'tooltips_arrow',
 				[
-					'label'		=> __( 'Arrow', 'elementor-extras' ),
+					'label'		=> __( 'Arrow', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> '""',
 					'options' 	=> [
-						'""' 	=> __( 'Show', 'elementor-extras' ),
-						'none' 	=> __( 'Hide', 'elementor-extras' ),
+						'""' 	=> __( 'Show', 'landtech-extras-for-elementor' ),
+						'none' 	=> __( 'Hide', 'landtech-extras-for-elementor' ),
 					],
 					'selectors' => [
 						'.ee-tooltip.ee-tooltip-{{ID}}:after' => 'content: {{VALUE}};',
@@ -718,8 +719,8 @@ class Button_Group extends Extras_Widget {
 			$this->add_control(
 				'delay_in',
 				[
-					'label' 		=> __( 'Delay in (s)', 'elementor-extras' ),
-					'description' 	=> __( 'Time until tooltips appear.', 'elementor-extras' ),
+					'label' 		=> __( 'Delay in (s)', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'Time until tooltips appear.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -735,8 +736,8 @@ class Button_Group extends Extras_Widget {
 			$this->add_control(
 				'delay_out',
 				[
-					'label' 		=> __( 'Delay out (s)', 'elementor-extras' ),
-					'description' 	=> __( 'Time until tooltips dissapear.', 'elementor-extras' ),
+					'label' 		=> __( 'Delay out (s)', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'Time until tooltips dissapear.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -752,7 +753,7 @@ class Button_Group extends Extras_Widget {
 			$this->add_control(
 				'duration',
 				[
-					'label' 		=> __( 'Duration', 'elementor-extras' ),
+					'label' 		=> __( 'Duration', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -768,8 +769,8 @@ class Button_Group extends Extras_Widget {
 			$this->add_control(
 				'tooltips_distance',
 				[
-					'label' 		=> __( 'Distance', 'elementor-extras' ),
-					'description' 	=> __( 'The distance between the tooltip and the hotspot. Defaults to 6px', 'elementor-extras' ),
+					'label' 		=> __( 'Distance', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'The distance between the tooltip and the hotspot. Defaults to 6px', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 0,
@@ -792,8 +793,8 @@ class Button_Group extends Extras_Widget {
 			$this->add_control(
 				'tooltips_offset',
 				[
-					'label' 		=> __( 'Offset', 'elementor-extras' ),
-					'description' 	=> __( 'Adjust offset to align arrow with target.', 'elementor-extras' ),
+					'label' 		=> __( 'Offset', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'Adjust offset to align arrow with target.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 0,
@@ -816,7 +817,7 @@ class Button_Group extends Extras_Widget {
 			$this->add_responsive_control(
 				'tooltips_width',
 				[
-					'label' 		=> __( 'Maximum Width', 'elementor-extras' ),
+					'label' 		=> __( 'Maximum Width', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 350,
@@ -836,8 +837,8 @@ class Button_Group extends Extras_Widget {
 			$this->add_control(
 				'tooltips_zindex',
 				[
-					'label'			=> __( 'zIndex', 'elementor-extras' ),
-					'description'   => __( 'Adjust the z-index of the tooltips. Defaults to 999', 'elementor-extras' ),
+					'label'			=> __( 'zIndex', 'landtech-extras-for-elementor' ),
+					'description'   => __( 'Adjust the z-index of the tooltips. Defaults to 999', 'landtech-extras-for-elementor' ),
 					'type'			=> Controls_Manager::NUMBER,
 					'default'		=> '999',
 					'min'			=> -9999999,
@@ -853,7 +854,7 @@ class Button_Group extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style',
 			[
-				'label' 	=> __( 'Buttons', 'elementor-extras' ),
+				'label' 	=> __( 'Buttons', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -861,24 +862,24 @@ class Button_Group extends Extras_Widget {
 			$this->add_responsive_control(
 				'vertical_align',
 				[
-					'label' 		=> __( 'Vertical Alignment', 'elementor-extras' ),
+					'label' 		=> __( 'Vertical Alignment', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'top'    		=> [
-							'title' 	=> __( 'Top', 'elementor-extras' ),
+							'title' 	=> __( 'Top', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-top',
 						],
 						'middle' 		=> [
-							'title' 	=> __( 'Middle', 'elementor-extras' ),
+							'title' 	=> __( 'Middle', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-middle',
 						],
 						'bottom' 		=> [
-							'title' 	=> __( 'Bottom', 'elementor-extras' ),
+							'title' 	=> __( 'Bottom', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-bottom',
 						],
 						'stretch' 		=> [
-							'title' 	=> __( 'Stretch', 'elementor-extras' ),
+							'title' 	=> __( 'Stretch', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-stretch',
 						],
 					],
@@ -889,24 +890,24 @@ class Button_Group extends Extras_Widget {
 			$this->add_responsive_control(
 				'align',
 				[
-					'label' 		=> __( 'Alignment', 'elementor-extras' ),
+					'label' 		=> __( 'Alignment', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'left'    		=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-right',
 						],
 						'justify' 		=> [
-							'title' 	=> __( 'Stretch', 'elementor-extras' ),
+							'title' 	=> __( 'Stretch', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-stretch',
 						],
 					],
@@ -917,24 +918,24 @@ class Button_Group extends Extras_Widget {
 			$this->add_control(
 				'content_align',
 				[
-					'label' 		=> __( 'Align Content', 'elementor-extras' ),
+					'label' 		=> __( 'Align Content', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> 'justify',
 					'options' 		=> [
 						'left'    		=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-right',
 						],
 						'justify' 		=> [
-							'title' 	=> __( 'Stretch', 'elementor-extras' ),
+							'title' 	=> __( 'Stretch', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-stretch',
 						],
 					],
@@ -948,20 +949,20 @@ class Button_Group extends Extras_Widget {
 			$this->add_control(
 				'text_align',
 				[
-					'label' 		=> __( 'Align Text', 'elementor-extras' ),
+					'label' 		=> __( 'Align Text', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'left'    		=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -978,18 +979,18 @@ class Button_Group extends Extras_Widget {
 			$this->add_control(
 				'gap',
 				[
-					'label' 		=> __( 'Buttons Gap', 'elementor-extras' ),
-					'description' 	=> __( 'Select Custom to be able to specify a different gap for each breakpoint.', 'elementor-extras' ),
+					'label' 		=> __( 'Buttons Gap', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'Select Custom to be able to specify a different gap for each breakpoint.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT,
 					'default' 		=> 'default',
 					'options' 		=> [
-						'default' 	=> __( 'Default', 'elementor-extras' ),
-						'no' 		=> __( 'No Gap', 'elementor-extras' ),
-						'narrow' 	=> __( 'Narrow', 'elementor-extras' ),
-						'extended' 	=> __( 'Extended', 'elementor-extras' ),
-						'wide' 		=> __( 'Wide', 'elementor-extras' ),
-						'wider' 	=> __( 'Wider', 'elementor-extras' ),
-						'custom' 	=> __( 'Custom', 'elementor-extras' ),
+						'default' 	=> __( 'Default', 'landtech-extras-for-elementor' ),
+						'no' 		=> __( 'No Gap', 'landtech-extras-for-elementor' ),
+						'narrow' 	=> __( 'Narrow', 'landtech-extras-for-elementor' ),
+						'extended' 	=> __( 'Extended', 'landtech-extras-for-elementor' ),
+						'wide' 		=> __( 'Wide', 'landtech-extras-for-elementor' ),
+						'wider' 	=> __( 'Wider', 'landtech-extras-for-elementor' ),
+						'custom' 	=> __( 'Custom', 'landtech-extras-for-elementor' ),
 					],
 					'prefix_class'	=> 'ee-button-group-gap-',
 				]
@@ -998,7 +999,7 @@ class Button_Group extends Extras_Widget {
 			$this->add_responsive_control(
 				'custom_gap',
 				[
-					'label' 	=> __( 'Custom Gap', 'elementor-extras' ),
+					'label' 	=> __( 'Custom Gap', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -1026,7 +1027,7 @@ class Button_Group extends Extras_Widget {
 			$this->add_control(
 				'text_padding',
 				[
-					'label' 		=> __( 'Text Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Text Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -1040,7 +1041,7 @@ class Button_Group extends Extras_Widget {
 				'buttons_border_radius',
 				[
 					'type' 			=> Controls_Manager::DIMENSIONS,
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
 						'{{WRAPPER}} .ee-button,
@@ -1052,15 +1053,15 @@ class Button_Group extends Extras_Widget {
 			$this->add_control(
 				'stack',
 				[
-					'label' 		=> __( 'Stack', 'elementor-extras' ),
-					'description'	=> __( 'Choose on what breakpoint should the buttons begin to stack.', 'elementor-extras' ),
+					'label' 		=> __( 'Stack', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Choose on what breakpoint should the buttons begin to stack.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT,
 					'default' 		=> '',
 					'options' 	=> [
-						'' 			=> __( 'None', 'elementor-extras' ),
-						'desktop' 	=> __( 'Desktop', 'elementor-extras' ),
-						'tablet' 	=> __( 'Tablet', 'elementor-extras' ),
-						'mobile' 	=> __( 'Mobile', 'elementor-extras' ),
+						'' 			=> __( 'None', 'landtech-extras-for-elementor' ),
+						'desktop' 	=> __( 'Desktop', 'landtech-extras-for-elementor' ),
+						'tablet' 	=> __( 'Tablet', 'landtech-extras-for-elementor' ),
+						'mobile' 	=> __( 'Mobile', 'landtech-extras-for-elementor' ),
 					],
 					'prefix_class'	=> 'ee-button-group-stack-',
 				]
@@ -1079,13 +1080,13 @@ class Button_Group extends Extras_Widget {
 
 			$this->start_controls_tabs( 'buttons_style' );
 
-			$this->start_controls_tab( 'buttons_style_default', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'buttons_style_default', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_group_control(
 					Group_Control_Border::get_type(),
 					[
 						'name' 		=> 'buttons_border',
-						'label' 	=> __( 'Border', 'elementor-extras' ),
+						'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 						'selector' 	=> '{{WRAPPER}} .ee-button',
 					]
 				);
@@ -1093,7 +1094,7 @@ class Button_Group extends Extras_Widget {
 				$this->add_control(
 					'buttons_text_color',
 					[
-						'label' 	=> __( 'Text Color', 'elementor-extras' ),
+						'label' 	=> __( 'Text Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default' 	=> '',
 						'selectors' => [
@@ -1105,7 +1106,7 @@ class Button_Group extends Extras_Widget {
 				$this->add_control(
 					'buttons_background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'global'	=> [
 							'default' => Global_Colors::COLOR_ACCENT,
@@ -1127,12 +1128,12 @@ class Button_Group extends Extras_Widget {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'buttons_style_hover', [ 'label' => __( 'Hover', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'buttons_style_hover', [ 'label' => __( 'Hover', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'buttons_hover_color',
 					[
-						'label' 	=> __( 'Text Color', 'elementor-extras' ),
+						'label' 	=> __( 'Text Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default' 	=> '',
 						'selectors' => [
@@ -1144,7 +1145,7 @@ class Button_Group extends Extras_Widget {
 				$this->add_control(
 					'buttons_background_hover_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-button-wrapper:hover .ee-button' => 'background-color: {{VALUE}};',
@@ -1155,7 +1156,7 @@ class Button_Group extends Extras_Widget {
 				$this->add_control(
 					'buttons_hover_border_color',
 					[
-						'label' 	=> __( 'Border Color', 'elementor-extras' ),
+						'label' 	=> __( 'Border Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'condition' => [
 							'button_border_border!' => '',
@@ -1184,7 +1185,7 @@ class Button_Group extends Extras_Widget {
 		$this->start_controls_section(
 			'section_tooltips_style',
 			[
-				'label' 	=> __( 'Tooltips', 'elementor-extras' ),
+				'label' 	=> __( 'Tooltips', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -1192,19 +1193,19 @@ class Button_Group extends Extras_Widget {
 			$this->add_control(
 				'tooltips_align',
 				[
-					'label' 	=> __( 'Text Align', 'elementor-extras' ),
+					'label' 	=> __( 'Text Align', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::CHOOSE,
 					'options' 	=> [
 						'left' 	=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 	=> [
-							'title' => __( 'Center', 'elementor-extras' ),
+							'title' => __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'fa fa-align-center',
 						],
 						'right' 	=> [
-							'title' => __( 'Right', 'elementor-extras' ),
+							'title' => __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon'	=> 'fa fa-align-right',
 						],
 					],
@@ -1217,7 +1218,7 @@ class Button_Group extends Extras_Widget {
 			$this->add_control(
 				'tooltips_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -1230,7 +1231,7 @@ class Button_Group extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'tooltips_border',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '.ee-tooltip.ee-tooltip-{{ID}}',
 				]
 			);
@@ -1238,7 +1239,7 @@ class Button_Group extends Extras_Widget {
 			$this->add_control(
 				'tooltips_border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
@@ -1259,7 +1260,7 @@ class Button_Group extends Extras_Widget {
 			$this->add_control(
 				'tooltips_background_color',
 				[
-					'label' 	=> __( 'Background Color', 'elementor-extras' ),
+					'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'selectors' => Utils::get_tooltip_background_selectors(),
 				]
@@ -1268,7 +1269,7 @@ class Button_Group extends Extras_Widget {
 			$this->add_control(
 				'tooltips_color',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'selectors' => [
 						'.ee-tooltip.ee-tooltip-{{ID}}' => 'color: {{VALUE}};',
@@ -1305,7 +1306,7 @@ class Button_Group extends Extras_Widget {
 
 		$this->add_render_attribute( 'group', 'class', 'ee-button-group' );
 
-		?><ul <?php echo $this->get_render_attribute_string( 'group' ); ?>><?php
+		?><ul <?php $this->print_render_attribute_string( 'group' ); ?>><?php
 
 			foreach ( $settings['buttons'] as $index => $item ) {
 
@@ -1508,14 +1509,14 @@ class Button_Group extends Extras_Widget {
 
 				if ( ( ! $this->_is_edit_mode && $item['text'] ) || $this->_is_edit_mode ) {
 
-				?><li <?php echo $this->get_render_attribute_string( $gap_key ); ?>>
-					<a <?php echo $this->get_render_attribute_string( $wrapper_key ); ?>>
+				?><li <?php $this->print_render_attribute_string( $gap_key ); ?>>
+					<a <?php $this->print_render_attribute_string( $wrapper_key ); ?>>
 
-						<span <?php echo $this->get_render_attribute_string( $button_key ); ?>>
-							<span <?php echo $this->get_render_attribute_string( $content_key ); ?>><?php
+						<span <?php $this->print_render_attribute_string( $button_key ); ?>>
+							<span <?php $this->print_render_attribute_string( $content_key ); ?>><?php
 
 								if ( $has_icon ) {
-									?><span <?php echo $this->get_render_attribute_string( $icon_key ); ?>><?php
+									?><span <?php $this->print_render_attribute_string( $icon_key ); ?>><?php
 										if ( $is_new || $migrated ) {
 											Icons_Manager::render_icon( $item['selected_icon'], [ 'aria-hidden' => 'true' ] );
 										} else {
@@ -1524,13 +1525,13 @@ class Button_Group extends Extras_Widget {
 									?></span><?php
 								}
 
-								?><span <?php echo $this->get_render_attribute_string( $text_key ); ?>>
-									<?php echo $item['text']; ?>
+								?><span <?php $this->print_render_attribute_string( $text_key ); ?>>
+									<?php echo esc_html( $item['text'] ); ?>
 								</span>
 
 								<?php if ( $_has_tooltip ) { ?>
-								<span <?php echo $this->get_render_attribute_string( $tooltip_key ); ?>>
-									<?php echo $this->parse_text_editor( $item['tooltip_content'] ); ?>
+								<span <?php $this->print_render_attribute_string( $tooltip_key ); ?>>
+									<?php echo wp_kses_post( $this->parse_text_editor( $item['tooltip_content'] ) ); ?>
 								</span>
 								<?php } ?>
 

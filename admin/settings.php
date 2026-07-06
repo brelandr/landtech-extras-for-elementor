@@ -1,5 +1,6 @@
 <?php
-namespace ElementorExtras;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -10,13 +11,12 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  */
 class Settings extends Settings_Page {
 
-	const PAGE_ID = 'elementor-extras';
+	const PAGE_ID = 'landtech-extras';
 
 	// Tabs
 	const TAB_WIDGETS 		= 'widgets';
 	const TAB_EXTENSIONS 	= 'extensions';
 	const TAB_ADVANCED 		= 'advanced';
-	const TAB_LICENSE 		= 'license';
 	const TAB_APIS 			= 'apis';
 	const TAB_DOCUMENTATION	= 'documentation';
 	const TAB_SUPPORT		= 'support';
@@ -38,13 +38,13 @@ class Settings extends Settings_Page {
 	*/
 
 	public function menu() {
-		$slug = 'elementor-extras';
+		$slug = 'landtech-extras';
 		$capability = 'manage_options';
 
 		add_submenu_page(
 			\Elementor\Settings::PAGE_ID,
 			$this->get_page_title(),
-			__( 'Extras', 'elementor-extras' ),
+			__( 'LandTech Extras', 'landtech-extras-for-elementor' ),
 			$capability,
 			$slug,
 			[ $this, 'render_page' ]
@@ -103,71 +103,111 @@ class Settings extends Settings_Page {
 		$this->_widgets_count = $this->get_widgets_count( true );
 		$this->_extensions_count = $this->get_extensions_count( true );
 
-		$license_status = 'inactive';
-		$license_key = Licensing::get_license_key();
-
-		if ( ! empty( $license_key ) ) {
-			$license_data = Licensing::get_license_data();
-
-			if ( ! empty( $license_data['license'] ) && is_string( $license_data['license'] ) ) {
-				if ( Licensing::STATUS_VALID === $license_data['license'] ) {
-					$license_status = 'active';
-				} elseif ( 'http_error' === $license_data['license'] ) {
-					$license_status = 'failed';
-				} else {
-					$errors = Licensing::get_status_errors();
-
-					if ( ! empty( $errors[ $license_data['license'] ] ) ) {
-						$license_status = $errors[ $license_data['license'] ]['label'];
-					}
-				}
-			}
-		}
-
 		$sections = array(
 			array(
 				'id'    => $this->settings_prefix . self::TAB_WIDGETS,
-				'title' => __( 'Widgets', 'elementor-extras' ),
+				'title' => __( 'Widgets', 'landtech-extras-for-elementor' ),
 				'count'	=> $this->_widgets_count,
 				'label' => $this->_widgets_count > 0 ? '' : 'error',
-				'desc'	=> __( 'Disable widgets from Extras. If disabled, a widget will no longer be available in the Elementor editor panel. We strongly recommend disabling the widgets you don\'t plan on using to improve the load time of the Elementor editor.', 'elementor-extras' ),
+				'desc'	=> __( 'Disable widgets from LandTech Extras. If disabled, a widget will no longer be available in the Elementor editor panel. We strongly recommend disabling the widgets you don\'t plan on using to improve the load time of the Elementor editor.', 'landtech-extras-for-elementor' ),
 			),
 			array(
 				'id'    => $this->settings_prefix . self::TAB_EXTENSIONS,
-				'title' => __( 'Extensions', 'elementor-extras' ),
+				'title' => __( 'Extensions', 'landtech-extras-for-elementor' ),
 				'count' => $this->_extensions_count,
 				'label' => $this->_extensions_count > 0 ? '' : 'error',
-				'desc'	=> __( 'Extras extensions are features added to the default Elementor elements. They display additional controls that can be found usually under the Advanced tab of each element. Below you can disable any or all these extensions. If disabled, these additional controls will no longer be available in the Elementor editor panel.', 'elementor-extras' ),
+				'desc'	=> __( 'LandTech Extras extensions are features added to the default Elementor elements. They display additional controls that can be found usually under the Advanced tab of each element. Below you can disable any or all these extensions. If disabled, these additional controls will no longer be available in the Elementor editor panel.', 'landtech-extras-for-elementor' ),
 			),
+		);
+
+		$premium_section_id = 'landtech_extras_features';
+		if ( class_exists( '\LandTechExtras\Feature_Flags_Settings', false ) ) {
+			$premium_section_id = \LandTechExtras\Feature_Flags_Settings::OPTION_KEY;
+		}
+
+		$bulk_base    = admin_url( 'admin-post.php' );
+		$enable_all   = wp_nonce_url(
+			add_query_arg(
+				array(
+					'action' => 'landtech_extras_features_bulk',
+					'bulk'   => 'enable',
+				),
+				$bulk_base
+			),
+			'landtech_extras_features_bulk'
+		);
+		$disable_all  = wp_nonce_url(
+			add_query_arg(
+				array(
+					'action' => 'landtech_extras_features_bulk',
+					'bulk'   => 'disable',
+				),
+				$bulk_base
+			),
+			'landtech_extras_features_bulk'
+		);
+		$premium_howto = '<p class="description"><strong>' . esc_html__( 'How to use this tab', 'landtech-extras-for-elementor' ) . '</strong> — ' . esc_html__( 'In the tab row at the top of this screen, open the Add-on features tab (between Extensions and APIs). Each row below is one optional capability: check or uncheck Enable for that row only, then click Save Changes. A checked box means the feature is allowed on this site when the optional LandTech Extras add-on is active and other requirements are met.', 'landtech-extras-for-elementor' ) . '</p>';
+
+		if ( class_exists( '\LandTechExtras\Feature_Flags_Settings', false ) ) {
+			$sections[] = array(
+				'id'    => $premium_section_id,
+				'title' => __( 'Add-on features', 'landtech-extras-for-elementor' ),
+				'desc'  => $premium_howto . sprintf(
+					wp_kses(
+						/* translators: %1$s: Opening anchor tag for the bulk-enable link. %2$s: Closing anchor tag for bulk-enable. %3$s: Opening anchor tag for the bulk-disable link. %4$s: Closing anchor tag for bulk-disable. */
+						__( 'Optional capability lanes when the add-on is active (AJAX loops & faceted filtering, AI workspace, advanced loop query, WooCommerce lanes, platform toggles). Shortcuts: %1$sEnable all%2$s · %3$sDisable all%4$s.', 'landtech-extras-for-elementor' ),
+						array(
+							'a' => array(
+								'href' => array(),
+							),
+						)
+					),
+					'<a href="' . esc_url( $enable_all ) . '">',
+					'</a>',
+					'<a href="' . esc_url( $disable_all ) . '">',
+					'</a>'
+				),
+			);
+		} else {
+			$sections[] = array(
+				'id'    => $premium_section_id,
+				'title' => __( 'Add-on features', 'landtech-extras-for-elementor' ),
+				'desc'  => '<p class="description">' . wp_kses_post(
+					sprintf(
+						/* translators: %s: URL to the Plugins admin screen. */
+						__( 'The optional <strong>LandTech Extras add-on</strong> is not active, so individual feature toggles (AJAX loops, AI workspace, etc.) are not available here. Install and activate it under <a href="%s">Plugins</a>, then open this tab again.', 'landtech-extras-for-elementor' ),
+						esc_url( admin_url( 'plugins.php' ) )
+					)
+				) . '</p>',
+			);
+		}
+
+		$sections = array_merge(
+			$sections,
+			array(
 			array(
 				'id'    => $this->settings_prefix . self::TAB_APIS,
-				'title' => __( 'APIs', 'elementor-extras' ),
+				'title' => __( 'APIs', 'landtech-extras-for-elementor' ),
 			),
 			array(
 				'id'    => $this->settings_prefix . self::TAB_ADVANCED,
-				'title' => __( 'Advanced', 'elementor-extras' ),
-			),
-			array(
-				'id'    => $this->settings_prefix . self::TAB_LICENSE,
-				'title' => __( 'License', 'elementor-extras' ),
-				'count' => $license_status,
-				'label' => 'active' === $license_status ? 'success' : 'error',
-				'link'	=> admin_url( 'admin.php?page=elementor_extras_license' ),
+				'title' => __( 'Advanced', 'landtech-extras-for-elementor' ),
 			),
 			array(
 				'id'    => $this->settings_prefix . self::TAB_SUPPORT,
-				'title' => __( 'Get Support', 'elementor-extras' ),
+				'title' => __( 'Get Support', 'landtech-extras-for-elementor' ),
 				'target'=> '_blank',
-				'link'	=> ElementorExtrasPlugin::$instance->get_link('support'),
+				'link'	=> LandTechExtrasPlugin::$instance->get_link('support'),
 				'icon'	=> 'dashicons dashicons-external',
 			),
 			array(
 				'id'    => $this->settings_prefix . self::TAB_DOCUMENTATION,
-				'title' => __( 'Documentation', 'elementor-extras' ),
+				'title' => __( 'Documentation', 'landtech-extras-for-elementor' ),
 				'target'=> '_blank',
-				'link'	=> ElementorExtrasPlugin::$instance->get_link('docs'),
+				'link'	=> LandTechExtrasPlugin::$instance->get_link('docs'),
 				'icon'	=> 'dashicons dashicons-external',
 			),
+			)
 		);
 
 		return $sections;
@@ -204,7 +244,7 @@ class Settings extends Settings_Page {
 	* @access protected
 	*/
 	protected function get_widgets_count( $enabled_only = false ) {
-		$modules = ElementorExtrasPlugin::$instance->modules_manager->get_modules();
+		$modules = LandTechExtrasPlugin::$instance->modules_manager->get_modules();
 		$count = 0;
 
 		foreach( $modules as $module ) {
@@ -234,7 +274,7 @@ class Settings extends Settings_Page {
 
 		$fields = [];
 
-		$modules = ElementorExtrasPlugin::$instance->modules_manager->get_modules();
+		$modules = LandTechExtrasPlugin::$instance->modules_manager->get_modules();
 
 		foreach( $modules as $module ) {
 
@@ -247,7 +287,7 @@ class Settings extends Settings_Page {
 
 			foreach( $widgets as $widget ) {
 
-				$class_name = 'ElementorExtras\Modules\\' . $module_class_name . '\Widgets\\' . $widget;
+				$class_name = 'LandTechExtras\Modules\\' . $module_class_name . '\Widgets\\' . $widget;
 
 				$widget_title 	= str_replace( '_', ' ', ucwords( $widget ) );
 				$widget_slug 	= strtolower( $widget );
@@ -255,14 +295,14 @@ class Settings extends Settings_Page {
 				$field = [
 					'name'		=> 'enable_' . $widget_slug,
 					'label' 	=> $widget_title,
-					'desc' 		=> __( 'Enable', 'elementor-extras' ),
+					'desc' 		=> __( 'Enable', 'landtech-extras-for-elementor' ),
 					'type' 		=> 'checkbox',
 					'default' 	=> 'on',
 				];
 
-				if ( $class_name::requires_elementor_pro() && ! is_elementor_pro_active() ) {
+				if ( $class_name::requires_elementor_pro() && ! landtech_extras_is_elementor_pro_active() ) {
 					$field['type'] = 'html';
-					$field['note'] = __( 'You need Elementor Pro installed and activated for this widget to be available.', 'elementor-extras' );
+					$field['note'] = __( 'You need Elementor Pro installed and activated for this widget to be available.', 'landtech-extras-for-elementor' );
 
 					unset( $field['desc'] );
 				}
@@ -283,7 +323,7 @@ class Settings extends Settings_Page {
 	* @access protected
 	*/
 	protected function get_extensions_count( $enabled_only = false ) {
-		$extensions = ElementorExtrasPlugin::$instance->extensions_manager->available_extensions;
+		$extensions = LandTechExtrasPlugin::$instance->extensions_manager->available_extensions;
 		$count = 0;
 
 		foreach( $extensions as $extension_id ) {
@@ -291,7 +331,7 @@ class Settings extends Settings_Page {
 			if ( ! $enabled_only ) {
 				$count ++;
 			} else {
-				if ( ! ElementorExtrasPlugin::$instance->extensions_manager->is_disabled( $extension_name ) ) {
+				if ( ! LandTechExtrasPlugin::$instance->extensions_manager->is_disabled( $extension_name ) ) {
 					$count++;
 				}
 			}
@@ -311,12 +351,12 @@ class Settings extends Settings_Page {
 
 		$fields = [];
 
-		$extensions = ElementorExtrasPlugin::$instance->extensions_manager->available_extensions;
+		$extensions = LandTechExtrasPlugin::$instance->extensions_manager->available_extensions;
 
 		foreach( $extensions as $extension_id ) {
 
 			$extension_name = str_replace( '-', '_', $extension_id );
-			$class_name = 'ElementorExtras\Extensions\Extension_' . ucwords( $extension_name );
+			$class_name = 'LandTechExtras\Extensions\Extension_' . ucwords( $extension_name );
 
 			$extension_title = str_replace( '-', ' ', $extension_id );
 			$extension_title = ucwords( $extension_title );
@@ -326,7 +366,7 @@ class Settings extends Settings_Page {
 			$fields[] = [
 				'name'		=> 'enable_' . $extension_name,
 				'label' 	=> $extension_title,
-				'desc' 		=> __( 'Enable', 'elementor-extras' ),
+				'desc' 		=> __( 'Enable', 'landtech-extras-for-elementor' ),
 				'type' 		=> 'checkbox',
 				'default' 	=> $class_name::is_default_disabled() ? 'off' : 'on',
 				'note'		=> $description,
@@ -334,6 +374,67 @@ class Settings extends Settings_Page {
 		}
 
 		return $fields;
+	}
+
+	/**
+	 * Fields for optional add-on feature flags (option landtech_extras_features; add-on provides registry).
+	 *
+	 * @since 2.2.70
+	 *
+	 * @access protected
+	 *
+	 * @return array<int, array<string, mixed>>
+	 */
+	protected function get_features_fields() {
+
+		if ( ! class_exists( '\LandTechExtras\Feature_Flags_Settings', false ) ) {
+			return apply_filters( 'landtech_extras/settings/features_fields', array() );
+		}
+
+		$fields = array();
+
+		foreach ( Feature_Flags_Settings::get_registry() as $feature_id => $meta ) {
+			$default = 'on';
+			if ( isset( $meta['enabled_by_default'] ) && true !== $meta['enabled_by_default'] ) {
+				$default = 'off';
+			}
+
+			$bool_default = ( 'on' === $default );
+			$runtime_on   = \function_exists( 'landtech_extras_feature_enabled' ) && landtech_extras_feature_enabled( $feature_id, $bool_default );
+
+			$desc_note = isset( $meta['description'] ) ? (string) $meta['description'] : '';
+
+			$runtime_html  = '<strong class="landtech-extras-runtime-status">' . ( $runtime_on
+				? esc_html__( 'Runtime status: On', 'landtech-extras-for-elementor' )
+				: esc_html__( 'Runtime status: Off', 'landtech-extras-for-elementor' ) ) . '</strong>';
+			$runtime_html .= '<br /><span class="description">' . esc_html__( 'Reflects this checkbox plus add-on and other gates. If this stays Off with the box checked, verify the add-on is active and that its feature gates allow this capability.', 'landtech-extras-for-elementor' ) . '</span>';
+
+			$note_combined = $desc_note;
+			if ( '' !== $note_combined ) {
+				$note_combined .= '<br /><br />';
+			}
+			$note_combined .= $runtime_html;
+
+			$fields[] = array(
+				'name'              => $feature_id,
+				'label'             => isset( $meta['label'] ) ? $meta['label'] : $feature_id,
+				'desc'              => __( 'Enable this feature', 'landtech-extras-for-elementor' ),
+				'type'              => 'checkbox',
+				'default'           => $default,
+				'note'              => $note_combined,
+				'no_note_p'         => true,
+				'sanitize_callback' => array( Feature_Flags_Settings::class, 'sanitize_on_off_checkbox' ),
+			);
+		}
+
+		/**
+		 * Allow the add-on (or other packages) to append read-only tools to the Add-on features section.
+		 *
+		 * @since 2.2.57
+		 *
+		 * @param array<int, array<string, mixed>> $fields Features fields.
+		 */
+		return apply_filters( 'landtech_extras/settings/features_fields', $fields );
 	}
 
 	/**
@@ -345,44 +446,16 @@ class Settings extends Settings_Page {
 	*/
 	protected function get_advanced_fields() {
 
-		$gsap_version = sprintf( __( '%1$sCurrent TweenMax version: %2$s', 'elementor-extras' ), '<br>', '<strong>' . ElementorExtrasPlugin::$instance->gsap_version . '</strong>' );
-		$gsap_description = sprintf( __( 'By default, we load GSAP\'s TweenMax which we use for Parallax Elements and other extensions and widgets. If another plugin uses this as well you might end up with conflicts. Set this to "No" ONLY such cases, otherwise some Extras functionality will not work. %s', 'elementor-extras' ), $gsap_version );
-
 		$fields = [
 			[
-				'name'		=> 'enable_beta',
-				'label'		=> __( 'Enable Beta Versions', 'elementor-extras' ),
-				'desc' 		=> __( 'Enable updates to beta versions of Extras. If you update to a beta version and wish to revert back to a stable release, you will need to download that version from your account and install it manually.', 'elementor-extras' ),
-				'no_desc_p' => false,
-				'note'		=> '<div class="ee-admin-notice ee-admin-notice--warning notice notice-warning inline"><p><strong>WARNING:</strong> Do not update to beta versions on production websites!</p></div>',
-				'no_note_p' => true,
-				'type'		=> 'radio',
-				'default'	=> 'no',
-				'options'	=> [
-					'yes' 	=> __( 'Yes', 'elementor-extras' ),
-					'no' 	=> __( 'No', 'elementor-extras' ),
-				]
-			],
-			[
-				'name'		=> 'load_tweenmax',
-				'label'		=> __( 'Load TweenMax', 'elementor-extras' ),
-				'desc' 		=> $gsap_description,
-				'type'		=> 'radio',
-				'default'	=> 'yes',
-				'options'	=> [
-					'yes' 	=> __( 'Yes', 'elementor-extras' ),
-					'no' 	=> __( 'No', 'elementor-extras' ),
-				]
-			],
-			[
 				'name'		=> 'load_google_maps_api',
-				'label'		=> __( 'Load Google Maps API', 'elementor-extras' ),
-				'desc' 		=> __( 'You can disable loading the Google Maps API script if it\'s already added from a theme or plugin.', 'elementor-extras' ),
+				'label'		=> __( 'Load Google Maps API', 'landtech-extras-for-elementor' ),
+				'desc' 		=> __( 'You can disable loading the Google Maps API script if it\'s already added from a theme or plugin.', 'landtech-extras-for-elementor' ),
 				'type'		=> 'radio',
 				'default'	=> 'yes',
 				'options'	=> [
-					'yes' 	=> __( 'Yes', 'elementor-extras' ),
-					'no' 	=> __( 'No', 'elementor-extras' ),
+					'yes' 	=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'no' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 				]
 			],
 		];
@@ -400,41 +473,110 @@ class Settings extends Settings_Page {
 	*/
 	protected function get_apis_fields() {
 
-		$gmap_description = sprintf( __( 'You can get your API key %1$shere%2$s', 'elementor-extras' ), '<a target="_blank" href="https://developers.google.com/maps/documentation/javascript/get-api-key">', '</a>' );
+		$ai_intro = sprintf(
+			/* translators: %s: Tab title "Add-on features" (same screen). */
+			__( 'Bring-your-own-key LLM access when the LandTech Extras add-on (AI Studio) is in use. Enable %s → AI Studio workspace (BYOK), choose a provider below, and save your key. Keys are sent only to that provider when you use AI features.', 'landtech-extras-for-elementor' ),
+			'<strong>' . esc_html__( 'Add-on features', 'landtech-extras-for-elementor' ) . '</strong>'
+		);
 
-		$snazzy_description = sprintf( __( 'You can get your API key %1$shere%2$s after you create an account on Snazzy Maps.', 'elementor-extras' ), '<a target="_blank" href="https://snazzymaps.com/account/developer">', '</a>' );
+		$gmap_description = sprintf(
+			/* translators: 1–2: link markup to Google Maps API key documentation. */
+			__( 'You can get your API key %1$shere%2$s', 'landtech-extras-for-elementor' ),
+			'<a target="_blank" href="https://developers.google.com/maps/documentation/javascript/get-api-key">',
+			'</a>'
+		);
 
-		$insta_token_description = sprintf( __( 'Find out %1$show to get your instagram access token%2$s.', 'elementor-extras' ), '<a target="_blank" href="' . ElementorExtrasPlugin::$instance->get_link('docs_ig_token') . '">', '</a>' );
+		$snazzy_description = sprintf(
+			/* translators: 1–2: link markup to Snazzy Maps developer account. */
+			__( 'You can get your API key %1$shere%2$s after you create an account on Snazzy Maps.', 'landtech-extras-for-elementor' ),
+			'<a target="_blank" href="https://snazzymaps.com/account/developer">',
+			'</a>'
+		);
+
+		$insta_token_description = sprintf(
+			/* translators: 1–2: link markup to Instagram token documentation. */
+			__( 'Find out %1$show to get your instagram access token%2$s.', 'landtech-extras-for-elementor' ),
+			'<a target="_blank" href="' . LandTechExtrasPlugin::$instance->get_link('docs_ig_token') . '">',
+			'</a>'
+		);
 
 		$fields = [
 			[
+				'name'		=> 'ai_workspace_api_heading',
+				'label'		=> __( 'AI / LLM (BYOK)', 'landtech-extras-for-elementor' ),
+				'desc' 		=> $ai_intro,
+				'type'		=> 'html',
+				'no_desc_p'	=> true,
+			],
+			[
+				'name'				=> 'ai_llm_provider',
+				'label'				=> __( 'LLM provider', 'landtech-extras-for-elementor' ),
+				'desc'				=> __( 'Select which API credentials to use. Leave disabled if you do not use add-on AI features.', 'landtech-extras-for-elementor' ),
+				'type'				=> 'select',
+				'default'			=> '',
+				'sanitize_callback'	=> array( __CLASS__, 'sanitize_ai_llm_provider_setting' ),
+				'options'			=> [
+					''          => __( '— Disabled —', 'landtech-extras-for-elementor' ),
+					'openai'    => __( 'OpenAI', 'landtech-extras-for-elementor' ),
+					'anthropic' => __( 'Anthropic', 'landtech-extras-for-elementor' ),
+					'gemini'    => __( 'Google Gemini', 'landtech-extras-for-elementor' ),
+				],
+			],
+			[
+				'name'		=> 'openai_api_key',
+				'label'		=> __( 'OpenAI API key', 'landtech-extras-for-elementor' ),
+				'desc' 		=> __( 'Used when the provider is OpenAI.', 'landtech-extras-for-elementor' ),
+				'type'		=> 'password',
+				'size'		=> 'large',
+				'sanitize_callback' => array( __CLASS__, 'sanitize_api_secret_setting' ),
+			],
+			[
+				'name'		=> 'anthropic_api_key',
+				'label'		=> __( 'Anthropic API key', 'landtech-extras-for-elementor' ),
+				'desc' 		=> __( 'Used when the provider is Anthropic.', 'landtech-extras-for-elementor' ),
+				'type'		=> 'password',
+				'size'		=> 'large',
+				'sanitize_callback' => array( __CLASS__, 'sanitize_api_secret_setting' ),
+			],
+			[
+				'name'		=> 'gemini_api_key',
+				'label'		=> __( 'Google Gemini API key', 'landtech-extras-for-elementor' ),
+				'desc' 		=> __( 'Used when the provider is Google Gemini.', 'landtech-extras-for-elementor' ),
+				'type'		=> 'password',
+				'size'		=> 'large',
+				'sanitize_callback' => array( __CLASS__, 'sanitize_api_secret_setting' ),
+			],
+			[
 				'name'		=> 'google_maps_api_key',
-				'label'		=> __( 'Google Maps API Key', 'elementor-extras' ),
+				'label'		=> __( 'Google Maps API Key', 'landtech-extras-for-elementor' ),
 				'desc' 		=> $gmap_description,
 				'type'		=> 'text',
+				'sanitize_callback' => array( __CLASS__, 'sanitize_api_secret_setting' ),
 			],
 			[
 				'name'		=> 'snazzy_maps_api_key',
-				'label'		=> __( 'Snazzy Maps API Key', 'elementor-extras' ),
+				'label'		=> __( 'Snazzy Maps API Key', 'landtech-extras-for-elementor' ),
 				'desc' 		=> $snazzy_description,
 				'type'		=> 'text',
+				'sanitize_callback' => array( __CLASS__, 'sanitize_api_secret_setting' ),
 			],			
 			[
 				'name'		=> 'snazzy_maps_endpoint',
-				'label'		=> __( 'Snazzy Maps Endpoint', 'elementor-extras' ),
-				'desc' 		=> __( 'Select where to search for map styles. "Explore" searches all public map styles, "My Styles" search the styles you created on Snazzy Maps and "Favorites" fetches styles from the ones you added to your favorites.', 'elementor-extras' ),
+				'label'		=> __( 'Snazzy Maps Endpoint', 'landtech-extras-for-elementor' ),
+				'desc' 		=> __( 'Select where to search for map styles. "Explore" searches all public map styles, "My Styles" search the styles you created on Snazzy Maps and "Favorites" fetches styles from the ones you added to your favorites.', 'landtech-extras-for-elementor' ),
 				'type'		=> 'select',
 				'options'	=> [
-					'explore' 	=> __( 'Explore', 'elementor-extras' ),
-					'my-styles' => __( 'My Styles', 'elementor-extras' ),
-					'favorites' => __( 'Favorites', 'elementor-extras' ),
+					'explore' 	=> __( 'Explore', 'landtech-extras-for-elementor' ),
+					'my-styles' => __( 'My Styles', 'landtech-extras-for-elementor' ),
+					'favorites' => __( 'Favorites', 'landtech-extras-for-elementor' ),
 				],
 			],
 			[
 				'name'		=> 'instagram_access_token',
-				'label'		=> __( 'Instagram Access Token', 'elementor-extras' ),
+				'label'		=> __( 'Instagram Access Token', 'landtech-extras-for-elementor' ),
 				'desc' 		=> $insta_token_description,
 				'type'		=> 'text',
+				'sanitize_callback' => array( __CLASS__, 'sanitize_api_secret_setting' ),
 			],
 		];
 
@@ -443,19 +585,24 @@ class Settings extends Settings_Page {
 	}
 
 	/**
-	* Refresh Long-Lived Instagram Access Token
-	*
-	* @since 2.2.23
-	*
-	* @access public
-	*/
-
+	 * Refresh long-lived Instagram access token via the Graph token endpoint.
+	 *
+	 * Performs at most one successful refresh per throttle window (stored in transient
+	 * `UPDATED_INSTA_ACCESS_TOKEN`). Failures cache a short backoff to reduce repeated calls.
+	 *
+	 * Documented under readme.txt **External Services → Instagram** (`graph.instagram.com`).
+	 *
+	 * @since 2.2.23
+	 * @access public
+	 *
+	 * @return void
+	 */
 	public function refresh_instagram_access_token() {
-		$update_token_key 	= self::UPDATED_INSTA_ACCESS_TOKEN;
-		$api_endpoint 		= self::REFRESH_INSTA_ACCESS_TOKEN_ENDPOINT;
-		$access_token 		= trim( $this->settings_api->get_option( 'instagram_access_token', 'elementor_extras_apis', false ) );
+		$update_token_key = self::UPDATED_INSTA_ACCESS_TOKEN;
+		$api_endpoint     = self::REFRESH_INSTA_ACCESS_TOKEN_ENDPOINT;
+		$access_token     = trim( (string) $this->settings_api->get_option( 'instagram_access_token', 'landtech_extras_apis', false ) );
 
-		if ( empty( $access_token ) ) {
+		if ( '' === $access_token ) {
 			return;
 		}
 
@@ -465,35 +612,99 @@ class Settings extends Settings_Page {
 			return;
 		}
 
-		$endpoint_url = add_query_arg( [
+		$endpoint_url = add_query_arg(
+			array(
 				'access_token' => $access_token,
 				'grant_type'   => 'ig_refresh_token',
-			],
+			),
 			$api_endpoint
 		);
 
-		$response = wp_remote_get( $endpoint_url );
+		$endpoint_url = esc_url_raw( $endpoint_url );
+		if ( '' === $endpoint_url ) {
+			set_transient( $update_token_key, 'error', HOUR_IN_SECONDS );
+			return;
+		}
 
-		if ( ! $response || 200 !== wp_remote_retrieve_response_code( $response ) || is_wp_error( $response ) ) {
-			set_transient( $update_token_key, 'error', DAY_IN_SECONDS );
+		$response = wp_safe_remote_get(
+			$endpoint_url,
+			array(
+				'timeout'   => 20,
+				'sslverify' => true,
+			)
+		);
+
+		if ( is_wp_error( $response ) ) {
+			set_transient( $update_token_key, 'error', HOUR_IN_SECONDS );
+			return;
+		}
+
+		$response_code = (int) wp_remote_retrieve_response_code( $response );
+		if ( 200 !== $response_code ) {
+			set_transient( $update_token_key, 'error', HOUR_IN_SECONDS );
 			return;
 		}
 
 		$body = wp_remote_retrieve_body( $response );
 
-		if ( ! $body ) {
-			set_transient( $update_token_key, 'error', DAY_IN_SECONDS );
+		if ( '' === $body ) {
+			set_transient( $update_token_key, 'error', HOUR_IN_SECONDS );
 			return;
 		}
 
-		$body = @json_decode( $body, true );
+		$decoded = json_decode( $body, true );
 
-		if ( empty( $body['access_token'] ) || empty( $body['expires_in'] ) ) {
+		if ( JSON_ERROR_NONE !== json_last_error() || ! is_array( $decoded ) ) {
+			set_transient( $update_token_key, 'error', HOUR_IN_SECONDS );
+			return;
+		}
+
+		if ( empty( $decoded['access_token'] ) || ! isset( $decoded['expires_in'] ) ) {
 			set_transient( $update_token_key, 'error', DAY_IN_SECONDS );
 			return;
 		}
 
 		set_transient( $update_token_key, 'updated', 30 * DAY_IN_SECONDS );
+	}
+
+	/**
+	 * Preserve API keys, tokens, and other secrets without sanitize_text_field() stripping.
+	 *
+	 * WordPress.org review: password-like values must not use sanitize_text_field().
+	 *
+	 * @since 2.2.71
+	 *
+	 * @param mixed $value Raw setting.
+	 * @return string
+	 */
+	public static function sanitize_api_secret_setting( $value ) {
+
+		if ( ! is_scalar( $value ) ) {
+			return '';
+		}
+
+		return (string) $value;
+	}
+
+	/**
+	 * Sanitize LLM provider slug for the APIs tab.
+	 *
+	 * @since 2.2.70
+	 *
+	 * @param mixed $value Raw setting.
+	 * @return string
+	 */
+	public static function sanitize_ai_llm_provider_setting( $value ) {
+
+		$v = sanitize_key( (string) $value );
+
+		if ( '' === $v ) {
+			return '';
+		}
+
+		$allowed = array( 'openai', 'anthropic', 'gemini' );
+
+		return in_array( $v, $allowed, true ) ? $v : '';
 	}
 
 	/**
@@ -504,7 +715,7 @@ class Settings extends Settings_Page {
 	* @access protected
 	*/
 	protected function get_page_title() {
-		return __( 'Extras for Elementor', 'elementor-extras' );
+		return __( 'LandTech Extras for Elementor', 'landtech-extras-for-elementor' );
 	}
 
 }

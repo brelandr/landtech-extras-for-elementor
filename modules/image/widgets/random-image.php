@@ -1,9 +1,10 @@
 <?php
-namespace ElementorExtras\Modules\Image\Widgets;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Image\Widgets;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Extras_Widget;
-use ElementorExtras\Modules\Image\Module;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Extras_Widget;
+use LandTechExtras\Modules\Image\Module;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -48,7 +49,7 @@ class Random_Image extends Extras_Widget {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Random Image', 'elementor-extras' );
+		return __( 'Random Image', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -72,9 +73,7 @@ class Random_Image extends Extras_Widget {
 	 * @return array
 	 */
 	public function get_script_depends() {
-		return [
-			'magnific-popup',
-		];
+		return [];
 	}
 
 	/**
@@ -87,14 +86,14 @@ class Random_Image extends Extras_Widget {
 		$this->start_controls_section(
 			'section_images',
 			[
-				'label' => __( 'Images', 'elementor-extras' ),
+				'label' => __( 'Images', 'landtech-extras-for-elementor' ),
 			]
 		);
 
 			$this->add_control(
 				'wp_gallery',
 				[
-					'label' 	=> __( 'Add Images', 'elementor-extras' ),
+					'label' 	=> __( 'Add Images', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::GALLERY,
 					'frontend_available' => true,
 					'dynamic'	=> [
@@ -107,7 +106,7 @@ class Random_Image extends Extras_Widget {
 				Group_Control_Image_Size::get_type(),
 				[
 					'name' 		=> 'image', // Actually its `image_size`.
-					'label' 	=> __( 'Image Size', 'elementor-extras' ),
+					'label' 	=> __( 'Image Size', 'landtech-extras-for-elementor' ),
 					'default' 	=> 'full',
 				]
 			);
@@ -115,19 +114,19 @@ class Random_Image extends Extras_Widget {
 			$this->add_responsive_control(
 				'align',
 				[
-					'label' 	=> __( 'Alignment', 'elementor-extras' ),
+					'label' 	=> __( 'Alignment', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::CHOOSE,
 					'options' 	=> [
 						'left' 	=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 	=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 	=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -140,11 +139,11 @@ class Random_Image extends Extras_Widget {
 			$this->add_control(
 				'caption',
 				[
-					'label' 		=> __( 'Caption', 'elementor-extras' ),
+					'label' 		=> __( 'Caption', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Show', 'elementor-extras' ),
-					'label_off' 	=> __( 'Hide', 'elementor-extras' ),
+					'label_on' 		=> __( 'Show', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'Hide', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'yes',
 				]
 			);
@@ -152,13 +151,13 @@ class Random_Image extends Extras_Widget {
 			$this->add_control(
 				'link_to',
 				[
-					'label' => __( 'Link to', 'elementor-extras' ),
+					'label' => __( 'Link to', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::SELECT,
 					'default' => 'none',
 					'options' => [
-						'none' => __( 'None', 'elementor-extras' ),
-						'file' => __( 'Media File', 'elementor-extras' ),
-						'custom' => __( 'Custom URL', 'elementor-extras' ),
+						'none' => __( 'None', 'landtech-extras-for-elementor' ),
+						'file' => __( 'Media File', 'landtech-extras-for-elementor' ),
+						'custom' => __( 'Custom URL', 'landtech-extras-for-elementor' ),
 					],
 				]
 			);
@@ -166,12 +165,12 @@ class Random_Image extends Extras_Widget {
 			$this->add_control(
 				'link',
 				[
-					'label' => __( 'Link to', 'elementor-extras' ),
+					'label' => __( 'Link to', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::URL,
 					'dynamic' => [
 						'active' => true,
 					],
-					'placeholder' => __( 'https://your-link.com', 'elementor-extras' ),
+					'placeholder' => __( 'https://your-link.com', 'landtech-extras-for-elementor' ),
 					'condition' => [
 						'link_to' => 'custom',
 					],
@@ -182,13 +181,13 @@ class Random_Image extends Extras_Widget {
 			$this->add_control(
 				'open_lightbox',
 				[
-					'label' => __( 'Lightbox', 'elementor-extras' ),
+					'label' => __( 'Lightbox', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::SELECT,
 					'default' => 'default',
 					'options' => [
-						'default' => __( 'Default', 'elementor-extras' ),
-						'yes' => __( 'Yes', 'elementor-extras' ),
-						'no' => __( 'No', 'elementor-extras' ),
+						'default' => __( 'Default', 'landtech-extras-for-elementor' ),
+						'yes' => __( 'Yes', 'landtech-extras-for-elementor' ),
+						'no' => __( 'No', 'landtech-extras-for-elementor' ),
 					],
 					'condition' => [
 						'link_to' => 'file',
@@ -201,7 +200,7 @@ class Random_Image extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_image',
 			[
-				'label' => __( 'Image', 'elementor-extras' ),
+				'label' => __( 'Image', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -209,7 +208,7 @@ class Random_Image extends Extras_Widget {
 			$this->add_responsive_control(
 				'width',
 				[
-					'label' => __( 'Width', 'elementor-extras' ),
+					'label' => __( 'Width', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::SLIDER,
 					'default' => [
 						'unit' => '%',
@@ -244,7 +243,7 @@ class Random_Image extends Extras_Widget {
 			$this->add_responsive_control(
 				'space',
 				[
-					'label' => __( 'Max Width', 'elementor-extras' ) . ' (%)',
+					'label' => __( 'Max Width', 'landtech-extras-for-elementor' ) . ' (%)',
 					'type' => Controls_Manager::SLIDER,
 					'default' => [
 						'unit' => '%',
@@ -271,7 +270,7 @@ class Random_Image extends Extras_Widget {
 			$this->add_control(
 				'opacity',
 				[
-					'label' => __( 'Opacity', 'elementor-extras' ),
+					'label' => __( 'Opacity', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::SLIDER,
 					'range' => [
 						'px' => [
@@ -289,7 +288,7 @@ class Random_Image extends Extras_Widget {
 			$this->add_control(
 				'hover_animation',
 				[
-					'label' => __( 'Hover Animation', 'elementor-extras' ),
+					'label' => __( 'Hover Animation', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::HOVER_ANIMATION,
 				]
 			);
@@ -306,7 +305,7 @@ class Random_Image extends Extras_Widget {
 			$this->add_responsive_control(
 				'image_border_radius',
 				[
-					'label' => __( 'Border Radius', 'elementor-extras' ),
+					'label' => __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::DIMENSIONS,
 					'size_units' => [ 'px', '%' ],
 					'selectors' => [
@@ -319,7 +318,7 @@ class Random_Image extends Extras_Widget {
 				Group_Control_Box_Shadow::get_type(),
 				[
 					'name' => 'image_box_shadow',
-					'exclude' => [
+					'exclude' => [ // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor group control keys; not WP_Query exclude.
 						'box_shadow_position',
 					],
 					'selector' => '{{WRAPPER}} .ee-random-image__image',
@@ -331,7 +330,7 @@ class Random_Image extends Extras_Widget {
 			$this->start_controls_section(
 				'section_style_caption',
 				[
-					'label' => __( 'Caption', 'elementor-extras' ),
+					'label' => __( 'Caption', 'landtech-extras-for-elementor' ),
 					'tab'   => Controls_Manager::TAB_STYLE,
 					'condition' => [
 						'caption!' => '',
@@ -342,23 +341,23 @@ class Random_Image extends Extras_Widget {
 			$this->add_control(
 				'caption_align',
 				[
-					'label' => __( 'Alignment', 'elementor-extras' ),
+					'label' => __( 'Alignment', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::CHOOSE,
 					'options' => [
 						'left' => [
-							'title' => __( 'Left', 'elementor-extras' ),
+							'title' => __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' => 'fa fa-align-left',
 						],
 						'center' => [
-							'title' => __( 'Center', 'elementor-extras' ),
+							'title' => __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' => 'fa fa-align-center',
 						],
 						'right' => [
-							'title' => __( 'Right', 'elementor-extras' ),
+							'title' => __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' => 'fa fa-align-right',
 						],
 						'justify' => [
-							'title' => __( 'Justified', 'elementor-extras' ),
+							'title' => __( 'Justified', 'landtech-extras-for-elementor' ),
 							'icon' => 'fa fa-align-justify',
 						],
 					],
@@ -372,7 +371,7 @@ class Random_Image extends Extras_Widget {
 			$this->add_control(
 				'text_color',
 				[
-					'label' => __( 'Text Color', 'elementor-extras' ),
+					'label' => __( 'Text Color', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::COLOR,
 					'default' => '',
 					'selectors' => [
@@ -395,7 +394,7 @@ class Random_Image extends Extras_Widget {
 			$this->add_responsive_control(
 				'caption_space',
 				[
-					'label' => __( 'Spacing', 'elementor-extras' ),
+					'label' => __( 'Spacing', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::SLIDER,
 					'range' => [
 						'px' => [
@@ -424,14 +423,14 @@ class Random_Image extends Extras_Widget {
 		$settings = $this->get_settings_for_display();
 
 		if ( ! $settings['wp_gallery'] ) {
-			echo $this->render_placeholder( [
-				'body' => __( 'No images selected.', 'elementor-extras' ),
+			$this->render_placeholder( [
+				'body' => __( 'No images selected.', 'landtech-extras-for-elementor' ),
 			] );
 			return;
 		}
 
 		$count 			= count( $settings['wp_gallery'] );
-		$index 			= ( $count > 1 ) ? rand( 0, $count - 1 ) : 0;
+		$index = ( $count > 1 ) ? wp_rand( 0, $count - 1 ) : 0;
 		$id 			= $settings['wp_gallery'][ $index ]['id'];
 		$has_caption 	= 'yes' === $settings['caption'];
 		$link 			= $this->get_link_url( $settings, $index );
@@ -485,22 +484,22 @@ class Random_Image extends Extras_Widget {
 			}
 		}
 
-		?><div <?php echo $this->get_render_attribute_string( 'wrapper' ); ?>>
+		?><div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
 			<?php if ( $has_caption ) { ?>
-			<figure <?php echo $this->get_render_attribute_string( 'figure' ); ?>>
+			<figure <?php $this->print_render_attribute_string( 'figure' ); ?>>
 			<?php } ?>
 
 			<?php if ( $link ) { ?>
-				<a <?php echo $this->get_render_attribute_string( 'link' ); ?>>
+				<a <?php $this->print_render_attribute_string( 'link' ); ?>>
 			<?php } ?>
-					<img <?php echo $this->get_render_attribute_string( 'image' ); ?> />
+					<img <?php $this->print_render_attribute_string( 'image' ); ?> />
 			<?php if ( $link ) { ?>
 				</a>
 			<?php } ?>
 
 			<?php if ( $has_caption ) { ?>
-				<figcaption <?php echo $this->get_render_attribute_string( 'caption' ); ?>>
-					<?php echo Module::get_image_caption( $attachment ); ?>
+				<figcaption <?php $this->print_render_attribute_string( 'caption' ); ?>>
+					<?php echo wp_kses_post( Module::get_image_caption( $attachment ) ); ?>
 				</figcaption>
 			</figure>
 			<?php } ?>

@@ -1,11 +1,12 @@
 <?php
-namespace ElementorExtras\Modules\ScrollIndicator\Widgets;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\ScrollIndicator\Widgets;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Extras_Widget;
-use ElementorExtras\Modules\ScrollIndicator\Skins;
-use ElementorExtras\Modules\ScrollIndicator\Module as Module;
-use ElementorExtras\Group_Control_Transition;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Extras_Widget;
+use LandTechExtras\Modules\ScrollIndicator\Skins;
+use LandTechExtras\Modules\ScrollIndicator\Module as Module;
+use LandTechExtras\Group_Control_Transition;
 
 // Elementor Classes
 use Elementor\Utils;
@@ -63,7 +64,7 @@ class Scroll_Indicator extends Extras_Widget {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Scroll Indicator', 'elementor-extras' );
+		return __( 'Scroll Indicator', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -88,8 +89,8 @@ class Scroll_Indicator extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
-			'ee-scroll-indicator',
-			'hotips',
+			'landtech-extras-scroll-indicator',
+			'landtech-extras-hotips',
 		];
 	}
 
@@ -139,7 +140,7 @@ class Scroll_Indicator extends Extras_Widget {
 		$this->start_controls_section(
 			'section_settings',
 			[
-				'label' => __( 'Settings', 'elementor-extras' ),
+				'label' => __( 'Settings', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -147,11 +148,11 @@ class Scroll_Indicator extends Extras_Widget {
 			$this->add_control(
 				'click',
 				[
-					'label' 		=> __( 'Enable Click to Scroll', 'elementor-extras' ),
+					'label' 		=> __( 'Enable Click to Scroll', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -159,8 +160,8 @@ class Scroll_Indicator extends Extras_Widget {
 			$this->add_control(
 				'scroll_offset',
 				[
-					'label' 	=> __( 'Scroll Offset', 'elementor-extras' ),
-					'description' => __( 'Offset for scrolling to element on click.', 'elementor-extras' ),
+					'label' 	=> __( 'Scroll Offset', 'landtech-extras-for-elementor' ),
+					'description' => __( 'Offset for scrolling to element on click.', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'frontend_available' => true,
 					'default' 	=> [
@@ -193,7 +194,7 @@ class Scroll_Indicator extends Extras_Widget {
 		$this->start_controls_section(
 			'section_elements',
 			[
-				'label' => __( 'Sections', 'elementor-extras' ),
+				'label' => __( 'Sections', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -203,31 +204,31 @@ class Scroll_Indicator extends Extras_Widget {
 			$repeater->add_control(
 				'selector',
 				[
-					'label' 		=> __( 'Element ID', 'elementor-extras' ),
-					'description'	=> __( 'Enter the element CSS ID which you want the indicator to for this section.', 'elementor-extras' ),
+					'label' 		=> __( 'Element ID', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Enter the element CSS ID which you want the indicator to for this section.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::TEXT,
 					'dynamic'		=> [ 'active' => true ],
-					'title' 		=> __( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'elementor-extras' ),
+					'title' 		=> __( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 			$repeater->add_control(
 				'title',
 				[
-					'label'		=> __( 'Title', 'elementor-extras' ),
+					'label'		=> __( 'Title', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXT,
 					'dynamic'		=> [ 'active' => true ],
-					'default' 	=> __( 'Element title', 'elementor-extras' ),
+					'default' 	=> __( 'Element title', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 			$repeater->add_control(
 				'subtitle',
 				[
-					'label'		=> __( 'Subtitle', 'elementor-extras' ),
+					'label'		=> __( 'Subtitle', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXT,
 					'dynamic'		=> [ 'active' => true ],
-					'default' 	=> __( 'Element subtitle', 'elementor-extras' ),
+					'default' 	=> __( 'Element subtitle', 'landtech-extras-for-elementor' ),
 				]
 			); 
 
@@ -235,8 +236,8 @@ class Scroll_Indicator extends Extras_Widget {
 				'link',
 				[
 					'separator'		=> 'before',
-					'label' 		=> __( 'Enable Link', 'elementor-extras' ),
-					'description'	=> __( 'Links only work if Settings > Enable Click to Scroll is disabled', 'elementor-extras' ),
+					'label' 		=> __( 'Enable Link', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Links only work if Settings > Enable Click to Scroll is disabled', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'label_block' 	=> false,
 				]
@@ -245,7 +246,7 @@ class Scroll_Indicator extends Extras_Widget {
 			$repeater->add_control(
 				'url',
 				[
-					'label' 		=> __( 'URL', 'elementor-extras' ),
+					'label' 		=> __( 'URL', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::URL,
 					'placeholder' 	=> esc_url( home_url( '/' ) ),
 					'dynamic'		=> [ 'active' => true ],
@@ -259,11 +260,11 @@ class Scroll_Indicator extends Extras_Widget {
 			$repeater->add_control(
 				'link_new_window',
 				[
-					'label' 		=> __( 'Open in new window', 'elementor-extras' ),
+					'label' 		=> __( 'Open in new window', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 					'condition'	=> [
 						'link!' => '',
@@ -273,23 +274,23 @@ class Scroll_Indicator extends Extras_Widget {
 
 			$repeater->start_controls_tabs( 'progress' );
 
-			$repeater->start_controls_tab( 'tab_progress_start', [ 'label' => __( 'Start', 'elementor-extras' ) ] );
+			$repeater->start_controls_tab( 'tab_progress_start', [ 'label' => __( 'Start', 'landtech-extras-for-elementor' ) ] );
 
 				$repeater->add_control(
 					'progress_start',
 					[
-						'label' 		=> __( 'Start At', 'elementor-extras' ),
+						'label' 		=> __( 'Start At', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::CHOOSE,
-						'description'	=> __( 'Set when the progress starts. Example: "Top to Top" means progress starts when the top of the window hits the top of section.', 'elementor-extras' ),
+						'description'	=> __( 'Set when the progress starts. Example: "Top to Top" means progress starts when the top of the window hits the top of section.', 'landtech-extras-for-elementor' ),
 						'default'		=> 'top-top',
 						'label_block'	=> false,
 						'options' 		=> [
 							'top-top'    	=> [
-								'title' 	=> __( 'Top to Top', 'elementor-extras' ),
+								'title' 	=> __( 'Top to Top', 'landtech-extras-for-elementor' ),
 								'icon' 		=> 'nicon nicon-top-top',
 							],
 							'bottom-top'	=> [
-								'title' 	=> __( 'Bottom to Top', 'elementor-extras' ),
+								'title' 	=> __( 'Bottom to Top', 'landtech-extras-for-elementor' ),
 								'icon' 		=> 'nicon nicon-bottom-top',
 							],
 						],
@@ -299,7 +300,7 @@ class Scroll_Indicator extends Extras_Widget {
 				$repeater->add_control(
 					'progress_start_offset',
 					[
-						'label' 	=> __( 'Start Offset', 'elementor-extras' ),
+						'label' 	=> __( 'Start Offset', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SLIDER,
 						'default' 	=> [
 							'size' 	=> 0,
@@ -317,23 +318,23 @@ class Scroll_Indicator extends Extras_Widget {
 
 			$repeater->end_controls_tab();
 
-			$repeater->start_controls_tab( 'tab_progress_end', [ 'label' => __( 'End', 'elementor-extras' ) ] );
+			$repeater->start_controls_tab( 'tab_progress_end', [ 'label' => __( 'End', 'landtech-extras-for-elementor' ) ] );
 
 				$repeater->add_control(
 					'progress_end',
 					[
-						'label' 		=> __( 'End At', 'elementor-extras' ),
+						'label' 		=> __( 'End At', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::CHOOSE,
-						'description'	=> __( 'Set when the progress ends. Example: "Top to Bottom" means progress ends when the top of the window hits the bottom of section.', 'elementor-extras' ),
+						'description'	=> __( 'Set when the progress ends. Example: "Top to Bottom" means progress ends when the top of the window hits the bottom of section.', 'landtech-extras-for-elementor' ),
 						'default'		=> 'top-bottom',
 						'label_block'	=> false,
 						'options' 		=> [
 							'top-bottom'	=> [
-								'title' 	=> __( 'Top to Bottom', 'elementor-extras' ),
+								'title' 	=> __( 'Top to Bottom', 'landtech-extras-for-elementor' ),
 								'icon' 		=> 'nicon nicon-top-bottom',
 							],
 							'bottom-bottom'	=> [
-								'title' 	=> __( 'Bottom to Bottom', 'elementor-extras' ),
+								'title' 	=> __( 'Bottom to Bottom', 'landtech-extras-for-elementor' ),
 								'icon' 		=> 'nicon nicon-bottom-bottom',
 							],
 						],
@@ -343,7 +344,7 @@ class Scroll_Indicator extends Extras_Widget {
 				$repeater->add_control(
 					'progress_end_offset',
 					[
-						'label' 	=> __( 'End Offset', 'elementor-extras' ),
+						'label' 	=> __( 'End Offset', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SLIDER,
 						'default' 	=> [
 							'size' 	=> 0,
@@ -371,8 +372,8 @@ class Scroll_Indicator extends Extras_Widget {
 					'default' 	=> [
 						[
 							'selector'	=> '',
-							'title' 	=> __( 'Section', 'elementor-extras' ),
-							'subtitle' 	=> __( 'Section subtitle', 'elementor-extras' ),
+							'title' 	=> __( 'Section', 'landtech-extras-for-elementor' ),
+							'subtitle' 	=> __( 'Section subtitle', 'landtech-extras-for-elementor' ),
 						],
 					],
 					'fields' 		=> $repeater->get_controls(),

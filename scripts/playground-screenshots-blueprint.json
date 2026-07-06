@@ -1,0 +1,24 @@
+{
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"landingPage": "/wp-admin/admin.php?page=landtech-extras",
+	"steps": [
+		{
+			"step": "installPlugin",
+			"pluginZipFile": {
+				"resource": "wordpress.org/plugins",
+				"slug": "elementor"
+			},
+			"options": {
+				"activate": true
+			}
+		},
+		{
+			"step": "activatePlugin",
+			"pluginPath": "landtech-extras-for-elementor/landtech-extras.php"
+		},
+		{
+			"step": "runPHP",
+			"code": "<?php require '/wordpress/wp-load.php'; update_option( 'elementor_onboarded', true ); update_option( 'elementor_experiment-container', 'active' ); $page_id = wp_insert_post( array( 'post_title' => 'LandTech Extras Demo', 'post_status' => 'publish', 'post_type' => 'page' ) ); update_post_meta( $page_id, '_elementor_edit_mode', 'builder' ); update_post_meta( $page_id, '_elementor_template_type', 'wp-page' ); update_option( 'show_on_front', 'page' ); update_option( 'page_on_front', $page_id ); echo (string) $page_id;"
+		}
+	]
+}

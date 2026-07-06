@@ -1,5 +1,6 @@
 <?php
-namespace ElementorExtras;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -24,7 +25,7 @@ class Settings_API {
 	 * @since 1.8.0
 	 * @var array
 	 */
-	protected $settings_prefix = 'elementor_extras_';
+	protected $settings_prefix = 'landtech_extras_';
 
 	/**
 	 * Settings fields array
@@ -39,11 +40,21 @@ class Settings_API {
 	}
 
 	/**
-	 * Enqueue scripts and styles
+	 * Enqueue scripts and styles — only on the LandTech Extras settings pages.
+	 *
+	 * Limiting to the plugin's own screen avoids loading wp_enqueue_media() (which
+	 * pulls in the full media-upload stack) and wp-color-picker on every admin page.
 	 *
 	 * @since 1.8.0
 	 */
 	function admin_enqueue_scripts() {
+		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+
+		// Only load on Elementor → LandTech Extras sub-pages (screen id contains our page slug).
+		if ( ! $screen || false === strpos( $screen->id, 'landtech-extras' ) ) {
+			return;
+		}
+
 		wp_enqueue_style( 'wp-color-picker' );
 
 		wp_enqueue_media();
@@ -134,9 +145,11 @@ class Settings_API {
 				add_option( $section['id'] );
 			}
 
-			if ( isset( $section['desc'] ) &&  ! empty( $section['desc'] ) ) {
+			if ( isset( $section['desc'] ) && ! empty( $section['desc'] ) ) {
 				$section['desc'] = $section['desc'];
-				$callback = function() use ( $section ) { echo $section['desc']; };
+				$callback = function() use ( $section ) {
+					echo wp_kses_post( $section['desc'] );
+				};
 			} else if ( isset( $section['callback'] ) ) {
 				$callback = $section['callback'];
 			} else {
@@ -181,9 +194,18 @@ class Settings_API {
 			}
 		}
 
-		// Creates our settings in the options table
+		// Creates our settings in the options table.
+		// Use the array-argument form required by WordPress Plugin Check (WP 4.7+).
 		foreach ( $this->settings_sections as $section ) {
-			register_setting( $section['id'], $section['id'], array( $this, 'sanitize_options' ) );
+			register_setting(
+				$section['id'],
+				$section['id'],
+				array(
+					'type'              => 'array',
+					'sanitize_callback' => array( $this, 'sanitize_options' ),
+					'description'       => isset( $section['title'] ) ? $section['title'] : '',
+				)
+			);
 		}
 	}
 
@@ -202,13 +224,11 @@ class Settings_API {
 				$before = '<p class="description ee-description">';
 				$after = '</p>';
 			}
-			
-			$desc = $before . $args['desc'] . $after;
-		} else {
-			$desc = '';
+
+			return $before . wp_kses_post( $args['desc'] ) . $after;
 		}
 
-		return $desc;
+		return '';
 	}
 
 	/**
@@ -227,12 +247,10 @@ class Settings_API {
 				$after = '</p>';
 			}
 
-			$note = $before . $args['note'] . $after;
-		} else {
-			$note = '';
+			return $before . wp_kses_post( $args['note'] ) . $after;
 		}
 
-		return $note;
+		return '';
 	}
 
 	/**
@@ -243,16 +261,23 @@ class Settings_API {
 	 */
 	function callback_text( $args ) {
 
-		$value       = esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
-		$size        = isset( $args['size'] ) && !is_null( $args['size'] ) ? $args['size'] : 'regular';
+		$value       = $this->get_option( $args['id'], $args['section'], $args['std'] );
+		$size        = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
 		$type        = isset( $args['type'] ) ? $args['type'] : 'text';
-		$placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . $args['placeholder'] . '"';
+		$placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . esc_attr( $args['placeholder'] ) . '"';
+		$id_name     = $args['section'] . '[' . $args['id'] . ']';
 
-		$html        = sprintf( '<input type="%1$s" class="%2$s-text" id="%3$s[%4$s]" name="%3$s[%4$s]" value="%5$s"%6$s/>', $type, $size, $args['section'], $args['id'], $value, $placeholder );
-		$html       .= $this->get_field_description( $args );
-		$html       .= $this->get_field_note( $args );
-
-		echo $html;
+		printf(
+			'<input type="%1$s" class="%2$s-text" id="%3$s" name="%3$s" value="%4$s"%5$s/>',
+			esc_attr( (string) $type ),
+			esc_attr( (string) $size ),
+			esc_attr( $id_name ),
+			esc_attr( (string) $value ),
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- attribute fragment built only from esc_attr( placeholder ).
+			$placeholder
+		);
+		echo wp_kses_post( $this->get_field_description( $args ) );
+		echo wp_kses_post( $this->get_field_note( $args ) );
 	}
 
 	/**
@@ -272,19 +297,30 @@ class Settings_API {
 	 * @param array   $args settings field args
 	 */
 	function callback_number( $args ) {
-		$value       = esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
-		$size        = isset( $args['size'] ) && !is_null( $args['size'] ) ? $args['size'] : 'regular';
+		$value       = $this->get_option( $args['id'], $args['section'], $args['std'] );
+		$size        = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
 		$type        = isset( $args['type'] ) ? $args['type'] : 'number';
-		$placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . $args['placeholder'] . '"';
-		$min         = empty( $args['min'] ) ? '' : ' min="' . $args['min'] . '"';
-		$max         = empty( $args['max'] ) ? '' : ' max="' . $args['max'] . '"';
-		$step        = empty( $args['max'] ) ? '' : ' step="' . $args['step'] . '"';
+		$placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . esc_attr( $args['placeholder'] ) . '"';
+		$min         = empty( $args['min'] ) ? '' : ' min="' . esc_attr( (string) $args['min'] ) . '"';
+		$max         = empty( $args['max'] ) ? '' : ' max="' . esc_attr( (string) $args['max'] ) . '"';
+		$step        = empty( $args['step'] ) ? '' : ' step="' . esc_attr( (string) $args['step'] ) . '"';
+		$id_name     = $args['section'] . '[' . $args['id'] . ']';
 
-		$html        = sprintf( '<input type="%1$s" class="%2$s-number" id="%3$s[%4$s]" name="%3$s[%4$s]" value="%5$s"%6$s%7$s%8$s%9$s/>', $type, $size, $args['section'], $args['id'], $value, $placeholder, $min, $max, $step );
-		$html       .= $this->get_field_description( $args );
-		$html       .= $this->get_field_note( $args );
-
-		echo $html;
+		printf(
+			'<input type="%1$s" class="%2$s-number" id="%3$s" name="%3$s" value="%4$s"%5$s%6$s%7$s%8$s/>',
+			esc_attr( (string) $type ),
+			esc_attr( (string) $size ),
+			esc_attr( $id_name ),
+			esc_attr( (string) $value ),
+			// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- Attribute fragments (placeholder, min, max, step) built with esc_attr above.
+			$placeholder,
+			$min,
+			$max,
+			$step
+			// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
+		);
+		echo wp_kses_post( $this->get_field_description( $args ) );
+		echo wp_kses_post( $this->get_field_note( $args ) );
 	}
 
 	/**
@@ -295,17 +331,22 @@ class Settings_API {
 	 */
 	function callback_checkbox( $args ) {
 
-		$value = esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
+		$value   = $this->get_option( $args['id'], $args['section'], $args['std'] );
+		$id_name = $args['section'] . '[' . $args['id'] . ']';
 
-		$html  = '<fieldset>';
-		$html  .= sprintf( '<label for="%1$s[%2$s]">', $args['section'], $args['id'] );
-		$html  .= sprintf( '<input type="hidden" name="%1$s[%2$s]" value="off" />', $args['section'], $args['id'], $args['disabled'] );
-		$html  .= sprintf( '<input type="checkbox" class="checkbox" id="%1$s[%2$s]" name="%1$s[%2$s]" value="on" %3$s %4$s />', $args['section'], $args['id'], checked( $value, 'on', false ), $args['disabled'] );
-		$html  .= sprintf( '%1$s</label>', $args['desc'] );
-		$html  .= $this->get_field_note( $args );
-		$html  .= '</fieldset>';
-
-		echo $html;
+		echo '<fieldset>';
+		printf( '<label for="%1$s">', esc_attr( $id_name ) );
+		printf( '<input type="hidden" name="%1$s" value="off" />', esc_attr( $id_name ) );
+		printf(
+			'<input type="checkbox" class="checkbox" id="%1$s" name="%1$s" value="on"%2$s%3$s />',
+			esc_attr( $id_name ),
+			checked( $value, 'on', false ),
+			disabled( ! empty( $args['disabled'] ), true, false )
+		);
+		echo wp_kses_post( $args['desc'] );
+		echo '</label>';
+		echo wp_kses_post( $this->get_field_note( $args ) );
+		echo '</fieldset>';
 	}
 
 	/**
@@ -317,20 +358,28 @@ class Settings_API {
 	function callback_multicheck( $args ) {
 
 		$value = $this->get_option( $args['id'], $args['section'], $args['std'] );
-		$html  = '<fieldset>';
-		$html .= sprintf( '<input type="hidden" name="%1$s[%2$s]" value="" />', $args['section'], $args['id'] );
+		$base  = $args['section'] . '[' . $args['id'] . ']';
+
+		echo '<fieldset>';
+		printf( '<input type="hidden" name="%s" value="" />', esc_attr( $base ) );
+
 		foreach ( $args['options'] as $key => $label ) {
-			$checked = isset( $value[$key] ) ? $value[$key] : '0';
-			$html    .= sprintf( '<label for="%1$s[%2$s][%3$s]">', $args['section'], $args['id'], $key );
-			$html    .= sprintf( '<input type="checkbox" class="checkbox" id="%1$s[%2$s][%3$s]" name="%1$s[%2$s][%3$s]" value="%3$s" %4$s />', $args['section'], $args['id'], $key, checked( $checked, $key, false ) );
-			$html    .= sprintf( '%1$s</label><br>',  $label );
+			$checked   = isset( $value[ $key ] ) ? $value[ $key ] : '0';
+			$field_id  = $args['section'] . '[' . $args['id'] . '][' . $key . ']';
+			printf( '<label for="%s">', esc_attr( $field_id ) );
+			printf(
+				'<input type="checkbox" class="checkbox" id="%1$s" name="%1$s" value="%2$s" %3$s />',
+				esc_attr( $field_id ),
+				esc_attr( (string) $key ),
+				checked( $checked, $key, false )
+			);
+			echo esc_html( $label );
+			echo '</label><br>';
 		}
 
-		$html .= $this->get_field_description( $args );
-		$html .= $this->get_field_note( $args );
-		$html .= '</fieldset>';
-
-		echo $html;
+		echo wp_kses_post( $this->get_field_description( $args ) );
+		echo wp_kses_post( $this->get_field_note( $args ) );
+		echo '</fieldset>';
 	}
 
 	/**
@@ -342,19 +391,27 @@ class Settings_API {
 	function callback_radio( $args ) {
 
 		$value = $this->get_option( $args['id'], $args['section'], $args['std'] );
-		$html  = '<fieldset>';
+		$base  = $args['section'] . '[' . $args['id'] . ']';
+
+		echo '<fieldset>';
 
 		foreach ( $args['options'] as $key => $label ) {
-			$html .= sprintf( '<label for="%1$s[%2$s][%3$s]">',  $args['section'], $args['id'], $key );
-			$html .= sprintf( '<input type="radio" class="radio" id="%1$s[%2$s][%3$s]" name="%1$s[%2$s]" value="%3$s" %4$s />', $args['section'], $args['id'], $key, checked( $value, $key, false ) );
-			$html .= sprintf( '%1$s</label><br>', $label );
+			$field_id = $args['section'] . '[' . $args['id'] . '][' . $key . ']';
+			printf( '<label for="%s">', esc_attr( $field_id ) );
+			printf(
+				'<input type="radio" class="radio" id="%1$s" name="%2$s" value="%3$s" %4$s />',
+				esc_attr( $field_id ),
+				esc_attr( $base ),
+				esc_attr( (string) $key ),
+				checked( $value, $key, false )
+			);
+			echo esc_html( $label );
+			echo '</label><br>';
 		}
 
-		$html .= $this->get_field_description( $args );
-		$html .= $this->get_field_note( $args );
-		$html .= '</fieldset>';
-
-		echo $html;
+		echo wp_kses_post( $this->get_field_description( $args ) );
+		echo wp_kses_post( $this->get_field_note( $args ) );
+		echo '</fieldset>';
 	}
 
 	/**
@@ -365,19 +422,28 @@ class Settings_API {
 	 */
 	function callback_select( $args ) {
 
-		$value = esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
-		$size  = isset( $args['size'] ) && !is_null( $args['size'] ) ? $args['size'] : 'regular';
-		$html  = sprintf( '<select class="%1$s" name="%2$s[%3$s]" id="%2$s[%3$s]">', $size, $args['section'], $args['id'] );
+		$value   = $this->get_option( $args['id'], $args['section'], $args['std'] );
+		$size    = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
+		$id_name = $args['section'] . '[' . $args['id'] . ']';
+
+		printf(
+			'<select class="%1$s" name="%2$s" id="%2$s">',
+			esc_attr( (string) $size ),
+			esc_attr( $id_name )
+		);
 
 		foreach ( $args['options'] as $key => $label ) {
-			$html .= sprintf( '<option value="%s"%s>%s</option>', $key, selected( $value, $key, false ), $label );
+			printf(
+				'<option value="%1$s"%2$s>%3$s</option>',
+				esc_attr( (string) $key ),
+				selected( (string) $value, (string) $key, false ),
+				esc_html( $label )
+			);
 		}
 
-		$html .= sprintf( '</select>' );
-		$html .= $this->get_field_description( $args );
-		$html .= $this->get_field_note( $args );
-
-		echo $html;
+		echo '</select>';
+		echo wp_kses_post( $this->get_field_description( $args ) );
+		echo wp_kses_post( $this->get_field_note( $args ) );
 	}
 
 	/**
@@ -388,15 +454,21 @@ class Settings_API {
 	 */
 	function callback_textarea( $args ) {
 
-		$value       = esc_textarea( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
-		$size        = isset( $args['size'] ) && !is_null( $args['size'] ) ? $args['size'] : 'regular';
-		$placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="'.$args['placeholder'].'"';
+		$value       = $this->get_option( $args['id'], $args['section'], $args['std'] );
+		$size        = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
+		$placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . esc_attr( $args['placeholder'] ) . '"';
+		$id_name     = $args['section'] . '[' . $args['id'] . ']';
 
-		$html        = sprintf( '<textarea rows="5" cols="55" class="%1$s-text" id="%2$s[%3$s]" name="%2$s[%3$s]"%4$s>%5$s</textarea>', $size, $args['section'], $args['id'], $placeholder, $value );
-		$html       .= $this->get_field_description( $args );
-		$html 		.= $this->get_field_note( $args );
-
-		echo $html;
+		printf(
+			'<textarea rows="5" cols="55" class="%1$s-text" id="%2$s" name="%2$s"%3$s>%4$s</textarea>',
+			esc_attr( (string) $size ),
+			esc_attr( $id_name ),
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- attribute fragment built with esc_attr( placeholder ).
+			$placeholder,
+			esc_textarea( (string) $value )
+		);
+		echo wp_kses_post( $this->get_field_description( $args ) );
+		echo wp_kses_post( $this->get_field_note( $args ) );
 	}
 
 	/**
@@ -407,10 +479,8 @@ class Settings_API {
 	 * @return string
 	 */
 	function callback_html( $args ) {
-		$html = $this->get_field_description( $args );
-		$html .= $this->get_field_note( $args );
-
-		echo $html;
+		echo wp_kses_post( $this->get_field_description( $args ) );
+		echo wp_kses_post( $this->get_field_note( $args ) );
 	}
 
 	/**
@@ -422,9 +492,9 @@ class Settings_API {
 	function callback_wysiwyg( $args ) {
 
 		$value = $this->get_option( $args['id'], $args['section'], $args['std'] );
-		$size  = isset( $args['size'] ) && !is_null( $args['size'] ) ? $args['size'] : '500px';
+		$size  = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : '500px';
 
-		echo '<div style="max-width: ' . $size . ';">';
+		printf( '<div style="max-width: %s;">', esc_attr( (string) $size ) );
 
 		$editor_settings = array(
 			'teeny'         => true,
@@ -440,8 +510,8 @@ class Settings_API {
 
 		echo '</div>';
 
-		echo $this->get_field_description( $args );
-		echo $this->get_field_note( $args );
+		echo wp_kses_post( $this->get_field_description( $args ) );
+		echo wp_kses_post( $this->get_field_note( $args ) );
 	}
 
 	/**
@@ -452,17 +522,20 @@ class Settings_API {
 	 */
 	function callback_file( $args ) {
 
-		$value = esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
-		$size  = isset( $args['size'] ) && !is_null( $args['size'] ) ? $args['size'] : 'regular';
-		$id    = $args['section']  . '[' . $args['id'] . ']';
-		$label = isset( $args['options']['button_label'] ) ? $args['options']['button_label'] : __( 'Choose File' );
+		$value = $this->get_option( $args['id'], $args['section'], $args['std'] );
+		$size  = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
+		$label = isset( $args['options']['button_label'] ) ? $args['options']['button_label'] : __( 'Choose File', 'landtech-extras-for-elementor' );
+		$id_name = $args['section'] . '[' . $args['id'] . ']';
 
-		$html  = sprintf( '<input type="text" class="%1$s-text wpsa-url" id="%2$s[%3$s]" name="%2$s[%3$s]" value="%4$s"/>', $size, $args['section'], $args['id'], $value );
-		$html .= '<input type="button" class="button wpsa-browse" value="' . $label . '" />';
-		$html .= $this->get_field_description( $args );
-		$html .= $this->get_field_note( $args );
-
-		echo $html;
+		printf(
+			'<input type="text" class="%1$s-text wpsa-url" id="%2$s" name="%2$s" value="%3$s"/>',
+			esc_attr( (string) $size ),
+			esc_attr( $id_name ),
+			esc_attr( (string) $value )
+		);
+		printf( '<input type="button" class="button wpsa-browse" value="%s" />', esc_attr( $label ) );
+		echo wp_kses_post( $this->get_field_description( $args ) );
+		echo wp_kses_post( $this->get_field_note( $args ) );
 	}
 
 	/**
@@ -473,14 +546,18 @@ class Settings_API {
 	 */
 	function callback_password( $args ) {
 
-		$value = esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
-		$size  = isset( $args['size'] ) && !is_null( $args['size'] ) ? $args['size'] : 'regular';
+		$value   = $this->get_option( $args['id'], $args['section'], $args['std'] );
+		$size    = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
+		$id_name = $args['section'] . '[' . $args['id'] . ']';
 
-		$html  = sprintf( '<input type="password" class="%1$s-text" id="%2$s[%3$s]" name="%2$s[%3$s]" value="%4$s"/>', $size, $args['section'], $args['id'], $value );
-		$html .= $this->get_field_description( $args );
-		$html .= $this->get_field_note( $args );
-
-		echo $html;
+		printf(
+			'<input type="password" class="%1$s-text" id="%2$s" name="%2$s" value="%3$s"/>',
+			esc_attr( (string) $size ),
+			esc_attr( $id_name ),
+			esc_attr( (string) $value )
+		);
+		echo wp_kses_post( $this->get_field_description( $args ) );
+		echo wp_kses_post( $this->get_field_note( $args ) );
 	}
 
 	/**
@@ -491,14 +568,20 @@ class Settings_API {
 	 */
 	function callback_color( $args ) {
 
-		$value = esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
-		$size  = isset( $args['size'] ) && !is_null( $args['size'] ) ? $args['size'] : 'regular';
+		$value   = $this->get_option( $args['id'], $args['section'], $args['std'] );
+		$size    = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
+		$std     = isset( $args['std'] ) ? $args['std'] : '';
+		$id_name = $args['section'] . '[' . $args['id'] . ']';
 
-		$html  = sprintf( '<input type="text" class="%1$s-text wp-color-picker-field" id="%2$s[%3$s]" name="%2$s[%3$s]" value="%4$s" data-default-color="%5$s" />', $size, $args['section'], $args['id'], $value, $args['std'] );
-		$html .= $this->get_field_description( $args );
-		$html .= $this->get_field_note( $args );
-
-		echo $html;
+		printf(
+			'<input type="text" class="%1$s-text wp-color-picker-field" id="%2$s" name="%2$s" value="%3$s" data-default-color="%4$s" />',
+			esc_attr( (string) $size ),
+			esc_attr( $id_name ),
+			esc_attr( (string) $value ),
+			esc_attr( (string) $std )
+		);
+		echo wp_kses_post( $this->get_field_description( $args ) );
+		echo wp_kses_post( $this->get_field_note( $args ) );
 	}
 
 
@@ -511,12 +594,14 @@ class Settings_API {
 	function callback_pages( $args ) {
 
 		$dropdown_args = array(
-			'selected' => esc_attr($this->get_option($args['id'], $args['section'], $args['std'] ) ),
+			'selected' => (int) $this->get_option( $args['id'], $args['section'], $args['std'] ),
 			'name'     => $args['section'] . '[' . $args['id'] . ']',
 			'id'       => $args['section'] . '[' . $args['id'] . ']',
 			'echo'     => 0
 		);
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Args only; markup returned below is core-generated by wp_dropdown_pages.
 		$html = wp_dropdown_pages( $dropdown_args );
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Markup generated by WordPress core (wp_dropdown_pages).
 		echo $html;
 	}
 
@@ -528,17 +613,24 @@ class Settings_API {
 	 */
 	function sanitize_options( $options ) {
 
-		if ( !$options ) {
+		if ( ! $options ) {
 			return $options;
 		}
 
-		foreach( $options as $option_slug => $option_value ) {
+		foreach ( $options as $option_slug => $option_value ) {
 			$sanitize_callback = $this->get_sanitize_callback( $option_slug );
 
 			// If callback is set, call it
 			if ( $sanitize_callback ) {
 				$options[ $option_slug ] = call_user_func( $sanitize_callback, $option_value );
 				continue;
+			}
+
+			// Default: no raw request values persisted (Settings API does not require per-field callbacks).
+			if ( is_array( $option_value ) ) {
+				$options[ $option_slug ] = map_deep( wp_unslash( $option_value ), 'sanitize_text_field' );
+			} else {
+				$options[ $option_slug ] = sanitize_text_field( wp_unslash( (string) $option_value ) );
 			}
 		}
 
@@ -613,44 +705,55 @@ class Settings_API {
 	 * Shows all the settings section labels as tab
 	 */
 	function render_navigation() {
-		$html = '<h2 class="nav-tab-wrapper ee-nav-tabs">';
-
 		$count = count( $this->settings_sections );
 
 		// don't show the navigation if only one section exists
-		if ( $count === 1 ) {
+		if ( 1 === $count ) {
 			return;
 		}
 
-		$classes = 'nav-tab ee-nav-tabs__tab';
+		echo '<h2 class="nav-tab-wrapper ee-nav-tabs">';
 
 		foreach ( $this->settings_sections as $tab ) {
 
-			$link = '#' . $tab['id'];
-			$count = isset( $tab['count'] ) ? $tab['count'] : '';
-			$icon = isset( $tab['icon'] ) ? '<span class="' . $tab['icon'] . '"></span>' : '';
+			$link          = '#' . $tab['id'];
+			$count_display = isset( $tab['count'] ) ? $tab['count'] : '';
+			$icon_class    = isset( $tab['icon'] ) ? $tab['icon'] : '';
 
-			$count_class = '';
+			$classes_item = 'nav-tab ee-nav-tabs__tab';
 
-			if ( ( ( is_numeric( $count ) && $count > 0 ) || '' !== $count ) ) {
+			$count_markup = '';
+			if ( ( is_numeric( $count_display ) && $count_display > 0 ) || '' !== $count_display ) {
+				$count_class = '';
 				if ( isset( $tab['label'] ) ) {
-					$count_class = 'ee-count--' . $tab['label'];
+					$count_class = 'ee-count--' . sanitize_html_class( (string) $tab['label'] );
 				}
+				$count_markup = '<span class="ee-count ' . esc_attr( $count_class ) . '">' . esc_html( (string) $count_display ) . '</span>';
+			}
 
-				$count = '<span class="ee-count ' . $count_class . '">' . $count . '</span>';
+			$icon_markup = '';
+			if ( '' !== $icon_class ) {
+				$icon_markup = '<span class="' . esc_attr( $icon_class ) . '"></span>';
 			}
 
 			if ( $this->is_tab_linked( $tab ) ) {
-				$classes .= ' ee-nav-tabs__link';
+				$classes_item .= ' ee-nav-tabs__link';
 				$link = $tab['link'];
 			}
 
-			$html .= sprintf( '<a href="%1$s" target="%2$s" class="%3$s" id="%4$s-tab">%5$s%6$s%7$s</a>', $link, isset( $tab['target'] ) ? $tab['target'] : '', $classes, $tab['id'], $tab['title'], $count, $icon );
+			printf(
+				'<a href="%1$s" target="%2$s" class="%3$s" id="%4$s-tab">%5$s%6$s%7$s</a>',
+				esc_url( $link ),
+				esc_attr( isset( $tab['target'] ) ? (string) $tab['target'] : '' ),
+				esc_attr( $classes_item ),
+				esc_attr( (string) $tab['id'] ),
+				esc_html( (string) $tab['title'] ),
+				wp_kses_post( $count_markup ),
+				wp_kses_post( $icon_markup )
+			);
 		}
 
-		$html .= '</h2>';
-
-		echo $html;
+		echo '</h2>';
 	}
 
 	/**
@@ -668,7 +771,7 @@ class Settings_API {
 					continue;
 
 				?>
-				<div id="<?php echo $form['id']; ?>" class="ee-settings__group" style="display: none;">
+				<div id="<?php echo esc_attr( (string) $form['id'] ); ?>" class="ee-settings__group" style="display: none;">
 					<form method="post" action="options.php" class="ee-settings__form">
 						<?php
 
@@ -676,7 +779,7 @@ class Settings_API {
 
 						do_settings_sections( $form['id'] );
 
-						if ( isset( $this->settings_fields[ $form['id'] ] ) ) {
+						if ( ! empty( $this->settings_fields[ $form['id'] ] ) ) {
 							submit_button();
 						} ?>
 					</form>

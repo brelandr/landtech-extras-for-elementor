@@ -1,10 +1,11 @@
 <?php
-namespace ElementorExtras\Modules\QueryControl;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\QueryControl;
 
-// Extras for Elementor Classes
-use ElementorExtras\Utils;
-use ElementorExtras\Base\Module_Base;
-use ElementorExtras\Controls\Control_Query as Query;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Utils;
+use LandTechExtras\Base\Module_Base;
+use LandTechExtras\Controls\Control_Query as Query;
 
 // Elementor Classes
 use Elementor\Widget_Base;
@@ -80,16 +81,30 @@ class Module extends Module_Base {
 	/**
 	 * Calls function depending on ajax query data
 	 *
+	 * Registered on Elementor's AJAX stack; Elementor Core verifies the editor AJAX nonce and capabilities
+	 * before invoking this callback.
+	 *
 	 * @since  2.0.0
 	 * @return array
 	 */
 	public function ajax_call_filter_autocomplete( array $data ) {
 
-		if ( empty( $data['query_type'] ) || empty( $data['q'] ) ) {
+		$query_type = isset( $data['query_type'] ) ? sanitize_key( (string) $data['query_type'] ) : '';
+		$q          = isset( $data['q'] ) ? sanitize_text_field( (string) $data['q'] ) : '';
+
+		if ( '' === $query_type || '' === $q ) {
 			throw new \Exception( 'Bad Request' );
 		}
 
-		$results = $this->get_component( $data['query_type'] )->get_autocomplete_values( $data );
+		$data['query_type'] = $query_type;
+		$data['q']          = $q;
+
+		$component = $this->get_component( $query_type );
+		if ( ! $component ) {
+			throw new \Exception( 'Bad Request' );
+		}
+
+		$results = $component->get_autocomplete_values( $data );
 
 		return [
 			'results' => $results,
@@ -104,9 +119,20 @@ class Module extends Module_Base {
 	 */
 	public function ajax_call_control_value_titles( array $request ) {
 
-		$results = $this->get_component( $request['query_type'] )->get_value_titles( $request );
+		$query_type = isset( $request['query_type'] ) ? sanitize_key( (string) $request['query_type'] ) : '';
 
-		return $results;
+		if ( '' === $query_type ) {
+			throw new \Exception( 'Bad Request' );
+		}
+
+		$component = $this->get_component( $query_type );
+		if ( ! $component ) {
+			throw new \Exception( 'Bad Request' );
+		}
+
+		$request['query_type'] = $query_type;
+
+		return $component->get_value_titles( $request );
 	}
 
 	/**
@@ -116,7 +142,7 @@ class Module extends Module_Base {
 	 * @return array
 	 */
 	public function register_ajax_actions( $ajax_manager ) {
-		$ajax_manager->register_ajax_action( 'ee_query_control_value_titles', [ $this, 'ajax_call_control_value_titles' ] );
-		$ajax_manager->register_ajax_action( 'ee_query_control_filter_autocomplete', [ $this, 'ajax_call_filter_autocomplete' ] );
+		$ajax_manager->register_ajax_action( 'ltxe_query_control_value_titles', [ $this, 'ajax_call_control_value_titles' ] );
+		$ajax_manager->register_ajax_action( 'ltxe_query_control_filter_autocomplete', [ $this, 'ajax_call_filter_autocomplete' ] );
 	}
 }

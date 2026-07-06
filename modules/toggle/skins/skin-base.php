@@ -1,8 +1,9 @@
 <?php
-namespace ElementorExtras\Modules\Toggle\Skins;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Toggle\Skins;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Extras_Widget;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Extras_Widget;
 
 // Elementor Classes
 use Elementor\Controls_Manager;

@@ -1,9 +1,10 @@
 <?php
-namespace ElementorExtras\Modules\QueryControl\Types;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\QueryControl\Types;
 
-// Extras for Elementor Classes
-use ElementorExtras\Utils;
-use ElementorExtras\Modules\QueryControl\Types\Type_Base;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Utils;
+use LandTechExtras\Modules\QueryControl\Types\Type_Base;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 

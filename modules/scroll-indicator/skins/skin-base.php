@@ -1,9 +1,10 @@
 <?php
-namespace ElementorExtras\Modules\ScrollIndicator\Skins;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\ScrollIndicator\Skins;
 
-// Extras for Elementor Classes
-use ElementorExtras\Utils;
-use ElementorExtras\Base\Extras_Widget;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Utils;
+use LandTechExtras\Base\Extras_Widget;
 
 // Elementor Classes
 use Elementor\Repeater;
@@ -97,7 +98,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		$this->start_controls_section(
 			'section_tooltips',
 			[
-				'label' => __( 'Tooltips', 'elementor-extras' ),
+				'label' => __( 'Tooltips', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 				'condition' => [
 					$this->get_control_id( 'tooltips!' ) => '',
@@ -108,11 +109,11 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			$this->add_control(
 				'show_on_focus',
 				[
-					'label' 		=> __( 'Show On Focus', 'elementor-extras' ),
+					'label' 		=> __( 'Show On Focus', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -120,16 +121,16 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			$this->add_responsive_control(
 				'trigger',
 				[
-					'label'		=> __( 'Trigger', 'elementor-extras' ),
+					'label'		=> __( 'Trigger', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 			=> 'mouseenter',
 					'tablet_default' 	=> 'click_target',
 					'mobile_default' 	=> 'click_target',
 					'options' 			=> [
-						'' 				=> __( 'None', 'elementor-extras' ),
-						'mouseenter' 	=> __( 'Mouse Over', 'elementor-extras' ),
-						'click_target' 	=> __( 'Click Target', 'elementor-extras' ),
-						'load' 			=> __( 'Page Load', 'elementor-extras' ),
+						'' 				=> __( 'None', 'landtech-extras-for-elementor' ),
+						'mouseenter' 	=> __( 'Mouse Over', 'landtech-extras-for-elementor' ),
+						'click_target' 	=> __( 'Click Target', 'landtech-extras-for-elementor' ),
+						'load' 			=> __( 'Page Load', 'landtech-extras-for-elementor' ),
 					],
 					'frontend_available' => true
 				]
@@ -138,17 +139,17 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			$this->add_responsive_control(
 				'_hide',
 				[
-					'label'		=> __( 'Hide on', 'elementor-extras' ),
+					'label'		=> __( 'Hide on', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 			=> 'mouseleave',
 					'tablet_default' 	=> 'click_out',
 					'mobile_default' 	=> 'click_out',
 					'options' 	=> [
-						'' 				=> __( 'None', 'elementor-extras' ),
-						'mouseleave' 	=> __( 'Mouse Leave', 'elementor-extras' ),
-						'click_out' 	=> __( 'Click Outside', 'elementor-extras' ),
-						'click_target' 	=> __( 'Click Target', 'elementor-extras' ),
-						'click_any' 	=> __( 'Click Anywhere', 'elementor-extras' ),
+						'' 				=> __( 'None', 'landtech-extras-for-elementor' ),
+						'mouseleave' 	=> __( 'Mouse Leave', 'landtech-extras-for-elementor' ),
+						'click_out' 	=> __( 'Click Outside', 'landtech-extras-for-elementor' ),
+						'click_target' 	=> __( 'Click Target', 'landtech-extras-for-elementor' ),
+						'click_any' 	=> __( 'Click Anywhere', 'landtech-extras-for-elementor' ),
 					],
 					'frontend_available' => true
 				]
@@ -157,14 +158,14 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			$this->add_control(
 				'position',
 				[
-					'label'		=> __( 'Show to', 'elementor-extras' ),
+					'label'		=> __( 'Show to', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'left',
 					'options' 	=> [
-						'bottom' 	=> __( 'Bottom', 'elementor-extras' ),
-						'left' 		=> __( 'Left', 'elementor-extras' ),
-						'top' 		=> __( 'Top', 'elementor-extras' ),
-						'right' 	=> __( 'Right', 'elementor-extras' ),
+						'bottom' 	=> __( 'Bottom', 'landtech-extras-for-elementor' ),
+						'left' 		=> __( 'Left', 'landtech-extras-for-elementor' ),
+						'top' 		=> __( 'Top', 'landtech-extras-for-elementor' ),
+						'right' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 					],
 					'frontend_available' => true
 				]
@@ -173,13 +174,13 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			$this->add_control(
 				'arrow_position_h',
 				[
-					'label'		=> __( 'Show at', 'elementor-extras' ),
+					'label'		=> __( 'Show at', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> '',
 					'options' 	=> [
-						'' 			=> __( 'Center', 'elementor-extras' ),
-						'left' 		=> __( 'Left', 'elementor-extras' ),
-						'right' 	=> __( 'Right', 'elementor-extras' ),
+						'' 			=> __( 'Center', 'landtech-extras-for-elementor' ),
+						'left' 		=> __( 'Left', 'landtech-extras-for-elementor' ),
+						'right' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 					],
 					'condition'		=> [
 						$this->get_control_id( 'position' ) => [ 'top', 'bottom' ],
@@ -191,13 +192,13 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			$this->add_control(
 				'arrow_position_v',
 				[
-					'label'		=> __( 'Show at', 'elementor-extras' ),
+					'label'		=> __( 'Show at', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> '',
 					'options' 	=> [
-						'' 			=> __( 'Center', 'elementor-extras' ),
-						'top' 		=> __( 'Top', 'elementor-extras' ),
-						'bottom' 	=> __( 'Bottom', 'elementor-extras' ),
+						'' 			=> __( 'Center', 'landtech-extras-for-elementor' ),
+						'top' 		=> __( 'Top', 'landtech-extras-for-elementor' ),
+						'bottom' 	=> __( 'Bottom', 'landtech-extras-for-elementor' ),
 					],
 					'condition'		=> [
 						$this->get_control_id( 'position' ) => [ 'left', 'right' ],
@@ -209,7 +210,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			$this->add_control(
 				'css_position',
 				[
-					'label' 		=> __( 'CSS Position', 'elementor-extras' ),
+					'label' 		=> __( 'CSS Position', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT,
 					'default' 		=> 'fixed',
 					'options'		=> [
@@ -223,13 +224,13 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			$this->add_control(
 				'disable',
 				[
-					'label'		=> __( 'Disable On', 'elementor-extras' ),
+					'label'		=> __( 'Disable On', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> '',
 					'options' 	=> [
-						'' 			=> __( 'None', 'elementor-extras' ),
-						'tablet' 	=> __( 'Tablet & Mobile', 'elementor-extras' ),
-						'mobile' 	=> __( 'Mobile', 'elementor-extras' ),
+						'' 			=> __( 'None', 'landtech-extras-for-elementor' ),
+						'tablet' 	=> __( 'Tablet & Mobile', 'landtech-extras-for-elementor' ),
+						'mobile' 	=> __( 'Mobile', 'landtech-extras-for-elementor' ),
 					],
 					'frontend_available' => true
 				]
@@ -238,12 +239,12 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			$this->add_control(
 				'tooltips_arrow',
 				[
-					'label'		=> __( 'Arrow', 'elementor-extras' ),
+					'label'		=> __( 'Arrow', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> '""',
 					'options' 	=> [
-						'""' 	=> __( 'Show', 'elementor-extras' ),
-						'none' 	=> __( 'Hide', 'elementor-extras' ),
+						'""' 	=> __( 'Show', 'landtech-extras-for-elementor' ),
+						'none' 	=> __( 'Hide', 'landtech-extras-for-elementor' ),
 					],
 					'selectors' => [
 						'.ee-tooltip.ee-tooltip-{{ID}}:after' => 'content: {{VALUE}};',
@@ -254,8 +255,8 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			$this->add_control(
 				'delay_in',
 				[
-					'label' 		=> __( 'Delay in (s)', 'elementor-extras' ),
-					'description' 	=> __( 'Time until tooltips appear.', 'elementor-extras' ),
+					'label' 		=> __( 'Delay in (s)', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'Time until tooltips appear.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default'	=> [
 						'size' 	=> 0,
@@ -274,8 +275,8 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			$this->add_control(
 				'delay_out',
 				[
-					'label' 		=> __( 'Delay out (s)', 'elementor-extras' ),
-					'description' 	=> __( 'Time until tooltips dissapear.', 'elementor-extras' ),
+					'label' 		=> __( 'Delay out (s)', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'Time until tooltips dissapear.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default'	=> [
 						'size' 	=> 0,
@@ -294,7 +295,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			$this->add_control(
 				'duration',
 				[
-					'label' 		=> __( 'Duration', 'elementor-extras' ),
+					'label' 		=> __( 'Duration', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -310,8 +311,8 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			$this->add_control(
 				'tooltips_distance',
 				[
-					'label' 		=> __( 'Distance', 'elementor-extras' ),
-					'description' 	=> __( 'The distance between the tooltip and the hotspot. Defaults to 6px', 'elementor-extras' ),
+					'label' 		=> __( 'Distance', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'The distance between the tooltip and the hotspot. Defaults to 6px', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 0,
@@ -334,8 +335,8 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			$this->add_control(
 				'tooltips_offset',
 				[
-					'label' 		=> __( 'Offset', 'elementor-extras' ),
-					'description' 	=> __( 'Adjust offset to align arrow with target.', 'elementor-extras' ),
+					'label' 		=> __( 'Offset', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'Adjust offset to align arrow with target.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 0,
@@ -358,7 +359,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			$this->add_responsive_control(
 				'tooltips_width',
 				[
-					'label' 		=> __( 'Maximum Width', 'elementor-extras' ),
+					'label' 		=> __( 'Maximum Width', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 350,
@@ -378,8 +379,8 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			$this->add_control(
 				'tooltips_zindex',
 				[
-					'label'			=> __( 'zIndex', 'elementor-extras' ),
-					'description'   => __( 'Adjust the z-index of the tooltips. Defaults to 999', 'elementor-extras' ),
+					'label'			=> __( 'zIndex', 'landtech-extras-for-elementor' ),
+					'description'   => __( 'Adjust the z-index of the tooltips. Defaults to 999', 'landtech-extras-for-elementor' ),
 					'type'			=> Controls_Manager::NUMBER,
 					'default'		=> '999',
 					'min'			=> -9999999,
@@ -405,7 +406,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		$this->start_controls_section(
 			'section_tooltips_style',
 			[
-				'label' => __( 'Tooltips', 'elementor-extras' ),
+				'label' => __( 'Tooltips', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					$this->get_control_id( 'tooltips!' ) => '',
@@ -416,19 +417,19 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			$this->add_control(
 				'tooltips_align',
 				[
-					'label' 	=> __( 'Alignment', 'elementor-extras' ),
+					'label' 	=> __( 'Alignment', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::CHOOSE,
 					'options' 	=> [
 						'left' 	=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 	=> [
-							'title' => __( 'Center', 'elementor-extras' ),
+							'title' => __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'fa fa-align-center',
 						],
 						'right' 	=> [
-							'title' => __( 'Right', 'elementor-extras' ),
+							'title' => __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon'	=> 'fa fa-align-right',
 						],
 					],
@@ -441,7 +442,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			$this->add_control(
 				'tooltips_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -453,7 +454,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			$this->add_control(
 				'tooltips_border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
@@ -465,7 +466,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			$this->add_control(
 				'tooltips_background_color',
 				[
-					'label' 	=> __( 'Background Color', 'elementor-extras' ),
+					'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'selectors' => Utils::get_tooltip_background_selectors(),
 				]
@@ -474,7 +475,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			$this->add_control(
 				'tooltips_color',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'selectors' => [
 						'.ee-tooltip.ee-tooltip-{{ID}}' => 'color: {{VALUE}};',
@@ -486,7 +487,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'tooltips_border',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '.ee-tooltip.ee-tooltip-{{ID}}',
 				]
 			);
@@ -535,7 +536,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			],
 		] );
 
-		?><div <?php echo $this->parent->get_render_attribute_string('wrapper'); ?>>
+		?><div <?php $this->parent->print_render_attribute_string('wrapper'); ?>>
 			<?php $this->render_content(); ?>
 		</div><?php
 	}
@@ -569,7 +570,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		$nav_class = $this->get_nav_class();
 
 		?>
-		<ul class="ee-scroll-indicator__menu ee-nav <?php echo $nav_class; ?>">
+		<ul class="ee-scroll-indicator__menu ee-nav <?php echo esc_attr( $nav_class ); ?>">
 			<?php foreach ( $sections as $index => $section ) { ?>
 				<?php $this->render_element( $index, $section ); ?>
 			<?php } ?>
@@ -599,7 +600,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		] );
 
 		?>
-		<li <?php echo $this->parent->get_render_attribute_string( $section_key ); ?>>
+		<li <?php $this->parent->print_render_attribute_string( $section_key ); ?>>
 			<?php $this->render_element_content( $index, $section ); ?>
 		</li>
 		<?php
@@ -646,11 +647,11 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		] );
 
 		?>
-		<div <?php echo $this->parent->get_render_attribute_string( $bullet_key ); ?>>
-			<div <?php echo $this->parent->get_render_attribute_string( $number_key ); ?>>
-				<?php echo $index + 1; ?>
+		<div <?php $this->parent->print_render_attribute_string( $bullet_key ); ?>>
+			<div <?php $this->parent->print_render_attribute_string( $number_key ); ?>>
+				<?php echo esc_html( (string) ( $index + 1 ) ); ?>
 			</div>
-			<div <?php echo $this->parent->get_render_attribute_string( $circle_key ); ?>>
+			<div <?php $this->parent->print_render_attribute_string( $circle_key ); ?>>
 				<?php $this->render_svg(); ?>
 			</div>
 		</div>
@@ -674,8 +675,8 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		$title_key 		= $this->parent->_get_repeater_setting_key( 'title', 'sections', $index );
 		$subtitle_key 	= $this->parent->_get_repeater_setting_key( 'subtitle', 'sections', $index );
 
-		$title_tag 		= $skin->get_instance_value('title_html_tag');
-		$subtitle_tag 	= $skin->get_instance_value('subtitle_html_tag');
+		$title_tag    = $this->parent->ltxe_sanitize_heading_tag( $skin->get_instance_value( 'title_html_tag' ) );
+		$subtitle_tag = $this->parent->ltxe_sanitize_heading_tag( $skin->get_instance_value( 'subtitle_html_tag' ) );
 
 		$this->parent->add_render_attribute( [
 			$text_key => [
@@ -700,12 +701,12 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		}
 
 		?>
-		<div <?php echo $this->parent->get_render_attribute_string( $text_key ); ?>>
+		<div <?php $this->parent->print_render_attribute_string( $text_key ); ?>>
 			<?php if ( $section['title'] ) { ?>
-			<<?php echo $title_tag; ?> <?php echo $this->parent->get_render_attribute_string( $title_key ); ?>><?php echo $section['title']; ?></<?php echo $title_tag; ?>>
+			<<?php echo esc_html( $title_tag ); ?> <?php $this->parent->print_render_attribute_string( $title_key ); ?>><?php echo esc_html( $section['title'] ); ?></<?php echo esc_html( $title_tag ); ?>>
 			<?php } ?>
 			<?php if ( $section['subtitle'] ) { ?>
-			<<?php echo $subtitle_tag; ?> <?php echo $this->parent->get_render_attribute_string( $subtitle_key ); ?>><?php echo $section['subtitle']; ?></<?php echo $subtitle_tag; ?>>
+			<<?php echo esc_html( $subtitle_tag ); ?> <?php $this->parent->print_render_attribute_string( $subtitle_key ); ?>><?php echo esc_html( $section['subtitle'] ); ?></<?php echo esc_html( $subtitle_tag ); ?>>
 			<?php } ?>
 		</div>
 		<?php

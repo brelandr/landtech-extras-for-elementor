@@ -1,5 +1,6 @@
 <?php
-namespace ElementorExtras\Compatibility;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Compatibility;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -43,7 +44,7 @@ class WPML {
 	public function __construct() {
 
 		// WPML String Translation plugin exist check
-		if ( is_wpml_string_translation_active() && class_exists( 'WPML_Elementor_Module_With_Items' ) ) {
+		if ( landtech_extras_is_wpml_string_translation_active() && class_exists( 'WPML_Elementor_Module_With_Items' ) ) {
 
 			$this->includes();
 
@@ -59,17 +60,17 @@ class WPML {
 	 * @return void
 	 */
 	public function includes() {
-		elementor_extras_include( 'includes/compatibility/wpml/modules/calendar.php' );
-		elementor_extras_include( 'includes/compatibility/wpml/modules/buttons.php' );
-		elementor_extras_include( 'includes/compatibility/wpml/modules/google-map.php' );
-		elementor_extras_include( 'includes/compatibility/wpml/modules/hotspots.php' );
-		elementor_extras_include( 'includes/compatibility/wpml/modules/offcanvas.php' );
-		elementor_extras_include( 'includes/compatibility/wpml/modules/timeline.php' );
-		elementor_extras_include( 'includes/compatibility/wpml/modules/table.php' );
-		elementor_extras_include( 'includes/compatibility/wpml/modules/table-header.php' );
-		elementor_extras_include( 'includes/compatibility/wpml/modules/toggle-element.php' );
-		elementor_extras_include( 'includes/compatibility/wpml/modules/switcher.php' );
-		elementor_extras_include( 'includes/compatibility/wpml/modules/scroll-indicator.php' );
+		landtech_extras_include( 'includes/compatibility/wpml/modules/calendar.php' );
+		landtech_extras_include( 'includes/compatibility/wpml/modules/buttons.php' );
+		landtech_extras_include( 'includes/compatibility/wpml/modules/google-map.php' );
+		landtech_extras_include( 'includes/compatibility/wpml/modules/hotspots.php' );
+		landtech_extras_include( 'includes/compatibility/wpml/modules/offcanvas.php' );
+		landtech_extras_include( 'includes/compatibility/wpml/modules/timeline.php' );
+		landtech_extras_include( 'includes/compatibility/wpml/modules/table.php' );
+		landtech_extras_include( 'includes/compatibility/wpml/modules/table-header.php' );
+		landtech_extras_include( 'includes/compatibility/wpml/modules/toggle-element.php' );
+		landtech_extras_include( 'includes/compatibility/wpml/modules/switcher.php' );
+		landtech_extras_include( 'includes/compatibility/wpml/modules/scroll-indicator.php' );
 	}
 
 	/**
@@ -87,7 +88,7 @@ class WPML {
 			'fields'     		=> [
 				[
 					'field'       => 'home_text',
-					'type'        => esc_html__( 'Breadcrumbs: Home Text', 'elementor-extras' ),
+					'type'        => esc_html__( 'Breadcrumbs: Home Text', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE',
 				],
 			],
@@ -98,7 +99,7 @@ class WPML {
 			'fields'     		=> [
 				[
 					'field'       => 'back_text',
-					'type'        => esc_html__( 'Slide Menu: Back Text', 'elementor-extras' ),
+					'type'        => esc_html__( 'Slide Menu: Back Text', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE',
 				],
 			],
@@ -107,13 +108,13 @@ class WPML {
 		$nodes_to_translate[ 'button-group' ] = [
 			'conditions' 		=> [ 'widgetType' => 'button-group' ],
 			'fields'     		=> [],
-			'integration-class' => '\ElementorExtras\Compatibility\WPML\Buttons',
+			'integration-class' => '\LandTechExtras\Compatibility\WPML\Buttons',
 		];
 
 		$nodes_to_translate[ 'ee-calendar' ] = [
 			'conditions' 		=> [ 'widgetType' => 'ee-calendar' ],
 			'fields'     		=> [],
-			'integration-class' => '\ElementorExtras\Compatibility\WPML\Calendar',
+			'integration-class' => '\LandTechExtras\Compatibility\WPML\Calendar',
 		];
 
 		$nodes_to_translate[ 'ee-calendar' ] = [
@@ -121,7 +122,7 @@ class WPML {
 			'fields'     		=> [
 				[
 					'field'       => 'event_list_heading',
-					'type'        => esc_html__( 'Calendar: Events List Heading', 'elementor-extras' ),
+					'type'        => esc_html__( 'Calendar: Events List Heading', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE',
 				],
 			],
@@ -132,12 +133,12 @@ class WPML {
 			'fields'     		=> [
 				[
 					'field'       => 'suffix',
-					'type'        => __( 'Circle Progress: Suffix', 'elementor-extras' ),
+					'type'        => __( 'Circle Progress: Suffix', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE'
 				],
 				[
 					'field'       => 'text',
-					'type'        => __( 'Circle Progress: Content', 'elementor-extras' ),
+					'type'        => __( 'Circle Progress: Content', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'VISUAL'
 				],
 			],
@@ -148,7 +149,7 @@ class WPML {
 			'fields'     		=> [
 				[
 					'field'       => 'title',
-					'type'        => __( 'Heading Extra: Title', 'elementor-extras' ),
+					'type'        => __( 'Heading Extra: Title', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE'
 				],
 			],
@@ -159,7 +160,7 @@ class WPML {
 			'fields'     		=> [
 				[
 					'field'       => 'text',
-					'type'        => __( 'Text Divider: Heading', 'elementor-extras' ),
+					'type'        => __( 'Text Divider: Heading', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE'
 				],
 			],
@@ -170,17 +171,17 @@ class WPML {
 			'fields'     		=> [
 				[
 					'field'       => 'all_text',
-					'type'        => __( 'Google Map: All Locations Text', 'elementor-extras' ),
+					'type'        => __( 'Google Map: All Locations Text', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE'
 				],
 			],
-			'integration-class' => '\ElementorExtras\Compatibility\WPML\Google_Map',
+			'integration-class' => '\LandTechExtras\Compatibility\WPML\Google_Map',
 		];
 
 		$nodes_to_translate[ 'hotspots' ] = [
 			'conditions' 		=> [ 'widgetType' => 'hotspots' ],
 			'fields'     		=> [],
-			'integration-class' => '\ElementorExtras\Compatibility\WPML\Hotspots',
+			'integration-class' => '\LandTechExtras\Compatibility\WPML\Hotspots',
 		];
 
 		$nodes_to_translate[ 'ee-offcanvas' ] = [
@@ -188,16 +189,16 @@ class WPML {
 			'fields'     		=> [
 				[
 					'field'       => 'trigger_text',
-					'type'        => __( 'Offcanvas: Trigger Text', 'elementor-extras' ),
+					'type'        => __( 'Offcanvas: Trigger Text', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE'
 				],
 				[
 					'field'       => 'header_title_text',
-					'type'        => __( 'Offcanvas: Header Title', 'elementor-extras' ),
+					'type'        => __( 'Offcanvas: Header Title', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE'
 				],
 			],
-			'integration-class' => '\ElementorExtras\Compatibility\WPML\Offcanvas',
+			'integration-class' => '\LandTechExtras\Compatibility\WPML\Offcanvas',
 		];
 
 		$nodes_to_translate[ 'ee-age-gate' ] = [
@@ -205,22 +206,22 @@ class WPML {
 			'fields'     		=> [
 				[
 					'field'       => 'denied',
-					'type'        => __( 'Age Gate: Denied Message', 'elementor-extras' ),
+					'type'        => __( 'Age Gate: Denied Message', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE'
 				],
 				[
 					'field'       => 'title',
-					'type'        => __( 'Age Gate: Title', 'elementor-extras' ),
+					'type'        => __( 'Age Gate: Title', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE'
 				],
 				[
 					'field'       => 'description',
-					'type'        => __( 'Age Gate: Description', 'elementor-extras' ),
+					'type'        => __( 'Age Gate: Description', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE'
 				],
 				[
 					'field'       => 'button_text',
-					'type'        => __( 'Age Gate: Button Label', 'elementor-extras' ),
+					'type'        => __( 'Age Gate: Button Label', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE'
 				],
 			],
@@ -231,22 +232,22 @@ class WPML {
 			'fields'     		=> [
 				[
 					'field'       => 'popup_trigger_text',
-					'type'        => __( 'Popup: Trigger Label', 'elementor-extras' ),
+					'type'        => __( 'Popup: Trigger Label', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE'
 				],
 				[
 					'field'       => 'popup_title',
-					'type'        => __( 'Popup: Title', 'elementor-extras' ),
+					'type'        => __( 'Popup: Title', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE'
 				],
 				[
 					'field'       => 'popup_close_button_text',
-					'type'        => __( 'Popup: Close Button Label', 'elementor-extras' ),
+					'type'        => __( 'Popup: Close Button Label', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE'
 				],
 				[
 					'field'       => 'popup_content',
-					'type'        => __( 'Popup: Content', 'elementor-extras' ),
+					'type'        => __( 'Popup: Content', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'VISUAL'
 				],
 			],
@@ -257,12 +258,12 @@ class WPML {
 			'fields'     		=> [
 				[
 					'field'       => 'original_label',
-					'type'        => __( 'Image Comparison: Original Label', 'elementor-extras' ),
+					'type'        => __( 'Image Comparison: Original Label', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE'
 				],
 				[
 					'field'       => 'modified_label',
-					'type'        => __( 'Image Comparison: Modified Label', 'elementor-extras' ),
+					'type'        => __( 'Image Comparison: Modified Label', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE'
 				],
 			],
@@ -273,57 +274,57 @@ class WPML {
 			'fields'     		=> [
 				[
 					'field'       => 'classic_filters_all_text',
-					'type'        => __( 'Posts Extra: Filter All Text', 'elementor-extras' ),
+					'type'        => __( 'Posts Extra: Filter All Text', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE',
 				],
 				[
 					'field'       => 'post_read_more_text',
-					'type'        => __( 'Posts Extra: Read More Text', 'elementor-extras' ),
+					'type'        => __( 'Posts Extra: Read More Text', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE',
 				],
 				[
 					'field'       => 'classic_infinite_scroll_loading_text',
-					'type'        => __( 'Posts Extra: Infinite Scroll Loading Status Text', 'elementor-extras' ),
+					'type'        => __( 'Posts Extra: Infinite Scroll Loading Status Text', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE',
 				],
 				[
 					'field'       => 'classic_infinite_scroll_last_text',
-					'type'        => __( 'Posts Extra: Infinite Scroll Last Text', 'elementor-extras' ),
+					'type'        => __( 'Posts Extra: Infinite Scroll Last Text', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE',
 				],
 				[
 					'field'       => 'classic_infinite_scroll_error_text',
-					'type'        => __( 'Posts Extra: Infinite Scroll Error Text', 'elementor-extras' ),
+					'type'        => __( 'Posts Extra: Infinite Scroll Error Text', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE',
 				],
 				[
 					'field'       => 'classic_infinite_scroll_button_text',
-					'type'        => __( 'Posts Extra: Infinite Scroll Button Text', 'elementor-extras' ),
+					'type'        => __( 'Posts Extra: Infinite Scroll Button Text', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE',
 				],
 				[
 					'field'       => 'post_terms_prefix',
-					'type'        => __( 'Posts Extra: Terms Prefix', 'elementor-extras' ),
+					'type'        => __( 'Posts Extra: Terms Prefix', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE',
 				],
 				[
 					'field'       => 'post_author_prefix',
-					'type'        => __( 'Posts Extra: Author Prefix', 'elementor-extras' ),
+					'type'        => __( 'Posts Extra: Author Prefix', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE',
 				],
 				[
 					'field'       => 'post_date_prefix',
-					'type'        => __( 'Posts Extra: Date Prefix', 'elementor-extras' ),
+					'type'        => __( 'Posts Extra: Date Prefix', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE',
 				],
 				[
 					'field'       => 'post_comments_suffix',
-					'type'        => __( 'Posts Extra: Comments Suffix', 'elementor-extras' ),
+					'type'        => __( 'Posts Extra: Comments Suffix', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE',
 				],
 				[
 					'field'       => 'post_comments_prefix',
-					'type'        => __( 'Posts Extra: Comments Prefix', 'elementor-extras' ),
+					'type'        => __( 'Posts Extra: Comments Prefix', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE',
 				],
 			],
@@ -334,17 +335,17 @@ class WPML {
 			'fields'     		=> [
 				[
 					'field'       => 'input_placeholder',
-					'type'        => __( 'Search Form: Input Placeholder', 'elementor-extras' ),
+					'type'        => __( 'Search Form: Input Placeholder', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE',
 				],
 				[
 					'field'       => 'classic_button_label_text',
-					'type'        => __( 'Search Form: Classic Skin Button Label Text', 'elementor-extras' ),
+					'type'        => __( 'Search Form: Classic Skin Button Label Text', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE',
 				],
 				[
 					'field'       => 'classic_button_label_text',
-					'type'        => __( 'Search Form: Classic Skin Button Label Text', 'elementor-extras' ),
+					'type'        => __( 'Search Form: Classic Skin Button Label Text', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE',
 				],
 			],
@@ -353,31 +354,31 @@ class WPML {
 		$nodes_to_translate[ 'timeline' ] = [
 			'conditions' 		=> [ 'widgetType' => 'timeline' ],
 			'fields'     		=> [],
-			'integration-class' => '\ElementorExtras\Compatibility\WPML\Timeline',
+			'integration-class' => '\LandTechExtras\Compatibility\WPML\Timeline',
 		];
 
 		$nodes_to_translate[ 'ee-switcher' ] = [
 			'conditions' 		=> [ 'widgetType' => 'ee-switcher' ],
 			'fields'     		=> [],
-			'integration-class' => '\ElementorExtras\Compatibility\WPML\Switcher',
+			'integration-class' => '\LandTechExtras\Compatibility\WPML\Switcher',
 		];
 
 		$nodes_to_translate[ 'ee-scroll-indicator' ] = [
 			'conditions' 		=> [ 'widgetType' => 'ee-scroll-indicator' ],
 			'fields'     		=> [],
-			'integration-class' => '\ElementorExtras\Compatibility\WPML\Scroll_Indicator',
+			'integration-class' => '\LandTechExtras\Compatibility\WPML\Scroll_Indicator',
 		];
 
 		$nodes_to_translate[ 'table' ] = [
 			'conditions' 		=> [ 'widgetType' => 'table' ],
 			'fields'     		=> [],
-			'integration-class' => '\ElementorExtras\Compatibility\WPML\Table',
+			'integration-class' => '\LandTechExtras\Compatibility\WPML\Table',
 		];
 
 		$nodes_to_translate[ 'ee-toggle-element' ] = [
 			'conditions' 		=> [ 'widgetType' => 'ee-toggle-element' ],
 			'fields'     		=> [],
-			'integration-class' => '\ElementorExtras\Compatibility\WPML\Toggle_Element',
+			'integration-class' => '\LandTechExtras\Compatibility\WPML\Toggle_Element',
 		];
 
 		$nodes_to_translate[ 'unfold' ] = [
@@ -385,17 +386,17 @@ class WPML {
 			'fields'     		=> [
 				[
 					'field'       => 'content',
-					'type'        => __( 'Unfold: Content', 'elementor-extras' ),
+					'type'        => __( 'Unfold: Content', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'VISUAL'
 				],
 				[
 					'field'       => 'text_closed',
-					'type'        => __( 'Unfold: Open Button Label', 'elementor-extras' ),
+					'type'        => __( 'Unfold: Open Button Label', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE'
 				],
 				[
 					'field'       => 'text_open',
-					'type'        => __( 'Unfold: Closed Button Label', 'elementor-extras' ),
+					'type'        => __( 'Unfold: Closed Button Label', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE'
 				],
 			],
@@ -406,22 +407,22 @@ class WPML {
 			'fields'     		=> [
 				[
 					'field'       => 'video_url',
-					'type'        => __( 'Devices: MP4 URL', 'elementor-extras' ),
+					'type'        => __( 'Devices: MP4 URL', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'VISUAL'
 				],
 				[
 					'field'       => 'video_url_webm',
-					'type'        => __( 'Devices: Webm URL', 'elementor-extras' ),
+					'type'        => __( 'Devices: Webm URL', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE'
 				],
 				[
 					'field'       => 'video_url_ogg',
-					'type'        => __( 'Devices: OGG URL', 'elementor-extras' ),
+					'type'        => __( 'Devices: OGG URL', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE'
 				],
 				[
 					'field'       => 'video_url_webm',
-					'type'        => __( 'Devices: M4V URL', 'elementor-extras' ),
+					'type'        => __( 'Devices: M4V URL', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE'
 				],
 			],
@@ -432,22 +433,22 @@ class WPML {
 			'fields'     		=> [
 				[
 					'field'       => 'video_url',
-					'type'        => __( 'HTML5 Video: MP4 URL', 'elementor-extras' ),
+					'type'        => __( 'HTML5 Video: MP4 URL', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'VISUAL'
 				],
 				[
 					'field'       => 'video_url_webm',
-					'type'        => __( 'HTML5 Video: Webm URL', 'elementor-extras' ),
+					'type'        => __( 'HTML5 Video: Webm URL', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE'
 				],
 				[
 					'field'       => 'video_url_ogg',
-					'type'        => __( 'HTML5 Video: OGG URL', 'elementor-extras' ),
+					'type'        => __( 'HTML5 Video: OGG URL', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE'
 				],
 				[
 					'field'       => 'video_url_webm',
-					'type'        => __( 'HTML5 Video: M4V URL', 'elementor-extras' ),
+					'type'        => __( 'HTML5 Video: M4V URL', 'landtech-extras-for-elementor' ),
 					'editor_type' => 'LINE'
 				],
 			],

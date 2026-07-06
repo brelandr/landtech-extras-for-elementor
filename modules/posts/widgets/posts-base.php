@@ -1,9 +1,10 @@
 <?php
-namespace ElementorExtras\Modules\Posts\Widgets;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Posts\Widgets;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Extras_Widget;
-use ElementorExtras\Modules\Posts\Module;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Extras_Widget;
+use LandTechExtras\Modules\Posts\Module;
 
 // Elementor Classes
 use Elementor\Controls_Manager; 
@@ -46,11 +47,16 @@ abstract class Posts_Base extends Extras_Widget {
 	 * @return void
 	 */
 	protected function register_query_content_controls( $condition = [] ) {
-		
+
+		// Posts_Base query UI depends on Elementor Pro group controls; avoid fatal if Pro is inactive.
+		if ( ! landtech_extras_is_elementor_pro_active() ) {
+			return;
+		}
+
 		$this->start_controls_section(
 			'section_query',
 			[
-				'label' => __( 'Query', 'elementor-extras' ),
+				'label' => __( 'Query', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 				'condition' => $condition,
 			]
@@ -61,7 +67,7 @@ abstract class Posts_Base extends Extras_Widget {
 				[
 					'name' => 'posts',
 					'presets' => [ 'full' ],
-					'exclude' => [
+					'exclude' => [ // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor group control keys; not WP_Query exclude.
 						'posts_per_page', //use the one from Layout section
 						'ignore_sticky_posts'
 					],
@@ -76,14 +82,16 @@ abstract class Posts_Base extends Extras_Widget {
 		] );
 
 			$this->update_control( 'posts_orderby', [
+				// phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- WP_Query orderby keys for Elementor control UI; not an executed query.
 				'options' => [
-					'post_date' 		=> __( 'Date', 'elementor-extras' ),
-					'post_title' 		=> __( 'Title', 'elementor-extras' ),
-					'menu_order' 		=> __( 'Menu Order', 'elementor-extras' ),
-					'rand' 				=> __( 'Random', 'elementor-extras' ),
-					'meta_value'		=> __( 'Meta Value (text)', 'elementor-extras' ),
-					'meta_value_num'	=> __( 'Meta Value (number)', 'elementor-extras' )
+					'post_date' 		=> __( 'Date', 'landtech-extras-for-elementor' ),
+					'post_title' 		=> __( 'Title', 'landtech-extras-for-elementor' ),
+					'menu_order' 		=> __( 'Menu Order', 'landtech-extras-for-elementor' ),
+					'rand' 				=> __( 'Random', 'landtech-extras-for-elementor' ),
+					'meta_value'		=> __( 'Meta Value (text)', 'landtech-extras-for-elementor' ),
+					'meta_value_num'	=> __( 'Meta Value (number)', 'landtech-extras-for-elementor' )
 				],
+				// phpcs:enable
 			] );
 
 		$this->end_injection();
@@ -95,11 +103,11 @@ abstract class Posts_Base extends Extras_Widget {
 
 			$this->add_control( 'posts_orderby_meta_key',
 				[
-					'label' 		=> __( 'Meta Key', 'elementor-extras' ),
+					'label' 		=> __( 'Meta Key', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::TEXT,
 					'default' 		=> '',
 					'condition' => [
-						'posts_orderby' => [ 'meta_value', 'meta_value_num' ],
+						'posts_orderby' => [ 'meta_value', 'meta_value_num' ], // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- WP_Query orderby values for Elementor control visibility.
 					],
 				]
 			);
@@ -114,7 +122,7 @@ abstract class Posts_Base extends Extras_Widget {
 			$this->add_control(
 				'sticky_posts',
 				[
-					'label' 		=> __( 'Sticky Posts', 'elementor-extras' ),
+					'label' 		=> __( 'Sticky Posts', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default'		=> '',
 					'separator'		=> 'before',
@@ -126,7 +134,7 @@ abstract class Posts_Base extends Extras_Widget {
 				'sticky_posts_info',
 				[
 					'type' 				=> Controls_Manager::RAW_HTML,
-					'raw' 				=> __( 'Preview of sticky posts option is only available on frontend.', 'elementor-extras' ),
+					'raw' 				=> __( 'Preview of sticky posts option is only available on frontend.', 'landtech-extras-for-elementor' ),
 					'content_classes' 	=> 'elementor-panel-alert elementor-panel-alert-info',
 					'condition' 		=> [
 						'sticky_posts!' => '',
@@ -138,7 +146,7 @@ abstract class Posts_Base extends Extras_Widget {
 			$this->add_control(
 				'sticky_only',
 				[
-					'label' 		=> __( 'Show Only Sticky Posts', 'elementor-extras' ),
+					'label' 		=> __( 'Show Only Sticky Posts', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default'		=> '',
 					'condition' 	=> [
@@ -166,6 +174,7 @@ abstract class Posts_Base extends Extras_Widget {
 		];
 
 		if ( $this->get_settings( 'posts_orderby_meta_key' ) ) {
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- User-selected orderby meta; required for Elementor/WP_Query meta ordering.
 			$query_args['meta_key'] = $this->get_settings( 'posts_orderby_meta_key' );
 		}
 
@@ -184,6 +193,42 @@ abstract class Posts_Base extends Extras_Widget {
 				$query_args['ignore_sticky_posts'] = 0;
 			}
 		}
+
+		/**
+		 * Allow Premium and add-ons to merge query args before `set_query()`.
+		 *
+		 * Filter order matches `admin/PHASE1-AJAX-LOOPS-SPEC.md`: advanced merge, forced `paged`
+		 * (facet REST), then facet/meta merge and later-priority listeners.
+		 *
+		 * @since 2.2.59
+		 *
+		 * @param array<string,mixed> $query_args Arguments passed to Elementor Query Module / WP_Query.
+		 * @param Posts_Base          $widget     Widget instance implementing this base (Premium expects
+		 *                                        `\LandTechExtras\Modules\Posts\Widgets\Posts_Base`).
+		 */
+		$query_args = (array) apply_filters( 'landtech_extras/posts/advanced_query_args', $query_args, $this );
+
+		$paged_base = isset( $query_args['paged'] ) ? (int) $query_args['paged'] : 1;
+
+		/**
+		 * Override paged (e.g. LandTech Extras Premium AJAX facet REST).
+		 *
+		 * @since 2.2.59
+		 *
+		 * @param int         $paged  Current page number.
+		 * @param Posts_Base $widget Widget instance.
+		 */
+		$query_args['paged'] = (int) apply_filters( 'landtech_extras/posts/query_paged', $paged_base, $this );
+
+		/**
+		 * Merge taxonomy / price facets, semantic query args, etc.
+		 *
+		 * @since 2.2.59
+		 *
+		 * @param array<string,mixed> $query_args Query arguments.
+		 * @param Posts_Base          $widget     Widget instance.
+		 */
+		$query_args = (array) apply_filters( 'landtech_extras/posts/set_query_args', $query_args, $this );
 
 		$this->set_query( $query_args );
 	}
@@ -215,7 +260,7 @@ abstract class Posts_Base extends Extras_Widget {
 	 */
 	public function set_query( $query_args ) {
 
-		if ( ! is_elementor_pro_active() ) {
+		if ( ! landtech_extras_is_elementor_pro_active() ) {
 			return;
 		}
 
@@ -238,7 +283,7 @@ abstract class Posts_Base extends Extras_Widget {
 		 * @since 2.1.3
 		 * @param WP_Query 			$query 		The initial query
 		 */
-		$this->_query = apply_filters( 'elementor_extras/widgets/posts/query', $this->_query );
+		$this->_query = apply_filters( 'landtech_extras/widgets/posts/query', $this->_query );
 
 		remove_filter( 'elementor/query/get_query_args/current_query', [ $this, 'fix_default_query_args' ] );
 	}
@@ -349,10 +394,18 @@ abstract class Posts_Base extends Extras_Widget {
 		}
 
 		if ( is_preview() ) {
+			// phpcs:disable WordPress.Security.NonceVerification.Recommended -- WordPress core preview request; args are sanitized for get_preview_post_link() only.
 			if ( ( 'draft' !== $post->post_status ) && isset( $_GET['preview_id'], $_GET['preview_nonce'] ) ) {
-				$query_args['preview_id'] = wp_unslash( $_GET['preview_id'] );
-				$query_args['preview_nonce'] = wp_unslash( $_GET['preview_nonce'] );
+				$preview_id_raw = wp_unslash( $_GET['preview_id'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitized below once scalar-safe.
+				$query_args['preview_id'] = absint( is_scalar( $preview_id_raw ) ? $preview_id_raw : 0 );
+
+				$pnonce_raw = wp_unslash( $_GET['preview_nonce'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitized below once scalar-safe.
+				if ( ! is_scalar( $pnonce_raw ) ) {
+					$pnonce_raw = '';
+				}
+				$query_args['preview_nonce'] = sanitize_text_field( (string) $pnonce_raw );
 			}
+			// phpcs:enable WordPress.Security.NonceVerification.Recommended
 
 			$url = get_preview_post_link( $post, $query_args, $url );
 		}
@@ -381,7 +434,7 @@ abstract class Posts_Base extends Extras_Widget {
 		 * @param string 			$link 	The initial link
 		 * @param object|WP_Post 	$page 	The page number
 		 */
-		return apply_filters( 'elementor_extras/widgets/posts/pagination_link', $link, $page );
+		return apply_filters( 'landtech_extras/widgets/posts/pagination_link', $link, $page );
 	}
 
 	/**
@@ -428,8 +481,8 @@ abstract class Posts_Base extends Extras_Widget {
 			'href' => $this->get_pagination_link( $page ),
 		] );
 
-		?><a <?php echo $this->get_render_attribute_string( $nav_link_key ); ?>><?php
-			echo $label;
+		?><a <?php $this->print_render_attribute_string( $nav_link_key ); ?>><?php
+			echo esc_html( (string) $label );
 		?></a><?php
 	}
 
@@ -449,8 +502,7 @@ abstract class Posts_Base extends Extras_Widget {
 
 		} else if ( Module::is_custom_pagination() ) {
 
-			// Use our own query var
-			return 'ee-page';
+			return 'ltxe-page';
 		}
 
 		// Default
@@ -467,7 +519,7 @@ abstract class Posts_Base extends Extras_Widget {
 		$pagination = '' !== $this->get_skin_setting( 'pagination' );
 		$multiple 	= '' !== $this->get_skin_setting( 'pagination_multiple' );
 		$infinite 	= '' !== $this->get_skin_setting( 'infinite_scroll' );
-		$posts 		= isset( $_GET['posts'] ) ? $_GET['posts'] : false;
+		$posts    = isset( $_GET['posts'] ) ? sanitize_text_field( wp_unslash( $_GET['posts'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Pagination widget compares public GET to widget ID only.
 		$query_var 	= $this->get_pagination_query_var();
 
 		if ( ! $infinite && ! $pagination ) {

@@ -1,8 +1,9 @@
 <?php
-namespace ElementorExtras\Modules\DisplayConditions\Conditions;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\DisplayConditions\Conditions;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Condition;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Condition;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -49,7 +50,7 @@ class Role extends Condition {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'User Role', 'elementor-extras' );
+		return __( 'User Role', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -65,7 +66,7 @@ class Role extends Condition {
 
 		return [
 			'type' 			=> Controls_Manager::SELECT,
-			'description' 	=> __( 'Warning: This condition applies only to logged in visitors.', 'elementor-extras' ),
+			'description' 	=> __( 'Warning: This condition applies only to logged in visitors.', 'landtech-extras-for-elementor' ),
 			'default' 		=> 'subscriber',
 			'label_block' 	=> true,
 			'options' 		=> $wp_roles->get_names(),

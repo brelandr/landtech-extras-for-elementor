@@ -1,8 +1,9 @@
 <?php
-namespace ElementorExtras\Modules\DisplayConditions\Conditions;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\DisplayConditions\Conditions;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Condition;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Condition;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -49,7 +50,7 @@ class Os extends Condition {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Operating System', 'elementor-extras' );
+		return __( 'Operating System', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -66,17 +67,17 @@ class Os extends Condition {
 			'default' 		=> 'iphone',
 			'label_block' 	=> true,
 			'options' 		=> [
-				'iphone' 		=> 'iPhone',
-				'windows' 		=> 'Windows',
-				'open_bsd'		=> 'OpenBSD',
-				'sun_os'    	=> 'SunOS',
-				'linux'     	=> 'Linux',
-				'safari'    	=> 'Safari',
-				'mac_os'    	=> 'Mac OS',
-				'qnx'       	=> 'QNX',
-				'beos'      	=> 'BeOS',
-				'os2'       	=> 'OS/2',
-				'search_bot'	=> 'Search Bot',
+				'iphone'     => __( 'iPhone', 'landtech-extras-for-elementor' ),
+				'windows'    => __( 'Windows', 'landtech-extras-for-elementor' ),
+				'open_bsd'   => __( 'OpenBSD', 'landtech-extras-for-elementor' ),
+				'sun_os'     => __( 'SunOS', 'landtech-extras-for-elementor' ),
+				'linux'      => __( 'Linux', 'landtech-extras-for-elementor' ),
+				'safari'     => __( 'Safari', 'landtech-extras-for-elementor' ),
+				'mac_os'     => __( 'Mac OS', 'landtech-extras-for-elementor' ),
+				'qnx'        => __( 'QNX', 'landtech-extras-for-elementor' ),
+				'beos'       => __( 'BeOS', 'landtech-extras-for-elementor' ),
+				'os2'        => __( 'OS/2', 'landtech-extras-for-elementor' ),
+				'search_bot' => __( 'Search Bot', 'landtech-extras-for-elementor' ),
 			],
 		];
 	}
@@ -107,6 +108,12 @@ class Os extends Condition {
 			'search_bot'        => '(nuhk)|(Googlebot)|(Yammybot)|(Openbot)|(Slurp/cat)|(msnbot)|(ia_archiver)',
 		];
 
-		return $this->compare( preg_match('@' . $oses[ $value ] . '@', $_SERVER['HTTP_USER_AGENT'] ), true, $operator );
+		$user_agent = isset( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) : '';
+
+		if ( '' === $user_agent || ! isset( $oses[ $value ] ) ) {
+			return $this->compare( false, true, $operator );
+		}
+
+		return $this->compare( (bool) preg_match( '@' . $oses[ $value ] . '@', $user_agent ), true, $operator );
 	}
 }

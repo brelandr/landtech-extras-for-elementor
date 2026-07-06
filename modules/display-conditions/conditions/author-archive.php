@@ -1,8 +1,9 @@
 <?php
-namespace ElementorExtras\Modules\DisplayConditions\Conditions;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\DisplayConditions\Conditions;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Condition;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Condition;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -49,7 +50,7 @@ class Author_Archive extends Condition {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Author', 'elementor-extras' );
+		return __( 'Author', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -64,8 +65,8 @@ class Author_Archive extends Condition {
 		return [
 			'type' 			=> 'ee-query',
 			'default' 		=> '',
-			'placeholder'	=> __( 'Any', 'elementor-extras' ),
-			'description'	=> __( 'Leave blank for all authors.', 'elementor-extras' ),
+			'placeholder'	=> __( 'Any', 'landtech-extras-for-elementor' ),
+			'description'	=> __( 'Leave blank for all authors.', 'landtech-extras-for-elementor' ),
 			'multiple'		=> true,
 			'label_block' 	=> true,
 			'query_type'	=> 'authors',

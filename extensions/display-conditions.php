@@ -1,12 +1,13 @@
 <?php
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
 
-namespace ElementorExtras\Extensions;
+namespace LandTechExtras\Extensions;
 
-// Elementor Extras classes
-use ElementorExtras\Utils;
-use ElementorExtras\Modules\DisplayConditions\Module;
-use ElementorExtras\Base\Extension_Base;
-use ElementorExtras\Controls\Control_Query as QueryControl;
+// LandTech Extras classes
+use LandTechExtras\Utils;
+use LandTechExtras\Modules\DisplayConditions\Module;
+use LandTechExtras\Base\Extension_Base;
+use LandTechExtras\Controls\Control_Query as QueryControl;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -46,7 +47,7 @@ class Extension_Display_Conditions extends Extension_Base {
 	 * @since 2.-.0
 	 **/
 	public static function get_description() {
-		return __( 'Adds display conditions to widgets and sections allowing you to show them depending on authentication, roles, date and time of day.', 'elementor-extras' );
+		return __( 'Adds display conditions to widgets and sections allowing you to show them depending on authentication, roles, date and time of day.', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -106,7 +107,7 @@ class Extension_Display_Conditions extends Extension_Base {
 	 * @access protected
 	 */
 	protected function add_actions() {
-		$module = \ElementorExtras\ElementorExtrasPlugin::instance()->modules_manager->get_modules( 'display-conditions' );
+		$module = \LandTechExtras\LandTechExtrasPlugin::instance()->modules_manager->get_modules( 'display-conditions' );
 		$module->add_actions();
 	}
 }

@@ -517,11 +517,16 @@
 				$element.find('.ee-switcher').addClass( 'is--loaded' );
 
 				$contentItems.each( function( index ) {
-					st[index] = new SplitText( $(this).find( plugin.opts.titleSelector ), {
-						type : ['chars', 'words'],
-					});
+					var $title = $( this ).find( plugin.opts.titleSelector );
+					var titleEl = $title.get( 0 );
 
-					$( st[index].chars ).addClass('ee-switcher__title__char').wrapInner('<div></div>');
+					if ( titleEl && 'function' === typeof window.Splitting ) {
+						window.Splitting( { target: titleEl, by: 'chars' } );
+					}
+
+					var $chars = $title.find( '.char' );
+					$chars.addClass( 'ee-switcher__title__char' ).wrapInner( '<div></div>' );
+					st[ index ] = { chars: $chars };
 				});
 
 				currentContentHeight = $thisContentItem.outerHeight();

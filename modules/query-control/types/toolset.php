@@ -1,9 +1,10 @@
 <?php
-namespace ElementorExtras\Modules\QueryControl\Types;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\QueryControl\Types;
 
-// Extras for Elementor Classes
-use ElementorExtras\Utils;
-use ElementorExtras\Modules\QueryControl\Types\Meta_Base;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Utils;
+use LandTechExtras\Modules\QueryControl\Types\Meta_Base;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -35,7 +36,7 @@ class Toolset extends Meta_Base {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Toolset', 'elementor-extras' );
+		return __( 'Toolset', 'landtech-extras-for-elementor' );
 	}
 
 	/**

@@ -398,7 +398,6 @@
 			_is_playing = true;
 
 			// Make sure overlays are turned off
-			// TweenMax.set( plugin.opts.overlays, { opacity: 0 });
 		};
 
 		plugin.pause = function() {

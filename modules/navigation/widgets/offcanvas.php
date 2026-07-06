@@ -1,12 +1,13 @@
 <?php
-namespace ElementorExtras\Modules\Navigation\Widgets;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Navigation\Widgets;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Extras_Widget;
-use ElementorExtras\Modules\Navigation\Skins;
-use ElementorExtras\Modules\Navigation\Module as Module;
-use ElementorExtras\Modules\TemplatesControl\Module as TemplatesControl;
-use ElementorExtras\Group_Control_Transition;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Extras_Widget;
+use LandTechExtras\Modules\Navigation\Skins;
+use LandTechExtras\Modules\Navigation\Module as Module;
+use LandTechExtras\Modules\TemplatesControl\Module as TemplatesControl;
+use LandTechExtras\Group_Control_Transition;
 
 // Elementor Classes
 use Elementor\Utils;
@@ -63,9 +64,9 @@ class Offcanvas extends Extras_Widget {
 		global $wp_registered_sidebars;
 
 		if ( ! $wp_registered_sidebars ) {
-			$this->_sidebars_options[''] = __( 'No sidebars were found', 'elementor-extras' );
+			$this->_sidebars_options[''] = __( 'No sidebars were found', 'landtech-extras-for-elementor' );
 		} else {
-			$this->_sidebars_options[''] = __( 'Choose Sidebar', 'elementor-extras' );
+			$this->_sidebars_options[''] = __( 'Choose Sidebar', 'landtech-extras-for-elementor' );
 
 			foreach ( $wp_registered_sidebars as $sidebar_id => $sidebar ) {
 				$this->_sidebars_options[ $sidebar_id ] = $sidebar['name'];
@@ -97,7 +98,7 @@ class Offcanvas extends Extras_Widget {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Offcanvas', 'elementor-extras' );
+		return __( 'Offcanvas', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -122,8 +123,8 @@ class Offcanvas extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
-			'slidebars',
-			'jquery-resize-ee',
+			'landtech-extras-slidebars',
+			'landtech-extras-jquery-resize',
 		];
 	}
 
@@ -183,7 +184,7 @@ class Offcanvas extends Extras_Widget {
 		$this->start_controls_section(
 			'section_settings',
 			[
-				'label' => __( 'Settings', 'elementor-extras' ),
+				'label' => __( 'Settings', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -191,10 +192,10 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'open',
 				[
-					'label' 		=> __( 'Toggle Offcanvas', 'elementor-extras' ),
+					'label' 		=> __( 'Toggle Offcanvas', 'landtech-extras-for-elementor' ),
 					'type' 			=> \Elementor\Controls_Manager::BUTTON,
 					'button_type' 	=> 'default',
-					'text' 			=> __( 'Toggle', 'elementor-extras' ),
+					'text' 			=> __( 'Toggle', 'landtech-extras-for-elementor' ),
 					'event' 		=> 'ee:editor:offcanvas:open',
 				]
 			);
@@ -202,11 +203,11 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'container_scroll',
 				[
-					'label' 		=> __( 'Allow Page Scroll', 'elementor-extras' ),
+					'label' 		=> __( 'Allow Page Scroll', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value'	=> 'yes',
 					'frontend_available' => true,
 				]
@@ -215,14 +216,14 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'position',
 				[
-					'label' 	=> __( 'Position', 'elementor-extras' ),
+					'label' 	=> __( 'Position', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default'	=> 'left',
 					'options' 	=> [
-						'left' 		=> __( 'Left', 'elementor-extras' ),
-						'right' 	=> __( 'Right', 'elementor-extras' ),
-						'top' 		=> __( 'Top', 'elementor-extras' ),
-						'bottom' 	=> __( 'Bottom', 'elementor-extras' ),
+						'left' 		=> __( 'Left', 'landtech-extras-for-elementor' ),
+						'right' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
+						'top' 		=> __( 'Top', 'landtech-extras-for-elementor' ),
+						'bottom' 	=> __( 'Bottom', 'landtech-extras-for-elementor' ),
 					],
 					'frontend_available' => true,
 				]
@@ -231,14 +232,14 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'animation',
 				[
-					'label' 	=> __( 'Animation', 'elementor-extras' ),
+					'label' 	=> __( 'Animation', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default'	=> 'reveal',
 					'options' 	=> [
-						'reveal' 	=> __( 'Reveal', 'elementor-extras' ),
-						'push' 		=> __( 'Push', 'elementor-extras' ),
-						'overlay' 	=> __( 'Overlay', 'elementor-extras' ),
-						'shift' 	=> __( 'Shift', 'elementor-extras' ),
+						'reveal' 	=> __( 'Reveal', 'landtech-extras-for-elementor' ),
+						'push' 		=> __( 'Push', 'landtech-extras-for-elementor' ),
+						'overlay' 	=> __( 'Overlay', 'landtech-extras-for-elementor' ),
+						'shift' 	=> __( 'Shift', 'landtech-extras-for-elementor' ),
 					],
 					'frontend_available' => true,
 				]
@@ -247,7 +248,7 @@ class Offcanvas extends Extras_Widget {
 			$this->add_responsive_control(
 				'duration',
 				[
-					'label' 		=> __( 'Animation Duration', 'elementor-extras' ),
+					'label' 		=> __( 'Animation Duration', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -266,21 +267,21 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'anchor_navigation',
 				[
-					'label' 		=> __( 'Anchor Navigation', 'elementor-extras' ),
-					'description'	=> __( 'Allow navigation to anchors on page', 'elementor-extras' ),
+					'label' 		=> __( 'Anchor Navigation', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Allow navigation to anchors on page', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
 					'separator'		=> 'before',
 					'frontend_available' => true,
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 			$this->add_control(
 				'anchor_navigation_speed',
 				[
-					'label' => __( 'Anchor Navigation Speed', 'elementor-extras' ),
+					'label' => __( 'Anchor Navigation Speed', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::SLIDER,
 					'default' => [
 						'size' => 500,
@@ -301,8 +302,8 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'anchor_navigation_close',
 				[
-					'label' 		=> __( 'Close After Scroll', 'elementor-extras' ),
-					'description'	=> __( 'Close offcanvas after animating to anchor', 'elementor-extras' ),
+					'label' 		=> __( 'Close After Scroll', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Close offcanvas after animating to anchor', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
 					'frontend_available' => true,
@@ -315,14 +316,19 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'scroll_fix',
 				[
-					'label' 	=> __( 'Page Jump Fix', 'elementor-extras' ),
-					'description' => sprintf( __( 'Read more about this issue %1$shere%2$s', 'elementor-extras' ), '<a href="https://landtechwebdesigns.com/">', '</a>' ),
+					'label' 	=> __( 'Page Jump Fix', 'landtech-extras-for-elementor' ),
+					'description' => sprintf(
+						/* translators: 1–2: opening and closing link markup for documentation. */
+						__( 'Read more about this issue %1$shere%2$s', 'landtech-extras-for-elementor' ),
+						'<a href="https://landtechwebdesigns.com/">',
+						'</a>'
+					),
 					'type' 		=> Controls_Manager::SELECT,
 					'default'	=> '',
 					'options' 	=> [
-						'' 			=> __( 'None', 'elementor-extras' ),
-						'margin' 	=> __( 'Margin Hack', 'elementor-extras' ),
-						'overflow' 	=> __( 'Overflow Fix', 'elementor-extras' ),
+						'' 			=> __( 'None', 'landtech-extras-for-elementor' ),
+						'margin' 	=> __( 'Margin Hack', 'landtech-extras-for-elementor' ),
+						'overflow' 	=> __( 'Overflow Fix', 'landtech-extras-for-elementor' ),
 					],
 					'frontend_available' => true,
 				]
@@ -331,8 +337,8 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'refresh_widgets',
 				[
-					'label' 		=> __( 'Refresh Panel Widgets', 'elementor-extras' ),
-					'description'	=> __( 'If you are using templates as content for the offcanvas panel, this option will refresh any frontend functionality for all elements inside the panel when opened. Turn this off if you notice strange behaviour or broken elements inside the panel.', 'elementor-extras' ),
+					'label' 		=> __( 'Refresh Panel Widgets', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'If you are using templates as content for the offcanvas panel, this option will refresh any frontend functionality for all elements inside the panel when opened. Turn this off if you notice strange behaviour or broken elements inside the panel.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
 					'frontend_available' => true,
@@ -352,7 +358,7 @@ class Offcanvas extends Extras_Widget {
 		$this->start_controls_section(
 			'section_trigger',
 			[
-				'label' => __( 'Trigger', 'elementor-extras' ),
+				'label' => __( 'Trigger', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -360,13 +366,13 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'trigger_source',
 				[
-					'label' 	=> __( 'Source', 'elementor-extras' ),
+					'label' 	=> __( 'Source', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default'	=> 'burger',
 					'options' 	=> [
-						'burger' 	=> __( 'Burger', 'elementor-extras' ),
-						'id' 		=> __( 'Element ID', 'elementor-extras' ),
-						'class' 	=> __( 'Element Class', 'elementor-extras' ),
+						'burger' 	=> __( 'Burger', 'landtech-extras-for-elementor' ),
+						'id' 		=> __( 'Element ID', 'landtech-extras-for-elementor' ),
+						'class' 	=> __( 'Element Class', 'landtech-extras-for-elementor' ),
 					],
 					'frontend_available' => true,
 				]
@@ -375,13 +381,13 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'trigger_id',
 				[
-					'label' 		=> __( 'Trigger CSS ID', 'elementor-extras' ),
+					'label' 		=> __( 'Trigger CSS ID', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::TEXT,
 					'dynamic'		=> [ 'active' => true ],
 					'default' 		=> '',
 					'label_block' 	=> false,
 					'frontend_available' => true,
-					'title' 		=> __( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'elementor-extras' ),
+					'title' 		=> __( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'landtech-extras-for-elementor' ),
 					'condition'	=> [
 						'trigger_source' => 'id',
 					],
@@ -391,13 +397,13 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'trigger_class',
 				[
-					'label' 		=> __( 'Trigger CSS Class', 'elementor-extras' ),
+					'label' 		=> __( 'Trigger CSS Class', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::TEXT,
 					'dynamic'		=> [ 'active' => true ],
 					'default' 		=> '',
 					'label_block' 	=> false,
 					'frontend_available' => true,
-					'title' 		=> __( 'Add your custom class WITHOUT the DOT key. e.g: my-class', 'elementor-extras' ),
+					'title' 		=> __( 'Add your custom class WITHOUT the DOT key. e.g: my-class', 'landtech-extras-for-elementor' ),
 					'condition'	=> [
 						'trigger_source' => 'class',
 					],
@@ -408,13 +414,13 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'trigger_position',
 				[
-					'label' 	=> __( 'Position', 'elementor-extras' ),
+					'label' 	=> __( 'Position', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'separator' => 'before',
 					'default'	=> 'inline',
 					'options' 	=> [
-						'inline' 	=> __( 'Inline', 'elementor-extras' ),
-						'floating' 	=> __( 'Floating', 'elementor-extras' ),
+						'inline' 	=> __( 'Inline', 'landtech-extras-for-elementor' ),
+						'floating' 	=> __( 'Floating', 'landtech-extras-for-elementor' ),
 					],
 					'condition'	=> [
 						'trigger_source' => 'burger',
@@ -425,18 +431,18 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'trigger_placement',
 				[
-					'label' 	=> __( 'Placement', 'elementor-extras' ),
+					'label' 	=> __( 'Placement', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default'	=> 'top-left',
 					'options' 	=> [
-						'top-left' 		=> __( 'Top Left', 'elementor-extras' ),
-						'top-center' 	=> __( 'Top Center', 'elementor-extras' ),
-						'top-right' 	=> __( 'Top Right', 'elementor-extras' ),
-						'middle-right' 	=> __( 'Middle Right', 'elementor-extras' ),
-						'bottom-right' 	=> __( 'Bottom Right', 'elementor-extras' ),
-						'bottom-center' => __( 'Bottom Center', 'elementor-extras' ),
-						'bottom-left' 	=> __( 'Bottom Left', 'elementor-extras' ),
-						'middle-left' 	=> __( 'Middle Left', 'elementor-extras' ),
+						'top-left' 		=> __( 'Top Left', 'landtech-extras-for-elementor' ),
+						'top-center' 	=> __( 'Top Center', 'landtech-extras-for-elementor' ),
+						'top-right' 	=> __( 'Top Right', 'landtech-extras-for-elementor' ),
+						'middle-right' 	=> __( 'Middle Right', 'landtech-extras-for-elementor' ),
+						'bottom-right' 	=> __( 'Bottom Right', 'landtech-extras-for-elementor' ),
+						'bottom-center' => __( 'Bottom Center', 'landtech-extras-for-elementor' ),
+						'bottom-left' 	=> __( 'Bottom Left', 'landtech-extras-for-elementor' ),
+						'middle-left' 	=> __( 'Middle Left', 'landtech-extras-for-elementor' ),
 					],
 					'prefix_class' => 'ee-offcanvas-placement--',
 					'condition'	=> [
@@ -449,20 +455,20 @@ class Offcanvas extends Extras_Widget {
 			$this->add_responsive_control(
 				'trigger_align',
 				[
-					'label' 		=> __( 'Align', 'elementor-extras' ),
+					'label' 		=> __( 'Align', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'flex-start' 	=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'flex-end' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -479,8 +485,8 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'trigger_zindex',
 				[
-					'label'			=> __( 'zIndex', 'elementor-extras' ),
-					'description'   => __( 'Adjust the z-index of the floating trigger. Defaults to 999', 'elementor-extras' ),
+					'label'			=> __( 'zIndex', 'landtech-extras-for-elementor' ),
+					'description'   => __( 'Adjust the z-index of the floating trigger. Defaults to 999', 'landtech-extras-for-elementor' ),
 					'type'			=> Controls_Manager::NUMBER,
 					'default'		=> '999',
 					'min'			=> 0,
@@ -498,7 +504,7 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'trigger_label_heading',
 				[
-					'label' 	=> __( 'Label', 'elementor-extras' ),
+					'label' 	=> __( 'Label', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 					'condition'	=> [
@@ -510,11 +516,11 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'trigger_label',
 				[
-					'label' 		=> __( 'Show', 'elementor-extras' ),
+					'label' 		=> __( 'Show', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'condition'		=> [
 						'trigger_source' => 'burger',
 					],
@@ -524,10 +530,10 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'trigger_text',
 				[
-					'label' 	=> __( 'Text', 'elementor-extras' ),
+					'label' 	=> __( 'Text', 'landtech-extras-for-elementor' ),
 					'dynamic'	=> [ 'active' => true ],
 					'type' 		=> Controls_Manager::TEXT,
-					'default'	=> __( 'Menu', 'elementor-extras' ),
+					'default'	=> __( 'Menu', 'landtech-extras-for-elementor' ),
 					'condition'	=> [
 						'trigger_source' => 'burger',
 						'trigger_label!' => '',
@@ -538,7 +544,7 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'trigger_icon_heading',
 				[
-					'label' 	=> __( 'Icon', 'elementor-extras' ),
+					'label' 	=> __( 'Icon', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 					'condition'	=> [
@@ -550,13 +556,13 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'trigger_icon_position',
 				[
-					'label' => __( 'Position', 'elementor-extras' ),
+					'label' => __( 'Position', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::SELECT,
 					'default' => 'left',
 					'options' => [
-						'' 		=> __( 'Hide', 'elementor-extras' ),
-						'left' 	=> __( 'Before Label', 'elementor-extras' ),
-						'right' => __( 'After Label', 'elementor-extras' ),
+						'' 		=> __( 'Hide', 'landtech-extras-for-elementor' ),
+						'left' 	=> __( 'Before Label', 'landtech-extras-for-elementor' ),
+						'right' => __( 'After Label', 'landtech-extras-for-elementor' ),
 					],
 					'condition'	=> [
 						'trigger_source' => 'burger',
@@ -567,35 +573,35 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'trigger_effect',
 				[
-					'label' 	=> __( 'Animation', 'elementor-extras' ),
+					'label' 	=> __( 'Animation', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default'	=> 'arrow',
 					'options' 	=> [
-						'' 				=> __( 'None', 'elementor-extras' ),
-						'arrow' 		=> __( 'Arrow Left', 'elementor-extras' ),
-						'arrow-r' 		=> __( 'Arrow Right', 'elementor-extras' ),
-						'arrowalt' 		=> __( 'Arrow Alt Left', 'elementor-extras' ),
-						'arrowalt-r' 	=> __( 'Arrow Alt Right', 'elementor-extras' ),
-						'arrowturn' 	=> __( 'Arrow Turn Left', 'elementor-extras' ),
-						'arrowturn-r' 	=> __( 'Arrow Turn Right', 'elementor-extras' ),
-						'collapse' 		=> __( 'Collapse Left', 'elementor-extras' ),
-						'collapse-r' 	=> __( 'Collapse Right', 'elementor-extras' ),
-						'elastic' 		=> __( 'Elastic Left', 'elementor-extras' ),
-						'elastic-r' 	=> __( 'Elastic Right', 'elementor-extras' ),
-						'emphatic' 		=> __( 'Emphatic Left', 'elementor-extras' ),
-						'emphatic-r' 	=> __( 'Emphatic Right', 'elementor-extras' ),
-						'slider' 		=> __( 'Slider Left', 'elementor-extras' ),
-						'slider-r' 		=> __( 'Slider Right', 'elementor-extras' ),
-						'spin' 			=> __( 'Spin Left', 'elementor-extras' ),
-						'spin-r' 		=> __( 'Spin Right', 'elementor-extras' ),
-						'spring' 		=> __( 'Spring Left', 'elementor-extras' ),
-						'spring-r' 		=> __( 'Spring Right', 'elementor-extras' ),
-						'stand' 		=> __( 'Stand Left', 'elementor-extras' ),
-						'stand-r' 		=> __( 'Stand Right', 'elementor-extras' ),
-						'vortex' 		=> __( 'Vortex Left', 'elementor-extras' ),
-						'vortex-r' 		=> __( 'Vortex Right', 'elementor-extras' ),
-						'minus' 		=> __( 'Minus', 'elementor-extras' ),
-						'squeeze' 		=> __( 'Squeeze', 'elementor-extras' ),
+						'' 				=> __( 'None', 'landtech-extras-for-elementor' ),
+						'arrow' 		=> __( 'Arrow Left', 'landtech-extras-for-elementor' ),
+						'arrow-r' 		=> __( 'Arrow Right', 'landtech-extras-for-elementor' ),
+						'arrowalt' 		=> __( 'Arrow Alt Left', 'landtech-extras-for-elementor' ),
+						'arrowalt-r' 	=> __( 'Arrow Alt Right', 'landtech-extras-for-elementor' ),
+						'arrowturn' 	=> __( 'Arrow Turn Left', 'landtech-extras-for-elementor' ),
+						'arrowturn-r' 	=> __( 'Arrow Turn Right', 'landtech-extras-for-elementor' ),
+						'collapse' 		=> __( 'Collapse Left', 'landtech-extras-for-elementor' ),
+						'collapse-r' 	=> __( 'Collapse Right', 'landtech-extras-for-elementor' ),
+						'elastic' 		=> __( 'Elastic Left', 'landtech-extras-for-elementor' ),
+						'elastic-r' 	=> __( 'Elastic Right', 'landtech-extras-for-elementor' ),
+						'emphatic' 		=> __( 'Emphatic Left', 'landtech-extras-for-elementor' ),
+						'emphatic-r' 	=> __( 'Emphatic Right', 'landtech-extras-for-elementor' ),
+						'slider' 		=> __( 'Slider Left', 'landtech-extras-for-elementor' ),
+						'slider-r' 		=> __( 'Slider Right', 'landtech-extras-for-elementor' ),
+						'spin' 			=> __( 'Spin Left', 'landtech-extras-for-elementor' ),
+						'spin-r' 		=> __( 'Spin Right', 'landtech-extras-for-elementor' ),
+						'spring' 		=> __( 'Spring Left', 'landtech-extras-for-elementor' ),
+						'spring-r' 		=> __( 'Spring Right', 'landtech-extras-for-elementor' ),
+						'stand' 		=> __( 'Stand Left', 'landtech-extras-for-elementor' ),
+						'stand-r' 		=> __( 'Stand Right', 'landtech-extras-for-elementor' ),
+						'vortex' 		=> __( 'Vortex Left', 'landtech-extras-for-elementor' ),
+						'vortex-r' 		=> __( 'Vortex Right', 'landtech-extras-for-elementor' ),
+						'minus' 		=> __( 'Minus', 'landtech-extras-for-elementor' ),
+						'squeeze' 		=> __( 'Squeeze', 'landtech-extras-for-elementor' ),
 					],
 					'condition'	=> [
 						'trigger_source' => 'burger',
@@ -606,7 +612,7 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'trigger_icon_indent',
 				[
-					'label' => __( 'Spacing', 'elementor-extras' ),
+					'label' => __( 'Spacing', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::SLIDER,
 					'range' => [
 						'px' => [
@@ -638,7 +644,7 @@ class Offcanvas extends Extras_Widget {
 		$this->start_controls_section(
 			'section_title',
 			[
-				'label' => __( 'Title', 'elementor-extras' ),
+				'label' => __( 'Title', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -646,21 +652,21 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'header_title',
 				[
-					'label' 		=> __( 'Show', 'elementor-extras' ),
+					'label' 		=> __( 'Show', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 			$this->add_control(
 				'header_title_text',
 				[
-					'label' 	=> __( 'Title', 'elementor-extras' ),
+					'label' 	=> __( 'Title', 'landtech-extras-for-elementor' ),
 					'dynamic'	=> [ 'active' => true ],
 					'type' 		=> Controls_Manager::TEXT,
-					'default'	=> __( 'Menu', 'elementor-extras' ),
+					'default'	=> __( 'Menu', 'landtech-extras-for-elementor' ),
 					'condition' => [
 						'header_title!' => '',
 					],
@@ -670,18 +676,18 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'header_title_tag',
 				[
-					'label' 	=> __( 'Title HTML Tag', 'elementor-extras' ),
+					'label' 	=> __( 'Title HTML Tag', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'options' 	=> [
-						'h1' 	=> __( 'H1', 'elementor-extras' ),
-						'h2' 	=> __( 'H2', 'elementor-extras' ),
-						'h3' 	=> __( 'H3', 'elementor-extras' ),
-						'h4' 	=> __( 'H4', 'elementor-extras' ),
-						'h5' 	=> __( 'H5', 'elementor-extras' ),
-						'h6' 	=> __( 'H6', 'elementor-extras' ),
-						'div' 	=> __( 'div', 'elementor-extras' ),
-						'span' 	=> __( 'span', 'elementor-extras' ),
-						'p' 	=> __( 'p', 'elementor-extras' ),
+						'h1' 	=> __( 'H1', 'landtech-extras-for-elementor' ),
+						'h2' 	=> __( 'H2', 'landtech-extras-for-elementor' ),
+						'h3' 	=> __( 'H3', 'landtech-extras-for-elementor' ),
+						'h4' 	=> __( 'H4', 'landtech-extras-for-elementor' ),
+						'h5' 	=> __( 'H5', 'landtech-extras-for-elementor' ),
+						'h6' 	=> __( 'H6', 'landtech-extras-for-elementor' ),
+						'div' 	=> __( 'div', 'landtech-extras-for-elementor' ),
+						'span' 	=> __( 'span', 'landtech-extras-for-elementor' ),
+						'p' 	=> __( 'p', 'landtech-extras-for-elementor' ),
 					],
 					'default' => 'h3',
 					'condition' => [
@@ -704,7 +710,7 @@ class Offcanvas extends Extras_Widget {
 		$this->start_controls_section(
 			'section_close',
 			[
-				'label' => __( 'Close', 'elementor-extras' ),
+				'label' => __( 'Close', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			]
 		);	
@@ -712,13 +718,13 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'header_close_source',
 				[
-					'label'		=> __( 'Source', 'elementor-extras' ),
+					'label'		=> __( 'Source', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> '',
 					'options' 	=> [
-						''			=> __( 'Default', 'elementor-extras' ),
-						'id' 		=> __( 'Element ID', 'elementor-extras' ),
-						'class' 	=> __( 'Element Class', 'elementor-extras' ),
+						''			=> __( 'Default', 'landtech-extras-for-elementor' ),
+						'id' 		=> __( 'Element ID', 'landtech-extras-for-elementor' ),
+						'class' 	=> __( 'Element Class', 'landtech-extras-for-elementor' ),
 					],
 					'frontend_available' => true,
 				]
@@ -727,13 +733,13 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'header_close_id',
 				[
-					'label' 		=> __( 'Close CSS ID', 'elementor-extras' ),
+					'label' 		=> __( 'Close CSS ID', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::TEXT,
 					'dynamic'		=> [ 'active' => true ],
 					'default' 		=> '',
 					'label_block' 	=> false,
 					'frontend_available' => true,
-					'title' 		=> __( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'elementor-extras' ),
+					'title' 		=> __( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'landtech-extras-for-elementor' ),
 					'condition'	=> [
 						'header_close_source' => 'id',
 					],
@@ -743,13 +749,13 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'header_close_class',
 				[
-					'label' 		=> __( 'Close CSS Class', 'elementor-extras' ),
+					'label' 		=> __( 'Close CSS Class', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::TEXT,
 					'dynamic'		=> [ 'active' => true ],
 					'default' 		=> '',
 					'label_block' 	=> false,
 					'frontend_available' => true,
-					'title' 		=> __( 'Add your custom class WITHOUT the DOT key. e.g: my-class', 'elementor-extras' ),
+					'title' 		=> __( 'Add your custom class WITHOUT the DOT key. e.g: my-class', 'landtech-extras-for-elementor' ),
 					'condition'	=> [
 						'header_close_source' => 'class',
 					],
@@ -760,14 +766,14 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'header_close_position',
 				[
-					'label'		=> __( 'Position', 'elementor-extras' ),
+					'label'		=> __( 'Position', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'after',
 					'options' 	=> [
-						''			=> __( 'Hide', 'elementor-extras' ),
-						'left' 		=> __( 'Left', 'elementor-extras' ),
-						'right'		=> __( 'Right', 'elementor-extras' ),
-						'custom'	=> __( 'Custom', 'elementor-extras' ),
+						''			=> __( 'Hide', 'landtech-extras-for-elementor' ),
+						'left' 		=> __( 'Left', 'landtech-extras-for-elementor' ),
+						'right'		=> __( 'Right', 'landtech-extras-for-elementor' ),
+						'custom'	=> __( 'Custom', 'landtech-extras-for-elementor' ),
 					],
 					'condition' => [
 						'header_close_source' => '',
@@ -788,7 +794,7 @@ class Offcanvas extends Extras_Widget {
 		$this->start_controls_section(
 			'section_content',
 			[
-				'label' => __( 'Content Boxes', 'elementor-extras' ),
+				'label' => __( 'Content Boxes', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -800,13 +806,13 @@ class Offcanvas extends Extras_Widget {
 			$repeater->add_control(
 				'content_type',
 				[
-					'label'		=> __( 'Type', 'elementor-extras' ),
+					'label'		=> __( 'Type', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'text',
 					'options' 	=> [
-						'text' 		=> __( 'Text', 'elementor-extras' ),
-						'template' 	=> __( 'Template', 'elementor-extras' ),
-						'sidebar' 	=> __( 'WordPress Sidebar', 'elementor-extras' ),
+						'text' 		=> __( 'Text', 'landtech-extras-for-elementor' ),
+						'template' 	=> __( 'Template', 'landtech-extras-for-elementor' ),
+						'sidebar' 	=> __( 'WordPress Sidebar', 'landtech-extras-for-elementor' ),
 					],
 				]
 			);
@@ -814,10 +820,10 @@ class Offcanvas extends Extras_Widget {
 			$repeater->add_control(
 				'content',
 				[
-					'label' 	=> __( 'Content', 'elementor-extras' ),
+					'label' 	=> __( 'Content', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::WYSIWYG,
 					'dynamic'	=> [ 'active' => true ],
-					'default' 	=> __( 'I am a content box for offcanvas navigation', 'elementor-extras' ),
+					'default' 	=> __( 'I am a content box for offcanvas navigation', 'landtech-extras-for-elementor' ),
 					'condition'	=> [
 						'content_type' => 'text',
 					],
@@ -832,7 +838,7 @@ class Offcanvas extends Extras_Widget {
 			] );
 
 			$repeater->add_control( 'sidebar', [
-				'label' => __( 'Choose Sidebar', 'elementor-extras' ),
+				'label' => __( 'Choose Sidebar', 'landtech-extras-for-elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => $this->_sidebars_default_key,
 				'options' => $this->_sidebars_options,
@@ -849,11 +855,11 @@ class Offcanvas extends Extras_Widget {
 					'default' 	=> [
 						[
 							'content_type' => 'text',
-							'content' => __( 'I am a content box for offcanvas navigation', 'elementor-extras' ),
+							'content' => __( 'I am a content box for offcanvas navigation', 'landtech-extras-for-elementor' ),
 						],
 						[
 							'content_type' => 'text',
-							'content' => __( 'I am a content box for offcanvas navigation', 'elementor-extras' ),
+							'content' => __( 'I am a content box for offcanvas navigation', 'landtech-extras-for-elementor' ),
 						],
 					],
 					'fields' 		=> $repeater->get_controls(),
@@ -874,7 +880,7 @@ class Offcanvas extends Extras_Widget {
 		$this->start_controls_section(
 			'section_offcanvas_style',
 			[
-				'label' => __( 'Offcanvas', 'elementor-extras' ),
+				'label' => __( 'Offcanvas', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -882,7 +888,7 @@ class Offcanvas extends Extras_Widget {
 			$this->add_responsive_control(
 				'offcanvas_width',
 				[
-					'label' 		=> __( 'Width', 'elementor-extras' ),
+					'label' 		=> __( 'Width', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'size_units' 	=> [ 'px', '%' ],
 					'range' 		=> [
@@ -919,7 +925,7 @@ class Offcanvas extends Extras_Widget {
 			$this->add_responsive_control(
 				'offcanvas_height',
 				[
-					'label' 		=> __( 'Height', 'elementor-extras' ),
+					'label' 		=> __( 'Height', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'size_units' 	=> [ 'px', '%' ],
 					'range' 		=> [
@@ -956,7 +962,7 @@ class Offcanvas extends Extras_Widget {
 			$this->add_responsive_control(
 				'offcanvas_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -968,7 +974,7 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'offcanvas_background',
 				[
-					'label' 	=> __( 'Background Color', 'elementor-extras' ),
+					'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'default'	=> '',
 					'selectors' => [
@@ -1003,7 +1009,7 @@ class Offcanvas extends Extras_Widget {
 		$this->start_controls_section(
 			'section_page_style',
 			[
-				'label' => __( 'Page', 'elementor-extras' ),
+				'label' => __( 'Page', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -1011,7 +1017,7 @@ class Offcanvas extends Extras_Widget {
 				'page_style_notice',
 				[
 					'type' 				=> Controls_Manager::RAW_HTML,
-					'raw' 				=> __( 'The settings below apply to the page when the offcanvas panel is opened.', 'elementor-extras' ),
+					'raw' 				=> __( 'The settings below apply to the page when the offcanvas panel is opened.', 'landtech-extras-for-elementor' ),
 					'content_classes' 	=> 'elementor-panel-alert elementor-panel-alert-info',
 				]
 			);
@@ -1020,8 +1026,8 @@ class Offcanvas extends Extras_Widget {
 				'page_background_color',
 				[
 					'type' 			=> Controls_Manager::COLOR,
-					'label' 		=> __( 'Container Background', 'elementor-extras' ),
-					'description' 	=> __( 'When the offcanvas opens, the page is wrapped in an element that needs a background colour which is the same as the page.', 'elementor-extras' ),
+					'label' 		=> __( 'Container Background', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'When the offcanvas opens, the page is wrapped in an element that needs a background colour which is the same as the page.', 'landtech-extras-for-elementor' ),
 					'default'		=> 'rgba(255,255,255,1)',
 					'selectors' 	=> [
 						'body.ee-offcanvas--id-{{ID}} .ee-offcanvas__container' => 'background-color: {{VALUE}};',
@@ -1032,7 +1038,7 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'overlay_background',
 				[
-					'label' 	=> __( 'Overlay Color', 'elementor-extras' ),
+					'label' 	=> __( 'Overlay Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'default'	=> '',
 					'selectors' => [
@@ -1044,7 +1050,7 @@ class Offcanvas extends Extras_Widget {
 			$this->add_responsive_control(
 				'overlay_opacity',
 				[
-					'label' 	=> __( 'Overlay Opacity (%)', 'elementor-extras' ),
+					'label' 	=> __( 'Overlay Opacity (%)', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 0.8,
@@ -1076,7 +1082,7 @@ class Offcanvas extends Extras_Widget {
 		$this->start_controls_section(
 			'section_trigger_style',
 			[
-				'label' => __( 'Trigger', 'elementor-extras' ),
+				'label' => __( 'Trigger', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 				'condition'	=> [
 					'trigger_source' => 'burger',
@@ -1088,7 +1094,7 @@ class Offcanvas extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'trigger_border',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '{{WRAPPER}} .ee-button',
 					'condition'	=> [
 						'trigger_source' => 'burger',
@@ -1099,7 +1105,7 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'trigger_border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
@@ -1114,7 +1120,7 @@ class Offcanvas extends Extras_Widget {
 			$this->add_responsive_control(
 				'trigger_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -1129,7 +1135,7 @@ class Offcanvas extends Extras_Widget {
 			$this->add_responsive_control(
 				'trigger_margin',
 				[
-					'label' 		=> __( 'Margin', 'elementor-extras' ),
+					'label' 		=> __( 'Margin', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -1145,7 +1151,7 @@ class Offcanvas extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'trigger',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '{{WRAPPER}} .ee-button-wrapper',
 					'condition'	=> [
 						'trigger_source' => 'burger',
@@ -1171,7 +1177,7 @@ class Offcanvas extends Extras_Widget {
 			$this->start_controls_tabs( 'trigger_tabs_hover' );
 
 			$this->start_controls_tab( 'trigger_tab_default', [
-				'label' => __( 'Default', 'elementor-extras' ),
+				'label' => __( 'Default', 'landtech-extras-for-elementor' ),
 				'condition'	=> [
 					'trigger_source' => 'burger',
 				],
@@ -1180,7 +1186,7 @@ class Offcanvas extends Extras_Widget {
 				$this->add_control(
 					'trigger_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -1198,7 +1204,7 @@ class Offcanvas extends Extras_Widget {
 				$this->add_control(
 					'trigger_background',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -1213,7 +1219,7 @@ class Offcanvas extends Extras_Widget {
 			$this->end_controls_tab();
 
 			$this->start_controls_tab( 'trigger_tab_hover', [
-				'label' => __( 'Hover', 'elementor-extras' ),
+				'label' => __( 'Hover', 'landtech-extras-for-elementor' ),
 				'condition'	=> [
 					'trigger_source' => 'burger',
 				],
@@ -1222,7 +1228,7 @@ class Offcanvas extends Extras_Widget {
 				$this->add_control(
 					'trigger_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -1240,7 +1246,7 @@ class Offcanvas extends Extras_Widget {
 				$this->add_control(
 					'trigger_background_hover',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -1255,7 +1261,7 @@ class Offcanvas extends Extras_Widget {
 			$this->end_controls_tab();
 
 			$this->start_controls_tab( 'trigger_tab_open', [
-				'label' => __( 'Open', 'elementor-extras' ),
+				'label' => __( 'Open', 'landtech-extras-for-elementor' ),
 				'condition'	=> [
 					'trigger_source' => 'burger',
 				],
@@ -1264,7 +1270,7 @@ class Offcanvas extends Extras_Widget {
 				$this->add_control(
 					'trigger_color_open',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -1282,7 +1288,7 @@ class Offcanvas extends Extras_Widget {
 				$this->add_control(
 					'trigger_background_open',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -1301,7 +1307,7 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'trigger_icon_style_heading',
 				[
-					'label' 	=> __( 'Icon', 'elementor-extras' ),
+					'label' 	=> __( 'Icon', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 					'condition'	=> [
@@ -1313,7 +1319,7 @@ class Offcanvas extends Extras_Widget {
 			$this->add_responsive_control(
 				'trigger_icon_size',
 				[
-					'label' 	=> __( 'Icon Size', 'elementor-extras' ),
+					'label' 	=> __( 'Icon Size', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 1,
@@ -1337,7 +1343,7 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'trigger_label_style_heading',
 				[
-					'label' 	=> __( 'Label', 'elementor-extras' ),
+					'label' 	=> __( 'Label', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 					'condition'	=> [
@@ -1351,7 +1357,7 @@ class Offcanvas extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'trigger_label',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -1376,7 +1382,7 @@ class Offcanvas extends Extras_Widget {
 		$this->start_controls_section(
 			'section_title_style',
 			[
-				'label' => __( 'Title', 'elementor-extras' ),
+				'label' => __( 'Title', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 				'condition'	=> [
 					'header_title!' => '',
@@ -1387,7 +1393,7 @@ class Offcanvas extends Extras_Widget {
 			$this->add_responsive_control(
 				'title_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -1402,20 +1408,20 @@ class Offcanvas extends Extras_Widget {
 			$this->add_responsive_control(
 				'title_align',
 				[
-					'label' 		=> __( 'Align', 'elementor-extras' ),
+					'label' 		=> __( 'Align', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'left' 			=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -1432,7 +1438,7 @@ class Offcanvas extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'title',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_SECONDARY,
 					],
@@ -1446,7 +1452,7 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'title_color',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'selectors' => [
 						'.ee-offcanvas__slidebar--{{ID}} .ee-offcanvas__header__title' => 'color: {{VALUE}};',
@@ -1471,7 +1477,7 @@ class Offcanvas extends Extras_Widget {
 		$this->start_controls_section(
 			'section_close_style',
 			[
-				'label' => __( 'Close', 'elementor-extras' ),
+				'label' => __( 'Close', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 				'condition'	=> [
 					'header_close_source' => '',
@@ -1483,7 +1489,7 @@ class Offcanvas extends Extras_Widget {
 			$this->add_responsive_control(
 				'close_size',
 				[
-					'label' 	=> __( 'Size', 'elementor-extras' ),
+					'label' 	=> __( 'Size', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 30,
@@ -1507,7 +1513,7 @@ class Offcanvas extends Extras_Widget {
 			$this->add_responsive_control(
 				'close_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -1523,7 +1529,7 @@ class Offcanvas extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'close_border',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '.ee-offcanvas__slidebar--{{ID}} .ee-offcanvas__header__close',
 					'condition'	=> [
 						'header_close_position!' => '',
@@ -1534,7 +1540,7 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'close_border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
@@ -1561,7 +1567,7 @@ class Offcanvas extends Extras_Widget {
 			$this->start_controls_tabs( 'close_tabs_hover' );
 
 			$this->start_controls_tab( 'close_tab_default', [
-				'label' => __( 'Default', 'elementor-extras' ),
+				'label' => __( 'Default', 'landtech-extras-for-elementor' ),
 				'condition'	=> [
 					'header_close_position!' => '',
 				],
@@ -1570,7 +1576,7 @@ class Offcanvas extends Extras_Widget {
 				$this->add_control(
 					'close_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'.ee-offcanvas__slidebar--{{ID}} .ee-offcanvas__header__close' => 'color: {{VALUE}};',
@@ -1584,7 +1590,7 @@ class Offcanvas extends Extras_Widget {
 				$this->add_control(
 					'close_background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'.ee-offcanvas__slidebar--{{ID}} .ee-offcanvas__header__close' => 'background-color: {{VALUE}};',
@@ -1598,7 +1604,7 @@ class Offcanvas extends Extras_Widget {
 			$this->end_controls_tab();
 
 			$this->start_controls_tab( 'close_tab_hover', [
-				'label' => __( 'Hover', 'elementor-extras' ),
+				'label' => __( 'Hover', 'landtech-extras-for-elementor' ),
 				'condition'	=> [
 					'header_close_position!' => '',
 				],
@@ -1607,7 +1613,7 @@ class Offcanvas extends Extras_Widget {
 				$this->add_control(
 					'close_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'.ee-offcanvas__slidebar--{{ID}} .ee-offcanvas__header__close:hover' => 'color: {{VALUE}};',
@@ -1621,7 +1627,7 @@ class Offcanvas extends Extras_Widget {
 				$this->add_control(
 					'close_background_color_hover',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'.ee-offcanvas__slidebar--{{ID}} .ee-offcanvas__header__close:hover' => 'background-color: {{VALUE}};',
@@ -1650,7 +1656,7 @@ class Offcanvas extends Extras_Widget {
 		$this->start_controls_section(
 			'section_content_style',
 			[
-				'label' => __( 'Content Boxes', 'elementor-extras' ),
+				'label' => __( 'Content Boxes', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -1658,7 +1664,7 @@ class Offcanvas extends Extras_Widget {
 			$this->add_responsive_control(
 				'boxes_spacing',
 				[
-					'label' 		=> __( 'Boxes Spacing', 'elementor-extras' ),
+					'label' 		=> __( 'Boxes Spacing', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'size_units' 	=> [ 'px' ],
 					'default'		=> [
@@ -1679,7 +1685,7 @@ class Offcanvas extends Extras_Widget {
 			$this->add_responsive_control(
 				'boxes_padding',
 				[
-					'label' 		=> __( 'Boxes Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Boxes Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -1692,7 +1698,7 @@ class Offcanvas extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'boxes',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '.ee-offcanvas__slidebar--{{ID}} .ee-offcanvas__content__item',
 				]
 			);
@@ -1700,7 +1706,7 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'boxes_border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
@@ -1713,7 +1719,7 @@ class Offcanvas extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'boxes',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -1724,7 +1730,7 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'boxes_foreground_color',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'selectors' => [
 						'.ee-offcanvas__slidebar--{{ID}} .ee-offcanvas__content__item' => 'color: {{VALUE}};',
@@ -1735,7 +1741,7 @@ class Offcanvas extends Extras_Widget {
 			$this->add_control(
 				'boxes_background_color',
 				[
-					'label' 	=> __( 'Background Color', 'elementor-extras' ),
+					'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'selectors' => [
 						'.ee-offcanvas__slidebar--{{ID}} .ee-offcanvas__content__item' => 'background-color: {{VALUE}};',
@@ -1764,7 +1770,7 @@ class Offcanvas extends Extras_Widget {
 
 		if ( 'burger' === $settings['trigger_source'] ) {
 			if ( 'floating' === $settings['trigger_position'] ) {
-				$placeholder .= __( 'Your menu trigger is floating. ', 'elementor-extras' );
+				$placeholder .= __( 'Your menu trigger is floating. ', 'landtech-extras-for-elementor' );
 				$has_placeholder = true;
 			} else {
 				$has_placeholder = false;
@@ -1773,14 +1779,14 @@ class Offcanvas extends Extras_Widget {
 			$this->render_trigger();
 			
 		} else {
-			$placeholder .= __( 'You selected to trigger offcanvas using another element on the page. ', 'elementor-extras' );
+			$placeholder .= __( 'You selected to trigger offcanvas using another element on the page. ', 'landtech-extras-for-elementor' );
 			$has_placeholder = true;
 		}
 
 		if ( $has_placeholder ) {
-			$placeholder .= __( ' This placeholder will not be shown on the live page.', 'elementor-extras' );
+			$placeholder .= __( ' This placeholder will not be shown on the live page.', 'landtech-extras-for-elementor' );
 
-			echo $this->render_placeholder( [
+			$this->render_placeholder( [
 				'body' => $placeholder,
 			] );
 		}
@@ -1844,20 +1850,20 @@ class Offcanvas extends Extras_Widget {
 			],
 		] );
 
-		?><div <?php echo $this->get_render_attribute_string( 'button-wrapper' ); ?>>
-			<div <?php echo $this->get_render_attribute_string( 'button' ); ?>>
+		?><div <?php $this->print_render_attribute_string( 'button-wrapper' ); ?>>
+			<div <?php $this->print_render_attribute_string( 'button' ); ?>>
 
-				<span <?php echo $this->get_render_attribute_string( 'button-content' ); ?>>
+				<span <?php $this->print_render_attribute_string( 'button-content' ); ?>>
 
 					<?php if ( '' !== $settings['trigger_icon_position'] ) { ?>
-					<span <?php echo $this->get_render_attribute_string( 'button-content-wrapper' ); ?>>
-						<span <?php echo $this->get_render_attribute_string( 'button-inner' ); ?>></span>
+					<span <?php $this->print_render_attribute_string( 'button-content-wrapper' ); ?>>
+						<span <?php $this->print_render_attribute_string( 'button-inner' ); ?>></span>
 					</span>
 					<?php } ?>
 
 					<?php if ( '' !== $settings['trigger_label'] ) : ?>
-					<span <?php echo $this->get_render_attribute_string( 'button-text' ); ?>>
-						<?php echo $settings['trigger_text']; ?>
+					<span <?php $this->print_render_attribute_string( 'button-text' ); ?>>
+						<?php echo esc_html( $settings['trigger_text'] ); ?>
 					</span>
 					<?php endif; ?>
 
@@ -1914,7 +1920,7 @@ class Offcanvas extends Extras_Widget {
 		}
 
 		if ( $has_title ) {
-			$title_tag = $settings['header_title_tag'];
+			$title_tag = $this->ltxe_sanitize_heading_tag( $settings['header_title_tag'] );
 
 			$this->add_render_attribute( [
 				'content-header' => [
@@ -1925,16 +1931,16 @@ class Offcanvas extends Extras_Widget {
 			] );
 		}
 
-		?><div <?php echo $this->get_render_attribute_string( 'content-boxes' ); ?>>
+		?><div <?php $this->print_render_attribute_string( 'content-boxes' ); ?>>
 			<?php if ( $has_title || $has_close ) { ?>
-			<div <?php echo $this->get_render_attribute_string( 'content-header' ); ?>>
+			<div <?php $this->print_render_attribute_string( 'content-header' ); ?>>
 				<?php if ( $has_title ) { ?>
-					<<?php echo $title_tag; ?> <?php echo $this->get_render_attribute_string( 'header-title' ); ?>>
-						<?php echo $settings['header_title_text']; ?>
-					</<?php echo $title_tag; ?>>
+					<<?php echo esc_html( $title_tag ); ?> <?php $this->print_render_attribute_string( 'header-title' ); ?>>
+						<?php echo wp_kses_post( $settings['header_title_text'] ); ?>
+					</<?php echo esc_html( $title_tag ); ?>>
 				<?php } ?>
 				<?php if ( $has_close ) { ?>
-					<div <?php echo $this->get_render_attribute_string( 'header-close' ); ?>><i class="eicon-close"></i></div>
+					<div <?php $this->print_render_attribute_string( 'header-close' ); ?>><i class="eicon-close"></i></div>
 				<?php } ?>
 			</div>
 			<?php } ?>
@@ -1949,7 +1955,7 @@ class Offcanvas extends Extras_Widget {
 					]
 				] );
 
-				?><div <?php echo $this->get_render_attribute_string( $box_key ); ?>><?php
+				?><div <?php $this->print_render_attribute_string( $box_key ); ?>><?php
 
 					switch ( $item['content_type'] ) {
 						case 'text':
@@ -1997,7 +2003,7 @@ class Offcanvas extends Extras_Widget {
 	 * @return void
 	 */
 	public function render_text( $index, $item ) {
-		echo $this->parse_text_editor( $item['content'] );
+		echo wp_kses_post( $this->parse_text_editor( $item['content'] ) );
 	}
 
 	/**

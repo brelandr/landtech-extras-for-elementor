@@ -1,10 +1,11 @@
 <?php
-namespace ElementorExtras\Modules\Posts\Skins;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Posts\Skins;
 
-// Extras for Elementor Classes
-use ElementorExtras\Utils;
-use ElementorExtras\Group_Control_Transition;
-use ElementorExtras\Modules\Posts\Module;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Utils;
+use LandTechExtras\Group_Control_Transition;
+use LandTechExtras\Modules\Posts\Module;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -43,7 +44,26 @@ class Skin_Classic extends Skin_Base {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Classic', 'elementor-extras' );
+		return __( 'Classic', 'landtech-extras-for-elementor' );
+	}
+
+	/**
+	 * Editor preview: expose loop layout so editor JS can initialise Isotope without inline PHP strings.
+	 *
+	 * @since  1.6.0
+	 * @return void
+	 */
+	protected function render_loop_start() {
+
+		if ( \Elementor\Plugin::instance()->editor->is_edit_mode() ) {
+			$this->parent->add_render_attribute(
+				'loop',
+				'data-ee-editor-isotope-layout',
+				(string) $this->get_instance_value( 'layout' )
+			);
+		}
+
+		parent::render_loop_start();
 	}
 
 	/**
@@ -94,7 +114,7 @@ class Skin_Classic extends Skin_Base {
 			$this->add_control(
 				'grid_heading',
 				[
-					'label' 	=> __( 'Grid', 'elementor-extras' ),
+					'label' 	=> __( 'Grid', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator'	=> 'before',
 				]
@@ -103,17 +123,93 @@ class Skin_Classic extends Skin_Base {
 			$this->add_control(
 				'layout',
 				[
-					'label' 		=> __( 'Layout', 'elementor-extras' ),
+					'label' 		=> __( 'Layout', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT,
 					'default' 		=> 'default',
-					'options' 		=> [
-						'default' 		=> __( 'Default', 'elementor-extras' ),
-						'masonry' 		=> __( 'Masonry', 'elementor-extras' ),
-					],
+					'options' 		=> apply_filters(
+						'landtech_extras/posts/grid_layout_mode_choices',
+						[
+							'default' 		=> __( 'Default', 'landtech-extras-for-elementor' ),
+							'masonry' 		=> __( 'Masonry', 'landtech-extras-for-elementor' ),
+						],
+						$this
+					),
 					'condition'		=> [
 						'columns!'	=> '1',
 					],
 					'frontend_available' => true,
+				]
+			);
+
+			$this->add_responsive_control(
+				'packery_featured_width',
+				[
+					'label'       => __( 'Packery: first item width', 'landtech-extras-for-elementor' ),
+					'description' => __( 'Width of the first grid item when using Metro tiles (Packery). Does not apply to other layouts.', 'landtech-extras-for-elementor' ),
+					'type'        => Controls_Manager::SLIDER,
+					'size_units'  => [ '%' ],
+					'range'       => [
+						'%' => [
+							'min'  => 25,
+							'max'  => 100,
+							'step' => 0.1,
+						],
+					],
+					'default'     => [
+						'unit' => '%',
+						'size' => 66.666,
+					],
+					'tablet_default' => [
+						'unit' => '%',
+						'size' => 66.666,
+					],
+					'mobile_default' => [
+						'unit' => '%',
+						'size' => 100,
+					],
+					'selectors'   => [
+						'{{WRAPPER}} .ee-grid--packery .ltxee-packery-featured' => 'width: {{SIZE}}{{UNIT}} !important;',
+					],
+					'condition'   => [
+						$this->get_control_id( 'layout' ) => 'packery',
+						'columns!' => '1',
+					],
+				]
+			);
+
+			$this->add_responsive_control(
+				'packery_second_width',
+				[
+					'label'       => __( 'Packery: second item width', 'landtech-extras-for-elementor' ),
+					'description' => __( 'Width of the second grid item when using Metro tiles (Packery). Does not apply to other layouts.', 'landtech-extras-for-elementor' ),
+					'type'        => Controls_Manager::SLIDER,
+					'size_units'  => [ '%' ],
+					'range'       => [
+						'%' => [
+							'min'  => 25,
+							'max'  => 100,
+							'step' => 0.1,
+						],
+					],
+					'default'     => [
+						'unit' => '%',
+						'size' => 33.333,
+					],
+					'tablet_default' => [
+						'unit' => '%',
+						'size' => 33.333,
+					],
+					'mobile_default' => [
+						'unit' => '%',
+						'size' => 100,
+					],
+					'selectors'   => [
+						'{{WRAPPER}} .ee-grid--packery .ltxee-packery-second' => 'width: {{SIZE}}{{UNIT}} !important;',
+					],
+					'condition'   => [
+						$this->get_control_id( 'layout' ) => 'packery',
+						'columns!' => '1',
+					],
 				]
 			);
 
@@ -131,7 +227,7 @@ class Skin_Classic extends Skin_Base {
 		$this->start_controls_section(
 			'section_parallax',
 			[
-				'label' => __( 'Parallax', 'elementor-extras' ),
+				'label' => __( 'Parallax', 'landtech-extras-for-elementor' ),
 				'condition' 	=> [
 					$this->get_control_id( 'parallax!' ) => '',
 				],
@@ -142,13 +238,13 @@ class Skin_Classic extends Skin_Base {
 			$this->add_control(
 				'parallax_disable_on',
 				[
-					'label' 	=> __( 'Disable for', 'elementor-extras' ),
+					'label' 	=> __( 'Disable for', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'mobile',
 					'options' 			=> [
-						'none' 		=> __( 'None', 'elementor-extras' ),
-						'tablet' 	=> __( 'Mobile and tablet', 'elementor-extras' ),
-						'mobile' 	=> __( 'Mobile only', 'elementor-extras' ),
+						'none' 		=> __( 'None', 'landtech-extras-for-elementor' ),
+						'tablet' 	=> __( 'Mobile and tablet', 'landtech-extras-for-elementor' ),
+						'mobile' 	=> __( 'Mobile only', 'landtech-extras-for-elementor' ),
 					],
 					'condition' 	=> [
 						$this->get_control_id( 'parallax!' ) => '',
@@ -160,7 +256,7 @@ class Skin_Classic extends Skin_Base {
 			$this->add_responsive_control(
 				'parallax_speed',
 				[
-					'label' 	=> __( 'Parallax speed', 'elementor-extras' ),
+					'label' 	=> __( 'Parallax speed', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default'	=> [
 						'size'	=> 0.5,
@@ -202,14 +298,14 @@ class Skin_Classic extends Skin_Base {
 		$this->start_controls_section(
 			'section_infinite_scroll',
 			[
-				'label' => __( 'Infinite Scroll', 'elementor-extras' ),
+				'label' => __( 'Infinite Scroll', 'landtech-extras-for-elementor' ),
 			]
 		);
 
 			$this->add_control(
 				'infinite_scroll',
 				[
-					'label' 		=> __( 'Infinite Scroll', 'elementor-extras' ),
+					'label' 		=> __( 'Infinite Scroll', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
 					'separator'		=> 'after',
@@ -221,8 +317,8 @@ class Skin_Classic extends Skin_Base {
 			$this->add_control(
 				'infinite_scroll_history',
 				[
-					'label' 		=> __( 'Enable History', 'elementor-extras' ),
-					'description'	=> __( 'Change the browser history and URL when loading new posts.', 'elementor-extras' ),
+					'label' 		=> __( 'Enable History', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Change the browser history and URL when loading new posts.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
 					'return_value' 	=> 'yes',
@@ -237,7 +333,7 @@ class Skin_Classic extends Skin_Base {
 				'infinite_scroll_status_heading',
 				[
 					'separator'	=> 'before',
-					'label' 	=> __( 'Status and Loader', 'elementor-extras' ),
+					'label' 	=> __( 'Status and Loader', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'condition'	=> [
 						$this->get_control_id( 'infinite_scroll!' ) => '',
@@ -248,7 +344,7 @@ class Skin_Classic extends Skin_Base {
 			$this->add_control(
 				'infinite_scroll_status',
 				[
-					'label' 		=> __( 'Show Statuses', 'elementor-extras' ),
+					'label' 		=> __( 'Show Statuses', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
 					'return_value' 	=> 'yes',
@@ -261,8 +357,8 @@ class Skin_Classic extends Skin_Base {
 			$this->add_control(
 				'infinite_scroll_status_helper',
 				[
-					'label' 		=> __( 'Preview in Editor', 'elementor-extras' ),
-					'description'	=> __( 'Preview loader and status texts in editor mode.', 'elementor-extras' ),
+					'label' 		=> __( 'Preview in Editor', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Preview loader and status texts in editor mode.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
 					'return_value' 	=> 'on',
@@ -277,12 +373,12 @@ class Skin_Classic extends Skin_Base {
 			$this->add_control(
 				'infinite_scroll_loading_type',
 				[
-					'label' 		=> __( 'Loading Type', 'elementor-extras' ),
+					'label' 		=> __( 'Loading Type', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT,
 					'default' 		=> 'loader',
 					'options' 		=> [
-						'loader' 	=> __( 'Loader', 'elementor-extras' ),
-						'text' 		=> __( 'Text', 'elementor-extras' ),
+						'loader' 	=> __( 'Loader', 'landtech-extras-for-elementor' ),
+						'text' 		=> __( 'Text', 'landtech-extras-for-elementor' ),
 					],
 					'condition' => [
 						$this->get_control_id( 'infinite_scroll!' ) => '',
@@ -294,24 +390,24 @@ class Skin_Classic extends Skin_Base {
 			$this->add_control(
 				'infinite_scroll_loading_loader',
 				[
-					'label' 		=> __( 'Loader', 'elementor-extras' ),
+					'label' 		=> __( 'Loader', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default'		=> 'track',
 					'options' 		=> [
 						'track'    	=> [
-							'title' 	=> __( 'Circle Track', 'elementor-extras' ),
+							'title' 	=> __( 'Circle Track', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'nicon nicon-loader-track',
 						],
 						'circle' 	=> [
-							'title' 	=> __( 'Circle', 'elementor-extras' ),
+							'title' 	=> __( 'Circle', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'nicon nicon-loader-circle',
 						],
 						'bars-equal' => [
-							'title' 	=> __( 'Equal Bars', 'elementor-extras' ),
+							'title' 	=> __( 'Equal Bars', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'nicon nicon-loader-bars-equal',
 						],
 						'bars-flex' => [
-							'title' 	=> __( 'Flexible Bars', 'elementor-extras' ),
+							'title' 	=> __( 'Flexible Bars', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'nicon nicon-loader-bars-flex',
 						],
 					],
@@ -326,10 +422,10 @@ class Skin_Classic extends Skin_Base {
 			$this->add_control(
 				'infinite_scroll_loading_text',
 				[
-					'label' 		=> __( 'Loading Text', 'elementor-extras' ),
+					'label' 		=> __( 'Loading Text', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::TEXT,
-					'default' 		=> __( 'Loading', 'elementor-extras' ),
-					'placeholder' 	=> __( 'Loading', 'elementor-extras' ),
+					'default' 		=> __( 'Loading', 'landtech-extras-for-elementor' ),
+					'placeholder' 	=> __( 'Loading', 'landtech-extras-for-elementor' ),
 					'condition' => [
 						$this->get_control_id( 'infinite_scroll!' ) => '',
 						$this->get_control_id( 'infinite_scroll_status!' ) => '',
@@ -341,10 +437,10 @@ class Skin_Classic extends Skin_Base {
 			$this->add_control(
 				'infinite_scroll_last_text',
 				[
-					'label' 		=> __( 'Last Text', 'elementor-extras' ),
+					'label' 		=> __( 'Last Text', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::TEXT,
-					'default' 		=> __( 'All articles loaded', 'elementor-extras' ),
-					'placeholder' 	=> __( 'All articles loaded', 'elementor-extras' ),
+					'default' 		=> __( 'All articles loaded', 'landtech-extras-for-elementor' ),
+					'placeholder' 	=> __( 'All articles loaded', 'landtech-extras-for-elementor' ),
 					'condition' => [
 						$this->get_control_id( 'infinite_scroll!' ) => '',
 						$this->get_control_id( 'infinite_scroll_status!' ) => '',
@@ -355,10 +451,10 @@ class Skin_Classic extends Skin_Base {
 			$this->add_control(
 				'infinite_scroll_error_text',
 				[
-					'label' 		=> __( 'Error Text', 'elementor-extras' ),
+					'label' 		=> __( 'Error Text', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::TEXT,
-					'default' 		=> __( 'No more articles to load', 'elementor-extras' ),
-					'placeholder' 	=> __( 'No more articles to load', 'elementor-extras' ),
+					'default' 		=> __( 'No more articles to load', 'landtech-extras-for-elementor' ),
+					'placeholder' 	=> __( 'No more articles to load', 'landtech-extras-for-elementor' ),
 					'condition' => [
 						$this->get_control_id( 'infinite_scroll!' ) => '',
 						$this->get_control_id( 'infinite_scroll_status!' ) => '',
@@ -370,7 +466,7 @@ class Skin_Classic extends Skin_Base {
 				'infinite_scroll_button_heading',
 				[
 					'separator'	=> 'before',
-					'label' 	=> __( 'Load Button', 'elementor-extras' ),
+					'label' 	=> __( 'Load Button', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'condition'	=> [
 						$this->get_control_id( 'infinite_scroll!' ) => '',
@@ -381,7 +477,7 @@ class Skin_Classic extends Skin_Base {
 			$this->add_control(
 				'infinite_scroll_button',
 				[
-					'label' 		=> __( 'Show Load Button', 'elementor-extras' ),
+					'label' 		=> __( 'Show Load Button', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
 					'return_value' 	=> 'yes',
@@ -395,10 +491,10 @@ class Skin_Classic extends Skin_Base {
 			$this->add_control(
 				'infinite_scroll_button_text',
 				[
-					'label' 		=> __( 'Button Text', 'elementor-extras' ),
+					'label' 		=> __( 'Button Text', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::TEXT,
-					'default' 		=> __( 'Load more', 'elementor-extras' ),
-					'placeholder' 	=> __( 'Load more', 'elementor-extras' ),
+					'default' 		=> __( 'Load more', 'landtech-extras-for-elementor' ),
+					'placeholder' 	=> __( 'Load more', 'landtech-extras-for-elementor' ),
 					'condition' => [
 						$this->get_control_id( 'infinite_scroll!' ) => '',
 						$this->get_control_id( 'infinite_scroll_button' ) => 'yes',
@@ -421,14 +517,14 @@ class Skin_Classic extends Skin_Base {
 		$this->start_controls_section(
 			'section_filters',
 			[
-				'label' => __( 'Filters', 'elementor-extras' ),
+				'label' => __( 'Filters', 'landtech-extras-for-elementor' ),
 			]
 		);
 
 			$this->add_control(
 				'filters',
 				[
-					'label' 				=> __( 'Enable Filters', 'elementor-extras' ),
+					'label' 				=> __( 'Enable Filters', 'landtech-extras-for-elementor' ),
 					'type' 					=> Controls_Manager::SWITCHER,
 					'default' 				=> '',
 					'separator'				=> 'after',
@@ -441,7 +537,7 @@ class Skin_Classic extends Skin_Base {
 				'filters_is_warning',
 				[
 					'type' 				=> Controls_Manager::RAW_HTML,
-					'raw' 				=> __( 'Warning: Filters are not meant to work optimally with Infinite Scroll because posts posts will load upon scroll might result in empty filters until the posts are loaded. ', 'elementor-extras' ),
+					'raw' 				=> __( 'Warning: Filters are not meant to work optimally with Infinite Scroll because posts posts will load upon scroll might result in empty filters until the posts are loaded. ', 'landtech-extras-for-elementor' ),
 					'content_classes' 	=> 'elementor-panel-alert elementor-panel-alert-warning',
 					'condition' 	=> [
 						$this->get_control_id( 'filters!' ) => '',
@@ -454,7 +550,7 @@ class Skin_Classic extends Skin_Base {
 			$this->add_control(
 				'filters_taxonomy',
 				[
-					'label' 		=> __( 'Taxonomy', 'elementor-extras' ),
+					'label' 		=> __( 'Taxonomy', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT2,
 					'label_block' 	=> true,
 					'default'		=> 'category',
@@ -471,7 +567,7 @@ class Skin_Classic extends Skin_Base {
 				$this->add_control(
 					'filters_taxonomy_' . str_replace( '-', '_', $name ),
 					[
-						'label' 		=> __( 'Default term', 'elementor-extras' ),
+						'label' 		=> __( 'Default term', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SELECT,
 						'label_block' 	=> true,
 						'default'		=> '',
@@ -488,9 +584,9 @@ class Skin_Classic extends Skin_Base {
 				$this->add_control(
 					'filters_taxonomy_exclude_' . str_replace( '-', '_', $name ),
 					[
-						'label'			=> __( 'Exclude Terms', 'elementor-extras' ),
+						'label'			=> __( 'Exclude Terms', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SELECT2,
-						'placeholder'	=> __( 'None', 'elementor-extras' ),
+						'placeholder'	=> __( 'None', 'landtech-extras-for-elementor' ),
 						'multiple'		=> true,
 						'options' 		=> $exclude_terms,
 						'label_block'	=> true,
@@ -505,8 +601,8 @@ class Skin_Classic extends Skin_Base {
 			$this->add_control(
 				'filters_show_all',
 				[
-					'label' 		=> __( 'Show All Terms', 'elementor-extras' ),
-					'description'	=> __( 'Show all filters (except excluded ones) instead of just those corresponding to the initial queried posts?', 'elementor-extras' ),
+					'label' 		=> __( 'Show All Terms', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Show all filters (except excluded ones) instead of just those corresponding to the initial queried posts?', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
 					'return_value' 	=> 'yes',
@@ -518,14 +614,14 @@ class Skin_Classic extends Skin_Base {
 				]
 			);
 
-			include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+			landtech_extras_require_plugin_api();
 
 			if ( is_plugin_active( 'intuitive-custom-post-order/intuitive-custom-post-order.php' ) ) {
 				$this->add_control(
 					'filters_order_warning',
 					[
 						'type' 				=> Controls_Manager::RAW_HTML,
-						'raw' 				=> __( 'Looks like you\'re using the Intuitive Custom Posts Order plugin. If you enable ordering on your taxonomy with this plugin, the ordering options below won\'t have any effect.', 'elementor-extras' ),
+						'raw' 				=> __( 'Looks like you\'re using the Intuitive Custom Posts Order plugin. If you enable ordering on your taxonomy with this plugin, the ordering options below won\'t have any effect.', 'landtech-extras-for-elementor' ),
 						'content_classes' 	=> 'elementor-panel-alert elementor-panel-alert-warning',
 						'condition' 	=> [
 							$this->get_control_id( 'filters!' ) => '',
@@ -537,17 +633,17 @@ class Skin_Classic extends Skin_Base {
 			$this->add_control(
 				'filters_orderby',
 				[
-					'label' 		=> __( 'Order By', 'elementor-extras' ),
+					'label' 		=> __( 'Order By', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT,
 					'default'		=> 'name',
 					'options' 		=> [
-						'name'			=> __( 'Name', 'elementor-extras' ),
-						'term_id'		=> __( 'Term ID', 'elementor-extras' ),
-						'count'			=> __( 'Post Count', 'elementor-extras' ),
-						'slug'			=> __( 'Slug', 'elementor-extras' ),
-						'description'	=> __( 'Description', 'elementor-extras' ),
-						'parent'		=> __( 'Term Parent', 'elementor-extras' ),
-						'menu_order'	=> __( 'Menu Order', 'elementor-extras' ),
+						'name'			=> __( 'Name', 'landtech-extras-for-elementor' ),
+						'term_id'		=> __( 'Term ID', 'landtech-extras-for-elementor' ),
+						'count'			=> __( 'Post Count', 'landtech-extras-for-elementor' ),
+						'slug'			=> __( 'Slug', 'landtech-extras-for-elementor' ),
+						'description'	=> __( 'Description', 'landtech-extras-for-elementor' ),
+						'parent'		=> __( 'Term Parent', 'landtech-extras-for-elementor' ),
+						'menu_order'	=> __( 'Menu Order', 'landtech-extras-for-elementor' ),
 					],
 					'condition' 	=> [
 						$this->get_control_id( 'filters!' ) => '',
@@ -558,12 +654,12 @@ class Skin_Classic extends Skin_Base {
 			$this->add_control(
 				'filters_order',
 				[
-					'label' 		=> __( 'Order', 'elementor-extras' ),
+					'label' 		=> __( 'Order', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT,
 					'default'		=> 'ASC',
 					'options' 		=> [
-						'ASC'		=> __( 'Ascending', 'elementor-extras' ),
-						'DESC'		=> __( 'Descending', 'elementor-extras' ),
+						'ASC'		=> __( 'Ascending', 'landtech-extras-for-elementor' ),
+						'DESC'		=> __( 'Descending', 'landtech-extras-for-elementor' ),
 					],
 					'condition' 	=> [
 						$this->get_control_id( 'filters!' ) => '',
@@ -574,7 +670,7 @@ class Skin_Classic extends Skin_Base {
 			$this->add_control(
 				'filters_show_count',
 				[
-					'label' 		=> __( 'Show Post Count', 'elementor-extras' ),
+					'label' 		=> __( 'Show Post Count', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
 					'return_value' 	=> 'yes',
@@ -588,10 +684,10 @@ class Skin_Classic extends Skin_Base {
 			$this->add_control(
 				'filters_not_found_text',
 				[
-					'label' 		=> __( 'Not Found text', 'elementor-extras' ),
+					'label' 		=> __( 'Not Found text', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::TEXT,
-					'default' 		=> __( 'No posts available', 'elementor-extras' ),
-					'placeholder' 	=> __( 'No posts available', 'elementor-extras' ),
+					'default' 		=> __( 'No posts available', 'landtech-extras-for-elementor' ),
+					'placeholder' 	=> __( 'No posts available', 'landtech-extras-for-elementor' ),
 					'condition'		=> [
 						$this->get_control_id( 'filters!' ) => '',
 						$this->get_control_id( 'infinite_scroll' ) 	=> 'yes',
@@ -604,7 +700,7 @@ class Skin_Classic extends Skin_Base {
 			$this->add_control(
 				'filters_all_show',
 				[
-					'label' 		=> __( 'Show "All" Filter', 'elementor-extras' ),
+					'label' 		=> __( 'Show "All" Filter', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
 					'return_value' 	=> 'yes',
@@ -618,10 +714,10 @@ class Skin_Classic extends Skin_Base {
 			$this->add_control(
 				'filters_all_text',
 				[
-					'label' 		=> __( 'All Text', 'elementor-extras' ),
+					'label' 		=> __( 'All Text', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::TEXT,
-					'default' 		=> __( 'All', 'elementor-extras' ),
-					'placeholder' 	=> __( 'All', 'elementor-extras' ),
+					'default' 		=> __( 'All', 'landtech-extras-for-elementor' ),
+					'placeholder' 	=> __( 'All', 'landtech-extras-for-elementor' ),
 					'condition' 	=> [
 						$this->get_control_id( 'filters!' ) => '',
 						$this->get_control_id( 'filters_all_show!' ) => '',
@@ -643,7 +739,7 @@ class Skin_Classic extends Skin_Base {
 		$this->start_controls_section(
 			'section_pagination',
 			[
-				'label' 	=> __( 'Pagination', 'elementor-extras' ),
+				'label' 	=> __( 'Pagination', 'landtech-extras-for-elementor' ),
 				'condition'	=> [
 					$this->get_control_id( 'infinite_scroll' ) 	=> '',
 				],
@@ -653,7 +749,7 @@ class Skin_Classic extends Skin_Base {
 			$this->add_control(
 				'pagination',
 				[
-					'label' 		=> __( 'Pagination', 'elementor-extras' ),
+					'label' 		=> __( 'Pagination', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
 					'separator'		=> 'after',
@@ -667,7 +763,7 @@ class Skin_Classic extends Skin_Base {
 			$this->add_control(
 				'pagination_numbers',
 				[
-					'label' 		=> __( 'Show Numbers', 'elementor-extras' ),
+					'label' 		=> __( 'Show Numbers', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
 					'return_value' 	=> 'yes',
@@ -681,7 +777,7 @@ class Skin_Classic extends Skin_Base {
 			$this->add_control(
 				'pagination_show_all',
 				[
-					'label' 		=> __( 'Show All Numbers', 'elementor-extras' ),
+					'label' 		=> __( 'Show All Numbers', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
 					'return_value' 	=> 'yes',
@@ -696,7 +792,7 @@ class Skin_Classic extends Skin_Base {
 			$this->add_control(
 				'pagination_prev_next',
 				[
-					'label' 		=> __( 'Show Prev Next', 'elementor-extras' ),
+					'label' 		=> __( 'Show Prev Next', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
 					'return_value' 	=> 'yes',
@@ -710,7 +806,7 @@ class Skin_Classic extends Skin_Base {
 			$this->add_control(
 				'pagination_page_limit',
 				[
-					'label' 		=> __( 'Page Limit', 'elementor-extras' ),
+					'label' 		=> __( 'Page Limit', 'landtech-extras-for-elementor' ),
 					'default' 		=> '5',
 					'conditions' => [
 						'relation' 	=> 'or',
@@ -733,8 +829,8 @@ class Skin_Classic extends Skin_Base {
 			$this->add_control(
 				'pagination_multiple',
 				[
-					'label' 		=> __( 'Handle Multiple', 'elementor-extras' ),
-					'description'	=> __( 'If you have multiple Posts Extra widgets on this page, enable this to make sure one pagination doesn\'t affect the others', 'elementor-extras' ),
+					'label' 		=> __( 'Handle Multiple', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'If you have multiple Posts Extra widgets on this page, enable this to make sure one pagination doesn\'t affect the others', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
 					'return_value' 	=> 'yes',
@@ -749,8 +845,8 @@ class Skin_Classic extends Skin_Base {
 			$this->add_control(
 				'pagination_previous_label',
 				[
-					'label' 		=> __( 'Previous Label', 'elementor-extras' ),
-					'default' 		=> __( '&larr; Previous', 'elementor-extras' ),
+					'label' 		=> __( 'Previous Label', 'landtech-extras-for-elementor' ),
+					'default' 		=> __( '&larr; Previous', 'landtech-extras-for-elementor' ),
 					'condition' 	=> [
 						$this->get_control_id( 'pagination_prev_next' ) 	=> 'yes',
 						$this->get_control_id( 'infinite_scroll' ) 			=> '',
@@ -762,8 +858,8 @@ class Skin_Classic extends Skin_Base {
 			$this->add_control(
 				'pagination_next_label',
 				[
-					'label' 		=> __( 'Next Label', 'elementor-extras' ),
-					'default' 		=> __( 'Next &rarr;', 'elementor-extras' ),
+					'label' 		=> __( 'Next Label', 'landtech-extras-for-elementor' ),
+					'default' 		=> __( 'Next &rarr;', 'landtech-extras-for-elementor' ),
 					'condition' 	=> [
 						$this->get_control_id( 'pagination_prev_next' ) 	=> 'yes',
 						$this->get_control_id( 'infinite_scroll' ) 			=> '',
@@ -786,7 +882,7 @@ class Skin_Classic extends Skin_Base {
 		$this->start_controls_section(
 			'section_style_filters',
 			[
-				'label' => __( 'Filters', 'elementor-extras' ),
+				'label' => __( 'Filters', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					$this->get_control_id( 'filters!' ) => '',
@@ -798,7 +894,7 @@ class Skin_Classic extends Skin_Base {
 				'filters_filters_heading',
 				[
 					'separator' => 'before',
-					'label' 	=> __( 'Filters', 'elementor-extras' ),
+					'label' 	=> __( 'Filters', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'condition' => [
 						$this->get_control_id( 'filters!' ) => '',
@@ -810,7 +906,7 @@ class Skin_Classic extends Skin_Base {
 			$this->add_responsive_control(
 				'stack',
 				[
-					'label' 		=> __( 'Stack', 'elementor-extras' ),
+					'label' 		=> __( 'Stack', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
 					'return_value'	=> 'stack',
@@ -821,24 +917,24 @@ class Skin_Classic extends Skin_Base {
 			$this->add_responsive_control(
 				'filters_align',
 				[
-					'label' 		=> __( 'Align', 'elementor-extras' ),
+					'label' 		=> __( 'Align', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'left' 			=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-right',
 						],
 						'justify' 		=> [
-							'title' 	=> __( 'Stretch', 'elementor-extras' ),
+							'title' 	=> __( 'Stretch', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-stretch',
 						],
 					],
@@ -853,7 +949,7 @@ class Skin_Classic extends Skin_Base {
 			$this->add_responsive_control(
 				'filters_distance',
 				[
-					'label' 		=> __( 'Distance', 'elementor-extras' ),
+					'label' 		=> __( 'Distance', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -875,7 +971,7 @@ class Skin_Classic extends Skin_Base {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'filters_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -891,7 +987,7 @@ class Skin_Classic extends Skin_Base {
 				'filters_filter_heading',
 				[
 					'separator' => 'before',
-					'label' 	=> __( 'Filter', 'elementor-extras' ),
+					'label' 	=> __( 'Filter', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'condition' => [
 						$this->get_control_id( 'filters!' ) => '',
@@ -903,7 +999,7 @@ class Skin_Classic extends Skin_Base {
 			$this->add_responsive_control(
 				'filters_filter_spacing',
 				[
-					'label' 		=> __( 'Horizontal Spacing', 'elementor-extras' ),
+					'label' 		=> __( 'Horizontal Spacing', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -925,8 +1021,8 @@ class Skin_Classic extends Skin_Base {
 			$this->add_responsive_control(
 				'filters_filter_vertical_spacing',
 				[
-					'label' 		=> __( 'Vertical Spacing', 'elementor-extras' ),
-					'description'	=> __( 'If your terms are stacked, this will help you distance them from one another.', 'elementor-extras' ),
+					'label' 		=> __( 'Vertical Spacing', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'If your terms are stacked, this will help you distance them from one another.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -947,7 +1043,7 @@ class Skin_Classic extends Skin_Base {
 			$this->add_responsive_control(
 				'filters_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -964,7 +1060,7 @@ class Skin_Classic extends Skin_Base {
 				'filters_border_radius',
 				[
 					'type' 			=> Controls_Manager::DIMENSIONS,
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
 						'{{WRAPPER}} .ee-filters__item a' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -978,12 +1074,12 @@ class Skin_Classic extends Skin_Base {
 
 			$this->start_controls_tabs( 'filters_tabs_hover' );
 
-			$this->start_controls_tab( 'filters_tab_default', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'filters_tab_default', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'filters_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-filters__item a' => 'color: {{VALUE}};',
@@ -998,7 +1094,7 @@ class Skin_Classic extends Skin_Base {
 				$this->add_control(
 					'filters_background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-filters__item a' => 'background-color: {{VALUE}};',
@@ -1014,7 +1110,7 @@ class Skin_Classic extends Skin_Base {
 					Group_Control_Border::get_type(),
 					[
 						'name' 		=> 'filters_border',
-						'label' 	=> __( 'Border', 'elementor-extras' ),
+						'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 						'selector' 	=> '{{WRAPPER}} .ee-filters__item a',
 						'condition' => [
 							$this->get_control_id( 'filters!' ) => '',
@@ -1025,12 +1121,12 @@ class Skin_Classic extends Skin_Base {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'filters_tab_hover', [ 'label' => __( 'Hover', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'filters_tab_hover', [ 'label' => __( 'Hover', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'filters_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-filters__item a:hover' => 'color: {{VALUE}};',
@@ -1045,7 +1141,7 @@ class Skin_Classic extends Skin_Base {
 				$this->add_control(
 					'filters_background_color_hover',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-filters__item a:hover' => 'background-color: {{VALUE}};',
@@ -1060,7 +1156,7 @@ class Skin_Classic extends Skin_Base {
 				$this->add_control(
 					'filters_border_color_hover',
 					[
-						'label' 	=> __( 'Border Color', 'elementor-extras' ),
+						'label' 	=> __( 'Border Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-filters__item a:hover' => 'border-color: {{VALUE}};',
@@ -1074,12 +1170,12 @@ class Skin_Classic extends Skin_Base {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'filters_tab_active', [ 'label' => __( 'Active', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'filters_tab_active', [ 'label' => __( 'Active', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'filters_color_active',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-filters__item a.ee--active' => 'color: {{VALUE}};',
@@ -1094,7 +1190,7 @@ class Skin_Classic extends Skin_Base {
 				$this->add_control(
 					'filters_background_color_active',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-filters__item a.ee--active' => 'background-color: {{VALUE}};',
@@ -1109,7 +1205,7 @@ class Skin_Classic extends Skin_Base {
 				$this->add_control(
 					'filters_border_color_active',
 					[
-						'label' 	=> __( 'Border Color', 'elementor-extras' ),
+						'label' 	=> __( 'Border Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-filters__item a.ee--active' => 'border-color: {{VALUE}};',
@@ -1129,7 +1225,7 @@ class Skin_Classic extends Skin_Base {
 				'filters_count_heading',
 				[
 					'separator' => 'before',
-					'label' 	=> __( 'Post Count', 'elementor-extras' ),
+					'label' 	=> __( 'Post Count', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'condition' => [
 						$this->get_control_id( 'filters!' ) => '',
@@ -1142,7 +1238,7 @@ class Skin_Classic extends Skin_Base {
 			$this->add_responsive_control(
 				'filters_count_distance',
 				[
-					'label' 		=> __( 'Distance', 'elementor-extras' ),
+					'label' 		=> __( 'Distance', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -1165,9 +1261,9 @@ class Skin_Classic extends Skin_Base {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'filters_count_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '{{WRAPPER}} .ee-filters__item__count',
-					'exclude'	=> [
+					'exclude'	=> [ // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor typography control keys.
 						'font-family',
 						'line_height',
 					],
@@ -1182,7 +1278,7 @@ class Skin_Classic extends Skin_Base {
 			$this->add_responsive_control(
 				'filters_count_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -1200,7 +1296,7 @@ class Skin_Classic extends Skin_Base {
 				'filters_count_border_radius',
 				[
 					'type' 			=> Controls_Manager::DIMENSIONS,
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
 						'{{WRAPPER}} .ee-filters__item__count' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -1216,7 +1312,7 @@ class Skin_Classic extends Skin_Base {
 			$this->start_controls_tabs( 'filters_count_tabs' );
 
 			$this->start_controls_tab( 'filters_count_default', [
-				'label' => __( 'Default', 'elementor-extras' ),
+				'label' => __( 'Default', 'landtech-extras-for-elementor' ),
 				'condition' => [
 					$this->get_control_id( 'filters!' ) => '',
 					$this->get_control_id( 'filters_taxonomy!' ) => '',
@@ -1227,7 +1323,7 @@ class Skin_Classic extends Skin_Base {
 				$this->add_control(
 					'filters_count_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-filters__item__count' => 'color: {{VALUE}};',
@@ -1243,7 +1339,7 @@ class Skin_Classic extends Skin_Base {
 				$this->add_control(
 					'filters_count_background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-filters__item__count' => 'background-color: {{VALUE}};',
@@ -1259,7 +1355,7 @@ class Skin_Classic extends Skin_Base {
 			$this->end_controls_tab();
 
 			$this->start_controls_tab( 'filters_count_hover', [
-				'label' => __( 'Hover', 'elementor-extras' ),
+				'label' => __( 'Hover', 'landtech-extras-for-elementor' ),
 				'condition' => [
 					$this->get_control_id( 'filters!' ) => '',
 					$this->get_control_id( 'filters_taxonomy!' ) => '',
@@ -1270,7 +1366,7 @@ class Skin_Classic extends Skin_Base {
 				$this->add_control(
 					'filters_count_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-filters__item a:hover .ee-filters__item__count' => 'color: {{VALUE}};',
@@ -1286,7 +1382,7 @@ class Skin_Classic extends Skin_Base {
 				$this->add_control(
 					'filters_count_background_color_hover',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-filters__item a:hover .ee-filters__item__count' => 'background-color: {{VALUE}};',
@@ -1302,7 +1398,7 @@ class Skin_Classic extends Skin_Base {
 			$this->end_controls_tab();
 
 			$this->start_controls_tab( 'filters_count_active', [
-				'label' => __( 'Active', 'elementor-extras' ),
+				'label' => __( 'Active', 'landtech-extras-for-elementor' ),
 				'condition' => [
 					$this->get_control_id( 'filters!' ) => '',
 					$this->get_control_id( 'filters_taxonomy!' ) => '',
@@ -1313,7 +1409,7 @@ class Skin_Classic extends Skin_Base {
 				$this->add_control(
 					'filters_count_color_active',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-filters__item a.ee--active .ee-filters__item__count' => 'color: {{VALUE}};',
@@ -1329,7 +1425,7 @@ class Skin_Classic extends Skin_Base {
 				$this->add_control(
 					'filters_count_background_color_active',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-filters__item a.ee--active .ee-filters__item__count' => 'background-color: {{VALUE}};',
@@ -1361,7 +1457,7 @@ class Skin_Classic extends Skin_Base {
 		$this->start_controls_section(
 			'section_style_pagination',
 			[
-				'label' => __( 'Pagination', 'elementor-extras' ),
+				'label' => __( 'Pagination', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					$this->get_control_id( 'pagination!' ) => '',
@@ -1373,7 +1469,7 @@ class Skin_Classic extends Skin_Base {
 				'pagination_heading',
 				[
 					'separator' => 'before',
-					'label' 	=> __( 'Pagination', 'elementor-extras' ),
+					'label' 	=> __( 'Pagination', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'condition' => [
 						$this->get_control_id( 'pagination!' ) => '',
@@ -1384,20 +1480,20 @@ class Skin_Classic extends Skin_Base {
 			$this->add_responsive_control(
 				'pagination_align',
 				[
-					'label' 		=> __( 'Align', 'elementor-extras' ),
+					'label' 		=> __( 'Align', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'left' 			=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-right',
 						],
 					],
@@ -1413,7 +1509,7 @@ class Skin_Classic extends Skin_Base {
 			$this->add_responsive_control(
 				'pagination_distance',
 				[
-					'label' 		=> __( 'Distance', 'elementor-extras' ),
+					'label' 		=> __( 'Distance', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -1434,7 +1530,7 @@ class Skin_Classic extends Skin_Base {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'pagination_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -1449,7 +1545,7 @@ class Skin_Classic extends Skin_Base {
 				'pagination_numbers_heading',
 				[
 					'separator' => 'before',
-					'label' 	=> __( 'Numbers', 'elementor-extras' ),
+					'label' 	=> __( 'Numbers', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'condition' => [
 						$this->get_control_id( 'pagination!' ) => '',
@@ -1460,7 +1556,7 @@ class Skin_Classic extends Skin_Base {
 			$this->add_responsive_control(
 				'pagination_numbers_spacing',
 				[
-					'label' 		=> __( 'Spacing', 'elementor-extras' ),
+					'label' 		=> __( 'Spacing', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -1480,7 +1576,7 @@ class Skin_Classic extends Skin_Base {
 			$this->add_responsive_control(
 				'pagination_numbers_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -1497,7 +1593,7 @@ class Skin_Classic extends Skin_Base {
 				[
 					'separator'		=> 'after',
 					'type' 			=> Controls_Manager::DIMENSIONS,
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
 						'{{WRAPPER}} .ee-pagination .page-numbers' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -1510,12 +1606,12 @@ class Skin_Classic extends Skin_Base {
 
 			$this->start_controls_tabs( 'pagination_numbers_tabs_hover' );
 
-			$this->start_controls_tab( 'pagination_numbers_tab_default', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'pagination_numbers_tab_default', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'pagination_numbers_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-pagination .page-numbers' => 'color: {{VALUE}};',
@@ -1526,7 +1622,7 @@ class Skin_Classic extends Skin_Base {
 				$this->add_control(
 					'pagination_numbers_background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-pagination .page-numbers' => 'background-color: {{VALUE}};',
@@ -1537,7 +1633,7 @@ class Skin_Classic extends Skin_Base {
 				$this->add_responsive_control(
 					'pagination_numbers_opacity',
 					[
-						'label' 		=> __( 'Opacity', 'elementor-extras' ),
+						'label' 		=> __( 'Opacity', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SLIDER,
 						'range' 		=> [
 							'px' 		=> [
@@ -1556,19 +1652,19 @@ class Skin_Classic extends Skin_Base {
 					Group_Control_Border::get_type(),
 					[
 						'name' 		=> 'pagination_numbers_border',
-						'label' 	=> __( 'Border', 'elementor-extras' ),
+						'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 						'selector' 	=> '{{WRAPPER}} .ee-pagination .page-numbers',
 					]
 				);
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'pagination_numbers_tab_hover', [ 'label' => __( 'Hover', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'pagination_numbers_tab_hover', [ 'label' => __( 'Hover', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'pagination_numbers_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-pagination .page-numbers[href]:hover' => 'color: {{VALUE}};',
@@ -1579,7 +1675,7 @@ class Skin_Classic extends Skin_Base {
 				$this->add_control(
 					'pagination_numbers_background_color_hover',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-pagination .page-numbers[href]:hover' => 'background-color: {{VALUE}};',
@@ -1590,7 +1686,7 @@ class Skin_Classic extends Skin_Base {
 				$this->add_control(
 					'pagination_numbers_border_color_hover',
 					[
-						'label' 	=> __( 'Border Color', 'elementor-extras' ),
+						'label' 	=> __( 'Border Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-pagination .page-numbers[href]:hover' => 'border-color: {{VALUE}};',
@@ -1601,7 +1697,7 @@ class Skin_Classic extends Skin_Base {
 				$this->add_responsive_control(
 					'pagination_numbers_opacity_hover',
 					[
-						'label' 		=> __( 'Opacity', 'elementor-extras' ),
+						'label' 		=> __( 'Opacity', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SLIDER,
 						'range' 		=> [
 							'px' 		=> [
@@ -1618,12 +1714,12 @@ class Skin_Classic extends Skin_Base {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'pagination_numbers_tab_current', [ 'label' => __( 'Current', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'pagination_numbers_tab_current', [ 'label' => __( 'Current', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'pagination_numbers_color_current',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-pagination .page-numbers.current' => 'color: {{VALUE}};',
@@ -1634,7 +1730,7 @@ class Skin_Classic extends Skin_Base {
 				$this->add_control(
 					'pagination_numbers_background_color_current',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-pagination .page-numbers.current' => 'background-color: {{VALUE}};',
@@ -1645,7 +1741,7 @@ class Skin_Classic extends Skin_Base {
 				$this->add_control(
 					'pagination_numbers_border_color_current',
 					[
-						'label' 	=> __( 'Border Color', 'elementor-extras' ),
+						'label' 	=> __( 'Border Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-pagination .page-numbers.current' => 'border-color: {{VALUE}};',
@@ -1656,7 +1752,7 @@ class Skin_Classic extends Skin_Base {
 				$this->add_responsive_control(
 					'pagination_numbers_opacity_current',
 					[
-						'label' 		=> __( 'Opacity', 'elementor-extras' ),
+						'label' 		=> __( 'Opacity', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SLIDER,
 						'range' 		=> [
 							'px' 		=> [
@@ -1690,7 +1786,7 @@ class Skin_Classic extends Skin_Base {
 		$this->start_controls_section(
 			'section_style_infinite_scroll',
 			[
-				'label' => __( 'Infinite Scroll', 'elementor-extras' ),
+				'label' => __( 'Infinite Scroll', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					$this->get_control_id( 'infinite_scroll!' ) => '',
@@ -1702,7 +1798,7 @@ class Skin_Classic extends Skin_Base {
 				'infinite_scroll_status_style_heading',
 				[
 					'separator' => 'before',
-					'label' 	=> __( 'Status', 'elementor-extras' ),
+					'label' 	=> __( 'Status', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'condition' => [
 						$this->get_control_id( 'infinite_scroll!' ) => '',
@@ -1714,7 +1810,7 @@ class Skin_Classic extends Skin_Base {
 			$this->add_responsive_control(
 				'infinite_scroll_status_spacing',
 				[
-					'label' 		=> __( 'Spacing', 'elementor-extras' ),
+					'label' 		=> __( 'Spacing', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -1736,7 +1832,7 @@ class Skin_Classic extends Skin_Base {
 				'infinite_scroll_loader_style_heading',
 				[
 					'separator' => 'before',
-					'label' 	=> __( 'Loader', 'elementor-extras' ),
+					'label' 	=> __( 'Loader', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'condition' => [
 						$this->get_control_id( 'infinite_scroll!' ) => '',
@@ -1749,7 +1845,7 @@ class Skin_Classic extends Skin_Base {
 			$this->add_control(
 				'infinite_scroll_loader_color',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'selectors' => [
 						'{{WRAPPER}} .ee-load-status__request svg *[fill]' => 'fill: {{VALUE}};',
@@ -1766,7 +1862,7 @@ class Skin_Classic extends Skin_Base {
 				'infinite_scroll_button_style_heading',
 				[
 					'separator' => 'before',
-					'label' 	=> __( 'Button', 'elementor-extras' ),
+					'label' 	=> __( 'Button', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'condition' => [
 						$this->get_control_id( 'infinite_scroll!' ) => '',
@@ -1778,7 +1874,7 @@ class Skin_Classic extends Skin_Base {
 			$this->add_responsive_control(
 				'infinite_scroll_button_spacing',
 				[
-					'label' 		=> __( 'Spacing', 'elementor-extras' ),
+					'label' 		=> __( 'Spacing', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -1799,20 +1895,20 @@ class Skin_Classic extends Skin_Base {
 			$this->add_responsive_control(
 				'infinite_scroll_button_align',
 				[
-					'label' 		=> __( 'Align', 'elementor-extras' ),
+					'label' 		=> __( 'Align', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> 'center',
 					'options' 		=> [
 						'flex-start' 	=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-center',
 						],
 						'flex-end' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-right',
 						],
 					],
@@ -1829,7 +1925,7 @@ class Skin_Classic extends Skin_Base {
 			$this->add_responsive_control(
 				'infinite_scroll_button_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -1846,7 +1942,7 @@ class Skin_Classic extends Skin_Base {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'load_button',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '{{WRAPPER}} .ee-load-button__trigger',
 					'condition' => [
 						$this->get_control_id( 'infinite_scroll!' ) => '',
@@ -1860,7 +1956,7 @@ class Skin_Classic extends Skin_Base {
 				[
 					'separator'		=> 'after',
 					'type' 			=> Controls_Manager::DIMENSIONS,
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
 						'{{WRAPPER}}  .ee-load-button__trigger' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -1876,7 +1972,7 @@ class Skin_Classic extends Skin_Base {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'infinite_scroll_button_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -1903,7 +1999,7 @@ class Skin_Classic extends Skin_Base {
 			$this->start_controls_tabs( 'infinite_scroll_button_tabs_hover' );
 
 			$this->start_controls_tab( 'infinite_scroll_button_tab_default', [
-				'label' 	=> __( 'Default', 'elementor-extras' ),
+				'label' 	=> __( 'Default', 'landtech-extras-for-elementor' ),
 				'condition' => [
 					$this->get_control_id( 'infinite_scroll!' ) => '',
 					$this->get_control_id( 'infinite_scroll_button!' ) => '',
@@ -1913,7 +2009,7 @@ class Skin_Classic extends Skin_Base {
 				$this->add_control(
 					'infinite_scroll_button_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-load-button__trigger' => 'color: {{VALUE}};',
@@ -1928,7 +2024,7 @@ class Skin_Classic extends Skin_Base {
 				$this->add_control(
 					'infinite_scroll_button_background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-load-button__trigger' => 'background-color: {{VALUE}};',
@@ -1943,7 +2039,7 @@ class Skin_Classic extends Skin_Base {
 			$this->end_controls_tab();
 
 			$this->start_controls_tab( 'infinite_scroll_button_tab_hover', [
-				'label' 	=> __( 'Hover', 'elementor-extras' ),
+				'label' 	=> __( 'Hover', 'landtech-extras-for-elementor' ),
 				'condition' => [
 					$this->get_control_id( 'infinite_scroll!' ) => '',
 					$this->get_control_id( 'infinite_scroll_button!' ) => '',
@@ -1953,7 +2049,7 @@ class Skin_Classic extends Skin_Base {
 				$this->add_control(
 					'infinite_scroll_button_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-load-button__trigger:hover' => 'color: {{VALUE}};',
@@ -1968,7 +2064,7 @@ class Skin_Classic extends Skin_Base {
 				$this->add_control(
 					'infinite_scroll_button_background_color_hover',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-load-button__trigger:hover' => 'background-color: {{VALUE}};',
@@ -2000,7 +2096,7 @@ class Skin_Classic extends Skin_Base {
 		$this->render_filters();
 		parent::before_loop();
 
-		add_filter( 'elementor_extras/widgets/posts/item_classes', [ $this, 'filter_item_classes' ], 10, 3 );
+		add_filter( 'landtech_extras/widgets/posts/item_classes', [ $this, 'filter_item_classes' ], 10, 3 );
 	}
 
 	/**
@@ -2012,20 +2108,20 @@ class Skin_Classic extends Skin_Base {
 	 * @return void
 	 */
 	public function after_loop() {
-		remove_filter( 'elementor_extras/widgets/posts/item_classes', [ $this, 'filter_item_classes' ] );
+		remove_filter( 'landtech_extras/widgets/posts/item_classes', [ $this, 'filter_item_classes' ] );
 
 		parent::after_loop();
 
 		if ( 'yes' === $this->get_instance_value( 'infinite_scroll' ) || 'yes' === $this->get_instance_value( 'pagination' ) ) {
 
 			$this->parent->add_render_attribute( 'pagination', [
-				'aria-label' 	=> __( 'Pagination', 'elementor-extras' ),
+				'aria-label' 	=> __( 'Pagination', 'landtech-extras-for-elementor' ),
 				'class' 		=> 'ee-pagination',
 				'role' 			=> 'navigation',
 			] );
 
 			if ( 'yes' === $this->get_instance_value('pagination_multiple') ) {
-				add_filter( 'elementor_extras/widgets/posts/pagination_link', [ $this->parent, 'filter_page_link' ], 10, 2 );
+				add_filter( 'landtech_extras/widgets/posts/pagination_link', [ $this->parent, 'filter_page_link' ], 10, 2 );
 			}
 
 			if ( 'yes' === $this->get_instance_value('infinite_scroll') ) {
@@ -2037,7 +2133,7 @@ class Skin_Classic extends Skin_Base {
 			}
 
 			if ( 'yes' === $this->get_instance_value('pagination_multiple') ) {
-				remove_filter( 'elementor_extras/widgets/posts/pagination_link', [ $this->parent, 'filter_page_link' ] );
+				remove_filter( 'landtech_extras/widgets/posts/pagination_link', [ $this->parent, 'filter_page_link' ] );
 			}
 		}
 	}
@@ -2111,11 +2207,11 @@ class Skin_Classic extends Skin_Base {
 			$this->parent->add_render_attribute( $this->get_control_id( 'filters_all_text' ), 'class', 'ee--active' );
 		}
 
-		?><ul <?php echo $this->parent->get_render_attribute_string( 'filters' ); ?>>
+		?><ul <?php $this->parent->print_render_attribute_string( 'filters' ); ?>>
 
 			<?php if ( $this->get_instance_value( 'filters_all_show' ) ) : ?>
-			<li <?php echo $this->parent->get_render_attribute_string( 'filter-all' ); ?>><a <?php echo $this->parent->get_render_attribute_string( $this->get_control_id( 'filters_all_text' ) ); ?>>
-				<?php echo $this->get_instance_value( 'filters_all_text' ); ?>
+			<li <?php $this->parent->print_render_attribute_string( 'filter-all' ); ?>><a <?php $this->parent->print_render_attribute_string( $this->get_control_id( 'filters_all_text' ) ); ?>>
+				<?php echo esc_html( $this->get_instance_value( 'filters_all_text' ) ); ?>
 			</a></li>
 			<?php endif; ?>
 
@@ -2143,12 +2239,12 @@ class Skin_Classic extends Skin_Base {
 					$this->parent->add_render_attribute( $filter_link_key, 'class', 'ee--active' );
 				}
 
-				?><li <?php echo $this->parent->get_render_attribute_string( $filter_term_key ); ?>>
-					<a <?php echo $this->parent->get_render_attribute_string( $filter_link_key ); ?>>
-						<?php echo $filter->name; ?>
+				?><li <?php $this->parent->print_render_attribute_string( $filter_term_key ); ?>>
+					<a <?php $this->parent->print_render_attribute_string( $filter_link_key ); ?>>
+						<?php echo esc_html( $filter->name ); ?>
 						<?php if ( $this->parent->get_settings( $this->get_control_id( 'filters_show_count' ) ) ) { ?>
-						<span <?php echo $this->parent->get_render_attribute_string( 'filter-count' ); ?>>
-							<?php echo $filter->count; ?>
+						<span <?php $this->parent->print_render_attribute_string( 'filter-count' ); ?>>
+							<?php echo esc_html( (string) $filter->count ); ?>
 						</span>
 						<?php } ?>
 					</a>
@@ -2178,8 +2274,8 @@ class Skin_Classic extends Skin_Base {
 			],
 		] );
 
-		?><p <?php echo $this->parent->get_render_attribute_string( 'filters-not-found' ); ?>>
-			<?php echo $this->parent->get_settings( $this->get_control_id( 'filters_not_found_text' ) ); ?>
+		?><p <?php $this->parent->print_render_attribute_string( 'filters-not-found' ); ?>>
+			<?php echo esc_html( $this->parent->get_settings( $this->get_control_id( 'filters_not_found_text' ) ) ); ?>
 		</p><?php
 	}
 
@@ -2220,21 +2316,21 @@ class Skin_Classic extends Skin_Base {
 			],
 		] );
 
-		?><div <?php echo $this->parent->get_render_attribute_string( 'status' ); ?>>
-			<div <?php echo $this->parent->get_render_attribute_string( 'status-request' ); ?>>
+		?><div <?php $this->parent->print_render_attribute_string( 'status' ); ?>>
+			<div <?php $this->parent->print_render_attribute_string( 'status-request' ); ?>>
 				<?php
 					if ( 'text' === $this->get_instance_value( 'infinite_scroll_loading_type' ) ) {
-						echo $this->get_instance_value( 'infinite_scroll_loading_text' );
-					} else if ( 'loader' === $this->get_instance_value( 'infinite_scroll_loading_type' ) ) {
-						echo $this->render_loading_svg();
+						echo esc_html( $this->get_instance_value( 'infinite_scroll_loading_text' ) );
+					} elseif ( 'loader' === $this->get_instance_value( 'infinite_scroll_loading_type' ) ) {
+						$this->render_loading_svg();
 					}
 				?>
 			</div>
-			<div <?php echo $this->parent->get_render_attribute_string( 'status-last' ); ?>>
-				<?php echo $this->get_instance_value( 'infinite_scroll_last_text' ); ?>
+			<div <?php $this->parent->print_render_attribute_string( 'status-last' ); ?>>
+				<?php echo esc_html( $this->get_instance_value( 'infinite_scroll_last_text' ) ); ?>
 			</div>
-			<div <?php echo $this->parent->get_render_attribute_string( 'status-error' ); ?>>
-				<?php echo $this->get_instance_value( 'infinite_scroll_error_text' ); ?>
+			<div <?php $this->parent->print_render_attribute_string( 'status-error' ); ?>>
+				<?php echo esc_html( $this->get_instance_value( 'infinite_scroll_error_text' ) ); ?>
 			</div>
 		</div><?php
 
@@ -2250,13 +2346,19 @@ class Skin_Classic extends Skin_Base {
 	 */
 	protected function render_loading_svg() {
 
+		$allowed_loaders = array( 'track', 'circle', 'bars-equal', 'bars-flex' );
 		$loader_filename = 'track';
+		$requested       = $this->get_instance_value( 'infinite_scroll_loading_loader' );
 
-		if ( $this->get_instance_value( 'infinite_scroll_loading_loader' ) ) {
-			$loader_filename = $this->get_instance_value( 'infinite_scroll_loading_loader' );
+		if ( is_string( $requested ) && in_array( $requested, $allowed_loaders, true ) ) {
+			$loader_filename = $requested;
 		}
 
-		include ELEMENTOR_EXTRAS_PATH . 'assets/shapes/loader-' . $loader_filename . '.svg';
+		$svg_path = LANDTECH_EXTRAS_PATH . 'assets/shapes/loader-' . $loader_filename . '.svg';
+
+		if ( is_readable( $svg_path ) ) {
+			include $svg_path;
+		}
 	}
 
 	/**
@@ -2296,11 +2398,11 @@ class Skin_Classic extends Skin_Base {
 			],
 		] );
 
-		?><div <?php echo $this->parent->get_render_attribute_string( 'load' ); ?>>
-			<a <?php echo $this->parent->get_render_attribute_string( 'load-button' ); ?>>
-				<span <?php echo $this->parent->get_render_attribute_string( 'load-button-content-wrapper' ); ?>>
-					<span <?php echo $this->parent->get_render_attribute_string( 'load-button-text' ); ?>>
-						<?php echo $this->get_instance_value( 'infinite_scroll_button_text' ); ?>
+		?><div <?php $this->parent->print_render_attribute_string( 'load' ); ?>>
+			<a <?php $this->parent->print_render_attribute_string( 'load-button' ); ?>>
+				<span <?php $this->parent->print_render_attribute_string( 'load-button-content-wrapper' ); ?>>
+					<span <?php $this->parent->print_render_attribute_string( 'load-button-text' ); ?>>
+						<?php echo esc_html( $this->get_instance_value( 'infinite_scroll_button_text' ) ); ?>
 					</span>
 				</span>
 			</a>
@@ -2327,7 +2429,7 @@ class Skin_Classic extends Skin_Base {
 
 		$this->parent->add_render_attribute( 'pagination', 'class', 'ee-pagination--is' );
 
-		?><nav <?php echo $this->parent->get_render_attribute_string( 'pagination' ); ?>><?php
+		?><nav <?php $this->parent->print_render_attribute_string( 'pagination' ); ?>><?php
 			$this->parent->render_pagination_link( $this->get_instance_value('pagination_next_label'), 'next' );
 		?></nav><?php
 	}
@@ -2354,7 +2456,7 @@ class Skin_Classic extends Skin_Base {
 			$limit = min( $custom_limit, $limit );
 		}
 
-		?><nav <?php echo $this->parent->get_render_attribute_string('pagination'); ?>><?php
+		?><nav <?php $this->parent->print_render_attribute_string('pagination'); ?>><?php
 
 			if ( $has_next_prev ) {
 				$this->parent->render_pagination_link( $this->get_instance_value('pagination_previous_label'), 'previous', $limit );
@@ -2370,13 +2472,13 @@ class Skin_Classic extends Skin_Base {
 				 * @since 2.2.38
 				 * @param array 			$args 	The initial args
 				 */
-				$paginate_args = apply_filters( 'elementor_extras/widgets/posts/paginate_links_args', [
+				$paginate_args = apply_filters( 'landtech_extras/widgets/posts/paginate_links_args', [
 					'type' 					=> 'plain',
 					'total' 				=> $limit,
 					'current' 				=> $this->parent->get_current_page(),
 					'show_all' 				=> 'yes' === $this->get_instance_value('pagination_show_all'),
 					'prev_next' 			=> false,
-					'before_page_number' 	=> '<span class="elementor-screen-only">' . __( 'Page ', 'elementor-extras' ) . '</span>',
+					'before_page_number' 	=> '<span class="elementor-screen-only">' . __( 'Page ', 'landtech-extras-for-elementor' ) . '</span>',
 				] );
 
 				/*
@@ -2400,7 +2502,7 @@ class Skin_Classic extends Skin_Base {
 					add_filter( 'paginate_links', [ $this, 'remove_unique_pagination_query_arg' ] );
 				}
 
-				echo paginate_links( $paginate_args );
+				echo wp_kses_post( paginate_links( $paginate_args ) );
 
 				// Remove all filters
 				remove_filter( 'paginate_links', [ $this, 'add_unique_pagination_query_arg' ] );
@@ -2442,96 +2544,11 @@ class Skin_Classic extends Skin_Base {
 
 	/**
 	 * Render Scripts
-	 * 
-	 * Handles javascript functionality for the widget inside the editor ONLY
+	 *
+	 * Editor preview behaviour moved to assets/js/posts-loop-isotope-editor.js (enqueued via LandTechExtrasPlugin).
 	 *
 	 * @since  1.6.0
 	 * @return void
 	 */
-	public function render_scripts() {
-
-		if ( \Elementor\Plugin::instance()->editor->is_edit_mode() === false )
-			return;
-
-		?><script type="text/javascript">
-        	jQuery( document ).ready( function( $ ) {
-
-				$( '.ee-loop' ).each( function() {
-
-					var $scope_id = '<?php echo $this->parent->get_id(); ?>',
-        				$scope = $( '[data-id="' + $scope_id + '"]' );
-
-        			// Don't move forward if this is not our widget
-        			if ( $(this).closest( $scope ).length < 1 ) {
-        				return;
-        			}
-
-					var $loop 		= $(this),
-						$filters 	= $loop.siblings('.ee-filters'),
-						$triggers 	= $filters.find( '[data-filter]' ),
-
-						_layout 	= '<?php echo $this->get_instance_value( 'layout' ); ?>',
-
-						isotopeArgs = {
-							itemSelector	: '.ee-loop__item',
-							layoutMode 		: _layout,
-			  				percentPosition : true,
-			  				hiddenStyle 	: {
-			  					opacity 	: 0,
-			  				},
-			  				masonry 		: {
-								columnWidth	: '.ee-grid__item--sizer',
-							},
-						},
-
-						filteryArgs = {
-							wrapper : $loop,
-							filterables : '.ee-loop__item',
-							activeFilterClass : 'ee--active',
-						};
-
-					$loop.imagesLoaded( function() {
-
-						if ( _layout !== 'default' ) {
-
-							var $isotope = $loop.isotope( isotopeArgs );
-							var isotopeInstance = $loop.data( 'isotope' );
-
-							$loop.find('.ee-grid__item:last-child')._resize( function() {
-								$loop.isotope( 'layout' );
-							});
-
-							if ( $triggers.length ) {
-
-								// Filter by default
-								var $default_trigger = $triggers.filter('.ee--active');
-
-								if ( $default_trigger.length ) {
-									default_filter = $default_trigger.data('filter');
-									$loop.isotope({ filter: default_filter });
-								}
-
-								// Filter by click
-								$triggers.on( 'click', function() {
-									var _filter = $(this).data('filter');
-
-									$loop.isotope({ filter: _filter });
-
-									$triggers.removeClass('ee--active');
-									$(this).addClass('ee--active');
-								});
-							}
-
-						} else {
-							if ( $triggers.length ) {
-								$filters.filtery( filteryArgs );
-							}
-						}
-					});
-
-				} );
-				
-        	} );
-		</script><?php
-	}
+	public function render_scripts() {}
 }

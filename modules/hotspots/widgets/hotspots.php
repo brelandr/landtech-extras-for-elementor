@@ -1,10 +1,11 @@
 <?php
-namespace ElementorExtras\Modules\Hotspots\Widgets;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Hotspots\Widgets;
 
-// Extras for Elementor Classes
-use ElementorExtras\Utils as ExtrasUtils;
-use ElementorExtras\Base\Extras_Widget;
-use ElementorExtras\Group_Control_Transition;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Utils as ExtrasUtils;
+use LandTechExtras\Base\Extras_Widget;
+use LandTechExtras\Group_Control_Transition;
 
 // Elementor Classes
 use Elementor\Icons_Manager;
@@ -49,7 +50,7 @@ class Hotspots extends Extras_Widget {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Hotspots', 'elementor-extras' );
+		return __( 'Hotspots', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -74,7 +75,7 @@ class Hotspots extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
-			'hotips',
+			'landtech-extras-hotips',
 			'resize',
 		];
 	}
@@ -90,14 +91,14 @@ class Hotspots extends Extras_Widget {
 		$this->start_controls_section(
 			'section_image',
 			[
-				'label' => __( 'Image', 'elementor-extras' ),
+				'label' => __( 'Image', 'landtech-extras-for-elementor' ),
 			]
 		);
 
 			$this->add_control(
 				'image',
 				[
-					'label' => __( 'Choose Image', 'elementor-extras' ),
+					'label' => __( 'Choose Image', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::MEDIA,
 					'dynamic' => [ 'active' => true ],
 					'default' => [
@@ -110,7 +111,7 @@ class Hotspots extends Extras_Widget {
 				Group_Control_Image_Size::get_type(),
 				[
 					'name' => 'image', // Actually its `image_size`
-					'label' => __( 'Image Size', 'elementor-extras' ),
+					'label' => __( 'Image Size', 'landtech-extras-for-elementor' ),
 					'default' => 'large',
 				]
 			);
@@ -118,19 +119,19 @@ class Hotspots extends Extras_Widget {
 			$this->add_responsive_control(
 				'align',
 				[
-					'label' => __( 'Alignment', 'elementor-extras' ),
+					'label' => __( 'Alignment', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::CHOOSE,
 					'options' => [
 						'left' => [
-							'title' => __( 'Left', 'elementor-extras' ),
+							'title' => __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' => 'eicon-h-align-left',
 						],
 						'center' => [
-							'title' => __( 'Center', 'elementor-extras' ),
+							'title' => __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' => 'eicon-h-align-center',
 						],
 						'right' => [
-							'title' => __( 'Right', 'elementor-extras' ),
+							'title' => __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' => 'eicon-h-align-right',
 						],
 					],
@@ -144,7 +145,7 @@ class Hotspots extends Extras_Widget {
 			$this->add_control(
 				'view',
 				[
-					'label' => __( 'View', 'elementor-extras' ),
+					'label' => __( 'View', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::HIDDEN,
 					'default' => 'traditional',
 				]
@@ -155,7 +156,7 @@ class Hotspots extends Extras_Widget {
 		$this->start_controls_section(
 			'section_hotspots',
 			[
-				'label' => __( 'Hotspots', 'elementor-extras' ),
+				'label' => __( 'Hotspots', 'landtech-extras-for-elementor' ),
 				'condition'		=> [
 					'image[url]!' => '',
 				]
@@ -166,17 +167,17 @@ class Hotspots extends Extras_Widget {
 
 			$repeater->start_controls_tabs( 'hotspots_repeater' );
 
-			$repeater->start_controls_tab( 'tab_content', [ 'label' => __( 'Content', 'elementor-extras' ) ] );
+			$repeater->start_controls_tab( 'tab_content', [ 'label' => __( 'Content', 'landtech-extras-for-elementor' ) ] );
 
 				$repeater->add_control(
 					'hotspot',
 					[
-						'label'		=> __( 'Type', 'elementor-extras' ),
+						'label'		=> __( 'Type', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SELECT,
 						'default' 	=> 'text',
 						'options' 	=> [
-							'text' 		=> __( 'Text', 'elementor-extras' ),
-							'icon' 		=> __( 'Icon', 'elementor-extras' ),
+							'text' 		=> __( 'Text', 'landtech-extras-for-elementor' ),
+							'icon' 		=> __( 'Icon', 'landtech-extras-for-elementor' ),
 						],
 					]
 				);
@@ -184,9 +185,9 @@ class Hotspots extends Extras_Widget {
 				$repeater->add_control(
 					'text',
 					[
-						'default'	=> __( 'X', 'elementor-extras' ),
+						'default'	=> __( 'X', 'landtech-extras-for-elementor' ),
 						'type'		=> Controls_Manager::TEXT,
-						'label' 	=> __( 'Text', 'elementor-extras' ),
+						'label' 	=> __( 'Text', 'landtech-extras-for-elementor' ),
 						'separator' => 'none',
 						'dynamic' => [
 							'active' => true,
@@ -200,7 +201,7 @@ class Hotspots extends Extras_Widget {
 				$repeater->add_control(
 					'selected_icon',
 					[
-						'label' 		=> __( 'Icon', 'elementor-extras' ),
+						'label' 		=> __( 'Icon', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::ICONS,
 						'fa4compatibility' => 'icon',
 						'skin'			=> 'inline',
@@ -214,8 +215,8 @@ class Hotspots extends Extras_Widget {
 				$repeater->add_control(
 					'link',
 					[
-						'label' 		=> __( 'Link', 'elementor-extras' ),
-						'description' 	=> __( 'Active only when tolltips\' Trigger is set to Hover or if tooltip is disabled responsively, below a certain breakpoint.', 'elementor-extras' ),
+						'label' 		=> __( 'Link', 'landtech-extras-for-elementor' ),
+						'description' 	=> __( 'Active only when tolltips\' Trigger is set to Hover or if tooltip is disabled responsively, below a certain breakpoint.', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::URL,
 						'label_block' 	=> false,
 						'dynamic' => [
@@ -229,48 +230,48 @@ class Hotspots extends Extras_Widget {
 				$repeater->add_control(
 					'content',
 					[
-						'label' 	=> __( 'Tooltip Content', 'elementor-extras' ),
+						'label' 	=> __( 'Tooltip Content', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::WYSIWYG,
 						'dynamic' 	=> [
 							'active' => true,
 						],
-						'default' 	=> __( 'I am a tooltip for a hotspot', 'elementor-extras' ),
+						'default' 	=> __( 'I am a tooltip for a hotspot', 'landtech-extras-for-elementor' ),
 					]
 				);
 
 				$repeater->add_control(
 					'_item_id',
 					[
-						'label' 		=> __( 'CSS ID', 'elementor-extras' ),
+						'label' 		=> __( 'CSS ID', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::TEXT,
 						'default' 		=> '',
 						'dynamic' 		=> [ 'active' => true ],
 						'label_block' 	=> true,
-						'title' 		=> __( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'elementor-extras' ),
+						'title' 		=> __( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'landtech-extras-for-elementor' ),
 					]
 				);
 
 				$repeater->add_control(
 					'css_classes',
 					[
-						'label' 		=> __( 'CSS Classes', 'elementor-extras' ),
+						'label' 		=> __( 'CSS Classes', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::TEXT,
 						'default' 		=> '',
 						'prefix_class' 	=> '',
 						'dynamic' 		=> [ 'active' => true ],
 						'label_block' 	=> true,
-						'title' 		=> __( 'Add your custom class WITHOUT the dot. e.g: my-class', 'elementor-extras' ),
+						'title' 		=> __( 'Add your custom class WITHOUT the dot. e.g: my-class', 'landtech-extras-for-elementor' ),
 					]
 				);
 
 			$repeater->end_controls_tab();
 
-			$repeater->start_controls_tab( 'tab_style', [ 'label' => __( 'Style', 'elementor-extras' ) ] );
+			$repeater->start_controls_tab( 'tab_style', [ 'label' => __( 'Style', 'landtech-extras-for-elementor' ) ] );
 
 				$repeater->add_control(
 					'default',
 					[
-						'label' => __( 'Default', 'elementor-extras' ),
+						'label' => __( 'Default', 'landtech-extras-for-elementor' ),
 						'type' => Controls_Manager::HEADING,
 					]
 				);
@@ -278,7 +279,7 @@ class Hotspots extends Extras_Widget {
 				$repeater->add_control(
 					'color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} {{CURRENT_ITEM}} .ee-hotspot__wrapper' => 'color: {{VALUE}};',
@@ -289,7 +290,7 @@ class Hotspots extends Extras_Widget {
 				$repeater->add_control(
 					'background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} {{CURRENT_ITEM}} .ee-hotspot__wrapper' 		=> 'background-color: {{VALUE}};',
@@ -301,7 +302,7 @@ class Hotspots extends Extras_Widget {
 				$repeater->add_responsive_control(
 					'opacity',
 					[
-						'label' 	=> __( 'Opacity (%)', 'elementor-extras' ),
+						'label' 	=> __( 'Opacity (%)', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SLIDER,
 						'range' 	=> [
 							'px' 	=> [
@@ -320,7 +321,7 @@ class Hotspots extends Extras_Widget {
 				$repeater->add_control(
 					'hover',
 					[
-						'label' => __( 'Hover', 'elementor-extras' ),
+						'label' => __( 'Hover', 'landtech-extras-for-elementor' ),
 						'type' => Controls_Manager::HEADING,
 					]
 				);
@@ -328,7 +329,7 @@ class Hotspots extends Extras_Widget {
 				$repeater->add_control(
 					'color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} {{CURRENT_ITEM}}:hover .ee-hotspot__wrapper' => 'color: {{VALUE}};',
@@ -339,7 +340,7 @@ class Hotspots extends Extras_Widget {
 				$repeater->add_control(
 					'background_color_hover',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} {{CURRENT_ITEM}}:hover .ee-hotspot__wrapper' 			=> 'background-color: {{VALUE}};',
@@ -351,7 +352,7 @@ class Hotspots extends Extras_Widget {
 				$repeater->add_responsive_control(
 					'opacity_hover',
 					[
-						'label' 	=> __( 'Opacity (%)', 'elementor-extras' ),
+						'label' 	=> __( 'Opacity (%)', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SLIDER,
 						'range' 	=> [
 							'px' 	=> [
@@ -368,12 +369,12 @@ class Hotspots extends Extras_Widget {
 
 			$repeater->end_controls_tab();
 
-			$repeater->start_controls_tab( 'tab_position', [ 'label' => __( 'Position', 'elementor-extras' ) ] );
+			$repeater->start_controls_tab( 'tab_position', [ 'label' => __( 'Position', 'landtech-extras-for-elementor' ) ] );
 
 				$repeater->add_control(
 					'_position_horizontal',
 					[
-						'label' 	=> __( 'Horizontal position (%)', 'elementor-extras' ),
+						'label' 	=> __( 'Horizontal position (%)', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SLIDER,
 						'default'	=> [
 							'size'	=> 50,
@@ -394,7 +395,7 @@ class Hotspots extends Extras_Widget {
 				$repeater->add_control(
 					'_position_vertical',
 					[
-						'label' 	=> __( 'Vertical position (%)', 'elementor-extras' ),
+						'label' 	=> __( 'Vertical position (%)', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SLIDER,
 						'default'	=> [
 							'size'	=> 50,
@@ -415,7 +416,7 @@ class Hotspots extends Extras_Widget {
 				$repeater->add_control(
 					'tooltips_heading',
 					[
-						'label' => __( 'Tooltips', 'elementor-extras' ),
+						'label' => __( 'Tooltips', 'landtech-extras-for-elementor' ),
 						'type' => Controls_Manager::HEADING,
 					]
 				);
@@ -423,15 +424,15 @@ class Hotspots extends Extras_Widget {
 				$repeater->add_control(
 					'tooltip_position',
 					[
-						'label'		=> __( 'Show to', 'elementor-extras' ),
+						'label'		=> __( 'Show to', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SELECT,
 						'default' 	=> '',
 						'options' 	=> [
-							'' 			=> __( 'Global', 'elementor-extras' ),
-							'bottom' 	=> __( 'Bottom', 'elementor-extras' ),
-							'left' 		=> __( 'Left', 'elementor-extras' ),
-							'top' 		=> __( 'Top', 'elementor-extras' ),
-							'right' 	=> __( 'Right', 'elementor-extras' ),
+							'' 			=> __( 'Global', 'landtech-extras-for-elementor' ),
+							'bottom' 	=> __( 'Bottom', 'landtech-extras-for-elementor' ),
+							'left' 		=> __( 'Left', 'landtech-extras-for-elementor' ),
+							'top' 		=> __( 'Top', 'landtech-extras-for-elementor' ),
+							'right' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 						],
 					]
 				);
@@ -439,14 +440,14 @@ class Hotspots extends Extras_Widget {
 				$repeater->add_control(
 					'tooltip_arrow_position_h',
 					[
-						'label'		=> __( 'Show at', 'elementor-extras' ),
+						'label'		=> __( 'Show at', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SELECT,
 						'default' 	=> '',
 						'options' 	=> [
-							'' 			=> __( 'Default', 'elementor-extras' ),
-							'center' 	=> __( 'Center', 'elementor-extras' ),
-							'left' 		=> __( 'Left', 'elementor-extras' ),
-							'right' 	=> __( 'Right', 'elementor-extras' ),
+							'' 			=> __( 'Default', 'landtech-extras-for-elementor' ),
+							'center' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
+							'left' 		=> __( 'Left', 'landtech-extras-for-elementor' ),
+							'right' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 						],
 						'condition'	=> [
 							'tooltip_position' => [ 'top', 'bottom' ],
@@ -457,14 +458,14 @@ class Hotspots extends Extras_Widget {
 				$repeater->add_control(
 					'tooltip_arrow_position_v',
 					[
-						'label'		=> __( 'Show at', 'elementor-extras' ),
+						'label'		=> __( 'Show at', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SELECT,
 						'default' 	=> '',
 						'options' 	=> [
-							'' 			=> __( 'Default', 'elementor-extras' ),
-							'center' 	=> __( 'Center', 'elementor-extras' ),
-							'bottom' 	=> __( 'Bottom', 'elementor-extras' ),
-							'top' 		=> __( 'Top', 'elementor-extras' ),
+							'' 			=> __( 'Default', 'landtech-extras-for-elementor' ),
+							'center' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
+							'bottom' 	=> __( 'Bottom', 'landtech-extras-for-elementor' ),
+							'top' 		=> __( 'Top', 'landtech-extras-for-elementor' ),
 						],
 						'condition'	=> [
 							'tooltip_position' => [ 'left', 'right' ],
@@ -480,7 +481,7 @@ class Hotspots extends Extras_Widget {
 			$this->add_control(
 				'hotspots',
 				[
-					'label' 	=> __( 'Hotspots', 'elementor-extras' ),
+					'label' 	=> __( 'Hotspots', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::REPEATER,
 					'default' 	=> [
 						[
@@ -503,7 +504,7 @@ class Hotspots extends Extras_Widget {
 		$this->start_controls_section(
 			'section_tooltips',
 			[
-				'label' => __( 'Tooltips', 'elementor-extras' ),
+				'label' => __( 'Tooltips', 'landtech-extras-for-elementor' ),
 				'condition'		=> [
 					'image[url]!' => '',
 				]
@@ -513,15 +514,15 @@ class Hotspots extends Extras_Widget {
 			$this->add_responsive_control(
 				'trigger',
 				[
-					'label'		=> __( 'Trigger', 'elementor-extras' ),
+					'label'		=> __( 'Trigger', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'mouseenter',
 					'tablet_default' 	=> 'click_target',
 					'mobile_default' 	=> 'click_target',
 					'options' 	=> [
-						'mouseenter' 	=> __( 'Mouse Over', 'elementor-extras' ),
-						'click_target' 	=> __( 'Click Target', 'elementor-extras' ),
-						'load' 			=> __( 'Page Load', 'elementor-extras' ),
+						'mouseenter' 	=> __( 'Mouse Over', 'landtech-extras-for-elementor' ),
+						'click_target' 	=> __( 'Click Target', 'landtech-extras-for-elementor' ),
+						'load' 			=> __( 'Page Load', 'landtech-extras-for-elementor' ),
 					],
 					'condition'		=> [
 						'image[url]!' => '',
@@ -533,16 +534,16 @@ class Hotspots extends Extras_Widget {
 			$this->add_responsive_control(
 				'_hide',
 				[
-					'label'		=> __( 'Hide on', 'elementor-extras' ),
+					'label'		=> __( 'Hide on', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 			=> 'mouseleave',
 					'tablet_default' 	=> 'click_out',
 					'mobile_default' 	=> 'click_out',
 					'options' 	=> [
-						'mouseleave' 	=> __( 'Mouse Leave', 'elementor-extras' ),
-						'click_out' 	=> __( 'Click Outside', 'elementor-extras' ),
-						'click_target' 	=> __( 'Click Target', 'elementor-extras' ),
-						'click_any' 	=> __( 'Click Anywhere', 'elementor-extras' ),
+						'mouseleave' 	=> __( 'Mouse Leave', 'landtech-extras-for-elementor' ),
+						'click_out' 	=> __( 'Click Outside', 'landtech-extras-for-elementor' ),
+						'click_target' 	=> __( 'Click Target', 'landtech-extras-for-elementor' ),
+						'click_any' 	=> __( 'Click Anywhere', 'landtech-extras-for-elementor' ),
 					],
 					'condition'		=> [
 						'image[url]!' => '',
@@ -554,14 +555,14 @@ class Hotspots extends Extras_Widget {
 			$this->add_control(
 				'position',
 				[
-					'label'		=> __( 'Show to', 'elementor-extras' ),
+					'label'		=> __( 'Show to', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'bottom',
 					'options' 	=> [
-						'bottom' 	=> __( 'Bottom', 'elementor-extras' ),
-						'left' 		=> __( 'Left', 'elementor-extras' ),
-						'top' 		=> __( 'Top', 'elementor-extras' ),
-						'right' 	=> __( 'Right', 'elementor-extras' ),
+						'bottom' 	=> __( 'Bottom', 'landtech-extras-for-elementor' ),
+						'left' 		=> __( 'Left', 'landtech-extras-for-elementor' ),
+						'top' 		=> __( 'Top', 'landtech-extras-for-elementor' ),
+						'right' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 					],
 					'condition'		=> [
 						'image[url]!' => '',
@@ -573,13 +574,13 @@ class Hotspots extends Extras_Widget {
 			$this->add_control(
 				'arrow_position_h',
 				[
-					'label'		=> __( 'Show at', 'elementor-extras' ),
+					'label'		=> __( 'Show at', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'center',
 					'options' 	=> [
-						'center' 	=> __( 'Center', 'elementor-extras' ),
-						'left' 		=> __( 'Left', 'elementor-extras' ),
-						'right' 	=> __( 'Right', 'elementor-extras' ),
+						'center' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
+						'left' 		=> __( 'Left', 'landtech-extras-for-elementor' ),
+						'right' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 					],
 					'condition'		=> [
 						'image[url]!' => '',
@@ -592,13 +593,13 @@ class Hotspots extends Extras_Widget {
 			$this->add_control(
 				'arrow_position_v',
 				[
-					'label'		=> __( 'Show at', 'elementor-extras' ),
+					'label'		=> __( 'Show at', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> '',
 					'options' 	=> [
-						'center' 	=> __( 'Center', 'elementor-extras' ),
-						'top' 		=> __( 'Top', 'elementor-extras' ),
-						'bottom' 	=> __( 'Bottom', 'elementor-extras' ),
+						'center' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
+						'top' 		=> __( 'Top', 'landtech-extras-for-elementor' ),
+						'bottom' 	=> __( 'Bottom', 'landtech-extras-for-elementor' ),
 					],
 					'condition'		=> [
 						'image[url]!' => '',
@@ -611,7 +612,7 @@ class Hotspots extends Extras_Widget {
 			$this->add_control(
 				'css_position',
 				[
-					'label' 		=> __( 'CSS Position', 'elementor-extras' ),
+					'label' 		=> __( 'CSS Position', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT,
 					'default' 		=> '',
 					'options'		=> [
@@ -625,13 +626,13 @@ class Hotspots extends Extras_Widget {
 			$this->add_control(
 				'disable',
 				[
-					'label'		=> __( 'Disable On', 'elementor-extras' ),
+					'label'		=> __( 'Disable On', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> '',
 					'options' 	=> [
-						'' 			=> __( 'None', 'elementor-extras' ),
-						'tablet' 	=> __( 'Tablet & Mobile', 'elementor-extras' ),
-						'mobile' 	=> __( 'Mobile', 'elementor-extras' ),
+						'' 			=> __( 'None', 'landtech-extras-for-elementor' ),
+						'tablet' 	=> __( 'Tablet & Mobile', 'landtech-extras-for-elementor' ),
+						'mobile' 	=> __( 'Mobile', 'landtech-extras-for-elementor' ),
 					],
 					'frontend_available' => true
 				]
@@ -640,12 +641,12 @@ class Hotspots extends Extras_Widget {
 			$this->add_control(
 				'arrow',
 				[
-					'label'		=> __( 'Arrow', 'elementor-extras' ),
+					'label'		=> __( 'Arrow', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> '""',
 					'options' 	=> [
-						'""' 	=> __( 'Show', 'elementor-extras' ),
-						'none' 	=> __( 'Hide', 'elementor-extras' ),
+						'""' 	=> __( 'Show', 'landtech-extras-for-elementor' ),
+						'none' 	=> __( 'Hide', 'landtech-extras-for-elementor' ),
 					],
 					'selectors' => [
 						'.ee-tooltip.ee-tooltip-{{ID}}:after' => 'content: {{VALUE}};',
@@ -659,8 +660,8 @@ class Hotspots extends Extras_Widget {
 			$this->add_control(
 				'delay_in',
 				[
-					'label' 		=> __( 'Delay in (s)', 'elementor-extras' ),
-					'description' 	=> __( 'Time until tooltips appear.', 'elementor-extras' ),
+					'label' 		=> __( 'Delay in (s)', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'Time until tooltips appear.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -679,8 +680,8 @@ class Hotspots extends Extras_Widget {
 			$this->add_control(
 				'delay_out',
 				[
-					'label' 		=> __( 'Delay out (s)', 'elementor-extras' ),
-					'description' 	=> __( 'Time until tooltips dissapear.', 'elementor-extras' ),
+					'label' 		=> __( 'Delay out (s)', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'Time until tooltips dissapear.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -699,7 +700,7 @@ class Hotspots extends Extras_Widget {
 			$this->add_control(
 				'duration',
 				[
-					'label' 		=> __( 'Duration', 'elementor-extras' ),
+					'label' 		=> __( 'Duration', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -715,8 +716,8 @@ class Hotspots extends Extras_Widget {
 			$this->add_control(
 				'distance',
 				[
-					'label' 		=> __( 'Distance', 'elementor-extras' ),
-					'description' 	=> __( 'The distance between the tooltip and the hotspot. Defaults to 6px', 'elementor-extras' ),
+					'label' 		=> __( 'Distance', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'The distance between the tooltip and the hotspot. Defaults to 6px', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> '',
@@ -742,8 +743,8 @@ class Hotspots extends Extras_Widget {
 			$this->add_control(
 				'offset',
 				[
-					'label' 		=> __( 'Offset', 'elementor-extras' ),
-					'description' 	=> __( 'Adjust offset to align arrow with target.', 'elementor-extras' ),
+					'label' 		=> __( 'Offset', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'Adjust offset to align arrow with target.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 0,
@@ -769,7 +770,7 @@ class Hotspots extends Extras_Widget {
 			$this->add_responsive_control(
 				'width',
 				[
-					'label' 		=> __( 'Maximum Width', 'elementor-extras' ),
+					'label' 		=> __( 'Maximum Width', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 200,
@@ -792,8 +793,8 @@ class Hotspots extends Extras_Widget {
 			$this->add_control(
 				'zindex',
 				[
-					'label'			=> __( 'zIndex', 'elementor-extras' ),
-					'description'   => __( 'Adjust the z-index of the tooltips. Defaults to 999', 'elementor-extras' ),
+					'label'			=> __( 'zIndex', 'landtech-extras-for-elementor' ),
+					'description'   => __( 'Adjust the z-index of the tooltips. Defaults to 999', 'landtech-extras-for-elementor' ),
 					'type'			=> Controls_Manager::NUMBER,
 					'default'		=> '999',
 					'min'			=> -9999999,
@@ -812,7 +813,7 @@ class Hotspots extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_image',
 			[
-				'label' => __( 'Image', 'elementor-extras' ),
+				'label' => __( 'Image', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -820,7 +821,7 @@ class Hotspots extends Extras_Widget {
 			$this->add_control(
 				'opacity',
 				[
-					'label' 	=> __( 'Opacity (%)', 'elementor-extras' ),
+					'label' 	=> __( 'Opacity (%)', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 1,
@@ -842,7 +843,7 @@ class Hotspots extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'image_border',
-					'label' 	=> __( 'Image Border', 'elementor-extras' ),
+					'label' 	=> __( 'Image Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '{{WRAPPER}} .ee-hotspots img',
 				]
 			);
@@ -850,7 +851,7 @@ class Hotspots extends Extras_Widget {
 			$this->add_control(
 				'image_border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
@@ -881,7 +882,7 @@ class Hotspots extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_hotspots',
 			[
-				'label' => __( 'Hotspots', 'elementor-extras' ),
+				'label' => __( 'Hotspots', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -889,7 +890,7 @@ class Hotspots extends Extras_Widget {
 			$this->add_control(
 				'hotspots_pulse',
 				[
-					'label' 		=> __( 'Disable Pulse Effect', 'elementor-extras' ),
+					'label' 		=> __( 'Disable Pulse Effect', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
 					'frontend_available' => 'true',
@@ -899,7 +900,7 @@ class Hotspots extends Extras_Widget {
 			$this->add_control(
 				'hotspots_padding',
 				[
-					'label' 		=> __( 'Text Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Text Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -912,7 +913,7 @@ class Hotspots extends Extras_Widget {
 			$this->add_control(
 				'hotspots_border_radius',
 				[
-					'label' 	=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 	=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 100,
@@ -935,7 +936,7 @@ class Hotspots extends Extras_Widget {
 				[
 					'name' 		=> 'hotspots_typography',
 					'selector' 	=> '{{WRAPPER}} .ee-hotspot__wrapper',
-					'exclude'	=> ['line_height'],
+					'exclude'	=> ['line_height'], // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor control schema.
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -957,14 +958,14 @@ class Hotspots extends Extras_Widget {
 			$this->start_controls_tab(
 				'tab_hotspots_default',
 				[
-					'label' => __( 'Default', 'elementor-extras' ),
+					'label' => __( 'Default', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 				$this->add_responsive_control(
 					'hotspots_opacity',
 					[
-						'label' 	=> __( 'Opacity (%)', 'elementor-extras' ),
+						'label' 	=> __( 'Opacity (%)', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SLIDER,
 						'default' 	=> [
 							'size' 	=> 1,
@@ -985,7 +986,7 @@ class Hotspots extends Extras_Widget {
 				$this->add_responsive_control(
 					'hotspots_size',
 					[
-						'label' 	=> __( 'Size', 'elementor-extras' ),
+						'label' 	=> __( 'Size', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SLIDER,
 						'default' 	=> [
 							'size' 	=> 1,
@@ -1006,7 +1007,7 @@ class Hotspots extends Extras_Widget {
 				$this->add_control(
 					'hotspots_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -1018,7 +1019,7 @@ class Hotspots extends Extras_Widget {
 				$this->add_control(
 					'hotspots_background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'global' => [
 							'default' => Global_Colors::COLOR_PRIMARY,
@@ -1034,7 +1035,7 @@ class Hotspots extends Extras_Widget {
 					Group_Control_Border::get_type(),
 					[
 						'name' 		=> 'hotspots_border',
-						'label' 	=> __( 'Text Border', 'elementor-extras' ),
+						'label' 	=> __( 'Text Border', 'landtech-extras-for-elementor' ),
 						'selector' 	=> '{{WRAPPER}} .ee-hotspot__wrapper',
 					]
 				);
@@ -1053,14 +1054,14 @@ class Hotspots extends Extras_Widget {
 			$this->start_controls_tab(
 				'tab_hotspots_hover',
 				[
-					'label' => __( 'Hover', 'elementor-extras' ),
+					'label' => __( 'Hover', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 				$this->add_responsive_control(
 					'hotspots_hover_opacity',
 					[
-						'label' 	=> __( 'Opacity (%)', 'elementor-extras' ),
+						'label' 	=> __( 'Opacity (%)', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SLIDER,
 						'default' 	=> [
 							'size' 	=> 1,
@@ -1081,7 +1082,7 @@ class Hotspots extends Extras_Widget {
 				$this->add_responsive_control(
 					'hotspots_hover_size',
 					[
-						'label' 	=> __( 'Size', 'elementor-extras' ),
+						'label' 	=> __( 'Size', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SLIDER,
 						'default' 	=> [
 							'size' 	=> 1,
@@ -1102,7 +1103,7 @@ class Hotspots extends Extras_Widget {
 				$this->add_control(
 					'hotspots_hover_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -1114,7 +1115,7 @@ class Hotspots extends Extras_Widget {
 				$this->add_control(
 					'hotspots_hover_background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'global' => [
 							'default' => Global_Colors::COLOR_SECONDARY,
@@ -1130,7 +1131,7 @@ class Hotspots extends Extras_Widget {
 					Group_Control_Border::get_type(),
 					[
 						'name' 		=> 'hotspots_hover_border',
-						'label' 	=> __( 'Text Border', 'elementor-extras' ),
+						'label' 	=> __( 'Text Border', 'landtech-extras-for-elementor' ),
 						'selector' 	=> '{{WRAPPER}} .ee-hotspot:hover .ee-hotspot__wrapper',
 					]
 				);
@@ -1153,7 +1154,7 @@ class Hotspots extends Extras_Widget {
 		$this->start_controls_section(
 			'section_tooltips_style',
 			[
-				'label' => __( 'Tooltips', 'elementor-extras' ),
+				'label' => __( 'Tooltips', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -1161,19 +1162,19 @@ class Hotspots extends Extras_Widget {
 			$this->add_control(
 				'tooltips_align',
 				[
-					'label' 	=> __( 'Alignment', 'elementor-extras' ),
+					'label' 	=> __( 'Alignment', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::CHOOSE,
 					'options' 	=> [
 						'left' 	=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 	=> [
-							'title' => __( 'Center', 'elementor-extras' ),
+							'title' => __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'fa fa-align-center',
 						],
 						'right' 	=> [
-							'title' => __( 'Right', 'elementor-extras' ),
+							'title' => __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon'	=> 'fa fa-align-right',
 						],
 					],
@@ -1186,7 +1187,7 @@ class Hotspots extends Extras_Widget {
 			$this->add_control(
 				'tooltips_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -1198,7 +1199,7 @@ class Hotspots extends Extras_Widget {
 			$this->add_control(
 				'tooltips_border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
@@ -1210,7 +1211,7 @@ class Hotspots extends Extras_Widget {
 			$this->add_control(
 				'tooltips_background_color',
 				[
-					'label' 	=> __( 'Background Color', 'elementor-extras' ),
+					'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'selectors' => ExtrasUtils::get_tooltip_background_selectors(),
 				]
@@ -1219,7 +1220,7 @@ class Hotspots extends Extras_Widget {
 			$this->add_control(
 				'tooltips_color',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'selectors' => [
 						'.ee-tooltip.ee-tooltip-{{ID}}' => 'color: {{VALUE}};',
@@ -1231,7 +1232,7 @@ class Hotspots extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'tooltips_border',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '.ee-tooltip.ee-tooltip-{{ID}}',
 				]
 			);
@@ -1282,12 +1283,12 @@ class Hotspots extends Extras_Widget {
 			$this->add_render_attribute( 'wrapper', 'class', 'ee-hotspots--no-pulse' );
 		}
 
-		?><div <?php echo $this->get_render_attribute_string( 'wrapper' ); ?>>
+		?><div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
 
-			<?php echo Group_Control_Image_Size::get_attachment_image_html( $settings ); ?>
+			<?php echo Group_Control_Image_Size::get_attachment_image_html( $settings ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor Group_Control_Image_Size::get_attachment_image_html returns escaped <img> markup. ?>
 
 			<?php if ( $settings['hotspots'] ) { ?>
-				<div <?php echo $this->get_render_attribute_string( 'container' ); ?>>
+				<div <?php $this->print_render_attribute_string( 'container' ); ?>>
 				<?php foreach ( $settings['hotspots'] as $index => $item ) {
 
 					$has_icon 				= false;
@@ -1374,26 +1375,26 @@ class Hotspots extends Extras_Widget {
 						}
 					}
 
-					?><<?php echo $hotspot_tag; ?> <?php echo $this->get_render_attribute_string( $hotspot_key ); ?>>
-						<span <?php echo $this->get_render_attribute_string( $wrapper_key ); ?>>
-							<span <?php echo $this->get_render_attribute_string( $text_key ); ?>><?php
+					?><<?php echo esc_html( $hotspot_tag ); ?> <?php $this->print_render_attribute_string( $hotspot_key ); ?>>
+						<span <?php $this->print_render_attribute_string( $wrapper_key ); ?>>
+							<span <?php $this->print_render_attribute_string( $text_key ); ?>><?php
 								if ( $has_icon ) {
-									?><span <?php echo $this->get_render_attribute_string( $icon_wrapper_key ); ?>><?php
+									?><span <?php $this->print_render_attribute_string( $icon_wrapper_key ); ?>><?php
 									if ( $is_new || $migrated ) {
 										Icons_Manager::render_icon( $item['selected_icon'], [ 'aria-hidden' => 'true' ] );
 									} else {
-										?><i <?php echo $this->get_render_attribute_string( $icon_key ); ?>></i><?php
+										?><i <?php $this->print_render_attribute_string( $icon_key ); ?>></i><?php
 									}
 									?></span><?php
 								} else {
-									echo $item['text'];
+									echo esc_html( $item['text'] );
 								}
 							?></span>
 						</span>
-					</<?php echo $hotspot_tag; ?>>
+					</<?php echo esc_html( $hotspot_tag ); ?>>
 
-					<div <?php echo $this->get_render_attribute_string( $tooltip_key ); ?>>
-						<?php echo $this->parse_text_editor( $item['content'] ); ?>
+					<div <?php $this->print_render_attribute_string( $tooltip_key ); ?>>
+						<?php echo wp_kses_post( $this->parse_text_editor( $item['content'] ) ); ?>
 					</div>
 
 				<?php } ?>

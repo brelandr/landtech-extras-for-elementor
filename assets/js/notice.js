@@ -17,10 +17,10 @@
             option_name = attr_value.join('-');
 
             data = {
-                'action': 'dismiss_admin_notice',
+                'action': 'landtech_extras_dismiss_notice',
                 'option_name': option_name,
                 'dismissible_length': dismissible_length,
-                'nonce': dismissible_notice.nonce
+                'nonce': landtechExtrasDismissibleNotice.nonce
             };
 
             // We can also pass the url value separately from ajaxurl for front end AJAX implementations

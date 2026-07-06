@@ -1,8 +1,9 @@
 <?php
-namespace ElementorExtras\Modules\DisplayConditions\Conditions;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\DisplayConditions\Conditions;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Condition;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Condition;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -37,7 +38,7 @@ class Acf_Text extends Acf_Base {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'ACF Textual', 'elementor-extras' );
+		return __( 'ACF Textual', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -50,8 +51,8 @@ class Acf_Text extends Acf_Base {
 	 */
 	public function get_name_control() {
 		return wp_parse_args( [
-			'description'	=> __( 'Search ACF Textual ( text, textarea, wysiwyg, number, range, email, url and password ) fields by label. Leave blank to check if the field is set.', 'elementor-extras' ),
-			'placeholder'	=> __( 'Search Fields', 'elementor-extras' ),
+			'description'	=> __( 'Search ACF Textual ( text, textarea, wysiwyg, number, range, email, url and password ) fields by label. Leave blank to check if the field is set.', 'landtech-extras-for-elementor' ),
+			'placeholder'	=> __( 'Search Fields', 'landtech-extras-for-elementor' ),
 		], $this->get_name_control_options() );
 	}
 
@@ -81,7 +82,7 @@ class Acf_Text extends Acf_Base {
 		return [
 			'type' 			=> Controls_Manager::TEXT,
 			'default' 		=> '',
-			'placeholder'	=> __( 'Value', 'elementor-extras' ),
+			'placeholder'	=> __( 'Value', 'landtech-extras-for-elementor' ),
 			'label_block' 	=> true,
 		];
 	}

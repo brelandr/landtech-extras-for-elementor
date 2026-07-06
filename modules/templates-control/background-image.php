@@ -1,8 +1,9 @@
 <?php
-namespace ElementorExtras\Modules\TemplatesControl;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\TemplatesControl;
 
-// Extras for Elementor Classes
-use ElementorExtras\Utils;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Utils;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -17,7 +18,23 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 class BackgroundImage {
 
 	/**
-	 * The current template ID
+	 * Accumulated inline CSS keyed by style block id.
+	 *
+	 * @since 2.2.71
+	 * @var array<string, string>
+	 */
+	private static $inline_css_blocks = array();
+
+	/**
+	 * Whether the wp_enqueue hook was registered.
+	 *
+	 * @since 2.2.71
+	 * @var bool
+	 */
+	private static $enqueue_hook_registered = false;
+
+	/**
+	 * Template post ID for loop context.
 	 *
 	 * @since 2.2.4
 	 * @access private
@@ -258,19 +275,67 @@ class BackgroundImage {
 	 * @return 	void
 	 */
 	private function print_styles( $element ) {
-		$settings = $element->get_settings_for_display();
-
-		echo '<style id="ee-template-loop-css-' . $this->template_id . '-' . $element->get_id() . '">';
+		$style_id = 'ee-template-loop-css-' . $this->template_id . '-' . $element->get_id();
+		$css      = '';
 
 		foreach ( $this->elements[ $element->get_type() ] as $control_name => $control_settings ) {
 			if ( array_key_exists( 'print', $control_settings ) && true === $control_settings['print'] ) {
-				echo $control_settings['selector'] . '{';
+				$css .= wp_strip_all_tags( (string) $control_settings['selector'] ) . '{';
 				foreach ( $control_settings['styles'] as $style ) {
-					echo $style['property'] . ':' . $style['value'];
+					$css .= wp_strip_all_tags( (string) $style['property'] ) . ':' . $style['value'];
 				}
+				$css .= '}';
 			}
 		}
 
-		echo '</style>';
+		if ( '' === $css ) {
+			return;
+		}
+
+		self::$inline_css_blocks[ $style_id ] = $css;
+		self::register_enqueue_hook();
+	}
+
+	/**
+	 * Attach accumulated CSS via wp_add_inline_style().
+	 *
+	 * @since 2.2.71
+	 * @return void
+	 */
+	public static function flush_inline_styles() {
+		if ( empty( self::$inline_css_blocks ) ) {
+			return;
+		}
+
+		if ( ! wp_style_is( 'landtech-extras-frontend', 'enqueued' ) && ! wp_style_is( 'landtech-extras-frontend', 'registered' ) ) {
+			return;
+		}
+
+		if ( ! wp_style_is( 'landtech-extras-frontend', 'enqueued' ) ) {
+			wp_enqueue_style( 'landtech-extras-frontend' );
+		}
+
+		wp_add_inline_style( 'landtech-extras-frontend', implode( '', self::$inline_css_blocks ) );
+		self::$inline_css_blocks = array();
+	}
+
+	/**
+	 * Register a late enqueue hook so loop CSS is printed with registered styles.
+	 *
+	 * @since 2.2.71
+	 * @return void
+	 */
+	private static function register_enqueue_hook() {
+		if ( self::$enqueue_hook_registered ) {
+			return;
+		}
+
+		self::$enqueue_hook_registered = true;
+
+		add_action(
+			'elementor/frontend/after_enqueue_styles',
+			array( __CLASS__, 'flush_inline_styles' ),
+			99
+		);
 	}
 }

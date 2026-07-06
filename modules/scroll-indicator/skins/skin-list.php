@@ -1,8 +1,9 @@
 <?php
-namespace ElementorExtras\Modules\ScrollIndicator\Skins;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\ScrollIndicator\Skins;
 
-// Extras for Elementor Classes
-use ElementorExtras\Group_Control_Transition;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Group_Control_Transition;
 
 // Elementor Classes
 use Elementor\Controls_Stack;
@@ -42,7 +43,7 @@ class Skin_List extends Skin_Base {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'List', 'elementor-extras' );
+		return __( 'List', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -80,7 +81,12 @@ class Skin_List extends Skin_Base {
 				'notice',
 				[
 					'type' 				=> Controls_Manager::RAW_HTML,
-					'raw' 				=> sprintf( __( '%1$sImportant note:%2$s Use the Elementor or Extras sticky functionality to keep the list in view.', 'elementor-extras' ), '<strong>', '</strong>' ),
+					'raw' 				=> sprintf(
+						/* translators: 1: Opening strong tag, 2: Closing strong tag. */
+						__( '%1$sImportant note:%2$s Use the Elementor or Extras sticky functionality to keep the list in view.', 'landtech-extras-for-elementor' ),
+						'<strong>',
+						'</strong>'
+					),
 					'content_classes' 	=> 'elementor-panel-alert elementor-panel-alert-info',
 				]
 			);
@@ -94,12 +100,12 @@ class Skin_List extends Skin_Base {
 			$this->add_control(
 				'direction',
 				[
-					'label' 	=> __( 'Direction', 'elementor-extras' ),
+					'label' 	=> __( 'Direction', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'vertical',
 					'options'	=> [
-						'vertical' 		=> __( 'Vertical', 'elementor-extras' ),
-						'horizontal' 	=> __( 'Horizontal', 'elementor-extras' ),
+						'vertical' 		=> __( 'Vertical', 'landtech-extras-for-elementor' ),
+						'horizontal' 	=> __( 'Horizontal', 'landtech-extras-for-elementor' ),
 					],
 					'prefix_class' => 'ee-scroll-indicator-direction--',
 				]
@@ -108,13 +114,13 @@ class Skin_List extends Skin_Base {
 			$this->add_control(
 				'show',
 				[
-					'label' 	=> __( 'Show', 'elementor-extras' ),
+					'label' 	=> __( 'Show', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> '',
 					'options'	=> [
-						''				=> __( 'Numbers & Text', 'elementor-extras' ),
-						'numbers' 		=> __( 'Numbers', 'elementor-extras' ),
-						'text' 			=> __( 'Text', 'elementor-extras' ),
+						''				=> __( 'Numbers & Text', 'landtech-extras-for-elementor' ),
+						'numbers' 		=> __( 'Numbers', 'landtech-extras-for-elementor' ),
+						'text' 			=> __( 'Text', 'landtech-extras-for-elementor' ),
 					],
 				]
 			);
@@ -122,19 +128,19 @@ class Skin_List extends Skin_Base {
 			$this->add_control(
 				'title_html_tag',
 				[
-					'label' => __( 'Title HTML Tag', 'elementor-extras' ),
+					'label' => __( 'Title HTML Tag', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::SELECT,
 					'default' => 'h4',
 					'options' 	=> [
-						'h1' 	=> __( 'H1', 'elementor-extras' ),
-						'h2' 	=> __( 'H2', 'elementor-extras' ),
-						'h3' 	=> __( 'H3', 'elementor-extras' ),
-						'h4' 	=> __( 'H4', 'elementor-extras' ),
-						'h5' 	=> __( 'H5', 'elementor-extras' ),
-						'h6' 	=> __( 'H6', 'elementor-extras' ),
-						'div' 	=> __( 'div', 'elementor-extras' ),
-						'span' 	=> __( 'span', 'elementor-extras' ),
-						'p' 	=> __( 'p', 'elementor-extras' ),
+						'h1' 	=> __( 'H1', 'landtech-extras-for-elementor' ),
+						'h2' 	=> __( 'H2', 'landtech-extras-for-elementor' ),
+						'h3' 	=> __( 'H3', 'landtech-extras-for-elementor' ),
+						'h4' 	=> __( 'H4', 'landtech-extras-for-elementor' ),
+						'h5' 	=> __( 'H5', 'landtech-extras-for-elementor' ),
+						'h6' 	=> __( 'H6', 'landtech-extras-for-elementor' ),
+						'div' 	=> __( 'div', 'landtech-extras-for-elementor' ),
+						'span' 	=> __( 'span', 'landtech-extras-for-elementor' ),
+						'p' 	=> __( 'p', 'landtech-extras-for-elementor' ),
 					],
 					'condition' <> [
 						$this->get_control_id( 'show!' ) => [ '', 'text' ],
@@ -145,19 +151,19 @@ class Skin_List extends Skin_Base {
 			$this->add_control(
 				'subtitle_html_tag',
 				[
-					'label' => __( 'Subtitle HTML Tag', 'elementor-extras' ),
+					'label' => __( 'Subtitle HTML Tag', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::SELECT,
 					'default' => 'h6',
 					'options' 	=> [
-						'h1' 	=> __( 'H1', 'elementor-extras' ),
-						'h2' 	=> __( 'H2', 'elementor-extras' ),
-						'h3' 	=> __( 'H3', 'elementor-extras' ),
-						'h4' 	=> __( 'H4', 'elementor-extras' ),
-						'h5' 	=> __( 'H5', 'elementor-extras' ),
-						'h6' 	=> __( 'H6', 'elementor-extras' ),
-						'div' 	=> __( 'div', 'elementor-extras' ),
-						'span' 	=> __( 'span', 'elementor-extras' ),
-						'p' 	=> __( 'p', 'elementor-extras' ),
+						'h1' 	=> __( 'H1', 'landtech-extras-for-elementor' ),
+						'h2' 	=> __( 'H2', 'landtech-extras-for-elementor' ),
+						'h3' 	=> __( 'H3', 'landtech-extras-for-elementor' ),
+						'h4' 	=> __( 'H4', 'landtech-extras-for-elementor' ),
+						'h5' 	=> __( 'H5', 'landtech-extras-for-elementor' ),
+						'h6' 	=> __( 'H6', 'landtech-extras-for-elementor' ),
+						'div' 	=> __( 'div', 'landtech-extras-for-elementor' ),
+						'span' 	=> __( 'span', 'landtech-extras-for-elementor' ),
+						'p' 	=> __( 'p', 'landtech-extras-for-elementor' ),
 					],
 					'condition' <> [
 						$this->get_control_id( 'show!' ) => [ '', 'text' ],
@@ -190,7 +196,7 @@ class Skin_List extends Skin_Base {
 		$this->start_controls_section(
 			'section_elements_style',
 			[
-				'label' => __( 'Elements', 'elementor-extras' ),
+				'label' => __( 'Elements', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -198,7 +204,7 @@ class Skin_List extends Skin_Base {
 			$this->add_control(
 				'spacing',
 				[
-					'label' 	=> __( 'Spacing (px)', 'elementor-extras' ),
+					'label' 	=> __( 'Spacing (px)', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -217,7 +223,7 @@ class Skin_List extends Skin_Base {
 			$this->add_responsive_control(
 				'padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -241,12 +247,12 @@ class Skin_List extends Skin_Base {
 
 			$this->start_controls_tabs( 'items' );
 
-			$this->start_controls_tab( 'item_default', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'item_default', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-scroll-indicator__element__link' => 'background-color: {{VALUE}};',
@@ -257,7 +263,7 @@ class Skin_List extends Skin_Base {
 				$this->add_control(
 					'number_background_color',
 					[
-						'label' 	=> __( 'Number Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Number Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-scroll-indicator__element__link .ee-scroll-indicator__element__bullet' => 'background-color: {{VALUE}};',
@@ -271,7 +277,7 @@ class Skin_List extends Skin_Base {
 				$this->add_control(
 					'number_border_color',
 					[
-						'label' 	=> __( 'Number Border Color', 'elementor-extras' ),
+						'label' 	=> __( 'Number Border Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-scroll-indicator__element__link .ee-scroll-indicator__element__bullet' => 'border-color: {{VALUE}};',
@@ -286,7 +292,7 @@ class Skin_List extends Skin_Base {
 				$this->add_control(
 					'number_color',
 					[
-						'label' 	=> __( 'Number Text Color', 'elementor-extras' ),
+						'label' 	=> __( 'Number Text Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-scroll-indicator__element__number' => 'color: {{VALUE}};',
@@ -300,7 +306,7 @@ class Skin_List extends Skin_Base {
 				$this->add_control(
 					'title_color',
 					[
-						'label' 	=> __( 'Title Color', 'elementor-extras' ),
+						'label' 	=> __( 'Title Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-scroll-indicator__element__title' => 'color: {{VALUE}};',
@@ -314,7 +320,7 @@ class Skin_List extends Skin_Base {
 				$this->add_control(
 					'subtitle_color',
 					[
-						'label' 	=> __( 'Subtitle Color', 'elementor-extras' ),
+						'label' 	=> __( 'Subtitle Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-scroll-indicator__element__subtitle' => 'color: {{VALUE}};',
@@ -327,12 +333,12 @@ class Skin_List extends Skin_Base {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'item_hover', [ 'label' => __( 'Hover', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'item_hover', [ 'label' => __( 'Hover', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'background_color_hover',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-scroll-indicator__element__link:hover' => 'background-color: {{VALUE}};',
@@ -346,7 +352,7 @@ class Skin_List extends Skin_Base {
 				$this->add_control(
 					'number_background_color_hover',
 					[
-						'label' 	=> __( 'Number Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Number Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-scroll-indicator__element__link:hover .ee-scroll-indicator__element__bullet' => 'background-color: {{VALUE}};',
@@ -360,7 +366,7 @@ class Skin_List extends Skin_Base {
 				$this->add_control(
 					'number_border_color_hover',
 					[
-						'label' 	=> __( 'Number Border Color', 'elementor-extras' ),
+						'label' 	=> __( 'Number Border Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-scroll-indicator__element__link:hover .ee-scroll-indicator__element__bullet' => 'border-color: {{VALUE}};',
@@ -375,7 +381,7 @@ class Skin_List extends Skin_Base {
 				$this->add_control(
 					'number_color_hover',
 					[
-						'label' 	=> __( 'Number Text Color', 'elementor-extras' ),
+						'label' 	=> __( 'Number Text Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-scroll-indicator__element__link:hover .ee-scroll-indicator__element__number' => 'color: {{VALUE}};',
@@ -386,7 +392,7 @@ class Skin_List extends Skin_Base {
 				$this->add_control(
 					'title_color_hover',
 					[
-						'label' 	=> __( 'Title Color', 'elementor-extras' ),
+						'label' 	=> __( 'Title Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-scroll-indicator__element__link:hover .ee-scroll-indicator__element__title' => 'color: {{VALUE}};',
@@ -400,7 +406,7 @@ class Skin_List extends Skin_Base {
 				$this->add_control(
 					'subtitle_color_hover',
 					[
-						'label' 	=> __( 'Subtitle Color', 'elementor-extras' ),
+						'label' 	=> __( 'Subtitle Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-scroll-indicator__element__link:hover .ee-scroll-indicator__element__subtitle' => 'color: {{VALUE}};',
@@ -413,12 +419,12 @@ class Skin_List extends Skin_Base {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'item_reading', [ 'label' => __( 'Reading', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'item_reading', [ 'label' => __( 'Reading', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'background_color_reading',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-scroll-indicator__element__link.is--reading' => 'background-color: {{VALUE}};',
@@ -429,7 +435,7 @@ class Skin_List extends Skin_Base {
 				$this->add_control(
 					'number_background_color_reading',
 					[
-						'label' 	=> __( 'Number Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Number Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-scroll-indicator__element__link.is--reading .ee-scroll-indicator__element__bullet' => 'background-color: {{VALUE}};',
@@ -443,7 +449,7 @@ class Skin_List extends Skin_Base {
 				$this->add_control(
 					'number_border_color_reading',
 					[
-						'label' 	=> __( 'Number Border Color', 'elementor-extras' ),
+						'label' 	=> __( 'Number Border Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-scroll-indicator__element__link.is--reading .ee-scroll-indicator__element__bullet' => 'border-color: {{VALUE}};',
@@ -458,7 +464,7 @@ class Skin_List extends Skin_Base {
 				$this->add_control(
 					'number_color_reading',
 					[
-						'label' 	=> __( 'Number Text Color', 'elementor-extras' ),
+						'label' 	=> __( 'Number Text Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'global' => [
 							'default' => Global_Colors::COLOR_PRIMARY,
@@ -475,7 +481,7 @@ class Skin_List extends Skin_Base {
 				$this->add_control(
 					'progress_color_reading',
 					[
-						'label' 	=> __( 'Progress Color', 'elementor-extras' ),
+						'label' 	=> __( 'Progress Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'global' => [
 							'default' => Global_Colors::COLOR_PRIMARY,
@@ -492,7 +498,7 @@ class Skin_List extends Skin_Base {
 				$this->add_control(
 					'title_color_reading',
 					[
-						'label' 	=> __( 'Title Color', 'elementor-extras' ),
+						'label' 	=> __( 'Title Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'global' => [
 							'default' => Global_Colors::COLOR_PRIMARY,
@@ -509,7 +515,7 @@ class Skin_List extends Skin_Base {
 				$this->add_control(
 					'subtitle_color_reading',
 					[
-						'label' 	=> __( 'Subtitle Color', 'elementor-extras' ),
+						'label' 	=> __( 'Subtitle Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'global' => [
 							'default' => Global_Colors::COLOR_PRIMARY,
@@ -525,12 +531,12 @@ class Skin_List extends Skin_Base {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'item_read', [ 'label' => __( 'Read', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'item_read', [ 'label' => __( 'Read', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'background_color_read',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-scroll-indicator__element__link.is--read' => 'background-color: {{VALUE}};',
@@ -541,7 +547,7 @@ class Skin_List extends Skin_Base {
 				$this->add_control(
 					'number_background_color_read',
 					[
-						'label' 	=> __( 'Number Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Number Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-scroll-indicator__element__link.is--read .ee-scroll-indicator__element__bullet' => 'background-color: {{VALUE}};',
@@ -555,7 +561,7 @@ class Skin_List extends Skin_Base {
 				$this->add_control(
 					'number_border_color_read',
 					[
-						'label' 	=> __( 'Number Border Color', 'elementor-extras' ),
+						'label' 	=> __( 'Number Border Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-scroll-indicator__element__link.is--read .ee-scroll-indicator__element__bullet' => 'border-color: {{VALUE}};',
@@ -570,7 +576,7 @@ class Skin_List extends Skin_Base {
 				$this->add_control(
 					'number_color_read',
 					[
-						'label' 	=> __( 'Number Text Color', 'elementor-extras' ),
+						'label' 	=> __( 'Number Text Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'global' => [
 							'default' => Global_Colors::COLOR_ACCENT,
@@ -587,7 +593,7 @@ class Skin_List extends Skin_Base {
 				$this->add_control(
 					'progress_color_read',
 					[
-						'label' 	=> __( 'Progress Color', 'elementor-extras' ),
+						'label' 	=> __( 'Progress Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'global' => [
 							'default' => Global_Colors::COLOR_ACCENT,
@@ -604,7 +610,7 @@ class Skin_List extends Skin_Base {
 				$this->add_control(
 					'title_color_read',
 					[
-						'label' 	=> __( 'Title Color', 'elementor-extras' ),
+						'label' 	=> __( 'Title Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'global' => [
 							'default' => Global_Colors::COLOR_ACCENT,
@@ -621,7 +627,7 @@ class Skin_List extends Skin_Base {
 				$this->add_control(
 					'subtitle_color_read',
 					[
-						'label' 	=> __( 'Subtitle Color', 'elementor-extras' ),
+						'label' 	=> __( 'Subtitle Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'global' => [
 							'default' => Global_Colors::COLOR_ACCENT,
@@ -642,7 +648,7 @@ class Skin_List extends Skin_Base {
 			$this->add_control(
 				'separators',
 				[
-					'label' 		=> __( 'Separators', 'elementor-extras' ),
+					'label' 		=> __( 'Separators', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default'		=> '',
 					'return_value' 	=> 'yes',
@@ -653,7 +659,7 @@ class Skin_List extends Skin_Base {
 			$this->add_responsive_control(
 				'separator_thickness',
 				[
-					'label' 	=> __( 'Separator Thickness', 'elementor-extras' ),
+					'label' 	=> __( 'Separator Thickness', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -674,7 +680,7 @@ class Skin_List extends Skin_Base {
 			$this->add_control(
 				'separator_color',
 				[
-					'label' 	=> __( 'Separators Color', 'elementor-extras' ),
+					'label' 	=> __( 'Separators Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'selectors' => [
 						'{{WRAPPER}}.ee-scroll-indicator-direction--vertical .ee-scroll-indicator__element:not(:last-child)' => 'border-bottom-color: {{VALUE}};',
@@ -701,7 +707,7 @@ class Skin_List extends Skin_Base {
 		$this->start_controls_section(
 			'section_numbers_style',
 			[
-				'label' => __( 'Numbers', 'elementor-extras' ),
+				'label' => __( 'Numbers', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					$this->get_control_id( 'show' ) => [ '', 'numbers' ],
@@ -712,25 +718,25 @@ class Skin_List extends Skin_Base {
 			$this->add_control(
 				'numbers_align',
 				[
-					'label' 		=> __( 'Position', 'elementor-extras' ),
+					'label' 		=> __( 'Position', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'label_block'	=> false,
 					'default' 		=> '',
 					'options' 		=> [
 						'left' 		=> [
-							'title' => __( 'Left', 'elementor-extras' ),
+							'title' => __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'eicon-h-align-left',
 						],
 						'top' 		=> [
-							'title' => __( 'Top', 'elementor-extras' ),
+							'title' => __( 'Top', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'eicon-v-align-top',
 						],
 						'right' 	=> [
-							'title' => __( 'Right', 'elementor-extras' ),
+							'title' => __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'eicon-h-align-right',
 						],
 						'bottom' 	=> [
-							'title' => __( 'Bottom', 'elementor-extras' ),
+							'title' => __( 'Bottom', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'eicon-v-align-bottom',
 						],
 					],
@@ -742,7 +748,7 @@ class Skin_List extends Skin_Base {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'numbers',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
 					],
@@ -753,7 +759,7 @@ class Skin_List extends Skin_Base {
 			$this->add_responsive_control(
 				'numbers_size',
 				[
-					'label' 	=> __( 'Size', 'elementor-extras' ),
+					'label' 	=> __( 'Size', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -771,7 +777,7 @@ class Skin_List extends Skin_Base {
 			$this->add_control(
 				'numbers_spacing',
 				[
-					'label' 	=> __( 'Spacing (px)', 'elementor-extras' ),
+					'label' 	=> __( 'Spacing (px)', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -794,7 +800,7 @@ class Skin_List extends Skin_Base {
 			$this->add_responsive_control(
 				'progress_thickness',
 				[
-					'label' 	=> __( 'Progress Thickness', 'elementor-extras' ),
+					'label' 	=> __( 'Progress Thickness', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -812,8 +818,8 @@ class Skin_List extends Skin_Base {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'numbers',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
-					'exclude'	=> [ 'width', 'color' ],
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
+					'exclude'	=> [ 'width', 'color' ], // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor control schema.
 					'selector' 	=> '{{WRAPPER}} .ee-scroll-indicator__element__bullet',
 				]
 			);
@@ -821,7 +827,7 @@ class Skin_List extends Skin_Base {
 			$this->add_responsive_control(
 				'numbers_border_width',
 				[
-					'label' 	=> __( 'Border Width', 'elementor-extras' ),
+					'label' 	=> __( 'Border Width', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -852,7 +858,7 @@ class Skin_List extends Skin_Base {
 		$this->start_controls_section(
 			'section_text_style',
 			[
-				'label' => __( 'Text', 'elementor-extras' ),
+				'label' => __( 'Text', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					$this->get_control_id( 'show' ) => [ '', 'text' ],
@@ -863,20 +869,20 @@ class Skin_List extends Skin_Base {
 			$this->add_responsive_control(
 				'text_align',
 				[
-					'label' 		=> __( 'Align Text', 'elementor-extras' ),
+					'label' 		=> __( 'Align Text', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'left'    		=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -889,7 +895,7 @@ class Skin_List extends Skin_Base {
 			$this->add_control(
 				'title_heading',
 				[
-					'label'		=> __( 'Title', 'elementor-extras' ),
+					'label'		=> __( 'Title', 'landtech-extras-for-elementor' ),
 					'type' 		=> \Elementor\Controls_Manager::HEADING,
 					'separator'	=> 'before',
 				]
@@ -899,7 +905,7 @@ class Skin_List extends Skin_Base {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'title',
-					'label' 	=> __( 'Title', 'elementor-extras' ),
+					'label' 	=> __( 'Title', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_SECONDARY,
 					],
@@ -910,7 +916,7 @@ class Skin_List extends Skin_Base {
 			$this->add_responsive_control(
 				'title_spacing',
 				[
-					'label' 	=> __( 'Spacing', 'elementor-extras' ),
+					'label' 	=> __( 'Spacing', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default'	=> [
 						'size' 	=> 0,
@@ -931,7 +937,7 @@ class Skin_List extends Skin_Base {
 			$this->add_control(
 				'subtitle_heading',
 				[
-					'label'		=> __( 'Subtitle', 'elementor-extras' ),
+					'label'		=> __( 'Subtitle', 'landtech-extras-for-elementor' ),
 					'type' 		=> \Elementor\Controls_Manager::HEADING,
 					'separator'	=> 'before',
 				]
@@ -941,7 +947,7 @@ class Skin_List extends Skin_Base {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'subtitle',
-					'label' 	=> __( 'Subtitle', 'elementor-extras' ),
+					'label' 	=> __( 'Subtitle', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_ACCENT,
 					],
@@ -1011,7 +1017,7 @@ class Skin_List extends Skin_Base {
 		}
 
 		?>
-		<a <?php echo $this->parent->get_render_attribute_string( $link_key ); ?>>
+		<a <?php $this->parent->print_render_attribute_string( $link_key ); ?>>
 			<?php
 				$this->render_element_bullet( $index, $section );
 				$this->render_element_text( $index, $section );

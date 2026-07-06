@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Plugin Name:       LandTech Extras for Elementor
  * Plugin URI:        https://landtechwebdesigns.com/
  * Description:       Free Elementor widgets and extensions — distributed on WordPress.org; updates via the WordPress dashboard only.
- * Version:           2.2.76
+ * Version:           2.2.77
  * Elementor tested up to: 3.28
  * Elementor Pro tested up to: 3.28
  *
@@ -99,7 +99,7 @@ if ( ! defined( 'LANDTECH_EXTRAS_ASSETS_URL' ) ) {
 	define( 'LANDTECH_EXTRAS_ASSETS_URL', LANDTECH_EXTRAS_URL . 'assets/' );
 }
 if ( ! defined( 'LANDTECH_EXTRAS_VERSION' ) ) {
-	define( 'LANDTECH_EXTRAS_VERSION', '2.2.76' );
+	define( 'LANDTECH_EXTRAS_VERSION', '2.2.77' );
 }
 if ( ! defined( 'LANDTECH_EXTRAS_PREVIOUS_STABLE_VERSION' ) ) {
 	define( 'LANDTECH_EXTRAS_PREVIOUS_STABLE_VERSION', '2.2.64' );
@@ -623,7 +623,7 @@ if ( ! function_exists( 'landtech_extras_is_elementor_installed' ) ) {
  */
 if ( ! function_exists( 'landtech_extras_get_playground_demo_url' ) ) {
 	function landtech_extras_get_playground_demo_url() {
-		$blueprint_url = 'https://raw.githubusercontent.com/brelandr/extras-for-elementor/main/blueprint.json';
+		$blueprint_url = 'https://plugins.svn.wordpress.org/landtech-extras-for-elementor/assets/blueprints/blueprint.json';
 
 		/**
 		 * Filter the blueprint JSON URL used for the WordPress Playground live demo.

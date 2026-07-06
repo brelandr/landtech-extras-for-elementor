@@ -1,8 +1,9 @@
 <?php
-namespace ElementorExtras\Modules\Posts\Skins;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Posts\Skins;
 
-// Extras for Elementor Classes
-use ElementorExtras\Group_Control_Transition;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Group_Control_Transition;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -37,7 +38,7 @@ class Skin_Carousel extends Skin_Base {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Carousel', 'elementor-extras' );
+		return __( 'Carousel', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -69,7 +70,7 @@ class Skin_Carousel extends Skin_Base {
 		$this->add_control(
 			'carousel_heading',
 			[
-				'label' 	=> __( 'Carousel', 'elementor-extras' ),
+				'label' 	=> __( 'Carousel', 'landtech-extras-for-elementor' ),
 				'type' 		=> Controls_Manager::HEADING,
 				'separator'	=> 'before',
 			]
@@ -79,13 +80,13 @@ class Skin_Carousel extends Skin_Base {
 			'direction',
 			[
 				'type' 				=> Controls_Manager::SELECT,
-				'label' 			=> __( 'Orientation', 'elementor-extras' ),
+				'label' 			=> __( 'Orientation', 'landtech-extras-for-elementor' ),
 				'default'			=> 'horizontal',
 				'tablet_default'	=> 'horizontal',
 				'mobile_default'	=> 'horizontal',
 				'options' 			=> [
-					'horizontal' 	=> __( 'Horizontal', 'elementor-extras' ),
-					'vertical' 		=> __( 'Vertical', 'elementor-extras' ),
+					'horizontal' 	=> __( 'Horizontal', 'landtech-extras-for-elementor' ),
+					'vertical' 		=> __( 'Vertical', 'landtech-extras-for-elementor' ),
 				],
 				'frontend_available' 	=> true,
 			]
@@ -94,13 +95,13 @@ class Skin_Carousel extends Skin_Base {
 		$this->add_responsive_control(
 			'slides_per_view',
 			[
-				'label' 			=> __( 'Slides Per View', 'elementor-extras' ),
+				'label' 			=> __( 'Slides Per View', 'landtech-extras-for-elementor' ),
 				'type' 				=> Controls_Manager::SELECT,
 				'default' 			=> '',
 				'tablet_default' 	=> '',
 				'mobile_default' 	=> '',
 				'options' => [
-					''	=> __( 'Default', 'elementor-extras' ),
+					''	=> __( 'Default', 'landtech-extras-for-elementor' ),
 					'1' => '1',
 					'2' => '2',
 					'3' => '3',
@@ -116,8 +117,8 @@ class Skin_Carousel extends Skin_Base {
 			'slides_per_column',
 			[
 				'type' 					=> Controls_Manager::SELECT,
-				'label' 				=> __( 'Slides Per Column', 'elementor-extras' ),
-				'options' 				=> [ '' => __( 'Default', 'elementor-extras' ) ] + $slides_per_column,
+				'label' 				=> __( 'Slides Per Column', 'landtech-extras-for-elementor' ),
+				'options' 				=> [ '' => __( 'Default', 'landtech-extras-for-elementor' ) ] + $slides_per_column,
 				'condition'				=> [
 					$this->get_control_id( 'direction' ) => 'horizontal',
 				],
@@ -129,8 +130,8 @@ class Skin_Carousel extends Skin_Base {
 			'slides_to_scroll',
 			[
 				'type' 			=> Controls_Manager::SELECT,
-				'label' 		=> __( 'Slides to Scroll', 'elementor-extras' ),
-				'options' 		=> [ '' => __( 'Default', 'elementor-extras' ) ] + $slides_per_column,
+				'label' 		=> __( 'Slides to Scroll', 'landtech-extras-for-elementor' ),
+				'options' 		=> [ '' => __( 'Default', 'landtech-extras-for-elementor' ) ] + $slides_per_column,
 				'frontend_available' => true,
 			]
 		);
@@ -138,7 +139,7 @@ class Skin_Carousel extends Skin_Base {
 		parent::register_layout_content_controls();
 
 		$this->update_control( 'grid_columns_spacing', [
-			'label' => __( 'Grid Spacing', 'elementor-extras' ),
+			'label' => __( 'Grid Spacing', 'landtech-extras-for-elementor' ),
 		] );
 
 		$this->remove_control( 'grid_rows_spacing' );
@@ -160,8 +161,8 @@ class Skin_Carousel extends Skin_Base {
 			$this->add_control(
 				'height',
 				[
-					'label' 		=> __( 'Height', 'elementor-extras' ),
-					'description'	=> __( 'The carousel needs to have a fixed defined height to work in vertical mode.', 'elementor-extras' ),
+					'label' 		=> __( 'Height', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'The carousel needs to have a fixed defined height to work in vertical mode.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'size_units' 	=> [ 'px', '%', 'vh' ],
 					'default' => [
@@ -201,24 +202,24 @@ class Skin_Carousel extends Skin_Base {
 			$this->add_responsive_control(
 				'slides_align',
 				[
-					'label' 		=> __( 'Vertical Align', 'elementor-extras' ),
+					'label' 		=> __( 'Vertical Align', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> 'stretch',
 					'options' 		=> [
 						'top' 			=> [
-							'title' 	=> __( 'Top', 'elementor-extras' ),
+							'title' 	=> __( 'Top', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-top',
 						],
 						'middle' 		=> [
-							'title' 	=> __( 'Middle', 'elementor-extras' ),
+							'title' 	=> __( 'Middle', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-middle',
 						],
 						'bottom' 		=> [
-							'title' 	=> __( 'Bottom', 'elementor-extras' ),
+							'title' 	=> __( 'Bottom', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-bottom',
 						],
 						'stretch' 		=> [
-							'title' 	=> __( 'Stretch', 'elementor-extras' ),
+							'title' 	=> __( 'Stretch', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-stretch',
 						],
 					],
@@ -240,7 +241,7 @@ class Skin_Carousel extends Skin_Base {
 		$this->start_controls_section(
 			'section_carousel',
 			[
-				'label' => __( 'Carousel', 'elementor-extras' ),
+				'label' => __( 'Carousel', 'landtech-extras-for-elementor' ),
 			]
 		);
 
@@ -248,11 +249,11 @@ class Skin_Carousel extends Skin_Base {
 				'effect',
 				[
 					'type' 			=> Controls_Manager::SELECT,
-					'label' 		=> __( 'Effect', 'elementor-extras' ),
+					'label' 		=> __( 'Effect', 'landtech-extras-for-elementor' ),
 					'default' 		=> 'slide',
 					'options' 		=> [
-						'slide' 	=> __( 'Slide', 'elementor-extras' ),
-						'fade' 		=> __( 'Fade', 'elementor-extras' ),
+						'slide' 	=> __( 'Slide', 'landtech-extras-for-elementor' ),
+						'fade' 		=> __( 'Fade', 'landtech-extras-for-elementor' ),
 					],
 					'frontend_available' => true,
 				]
@@ -262,7 +263,7 @@ class Skin_Carousel extends Skin_Base {
 				'effect_fade_warning',
 				[
 					'type' 				=> Controls_Manager::RAW_HTML,
-					'raw' 				=> __( 'The Fade effect ignores the Slides per View and Slides per Column settings', 'elementor-extras' ),
+					'raw' 				=> __( 'The Fade effect ignores the Slides per View and Slides per Column settings', 'landtech-extras-for-elementor' ),
 					'content_classes' 	=> 'elementor-panel-alert elementor-panel-alert-info',
 					'condition' 		=> [
 						$this->get_control_id('effect') => 'fade',
@@ -273,8 +274,8 @@ class Skin_Carousel extends Skin_Base {
 			$this->add_control(
 				'speed',
 				[
-					'label' 	=> __( 'Duration (ms)', 'elementor-extras' ),
-					'description' => __( 'Duration of the effect transition.', 'elementor-extras' ) ,
+					'label' 	=> __( 'Duration (ms)', 'landtech-extras-for-elementor' ),
+					'description' => __( 'Duration of the effect transition.', 'landtech-extras-for-elementor' ) ,
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 300,
@@ -294,8 +295,8 @@ class Skin_Carousel extends Skin_Base {
 			$this->add_control(
 				'resistance_ratio',
 				[
-					'label' 		=> __( 'Resistance', 'elementor-extras' ),
-					'description'	=> __( 'Set the value for resistant bounds.', 'elementor-extras' ),
+					'label' 		=> __( 'Resistance', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Set the value for resistant bounds.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 		=> [
 						'size' 		=> 0.25,
@@ -316,7 +317,7 @@ class Skin_Carousel extends Skin_Base {
 				'loop',
 				[
 					'type' 			=> Controls_Manager::SWITCHER,
-					'label' 		=> __( 'Loop', 'elementor-extras' ),
+					'label' 		=> __( 'Loop', 'landtech-extras-for-elementor' ),
 					'default' 		=> '',
 					'separator'		=> 'before',
 					'frontend_available' 	=> true,
@@ -327,7 +328,7 @@ class Skin_Carousel extends Skin_Base {
 				'autoheight',
 				[
 					'type' 			=> Controls_Manager::SWITCHER,
-					'label' 		=> __( 'Auto Height', 'elementor-extras' ),
+					'label' 		=> __( 'Auto Height', 'landtech-extras-for-elementor' ),
 					'default' 		=> '',
 					'frontend_available' 	=> true,
 					'conditions'=> [
@@ -352,8 +353,8 @@ class Skin_Carousel extends Skin_Base {
 				'slide_change_resize',
 				[
 					'type' 			=> Controls_Manager::SWITCHER,
-					'label' 		=> __( 'Trigger Resize on Slide', 'elementor-extras' ),
-					'description'	=> __( 'Some widgets inside post skins templates might require triggering a window resize event when changing slides to display correctly.', 'elementor-extras' ),
+					'label' 		=> __( 'Trigger Resize on Slide', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Some widgets inside post skins templates might require triggering a window resize event when changing slides to display correctly.', 'landtech-extras-for-elementor' ),
 					'default' 		=> '',
 					'frontend_available' => true,
 					'condition' 	=> [
@@ -365,11 +366,11 @@ class Skin_Carousel extends Skin_Base {
 			$this->add_control(
 				'arrows',
 				[
-					'label' 		=> __( 'Arrows', 'elementor-extras' ),
+					'label' 		=> __( 'Arrows', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::POPOVER_TOGGLE,
 					'default' 		=> 'on',
-					'label_on' 		=> __( 'On', 'elementor-extras' ),
-					'label_off' 	=> __( 'Off', 'elementor-extras' ),
+					'label_on' 		=> __( 'On', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'Off', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'on',
 					'frontend_available' => true,
 				]
@@ -381,11 +382,11 @@ class Skin_Carousel extends Skin_Base {
 				'arrows_placement',
 				[
 					'type' 			=> Controls_Manager::SELECT,
-					'label' 		=> __( 'Placement', 'elementor-extras' ),
+					'label' 		=> __( 'Placement', 'landtech-extras-for-elementor' ),
 					'default'		=> 'inside',
 					'options' 		=> [
-						'inside' 	=> __( 'Inside', 'elementor-extras' ),
-						'outside' 	=> __( 'Outside', 'elementor-extras' ),
+						'inside' 	=> __( 'Inside', 'landtech-extras-for-elementor' ),
+						'outside' 	=> __( 'Outside', 'landtech-extras-for-elementor' ),
 					],
 					'condition'		=> [
 						$this->get_control_id('arrows!') => '',
@@ -399,8 +400,8 @@ class Skin_Carousel extends Skin_Base {
 				'free_mode',
 				[
 					'type' 			=> Controls_Manager::POPOVER_TOGGLE,
-					'label' 		=> __( 'Free Mode', 'elementor-extras' ),
-					'description'	=> __( 'Disable fixed positions for slides.', 'elementor-extras' ),
+					'label' 		=> __( 'Free Mode', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Disable fixed positions for slides.', 'landtech-extras-for-elementor' ),
 					'default' 		=> '',
 					'return_value' 	=> 'yes',
 					'frontend_available' 	=> true,
@@ -413,8 +414,8 @@ class Skin_Carousel extends Skin_Base {
 				'free_mode_sticky',
 				[
 					'type' 			=> Controls_Manager::SWITCHER,
-					'label' 		=> __( 'Snap to position', 'elementor-extras' ),
-					'description'	=> __( 'Enable to snap slides to positions in free mode.', 'elementor-extras' ),
+					'label' 		=> __( 'Snap to position', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Enable to snap slides to positions in free mode.', 'landtech-extras-for-elementor' ),
 					'default' 		=> '',
 					'return_value' 	=> 'yes',
 					'frontend_available' 	=> true,
@@ -428,8 +429,8 @@ class Skin_Carousel extends Skin_Base {
 				'free_mode_momentum',
 				[
 					'type' 			=> Controls_Manager::SWITCHER,
-					'label' 		=> __( 'Momentum', 'elementor-extras' ),
-					'description'	=> __( 'Enable to keep slide moving for a while after you release it.', 'elementor-extras' ),
+					'label' 		=> __( 'Momentum', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Enable to keep slide moving for a while after you release it.', 'landtech-extras-for-elementor' ),
 					'default' 		=> 'yes',
 					'return_value' 	=> 'yes',
 					'separator'		=> 'before',
@@ -443,8 +444,8 @@ class Skin_Carousel extends Skin_Base {
 			$this->add_control(
 				'free_mode_momentum_ratio',
 				[
-					'label' 		=> __( 'Ratio', 'elementor-extras' ),
-					'description'	=> __( 'Higher value produces larger momentum distance after you release slider.', 'elementor-extras' ),
+					'label' 		=> __( 'Ratio', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Higher value produces larger momentum distance after you release slider.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -464,8 +465,8 @@ class Skin_Carousel extends Skin_Base {
 			$this->add_control(
 				'free_mode_momentum_velocity',
 				[
-					'label' 		=> __( 'Velocity', 'elementor-extras' ),
-					'description'	=> __( 'Higher value produces larger momentum velocity after you release slider.', 'elementor-extras' ),
+					'label' 		=> __( 'Velocity', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Higher value produces larger momentum velocity after you release slider.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -486,8 +487,8 @@ class Skin_Carousel extends Skin_Base {
 				'free_mode_momentum_bounce',
 				[
 					'type' 			=> Controls_Manager::SWITCHER,
-					'label' 		=> __( 'Bounce', 'elementor-extras' ),
-					'description'	=> __( 'Set to No if you want to disable momentum bounce in free mode.', 'elementor-extras' ),
+					'label' 		=> __( 'Bounce', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Set to No if you want to disable momentum bounce in free mode.', 'landtech-extras-for-elementor' ),
 					'default' 		=> 'yes',
 					'return_value' 	=> 'yes',
 					'frontend_available' => true,
@@ -501,8 +502,8 @@ class Skin_Carousel extends Skin_Base {
 			$this->add_control(
 				'free_mode_momentum_bounce_ratio',
 				[
-					'label' 		=> __( 'Bounce Ratio', 'elementor-extras' ),
-					'description'	=> __( 'Higher value produces larger momentum bounce effect.', 'elementor-extras' ),
+					'label' 		=> __( 'Bounce Ratio', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Higher value produces larger momentum bounce effect.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -525,7 +526,7 @@ class Skin_Carousel extends Skin_Base {
 			$this->add_control(
 				'autoplay',
 				[
-					'label' 	=> __( 'Autoplay', 'elementor-extras' ),
+					'label' 	=> __( 'Autoplay', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::POPOVER_TOGGLE,
 					'default' 	=> '',
 					'frontend_available' => true,
@@ -537,7 +538,7 @@ class Skin_Carousel extends Skin_Base {
 			$this->add_control(
 				'autoplay_speed',
 				[
-					'label' 	=> __( 'Autoplay Speed', 'elementor-extras' ),
+					'label' 	=> __( 'Autoplay Speed', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::NUMBER,
 					'default' 	=> 5000,
 					'condition' => [
@@ -550,8 +551,8 @@ class Skin_Carousel extends Skin_Base {
 			$this->add_control(
 				'pause_on_interaction',
 				[
-					'label' 		=> __( 'Disable on Interaction', 'elementor-extras' ),
-					'description' 	=> __( 'Removes autoplay completely on the first interaction with the carousel.', 'elementor-extras' ),
+					'label' 		=> __( 'Disable on Interaction', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'Removes autoplay completely on the first interaction with the carousel.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
 					'condition' 	=> [
@@ -564,7 +565,7 @@ class Skin_Carousel extends Skin_Base {
 			$this->add_control(
 				'stop_on_hover',
 				[
-					'label' 	=> __( 'Pause on Hover', 'elementor-extras' ),
+					'label' 	=> __( 'Pause on Hover', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SWITCHER,
 					'default' 	=> '',
 					'frontend_available' => true,
@@ -579,11 +580,11 @@ class Skin_Carousel extends Skin_Base {
 			$this->add_control(
 				'pagination',
 				[
-					'label' 		=> __( 'Pagination', 'elementor-extras' ),
+					'label' 		=> __( 'Pagination', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::POPOVER_TOGGLE,
 					'default' 		=> 'on',
-					'label_on' 		=> __( 'On', 'elementor-extras' ),
-					'label_off' 	=> __( 'Off', 'elementor-extras' ),
+					'label_on' 		=> __( 'On', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'Off', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'on',
 					'frontend_available' => true,
 				]
@@ -595,11 +596,11 @@ class Skin_Carousel extends Skin_Base {
 				'pagination_position',
 				[
 					'type' 			=> Controls_Manager::SELECT,
-					'label' 		=> __( 'Position', 'elementor-extras' ),
+					'label' 		=> __( 'Position', 'landtech-extras-for-elementor' ),
 					'default'		=> 'inside',
 					'options' 		=> [
-						'inside' 		=> __( 'Inside', 'elementor-extras' ),
-						'outside' 		=> __( 'Outside', 'elementor-extras' ),
+						'inside' 		=> __( 'Inside', 'landtech-extras-for-elementor' ),
+						'outside' 		=> __( 'Outside', 'landtech-extras-for-elementor' ),
 					],
 					'frontend_available' 	=> true,
 					'condition'		=> [
@@ -612,11 +613,11 @@ class Skin_Carousel extends Skin_Base {
 				'pagination_type',
 				[
 					'type' 			=> Controls_Manager::SELECT,
-					'label' 		=> __( 'Type', 'elementor-extras' ),
+					'label' 		=> __( 'Type', 'landtech-extras-for-elementor' ),
 					'default'		=> 'bullets',
 					'options' 		=> [
-						'bullets' 		=> __( 'Bullets', 'elementor-extras' ),
-						'fraction' 		=> __( 'Fraction', 'elementor-extras' ),
+						'bullets' 		=> __( 'Bullets', 'landtech-extras-for-elementor' ),
+						'fraction' 		=> __( 'Fraction', 'landtech-extras-for-elementor' ),
 					],
 					'condition'		=> [
 						$this->get_control_id( 'pagination!' ) => '',
@@ -629,7 +630,7 @@ class Skin_Carousel extends Skin_Base {
 				'pagination_clickable',
 				[
 					'type' 			=> Controls_Manager::SWITCHER,
-					'label' 		=> __( 'Clickable', 'elementor-extras' ),
+					'label' 		=> __( 'Clickable', 'landtech-extras-for-elementor' ),
 					'default' 		=> 'yes',
 					'return_value' 	=> 'yes',
 					'condition' => [
@@ -657,7 +658,7 @@ class Skin_Carousel extends Skin_Base {
 		$this->start_controls_section(
 			'section_style_carousel',
 			[
-				'label' => __( 'Carousel', 'elementor-extras' ),
+				'label' => __( 'Carousel', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 				'conditions'=> [
 					'relation' 	=> 'and',
@@ -690,7 +691,7 @@ class Skin_Carousel extends Skin_Base {
 			$this->add_control(
 				'arrows_style_heading',
 				[
-					'label' 	=> __( 'Arrows', 'elementor-extras' ),
+					'label' 	=> __( 'Arrows', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'condition'		=> [
 						$this->get_control_id('arrows!') => '',
@@ -702,12 +703,12 @@ class Skin_Carousel extends Skin_Base {
 				'arrows_position',
 				[
 					'type' 			=> Controls_Manager::SELECT,
-					'label' 		=> __( 'Position', 'elementor-extras' ),
+					'label' 		=> __( 'Position', 'landtech-extras-for-elementor' ),
 					'default'		=> 'middle',
 					'options' 		=> [
-						'top' 		=> __( 'Top', 'elementor-extras' ),
-						'middle' 	=> __( 'Middle', 'elementor-extras' ),
-						'bottom' 	=> __( 'Bottom', 'elementor-extras' ),
+						'top' 		=> __( 'Top', 'landtech-extras-for-elementor' ),
+						'middle' 	=> __( 'Middle', 'landtech-extras-for-elementor' ),
+						'bottom' 	=> __( 'Bottom', 'landtech-extras-for-elementor' ),
 					],
 					'condition'		=> [
 						$this->get_control_id('arrows!') => '',
@@ -720,12 +721,12 @@ class Skin_Carousel extends Skin_Base {
 				'arrows_position_vertical',
 				[
 					'type' 			=> Controls_Manager::SELECT,
-					'label' 		=> __( 'Position', 'elementor-extras' ),
+					'label' 		=> __( 'Position', 'landtech-extras-for-elementor' ),
 					'default'		=> 'center',
 					'options' 		=> [
-						'left' 		=> __( 'Left', 'elementor-extras' ),
-						'center' 	=> __( 'Center', 'elementor-extras' ),
-						'right' 	=> __( 'Right', 'elementor-extras' ),
+						'left' 		=> __( 'Left', 'landtech-extras-for-elementor' ),
+						'center' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
+						'right' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 					],
 					'condition'		=> [
 						$this->get_control_id('arrows!') => '',
@@ -737,7 +738,7 @@ class Skin_Carousel extends Skin_Base {
 			$this->add_responsive_control(
 				'arrows_size',
 				[
-					'label' 		=> __( 'Size', 'elementor-extras' ),
+					'label' 		=> __( 'Size', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -757,7 +758,7 @@ class Skin_Carousel extends Skin_Base {
 			$this->add_responsive_control(
 				'arrows_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -778,7 +779,7 @@ class Skin_Carousel extends Skin_Base {
 			$this->add_responsive_control(
 				'arrows_distance',
 				[
-					'label' 		=> __( 'Distance', 'elementor-extras' ),
+					'label' 		=> __( 'Distance', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -806,7 +807,7 @@ class Skin_Carousel extends Skin_Base {
 			$this->add_responsive_control(
 				'arrows_border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -838,7 +839,7 @@ class Skin_Carousel extends Skin_Base {
 			$this->start_controls_tabs( 'arrows_tabs_hover' );
 
 			$this->start_controls_tab( 'arrows_tab_default', [
-				'label' => __( 'Default', 'elementor-extras' ),
+				'label' => __( 'Default', 'landtech-extras-for-elementor' ),
 				'condition'	=> [
 					$this->get_control_id('arrows!') => '',
 				]
@@ -847,7 +848,7 @@ class Skin_Carousel extends Skin_Base {
 				$this->add_control(
 					'arrows_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-swiper__button i:before' => 'color: {{VALUE}};',
@@ -861,7 +862,7 @@ class Skin_Carousel extends Skin_Base {
 				$this->add_control(
 					'arrows_background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-swiper__button' => 'background-color: {{VALUE}};',
@@ -875,7 +876,7 @@ class Skin_Carousel extends Skin_Base {
 			$this->end_controls_tab();
 
 			$this->start_controls_tab( 'arrows_tab_hover', [
-				'label' => __( 'Hover', 'elementor-extras' ),
+				'label' => __( 'Hover', 'landtech-extras-for-elementor' ),
 				'condition'	=> [
 					$this->get_control_id('arrows!') => '',
 				]
@@ -884,7 +885,7 @@ class Skin_Carousel extends Skin_Base {
 				$this->add_control(
 					'arrows_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-swiper__button:not(.ee-swiper__button--disabled):hover i:before' => 'color: {{VALUE}};',
@@ -898,7 +899,7 @@ class Skin_Carousel extends Skin_Base {
 				$this->add_control(
 					'arrows_background_color_hover',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-swiper__button:not(.ee-swiper__button--disabled):hover' => 'background-color: {{VALUE}};',
@@ -912,7 +913,7 @@ class Skin_Carousel extends Skin_Base {
 			$this->end_controls_tab();
 
 			$this->start_controls_tab( 'arrows_tab_disabled', [
-				'label' => __( 'Disabled', 'elementor-extras' ),
+				'label' => __( 'Disabled', 'landtech-extras-for-elementor' ),
 				'condition'	=> [
 					$this->get_control_id('arrows!') => '',
 				]
@@ -921,7 +922,7 @@ class Skin_Carousel extends Skin_Base {
 				$this->add_responsive_control(
 					'arrows_opacity_disabled',
 					[
-						'label' 		=> __( 'Opacity', 'elementor-extras' ),
+						'label' 		=> __( 'Opacity', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SLIDER,
 						'range' 		=> [
 							'px' 		=> [
@@ -947,7 +948,7 @@ class Skin_Carousel extends Skin_Base {
 				'pagination_style_heading',
 				[
 					'separator'	=> 'before',
-					'label' 	=> __( 'Pagination', 'elementor-extras' ),
+					'label' 	=> __( 'Pagination', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'condition'		=> [
 						$this->get_control_id( 'pagination!' ) => '',
@@ -958,20 +959,20 @@ class Skin_Carousel extends Skin_Base {
 			$this->add_responsive_control(
 				'pagination_align',
 				[
-					'label' 		=> __( 'Align', 'elementor-extras' ),
+					'label' 		=> __( 'Align', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> 'center',
 					'options' 		=> [
 						'left'    		=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -988,20 +989,20 @@ class Skin_Carousel extends Skin_Base {
 			$this->add_responsive_control(
 				'pagination_align_vertical',
 				[
-					'label' 		=> __( 'Align', 'elementor-extras' ),
+					'label' 		=> __( 'Align', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> 'middle',
 					'options' 		=> [
 						'flex-start'    => [
-							'title' 	=> __( 'Top', 'elementor-extras' ),
+							'title' 	=> __( 'Top', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-top',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-middle',
 						],
 						'flex-end' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-bottom',
 						],
 					],
@@ -1018,7 +1019,7 @@ class Skin_Carousel extends Skin_Base {
 			$this->add_responsive_control(
 				'pagination_distance',
 				[
-					'label' 		=> __( 'Distance', 'elementor-extras' ),
+					'label' 		=> __( 'Distance', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -1041,7 +1042,7 @@ class Skin_Carousel extends Skin_Base {
 			$this->add_responsive_control(
 				'pagination_bullets_spacing',
 				[
-					'label' 		=> __( 'Spacing', 'elementor-extras' ),
+					'label' 		=> __( 'Spacing', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -1063,7 +1064,7 @@ class Skin_Carousel extends Skin_Base {
 			$this->add_responsive_control(
 				'pagination_bullets_border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -1096,7 +1097,7 @@ class Skin_Carousel extends Skin_Base {
 			$this->start_controls_tabs( 'pagination_bullets_tabs_hover' );
 
 			$this->start_controls_tab( 'pagination_bullets_tab_default', [
-				'label' 		=> __( 'Default', 'elementor-extras' ),
+				'label' 		=> __( 'Default', 'landtech-extras-for-elementor' ),
 				'condition'		=> [
 					$this->get_control_id( 'pagination!' ) => '',
 					$this->get_control_id( 'pagination_type' ) => 'bullets',
@@ -1106,7 +1107,7 @@ class Skin_Carousel extends Skin_Base {
 				$this->add_responsive_control(
 					'pagination_bullets_size',
 					[
-						'label' 		=> __( 'Size', 'elementor-extras' ),
+						'label' 		=> __( 'Size', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SLIDER,
 						'range' 		=> [
 							'px' 		=> [
@@ -1127,7 +1128,7 @@ class Skin_Carousel extends Skin_Base {
 				$this->add_control(
 					'pagination_bullets_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .swiper-pagination-bullet' => 'background-color: {{VALUE}};',
@@ -1142,7 +1143,7 @@ class Skin_Carousel extends Skin_Base {
 				$this->add_responsive_control(
 					'pagination_bullets_opacity',
 					[
-						'label' 		=> __( 'Opacity', 'elementor-extras' ),
+						'label' 		=> __( 'Opacity', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SLIDER,
 						'range' 		=> [
 							'px' 		=> [
@@ -1164,7 +1165,7 @@ class Skin_Carousel extends Skin_Base {
 			$this->end_controls_tab();
 
 			$this->start_controls_tab( 'pagination_bullets_tab_hover',[
-				'label' 		=> __( 'Hover', 'elementor-extras' ),
+				'label' 		=> __( 'Hover', 'landtech-extras-for-elementor' ),
 				'condition'		=> [
 					$this->get_control_id( 'pagination!' ) => '',
 					$this->get_control_id( 'pagination_type' ) => 'bullets',
@@ -1174,7 +1175,7 @@ class Skin_Carousel extends Skin_Base {
 				$this->add_responsive_control(
 					'pagination_bullets_size_hover',
 					[
-						'label' 		=> __( 'Size', 'elementor-extras' ),
+						'label' 		=> __( 'Size', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SLIDER,
 						'range' 		=> [
 							'px' 		=> [
@@ -1196,7 +1197,7 @@ class Skin_Carousel extends Skin_Base {
 				$this->add_control(
 					'pagination_bullets_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .swiper-pagination-bullet:hover' => 'background-color: {{VALUE}};',
@@ -1211,7 +1212,7 @@ class Skin_Carousel extends Skin_Base {
 				$this->add_responsive_control(
 					'pagination_bullets_opacity_hover',
 					[
-						'label' 		=> __( 'Opacity', 'elementor-extras' ),
+						'label' 		=> __( 'Opacity', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SLIDER,
 						'range' 		=> [
 							'px' 		=> [
@@ -1233,7 +1234,7 @@ class Skin_Carousel extends Skin_Base {
 			$this->end_controls_tab();
 
 			$this->start_controls_tab( 'pagination_bullets_tab_active', [
-				'label' => __( 'Active', 'elementor-extras' ),
+				'label' => __( 'Active', 'landtech-extras-for-elementor' ),
 				'condition'	=> [
 					$this->get_control_id( 'pagination!' ) => '',
 					$this->get_control_id( 'pagination_type' ) => 'bullets',
@@ -1243,7 +1244,7 @@ class Skin_Carousel extends Skin_Base {
 				$this->add_responsive_control(
 					'pagination_bullets_size_active',
 					[
-						'label' 		=> __( 'Size', 'elementor-extras' ),
+						'label' 		=> __( 'Size', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SLIDER,
 						'range' 		=> [
 							'px' 		=> [
@@ -1265,7 +1266,7 @@ class Skin_Carousel extends Skin_Base {
 				$this->add_control(
 					'pagination_bullets_color_active',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .swiper-pagination-bullet-active' => 'background-color: {{VALUE}};',
@@ -1280,7 +1281,7 @@ class Skin_Carousel extends Skin_Base {
 				$this->add_responsive_control(
 					'pagination_bullets_opacity_active',
 					[
-						'label' 		=> __( 'Opacity', 'elementor-extras' ),
+						'label' 		=> __( 'Opacity', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SLIDER,
 						'range' 		=> [
 							'px' 		=> [
@@ -1318,7 +1319,7 @@ class Skin_Carousel extends Skin_Base {
 	public function before_loop() {
 		parent::before_loop();
 
-		add_filter( 'elementor_extras/widgets/posts/item_classes', [ $this, 'filter_item_classes' ], 10, 3 );
+		add_filter( 'landtech_extras/widgets/posts/item_classes', [ $this, 'filter_item_classes' ], 10, 3 );
 	}
 
 	/**
@@ -1330,7 +1331,7 @@ class Skin_Carousel extends Skin_Base {
 	 * @return void
 	 */
 	public function after_loop() {
-		remove_filter( 'elementor_extras/widgets/posts/item_classes', [ $this, 'filter_item_classes' ] );
+		remove_filter( 'landtech_extras/widgets/posts/item_classes', [ $this, 'filter_item_classes' ] );
 
 		parent::after_loop();
 	}
@@ -1389,9 +1390,9 @@ class Skin_Carousel extends Skin_Base {
 		] );
 
 		?>
-		<div <?php echo $this->parent->get_render_attribute_string( 'swiper' ); ?>>
-			<div <?php echo $this->parent->get_render_attribute_string( 'swiper-container' ); ?>>
-				<div <?php echo $this->parent->get_render_attribute_string( 'swiper-wrapper' ); ?>>
+		<div <?php $this->parent->print_render_attribute_string( 'swiper' ); ?>>
+			<div <?php $this->parent->print_render_attribute_string( 'swiper-container' ); ?>>
+				<div <?php $this->parent->print_render_attribute_string( 'swiper-wrapper' ); ?>>
 		<?php
 	}
 
@@ -1458,7 +1459,7 @@ class Skin_Carousel extends Skin_Base {
 		// 	);
 		// }
 
-		?><div <?php echo $this->parent->get_render_attribute_string( 'navigation' ); ?>><?php
+		?><div <?php $this->parent->print_render_attribute_string( 'navigation' ); ?>><?php
 			$this->render_swiper_arrows();
 		?></div><?php
 	}
@@ -1483,7 +1484,7 @@ class Skin_Carousel extends Skin_Base {
 			'swiper-pagination',
 		] );
 
-		?><div <?php echo $this->parent->get_render_attribute_string( 'pagination' ); ?>></div><?php
+		?><div <?php $this->parent->print_render_attribute_string( 'pagination' ); ?>></div><?php
 	}
 
 	/**
@@ -1528,11 +1529,11 @@ class Skin_Carousel extends Skin_Base {
 			],
 		] );
 
-		?><div <?php echo $this->parent->get_render_attribute_string( 'button-prev' ); ?>>
-			<i <?php echo $this->parent->get_render_attribute_string( 'button-prev-icon' ); ?>></i>
+		?><div <?php $this->parent->print_render_attribute_string( 'button-prev' ); ?>>
+			<i <?php $this->parent->print_render_attribute_string( 'button-prev-icon' ); ?>></i>
 		</div>
-		<div <?php echo $this->parent->get_render_attribute_string( 'button-next' ); ?>>
-			<i <?php echo $this->parent->get_render_attribute_string( 'button-next-icon' ); ?>></i>
+		<div <?php $this->parent->print_render_attribute_string( 'button-next' ); ?>>
+			<i <?php $this->parent->print_render_attribute_string( 'button-next-icon' ); ?>></i>
 		</div><?php
 	}
 

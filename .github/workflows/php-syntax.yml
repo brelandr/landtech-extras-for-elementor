@@ -1,0 +1,28 @@
+name: PHP syntax
+
+on:
+  push:
+    branches: [ trunk, master, main, develop ]
+  pull_request:
+
+jobs:
+  php-l:
+    name: php -l (core + ACF gallery bridge)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: Syntax check
+        run: |
+          php -l landtech-extras.php
+          php -l includes/plugin.php
+          php -l includes/gallery/acf-gallery-bridge.php
+          php -l modules/gallery/widgets/gallery.php
+          php -l modules/gallery/widgets/gallery-slider.php

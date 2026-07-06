@@ -1,8 +1,9 @@
 <?php
-namespace ElementorExtras\Modules\DisplayConditions\Conditions;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\DisplayConditions\Conditions;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Condition;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Condition;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -49,7 +50,7 @@ class Search_Results extends Condition {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Search', 'elementor-extras' );
+		return __( 'Search', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -64,8 +65,8 @@ class Search_Results extends Condition {
 		return [
 			'type' 			=> Controls_Manager::TEXT,
 			'default' 		=> '',
-			'placeholder'	=> __( 'Keywords', 'elementor-extras' ),
-			'description'	=> __( 'Enter keywords, separated by commas, to condition the display on specific keywords and leave blank for any.', 'elementor-extras' ),
+			'placeholder'	=> __( 'Keywords', 'landtech-extras-for-elementor' ),
+			'description'	=> __( 'Enter keywords, separated by commas, to condition the display on specific keywords and leave blank for any.', 'landtech-extras-for-elementor' ),
 			'label_block' 	=> true,
 		];
 	}
@@ -81,7 +82,13 @@ class Search_Results extends Condition {
 	 * @param string 	$phrase  	Phrase to search in
 	 */
 	protected function keyword_exists( $keyword, $phrase ) {
-		return strpos( $phrase, trim( $keyword ) ) !== false;
+		$needle = trim( is_scalar( $keyword ) ? (string) $keyword : '' );
+		if ( '' === $needle ) {
+			return false;
+		}
+		$haystack = is_scalar( $phrase ) ? (string) $phrase : '';
+
+		return strpos( $haystack, $needle ) !== false;
 	}
 
 	/**

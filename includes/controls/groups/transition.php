@@ -1,5 +1,6 @@
 <?php
-namespace ElementorExtras;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras;
 
 use Elementor\Group_Control_Base;
 use Elementor\Controls_Manager;
@@ -35,10 +36,10 @@ class Group_Control_Transition extends Group_Control_Base {
 	 */
 	public static function get_easings() {
 		return [
-			'linear' 		=> __( 'Linear', 'elementor-extras' ),
-			'ease-in' 		=> __( 'Ease In', 'elementor-extras' ),
-			'ease-out' 		=> __( 'Ease Out', 'elementor-extras' ),
-			'ease-in-out' 	=> __( 'Ease In Out', 'elementor-extras' ),
+			'linear' 		=> __( 'Linear', 'landtech-extras-for-elementor' ),
+			'ease-in' 		=> __( 'Ease In', 'landtech-extras-for-elementor' ),
+			'ease-out' 		=> __( 'Ease Out', 'landtech-extras-for-elementor' ),
+			'ease-in-out' 	=> __( 'Ease In Out', 'landtech-extras-for-elementor' ),
 		];
 	}
 
@@ -50,11 +51,11 @@ class Group_Control_Transition extends Group_Control_Base {
 		$controls = [];
 
 		$controls['property'] = [
-			'label'			=> _x( 'Property', 'Transition Control', 'elementor-extras' ),
+			'label'			=> _x( 'Property', 'Transition Control', 'landtech-extras-for-elementor' ),
 			'type' 			=> Controls_Manager::SELECT,
 			'default' 		=> 'all',
 			'options'		=> [
-				'all'		=> __( 'All', 'elementor-extras' ),
+				'all'		=> __( 'All', 'landtech-extras-for-elementor' ),
 			],
 			'selectors' => [
 				'{{SELECTOR}}' => 'transition-property: {{VALUE}}',
@@ -62,7 +63,7 @@ class Group_Control_Transition extends Group_Control_Base {
 		];
 
 		$controls['easing'] = [
-			'label'			=> _x( 'Easing', 'Transition Control', 'elementor-extras' ),
+			'label'			=> _x( 'Easing', 'Transition Control', 'landtech-extras-for-elementor' ),
 			'type' 			=> Controls_Manager::SELECT,
 			'default' 		=> 'linear',
 			'options'		=> self::get_easings(),
@@ -72,7 +73,7 @@ class Group_Control_Transition extends Group_Control_Base {
 		];
 
 		$controls['duration'] = [
-			'label'			=> _x( 'Duration', 'Transition Control', 'elementor-extras' ),
+			'label'			=> _x( 'Duration', 'Transition Control', 'landtech-extras-for-elementor' ),
 			'type' 			=> Controls_Manager::NUMBER,
 			'default' 		=> 0.3,
 			'min' 			=> 0.05,
@@ -121,7 +122,7 @@ class Group_Control_Transition extends Group_Control_Base {
 		return [
 			'popover' => [
 				'starter_name' 	=> 'transition',
-				'starter_title' => _x( 'Transition', 'Transition Control', 'elementor-extras' ),
+				'starter_title' => _x( 'Transition', 'Transition Control', 'landtech-extras-for-elementor' ),
 			],
 		];
 	}

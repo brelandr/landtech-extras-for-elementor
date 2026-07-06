@@ -1,9 +1,10 @@
 <?php
-namespace ElementorExtras\Modules\Map\Widgets;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Map\Widgets;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Extras_Widget;
-use ElementorExtras\Group_Control_Transition;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Extras_Widget;
+use LandTechExtras\Group_Control_Transition;
 
 // Elementor Classes
 use Elementor\Icons_Manager;
@@ -50,7 +51,7 @@ class Google_Map extends Extras_Widget {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Google Map', 'elementor-extras' );
+		return __( 'Google Map', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -75,9 +76,9 @@ class Google_Map extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
-			'gmap3',
-			'google-maps-api',
-			'jquery-resize-ee',
+			'landtech-extras-gmap3',
+			'landtech-extras-google-maps',
+			'landtech-extras-jquery-resize',
 		];
 	}
 
@@ -91,7 +92,7 @@ class Google_Map extends Extras_Widget {
 		$this->start_controls_section(
 			'section_pins',
 			[
-				'label' => __( 'Locations', 'elementor-extras' ),
+				'label' => __( 'Locations', 'landtech-extras-for-elementor' ),
 			]
 		);
 
@@ -99,12 +100,12 @@ class Google_Map extends Extras_Widget {
 
 			$repeater->start_controls_tabs( 'pins_repeater' );
 
-			$repeater->start_controls_tab( 'pins_pin', [ 'label' => __( 'Pin', 'elementor-extras' ) ] );
+			$repeater->start_controls_tab( 'pins_pin', [ 'label' => __( 'Pin', 'landtech-extras-for-elementor' ) ] );
 
 				$repeater->add_control(
 					'lat',
 					[
-						'label'		=> __( 'Latitude', 'elementor-extras' ),
+						'label'		=> __( 'Latitude', 'landtech-extras-for-elementor' ),
 						'dynamic'	=> [ 'active' => true ],
 						'type' 		=> Controls_Manager::TEXT,
 						'default' 	=> '',
@@ -114,7 +115,7 @@ class Google_Map extends Extras_Widget {
 				$repeater->add_control(
 					'lng',
 					[
-						'label'		=> __( 'Longitude', 'elementor-extras' ),
+						'label'		=> __( 'Longitude', 'landtech-extras-for-elementor' ),
 						'dynamic'	=> [ 'active' => true ],
 						'type' 		=> Controls_Manager::TEXT,
 						'default' 	=> '',
@@ -124,32 +125,32 @@ class Google_Map extends Extras_Widget {
 				$repeater->add_control(
 					'icon',
 					[
-						'label' 	=> __( 'Icon', 'elementor-extras' ),
+						'label' 	=> __( 'Icon', 'landtech-extras-for-elementor' ),
 						'dynamic'	=> [ 'active' => true ],
-						'description' => __( 'IMPORTANT: Your icon image needs to be a square to avoid distortion of the artwork.', 'elementor-extras' ),
+						'description' => __( 'IMPORTANT: Your icon image needs to be a square to avoid distortion of the artwork.', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::MEDIA,
 					]
 				);
 
 			$repeater->end_controls_tab();
 
-			$repeater->start_controls_tab( 'pins_info', [ 'label' => __( 'Popup', 'elementor-extras' ) ] );
+			$repeater->start_controls_tab( 'pins_info', [ 'label' => __( 'Popup', 'landtech-extras-for-elementor' ) ] );
 
 				$repeater->add_control(
 					'name',
 					[
-						'label'		=> __( 'Title', 'elementor-extras' ),
+						'label'		=> __( 'Title', 'landtech-extras-for-elementor' ),
 						'dynamic'	=> [ 'active' => true ],
 						'type' 		=> Controls_Manager::TEXT,
 						'label_block' => true,
-						'default' 	=> __( 'Pin', 'elementor-extras' ),
+						'default' 	=> __( 'Pin', 'landtech-extras-for-elementor' ),
 					]
 				);
 
 				$repeater->add_control(
 					'description',
 					[
-						'label'		=> __( 'Description', 'elementor-extras' ),
+						'label'		=> __( 'Description', 'landtech-extras-for-elementor' ),
 						'dynamic'	=> [ 'active' => true ],
 						'type' 		=> Controls_Manager::WYSIWYG,
 					]
@@ -158,14 +159,14 @@ class Google_Map extends Extras_Widget {
 				$repeater->add_control(
 					'trigger',
 					[
-						'label'		=> __( 'Trigger', 'elementor-extras' ),
+						'label'		=> __( 'Trigger', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SELECT,
 						'default' 	=> 'click',
 						'label_block' => true,
 						'options'	=> [
-							'click' 	=> __( 'Click', 'elementor-extras' ),
-							'auto' 		=> __( 'Auto', 'elementor-extras' ),
-							'mouseover' => __( 'Mouse Over', 'elementor-extras' ),
+							'click' 	=> __( 'Click', 'landtech-extras-for-elementor' ),
+							'auto' 		=> __( 'Auto', 'landtech-extras-for-elementor' ),
+							'mouseover' => __( 'Mouse Over', 'landtech-extras-for-elementor' ),
 						],
 					]
 				);
@@ -180,17 +181,17 @@ class Google_Map extends Extras_Widget {
 					'type' 		=> Controls_Manager::REPEATER,
 					'default' 	=> [
 						[
-							'name' => __( 'Tour Eiffel', 'elementor-extras' ),
+							'name' => __( 'Tour Eiffel', 'landtech-extras-for-elementor' ),
 							'lat' => '48.8583736',
 							'lng' => '2.2922873',
 						],
 						[
-							'name' => __( 'Arc de Triomphe', 'elementor-extras' ),
+							'name' => __( 'Arc de Triomphe', 'landtech-extras-for-elementor' ),
 							'lat' => '48.8737952',
 							'lng' => '2.2928335',
 						],
 						[
-							'name' => __( 'Louvre Museum', 'elementor-extras' ),
+							'name' => __( 'Louvre Museum', 'landtech-extras-for-elementor' ),
 							'lat' => '48.8606146',
 							'lng' => '2.33545',
 						],
@@ -205,18 +206,18 @@ class Google_Map extends Extras_Widget {
 		$this->start_controls_section(
 			'section_popups',
 			[
-				'label' => __( 'Popups', 'elementor-extras' ),
+				'label' => __( 'Popups', 'landtech-extras-for-elementor' ),
 			]
 		);
 
 			$this->add_control(
 				'popups',
 				[
-					'label' 		=> __( 'Enable Popups', 'elementor-extras' ),
+					'label' 		=> __( 'Enable Popups', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -224,17 +225,17 @@ class Google_Map extends Extras_Widget {
 			$this->add_control(
 				'title_tag',
 				[
-					'label' 	=> __( 'Title Tag', 'elementor-extras' ),
+					'label' 	=> __( 'Title Tag', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'options' 	=> [
-						'h1' 	=> __( 'H1', 'elementor-extras' ),
-						'h2' 	=> __( 'H2', 'elementor-extras' ),
-						'h3' 	=> __( 'H3', 'elementor-extras' ),
-						'h4' 	=> __( 'H4', 'elementor-extras' ),
-						'h5' 	=> __( 'H5', 'elementor-extras' ),
-						'h6' 	=> __( 'H6', 'elementor-extras' ),
-						'div'	=> __( 'div', 'elementor-extras' ),
-						'span' 	=> __( 'span', 'elementor-extras' ),
+						'h1' 	=> __( 'H1', 'landtech-extras-for-elementor' ),
+						'h2' 	=> __( 'H2', 'landtech-extras-for-elementor' ),
+						'h3' 	=> __( 'H3', 'landtech-extras-for-elementor' ),
+						'h4' 	=> __( 'H4', 'landtech-extras-for-elementor' ),
+						'h5' 	=> __( 'H5', 'landtech-extras-for-elementor' ),
+						'h6' 	=> __( 'H6', 'landtech-extras-for-elementor' ),
+						'div'	=> __( 'div', 'landtech-extras-for-elementor' ),
+						'span' 	=> __( 'span', 'landtech-extras-for-elementor' ),
 					],
 					'default' => 'h5',
 					'condition' => [
@@ -246,13 +247,13 @@ class Google_Map extends Extras_Widget {
 			$this->add_control(
 				'description_tag',
 				[
-					'label' 	=> __( 'Description Tag', 'elementor-extras' ),
+					'label' 	=> __( 'Description Tag', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'p',
 					'options' 	=> [
-						'p' 	=> __( 'p', 'elementor-extras' ),
-						'div'	=> __( 'div', 'elementor-extras' ),
-						'span' 	=> __( 'span', 'elementor-extras' ),
+						'p' 	=> __( 'p', 'landtech-extras-for-elementor' ),
+						'div'	=> __( 'div', 'landtech-extras-for-elementor' ),
+						'span' 	=> __( 'span', 'landtech-extras-for-elementor' ),
 					],
 					'condition' => [
 						'popups' => 'yes',
@@ -265,7 +266,7 @@ class Google_Map extends Extras_Widget {
 		$this->start_controls_section(
 			'section_map',
 			[
-				'label' => __( 'Map', 'elementor-extras' ),
+				'label' => __( 'Map', 'landtech-extras-for-elementor' ),
 			]
 		);
 
@@ -273,7 +274,7 @@ class Google_Map extends Extras_Widget {
 				'heading_center',
 				[
 					'type'		=> Controls_Manager::HEADING,
-					'label' 	=> __( 'Center Map', 'elementor-extras' ),
+					'label' 	=> __( 'Center Map', 'landtech-extras-for-elementor' ),
 					'condition'	=> [
 						'route'	=> '',
 					],
@@ -283,11 +284,11 @@ class Google_Map extends Extras_Widget {
 			$this->add_control(
 				'fit',
 				[
-					'label' 		=> __( 'Fit to Locations', 'elementor-extras' ),
+					'label' 		=> __( 'Fit to Locations', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 					'condition'		=> [
 						'route'		=> '',
@@ -298,7 +299,7 @@ class Google_Map extends Extras_Widget {
 			$this->add_control(
 				'lat',
 				[
-					'label'		=> __( 'Latitude', 'elementor-extras' ),
+					'label'		=> __( 'Latitude', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXT,
 					'dynamic'	=> [ 'active' => true ],
 					'default' 	=> '48.8583736',
@@ -312,7 +313,7 @@ class Google_Map extends Extras_Widget {
 			$this->add_control(
 				'lng',
 				[
-					'label'		=> __( 'Longitude', 'elementor-extras' ),
+					'label'		=> __( 'Longitude', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXT,
 					'dynamic'	=> [ 'active' => true ],
 					'default' 	=> '2.2922873',
@@ -326,7 +327,7 @@ class Google_Map extends Extras_Widget {
 			$this->add_control(
 				'zoom',
 				[
-					'label' 		=> __( 'Zoom', 'elementor-extras' ),
+					'label' 		=> __( 'Zoom', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 10,
@@ -350,7 +351,7 @@ class Google_Map extends Extras_Widget {
 				'heading_settings',
 				[
 					'type'		=> Controls_Manager::HEADING,
-					'label' 	=> __( 'Settings', 'elementor-extras' ),
+					'label' 	=> __( 'Settings', 'landtech-extras-for-elementor' ),
 					'separator' => 'before',
 				]
 			);
@@ -358,14 +359,14 @@ class Google_Map extends Extras_Widget {
 			$this->add_control(
 				'map_type',
 				[
-					'label'		=> __( 'Map Type', 'elementor-extras' ),
+					'label'		=> __( 'Map Type', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'ROADMAP',
 					'options'	=> [
-						'ROADMAP' 	=> __( 'Roadmap', 'elementor-extras' ),
-						'SATELLITE' => __( 'Satellite', 'elementor-extras' ),
-						'TERRAIN' 	=> __( 'Terrain', 'elementor-extras' ),
-						'HYBRID' 	=> __( 'Hybrid', 'elementor-extras' ),
+						'ROADMAP' 	=> __( 'Roadmap', 'landtech-extras-for-elementor' ),
+						'SATELLITE' => __( 'Satellite', 'landtech-extras-for-elementor' ),
+						'TERRAIN' 	=> __( 'Terrain', 'landtech-extras-for-elementor' ),
+						'HYBRID' 	=> __( 'Hybrid', 'landtech-extras-for-elementor' ),
 					],
 					'frontend_available' => true,
 				]
@@ -374,11 +375,11 @@ class Google_Map extends Extras_Widget {
 			$this->add_control(
 				'scrollwheel',
 				[
-					'label' 		=> __( 'Scrollwheel', 'elementor-extras' ),
+					'label' 		=> __( 'Scrollwheel', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -386,11 +387,11 @@ class Google_Map extends Extras_Widget {
 			$this->add_control(
 				'clickable_icons',
 				[
-					'label' 		=> __( 'Clickable Icons', 'elementor-extras' ),
+					'label' 		=> __( 'Clickable Icons', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -398,11 +399,11 @@ class Google_Map extends Extras_Widget {
 			$this->add_control(
 				'doubleclick_zoom',
 				[
-					'label' 		=> __( 'Double Click to Zoom', 'elementor-extras' ),
+					'label' 		=> __( 'Double Click to Zoom', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -410,12 +411,12 @@ class Google_Map extends Extras_Widget {
 			$this->add_control(
 				'draggable',
 				[
-					'label' 		=> __( 'Draggable', 'elementor-extras' ),
-					'description'	=> __( 'Note: Map is not draggable in edit mode.', 'elementor-extras' ),
+					'label' 		=> __( 'Draggable', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Note: Map is not draggable in edit mode.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -423,11 +424,11 @@ class Google_Map extends Extras_Widget {
 			$this->add_control(
 				'keyboard_shortcuts',
 				[
-					'label' 		=> __( 'Keyboard Shortcuts', 'elementor-extras' ),
+					'label' 		=> __( 'Keyboard Shortcuts', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -436,7 +437,7 @@ class Google_Map extends Extras_Widget {
 				'heading_controls',
 				[
 					'type'		=> Controls_Manager::HEADING,
-					'label' 	=> __( 'Interface', 'elementor-extras' ),
+					'label' 	=> __( 'Interface', 'landtech-extras-for-elementor' ),
 					'separator' => 'before',
 				]
 			);
@@ -444,11 +445,11 @@ class Google_Map extends Extras_Widget {
 			$this->add_control(
 				'fullscreen_control',
 				[
-					'label' 		=> __( 'Fullscreen Control', 'elementor-extras' ),
+					'label' 		=> __( 'Fullscreen Control', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -456,11 +457,11 @@ class Google_Map extends Extras_Widget {
 			$this->add_control(
 				'map_type_control',
 				[
-					'label' 		=> __( 'Map Type Control', 'elementor-extras' ),
+					'label' 		=> __( 'Map Type Control', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -468,11 +469,11 @@ class Google_Map extends Extras_Widget {
 			$this->add_control(
 				'rotate_control',
 				[
-					'label' 		=> __( 'Rotate Control', 'elementor-extras' ),
+					'label' 		=> __( 'Rotate Control', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -480,11 +481,11 @@ class Google_Map extends Extras_Widget {
 			$this->add_control(
 				'scale_control',
 				[
-					'label' 		=> __( 'Scale Control', 'elementor-extras' ),
+					'label' 		=> __( 'Scale Control', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -492,11 +493,11 @@ class Google_Map extends Extras_Widget {
 			$this->add_control(
 				'streetview_control',
 				[
-					'label' 		=> __( 'Street View Control', 'elementor-extras' ),
+					'label' 		=> __( 'Street View Control', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -504,11 +505,11 @@ class Google_Map extends Extras_Widget {
 			$this->add_control(
 				'zoom_control',
 				[
-					'label' 		=> __( 'Zoom Control', 'elementor-extras' ),
+					'label' 		=> __( 'Zoom Control', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -518,19 +519,19 @@ class Google_Map extends Extras_Widget {
 		$this->start_controls_section(
 			'section_polygon',
 			[
-				'label' => __( 'Polygon', 'elementor-extras' ),
+				'label' => __( 'Polygon', 'landtech-extras-for-elementor' ),
 			]
 		);
 
 			$this->add_control(
 				'polygon',
 				[
-					'label' 		=> __( 'Enable', 'elementor-extras' ),
-					'description' 	=> __( 'Draws a polygon on the map by connecting the locations.', 'elementor-extras' ),
+					'label' 		=> __( 'Enable', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'Draws a polygon on the map by connecting the locations.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -540,19 +541,19 @@ class Google_Map extends Extras_Widget {
 		$this->start_controls_section(
 			'section_route',
 			[
-				'label' => __( 'Route', 'elementor-extras' ),
+				'label' => __( 'Route', 'landtech-extras-for-elementor' ),
 			]
 		);
 
 			$this->add_control(
 				'route',
 				[
-					'label' 		=> __( 'Enable', 'elementor-extras' ),
-					'description' 	=> __( 'Draws a route on the map between the locations.', 'elementor-extras' ),
+					'label' 		=> __( 'Enable', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'Draws a route on the map between the locations.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -560,14 +561,14 @@ class Google_Map extends Extras_Widget {
 			$this->add_control(
 				'route_mode',
 				[
-					'label' 	=> __( 'Mode', 'elementor-extras' ),
+					'label' 	=> __( 'Mode', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'DRIVING',
 					'options' 	=> [
-						'DRIVING' 	=> __( 'Driving', 'elementor-extras' ),
-						'WALKING' 	=> __( 'Walking', 'elementor-extras' ),
-						'BICYCLING' => __( 'Bicycling', 'elementor-extras' ),
-						'TRANSIT' 	=> __( 'Transit', 'elementor-extras' ),
+						'DRIVING' 	=> __( 'Driving', 'landtech-extras-for-elementor' ),
+						'WALKING' 	=> __( 'Walking', 'landtech-extras-for-elementor' ),
+						'BICYCLING' => __( 'Bicycling', 'landtech-extras-for-elementor' ),
+						'TRANSIT' 	=> __( 'Transit', 'landtech-extras-for-elementor' ),
 					],
 					'condition' 	=> [
 						'route!' => '',
@@ -579,12 +580,12 @@ class Google_Map extends Extras_Widget {
 			$this->add_control(
 				'route_markers',
 				[
-					'label' 		=> __( 'Markers', 'elementor-extras' ),
-					'description' 	=> __( 'Enables direction markers to be shown on your route.', 'elementor-extras' ),
+					'label' 		=> __( 'Markers', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'Enables direction markers to be shown on your route.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'condition' 	=> [
 						'route!' => '',
 					],
@@ -597,19 +598,19 @@ class Google_Map extends Extras_Widget {
 		$this->start_controls_section(
 			'section_navigation',
 			[
-				'label' => __( 'Navigation', 'elementor-extras' ),
+				'label' => __( 'Navigation', 'landtech-extras-for-elementor' ),
 			]
 		);
 
 			$this->add_responsive_control(
 				'navigation',
 				[
-					'label' 		=> __( 'Enable', 'elementor-extras' ),
-					'description' 	=> __( 'Adds a list which visitors can use to navigate through your locations.', 'elementor-extras' ),
+					'label' 		=> __( 'Enable', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'Adds a list which visitors can use to navigate through your locations.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -617,7 +618,7 @@ class Google_Map extends Extras_Widget {
 			$this->add_control(
 				'navigation_zoom',
 				[
-					'label' 	=> __( 'Zoom Level', 'elementor-extras' ),
+					'label' 	=> __( 'Zoom Level', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 18,
@@ -637,13 +638,13 @@ class Google_Map extends Extras_Widget {
 			$this->add_control(
 				'navigation_hide_on',
 				[
-					'label' 	=> __( 'Hide On', 'elementor-extras' ),
+					'label' 	=> __( 'Hide On', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'mobile',
 					'options' 	=> [
-						'' 			=> __( 'None', 'elementor-extras' ),
-						'tablet' 	=> __( 'Mobile & Tablet', 'elementor-extras' ),
-						'mobile' 	=> __( 'Mobile Only', 'elementor-extras' ),
+						'' 			=> __( 'None', 'landtech-extras-for-elementor' ),
+						'tablet' 	=> __( 'Mobile & Tablet', 'landtech-extras-for-elementor' ),
+						'mobile' 	=> __( 'Mobile Only', 'landtech-extras-for-elementor' ),
 					],
 					'condition' => [
 						'navigation!' => '',
@@ -655,9 +656,9 @@ class Google_Map extends Extras_Widget {
 			$this->add_control(
 				'all_text',
 				[
-					'label'		=> __( 'All label', 'elementor-extras' ),
+					'label'		=> __( 'All label', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXT,
-					'default' 	=> __( 'All locations', 'elementor-extras' ),
+					'default' 	=> __( 'All locations', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 					'condition' => [
 						'navigation!' => '',
@@ -668,7 +669,7 @@ class Google_Map extends Extras_Widget {
 			$this->add_control(
 				'selected_navigation_icon',
 				[
-					'label' 			=> __( 'Icon', 'elementor-extras' ),
+					'label' 			=> __( 'Icon', 'landtech-extras-for-elementor' ),
 					'type' 				=> Controls_Manager::ICONS,
 					'fa4compatibility' 	=> 'navigation_icon',
 					'default' 			=> [
@@ -686,12 +687,12 @@ class Google_Map extends Extras_Widget {
 			$this->add_control(
 				'navigation_icon_align',
 				[
-					'label' => __( 'Icon Position', 'elementor-extras' ),
+					'label' => __( 'Icon Position', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::SELECT,
 					'default' => 'left',
 					'options' => [
-						'left' => __( 'Before', 'elementor-extras' ),
-						'right' => __( 'After', 'elementor-extras' ),
+						'left' => __( 'Before', 'landtech-extras-for-elementor' ),
+						'right' => __( 'After', 'landtech-extras-for-elementor' ),
 					],
 					'condition' => [
 						'navigation!' => '',
@@ -703,7 +704,7 @@ class Google_Map extends Extras_Widget {
 			$this->add_control(
 				'navigation_icon_indent',
 				[
-					'label' => __( 'Icon Spacing', 'elementor-extras' ),
+					'label' => __( 'Icon Spacing', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::SLIDER,
 					'range' => [
 						'px' => [
@@ -726,7 +727,7 @@ class Google_Map extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_pins',
 			[
-				'label' => __( 'Pins', 'elementor-extras' ),
+				'label' => __( 'Pins', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -734,9 +735,9 @@ class Google_Map extends Extras_Widget {
 			$this->add_control(
 				'pin_size',
 				[
-					'label' 		=> __( 'Size', 'elementor-extras' ),
+					'label' 		=> __( 'Size', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
-					'description' 	=> __( 'Note: This setting only applies to custom pins.', 'elementor-extras' ),
+					'description' 	=> __( 'Note: This setting only applies to custom pins.', 'landtech-extras-for-elementor' ),
 					'default' 	=> [
 						'size' 	=> 50,
 					],
@@ -754,21 +755,21 @@ class Google_Map extends Extras_Widget {
 			$this->add_control(
 				'pin_position_horizontal',
 				[
-					'label' 		=> __( 'Horizontal Position', 'elementor-extras' ),
-					'description' 	=> __( 'Note: This setting only applies to custom pins.', 'elementor-extras' ),
+					'label' 		=> __( 'Horizontal Position', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'Note: This setting only applies to custom pins.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> 'center',
 					'options' 		=> [
 						'left'    		=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-right',
 						],
 					],
@@ -779,21 +780,21 @@ class Google_Map extends Extras_Widget {
 			$this->add_control(
 				'pin_position_vertical',
 				[
-					'label' 		=> __( 'Vertical Position', 'elementor-extras' ),
-					'description' 	=> __( 'Note: This setting only applies to custom pins.', 'elementor-extras' ),
+					'label' 		=> __( 'Vertical Position', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'Note: This setting only applies to custom pins.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> 'top',
 					'options' 		=> [
 						'top'    		=> [
-							'title' 	=> __( 'Top', 'elementor-extras' ),
+							'title' 	=> __( 'Top', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-top',
 						],
 						'middle'    		=> [
-							'title' 	=> __( 'Middle', 'elementor-extras' ),
+							'title' 	=> __( 'Middle', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-middle',
 						],
 						'bottom' 		=> [
-							'title' 	=> __( 'Bottom', 'elementor-extras' ),
+							'title' 	=> __( 'Bottom', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-bottom',
 						],
 					],
@@ -806,7 +807,7 @@ class Google_Map extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_map',
 			[
-				'label' => __( 'Map', 'elementor-extras' ),
+				'label' => __( 'Map', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -814,26 +815,26 @@ class Google_Map extends Extras_Widget {
 			$this->add_control(
 				'map_style_type',
 				[
-					'label' => __( 'Add style from', 'elementor-extras' ),
+					'label' => __( 'Add style from', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::SELECT,
 					'default' => 'api',
 					'options' => [
-						'api' 	=> __( 'Snazzy Maps API', 'elementor-extras' ),
-						'json' 	=> __( 'Custom JSON', 'elementor-extras' ),
+						'api' 	=> __( 'Snazzy Maps API', 'landtech-extras-for-elementor' ),
+						'json' 	=> __( 'Custom JSON', 'landtech-extras-for-elementor' ),
 					],
 					'label_block' => true,
 					'frontend_available' => true,
 				]
 			);
 
-			$sm_endpoint_option = \ElementorExtras\ElementorExtrasPlugin::$instance->settings->get_option( 'snazzy_maps_endpoint', 'elementor_extras_apis', false );
+			$sm_endpoint_option = \LandTechExtras\LandTechExtrasPlugin::$instance->settings->get_option( 'snazzy_maps_endpoint', 'landtech_extras_apis', false );
 
 			$this->add_control(
 				'map_style_api',
 				[
-					'label' 				=> __( 'Search Snazzy Maps', 'elementor-extras' ),
+					'label' 				=> __( 'Search Snazzy Maps', 'landtech-extras-for-elementor' ),
 					'type' 					=> 'ee-snazzy',
-					'placeholder'			=> __( 'Search styles', 'elementor-extras' ),
+					'placeholder'			=> __( 'Search styles', 'landtech-extras-for-elementor' ),
 					'snazzy_options'		=> [
 						'endpoint'			=> $sm_endpoint_option ? $sm_endpoint_option : 'explore',
 					],
@@ -848,8 +849,13 @@ class Google_Map extends Extras_Widget {
 			$this->add_control(
 				'map_style_json',
 				[
-					'label'					=> __( 'Custom JSON', 'elementor-extras' ),
-					'description' 			=> sprintf( __( 'Paste the JSON code for styling the map. You can get it from %1$sSnazzyMaps%2$s or similar services. Note: If you enter an invalid JSON string you\'ll be alerted.', 'elementor-extras' ), '<a target="_blank" href="https://snazzymaps.com/explore">', '</a>' ),
+					'label'					=> __( 'Custom JSON', 'landtech-extras-for-elementor' ),
+					'description' 			=> sprintf(
+						/* translators: 1–2: link markup to Snazzy Maps. */
+						__( 'Paste the JSON code for styling the map. You can get it from %1$sSnazzyMaps%2$s or similar services. Note: If you enter an invalid JSON string you\'ll be alerted.', 'landtech-extras-for-elementor' ),
+						'<a target="_blank" href="https://snazzymaps.com/explore">',
+						'</a>'
+					),
 					'type' 					=> Controls_Manager::TEXTAREA,
 					'default' 				=> '',
 					'frontend_available' 	=> true,
@@ -862,7 +868,7 @@ class Google_Map extends Extras_Widget {
 			$this->add_responsive_control(
 				'map_height',
 				[
-					'label' 		=> __( 'Height', 'elementor-extras' ),
+					'label' 		=> __( 'Height', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'size_units' 	=> [ 'px', 'vh', '%' ],
 					'default' 	=> [
@@ -895,7 +901,7 @@ class Google_Map extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_polygon',
 			[
-				'label' => __( 'Polygon', 'elementor-extras' ),
+				'label' => __( 'Polygon', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'polygon!' => '',
@@ -905,13 +911,13 @@ class Google_Map extends Extras_Widget {
 
 			$this->start_controls_tabs( 'polygon_tabs' );
 
-			$this->start_controls_tab( 'polygon_default', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'polygon_default', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'heading_polygon_stroke',
 					[
 						'type'		=> Controls_Manager::HEADING,
-						'label' 	=> __( 'Stroke', 'elementor-extras' ),
+						'label' 	=> __( 'Stroke', 'landtech-extras-for-elementor' ),
 						'condition' => [
 							'polygon!' => '',
 						],
@@ -921,7 +927,7 @@ class Google_Map extends Extras_Widget {
 				$this->add_control(
 					'polygon_stroke_weight',
 					[
-						'label' 		=> __( 'Weight', 'elementor-extras' ),
+						'label' 		=> __( 'Weight', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SLIDER,
 						'default' 	=> [
 							'size' 	=> 2,
@@ -943,7 +949,7 @@ class Google_Map extends Extras_Widget {
 				$this->add_control(
 					'polygon_stroke_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'condition' => [
@@ -956,7 +962,7 @@ class Google_Map extends Extras_Widget {
 				$this->add_control(
 					'polygon_stroke_opacity',
 					[
-						'label' 		=> __( 'Opacity', 'elementor-extras' ),
+						'label' 		=> __( 'Opacity', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SLIDER,
 						'default' 	=> [
 							'size' 	=> 0.8,
@@ -979,7 +985,7 @@ class Google_Map extends Extras_Widget {
 					'heading_polygon_fill',
 					[
 						'type'		=> Controls_Manager::HEADING,
-						'label' 	=> __( 'Fill', 'elementor-extras' ),
+						'label' 	=> __( 'Fill', 'landtech-extras-for-elementor' ),
 						'separator' => 'before',
 						'condition' => [
 							'polygon!' => '',
@@ -990,7 +996,7 @@ class Google_Map extends Extras_Widget {
 				$this->add_control(
 					'polygon_fill_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'condition' => [
@@ -1003,7 +1009,7 @@ class Google_Map extends Extras_Widget {
 				$this->add_control(
 					'polygon_fill_opacity',
 					[
-						'label' 		=> __( 'Opacity', 'elementor-extras' ),
+						'label' 		=> __( 'Opacity', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SLIDER,
 						'default' 	=> [
 							'size' 	=> 0.35,
@@ -1024,13 +1030,13 @@ class Google_Map extends Extras_Widget {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'polygon_hover', [ 'label' => __( 'Hover', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'polygon_hover', [ 'label' => __( 'Hover', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'heading_polygon_stroke_hover',
 					[
 						'type'		=> Controls_Manager::HEADING,
-						'label' 	=> __( 'Stroke', 'elementor-extras' ),
+						'label' 	=> __( 'Stroke', 'landtech-extras-for-elementor' ),
 						'condition' => [
 							'polygon!' => '',
 						],
@@ -1040,7 +1046,7 @@ class Google_Map extends Extras_Widget {
 				$this->add_control(
 					'polygon_stroke_weight_hover',
 					[
-						'label' 		=> __( 'Weight', 'elementor-extras' ),
+						'label' 		=> __( 'Weight', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SLIDER,
 						'default' 	=> [
 							'size' 	=> 2,
@@ -1062,7 +1068,7 @@ class Google_Map extends Extras_Widget {
 				$this->add_control(
 					'polygon_stroke_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'condition' => [
@@ -1075,7 +1081,7 @@ class Google_Map extends Extras_Widget {
 				$this->add_control(
 					'polygon_stroke_opacity_hover',
 					[
-						'label' 		=> __( 'Opacity', 'elementor-extras' ),
+						'label' 		=> __( 'Opacity', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SLIDER,
 						'default' 	=> [
 							'size' 	=> 0.8,
@@ -1098,7 +1104,7 @@ class Google_Map extends Extras_Widget {
 					'heading_polygon_fill_hover',
 					[
 						'type'		=> Controls_Manager::HEADING,
-						'label' 	=> __( 'Fill', 'elementor-extras' ),
+						'label' 	=> __( 'Fill', 'landtech-extras-for-elementor' ),
 						'separator' => 'before',
 						'condition' => [
 							'polygon!' => '',
@@ -1109,7 +1115,7 @@ class Google_Map extends Extras_Widget {
 				$this->add_control(
 					'polygon_fill_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'condition' => [
@@ -1122,7 +1128,7 @@ class Google_Map extends Extras_Widget {
 				$this->add_control(
 					'polygon_fill_opacity_hover',
 					[
-						'label' 		=> __( 'Opacity', 'elementor-extras' ),
+						'label' 		=> __( 'Opacity', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SLIDER,
 						'default' 	=> [
 							'size' 	=> 0.35,
@@ -1150,7 +1156,7 @@ class Google_Map extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_navigation',
 			[
-				'label' => __( 'Navigation', 'elementor-extras' ),
+				'label' => __( 'Navigation', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'navigation!' => '',
@@ -1161,14 +1167,14 @@ class Google_Map extends Extras_Widget {
 			$this->add_responsive_control(
 				'navigation_position',
 				[
-					'label'		=> __( 'Position', 'elementor-extras' ),
+					'label'		=> __( 'Position', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'top-left',
 					'options'	=> [
-						'top-left' 		=> __( 'Top Left', 'elementor-extras' ),
-						'top-right' 	=> __( 'Top Right', 'elementor-extras' ),
-						'bottom-right' 	=> __( 'Bottom Right', 'elementor-extras' ),
-						'bottom-left' 	=> __( 'Bottom Left', 'elementor-extras' ),
+						'top-left' 		=> __( 'Top Left', 'landtech-extras-for-elementor' ),
+						'top-right' 	=> __( 'Top Right', 'landtech-extras-for-elementor' ),
+						'bottom-right' 	=> __( 'Bottom Right', 'landtech-extras-for-elementor' ),
+						'bottom-left' 	=> __( 'Bottom Left', 'landtech-extras-for-elementor' ),
 					],
 					'frontend_available' => true,
 					'prefix_class' => 'ee-google-map-navigation%s--',
@@ -1181,7 +1187,7 @@ class Google_Map extends Extras_Widget {
 			$this->add_responsive_control(
 				'navigation_width',
 				[
-					'label' 		=> __( 'Width', 'elementor-extras' ),
+					'label' 		=> __( 'Width', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'size_units' 	=> [ 'px', '%' ],
 					'range' 		=> [
@@ -1206,7 +1212,7 @@ class Google_Map extends Extras_Widget {
 			$this->add_responsive_control(
 				'navigation_margin',
 				[
-					'label' 		=> __( 'Margin', 'elementor-extras' ),
+					'label' 		=> __( 'Margin', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -1226,7 +1232,7 @@ class Google_Map extends Extras_Widget {
 			$this->add_control(
 				'navigation_background',
 				[
-					'label' 	=> __( 'Background', 'elementor-extras' ),
+					'label' 	=> __( 'Background', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'global' => [
 						'default' => Global_Colors::COLOR_PRIMARY,
@@ -1245,7 +1251,7 @@ class Google_Map extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'navigation_border',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '{{WRAPPER}} .ee-google-map__navigation',
 					'condition' => [
 						'navigation!' => '',
@@ -1256,7 +1262,7 @@ class Google_Map extends Extras_Widget {
 			$this->add_control(
 				'navigation_border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'selectors' 	=> [
 						'{{WRAPPER}} .ee-google-map__navigation' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -1285,7 +1291,7 @@ class Google_Map extends Extras_Widget {
 				'heading_navigation_separator',
 				[
 					'type'		=> Controls_Manager::HEADING,
-					'label' 	=> __( 'Separator', 'elementor-extras' ),
+					'label' 	=> __( 'Separator', 'landtech-extras-for-elementor' ),
 					'separator' => 'before',
 					'condition' => [
 						'navigation!' => '',
@@ -1296,7 +1302,7 @@ class Google_Map extends Extras_Widget {
 			$this->add_responsive_control(
 				'navigation_links_separator_thickness',
 				[
-					'label' 		=> __( 'Thickness', 'elementor-extras' ),
+					'label' 		=> __( 'Thickness', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -1317,7 +1323,7 @@ class Google_Map extends Extras_Widget {
 				'heading_navigation_links',
 				[
 					'type'		=> Controls_Manager::HEADING,
-					'label' 	=> __( 'Links', 'elementor-extras' ),
+					'label' 	=> __( 'Links', 'landtech-extras-for-elementor' ),
 					'separator' => 'before',
 					'condition' => [
 						'navigation!' => '',
@@ -1328,7 +1334,7 @@ class Google_Map extends Extras_Widget {
 			$this->add_responsive_control(
 				'navigation_links_spacing',
 				[
-					'label' 		=> __( 'Spacing', 'elementor-extras' ),
+					'label' 		=> __( 'Spacing', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default'		=> [
 						'size'		=> 0,
@@ -1351,7 +1357,7 @@ class Google_Map extends Extras_Widget {
 			$this->add_control(
 				'navigation_links_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'selectors' 	=> [
 						'{{WRAPPER}} .ee-google-map__navigation__link' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -1366,7 +1372,7 @@ class Google_Map extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'navigation_links_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -1380,20 +1386,20 @@ class Google_Map extends Extras_Widget {
 			$this->add_control(
 				'navigation_links_text_align',
 				[
-					'label' 		=> __( 'Align Text', 'elementor-extras' ),
+					'label' 		=> __( 'Align Text', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> 'left',
 					'options' 		=> [
 						'left'    		=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -1417,12 +1423,12 @@ class Google_Map extends Extras_Widget {
 
 			$this->start_controls_tabs( 'navigation_tabs' );
 
-			$this->start_controls_tab( 'navigation_default', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'navigation_default', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'navigation_links_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'condition' => [
@@ -1437,7 +1443,7 @@ class Google_Map extends Extras_Widget {
 				$this->add_control(
 					'navigation_links_separator_color',
 					[
-						'label' 	=> __( 'Separator Color', 'elementor-extras' ),
+						'label' 	=> __( 'Separator Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'condition' => [
@@ -1452,7 +1458,7 @@ class Google_Map extends Extras_Widget {
 				$this->add_control(
 					'navigation_links_background',
 					[
-						'label' 	=> __( 'Background', 'elementor-extras' ),
+						'label' 	=> __( 'Background', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -1466,12 +1472,12 @@ class Google_Map extends Extras_Widget {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'navigation_hover', [ 'label' => __( 'Hover', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'navigation_hover', [ 'label' => __( 'Hover', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'navigation_links_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'condition' => [
@@ -1486,7 +1492,7 @@ class Google_Map extends Extras_Widget {
 				$this->add_control(
 					'navigation_links_separator_color_hover',
 					[
-						'label' 	=> __( 'Separator Color', 'elementor-extras' ),
+						'label' 	=> __( 'Separator Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'condition' => [
@@ -1501,7 +1507,7 @@ class Google_Map extends Extras_Widget {
 				$this->add_control(
 					'navigation_links_background_hover',
 					[
-						'label' 	=> __( 'Background', 'elementor-extras' ),
+						'label' 	=> __( 'Background', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -1515,12 +1521,12 @@ class Google_Map extends Extras_Widget {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'navigation_current', [ 'label' => __( 'Current', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'navigation_current', [ 'label' => __( 'Current', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'navigation_links_color_current',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'condition' => [
@@ -1536,7 +1542,7 @@ class Google_Map extends Extras_Widget {
 				$this->add_control(
 					'navigation_links_separator_color_current',
 					[
-						'label' 	=> __( 'Separator Color', 'elementor-extras' ),
+						'label' 	=> __( 'Separator Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'condition' => [
@@ -1552,7 +1558,7 @@ class Google_Map extends Extras_Widget {
 				$this->add_control(
 					'navigation_links_background_current',
 					[
-						'label' 	=> __( 'Background', 'elementor-extras' ),
+						'label' 	=> __( 'Background', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -1582,11 +1588,11 @@ class Google_Map extends Extras_Widget {
 	 */
 	protected function render() {
 		$settings = $this->get_settings_for_display();
-		$plugin = \ElementorExtras\ElementorExtrasPlugin::$instance;
+		$plugin = \LandTechExtras\LandTechExtrasPlugin::$instance;
 
-		if ( '' === $plugin->settings->get_option( 'google_maps_api_key', 'elementor_extras_apis', false ) ) {
-			echo $this->render_placeholder( [
-				'body' => __( 'You have not set your Google Maps API key.', 'elementor-extras' ),
+		if ( '' === $plugin->settings->get_option( 'google_maps_api_key', 'landtech_extras_apis', false ) ) {
+			$this->render_placeholder( [
+				'body' => __( 'You have not set your Google Maps API key.', 'landtech-extras-for-elementor' ),
 			] );
 
 			return;
@@ -1615,13 +1621,13 @@ class Google_Map extends Extras_Widget {
 
 		if ( ! empty( $settings['pins'] ) ) {
 
-			?><div <?php echo $this->get_render_attribute_string( 'wrapper' ); ?>><?php
+			?><div <?php $this->print_render_attribute_string( 'wrapper' ); ?>><?php
 
 				if ( '' !== $settings['navigation'] ) {
 					$this->render_navigation();
 				}
 				
-				?><div <?php echo $this->get_render_attribute_string( 'map' ); ?>>
+				?><div <?php $this->print_render_attribute_string( 'map' ); ?>>
 						
 					<?php foreach ( $settings['pins'] as $index => $item ) {
 
@@ -1647,18 +1653,18 @@ class Google_Map extends Extras_Widget {
 							] );
 						}
 
-						?><div <?php echo $this->get_render_attribute_string( $key ); ?>>
+						?><div <?php $this->print_render_attribute_string( $key ); ?>>
 							<?php if ( '' !== $settings['popups'] ) {
 
 								$title_tag = $settings['title_tag'];
 								$description_tag = $settings['description_tag'];
 								
-								?><<?php echo $title_tag; ?> <?php echo $this->get_render_attribute_string( 'title' ); ?>>
-									<?php echo $item['name']; ?>
-								</<?php echo $title_tag; ?>>
-								<<?php echo $description_tag; ?> <?php echo $this->get_render_attribute_string( 'description' ); ?>>
-									<?php echo $item['description']; ?>
-								</<?php echo $description_tag; ?>>
+								?><<?php echo esc_html( $this->ltxe_sanitize_heading_tag( $title_tag ) ); ?> <?php $this->print_render_attribute_string( 'title' ); ?>>
+									<?php echo wp_kses_post( $item['name'] ); ?>
+								</<?php echo esc_html( $this->ltxe_sanitize_heading_tag( $title_tag ) ); ?>>
+								<<?php echo esc_html( $this->ltxe_sanitize_heading_tag( $description_tag ) ); ?> <?php $this->print_render_attribute_string( 'description' ); ?>>
+									<?php echo wp_kses_post( $item['description'] ); ?>
+								</<?php echo esc_html( $this->ltxe_sanitize_heading_tag( $description_tag ) ); ?>>
 
 							<?php } ?>
 						</div><?php 
@@ -1715,8 +1721,8 @@ class Google_Map extends Extras_Widget {
 			$has_icon = true;
 		}
 
-		?><div <?php echo $this->get_render_attribute_string( 'navigation-wrapper' ); ?>>
-			<ul <?php echo $this->get_render_attribute_string( 'navigation' ); ?>><?php
+		?><div <?php $this->print_render_attribute_string( 'navigation-wrapper' ); ?>>
+			<ul <?php $this->print_render_attribute_string( 'navigation' ); ?>><?php
 
 				$this->render_all_link( $has_icon );
 
@@ -1742,15 +1748,15 @@ class Google_Map extends Extras_Widget {
 						],
 					] );
 
-					?><li <?php echo $this->get_render_attribute_string( $item_key ); ?>>
-						<a <?php echo $this->get_render_attribute_string( $link_key ); ?>><?php
+					?><li <?php $this->print_render_attribute_string( $item_key ); ?>>
+						<a <?php $this->print_render_attribute_string( $link_key ); ?>><?php
 
 							if ( $has_icon ) {
 								$this->render_navigation_icon();
 							}
 
-							?><span <?php echo $this->get_render_attribute_string( 'text' ); ?>>
-								<?php echo $item['name']; ?>
+							?><span <?php $this->print_render_attribute_string( 'text' ); ?>>
+								<?php echo esc_html( $item['name'] ); ?>
 							</span>
 						</a>
 					</li><?php 
@@ -1772,7 +1778,7 @@ class Google_Map extends Extras_Widget {
 		$migrated = isset( $settings['__fa4_migrated']['selected_navigation_icon'] );
 		$is_new = empty( $settings['navigation_icon'] ) && Icons_Manager::is_migration_allowed();
 		
-		?><span <?php echo $this->get_render_attribute_string( 'icon' ); ?>><?php
+		?><span <?php $this->print_render_attribute_string( 'icon' ); ?>><?php
 			if ( $is_new || $migrated ) {
 				Icons_Manager::render_icon( $settings['selected_navigation_icon'], [ 'aria-hidden' => 'true' ] );
 			} else {
@@ -1808,15 +1814,15 @@ class Google_Map extends Extras_Widget {
 				],
 			] );
 
-			?><li <?php echo $this->get_render_attribute_string( 'all' ); ?>>
-				<a <?php echo $this->get_render_attribute_string( 'link' ); ?>><?php
+			?><li <?php $this->print_render_attribute_string( 'all' ); ?>>
+				<a <?php $this->print_render_attribute_string( 'link' ); ?>><?php
 
 					if ( $icon ) {
 						$this->render_navigation_icon();
 					}
 					
-					?><span <?php echo $this->get_render_attribute_string( 'text' ); ?>>
-						<?php echo $settings['all_text']; ?>
+					?><span <?php $this->print_render_attribute_string( 'text' ); ?>>
+						<?php echo esc_html( $settings['all_text'] ); ?>
 					</span>
 				</a>
 			</li><?php

@@ -1,9 +1,10 @@
 <?php
-namespace ElementorExtras\Modules\DisplayConditions\Conditions;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\DisplayConditions\Conditions;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Condition;
-use ElementorExtras\Utils;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Condition;
+use LandTechExtras\Utils;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -113,7 +114,7 @@ class Acf_Base extends Condition {
 			return false;
 		}
 
-		if ( false === strpos( $key, ':' ) ) { // Fallback for 2.2.32
+		if ( false === strpos( (string) $key, ':' ) ) { // Fallback for 2.2.32
 
 			$field_name = false;
 			$field_key 	= $key;

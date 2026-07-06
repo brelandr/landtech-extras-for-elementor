@@ -1,11 +1,12 @@
 <?php
-namespace ElementorExtras\Modules\Navigation\Widgets;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Navigation\Widgets;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Extras_Widget;
-use ElementorExtras\Modules\Navigation\Skins;
-use ElementorExtras\Modules\Navigation\Module as Module;
-use ElementorExtras\Group_Control_Transition;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Extras_Widget;
+use LandTechExtras\Modules\Navigation\Skins;
+use LandTechExtras\Modules\Navigation\Module as Module;
+use LandTechExtras\Group_Control_Transition;
 
 // Elementor Classes
 use Elementor\Utils;
@@ -66,7 +67,7 @@ class Slide_Menu extends Extras_Widget {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Slide Menu', 'elementor-extras' );
+		return __( 'Slide Menu', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -91,7 +92,7 @@ class Slide_Menu extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
-			'slide-menu',
+			'landtech-extras-slide-menu',
 		];
 	}
 
@@ -161,7 +162,7 @@ class Slide_Menu extends Extras_Widget {
 		$this->start_controls_section(
 			'section_settings',
 			[
-				'label' => __( 'Settings', 'elementor-extras' ),
+				'label' => __( 'Settings', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -172,13 +173,17 @@ class Slide_Menu extends Extras_Widget {
 				$this->add_control(
 					'menu',
 					[
-						'label' => __( 'Menu', 'elementor-extras' ),
+						'label' => __( 'Menu', 'landtech-extras-for-elementor' ),
 						'type' => Controls_Manager::SELECT,
 						'options' => $menus,
 						'default' => array_keys( $menus )[0],
 						'save_default' => true,
 						'separator' => 'after',
-						'description' => sprintf( __( 'Go to the <a href="%s" target="_blank">Menus screen</a> to manage your menus.', 'elementor-extras' ), admin_url( 'nav-menus.php' ) ),
+						'description' => sprintf(
+							/* translators: %s: URL to the WordPress Menus admin screen. */
+							__( 'Go to the <a href="%s" target="_blank">Menus screen</a> to manage your menus.', 'landtech-extras-for-elementor' ),
+							admin_url( 'nav-menus.php' )
+						),
 					]
 				);
 			} else {
@@ -186,7 +191,11 @@ class Slide_Menu extends Extras_Widget {
 					'menu',
 					[
 						'type' => Controls_Manager::RAW_HTML,
-						'raw' => sprintf( __( '<strong>There are no menus in your site.</strong><br>Go to the <a href="%s" target="_blank">Menus screen</a> to create one.', 'elementor-extras' ), admin_url( 'nav-menus.php?action=edit&menu=0' ) ),
+						'raw' => sprintf(
+							/* translators: %s: URL to create a new menu in WordPress admin. */
+							__( '<strong>There are no menus in your site.</strong><br>Go to the <a href="%s" target="_blank">Menus screen</a> to create one.', 'landtech-extras-for-elementor' ),
+							admin_url( 'nav-menus.php?action=edit&menu=0' )
+						),
 						'separator' => 'after',
 						'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 					]
@@ -196,10 +205,10 @@ class Slide_Menu extends Extras_Widget {
 			$this->add_control(
 				'back_text',
 				[
-					'label' 		=> __( 'Back Label', 'elementor-extras' ),
+					'label' 		=> __( 'Back Label', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::TEXT,
 					'dynamic'		=> [ 'active' => true ],
-					'default' 		=> __( 'Back', 'elementor-extras' ),
+					'default' 		=> __( 'Back', 'landtech-extras-for-elementor' ),
 					'label_block' 	=> false,
 					'frontend_available' => true,
 				]
@@ -208,12 +217,12 @@ class Slide_Menu extends Extras_Widget {
 			$this->add_control(
 				'effect',
 				[
-					'label' 	=> __( 'Effect', 'elementor-extras' ),
+					'label' 	=> __( 'Effect', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'options' 	=> [
-						'overlay'	=> __( 'Overlay', 'elementor-extras' ),
-						'push'		=> __( 'Push', 'elementor-extras' ),
-						// 'shift'		=> __( 'Shift', 'elementor-extras' ),
+						'overlay'	=> __( 'Overlay', 'landtech-extras-for-elementor' ),
+						'push'		=> __( 'Push', 'landtech-extras-for-elementor' ),
+						// 'shift'		=> __( 'Shift', 'landtech-extras-for-elementor' ),
 					],
 					'default' 		=> 'overlay',
 					'prefix_class'	=> 'ee-slide-menu-effect--',
@@ -223,13 +232,13 @@ class Slide_Menu extends Extras_Widget {
 			$this->add_control(
 				'direction',
 				[
-					'label' 	=> __( 'Direction', 'elementor-extras' ),
+					'label' 	=> __( 'Direction', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'options' 	=> [
-						'left'		=> __( 'Left', 'elementor-extras' ),
-						'right'		=> __( 'Right', 'elementor-extras' ),
-						'bottom'	=> __( 'Bottom', 'elementor-extras' ),
-						'top'		=> __( 'Top', 'elementor-extras' ),
+						'left'		=> __( 'Left', 'landtech-extras-for-elementor' ),
+						'right'		=> __( 'Right', 'landtech-extras-for-elementor' ),
+						'bottom'	=> __( 'Bottom', 'landtech-extras-for-elementor' ),
+						'top'		=> __( 'Top', 'landtech-extras-for-elementor' ),
 					],
 					'default' 		=> 'left',
 					'prefix_class'	=> 'ee-slide-menu-direction--',
@@ -239,7 +248,7 @@ class Slide_Menu extends Extras_Widget {
 			$this->add_responsive_control(
 				'duration',
 				[
-					'label' 		=> __( 'Transition Duration', 'elementor-extras' ),
+					'label' 		=> __( 'Transition Duration', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -258,9 +267,9 @@ class Slide_Menu extends Extras_Widget {
 			$this->add_control(
 				'link_navigation',
 				[
-					'label' 		=> __( 'Link Navigation', 'elementor-extras' ),
+					'label' 		=> __( 'Link Navigation', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
-					'description' 	=> __( 'Allow navigating to sub-menus by clicking the links instead of just the arrows.', 'elementor-extras' ),
+					'description' 	=> __( 'Allow navigating to sub-menus by clicking the links instead of just the arrows.', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'yes',
 					'frontend_available' => true,
 				]
@@ -269,7 +278,7 @@ class Slide_Menu extends Extras_Widget {
 			$this->add_control(
 				'parent_icon',
 				[
-					'label' => __( 'Parent Icon', 'elementor' ),
+					'label' => __( 'Parent Icon', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::ICONS,
 					'default' => [
 						'value' => 'fas fa-angle-right',
@@ -292,7 +301,7 @@ class Slide_Menu extends Extras_Widget {
 		$this->start_controls_section(
 			'section_menu_style',
 			[
-				'label' => __( 'Menu', 'elementor-extras' ),
+				'label' => __( 'Menu', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -300,7 +309,7 @@ class Slide_Menu extends Extras_Widget {
 			$this->add_responsive_control(
 				'width',
 				[
-					'label' 		=> __( 'Width', 'elementor-extras' ),
+					'label' 		=> __( 'Width', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'size_units' 	=> [ 'px', '%' ],
 					'range' 		=> [
@@ -322,9 +331,9 @@ class Slide_Menu extends Extras_Widget {
 			$this->add_control(
 				'fixed_height',
 				[
-					'label' 		=> __( 'Fixed Height', 'elementor-extras' ),
+					'label' 		=> __( 'Fixed Height', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
-					'description' 	=> __( 'If turned off, the menu will adjust its height based on the currently active sub-menu.', 'elementor-extras' ),
+					'description' 	=> __( 'If turned off, the menu will adjust its height based on the currently active sub-menu.', 'landtech-extras-for-elementor' ),
 					'default'		=> 'yes',
 				]
 			);
@@ -332,7 +341,7 @@ class Slide_Menu extends Extras_Widget {
 			$this->add_responsive_control(
 				'height',
 				[
-					'label' 		=> __( 'Min. Height', 'elementor-extras' ),
+					'label' 		=> __( 'Min. Height', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -353,20 +362,20 @@ class Slide_Menu extends Extras_Widget {
 			$this->add_control(
 				'align',
 				[
-					'label' 		=> __( 'Align', 'elementor-extras' ),
+					'label' 		=> __( 'Align', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> 'left',
 					'options' 		=> [
 						'left'    		=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-right',
 						],
 					],
@@ -379,7 +388,7 @@ class Slide_Menu extends Extras_Widget {
 			$this->add_control(
 				'background',
 				[
-					'label' 	=> __( 'Background', 'elementor-extras' ),
+					'label' 	=> __( 'Background', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'global' => [
 						'default' => Global_Colors::COLOR_PRIMARY,
@@ -396,7 +405,7 @@ class Slide_Menu extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'navigation',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '{{WRAPPER}} .ee-slide-menu',
 				]
 			);
@@ -404,7 +413,7 @@ class Slide_Menu extends Extras_Widget {
 			$this->add_control(
 				'border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'selectors' 	=> [
 						'{{WRAPPER}} .ee-slide-menu,
@@ -426,7 +435,7 @@ class Slide_Menu extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'navigation_links_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -448,7 +457,7 @@ class Slide_Menu extends Extras_Widget {
 		$this->start_controls_section(
 			'section_links_style',
 			[
-				'label' => __( 'Links', 'elementor-extras' ),
+				'label' => __( 'Links', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -456,7 +465,7 @@ class Slide_Menu extends Extras_Widget {
 			$this->add_responsive_control(
 				'links_spacing',
 				[
-					'label' 		=> __( 'Spacing', 'elementor-extras' ),
+					'label' 		=> __( 'Spacing', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default'		=> [
 						'size'		=> 0,
@@ -476,7 +485,7 @@ class Slide_Menu extends Extras_Widget {
 			$this->add_responsive_control(
 				'links_separator_thickness',
 				[
-					'label' 		=> __( 'Separator Thickness', 'elementor-extras' ),
+					'label' 		=> __( 'Separator Thickness', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'separator'		=> 'before',
 					'range' 		=> [
@@ -503,12 +512,12 @@ class Slide_Menu extends Extras_Widget {
 
 			$this->start_controls_tabs( 'links_type' );
 
-			$this->start_controls_tab( 'links_regular', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'links_regular', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'links_padding',
 					[
-						'label' 		=> __( 'Padding', 'elementor-extras' ),
+						'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::DIMENSIONS,
 						'selectors' 	=> [
 							'{{WRAPPER}} .ee-menu__item__link' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -520,20 +529,20 @@ class Slide_Menu extends Extras_Widget {
 				$this->add_control(
 					'links_text_align',
 					[
-						'label' 		=> __( 'Align Text', 'elementor-extras' ),
+						'label' 		=> __( 'Align Text', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::CHOOSE,
 						'default' 		=> 'left',
 						'options' 		=> [
 							'left'    		=> [
-								'title' 	=> __( 'Left', 'elementor-extras' ),
+								'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 								'icon' 		=> 'fa fa-align-left',
 							],
 							'center' 		=> [
-								'title' 	=> __( 'Center', 'elementor-extras' ),
+								'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 								'icon' 		=> 'fa fa-align-center',
 							],
 							'right' 		=> [
-								'title' 	=> __( 'Right', 'elementor-extras' ),
+								'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 								'icon' 		=> 'fa fa-align-right',
 							],
 						],
@@ -545,12 +554,12 @@ class Slide_Menu extends Extras_Widget {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'links_back', [ 'label' => __( 'Back', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'links_back', [ 'label' => __( 'Back', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'links_back_padding',
 					[
-						'label' 		=> __( 'Padding', 'elementor-extras' ),
+						'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::DIMENSIONS,
 						'selectors' 	=> [
 							'{{WRAPPER}} .ee-menu__back .ee-menu__item__link' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -562,20 +571,20 @@ class Slide_Menu extends Extras_Widget {
 				$this->add_control(
 					'links_back_text_align',
 					[
-						'label' 		=> __( 'Align Text', 'elementor-extras' ),
+						'label' 		=> __( 'Align Text', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::CHOOSE,
 						'default' 		=> 'left',
 						'options' 		=> [
 							'left'    		=> [
-								'title' 	=> __( 'Left', 'elementor-extras' ),
+								'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 								'icon' 		=> 'fa fa-align-left',
 							],
 							'center' 		=> [
-								'title' 	=> __( 'Center', 'elementor-extras' ),
+								'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 								'icon' 		=> 'fa fa-align-center',
 							],
 							'right' 		=> [
-								'title' 	=> __( 'Right', 'elementor-extras' ),
+								'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 								'icon' 		=> 'fa fa-align-right',
 							],
 						],
@@ -591,12 +600,12 @@ class Slide_Menu extends Extras_Widget {
 
 			$this->start_controls_tabs( 'links' );
 
-			$this->start_controls_tab( 'links_default', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'links_default', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'links_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -608,7 +617,7 @@ class Slide_Menu extends Extras_Widget {
 				$this->add_control(
 					'links_separator_color',
 					[
-						'label' 	=> __( 'Separator Color', 'elementor-extras' ),
+						'label' 	=> __( 'Separator Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -620,7 +629,7 @@ class Slide_Menu extends Extras_Widget {
 				$this->add_control(
 					'links_background',
 					[
-						'label' 	=> __( 'Background', 'elementor-extras' ),
+						'label' 	=> __( 'Background', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -631,12 +640,12 @@ class Slide_Menu extends Extras_Widget {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'links_hover', [ 'label' => __( 'Hover', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'links_hover', [ 'label' => __( 'Hover', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'links_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -648,7 +657,7 @@ class Slide_Menu extends Extras_Widget {
 				$this->add_control(
 					'links_separator_color_hover',
 					[
-						'label' 	=> __( 'Separator Color', 'elementor-extras' ),
+						'label' 	=> __( 'Separator Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -660,7 +669,7 @@ class Slide_Menu extends Extras_Widget {
 				$this->add_control(
 					'links_background_hover',
 					[
-						'label' 	=> __( 'Background', 'elementor-extras' ),
+						'label' 	=> __( 'Background', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -671,12 +680,12 @@ class Slide_Menu extends Extras_Widget {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'links_current', [ 'label' => __( 'Current', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'links_current', [ 'label' => __( 'Current', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'links_color_current',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -689,7 +698,7 @@ class Slide_Menu extends Extras_Widget {
 				$this->add_control(
 					'links_separator_color_current',
 					[
-						'label' 	=> __( 'Separator Color', 'elementor-extras' ),
+						'label' 	=> __( 'Separator Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -701,7 +710,7 @@ class Slide_Menu extends Extras_Widget {
 				$this->add_control(
 					'links_background_current',
 					[
-						'label' 	=> __( 'Background', 'elementor-extras' ),
+						'label' 	=> __( 'Background', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -719,7 +728,7 @@ class Slide_Menu extends Extras_Widget {
 				'heading_arrows',
 				[
 					'type'		=> Controls_Manager::HEADING,
-					'label' 	=> __( 'Arrows', 'elementor-extras' ),
+					'label' 	=> __( 'Arrows', 'landtech-extras-for-elementor' ),
 					'separator' => 'before',
 				]
 			);
@@ -727,7 +736,7 @@ class Slide_Menu extends Extras_Widget {
 			$this->add_responsive_control(
 				'arrows_separator_thickness',
 				[
-					'label' 		=> __( 'Separator Thickness', 'elementor-extras' ),
+					'label' 		=> __( 'Separator Thickness', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'separator'		=> 'after',
 					'range' 		=> [
@@ -745,12 +754,12 @@ class Slide_Menu extends Extras_Widget {
 
 			$this->start_controls_tabs( 'arrows_type' );
 
-			$this->start_controls_tab( 'arrows_regular', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'arrows_regular', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_responsive_control(
 					'arrows_size',
 					[
-						'label' 		=> __( 'Size', 'elementor-extras' ),
+						'label' 		=> __( 'Size', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SLIDER,
 						'default'		=> [
 							'size'		=> 1,
@@ -771,7 +780,7 @@ class Slide_Menu extends Extras_Widget {
 				$this->add_control(
 					'arrows_padding',
 					[
-						'label' 		=> __( 'Padding', 'elementor-extras' ),
+						'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::DIMENSIONS,
 						'allowed_dimensions' => [ 'right', 'left' ],
 						'selectors' 	=> [
@@ -782,12 +791,12 @@ class Slide_Menu extends Extras_Widget {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'arrows_back', [ 'label' => __( 'Back', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'arrows_back', [ 'label' => __( 'Back', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_responsive_control(
 					'arrows_back_size',
 					[
-						'label' 		=> __( 'Size', 'elementor-extras' ),
+						'label' 		=> __( 'Size', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SLIDER,
 						'default'		=> [
 							'size'		=> 1,
@@ -808,7 +817,7 @@ class Slide_Menu extends Extras_Widget {
 				$this->add_control(
 					'arrows_back_padding',
 					[
-						'label' 		=> __( 'Padding', 'elementor-extras' ),
+						'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::DIMENSIONS,
 						'allowed_dimensions' => [ 'right', 'left' ],
 						'selectors' 	=> [
@@ -823,12 +832,12 @@ class Slide_Menu extends Extras_Widget {
 
 			$this->start_controls_tabs( 'arrows' );
 
-			$this->start_controls_tab( 'arrows_default', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'arrows_default', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'arrows_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -841,7 +850,7 @@ class Slide_Menu extends Extras_Widget {
 				$this->add_control(
 					'arrows_separator_color',
 					[
-						'label' 	=> __( 'Separator Color', 'elementor-extras' ),
+						'label' 	=> __( 'Separator Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -853,7 +862,7 @@ class Slide_Menu extends Extras_Widget {
 				$this->add_control(
 					'arrows_background',
 					[
-						'label' 	=> __( 'Background', 'elementor-extras' ),
+						'label' 	=> __( 'Background', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -864,12 +873,12 @@ class Slide_Menu extends Extras_Widget {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'arrows_hover', [ 'label' => __( 'Hover', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'arrows_hover', [ 'label' => __( 'Hover', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'arrows_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -882,7 +891,7 @@ class Slide_Menu extends Extras_Widget {
 				$this->add_control(
 					'arrows_separator_color_hover',
 					[
-						'label' 	=> __( 'Separator Color', 'elementor-extras' ),
+						'label' 	=> __( 'Separator Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -894,7 +903,7 @@ class Slide_Menu extends Extras_Widget {
 				$this->add_control(
 					'arrows_background_hover',
 					[
-						'label' 	=> __( 'Background', 'elementor-extras' ),
+						'label' 	=> __( 'Background', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -968,8 +977,11 @@ class Slide_Menu extends Extras_Widget {
 		] );
 
 		?>
-		<div <?php echo $this->get_render_attribute_string( 'wrapper' ); ?>>
-			<?php echo $menu_html; ?>
+		<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
+			<?php
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Markup generated by wp_nav_menu().
+			echo $menu_html;
+			?>
 		</div><?php
 	}
 
@@ -985,7 +997,7 @@ class Slide_Menu extends Extras_Widget {
 		 *
 		 * @since 2.2.16
 		 */
-		return apply_filters( 'elementor_extras/widgets/slide_menu/nav_menu/walker_start_el', $item_output, $item, $depth, $args );
+		return apply_filters( 'landtech_extras/widgets/slide_menu/nav_menu/walker_start_el', $item_output, $item, $depth, $args );
 	}
 
 	/**

@@ -1,9 +1,10 @@
 <?php
-namespace ElementorExtras\Modules\Search\Skins;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Search\Skins;
 
-// Extras for Elementor Classes
-use ElementorExtras\Utils;
-use ElementorExtras\Base\Extras_Widget;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Utils;
+use LandTechExtras\Base\Extras_Widget;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -66,12 +67,12 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			$this->add_control(
 				'icon_style',
 				[
-					'label' 	=> __( 'Style', 'elementor-extras' ),
+					'label' 	=> __( 'Style', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'thin',
 					'options' 	=> [
-						'thin' 	=> __( 'Thin', 'elementor-extras' ),
-						'thick' => __( 'Thick', 'elementor-extras' ),
+						'thin' 	=> __( 'Thin', 'landtech-extras-for-elementor' ),
+						'thick' => __( 'Thick', 'landtech-extras-for-elementor' ),
 					],
 					'condition'	=> [
 						$this->get_control_id('icon!') => [ 'triangle', '' ],
@@ -101,7 +102,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 	 */
 	protected function add_actions() {
 
-		add_action( 'elementor-extras/search-form/form/after_start', [ $this->parent, 'render_hidden_fields' ], 20 );
+		add_action( 'landtech_extras/search-form/form/after_start', [ $this->parent, 'render_hidden_fields' ], 20 );
 
 	}
 
@@ -153,7 +154,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			]
 		);
 
-		?><form <?php echo $this->parent->get_render_attribute_string( 'form' ); ?>>
+		?><form <?php $this->parent->print_render_attribute_string( 'form' ); ?>>
 			<?php
 
 			$this->after_form_start();
@@ -190,7 +191,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 	public function render_form_container() {
 		$this->parent->add_render_attribute( 'form-container', 'class', 'ee-search-form__container' );
 
-		?><div <?php echo $this->parent->get_render_attribute_string( 'form-container' ); ?>><?php
+		?><div <?php $this->parent->print_render_attribute_string( 'form-container' ); ?>><?php
 			$this->render_form_container_content();
 		?></div><?php
 	}
@@ -225,7 +226,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 
 		$widget_id = $this->parent->get_id();
 
-		?><div <?php echo $this->parent->get_render_attribute_string( 'fields' ); ?>>
+		?><div <?php $this->parent->print_render_attribute_string( 'fields' ); ?>>
 			<?php
 
 				$this->before_fields();
@@ -273,7 +274,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			],
 			'type' 			=> 'search',
 			'name' 			=> 's',
-			'title' 		=> __( 'Search', 'elementor-extras' ),
+			'title' 		=> __( 'Search', 'landtech-extras-for-elementor' ),
 			'value' 		=> get_search_query(),
 		];
 
@@ -284,7 +285,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param array 			$input_attributes 	The default input attributes
 		 * @param array 			$settings 			The widget settings
 		 */
-		$input_attributes = apply_filters( 'elementor_extras/widgets/search-form/input/attributes', $input_attributes, $settings );
+		$input_attributes = apply_filters( 'landtech_extras/widgets/search-form/input/attributes', $input_attributes, $settings );
 
 		$this->parent->add_render_attribute( [
 			'field' => [
@@ -298,8 +299,8 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			'input' => $input_attributes,
 		] );
 
-		?><div <?php echo $this->parent->get_render_attribute_string( 'field' ); ?>>
-			<input <?php echo $this->parent->get_render_attribute_string( 'input' ); ?>>
+		?><div <?php $this->parent->print_render_attribute_string( 'field' ); ?>>
+			<input <?php $this->parent->print_render_attribute_string( 'input' ); ?>>
 		</div><?php
 	}
 
@@ -334,7 +335,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			],
 		] );
 
-		?><span <?php echo $this->parent->get_render_attribute_string( 'filters-toggle' ); ?>></span><?php
+		?><span <?php $this->parent->print_render_attribute_string( 'filters-toggle' ); ?>></span><?php
 	}
 
 	/**
@@ -364,7 +365,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			$this->parent->add_render_attribute( 'button', 'class', 'ee-search-form__control--icon' );
 		}
 
-		?><button <?php echo $this->parent->get_render_attribute_string( 'button' ); ?>>
+		?><button <?php $this->parent->print_render_attribute_string( 'button' ); ?>>
 			<?php $this->render_button_content(); ?>
 		</button><?php
 	}
@@ -420,7 +421,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			'aria-hidden' => 'true',
 		] );
 
-		?><i <?php echo $this->parent->get_render_attribute_string( 'icon' ); ?>></i><?php
+		?><i <?php $this->parent->print_render_attribute_string( 'icon' ); ?>></i><?php
 	}
 
 	/**
@@ -437,7 +438,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			return;
 		}
 
-		echo $this->get_instance_value('button_label_text');
+		echo esc_html( $this->get_instance_value( 'button_label_text' ) );
 	}
 
 	/**
@@ -449,7 +450,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 	public function render_button_sr_label() {
 		$this->parent->add_render_attribute( 'screen-reader', 'class', 'elementor-screen-only' );
 
-		?><span <?php echo $this->parent->get_render_attribute_string( 'screen-reader' ); ?>><?php
+		?><span <?php $this->parent->print_render_attribute_string( 'screen-reader' ); ?>><?php
 			/**
 			 * Separator filter
 			 *
@@ -458,7 +459,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			 * @since 2.2.0
 			 * @param string 			$post_title 	The markup for the separator
 			 */
-			echo apply_filters( 'elementor_extras/widgets/search-form/button/sr_text', __('Search', 'elementor-extras') );
+			echo esc_html( apply_filters( 'landtech_extras/widgets/search-form/button/sr_text', __( 'Search', 'landtech-extras-for-elementor' ) ) );
 		?></span><?php
 	}
 

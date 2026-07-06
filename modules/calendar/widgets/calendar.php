@@ -1,12 +1,13 @@
 <?php
-namespace ElementorExtras\Modules\Calendar\Widgets;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Calendar\Widgets;
 
-// Extras for Elementor Classes
-use ElementorExtras\Utils;
-use ElementorExtras\Group_Control_Transition;
-use ElementorExtras\Base\Extras_Widget;
-use ElementorExtras\Modules\Calendar\Module as Module;
-use ElementorExtras\Modules\CustomFields\Module as CustomFieldsModule;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Utils;
+use LandTechExtras\Group_Control_Transition;
+use LandTechExtras\Base\Extras_Widget;
+use LandTechExtras\Modules\Calendar\Module as Module;
+use LandTechExtras\Modules\CustomFields\Module as CustomFieldsModule;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -57,7 +58,7 @@ class Calendar extends Extras_Widget {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Calendar', 'elementor-extras' );
+		return __( 'Calendar', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -83,7 +84,7 @@ class Calendar extends Extras_Widget {
 	public function get_script_depends() {
 		return [
 			'moment',
-			'clndr',
+			'landtech-extras-clndr',
 			'wp-util',
 		];
 	}
@@ -99,19 +100,19 @@ class Calendar extends Extras_Widget {
 		$this->start_controls_section(
 			'section_sources',
 			[
-				'label' 	=> __( 'Events', 'elementor-extras' ),
+				'label' 	=> __( 'Events', 'landtech-extras-for-elementor' ),
 			]
 		);
 
 			$this->add_control(
 				'source',
 				[
-					'label'			=> __( 'Source', 'elementor-extras' ),
+					'label'			=> __( 'Source', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT,
 					'default' 		=> 'manual',
 					'options'		=> [
-						'manual' 	=> __( 'Manual', 'elementor-extras' ),
-						'posts' 	=> __( 'Posts', 'elementor-extras' ),
+						'manual' 	=> __( 'Manual', 'landtech-extras-for-elementor' ),
+						'posts' 	=> __( 'Posts', 'landtech-extras-for-elementor' ),
 					],
 				]
 			);
@@ -121,18 +122,18 @@ class Calendar extends Extras_Widget {
 			$repeater->add_control(
 				'title',
 				[
-					'label'		=> __( 'Title', 'elementor-extras' ),
+					'label'		=> __( 'Title', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXT,
-					'default' 	=> __( 'Conference', 'elementor-extras' ),
+					'default' 	=> __( 'Conference', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 			$repeater->add_control(
 				'link',
 				[
-					'label' 	=> __( 'Link', 'elementor-extras' ),
+					'label' 	=> __( 'Link', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::URL,
-					'placeholder' => __( 'https://your-link.com', 'elementor-extras' ),
+					'placeholder' => __( 'https://your-link.com', 'landtech-extras-for-elementor' ),
 					'default' => [
 						'url' => '',
 					],
@@ -142,24 +143,24 @@ class Calendar extends Extras_Widget {
 			$repeater->add_control(
 				'start',
 				[
-					'label'		=> __( 'Start Date', 'elementor-extras' ),
+					'label'		=> __( 'Start Date', 'landtech-extras-for-elementor' ),
 					'type' 		=> \Elementor\Controls_Manager::DATE_TIME,
 					'picker_options' => [
 						'enableTime' => false,
 					],
-					'default' 	=> date( 'Y-m-d H:i', strtotime( '+1 day' ) + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ) ),
+					'default' 	=> wp_date( 'Y-m-d H:i', strtotime( '+1 day', current_time( 'timestamp' ) ) ),
 				]
 			);
 
 			$repeater->add_control(
 				'end',
 				[
-					'label'		=> __( 'End Date', 'elementor-extras' ),
+					'label'		=> __( 'End Date', 'landtech-extras-for-elementor' ),
 					'type' 		=> \Elementor\Controls_Manager::DATE_TIME,
 					'picker_options' => [
 						'enableTime' => false,
 					],
-					'default' 	=> date( 'Y-m-d H:i', strtotime( '+3 day' ) + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ) ),
+					'default' 	=> wp_date( 'Y-m-d H:i', strtotime( '+3 day', current_time( 'timestamp' ) ) ),
 				]
 			);
 
@@ -181,7 +182,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'post_type',
 				[	
-					'label'		=> __( 'Post Type', 'elementor-extras' ),
+					'label'		=> __( 'Post Type', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'post',
 					'condition'		=> [
@@ -196,14 +197,14 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'post_dates_field_type',
 				[	
-					'label'		=> __( 'Fetch Dates From', 'elementor-extras' ),
+					'label'		=> __( 'Fetch Dates From', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'post_date',
 					'condition'		=> [
 						'source'	=> 'posts',
 					],
 					'options'	=> array_merge(
-						[ 'post_date' => __( 'Post Date', 'elementor-extras' ), ],
+						[ 'post_date' => __( 'Post Date', 'landtech-extras-for-elementor' ), ],
 						$customfields->get_field_types()
 					),
 				]
@@ -214,8 +215,16 @@ class Calendar extends Extras_Widget {
 				foreach ( $customfields->get_field_types() as $field_type => $label ) {
 
 					$fields_options = [
-						'placeholder'	=> sprintf( __( 'Search %s Date Fields', 'elementor-extras' ), $post_type_label ),
-						'description'	=> sprintf( __( 'Search %s fields by label or name', 'elementor-extras' ), strtolower( $field_type ) ),
+						'placeholder'	=> sprintf(
+							/* translators: %s: Post type label (e.g. Posts, Pages). */
+							__( 'Search %s Date Fields', 'landtech-extras-for-elementor' ),
+							$post_type_label
+						),
+						'description'	=> sprintf(
+							/* translators: %s: Custom field type name (e.g. ACF). */
+							__( 'Search %s fields by label or name', 'landtech-extras-for-elementor' ),
+							strtolower( $field_type )
+						),
 						'type' 			=> 'ee-query',
 						'options' 		=> [],
 						'label_block' 	=> false,
@@ -237,12 +246,12 @@ class Calendar extends Extras_Widget {
 
 					$this->add_control(
 						'post_start_date_' . $field_type . '_' . $post_type,
-						array_merge( $fields_options, [ 'label' => __( 'Start Date', 'elementor-extras' ), ] )
+						array_merge( $fields_options, [ 'label' => __( 'Start Date', 'landtech-extras-for-elementor' ), ] )
 					);
 
 					$this->add_control(
 						'post_end_date_' . $field_type . '_' . $post_type,
-						array_merge( $fields_options, [ 'label' => __( 'End Date', 'elementor-extras' ), ] )
+						array_merge( $fields_options, [ 'label' => __( 'End Date', 'landtech-extras-for-elementor' ), ] )
 					);
 				}
 			}
@@ -250,14 +259,14 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'no_events',
 				[	
-					'label'		=> __( 'Handle No Events', 'elementor-extras' ),
+					'label'		=> __( 'Handle No Events', 'landtech-extras-for-elementor' ),
 					'separator' => 'before',
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> '',
 					'options'		=> [
-						''			=> __( 'Show Calendar', 'elementor-extras' ),
-						'hide'		=> __( 'Hide Calendar', 'elementor-extras' ),
-						'message'	=> __( 'Show Message', 'elementor-extras' ),
+						''			=> __( 'Show Calendar', 'landtech-extras-for-elementor' ),
+						'hide'		=> __( 'Hide Calendar', 'landtech-extras-for-elementor' ),
+						'message'	=> __( 'Show Message', 'landtech-extras-for-elementor' ),
 					],
 				]
 			);
@@ -265,9 +274,9 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'no_events_message',
 				[
-					'label'		=> __( 'Message', 'elementor-extras' ),
+					'label'		=> __( 'Message', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXT,
-					'default' 	=> __( 'There are currently no available events.', 'elementor-extras' ),
+					'default' 	=> __( 'There are currently no available events.', 'landtech-extras-for-elementor' ),
 					'condition' => [
 						'no_events' => 'message',
 					],
@@ -279,14 +288,14 @@ class Calendar extends Extras_Widget {
 		$this->start_controls_section(
 			'section_calendar',
 			[
-				'label' 	=> __( 'Calendar', 'elementor-extras' ),
+				'label' 	=> __( 'Calendar', 'landtech-extras-for-elementor' ),
 			]
 		);
 
 			$this->add_control(
 				'display_heading',
 				[
-					'label'		=> __( 'Display', 'elementor-extras' ),
+					'label'		=> __( 'Display', 'landtech-extras-for-elementor' ),
 					'type' 		=> \Elementor\Controls_Manager::HEADING,
 				]
 			);
@@ -294,12 +303,12 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'skin',
 				[
-					'label' 		=> __( 'Skin', 'elementor-extras' ),
+					'label' 		=> __( 'Skin', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'default',
 					'options'	=> [
-						'default' 	=> __( 'Default', 'elementor-extras' ),
-						'compact' 	=> __( 'Compact', 'elementor-extras' ),
+						'default' 	=> __( 'Default', 'landtech-extras-for-elementor' ),
+						'compact' 	=> __( 'Compact', 'landtech-extras-for-elementor' ),
 					],
 					'prefix_class' 	=> 'ee-calendar-skin--',
 				]
@@ -308,17 +317,17 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'first_day',
 				[	
-					'label'		=> __( 'First Day', 'elementor-extras' ),
+					'label'		=> __( 'First Day', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> '1',
 					'options'	=> [
-						'0' => __( 'Sunday', 'elementor-extras' ),
-						'1' => __( 'Monday', 'elementor-extras' ),
-						'2' => __( 'Tuesday', 'elementor-extras' ),
-						'3' => __( 'Wednesday', 'elementor-extras' ),
-						'4' => __( 'Thursday', 'elementor-extras' ),
-						'5' => __( 'Friday', 'elementor-extras' ),
-						'6' => __( 'Saturday', 'elementor-extras' ),
+						'0' => __( 'Sunday', 'landtech-extras-for-elementor' ),
+						'1' => __( 'Monday', 'landtech-extras-for-elementor' ),
+						'2' => __( 'Tuesday', 'landtech-extras-for-elementor' ),
+						'3' => __( 'Wednesday', 'landtech-extras-for-elementor' ),
+						'4' => __( 'Thursday', 'landtech-extras-for-elementor' ),
+						'5' => __( 'Friday', 'landtech-extras-for-elementor' ),
+						'6' => __( 'Saturday', 'landtech-extras-for-elementor' ),
 					],
 					'frontend_available' => true
 				]
@@ -327,7 +336,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'constrain_start',
 				[
-					'label'		=> __( 'Earliest Month', 'elementor-extras' ),
+					'label'		=> __( 'Earliest Month', 'landtech-extras-for-elementor' ),
 					'type' 		=> \Elementor\Controls_Manager::DATE_TIME,
 					'picker_options' => [
 						'enableTime' => false,
@@ -342,7 +351,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'constrain_end',
 				[
-					'label'		=> __( 'Latest Month', 'elementor-extras' ),
+					'label'		=> __( 'Latest Month', 'landtech-extras-for-elementor' ),
 					'type' 		=> \Elementor\Controls_Manager::DATE_TIME,
 					'picker_options' => [
 						'enableTime' => false,
@@ -357,11 +366,11 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'default_current_month',
 				[
-					'label' 		=> __( 'Default to Current Month', 'elementor-extras' ),
+					'label' 		=> __( 'Default to Current Month', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -369,7 +378,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'default_month',
 				[
-					'label'		=> __( 'Default Month', 'elementor-extras' ),
+					'label'		=> __( 'Default Month', 'landtech-extras-for-elementor' ),
 					'type' 		=> \Elementor\Controls_Manager::DATE_TIME,
 					'picker_options' => [
 						'enableTime' => false,
@@ -387,11 +396,11 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'show_adjacent_months',
 				[
-					'label' 		=> __( 'Show Adjacent Days', 'elementor-extras' ),
+					'label' 		=> __( 'Show Adjacent Days', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -399,7 +408,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'navigation_heading',
 				[
-					'label'		=> __( 'Navigation', 'elementor-extras' ),
+					'label'		=> __( 'Navigation', 'landtech-extras-for-elementor' ),
 					'type' 		=> \Elementor\Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -408,12 +417,12 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'click_adjacent',
 				[
-					'label' 		=> __( 'Adjacent Click', 'elementor-extras' ),
-					'description'	=> __( 'Clicking on days adjacent to current month navigates to corresponding month', 'elementor-extras' ),
+					'label' 		=> __( 'Adjacent Click', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Clicking on days adjacent to current month navigates to corresponding month', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'condition'		=> [
 						'show_adjacent_months!' => '',
 					],
@@ -424,7 +433,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'links_heading',
 				[
-					'label'		=> __( 'Links', 'elementor-extras' ),
+					'label'		=> __( 'Links', 'landtech-extras-for-elementor' ),
 					'type' 		=> \Elementor\Controls_Manager::HEADING,
 					'separator' => 'before',
 					'condition'	=> [
@@ -436,11 +445,11 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'link',
 				[
-					'label' 		=> __( 'Enable Links', 'elementor-extras' ),
+					'label' 		=> __( 'Enable Links', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 					'condition'	=> [
 						'source' => 'posts',
@@ -451,11 +460,11 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'link_is_external',
 				[
-					'label' 		=> __( 'Open in new window', 'elementor-extras' ),
+					'label' 		=> __( 'Open in new window', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 					'condition'	=> [
 						'source' => 'posts',
@@ -466,11 +475,11 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'link_no_follow',
 				[
-					'label' 		=> __( 'Add nofollow', 'elementor-extras' ),
+					'label' 		=> __( 'Add nofollow', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 					'condition'	=> [
 						'source' => 'posts',
@@ -481,7 +490,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'days_heading',
 				[
-					'label'		=> __( 'Days', 'elementor-extras' ),
+					'label'		=> __( 'Days', 'landtech-extras-for-elementor' ),
 					'type' 		=> \Elementor\Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -490,9 +499,9 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'day_monday',
 				[
-					'label'		=> __( 'Monday', 'elementor-extras' ),
+					'label'		=> __( 'Monday', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXT,
-					'default' 	=> __( 'Mon', 'elementor-extras' ),
+					'default' 	=> __( 'Mon', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -500,9 +509,9 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'day_tuesday',
 				[
-					'label'		=> __( 'Tuesday', 'elementor-extras' ),
+					'label'		=> __( 'Tuesday', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXT,
-					'default' 	=> __( 'Tue', 'elementor-extras' ),
+					'default' 	=> __( 'Tue', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -510,9 +519,9 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'day_wednesday',
 				[
-					'label'		=> __( 'Wednesday', 'elementor-extras' ),
+					'label'		=> __( 'Wednesday', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXT,
-					'default' 	=> __( 'Wed', 'elementor-extras' ),
+					'default' 	=> __( 'Wed', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -520,9 +529,9 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'day_thursday',
 				[
-					'label'		=> __( 'Thursday', 'elementor-extras' ),
+					'label'		=> __( 'Thursday', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXT,
-					'default' 	=> __( 'Thu', 'elementor-extras' ),
+					'default' 	=> __( 'Thu', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -530,9 +539,9 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'day_friday',
 				[
-					'label'		=> __( 'Friday', 'elementor-extras' ),
+					'label'		=> __( 'Friday', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXT,
-					'default' 	=> __( 'Fri', 'elementor-extras' ),
+					'default' 	=> __( 'Fri', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -540,9 +549,9 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'day_saturday',
 				[
-					'label'		=> __( 'Saturday', 'elementor-extras' ),
+					'label'		=> __( 'Saturday', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXT,
-					'default' 	=> __( 'Sat', 'elementor-extras' ),
+					'default' 	=> __( 'Sat', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -550,9 +559,9 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'day_sunday',
 				[
-					'label'		=> __( 'Sunday', 'elementor-extras' ),
+					'label'		=> __( 'Sunday', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXT,
-					'default' 	=> __( 'Sun', 'elementor-extras' ),
+					'default' 	=> __( 'Sun', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -560,11 +569,11 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'link_archive',
 				[
-					'label' 		=> __( 'Link to Archive', 'elementor-extras' ),
+					'label' 		=> __( 'Link to Archive', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'condition'		=> [
 						'source'				=> 'posts',
 						'post_dates_field_type' => 'post_date',
@@ -576,7 +585,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'months_heading',
 				[
-					'label'		=> __( 'Months', 'elementor-extras' ),
+					'label'		=> __( 'Months', 'landtech-extras-for-elementor' ),
 					'type' 		=> \Elementor\Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -585,9 +594,9 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'month_january',
 				[
-					'label'		=> __( 'January', 'elementor-extras' ),
+					'label'		=> __( 'January', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXT,
-					'default' 	=> __( 'January', 'elementor-extras' ),
+					'default' 	=> __( 'January', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -595,9 +604,9 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'month_february',
 				[
-					'label'		=> __( 'February', 'elementor-extras' ),
+					'label'		=> __( 'February', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXT,
-					'default' 	=> __( 'February', 'elementor-extras' ),
+					'default' 	=> __( 'February', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -605,9 +614,9 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'month_march',
 				[
-					'label'		=> __( 'March', 'elementor-extras' ),
+					'label'		=> __( 'March', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXT,
-					'default' 	=> __( 'March', 'elementor-extras' ),
+					'default' 	=> __( 'March', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -615,9 +624,9 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'month_april',
 				[
-					'label'		=> __( 'April', 'elementor-extras' ),
+					'label'		=> __( 'April', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXT,
-					'default' 	=> __( 'April', 'elementor-extras' ),
+					'default' 	=> __( 'April', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -625,9 +634,9 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'month_may',
 				[
-					'label'		=> __( 'May', 'elementor-extras' ),
+					'label'		=> __( 'May', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXT,
-					'default' 	=> __( 'May', 'elementor-extras' ),
+					'default' 	=> __( 'May', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -635,9 +644,9 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'month_june',
 				[
-					'label'		=> __( 'June', 'elementor-extras' ),
+					'label'		=> __( 'June', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXT,
-					'default' 	=> __( 'June', 'elementor-extras' ),
+					'default' 	=> __( 'June', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -645,9 +654,9 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'month_july',
 				[
-					'label'		=> __( 'July', 'elementor-extras' ),
+					'label'		=> __( 'July', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXT,
-					'default' 	=> __( 'July', 'elementor-extras' ),
+					'default' 	=> __( 'July', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -655,9 +664,9 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'month_august',
 				[
-					'label'		=> __( 'August', 'elementor-extras' ),
+					'label'		=> __( 'August', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXT,
-					'default' 	=> __( 'August', 'elementor-extras' ),
+					'default' 	=> __( 'August', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -665,9 +674,9 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'month_september',
 				[
-					'label'		=> __( 'September', 'elementor-extras' ),
+					'label'		=> __( 'September', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXT,
-					'default' 	=> __( 'September', 'elementor-extras' ),
+					'default' 	=> __( 'September', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -675,9 +684,9 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'month_october',
 				[
-					'label'		=> __( 'October', 'elementor-extras' ),
+					'label'		=> __( 'October', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXT,
-					'default' 	=> __( 'October', 'elementor-extras' ),
+					'default' 	=> __( 'October', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -685,9 +694,9 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'month_november',
 				[
-					'label'		=> __( 'November', 'elementor-extras' ),
+					'label'		=> __( 'November', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXT,
-					'default' 	=> __( 'November', 'elementor-extras' ),
+					'default' 	=> __( 'November', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -695,9 +704,9 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'month_december',
 				[
-					'label'		=> __( 'December', 'elementor-extras' ),
+					'label'		=> __( 'December', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXT,
-					'default' 	=> __( 'December', 'elementor-extras' ),
+					'default' 	=> __( 'December', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -705,7 +714,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'events_heading',
 				[
-					'label'		=> __( 'Events List', 'elementor-extras' ),
+					'label'		=> __( 'Events List', 'landtech-extras-for-elementor' ),
 					'type' 		=> \Elementor\Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -714,12 +723,12 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'event_order',
 				[	
-					'label'		=> __( 'Order', 'elementor-extras' ),
+					'label'		=> __( 'Order', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'ASC',
 					'options'	=> [
-						'ASC'	=> __( 'Ascending', 'elementor-extras' ),
-						'DESC'	=> __( 'Descending', 'elementor-extras' ),
+						'ASC'	=> __( 'Ascending', 'landtech-extras-for-elementor' ),
+						'DESC'	=> __( 'Descending', 'landtech-extras-for-elementor' ),
 					],
 					'condition' => [
 						'skin' => 'compact',
@@ -730,9 +739,9 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'event_list_heading',
 				[
-					'label'		=> __( 'Heading', 'elementor-extras' ),
+					'label'		=> __( 'Heading', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXT,
-					'default' 	=> __( 'Posts this month', 'elementor-extras' ),
+					'default' 	=> __( 'Posts this month', 'landtech-extras-for-elementor' ),
 					'condition' => [
 						'skin' => 'compact',
 					],
@@ -743,12 +752,12 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'event_title_wrap',
 				[
-					'label' 		=> __( 'Title Wrapping', 'elementor-extras' ),
+					'label' 		=> __( 'Title Wrapping', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'no-wrap',
 					'options'	=> [
-						'no-wrap' 	=> __( 'Single Line', 'elementor-extras' ),
-						'wrap' 		=> __( 'Wrap', 'elementor-extras' ),
+						'no-wrap' 	=> __( 'Single Line', 'landtech-extras-for-elementor' ),
+						'wrap' 		=> __( 'Wrap', 'landtech-extras-for-elementor' ),
 					],
 					'prefix_class' 	=> 'ee-calendar-event-title--',
 				]
@@ -757,9 +766,9 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'event_date_format',
 				[
-					'label'		=> __( 'Date Format', 'elementor-extras' ),
+					'label'		=> __( 'Date Format', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXT,
-					'description' => sprintf( '<a href="https://momentjs.com/docs/#/displaying/format/" target="_blank">%s</a>', __( 'Documentation on ISO date and time formatting', 'elementor-extras' ) ),
+					'description' => sprintf( '<a href="https://momentjs.com/docs/#/displaying/format/" target="_blank">%s</a>', __( 'Documentation on ISO date and time formatting', 'landtech-extras-for-elementor' ) ),
 					'default' 	=> 'MMMM Do',
 					'condition' => [
 						'skin' => 'compact',
@@ -773,7 +782,7 @@ class Calendar extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_calendar',
 			[
-				'label' => __( 'Calendar', 'elementor-extras' ),
+				'label' => __( 'Calendar', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -781,7 +790,7 @@ class Calendar extends Extras_Widget {
 			$this->add_responsive_control(
 				'calendar_width',
 				[
-					'label' 	=> __( 'Max. Width', 'elementor-extras' ),
+					'label' 	=> __( 'Max. Width', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -799,7 +808,7 @@ class Calendar extends Extras_Widget {
 			$this->add_responsive_control(
 				'calendar_padding',
 				[
-					'label' 	=> __( 'Padding', 'elementor-extras' ),
+					'label' 	=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -817,7 +826,7 @@ class Calendar extends Extras_Widget {
 			$this->add_responsive_control(
 				'calendar_spacing_horizontal',
 				[
-					'label' 	=> __( 'Horizontal Spacing', 'elementor-extras' ),
+					'label' 	=> __( 'Horizontal Spacing', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -835,7 +844,7 @@ class Calendar extends Extras_Widget {
 			$this->add_responsive_control(
 				'calendar_spacing_vertical',
 				[
-					'label' 	=> __( 'Vertical Spacing', 'elementor-extras' ),
+					'label' 	=> __( 'Vertical Spacing', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -853,20 +862,20 @@ class Calendar extends Extras_Widget {
 			$this->add_responsive_control(
 				'calendar_align',
 				[
-					'label' 		=> __( 'Align', 'elementor-extras' ),
+					'label' 		=> __( 'Align', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> 'center',
 					'options' 		=> [
 						'left' 			=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -879,7 +888,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'calendar_background_color',
 				[
-					'label' 	=> __( 'Background Color', 'elementor-extras' ),
+					'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'default'	=> '',
 					'selectors' => [
@@ -891,7 +900,7 @@ class Calendar extends Extras_Widget {
 			$this->add_responsive_control(
 				'calendar_border_radius',
 				[
-					'label' 	=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 	=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -911,7 +920,7 @@ class Calendar extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'calendar_border',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '{{WRAPPER}} .ee-calendar',
 				]
 			);
@@ -938,7 +947,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'separators_heading',
 				[
-					'label'		=> __( 'Separators', 'elementor-extras' ),
+					'label'		=> __( 'Separators', 'landtech-extras-for-elementor' ),
 					'type' 		=> \Elementor\Controls_Manager::HEADING,
 					'separator'	=> 'before',
 				]
@@ -946,21 +955,21 @@ class Calendar extends Extras_Widget {
 
 			$this->start_controls_tabs( 'separators' );
 
-			$this->start_controls_tab( 'separators_horizontal', [ 'label' => __( 'Horizontal', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'separators_horizontal', [ 'label' => __( 'Horizontal', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'separators_horizontal_style',
 					[
-						'label' 	=> __( 'Style', 'elementor-extras' ),
+						'label' 	=> __( 'Style', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SELECT,
 						'default'	=> '',
 						'options' 	=> [
-							'' 			=> __( 'None', 'elementor-extras' ),
-							'solid' 	=> _x( 'Solid', 'Border Control', 'elementor-extras' ),
-							'double' 	=> _x( 'Double', 'Border Control', 'elementor-extras' ),
-							'dotted' 	=> _x( 'Dotted', 'Border Control', 'elementor-extras' ),
-							'dashed' 	=> _x( 'Dashed', 'Border Control', 'elementor-extras' ),
-							'groove' 	=> _x( 'Groove', 'Border Control', 'elementor-extras' ),
+							'' 			=> __( 'None', 'landtech-extras-for-elementor' ),
+							'solid' 	=> _x( 'Solid', 'Border Control', 'landtech-extras-for-elementor' ),
+							'double' 	=> _x( 'Double', 'Border Control', 'landtech-extras-for-elementor' ),
+							'dotted' 	=> _x( 'Dotted', 'Border Control', 'landtech-extras-for-elementor' ),
+							'dashed' 	=> _x( 'Dashed', 'Border Control', 'landtech-extras-for-elementor' ),
+							'groove' 	=> _x( 'Groove', 'Border Control', 'landtech-extras-for-elementor' ),
 						],
 						'selectors' => [
 							'{{WRAPPER}} tr:not(:last-child) td.ee-calendar__cell' => 'border-bottom-style: {{VALUE}};',
@@ -971,7 +980,7 @@ class Calendar extends Extras_Widget {
 				$this->add_control(
 					'separators_horizontal_width',
 					[
-						'label' 	=> __( 'Width', 'elementor-extras' ),
+						'label' 	=> __( 'Width', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SLIDER,
 						'default'	=> [
 							'size'	=> 1,
@@ -995,7 +1004,7 @@ class Calendar extends Extras_Widget {
 				$this->add_control(
 					'separators_horizontal_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'condition'	=> [
@@ -1009,21 +1018,21 @@ class Calendar extends Extras_Widget {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'separators_vertical', [ 'label' => __( 'Vertical', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'separators_vertical', [ 'label' => __( 'Vertical', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'separators_vertical_style',
 					[
-						'label' 	=> __( 'Style', 'elementor-extras' ),
+						'label' 	=> __( 'Style', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SELECT,
 						'default'	=> '',
 						'options' 	=> [
-							'' 			=> __( 'None', 'elementor-extras' ),
-							'solid' 	=> _x( 'Solid', 'Border Control', 'elementor-extras' ),
-							'double' 	=> _x( 'Double', 'Border Control', 'elementor-extras' ),
-							'dotted' 	=> _x( 'Dotted', 'Border Control', 'elementor-extras' ),
-							'dashed' 	=> _x( 'Dashed', 'Border Control', 'elementor-extras' ),
-							'groove' 	=> _x( 'Groove', 'Border Control', 'elementor-extras' ),
+							'' 			=> __( 'None', 'landtech-extras-for-elementor' ),
+							'solid' 	=> _x( 'Solid', 'Border Control', 'landtech-extras-for-elementor' ),
+							'double' 	=> _x( 'Double', 'Border Control', 'landtech-extras-for-elementor' ),
+							'dotted' 	=> _x( 'Dotted', 'Border Control', 'landtech-extras-for-elementor' ),
+							'dashed' 	=> _x( 'Dashed', 'Border Control', 'landtech-extras-for-elementor' ),
+							'groove' 	=> _x( 'Groove', 'Border Control', 'landtech-extras-for-elementor' ),
 						],
 						'selectors' => [
 							'{{WRAPPER}} td:not(:first-child).ee-calendar__cell' => 'border-left-style: {{VALUE}};',
@@ -1034,7 +1043,7 @@ class Calendar extends Extras_Widget {
 				$this->add_control(
 					'separators_vertical_width',
 					[
-						'label' 	=> __( 'Width', 'elementor-extras' ),
+						'label' 	=> __( 'Width', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SLIDER,
 						'default'	=> [
 							'size'	=> 1,
@@ -1058,7 +1067,7 @@ class Calendar extends Extras_Widget {
 				$this->add_control(
 					'separators_vertical_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'condition'	=> [
@@ -1079,7 +1088,7 @@ class Calendar extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_navigation',
 			[
-				'label' => __( 'Navigation', 'elementor-extras' ),
+				'label' => __( 'Navigation', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -1087,7 +1096,7 @@ class Calendar extends Extras_Widget {
 			$this->add_responsive_control(
 				'navigation_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -1099,7 +1108,7 @@ class Calendar extends Extras_Widget {
 			$this->add_responsive_control(
 				'navigation_color',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'default'	=> '',
 					'selectors' => [
@@ -1111,7 +1120,7 @@ class Calendar extends Extras_Widget {
 			$this->add_responsive_control(
 				'navigation_background_color',
 				[
-					'label' 	=> __( 'Background Color', 'elementor-extras' ),
+					'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'default'	=> '',
 					'selectors' => [
@@ -1123,7 +1132,7 @@ class Calendar extends Extras_Widget {
 			$this->add_responsive_control(
 				'navigation_month_spacing',
 				[
-					'label' 	=> __( 'Month Spacing', 'elementor-extras' ),
+					'label' 	=> __( 'Month Spacing', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default'	=> [
 						'size'	=> 12,
@@ -1146,20 +1155,20 @@ class Calendar extends Extras_Widget {
 			$this->add_responsive_control(
 				'navigation_text_align',
 				[
-					'label' 		=> __( 'Align Text', 'elementor-extras' ),
+					'label' 		=> __( 'Align Text', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'left' 			=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -1183,7 +1192,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'navigation_buttons_heading',
 				[
-					'label'		=> __( 'Buttons', 'elementor-extras' ),
+					'label'		=> __( 'Buttons', 'landtech-extras-for-elementor' ),
 					'type' 		=> \Elementor\Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -1192,13 +1201,13 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'arrows_position',
 				[	
-					'label'		=> __( 'Position', 'elementor-extras' ),
+					'label'		=> __( 'Position', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'sides',
 					'options'	=> [
-						'sides' => __( 'Sides', 'elementor-extras' ),
-						'left' 	=> __( 'Left', 'elementor-extras' ),
-						'right' => __( 'Right', 'elementor-extras' ),
+						'sides' => __( 'Sides', 'landtech-extras-for-elementor' ),
+						'left' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
+						'right' => __( 'Right', 'landtech-extras-for-elementor' ),
 					],
 					'prefix_class' => 'ee-calendar-arrows-position--',
 				]
@@ -1207,7 +1216,7 @@ class Calendar extends Extras_Widget {
 			$this->add_responsive_control(
 				'navigation_buttons_spacing',
 				[
-					'label' 	=> __( 'Spacing', 'elementor-extras' ),
+					'label' 	=> __( 'Spacing', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default'	=> [
 						'size'	=> 12,
@@ -1231,7 +1240,7 @@ class Calendar extends Extras_Widget {
 			$this->add_responsive_control(
 				'buttons_size',
 				[
-					'label' 	=> __( 'Size', 'elementor-extras' ),
+					'label' 	=> __( 'Size', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -1249,7 +1258,7 @@ class Calendar extends Extras_Widget {
 			$this->add_responsive_control(
 				'buttons_padding',
 				[
-					'label' 	=> __( 'Padding', 'elementor-extras' ),
+					'label' 	=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -1267,7 +1276,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'buttons_border_radius',
 				[
-					'label' 	=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 	=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -1293,12 +1302,12 @@ class Calendar extends Extras_Widget {
 
 			$this->start_controls_tabs( 'buttons' );
 
-			$this->start_controls_tab( 'buttons_default', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'buttons_default', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'button_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -1310,7 +1319,7 @@ class Calendar extends Extras_Widget {
 				$this->add_control(
 					'button_background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'global' => [
 							'default' => Global_Colors::COLOR_PRIMARY,
@@ -1324,12 +1333,12 @@ class Calendar extends Extras_Widget {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'buttons_hover', [ 'label' => __( 'Hover', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'buttons_hover', [ 'label' => __( 'Hover', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'button_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -1341,7 +1350,7 @@ class Calendar extends Extras_Widget {
 				$this->add_control(
 					'button_background_color_hover',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -1357,7 +1366,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'navigation_separator_heading',
 				[
-					'label'		=> __( 'Separator', 'elementor-extras' ),
+					'label'		=> __( 'Separator', 'landtech-extras-for-elementor' ),
 					'type' 		=> \Elementor\Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -1366,16 +1375,16 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'navigation_separator_style',
 				[
-					'label' 	=> __( 'Style', 'elementor-extras' ),
+					'label' 	=> __( 'Style', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default'	=> '',
 					'options' 	=> [
-						'' 			=> __( 'None', 'elementor-extras' ),
-						'solid' 	=> _x( 'Solid', 'Border Control', 'elementor-extras' ),
-						'double' 	=> _x( 'Double', 'Border Control', 'elementor-extras' ),
-						'dotted' 	=> _x( 'Dotted', 'Border Control', 'elementor-extras' ),
-						'dashed' 	=> _x( 'Dashed', 'Border Control', 'elementor-extras' ),
-						'groove' 	=> _x( 'Groove', 'Border Control', 'elementor-extras' ),
+						'' 			=> __( 'None', 'landtech-extras-for-elementor' ),
+						'solid' 	=> _x( 'Solid', 'Border Control', 'landtech-extras-for-elementor' ),
+						'double' 	=> _x( 'Double', 'Border Control', 'landtech-extras-for-elementor' ),
+						'dotted' 	=> _x( 'Dotted', 'Border Control', 'landtech-extras-for-elementor' ),
+						'dashed' 	=> _x( 'Dashed', 'Border Control', 'landtech-extras-for-elementor' ),
+						'groove' 	=> _x( 'Groove', 'Border Control', 'landtech-extras-for-elementor' ),
 					],
 					'selectors' => [
 						'{{WRAPPER}} .ee-calendar__controls' => 'border-bottom-style: {{VALUE}};',
@@ -1386,7 +1395,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'navigation_separator_width',
 				[
-					'label' 	=> __( 'Width', 'elementor-extras' ),
+					'label' 	=> __( 'Width', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default'	=> [
 						'size'	=> 1,
@@ -1410,7 +1419,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'navigation_separator_color',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'default'	=> '',
 					'condition'	=> [
@@ -1427,7 +1436,7 @@ class Calendar extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_header',
 			[
-				'label' => __( 'Header', 'elementor-extras' ),
+				'label' => __( 'Header', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -1435,7 +1444,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'header_color',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'default'	=> '',
 					'selectors' => [
@@ -1447,7 +1456,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'header_background_color',
 				[
-					'label' 	=> __( 'Background Color', 'elementor-extras' ),
+					'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'default'	=> '',
 					'selectors' => [
@@ -1459,20 +1468,20 @@ class Calendar extends Extras_Widget {
 			$this->add_responsive_control(
 				'header_text_align',
 				[
-					'label' 		=> __( 'Align Text', 'elementor-extras' ),
+					'label' 		=> __( 'Align Text', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'left' 			=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -1496,7 +1505,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'header_separator_heading',
 				[
-					'label'		=> __( 'Separator', 'elementor-extras' ),
+					'label'		=> __( 'Separator', 'landtech-extras-for-elementor' ),
 					'type' 		=> \Elementor\Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -1505,16 +1514,16 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'header_separator_style',
 				[
-					'label' 	=> __( 'Style', 'elementor-extras' ),
+					'label' 	=> __( 'Style', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default'	=> '',
 					'options' 	=> [
-						'' 			=> __( 'None', 'elementor-extras' ),
-						'solid' 	=> _x( 'Solid', 'Border Control', 'elementor-extras' ),
-						'double' 	=> _x( 'Double', 'Border Control', 'elementor-extras' ),
-						'dotted' 	=> _x( 'Dotted', 'Border Control', 'elementor-extras' ),
-						'dashed' 	=> _x( 'Dashed', 'Border Control', 'elementor-extras' ),
-						'groove' 	=> _x( 'Groove', 'Border Control', 'elementor-extras' ),
+						'' 			=> __( 'None', 'landtech-extras-for-elementor' ),
+						'solid' 	=> _x( 'Solid', 'Border Control', 'landtech-extras-for-elementor' ),
+						'double' 	=> _x( 'Double', 'Border Control', 'landtech-extras-for-elementor' ),
+						'dotted' 	=> _x( 'Dotted', 'Border Control', 'landtech-extras-for-elementor' ),
+						'dashed' 	=> _x( 'Dashed', 'Border Control', 'landtech-extras-for-elementor' ),
+						'groove' 	=> _x( 'Groove', 'Border Control', 'landtech-extras-for-elementor' ),
 					],
 					'selectors' => [
 						'{{WRAPPER}} .ee-calendar__table__head' => 'border-bottom-style: {{VALUE}};',
@@ -1525,7 +1534,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'header_separator_width',
 				[
-					'label' 	=> __( 'Width', 'elementor-extras' ),
+					'label' 	=> __( 'Width', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default'	=> [
 						'size'	=> 1,
@@ -1549,7 +1558,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'header_separator_color',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'default'	=> '',
 					'condition'	=> [
@@ -1566,7 +1575,7 @@ class Calendar extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_days',
 			[
-				'label' => __( 'Days', 'elementor-extras' ),
+				'label' => __( 'Days', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -1574,7 +1583,7 @@ class Calendar extends Extras_Widget {
 			$this->add_responsive_control(
 				'days_padding',
 				[
-					'label' 	=> __( 'Padding', 'elementor-extras' ),
+					'label' 	=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default'	=> [
 						'size'	=> 12,
@@ -1595,7 +1604,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'days_border_radius',
 				[
-					'label' 	=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 	=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -1614,20 +1623,20 @@ class Calendar extends Extras_Widget {
 			$this->add_responsive_control(
 				'days_text_align',
 				[
-					'label' 		=> __( 'Align Text', 'elementor-extras' ),
+					'label' 		=> __( 'Align Text', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'left' 			=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -1643,7 +1652,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'days_all_heading',
 				[
-					'label'		=> __( 'All Days', 'elementor-extras' ),
+					'label'		=> __( 'All Days', 'landtech-extras-for-elementor' ),
 					'type' 		=> \Elementor\Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -1652,7 +1661,7 @@ class Calendar extends Extras_Widget {
 			$this->add_responsive_control(
 				'days_all_padding_horizontal',
 				[
-					'label' 	=> __( 'Horizontal Padding', 'elementor-extras' ),
+					'label' 	=> __( 'Horizontal Padding', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -1675,7 +1684,7 @@ class Calendar extends Extras_Widget {
 			$this->add_responsive_control(
 				'days_all_padding_vertical',
 				[
-					'label' 	=> __( 'Vertical Padding', 'elementor-extras' ),
+					'label' 	=> __( 'Vertical Padding', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -1706,12 +1715,12 @@ class Calendar extends Extras_Widget {
 
 			$this->start_controls_tabs( 'days' );
 
-			$this->start_controls_tab( 'days_default', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'days_default', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'day_all_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -1723,7 +1732,7 @@ class Calendar extends Extras_Widget {
 				$this->add_control(
 					'day_all_background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -1734,12 +1743,12 @@ class Calendar extends Extras_Widget {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'days_hover', [ 'label' => __( 'Hover', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'days_hover', [ 'label' => __( 'Hover', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'day_all_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -1751,7 +1760,7 @@ class Calendar extends Extras_Widget {
 				$this->add_control(
 					'day_all_background_color_hover',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -1767,7 +1776,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'days_event_heading',
 				[
-					'label'		=> __( 'Event', 'elementor-extras' ),
+					'label'		=> __( 'Event', 'landtech-extras-for-elementor' ),
 					'type' 		=> \Elementor\Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -1775,12 +1784,12 @@ class Calendar extends Extras_Widget {
 
 			$this->start_controls_tabs( 'days_event' );
 
-			$this->start_controls_tab( 'days_event_default', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'days_event_default', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'day_event_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '#ffffff',
 						'selectors' => [
@@ -1794,7 +1803,7 @@ class Calendar extends Extras_Widget {
 				$this->add_control(
 					'day_event_background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'global' => [
 							'default' => Global_Colors::COLOR_PRIMARY,
@@ -1817,12 +1826,12 @@ class Calendar extends Extras_Widget {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'days_event_hover', [ 'label' => __( 'Hover', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'days_event_hover', [ 'label' => __( 'Hover', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'day_event_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -1836,7 +1845,7 @@ class Calendar extends Extras_Widget {
 				$this->add_control(
 					'day_event_background_color_hover',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -1862,7 +1871,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'days_today_heading',
 				[
-					'label'		=> __( 'Today', 'elementor-extras' ),
+					'label'		=> __( 'Today', 'landtech-extras-for-elementor' ),
 					'type' 		=> \Elementor\Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -1870,12 +1879,12 @@ class Calendar extends Extras_Widget {
 
 			$this->start_controls_tabs( 'days_today' );
 
-			$this->start_controls_tab( 'days_today_default', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'days_today_default', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'day_today_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '#ffffff',
 						'selectors' => [
@@ -1889,7 +1898,7 @@ class Calendar extends Extras_Widget {
 				$this->add_control(
 					'day_today_background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'global' => [
 							'default' => Global_Colors::COLOR_SECONDARY,
@@ -1904,12 +1913,12 @@ class Calendar extends Extras_Widget {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'days_today_hover', [ 'label' => __( 'Hover', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'days_today_hover', [ 'label' => __( 'Hover', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'day_today_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -1923,7 +1932,7 @@ class Calendar extends Extras_Widget {
 				$this->add_control(
 					'day_today_background_color_hover',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -1941,7 +1950,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'days_passed_heading',
 				[
-					'label'		=> __( 'Passed', 'elementor-extras' ),
+					'label'		=> __( 'Passed', 'landtech-extras-for-elementor' ),
 					'type' 		=> \Elementor\Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -1949,12 +1958,12 @@ class Calendar extends Extras_Widget {
 
 			$this->start_controls_tabs( 'days_passed' );
 
-			$this->start_controls_tab( 'days_passed_default', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'days_passed_default', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'day_passed_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-calendar__day--passed .ee-calendar__day__wrapper,
@@ -1967,7 +1976,7 @@ class Calendar extends Extras_Widget {
 				$this->add_control(
 					'day_passed_background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-calendar__day--passed .ee-calendar__day__wrapper,
@@ -1979,12 +1988,12 @@ class Calendar extends Extras_Widget {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'days_passed_hover', [ 'label' => __( 'Hover', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'days_passed_hover', [ 'label' => __( 'Hover', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'day_passed_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -1998,7 +2007,7 @@ class Calendar extends Extras_Widget {
 				$this->add_control(
 					'day_passed_background_color_hover',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -2016,7 +2025,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'days_passed_events_heading',
 				[
-					'label'		=> __( 'Passed Events', 'elementor-extras' ),
+					'label'		=> __( 'Passed Events', 'landtech-extras-for-elementor' ),
 					'type' 		=> \Elementor\Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -2024,12 +2033,12 @@ class Calendar extends Extras_Widget {
 
 			$this->start_controls_tabs( 'days_passed_events' );
 
-			$this->start_controls_tab( 'days_passed_events_default', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'days_passed_events_default', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'day_passed_events_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-calendar__day--passed.ee-calendar__day--event .ee-calendar__day__wrapper,
@@ -2042,7 +2051,7 @@ class Calendar extends Extras_Widget {
 				$this->add_control(
 					'day_passed_events_background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-calendar__day--passed.ee-calendar__day--event .ee-calendar__day__wrapper,
@@ -2054,12 +2063,12 @@ class Calendar extends Extras_Widget {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'days_passed_events_hover', [ 'label' => __( 'Hover', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'days_passed_events_hover', [ 'label' => __( 'Hover', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'day_passed_events_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -2073,7 +2082,7 @@ class Calendar extends Extras_Widget {
 				$this->add_control(
 					'day_passed_events_background_color_hover',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -2091,7 +2100,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'days_adjacent_heading',
 				[
-					'label'		=> __( 'Adjacent', 'elementor-extras' ),
+					'label'		=> __( 'Adjacent', 'landtech-extras-for-elementor' ),
 					'type' 		=> \Elementor\Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -2100,7 +2109,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'day_adjacent_opacity',
 				[
-					'label' 	=> __( 'Opacity', 'elementor-extras' ),
+					'label' 	=> __( 'Opacity', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -2120,7 +2129,7 @@ class Calendar extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_events',
 			[
-				'label' => __( 'Events', 'elementor-extras' ),
+				'label' => __( 'Events', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'skin' => 'compact',
@@ -2131,7 +2140,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'events_header_heading',
 				[
-					'label'		=> __( 'Header', 'elementor-extras' ),
+					'label'		=> __( 'Header', 'landtech-extras-for-elementor' ),
 					'type' 		=> \Elementor\Controls_Manager::HEADING,
 					'condition' => [
 						'skin' => 'compact',
@@ -2142,7 +2151,7 @@ class Calendar extends Extras_Widget {
 			$this->add_responsive_control(
 				'events_header_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -2154,7 +2163,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'events_header_color',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'default'	=> '',
 					'selectors' => [
@@ -2166,7 +2175,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'events_header_background_color',
 				[
-					'label' 	=> __( 'Background Color', 'elementor-extras' ),
+					'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'default'	=> '',
 					'selectors' => [
@@ -2178,7 +2187,7 @@ class Calendar extends Extras_Widget {
 			$this->add_responsive_control(
 				'events_header_title_spacing',
 				[
-					'label' 	=> __( 'Title Spacing', 'elementor-extras' ),
+					'label' 	=> __( 'Title Spacing', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default'	=> [
 						'size' 	=> 12,
@@ -2202,20 +2211,20 @@ class Calendar extends Extras_Widget {
 			$this->add_responsive_control(
 				'events_header_text_align',
 				[
-					'label' 		=> __( 'Align Text', 'elementor-extras' ),
+					'label' 		=> __( 'Align Text', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> 'left',
 					'options' 		=> [
 						'left' 			=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -2242,7 +2251,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'events_separator_heading',
 				[
-					'label'		=> __( 'Separator', 'elementor-extras' ),
+					'label'		=> __( 'Separator', 'landtech-extras-for-elementor' ),
 					'type' 		=> \Elementor\Controls_Manager::HEADING,
 					'separator' => 'before',
 					'condition' => [
@@ -2254,16 +2263,16 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'events_separator_style',
 				[
-					'label' 	=> __( 'Style', 'elementor-extras' ),
+					'label' 	=> __( 'Style', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default'	=> '',
 					'options' 	=> [
-						'' 			=> __( 'None', 'elementor-extras' ),
-						'solid' 	=> _x( 'Solid', 'Border Control', 'elementor-extras' ),
-						'double' 	=> _x( 'Double', 'Border Control', 'elementor-extras' ),
-						'dotted' 	=> _x( 'Dotted', 'Border Control', 'elementor-extras' ),
-						'dashed' 	=> _x( 'Dashed', 'Border Control', 'elementor-extras' ),
-						'groove' 	=> _x( 'Groove', 'Border Control', 'elementor-extras' ),
+						'' 			=> __( 'None', 'landtech-extras-for-elementor' ),
+						'solid' 	=> _x( 'Solid', 'Border Control', 'landtech-extras-for-elementor' ),
+						'double' 	=> _x( 'Double', 'Border Control', 'landtech-extras-for-elementor' ),
+						'dotted' 	=> _x( 'Dotted', 'Border Control', 'landtech-extras-for-elementor' ),
+						'dashed' 	=> _x( 'Dashed', 'Border Control', 'landtech-extras-for-elementor' ),
+						'groove' 	=> _x( 'Groove', 'Border Control', 'landtech-extras-for-elementor' ),
 					],
 					'condition' => [
 						'skin' => 'compact',
@@ -2277,7 +2286,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'events_separator_width',
 				[
-					'label' 	=> __( 'Width', 'elementor-extras' ),
+					'label' 	=> __( 'Width', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default'	=> [
 						'size'	=> 1,
@@ -2302,7 +2311,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'events_separator_color',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'default'	=> '',
 					'condition'	=> [
@@ -2318,7 +2327,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'events_list_heading',
 				[
-					'label'		=> __( 'List', 'elementor-extras' ),
+					'label'		=> __( 'List', 'landtech-extras-for-elementor' ),
 					'type' 		=> \Elementor\Controls_Manager::HEADING,
 					'separator' => 'before',
 					'condition' => [
@@ -2330,7 +2339,7 @@ class Calendar extends Extras_Widget {
 			$this->add_responsive_control(
 				'event_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -2341,12 +2350,12 @@ class Calendar extends Extras_Widget {
 
 			$this->start_controls_tabs( 'event_tabs' );
 
-			$this->start_controls_tab( 'event_default', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'event_default', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'event_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-calendar__events__event' => 'color: {{VALUE}};',
@@ -2360,7 +2369,7 @@ class Calendar extends Extras_Widget {
 				$this->add_control(
 					'event_background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-calendar__events__event' => 'background-color: {{VALUE}};',
@@ -2373,12 +2382,12 @@ class Calendar extends Extras_Widget {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'event_hover', [ 'label' => __( 'Hover', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'event_hover', [ 'label' => __( 'Hover', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'event_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -2393,7 +2402,7 @@ class Calendar extends Extras_Widget {
 				$this->add_control(
 					'event_background_color_hover',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -2415,7 +2424,7 @@ class Calendar extends Extras_Widget {
 			'section_style_no_events',
 			[
 				'tab' 		=> Controls_Manager::TAB_STYLE,
-				'label' 	=> __( 'No Events', 'elementor-extras' ),
+				'label' 	=> __( 'No Events', 'landtech-extras-for-elementor' ),
 				'condition' => [
 					'no_events' => 'message',
 				],
@@ -2425,7 +2434,7 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'no_events_message_color',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'global' => [
 						'default' => Global_Colors::COLOR_TEXT,
@@ -2450,7 +2459,7 @@ class Calendar extends Extras_Widget {
 			$this->add_responsive_control(
 				'no_events_message_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -2525,7 +2534,7 @@ class Calendar extends Extras_Widget {
 		 * @param array 			$args 		The query args
 		 * @param array 			$settings 	The widget settings
 		 */
-		$args = apply_filters( 'elementor_extras/widgets/calendar/events/query/args', $args, $settings );
+		$args = apply_filters( 'landtech_extras/widgets/calendar/events/query/args', $args, $settings );
 
 		$posts = get_posts( $args );
 
@@ -2566,7 +2575,7 @@ class Calendar extends Extras_Widget {
 			 * @param array 			$event 		The event settings
 			 * @param WP_Post 			$post 		The event post object
 			 */
-			$events[] = apply_filters( 'elementor_extras/widgets/calendar/events/event', $event, $post );
+			$events[] = apply_filters( 'landtech_extras/widgets/calendar/events/event', $event, $post );
 		}
 
 		/**
@@ -2578,7 +2587,7 @@ class Calendar extends Extras_Widget {
 		 * @param array 			$events 	The array of events
 		 * @param array 			$settings 	The widget settings
 		 */
-		$this->_events = apply_filters( 'elementor_extras/widgets/calendar/events', $events, $settings );
+		$this->_events = apply_filters( 'landtech_extras/widgets/calendar/events', $events, $settings );
 	}
 
 	/**
@@ -2611,6 +2620,7 @@ class Calendar extends Extras_Widget {
 			$field_object = get_field_object( $start_date_key );
 
 			$args['orderby'] = 'meta_value';
+			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- ACF calendar ordering requires meta_key from selected date field.
 			$args['meta_key'] = $field_object['name'];
 		}
 
@@ -2707,7 +2717,7 @@ class Calendar extends Extras_Widget {
 		 * @param string 			$events 	The array of events
 		 * @param string 			$settings 	The widget settings
 		 */
-		$this->_events = apply_filters( 'elementor_extras/widgets/calendar/events/manual', $events, $settings );
+		$this->_events = apply_filters( 'landtech_extras/widgets/calendar/events/manual', $events, $settings );
 	}
 
 	/**
@@ -2722,8 +2732,8 @@ class Calendar extends Extras_Widget {
 		if ( empty( $this->_events ) ) {
 
 			if ( 'message' !== $settings['no_events'] ) {
-				echo $this->render_placeholder( [
-					'body' => __( 'You have no events in your calendar. Check the settings and make sure the source fields for the dates of the events are setup correctly.', 'elementor-extras' ),
+				$this->render_placeholder( [
+					'body' => __( 'You have no events in your calendar. Check the settings and make sure the source fields for the dates of the events are setup correctly.', 'landtech-extras-for-elementor' ),
 				] );
 			}
 
@@ -2734,8 +2744,8 @@ class Calendar extends Extras_Widget {
 			if ( 'message' === $settings['no_events'] ) {
 				$this->add_render_attribute('no-events', 'class', 'ee-calendar__no-events');
 
-				?><div <?php echo $this->get_render_attribute_string( 'no-events' ); ?>><?php
-					echo $settings['no_events_message'];
+				?><div <?php $this->print_render_attribute_string( 'no-events' ); ?>><?php
+					echo wp_kses_post( $settings['no_events_message'] );
 				?></div><?php
 
 				return;
@@ -2751,7 +2761,7 @@ class Calendar extends Extras_Widget {
 		] );
 
 		?>
-		<div <?php echo $this->get_render_attribute_string( 'calendar' ); ?>>
+		<div <?php $this->print_render_attribute_string( 'calendar' ); ?>>
 			<?php foreach ( $this->_events as $index => $event ) {
 
 				if ( ! $event['start'] )
@@ -2778,8 +2788,8 @@ class Calendar extends Extras_Widget {
 					'data-before'		=> $this->get_before_title( $event ),
 					'data-after'		=> $this->get_after_title( $event ),
 				] );
-			?><div <?php echo $this->get_render_attribute_string( $event_key ); ?>><?php
-				echo $title;
+			?><div <?php $this->print_render_attribute_string( $event_key ); ?>><?php
+				echo esc_html( $title );
 			?></div><?php
 			}
 		?></div><?php
@@ -2804,7 +2814,7 @@ class Calendar extends Extras_Widget {
 		 *
 		 * @param array $event The event data.
 		 */
-		do_action( 'elementor_extras/widgets/calendar/event/before_title', $event );
+		do_action( 'landtech_extras/widgets/calendar/event/before_title', $event );
 
 		return ob_get_clean();
 	}
@@ -2828,7 +2838,7 @@ class Calendar extends Extras_Widget {
 		 *
 		 * @param array $event The event data.
 		 */
-		do_action( 'elementor_extras/widgets/calendar/event/after_title', $event );
+		do_action( 'landtech_extras/widgets/calendar/event/after_title', $event );
 
 		return ob_get_clean();
 	}

@@ -1,9 +1,10 @@
 <?php
-namespace ElementorExtras\Modules\Popup;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Popup;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Module_Base;
-use ElementorExtras\Utils;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Module_Base;
+use LandTechExtras\Utils;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -49,15 +50,15 @@ class Module extends Module_Base {
 	 */
 	public static function get_animation_options() {
 		return [
-			'' 				=> __( 'None', 'elementor-extras' ),
-			'zoom-in' 		=> __( 'Zoom In', 'elementor-extras' ),
-			'zoom-out' 		=> __( 'Zoom Out', 'elementor-extras' ),
-			'slide-right' 	=> __( 'Slide Right', 'elementor-extras' ),
-			'slide-left' 	=> __( 'Slide Left', 'elementor-extras' ),
-			'slide-top' 	=> __( 'Slide Top', 'elementor-extras' ),
-			'slide-bottom' 	=> __( 'Slide Bottom', 'elementor-extras' ),
-			'unfold-horizontal' => __( 'Unfold Horizontal', 'elementor-extras' ),
-			'unfold-vertical' => __( 'Unfold Vertical', 'elementor-extras' ),
+			'' 				=> __( 'None', 'landtech-extras-for-elementor' ),
+			'zoom-in' 		=> __( 'Zoom In', 'landtech-extras-for-elementor' ),
+			'zoom-out' 		=> __( 'Zoom Out', 'landtech-extras-for-elementor' ),
+			'slide-right' 	=> __( 'Slide Right', 'landtech-extras-for-elementor' ),
+			'slide-left' 	=> __( 'Slide Left', 'landtech-extras-for-elementor' ),
+			'slide-top' 	=> __( 'Slide Top', 'landtech-extras-for-elementor' ),
+			'slide-bottom' 	=> __( 'Slide Bottom', 'landtech-extras-for-elementor' ),
+			'unfold-horizontal' => __( 'Unfold Horizontal', 'landtech-extras-for-elementor' ),
+			'unfold-vertical' => __( 'Unfold Vertical', 'landtech-extras-for-elementor' ),
 		];
 	}
 }

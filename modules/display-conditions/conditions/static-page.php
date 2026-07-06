@@ -1,8 +1,9 @@
 <?php
-namespace ElementorExtras\Modules\DisplayConditions\Conditions;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\DisplayConditions\Conditions;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Condition;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Condition;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -49,7 +50,7 @@ class Static_Page extends Condition {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Static Page', 'elementor-extras' );
+		return __( 'Static Page', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -66,10 +67,10 @@ class Static_Page extends Condition {
 			'default' 		=> 'home',
 			'label_block' 	=> true,
 			'options' 		=> [
-				'home'		=> __( 'Default Homepage', 'elementor-extras' ),
-				'static'	=> __( 'Static Homepage', 'elementor-extras' ),
-				'blog'		=> __( 'Blog Page', 'elementor-extras' ),
-				'404'		=> __( '404 Page', 'elementor-extras' ),
+				'home'		=> __( 'Default Homepage', 'landtech-extras-for-elementor' ),
+				'static'	=> __( 'Static Homepage', 'landtech-extras-for-elementor' ),
+				'blog'		=> __( 'Blog Page', 'landtech-extras-for-elementor' ),
+				'404'		=> __( '404 Page', 'landtech-extras-for-elementor' ),
 			],
 		];
 	}

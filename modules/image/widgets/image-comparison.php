@@ -1,8 +1,9 @@
 <?php
-namespace ElementorExtras\Modules\Image\Widgets;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Image\Widgets;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Extras_Widget;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Extras_Widget;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -48,7 +49,7 @@ class Image_Comparison extends Extras_Widget {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Image Comparison', 'elementor-extras' );
+		return __( 'Image Comparison', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -73,9 +74,8 @@ class Image_Comparison extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
-			'image-comparison',
-			'jquery-mobile',
-			'gsap-js',
+			'landtech-extras-image-comparison',
+			'landtech-extras-jquery-mobile',
 		];
 	}
 
@@ -89,14 +89,14 @@ class Image_Comparison extends Extras_Widget {
 		$this->start_controls_section(
 			'section_buttons',
 			[
-				'label' => __( 'Images & Labels', 'elementor-extras' ),
+				'label' => __( 'Images & Labels', 'landtech-extras-for-elementor' ),
 			]
 		);
 
 			$this->add_control(
 				'original_image',
 				[
-					'label' 	=> __( 'Choose Original Image', 'elementor-extras' ),
+					'label' 	=> __( 'Choose Original Image', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::MEDIA,
 					'dynamic'	=> [ 'active' => true ],
 					'default' 	=> [
@@ -109,7 +109,7 @@ class Image_Comparison extends Extras_Widget {
 				Group_Control_Image_Size::get_type(),
 				[
 					'name' 		=> 'original_image', // Actually its `original_image_size`.
-					'label' 	=> __( 'Image Size', 'elementor-extras' ),
+					'label' 	=> __( 'Image Size', 'landtech-extras-for-elementor' ),
 					'default' 	=> 'full',
 				]
 			);
@@ -117,7 +117,7 @@ class Image_Comparison extends Extras_Widget {
 			$this->add_control(
 				'modified_image',
 				[
-					'label' 	=> __( 'Choose Modified Image', 'elementor-extras' ),
+					'label' 	=> __( 'Choose Modified Image', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::MEDIA,
 					'dynamic'	=> [ 'active' => true ],
 					'default' 	=> [
@@ -133,7 +133,7 @@ class Image_Comparison extends Extras_Widget {
 				Group_Control_Image_Size::get_type(),
 				[
 					'name' 		=> 'modified_image', // Actually its `modified_image_size`.
-					'label' 	=> __( 'Image Size', 'elementor-extras' ),
+					'label' 	=> __( 'Image Size', 'landtech-extras-for-elementor' ),
 					'default' 	=> 'full',
 				]
 			);
@@ -141,10 +141,10 @@ class Image_Comparison extends Extras_Widget {
 			$this->add_control(
 				'original_label',
 				[
-					'label'			=> __( 'Original Label', 'elementor-extras' ),
+					'label'			=> __( 'Original Label', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::TEXT,
-					'default'		=> __( 'Original', 'elementor-extras' ),
-					'placeholder'	=> __( 'Original', 'elementor-extras' ),
+					'default'		=> __( 'Original', 'landtech-extras-for-elementor' ),
+					'placeholder'	=> __( 'Original', 'landtech-extras-for-elementor' ),
 					'dynamic'		=> [ 'active' => true ],
 					'condition'		=> [
 						'original_image[url]!' => '',
@@ -155,10 +155,10 @@ class Image_Comparison extends Extras_Widget {
 			$this->add_control(
 				'modified_label',
 				[
-					'label'			=> __( 'Modified Label', 'elementor-extras' ),
+					'label'			=> __( 'Modified Label', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::TEXT,
-					'default'		=> __( 'Modified', 'elementor-extras' ),
-					'placeholder'	=> __( 'Modified', 'elementor-extras' ),
+					'default'		=> __( 'Modified', 'landtech-extras-for-elementor' ),
+					'placeholder'	=> __( 'Modified', 'landtech-extras-for-elementor' ),
 					'dynamic'		=> [ 'active' => true ],
 					'condition'		=> [
 						'modified_image[url]!' => '',
@@ -171,18 +171,18 @@ class Image_Comparison extends Extras_Widget {
 		$this->start_controls_section(
 			'section_settings',
 			[
-				'label' => __( 'Settings', 'elementor-extras' ),
+				'label' => __( 'Settings', 'landtech-extras-for-elementor' ),
 			]
 		);
 
 			$this->add_control(
 				'entrance_animation',
 				[
-					'label' 		=> __( 'Animate on entrance', 'elementor-extras' ),
+					'label' 		=> __( 'Animate on entrance', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'yes',
 					'frontend_available' => true
 				]
@@ -191,12 +191,12 @@ class Image_Comparison extends Extras_Widget {
 			$this->add_control(
 				'click_to_move',
 				[
-					'label' 		=> __( 'Enable click', 'elementor-extras' ),
-					'description'	=> __( 'Click to move separator to a particular position.', 'elementor-extras' ),
+					'label' 		=> __( 'Enable click', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Click to move separator to a particular position.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'yes',
 					'frontend_available' => true
 				]
@@ -205,12 +205,12 @@ class Image_Comparison extends Extras_Widget {
 			$this->add_control(
 				'click_labels',
 				[
-					'label' 		=> __( 'Click Labels', 'elementor-extras' ),
-					'description'	=> __( 'Click on a label to uncover the corresponding image.', 'elementor-extras' ),
+					'label' 		=> __( 'Click Labels', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Click on a label to uncover the corresponding image.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'yes',
 					'condition'		=> [
 						'click_to_move!' => ''
@@ -222,12 +222,12 @@ class Image_Comparison extends Extras_Widget {
 			$this->add_control(
 				'click_animate',
 				[
-					'label' 		=> __( 'Animate Move', 'elementor-extras' ),
-					'description'	=> __( 'Animate separator position on click or change position instantly.', 'elementor-extras' ),
+					'label' 		=> __( 'Animate Move', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Animate separator position on click or change position instantly.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'yes',
 					'condition'		=> [
 						'click_to_move!' => ''
@@ -241,14 +241,14 @@ class Image_Comparison extends Extras_Widget {
 		$this->start_controls_section(
 			'section_images_style',
 			[
-				'label' => __( 'Images', 'elementor-extras' ),
+				'label' => __( 'Images', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_STYLE,
 			]
 		);
 
 			$this->start_controls_tabs( 'tabs_images_style' );
 
-			$this->start_controls_tab( 'tab_image_original', [ 'label' => __( 'Original', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'tab_image_original', [ 'label' => __( 'Original', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_group_control(
 					Group_Control_Css_Filter::get_type(),
@@ -260,7 +260,7 @@ class Image_Comparison extends Extras_Widget {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'tab_image_modified', [ 'label' => __( 'Modified', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'tab_image_modified', [ 'label' => __( 'Modified', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_group_control(
 					Group_Control_Css_Filter::get_type(),
@@ -279,7 +279,7 @@ class Image_Comparison extends Extras_Widget {
 		$this->start_controls_section(
 			'section_labels_style',
 			[
-				'label' => __( 'Labels', 'elementor-extras' ),
+				'label' => __( 'Labels', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -287,7 +287,7 @@ class Image_Comparison extends Extras_Widget {
 			$this->add_control(
 				'labels_spacing',
 				[
-					'label' => __( 'Distance (em)', 'elementor-extras' ),
+					'label' => __( 'Distance (em)', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::SLIDER,
 					'default' => [
 						'size' => 0,
@@ -315,7 +315,7 @@ class Image_Comparison extends Extras_Widget {
 			$this->add_control(
 				'labels_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -328,20 +328,20 @@ class Image_Comparison extends Extras_Widget {
 			$this->add_responsive_control(
 				'labels_vertical_align',
 				[
-					'label' 		=> __( 'Vertical Alignment', 'elementor-extras' ),
+					'label' 		=> __( 'Vertical Alignment', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'top'    		=> [
-							'title' 	=> __( 'Top', 'elementor-extras' ),
+							'title' 	=> __( 'Top', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-top',
 						],
 						'middle' 		=> [
-							'title' 	=> __( 'Middle', 'elementor-extras' ),
+							'title' 	=> __( 'Middle', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-middle',
 						],
 						'bottom' 		=> [
-							'title' 	=> __( 'Bottom', 'elementor-extras' ),
+							'title' 	=> __( 'Bottom', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-bottom',
 						],
 					],
@@ -353,7 +353,7 @@ class Image_Comparison extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'labels_border',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '{{WRAPPER}} .ee-image-comparison .ee-image-comparison__label',
 				]
 			);
@@ -361,7 +361,7 @@ class Image_Comparison extends Extras_Widget {
 			$this->add_control(
 				'labels_border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
@@ -400,12 +400,12 @@ class Image_Comparison extends Extras_Widget {
 
 			$this->start_controls_tabs( 'tabs_label_style' );
 
-			$this->start_controls_tab( 'tab_label_original', [ 'label' => __( 'Original', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'tab_label_original', [ 'label' => __( 'Original', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'label_original_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-image-comparison__label--original' => 'color: {{VALUE}};',
@@ -417,7 +417,7 @@ class Image_Comparison extends Extras_Widget {
 				$this->add_control(
 					'label_original_background',
 					[
-						'label' 	=> __( 'Background color', 'elementor-extras' ),
+						'label' 	=> __( 'Background color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-image-comparison__label--original' => 'background-color: {{VALUE}};',
@@ -430,12 +430,12 @@ class Image_Comparison extends Extras_Widget {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'tab_label_modified', [ 'label' => __( 'Modified', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'tab_label_modified', [ 'label' => __( 'Modified', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'label_modified_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-image-comparison__label--modified' => 'color: {{VALUE}};',
@@ -447,7 +447,7 @@ class Image_Comparison extends Extras_Widget {
 				$this->add_control(
 					'label_modified_background',
 					[
-						'label' 	=> __( 'Background color', 'elementor-extras' ),
+						'label' 	=> __( 'Background color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-image-comparison__label--modified' => 'background-color: {{VALUE}};',
@@ -468,7 +468,7 @@ class Image_Comparison extends Extras_Widget {
 		$this->start_controls_section(
 			'section_separator_style',
 			[
-				'label' => __( 'Separator', 'elementor-extras' ),
+				'label' => __( 'Separator', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -476,7 +476,7 @@ class Image_Comparison extends Extras_Widget {
 			$this->add_control(
 				'separator_position',
 				[
-					'label' => __( 'Position', 'elementor-extras' ),
+					'label' => __( 'Position', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::SLIDER,
 					'default' => [
 						'size' => 50,
@@ -498,7 +498,7 @@ class Image_Comparison extends Extras_Widget {
 			$this->add_control(
 				'separator_size',
 				[
-					'label' => __( 'Size (%)', 'elementor-extras' ),
+					'label' => __( 'Size (%)', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::SLIDER,
 					'default' => [
 						'size' => 100,
@@ -532,7 +532,7 @@ class Image_Comparison extends Extras_Widget {
 		$this->start_controls_section(
 			'section_handle_style',
 			[
-				'label' => __( 'Handle', 'elementor-extras' ),
+				'label' => __( 'Handle', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -542,14 +542,14 @@ class Image_Comparison extends Extras_Widget {
 			$this->start_controls_tab(
 				'tab_handle_normal',
 				[
-					'label' => __( 'Normal', 'elementor-extras' ),
+					'label' => __( 'Normal', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 				$this->add_control(
 					'handle_background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-image-comparison__handle' => 'background-color: {{VALUE}};',
@@ -563,7 +563,7 @@ class Image_Comparison extends Extras_Widget {
 				$this->add_control(
 					'handle_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-image-comparison__handle' => 'color: {{VALUE}};',
@@ -575,7 +575,7 @@ class Image_Comparison extends Extras_Widget {
 				$this->add_control(
 					'handle_size',
 					[
-						'label' 	=> __( 'Size (%)', 'elementor-extras' ),
+						'label' 	=> __( 'Size (%)', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SLIDER,
 						'default' 	=> [
 							'size' 	=> 44,
@@ -598,14 +598,14 @@ class Image_Comparison extends Extras_Widget {
 			$this->start_controls_tab(
 				'tab_handle_hover',
 				[
-					'label' => __( 'Hover', 'elementor-extras' ),
+					'label' => __( 'Hover', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 				$this->add_control(
 					'handle_hover_background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default' 	=> '',
 						'selectors' => [
@@ -617,7 +617,7 @@ class Image_Comparison extends Extras_Widget {
 				$this->add_control(
 					'handle_hover_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default' 	=> '',
 						'selectors' => [
@@ -629,7 +629,7 @@ class Image_Comparison extends Extras_Widget {
 				$this->add_control(
 					'handle_size_hover',
 					[
-						'label' 	=> __( 'Size (%)', 'elementor-extras' ),
+						'label' 	=> __( 'Size (%)', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SLIDER,
 						'default' 	=> [
 							'size' 	=> 44,
@@ -652,14 +652,14 @@ class Image_Comparison extends Extras_Widget {
 			$this->start_controls_tab(
 				'tab_handle_dragged',
 				[
-					'label' => __( 'Dragged', 'elementor-extras' ),
+					'label' => __( 'Dragged', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 				$this->add_control(
 					'handle_dragged_background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default' 	=> '',
 						'selectors' => [
@@ -674,7 +674,7 @@ class Image_Comparison extends Extras_Widget {
 				$this->add_control(
 					'handle_dragged_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default' 	=> '',
 						'selectors' => [
@@ -686,7 +686,7 @@ class Image_Comparison extends Extras_Widget {
 				$this->add_control(
 					'handle_size_dragged',
 					[
-						'label' 	=> __( 'Size (%)', 'elementor-extras' ),
+						'label' 	=> __( 'Size (%)', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SLIDER,
 						'default' 	=> [
 							'size' 	=> 44,
@@ -774,30 +774,34 @@ class Image_Comparison extends Extras_Widget {
 			$this->add_render_attribute( 'modified-label', 'class', 'ee-image-comparison__label--clickable' );
 		}
 
-		?><figure <?php echo $this->get_render_attribute_string( 'wrapper' ) ?>>
+		?><figure <?php $this->print_render_attribute_string( 'wrapper' ) ?>>
 			
 			<?php if ( ! empty( $settings['original_image']['url'] ) ) {
-				echo Group_Control_Image_Size::get_attachment_image_html( $settings, 'original_image' );
+				echo Group_Control_Image_Size::get_attachment_image_html( $settings, 'original_image' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor Group_Control_Image_Size::get_attachment_image_html returns escaped <img> markup.
 			} ?>
 
-			<span <?php echo $this->get_render_attribute_string( 'original-label' ) ?>>
-				<?php if ( '' !== $settings['original_label'] ) { echo $settings['original_label']; } ?>
+			<span <?php $this->print_render_attribute_string( 'original-label' ) ?>>
+				<?php if ( '' !== $settings['original_label'] ) {
+					echo esc_html( $settings['original_label'] );
+				} ?>
 			</span>
 		
-			<div <?php echo $this->get_render_attribute_string( 'modified-image-wrapper' ) ?>>
+			<div <?php $this->print_render_attribute_string( 'modified-image-wrapper' ) ?>>
 				
 				<?php if ( ! empty( $settings['modified_image']['url'] ) ) {
-					echo Group_Control_Image_Size::get_attachment_image_html( $settings, 'modified_image' );
+					echo Group_Control_Image_Size::get_attachment_image_html( $settings, 'modified_image' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor Group_Control_Image_Size::get_attachment_image_html returns escaped <img> markup.
 				} ?>
 
-				<span <?php echo $this->get_render_attribute_string( 'modified-label' ) ?>>
-					<?php if ( '' !== $settings['modified_label'] ) { echo $settings['modified_label']; } ?>
+				<span <?php $this->print_render_attribute_string( 'modified-label' ) ?>>
+					<?php if ( '' !== $settings['modified_label'] ) {
+						echo esc_html( $settings['modified_label'] );
+					} ?>
 				</span>
 
-				<span <?php echo $this->get_render_attribute_string( 'separator' ) ?>></span>
+				<span <?php $this->print_render_attribute_string( 'separator' ) ?>></span>
 			</div>
 		
-			<span <?php echo $this->get_render_attribute_string( 'handle' ) ?>></span>
+			<span <?php $this->print_render_attribute_string( 'handle' ) ?>></span>
 		</figure><?php
 	}
 

@@ -1,8 +1,9 @@
 <?php
-namespace ElementorExtras\Modules\DisplayConditions\Conditions;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\DisplayConditions\Conditions;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Condition;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Condition;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -49,7 +50,7 @@ class Date_Time_Before extends Condition {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Current Date & Time', 'elementor-extras' );
+		return __( 'Current Date & Time', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -61,10 +62,10 @@ class Date_Time_Before extends Condition {
 	 * @return string
 	 */
 	public function get_value_control() {
-		$default_date = date( 'Y-m-d H:i', strtotime( '+3 day' ) + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ) );
+		$default_date = wp_date( 'Y-m-d H:i', strtotime( '+3 day', current_time( 'timestamp' ) ) );
 
 		return [
-			'label'		=> __( 'Before', 'elementor-extras' ),
+			'label'		=> __( 'Before', 'landtech-extras-for-elementor' ),
 			'type' 		=> \Elementor\Controls_Manager::DATE_TIME,
 			'picker_options' => [
 				'enableTime'	=> true,

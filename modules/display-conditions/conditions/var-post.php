@@ -1,8 +1,9 @@
 <?php
-namespace ElementorExtras\Modules\DisplayConditions\Conditions;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\DisplayConditions\Conditions;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Condition;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Condition;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -37,7 +38,7 @@ class Var_Post extends Var_Base {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'POST', 'elementor-extras' );
+		return __( 'POST', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -53,11 +54,24 @@ class Var_Post extends Var_Base {
 	 */
 	public function check( $operator, $value, $name = null ) {
 		$show = false;
+		$key  = $this->sanitize_request_var_key( $name );
+		if ( '' === $key || ! isset( $_POST[ $key ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Read-only display condition on public/front requests.
+			return $this->compare( $show, true, $operator );
+		}
+		$raw      = map_deep( wp_unslash( $_POST[ $key ] ), 'sanitize_text_field' ); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Read-only display condition on public requests.
+		$value_in = sanitize_text_field( (string) $value );
 
-		if ( isset( $_POST[ $name ] ) ) {
-			if ( '' === trim( $value ) ) {
+		if ( is_array( $raw ) ) {
+			// MANUAL REVIEW REQUIRED: Multi-value/array POST compares are not normalized; blank "any value" check still applies.
+			if ( '' !== trim( (string) $value ) ) {
+				return $this->compare( $show, true, $operator );
+			}
+			$show = true;
+		} else {
+			$incoming = (string) $raw;
+			if ( '' === trim( (string) $value ) ) {
 				$show = true;
-			} else if ( $value === $_POST[ $name ] ) {
+			} elseif ( $value_in === $incoming ) {
 				$show = true;
 			}
 		}

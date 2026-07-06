@@ -1,10 +1,12 @@
 <?php
-namespace ElementorExtras\Modules\Gallery\Widgets;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Gallery\Widgets;
 
-use ElementorExtras\Base\Extras_Widget;
-use ElementorExtras\Group_Control_Transition;
-use ElementorExtras\Modules\Gallery\Module;
-use ElementorExtras\Modules\Image\Module as ImageModule;
+use LandTechExtras\Base\Extras_Widget;
+use LandTechExtras\Gallery\ACF_Gallery_Bridge;
+use LandTechExtras\Group_Control_Transition;
+use LandTechExtras\Modules\Gallery\Module;
+use LandTechExtras\Modules\Image\Module as ImageModule;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -29,6 +31,15 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 class Gallery_Slider extends Extras_Widget {
 
 	/**
+	 * Resolved gallery rows for this render (Media Library or ACF).
+	 *
+	 * @since 2.2.54
+	 *
+	 * @var array<int, array<string, mixed>>
+	 */
+	private $slider_gallery_dataset = array();
+
+	/**
 	 * Get Name
 	 * 
 	 * Get the name of the widget
@@ -49,7 +60,7 @@ class Gallery_Slider extends Extras_Widget {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Gallery Slider', 'elementor-extras' );
+		return __( 'Gallery Slider', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -89,25 +100,79 @@ class Gallery_Slider extends Extras_Widget {
 		$this->start_controls_section(
 			'section_gallery',
 			[
-				'label' => __( 'Gallery', 'elementor-extras' ),
+				'label' => __( 'Gallery', 'landtech-extras-for-elementor' ),
 			]
 		);
 
-			$this->add_control(
-				'wp_gallery',
-				[
-					'label' 	=> __( 'Add Images', 'elementor-extras' ),
-					'type' 		=> Controls_Manager::GALLERY,
-					'dynamic'	=> [ 'active' => true ],
-				]
-			);
+			if ( ACF_Gallery_Bridge::is_enabled() ) {
+				$this->add_control(
+					'gallery_source',
+					[
+						'label'   => __( 'Source', 'landtech-extras-for-elementor' ),
+						'type'    => Controls_Manager::SELECT,
+						'default' => 'media_library',
+						'options' => [
+							'media_library' => __( 'Media Library', 'landtech-extras-for-elementor' ),
+							'acf_gallery'   => __( 'ACF Gallery', 'landtech-extras-for-elementor' ),
+						],
+					]
+				);
+			}
+
+			$wp_gallery_field = [
+				'label' 	=> __( 'Add Images', 'landtech-extras-for-elementor' ),
+				'type' 		=> Controls_Manager::GALLERY,
+				'dynamic'	=> [ 'active' => true ],
+			];
+
+			if ( ACF_Gallery_Bridge::is_enabled() ) {
+				$wp_gallery_field['condition'] = [
+					'gallery_source!' => 'acf_gallery',
+				];
+			}
+
+			$this->add_control( 'wp_gallery', $wp_gallery_field );
+
+			if ( ACF_Gallery_Bridge::is_enabled() ) {
+				$this->add_control(
+					'acf_field_name',
+					[
+						'label'       => __( 'ACF Field Name', 'landtech-extras-for-elementor' ),
+						'type'        => Controls_Manager::TEXT,
+						'description' => __( 'Name of the ACF Gallery field (not the label).', 'landtech-extras-for-elementor' ),
+						'dynamic'     => [
+							'active' => true,
+						],
+						'condition'   => [
+							'gallery_source' => 'acf_gallery',
+						],
+					]
+				);
+
+				$this->add_control(
+					'acf_post_id',
+					[
+						'label'       => __( 'Post ID', 'landtech-extras-for-elementor' ),
+						'type'        => Controls_Manager::NUMBER,
+						'description' => __( 'Leave empty to use the current post.', 'landtech-extras-for-elementor' ),
+						'dynamic'     => [
+							'active' => true,
+						],
+						'min'         => 0,
+						'default'     => 0,
+						'condition'   => [
+							'gallery_source' => 'acf_gallery',
+						],
+					]
+				);
+			}
 
 		$this->end_controls_section();
 
 		$this->start_controls_section(
 			'section_thumbnails',
 			[
-				'label' => __( 'Thumbnails', 'elementor-extras' ),
+				'label' => __( 'Thumbnails', 'landtech-extras-for-elementor' ),
 			]
 		);
 
@@ -115,10 +180,10 @@ class Gallery_Slider extends Extras_Widget {
 				'show_thumbnails',
 				[
 					'type' 		=> Controls_Manager::SWITCHER,
-					'label' 	=> __( 'Thumbnails', 'elementor-extras' ),
+					'label' 	=> __( 'Thumbnails', 'landtech-extras-for-elementor' ),
 					'default' 	=> 'yes',
-					'label_off' => __( 'Hide', 'elementor-extras' ),
-					'label_on' 	=> __( 'Show', 'elementor-extras' ),
+					'label_off' => __( 'Hide', 'landtech-extras-for-elementor' ),
+					'label_on' 	=> __( 'Show', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -127,10 +192,10 @@ class Gallery_Slider extends Extras_Widget {
 				'thumbnails_carousel',
 				[
 					'type' 		=> Controls_Manager::SWITCHER,
-					'label' 	=> __( 'Enable Carousel', 'elementor-extras' ),
+					'label' 	=> __( 'Enable Carousel', 'landtech-extras-for-elementor' ),
 					'default' 	=> '',
-					'label_off' => __( 'Hide', 'elementor-extras' ),
-					'label_on' 	=> __( 'Show', 'elementor-extras' ),
+					'label_off' => __( 'Hide', 'landtech-extras-for-elementor' ),
+					'label_on' 	=> __( 'Show', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -139,7 +204,7 @@ class Gallery_Slider extends Extras_Widget {
 				'thumbnails_hide_single',
 				[
 					'type' 		=> Controls_Manager::SWITCHER,
-					'label' 	=> __( 'Hide for Single Image', 'elementor-extras' ),
+					'label' 	=> __( 'Hide for Single Image', 'landtech-extras-for-elementor' ),
 					'default' 	=> 'yes',
 					'condition' => [
 						'show_thumbnails!' => '',
@@ -153,8 +218,8 @@ class Gallery_Slider extends Extras_Widget {
 				'thumbnails_stretch',
 				[
 					'type' 			=> Controls_Manager::SWITCHER,
-					'label' 		=> __( 'Stretch Horizontally', 'elementor-extras' ),
-					'description' 	=> __( 'Stretch thumbnails horizontally if their number is smaller that the selected Slides per View number' ),
+					'label' 		=> __( 'Stretch Horizontally', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'Stretch thumbnails horizontally if their number is smaller that the selected Slides per View number', 'landtech-extras-for-elementor' ),
 					'default' 		=> 'yes',
 					'condition' 	=> [
 						'show_thumbnails!' => '',
@@ -168,7 +233,7 @@ class Gallery_Slider extends Extras_Widget {
 				Group_Control_Image_Size::get_type(),
 				[
 					'name' 		=> 'thumbnail',
-					'label'		=> __( 'Thumbnails Size', 'elementor-extras' ),
+					'label'		=> __( 'Thumbnails Size', 'landtech-extras-for-elementor' ),
 					'condition' => [
 						'show_thumbnails!' => '',
 					],
@@ -178,7 +243,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_responsive_control(
 				'columns',
 				[
-					'label' 	=> __( 'Columns', 'elementor-extras' ),
+					'label' 	=> __( 'Columns', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> '3',
 					'tablet_default' 	=> '6',
@@ -209,11 +274,11 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'gallery_rand',
 				[
-					'label' 	=> __( 'Ordering', 'elementor-extras' ),
+					'label' 	=> __( 'Ordering', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'options' 	=> [
-						'' 		=> __( 'Default', 'elementor-extras' ),
-						'rand' 	=> __( 'Random', 'elementor-extras' ),
+						'' 		=> __( 'Default', 'landtech-extras-for-elementor' ),
+						'rand' 	=> __( 'Random', 'landtech-extras-for-elementor' ),
 					],
 					'default' 	=> '',
 					'condition' => [
@@ -225,14 +290,14 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'thumbnails_caption_type',
 				[
-					'label' 	=> __( 'Caption', 'elementor-extras' ),
+					'label' 	=> __( 'Caption', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> '',
 					'options' 	=> [
-						'' 				=> __( 'None', 'elementor-extras' ),
-						'title' 		=> __( 'Title', 'elementor-extras' ),
-						'caption' 		=> __( 'Caption', 'elementor-extras' ),
-						'description' 	=> __( 'Description', 'elementor-extras' ),
+						'' 				=> __( 'None', 'landtech-extras-for-elementor' ),
+						'title' 		=> __( 'Title', 'landtech-extras-for-elementor' ),
+						'caption' 		=> __( 'Caption', 'landtech-extras-for-elementor' ),
+						'description' 	=> __( 'Description', 'landtech-extras-for-elementor' ),
 					],
 					'condition' => [
 						'show_thumbnails!' => '',
@@ -243,7 +308,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'view',
 				[
-					'label' 	=> __( 'View', 'elementor-extras' ),
+					'label' 	=> __( 'View', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HIDDEN,
 					'default' 	=> 'traditional',
 					'condition' => [
@@ -255,7 +320,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'carousel_heading',
 				[
-					'label' 	=> __( 'Carousel', 'elementor-extras' ),
+					'label' 	=> __( 'Carousel', 'landtech-extras-for-elementor' ),
 					'separator' => 'before',
 					'type' 		=> Controls_Manager::HEADING,
 					'condition'		=> [
@@ -269,13 +334,13 @@ class Gallery_Slider extends Extras_Widget {
 				'carousel_orientation',
 				[
 					'type' 				=> Controls_Manager::SELECT,
-					'label' 			=> __( 'Orientation', 'elementor-extras' ),
+					'label' 			=> __( 'Orientation', 'landtech-extras-for-elementor' ),
 					'default'			=> 'horizontal',
 					'tablet_default'	=> 'horizontal',
 					'mobile_default'	=> 'horizontal',
 					'options' 			=> [
-						'horizontal' 	=> __( 'Horizontal', 'elementor-extras' ),
-						'vertical' 		=> __( 'Vertical', 'elementor-extras' ),
+						'horizontal' 	=> __( 'Horizontal', 'landtech-extras-for-elementor' ),
+						'vertical' 		=> __( 'Vertical', 'landtech-extras-for-elementor' ),
 					],
 					'condition' 		=> [
 						'show_thumbnails!' => '',
@@ -292,13 +357,13 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_responsive_control(
 				'carousel_slides_per_view',
 				[
-					'label' 			=> __( 'Slides per View', 'elementor-extras' ),
+					'label' 			=> __( 'Slides per View', 'landtech-extras-for-elementor' ),
 					'type' 				=> Controls_Manager::SELECT,
 					'default' 			=> '',
 					'tablet_default' 	=> '',
 					'mobile_default' 	=> '',
 					'options' 			=> [
-						'' => __( 'Default', 'elementor-extras' ),
+						'' => __( 'Default', 'landtech-extras-for-elementor' ),
 						'1' => '1',
 						'2' => '2',
 						'3' => '3',
@@ -324,9 +389,9 @@ class Gallery_Slider extends Extras_Widget {
 				'carousel_slides_per_column',
 				[
 					'type' 			=> Controls_Manager::SELECT,
-					'label' 		=> __( 'Slides per Column', 'elementor-extras' ),
-					'description' 	=> __( 'For Vertical direction this defines the number of slides per row.', 'elementor-extras' ),
-					'options' 		=> [ '' => __( 'Default', 'elementor-extras' ) ] + $slides_per_column,
+					'label' 		=> __( 'Slides per Column', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'For Vertical direction this defines the number of slides per row.', 'landtech-extras-for-elementor' ),
+					'options' 		=> [ '' => __( 'Default', 'landtech-extras-for-elementor' ) ] + $slides_per_column,
 					'condition' 	=> [
 						'show_thumbnails!' => '',
 						'thumbnails_carousel!' => '',
@@ -340,8 +405,8 @@ class Gallery_Slider extends Extras_Widget {
 				'carousel_slides_to_scroll',
 				[
 					'type' 			=> Controls_Manager::SELECT,
-					'label' 		=> __( 'Slides to Scroll', 'elementor-extras' ),
-					'options' 		=> [ '' => __( 'Default', 'elementor-extras' ) ] + $slides_per_column,
+					'label' 		=> __( 'Slides to Scroll', 'landtech-extras-for-elementor' ),
+					'options' 		=> [ '' => __( 'Default', 'landtech-extras-for-elementor' ) ] + $slides_per_column,
 					'condition' 	=> [
 						'show_thumbnails!' => '',
 						'thumbnails_carousel!' => '',
@@ -353,7 +418,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_responsive_control(
 				'carousel_spacing',
 				[
-					'label' 			=> __( 'Spacing', 'elementor-extras' ),
+					'label' 			=> __( 'Spacing', 'landtech-extras-for-elementor' ),
 					'type' 				=> Controls_Manager::SLIDER,
 					'default'			=> [
 						'size' => 24,
@@ -385,8 +450,8 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'carousel_resistance',
 				[
-					'label' 		=> __( 'Resistance', 'elementor-extras' ),
-					'description'	=> __( 'Set the value for resistant bounds.', 'elementor-extras' ),
+					'label' 		=> __( 'Resistance', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Set the value for resistant bounds.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 		=> [
 						'size' 		=> 0.25,
@@ -410,8 +475,8 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'carousel_speed',
 				[
-					'label' 	=> __( 'Speed (ms)', 'elementor-extras' ),
-					'description' => __( 'Duration of the effect transition.', 'elementor-extras' ) ,
+					'label' 	=> __( 'Speed (ms)', 'landtech-extras-for-elementor' ),
+					'description' => __( 'Duration of the effect transition.', 'landtech-extras-for-elementor' ) ,
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 500,
@@ -435,11 +500,11 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'carousel_arrows',
 				[
-					'label' 		=> __( 'Arrows', 'elementor-extras' ),
+					'label' 		=> __( 'Arrows', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'on',
-					'label_on' 		=> __( 'On', 'elementor-extras' ),
-					'label_off' 	=> __( 'Off', 'elementor-extras' ),
+					'label_on' 		=> __( 'On', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'Off', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'on',
 					'condition' 	=> [
 						'show_thumbnails!' => '',
@@ -454,7 +519,7 @@ class Gallery_Slider extends Extras_Widget {
 		$this->start_controls_section(
 			'section_preview',
 			[
-				'label' => __( 'Preview', 'elementor-extras' ),
+				'label' => __( 'Preview', 'landtech-extras-for-elementor' ),
 			]
 		);
 
@@ -462,7 +527,7 @@ class Gallery_Slider extends Extras_Widget {
 				Group_Control_Image_Size::get_type(),
 				[
 					'name' 		=> 'preview',
-					'label'		=> __( 'Preview Size', 'elementor-extras' ),
+					'label'		=> __( 'Preview Size', 'landtech-extras-for-elementor' ),
 					'default'	=> 'full',
 				]
 			);
@@ -471,12 +536,12 @@ class Gallery_Slider extends Extras_Widget {
 			// 	'lazy',
 			// 	[
 			// 		'type' 		=> Controls_Manager::SELECT,
-			// 		'label' 	=> __( 'Lazy Load', 'elementor-extras' ),
-			// 		'description' 	=> __( 'On Demand: load image when slide is changed, Progressive: load all images after page loads.', 'elementor-extras' ),
+			// 		'label' 	=> __( 'Lazy Load', 'landtech-extras-for-elementor' ),
+			// 		'description' 	=> __( 'On Demand: load image when slide is changed, Progressive: load all images after page loads.', 'landtech-extras-for-elementor' ),
 			// 		'options'	=> [
-			// 			'' 				=> __( 'Off', 'elementor-extras' ),
-			// 			'ondemand' 		=> __( 'On Demand', 'elementor-extras' ),
-			// 			'progressive' 	=> __( 'Progressive', 'elementor-extras' ),
+			// 			'' 				=> __( 'Off', 'landtech-extras-for-elementor' ),
+			// 			'ondemand' 		=> __( 'On Demand', 'landtech-extras-for-elementor' ),
+			// 			'progressive' 	=> __( 'Progressive', 'landtech-extras-for-elementor' ),
 			// 		],
 			// 		'default' 	=> '',
 			// 		'frontend_available' => true,
@@ -486,13 +551,13 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'link_to',
 				[
-					'label' 	=> __( 'Link to', 'elementor-extras' ),
+					'label' 	=> __( 'Link to', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'none',
 					'options' 	=> [
-						'none' 		=> __( 'None', 'elementor-extras' ),
-						'file' 		=> __( 'Media File', 'elementor-extras' ),
-						'custom' 	=> __( 'Custom URL', 'elementor-extras' ),
+						'none' 		=> __( 'None', 'landtech-extras-for-elementor' ),
+						'file' 		=> __( 'Media File', 'landtech-extras-for-elementor' ),
+						'custom' 	=> __( 'Custom URL', 'landtech-extras-for-elementor' ),
 					],
 				]
 			);
@@ -502,7 +567,7 @@ class Gallery_Slider extends Extras_Widget {
 				[
 					'label' 		=> 'Link to',
 					'type' 			=> Controls_Manager::URL,
-					'placeholder' 	=> __( 'http://your-link.com', 'elementor-extras' ),
+					'placeholder' 	=> __( 'http://your-link.com', 'landtech-extras-for-elementor' ),
 					'condition' 	=> [
 						'link_to' 	=> 'custom',
 					],
@@ -513,13 +578,13 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'open_lightbox',
 				[
-					'label' 	=> __( 'Lightbox', 'elementor-extras' ),
+					'label' 	=> __( 'Lightbox', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'default',
 					'options' 	=> [
-						'default' 	=> __( 'Default', 'elementor-extras' ),
-						'yes' 		=> __( 'Yes', 'elementor-extras' ),
-						'no' 		=> __( 'No', 'elementor-extras' ),
+						'default' 	=> __( 'Default', 'landtech-extras-for-elementor' ),
+						'yes' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+						'no' 		=> __( 'No', 'landtech-extras-for-elementor' ),
 					],
 					'condition' => [
 						'link_to' => 'file',
@@ -530,7 +595,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'lightbox_slideshow',
 				[
-					'label' 	=> __( 'Lightbox Slideshow', 'elementor-extras' ),
+					'label' 	=> __( 'Lightbox Slideshow', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SWITCHER,
 					'default' 	=> 'yes',
 					'condition' => [
@@ -543,12 +608,12 @@ class Gallery_Slider extends Extras_Widget {
 			// $this->add_control(
 			// 	'preview_stretch',
 			// 	[
-			// 		'label' 	=> __( 'Image Stretch', 'elementor-extras' ),
+			// 		'label' 	=> __( 'Image Stretch', 'landtech-extras-for-elementor' ),
 			// 		'type' 		=> Controls_Manager::SELECT,
 			// 		'default' 	=> 'yes',
 			// 		'options' 	=> [
-			// 			'no' 	=> __( 'No', 'elementor-extras' ),
-			// 			'yes' 	=> __( 'Yes', 'elementor-extras' ),
+			// 			'no' 	=> __( 'No', 'landtech-extras-for-elementor' ),
+			// 			'yes' 	=> __( 'Yes', 'landtech-extras-for-elementor' ),
 			// 		],
 			// 	]
 			// );
@@ -556,16 +621,16 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'caption_type',
 				[
-					'label' 	=> __( 'Caption', 'elementor-extras' ),
+					'label' 	=> __( 'Caption', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT2,
 					'multiple'	=> true,
 					'label_block' => true,
 					'default' 	=> ['caption'],
 					'options' 	=> [
-						'' 				=> __( 'None', 'elementor-extras' ),
-						'title' 		=> __( 'Title', 'elementor-extras' ),
-						'caption' 		=> __( 'Caption', 'elementor-extras' ),
-						'description' 	=> __( 'Description', 'elementor-extras' ),
+						'' 				=> __( 'None', 'landtech-extras-for-elementor' ),
+						'title' 		=> __( 'Title', 'landtech-extras-for-elementor' ),
+						'caption' 		=> __( 'Caption', 'landtech-extras-for-elementor' ),
+						'description' 	=> __( 'Description', 'landtech-extras-for-elementor' ),
 					],
 				]
 			);
@@ -573,7 +638,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'preview_slider_heading',
 				[
-					'label' 	=> __( 'Slider', 'elementor-extras' ),
+					'label' 	=> __( 'Slider', 'landtech-extras-for-elementor' ),
 					'separator' => 'before',
 					'type' 		=> Controls_Manager::HEADING,
 				]
@@ -582,12 +647,12 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'direction',
 				[
-					'label' 	=> __( 'Slide Direction', 'elementor-extras' ),
+					'label' 	=> __( 'Slide Direction', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'ltr',
 					'options' 	=> [
-						'ltr' 	=> __( 'Left', 'elementor-extras' ),
-						'rtl' 	=> __( 'Right', 'elementor-extras' ),
+						'ltr' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
+						'rtl' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 					],
 					'frontend_available' => true,
 				]
@@ -596,12 +661,12 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'infinite',
 				[
-					'label' 	=> __( 'Infinite Loop', 'elementor-extras' ),
+					'label' 	=> __( 'Infinite Loop', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'yes',
 					'options' 	=> [
-						'yes' 	=> __( 'Yes', 'elementor-extras' ),
-						'no' 	=> __( 'No', 'elementor-extras' ),
+						'yes' 	=> __( 'Yes', 'landtech-extras-for-elementor' ),
+						'no' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					],
 					'frontend_available' => true,
 				]
@@ -610,13 +675,13 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'effect',
 				[
-					'label' 	=> __( 'Effect', 'elementor-extras' ),
+					'label' 	=> __( 'Effect', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'separator' => 'before',
 					'default' 	=> 'slide',
 					'options' 	=> [
-						'slide' 	=> __( 'Slide', 'elementor-extras' ),
-						'fade' 		=> __( 'Fade', 'elementor-extras' ),
+						'slide' 	=> __( 'Slide', 'landtech-extras-for-elementor' ),
+						'fade' 		=> __( 'Fade', 'landtech-extras-for-elementor' ),
 					],
 					'frontend_available' => true,
 				]
@@ -625,8 +690,8 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'speed',
 				[
-					'label' 	=> __( 'Duration (ms)', 'elementor-extras' ),
-					'description' => __( 'How long should the effect transition last.', 'elementor-extras' ) ,
+					'label' 	=> __( 'Duration (ms)', 'landtech-extras-for-elementor' ),
+					'description' => __( 'How long should the effect transition last.', 'landtech-extras-for-elementor' ) ,
 					'type' 		=> Controls_Manager::NUMBER,
 					'default' 	=> 1000,
 					'min' 		=> 0,
@@ -639,7 +704,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'ken_burns',
 				[
-					'label' 	=> __( 'Ken Burns', 'elementor-extras' ),
+					'label' 	=> __( 'Ken Burns', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::POPOVER_TOGGLE,
 					'default' 	=> '',
 					'condition' => [
@@ -653,7 +718,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'ken_burns_scale',
 				[
-					'label' 	=> __( 'Scale', 'elementor-extras' ),
+					'label' 	=> __( 'Scale', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -675,14 +740,14 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'ken_burns_origin',
 				[
-					'label' 	=> __( 'Transform Origin', 'elementor-extras' ),
+					'label' 	=> __( 'Transform Origin', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'separator' => 'before',
 					'label_block' => true,
 					'options'	=> [
-						'' => __('Default', 'elementor-extras'),
-						'random' => __('Random', 'elementor-extras'),
-						'custom' => __('Custom', 'elementor-extras'),
+						'' => __('Default', 'landtech-extras-for-elementor'),
+						'random' => __('Random', 'landtech-extras-for-elementor'),
+						'custom' => __('Custom', 'landtech-extras-for-elementor'),
 					],
 					'default' 	=> '',
 					'condition' => [
@@ -695,20 +760,20 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'ken_burns_origin_x',
 				[
-					'label' 	=> __( 'X Anchor Point', 'elementor-extras' ),
+					'label' 	=> __( 'X Anchor Point', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::CHOOSE,
 					'default' 	=> 'center',
 					'options' 	=> [
 						'left' 	=> [
-							'title' => __( 'Left', 'elementor-pro' ),
+							'title' => __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'eicon-h-align-left',
 						],
 						'center' => [
-							'title' => __( 'Center', 'elementor-pro' ),
+							'title' => __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'eicon-h-align-center',
 						],
 						'right' => [
-							'title' => __( 'Right', 'elementor-pro' ),
+							'title' => __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' => 'eicon-h-align-right',
 						],
 					],
@@ -723,20 +788,20 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'ken_burns_origin_y',
 				[
-					'label' 	=> __( 'Y Anchor Point', 'elementor-pro' ),
+					'label' 	=> __( 'Y Anchor Point', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::CHOOSE,
 					'default' 	=> 'center',
 					'options' 	=> [
 						'top' => [
-							'title' => __( 'Top', 'elementor-pro' ),
+							'title' => __( 'Top', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'eicon-v-align-top',
 						],
 						'center' => [
-							'title' => __( 'Center', 'elementor-pro' ),
+							'title' => __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'eicon-v-align-middle',
 						],
 						'bottom' => [
-							'title' => __( 'Bottom', 'elementor-pro' ),
+							'title' => __( 'Bottom', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'eicon-v-align-bottom',
 						],
 					],
@@ -755,7 +820,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'ken_burns_duration',
 				[
-					'label' 	=> __( 'Duration', 'elementor-extras' ),
+					'label' 	=> __( 'Duration', 'landtech-extras-for-elementor' ),
 					'separator' => 'before',
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 		=> [
@@ -778,7 +843,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'ken_burns_easing',
 				[
-					'label' 	=> __( 'Easing', 'elementor-extras' ),
+					'label' 	=> __( 'Easing', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'options'	=> Group_Control_Transition::get_easings(),
 					'default' 	=> 'linear',
@@ -797,8 +862,8 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'resistance',
 				[
-					'label' 		=> __( 'Resistance', 'elementor-extras' ),
-					'description'	=> __( 'Set the value for resistant bounds.', 'elementor-extras' ),
+					'label' 		=> __( 'Resistance', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Set the value for resistant bounds.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 		=> [
 						'size' 		=> 0.25,
@@ -818,7 +883,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'autoplay',
 				[
-					'label' 	=> __( 'Autoplay', 'elementor-extras' ),
+					'label' 	=> __( 'Autoplay', 'landtech-extras-for-elementor' ),
 					'separator' => 'before',
 					'type' 		=> Controls_Manager::POPOVER_TOGGLE,
 					'default' 	=> '',
@@ -831,7 +896,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'autoplay_speed',
 				[
-					'label' 	=> __( 'Autoplay Speed', 'elementor-extras' ),
+					'label' 	=> __( 'Autoplay Speed', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 5000,
@@ -854,7 +919,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'autoplay_disable_on_interaction',
 				[
-					'label' 	=> __( 'Disable on Interaction', 'elementor-extras' ),
+					'label' 	=> __( 'Disable on Interaction', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SWITCHER,
 					'default' 	=> '',
 					'frontend_available' => true,
@@ -867,7 +932,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'pause_on_hover',
 				[
-					'label' 	=> __( 'Pause on Hover', 'elementor-extras' ),
+					'label' 	=> __( 'Pause on Hover', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SWITCHER,
 					'default' 	=> '',
 					'frontend_available' => true,
@@ -883,7 +948,7 @@ class Gallery_Slider extends Extras_Widget {
 				'adaptive_height',
 				[
 					'type' 			=> Controls_Manager::SWITCHER,
-					'label' 		=> __( 'Auto Height', 'elementor-extras' ),
+					'label' 		=> __( 'Auto Height', 'landtech-extras-for-elementor' ),
 					'default' 		=> 'yes',
 					'frontend_available' => true,
 				]
@@ -892,11 +957,11 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'show_arrows',
 				[
-					'label' 		=> __( 'Arrows', 'elementor-extras' ),
+					'label' 		=> __( 'Arrows', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'On', 'elementor-extras' ),
-					'label_off' 	=> __( 'Off', 'elementor-extras' ),
+					'label_on' 		=> __( 'On', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'Off', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -906,7 +971,7 @@ class Gallery_Slider extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_layout',
 			[
-				'label' 	=> __( 'Layout', 'elementor-extras' ),
+				'label' 	=> __( 'Layout', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -914,15 +979,15 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'preview_position',
 				[
-					'label' 	=> __( 'Preview Position', 'elementor-extras' ),
+					'label' 	=> __( 'Preview Position', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'left',
 					'tablet_default' 	=> 'top',
 					'mobile_default' 	=> 'top',
 					'options' 	=> [
-						'top' 		=> __( 'Top', 'elementor-extras' ),
-						'right' 	=> __( 'Right', 'elementor-extras' ),
-						'left' 		=> __( 'Left', 'elementor-extras' ),
+						'top' 		=> __( 'Top', 'landtech-extras-for-elementor' ),
+						'right' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
+						'left' 		=> __( 'Left', 'landtech-extras-for-elementor' ),
 					],
 					'prefix_class'	=> 'ee-gallery-slider--',
 					'condition' => [
@@ -934,14 +999,14 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'preview_stack',
 				[
-					'label' 	=> __( 'Stack on', 'elementor-extras' ),
+					'label' 	=> __( 'Stack on', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'tablet',
 					'tablet_default' 	=> 'top',
 					'mobile_default' 	=> 'top',
 					'options' 	=> [
-						'tablet' 	=> __( 'Tablet & Mobile', 'elementor-extras' ),
-						'mobile' 	=> __( 'Mobile Only', 'elementor-extras' ),
+						'tablet' 	=> __( 'Tablet & Mobile', 'landtech-extras-for-elementor' ),
+						'mobile' 	=> __( 'Mobile Only', 'landtech-extras-for-elementor' ),
 					],
 					'prefix_class'	=> 'ee-gallery-slider--stack-',
 					'condition' => [
@@ -954,19 +1019,19 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_responsive_control(
 				'layout_horizontal_align',
 				[
-					'label' 	=> __( 'Horizontal Align', 'elementor-extras' ),
+					'label' 	=> __( 'Horizontal Align', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::CHOOSE,
 					'options' 	=> [
 						'flex-start' 	=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-center',
 						],
 						'flex-end' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-right',
 						],
 					],
@@ -983,19 +1048,19 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_responsive_control(
 				'layout_vertical_align',
 				[
-					'label' 	=> __( 'Vertical Align', 'elementor-extras' ),
+					'label' 	=> __( 'Vertical Align', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::CHOOSE,
 					'options' 	=> [
 						'flex-start' 	=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-top',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-middle',
 						],
 						'flex-end' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-bottom',
 						],
 					],
@@ -1012,7 +1077,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_responsive_control(
 				'preview_width',
 				[
-					'label' 	=> __( 'Preview Width (%)', 'elementor-extras' ),
+					'label' 	=> __( 'Preview Width (%)', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -1039,7 +1104,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_responsive_control(
 				'carousel_width',
 				[
-					'label' 	=> __( 'Carousel Width', 'elementor-extras' ),
+					'label' 	=> __( 'Carousel Width', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'size_units' => [ 'px', '%' ],
 					'range' 	=> [
@@ -1072,7 +1137,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_responsive_control(
 				'preview_spacing',
 				[
-					'label' 	=> __( 'Spacing', 'elementor-extras' ),
+					'label' 	=> __( 'Spacing', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -1106,7 +1171,7 @@ class Gallery_Slider extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_slides',
 			[
-				'label' 	=> __( 'Slides', 'elementor-extras' ),
+				'label' 	=> __( 'Slides', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -1114,7 +1179,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'slides_custom_height',
 				[
-					'label' 		=> __( 'Custom Height', 'elementor-extras' ),
+					'label' 		=> __( 'Custom Height', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
 				]
@@ -1123,12 +1188,12 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'slides_image_fit',
 				[
-					'label' 		=> __( 'Image Fit', 'elementor-extras' ),
+					'label' 		=> __( 'Image Fit', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT,
 					'default' 		=> 'cover',
 					'options'		=> [
-						'cover' 	=> __('Cover', 'elementor-extras'),
-						'contain' 	=> __('Contain', 'elementor-extras'),
+						'cover' 	=> __('Cover', 'landtech-extras-for-elementor'),
+						'contain' 	=> __('Contain', 'landtech-extras-for-elementor'),
 					],
 					'selectors'		=> [
 						'{{WRAPPER}} .ee-slider__media__thumbnail img' => 'object-fit: {{VALUE}}',
@@ -1143,7 +1208,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_responsive_control(
 				'slides_height',
 				[
-					'label' 		=> __( 'Height', 'elementor-extras' ),
+					'label' 		=> __( 'Height', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -1166,7 +1231,7 @@ class Gallery_Slider extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'preview_border',
-					'label' 	=> __( 'Image Border', 'elementor-extras' ),
+					'label' 	=> __( 'Image Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '{{WRAPPER}} .ee-gallery-slider__slider',
 				]
 			);
@@ -1174,7 +1239,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'preview_border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
@@ -1195,7 +1260,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'arrows_style_heading',
 				[
-					'label' 	=> __( 'Arrows', 'elementor-extras' ),
+					'label' 	=> __( 'Arrows', 'landtech-extras-for-elementor' ),
 					'separator' => 'before',
 					'type' 		=> Controls_Manager::HEADING,
 					'condition'		=> [
@@ -1208,12 +1273,12 @@ class Gallery_Slider extends Extras_Widget {
 				'arrows_position',
 				[
 					'type' 			=> Controls_Manager::SELECT,
-					'label' 		=> __( 'Position', 'elementor-extras' ),
+					'label' 		=> __( 'Position', 'landtech-extras-for-elementor' ),
 					'default'		=> 'middle',
 					'options' 		=> [
-						'top' 		=> __( 'Top', 'elementor-extras' ),
-						'middle' 	=> __( 'Middle', 'elementor-extras' ),
-						'bottom' 	=> __( 'Bottom', 'elementor-extras' ),
+						'top' 		=> __( 'Top', 'landtech-extras-for-elementor' ),
+						'middle' 	=> __( 'Middle', 'landtech-extras-for-elementor' ),
+						'bottom' 	=> __( 'Bottom', 'landtech-extras-for-elementor' ),
 					],
 					'condition'		=> [
 						'show_arrows!' 	=> '',
@@ -1224,7 +1289,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_responsive_control(
 				'arrows_size',
 				[
-					'label' 		=> __( 'Size', 'elementor-extras' ),
+					'label' 		=> __( 'Size', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -1244,7 +1309,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_responsive_control(
 				'arrows_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -1265,7 +1330,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_responsive_control(
 				'arrows_distance',
 				[
-					'label' 		=> __( 'Distance', 'elementor-extras' ),
+					'label' 		=> __( 'Distance', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -1286,7 +1351,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_responsive_control(
 				'arrows_border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -1319,7 +1384,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->start_controls_tabs( 'arrows_tabs_hover' );
 
 			$this->start_controls_tab( 'arrows_tab_default', [
-				'label' => __( 'Default', 'elementor-extras' ),
+				'label' => __( 'Default', 'landtech-extras-for-elementor' ),
 				'condition'	=> [
 					'show_arrows!' => '',
 				]
@@ -1328,7 +1393,7 @@ class Gallery_Slider extends Extras_Widget {
 				$this->add_control(
 					'arrows_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-gallery-slider__preview .ee-swiper__button i:before' => 'color: {{VALUE}};',
@@ -1342,7 +1407,7 @@ class Gallery_Slider extends Extras_Widget {
 				$this->add_control(
 					'arrows_background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-gallery-slider__preview .ee-swiper__button' => 'background-color: {{VALUE}};',
@@ -1356,7 +1421,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->end_controls_tab();
 
 			$this->start_controls_tab( 'arrows_tab_hover', [
-				'label' => __( 'Hover', 'elementor-extras' ),
+				'label' => __( 'Hover', 'landtech-extras-for-elementor' ),
 				'condition'	=> [
 					'show_arrows!' => '',
 				]
@@ -1365,7 +1430,7 @@ class Gallery_Slider extends Extras_Widget {
 				$this->add_control(
 					'arrows_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-gallery-slider__preview .ee-swiper__button:hover i:before' => 'color: {{VALUE}};',
@@ -1379,7 +1444,7 @@ class Gallery_Slider extends Extras_Widget {
 				$this->add_control(
 					'arrows_background_color_hover',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-gallery-slider__preview .ee-swiper__button:hover' => 'background-color: {{VALUE}};',
@@ -1393,7 +1458,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->end_controls_tab();
 
 			$this->start_controls_tab( 'arrows_tab_disabled', [
-				'label' => __( 'Disabled', 'elementor-extras' ),
+				'label' => __( 'Disabled', 'landtech-extras-for-elementor' ),
 				'condition'	=> [
 					'show_arrows!' => '',
 				]
@@ -1402,7 +1467,7 @@ class Gallery_Slider extends Extras_Widget {
 				$this->add_responsive_control(
 					'arrows_opacity_disabled',
 					[
-						'label' 		=> __( 'Opacity', 'elementor-extras' ),
+						'label' 		=> __( 'Opacity', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SLIDER,
 						'range' 		=> [
 							'px' 		=> [
@@ -1429,7 +1494,7 @@ class Gallery_Slider extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_preview_captions',
 			[
-				'label' 	=> __( 'Preview Captions', 'elementor-extras' ),
+				'label' 	=> __( 'Preview Captions', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'caption_type!' => [],
@@ -1440,19 +1505,19 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'preview_vertical_align',
 				[
-					'label' 	=> __( 'Vertical Align', 'elementor-extras' ),
+					'label' 	=> __( 'Vertical Align', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::CHOOSE,
 					'options' 	=> [
 						'top' 	=> [
-							'title' 	=> __( 'Top', 'elementor-extras' ),
+							'title' 	=> __( 'Top', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-top',
 						],
 						'middle' 		=> [
-							'title' 	=> __( 'Middle', 'elementor-extras' ),
+							'title' 	=> __( 'Middle', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-middle',
 						],
 						'bottom' 		=> [
-							'title' 	=> __( 'Bottom', 'elementor-extras' ),
+							'title' 	=> __( 'Bottom', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-bottom',
 						],
 					],
@@ -1466,23 +1531,23 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'preview_horizontal_align',
 				[
-					'label' 	=> __( 'Horizontal Align', 'elementor-extras' ),
+					'label' 	=> __( 'Horizontal Align', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::CHOOSE,
 					'options' 	=> [
 						'left' 	=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-right',
 						],
 						'justify' 		=> [
-							'title' 	=> __( 'Justify', 'elementor-extras' ),
+							'title' 	=> __( 'Justify', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-stretch',
 						],
 					],
@@ -1496,19 +1561,19 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'preview_align',
 				[
-					'label' 	=> __( 'Text Align', 'elementor-extras' ),
+					'label' 	=> __( 'Text Align', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::CHOOSE,
 					'options' 	=> [
 						'left' 	=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -1526,7 +1591,7 @@ class Gallery_Slider extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'preview_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -1540,7 +1605,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'preview_text_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
@@ -1555,7 +1620,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'preview_text_margin',
 				[
-					'label' 		=> __( 'Margin', 'elementor-extras' ),
+					'label' 		=> __( 'Margin', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
@@ -1571,7 +1636,7 @@ class Gallery_Slider extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'preview_text_border',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '{{WRAPPER}} .ee-slider__media__caption',
 					// 'separator' => '',
 					'condition'	=> [
@@ -1583,7 +1648,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'preview_text_border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
@@ -1598,7 +1663,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'preview_captions_title',
 				[
-					'label' 	=> __( 'Title', 'elementor-extras' ),
+					'label' 	=> __( 'Title', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 					'condition' => [
@@ -1611,7 +1676,7 @@ class Gallery_Slider extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'preview_title_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -1625,7 +1690,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'preview_title_margin',
 				[
-					'label' 		=> __( 'Margin', 'elementor-extras' ),
+					'label' 		=> __( 'Margin', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px' ],
 					'selectors' 	=> [
@@ -1640,7 +1705,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'preview_captions_caption',
 				[
-					'label' 	=> __( 'Caption', 'elementor-extras' ),
+					'label' 	=> __( 'Caption', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 					'condition' => [
@@ -1653,7 +1718,7 @@ class Gallery_Slider extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'preview_caption_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -1667,7 +1732,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'preview_caption_margin',
 				[
-					'label' 		=> __( 'Margin', 'elementor-extras' ),
+					'label' 		=> __( 'Margin', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px' ],
 					'selectors' 	=> [
@@ -1682,7 +1747,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'preview_captions_description',
 				[
-					'label' 	=> __( 'Description', 'elementor-extras' ),
+					'label' 	=> __( 'Description', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 					'condition' => [
@@ -1695,7 +1760,7 @@ class Gallery_Slider extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'preview_description_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -1709,7 +1774,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'preview_description_margin',
 				[
-					'label' 		=> __( 'Margin', 'elementor-extras' ),
+					'label' 		=> __( 'Margin', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px' ],
 					'selectors' 	=> [
@@ -1726,7 +1791,7 @@ class Gallery_Slider extends Extras_Widget {
 		$this->start_controls_section(
 			'section_preview_hover_effects',
 			[
-				'label' 	=> __( 'Preview Hover Effects', 'elementor-extras' ),
+				'label' 	=> __( 'Preview Hover Effects', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'caption_type!' => [],
@@ -1737,7 +1802,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'hover_preview_captions_heading',
 				[
-					'label' 	=> __( 'Captions', 'elementor-extras' ),
+					'label' 	=> __( 'Captions', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'condition' => [
 						'caption_type!' => [],
@@ -1764,29 +1829,29 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'preview_caption_effect',
 				[
-					'label' 	=> __( 'Effect', 'elementor-extras' ),
+					'label' 	=> __( 'Effect', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> '',
 					'options' => [
-						''					=> __( 'None', 'elementor-extras' ),
-						'fade-in'			=> __( 'Fade In', 'elementor-extras' ),
-						'fade-out'			=> __( 'Fade Out', 'elementor-extras' ),
-						'from-top'			=> __( 'From Top', 'elementor-extras' ),
-						'from-right'		=> __( 'From Right', 'elementor-extras' ),
-						'from-bottom'		=> __( 'From Bottom', 'elementor-extras' ),
-						'from-left'			=> __( 'From Left', 'elementor-extras' ),
-						'fade-from-top'		=> __( 'Fade From Top', 'elementor-extras' ),
-						'fade-from-right'	=> __( 'Fade From Right', 'elementor-extras' ),
-						'fade-from-bottom'	=> __( 'Fade From Bottom', 'elementor-extras' ),
-						'fade-from-left'	=> __( 'Fade From Left', 'elementor-extras' ),
-						'to-top'			=> __( 'To Top', 'elementor-extras' ),
-						'to-right'			=> __( 'To Right', 'elementor-extras' ),
-						'to-bottom'			=> __( 'To Bottom', 'elementor-extras' ),
-						'to-left'			=> __( 'To Left', 'elementor-extras' ),
-						'fade-to-top'		=> __( 'Fade To Top', 'elementor-extras' ),
-						'fade-to-right'		=> __( 'Fade To Right', 'elementor-extras' ),
-						'fade-to-bottom'	=> __( 'Fade To Bottom', 'elementor-extras' ),
-						'fade-to-left'		=> __( 'Fade To Left', 'elementor-extras' ),
+						''					=> __( 'None', 'landtech-extras-for-elementor' ),
+						'fade-in'			=> __( 'Fade In', 'landtech-extras-for-elementor' ),
+						'fade-out'			=> __( 'Fade Out', 'landtech-extras-for-elementor' ),
+						'from-top'			=> __( 'From Top', 'landtech-extras-for-elementor' ),
+						'from-right'		=> __( 'From Right', 'landtech-extras-for-elementor' ),
+						'from-bottom'		=> __( 'From Bottom', 'landtech-extras-for-elementor' ),
+						'from-left'			=> __( 'From Left', 'landtech-extras-for-elementor' ),
+						'fade-from-top'		=> __( 'Fade From Top', 'landtech-extras-for-elementor' ),
+						'fade-from-right'	=> __( 'Fade From Right', 'landtech-extras-for-elementor' ),
+						'fade-from-bottom'	=> __( 'Fade From Bottom', 'landtech-extras-for-elementor' ),
+						'fade-from-left'	=> __( 'Fade From Left', 'landtech-extras-for-elementor' ),
+						'to-top'			=> __( 'To Top', 'landtech-extras-for-elementor' ),
+						'to-right'			=> __( 'To Right', 'landtech-extras-for-elementor' ),
+						'to-bottom'			=> __( 'To Bottom', 'landtech-extras-for-elementor' ),
+						'to-left'			=> __( 'To Left', 'landtech-extras-for-elementor' ),
+						'fade-to-top'		=> __( 'Fade To Top', 'landtech-extras-for-elementor' ),
+						'fade-to-right'		=> __( 'Fade To Right', 'landtech-extras-for-elementor' ),
+						'fade-to-bottom'	=> __( 'Fade To Bottom', 'landtech-extras-for-elementor' ),
+						'fade-to-left'		=> __( 'Fade To Left', 'landtech-extras-for-elementor' ),
 					],
 					'condition' 	=> [
 						'caption_type!' => [],
@@ -1798,7 +1863,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->start_controls_tabs( 'preview_caption_style' );
 
 				$this->start_controls_tab( 'preview_caption_style_default', [
-					'label' 	=> __( 'Default', 'elementor-extras' ),
+					'label' 	=> __( 'Default', 'landtech-extras-for-elementor' ),
 					'condition' 	=> [
 						'caption_type!' => [],
 					],
@@ -1807,7 +1872,7 @@ class Gallery_Slider extends Extras_Widget {
 					$this->add_control(
 						'preview_text_color',
 						[
-							'label' 	=> __( 'Color', 'elementor-extras' ),
+							'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::COLOR,
 							'default' 	=> '',
 							'selectors' => [
@@ -1829,6 +1894,7 @@ class Gallery_Slider extends Extras_Widget {
 							'condition' => [
 								'caption_type!' => [],
 							],
+							// phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor group control option, not WP_Query.
 							'exclude'	=> [
 								'image',
 							]
@@ -1838,7 +1904,7 @@ class Gallery_Slider extends Extras_Widget {
 					$this->add_control(
 						'preview_text_opacity',
 						[
-							'label' 	=> __( 'Opacity (%)', 'elementor-extras' ),
+							'label' 	=> __( 'Opacity (%)', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::SLIDER,
 							'default' 	=> [
 								'size' 	=> 1,
@@ -1874,7 +1940,7 @@ class Gallery_Slider extends Extras_Widget {
 				$this->end_controls_tab();
 
 				$this->start_controls_tab( 'preview_caption_style_hover', [
-					'label' 	=> __( 'Hover', 'elementor-extras' ),
+					'label' 	=> __( 'Hover', 'landtech-extras-for-elementor' ),
 					'condition'	=> [
 						'caption_type!' => [],
 					],
@@ -1883,7 +1949,7 @@ class Gallery_Slider extends Extras_Widget {
 					$this->add_control(
 						'preview_text_color_hover',
 						[
-							'label' 	=> __( 'Color', 'elementor-extras' ),
+							'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::COLOR,
 							'default' 	=> '',
 							'selectors' => [
@@ -1905,6 +1971,7 @@ class Gallery_Slider extends Extras_Widget {
 							'condition' => [
 								'caption_type!' => [],
 							],
+							// phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor group control option, not WP_Query.
 							'exclude'	=> [
 								'image',
 							]
@@ -1914,7 +1981,7 @@ class Gallery_Slider extends Extras_Widget {
 					$this->add_control(
 						'preview_text_opacity_hover',
 						[
-							'label' 	=> __( 'Opacity (%)', 'elementor-extras' ),
+							'label' 	=> __( 'Opacity (%)', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::SLIDER,
 							'default' 	=> [
 								'size' 	=> 1,
@@ -1938,7 +2005,7 @@ class Gallery_Slider extends Extras_Widget {
 					$this->add_control(
 						'preview_text_border_color_hover',
 						[
-							'label' 	=> __( 'Border Color', 'elementor-extras' ),
+							'label' 	=> __( 'Border Color', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::COLOR,
 							'default' 	=> '',
 							'selectors' => [
@@ -1971,7 +2038,7 @@ class Gallery_Slider extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_thumbnails',
 			[
-				'label' 	=> __( 'Thumbnails', 'elementor-extras' ),
+				'label' 	=> __( 'Thumbnails', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'show_thumbnails!' => '',
@@ -1982,20 +2049,20 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'image_align',
 				[
-					'label' 		=> __( 'Alignment', 'elementor-extras' ),
+					'label' 		=> __( 'Alignment', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'left'    		=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-right',
 						],
 					],
@@ -2009,24 +2076,24 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'image_vertical_align',
 				[
-					'label' 		=> __( 'Vertical Alignment', 'elementor-extras' ),
+					'label' 		=> __( 'Vertical Alignment', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'top'    		=> [
-							'title' 	=> __( 'Top', 'elementor-extras' ),
+							'title' 	=> __( 'Top', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-top',
 						],
 						'middle' 		=> [
-							'title' 	=> __( 'Middle', 'elementor-extras' ),
+							'title' 	=> __( 'Middle', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-middle',
 						],
 						'bottom' 		=> [
-							'title' 	=> __( 'Bottom', 'elementor-extras' ),
+							'title' 	=> __( 'Bottom', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-bottom',
 						],
 						'stretch' 		=> [
-							'title' 	=> __( 'Stretch', 'elementor-extras' ),
+							'title' 	=> __( 'Stretch', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-stretch',
 						],
 					],
@@ -2040,7 +2107,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'image_vertical_stretch',
 				[
-					'label' 		=> __( 'Stretch', 'elementor-extras' ),
+					'label' 		=> __( 'Stretch', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'stretch',
 					'return_value'	=> 'stretch',
@@ -2054,7 +2121,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_responsive_control(
 				'image_stretch_ratio',
 				[
-					'label' 	=> __( 'Image Size Ratio', 'elementor-extras' ),
+					'label' 	=> __( 'Image Size Ratio', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default'	=> [
 						'size'	=> '100'
@@ -2081,7 +2148,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_responsive_control(
 				'image_horizontal_spacing',
 				[
-					'label' 	=> __( 'Horizontal Spacing', 'elementor-extras' ),
+					'label' 	=> __( 'Horizontal Spacing', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -2109,7 +2176,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_responsive_control(
 				'image_vertical_spacing',
 				[
-					'label' 	=> __( 'Vertical spacing', 'elementor-extras' ),
+					'label' 	=> __( 'Vertical spacing', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -2134,7 +2201,7 @@ class Gallery_Slider extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'image_border',
-					'label' 	=> __( 'Image Border', 'elementor-extras' ),
+					'label' 	=> __( 'Image Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '{{WRAPPER}} .ee-gallery__media-wrapper',
 					'separator' => '',
 				]
@@ -2143,7 +2210,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'image_border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
@@ -2156,7 +2223,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'carousel_style_heading',
 				[
-					'label' 	=> __( 'Carousel', 'elementor-extras' ),
+					'label' 	=> __( 'Carousel', 'landtech-extras-for-elementor' ),
 					'separator'	=> 'before',
 					'type' 		=> Controls_Manager::HEADING,
 					'condition'		=> [
@@ -2170,7 +2237,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_responsive_control(
 				'carousel_height',
 				[
-					'label' 			=> __( 'Height', 'elementor-extras' ),
+					'label' 			=> __( 'Height', 'landtech-extras-for-elementor' ),
 					'type' 				=> Controls_Manager::SLIDER,
 					'size_units' 	=> ['px'],
 					'range' 		=> [
@@ -2194,7 +2261,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'carousel_arrows_style_heading',
 				[
-					'label' 	=> __( 'Arrows', 'elementor-extras' ),
+					'label' 	=> __( 'Arrows', 'landtech-extras-for-elementor' ),
 					'separator'	=> 'before',
 					'type' 		=> Controls_Manager::HEADING,
 					'condition'		=> [
@@ -2209,12 +2276,12 @@ class Gallery_Slider extends Extras_Widget {
 				'carousel_arrows_position',
 				[
 					'type' 			=> Controls_Manager::SELECT,
-					'label' 		=> __( 'Position', 'elementor-extras' ),
+					'label' 		=> __( 'Position', 'landtech-extras-for-elementor' ),
 					'default'		=> 'middle',
 					'options' 		=> [
-						'top' 		=> __( 'Top', 'elementor-extras' ),
-						'middle' 	=> __( 'Middle', 'elementor-extras' ),
-						'bottom' 	=> __( 'Bottom', 'elementor-extras' ),
+						'top' 		=> __( 'Top', 'landtech-extras-for-elementor' ),
+						'middle' 	=> __( 'Middle', 'landtech-extras-for-elementor' ),
+						'bottom' 	=> __( 'Bottom', 'landtech-extras-for-elementor' ),
 					],
 					'condition'		=> [
 						'show_thumbnails!' => '',
@@ -2229,12 +2296,12 @@ class Gallery_Slider extends Extras_Widget {
 				'carousel_arrows_position_vertical',
 				[
 					'type' 			=> Controls_Manager::SELECT,
-					'label' 		=> __( 'Position', 'elementor-extras' ),
+					'label' 		=> __( 'Position', 'landtech-extras-for-elementor' ),
 					'default'		=> 'center',
 					'options' 		=> [
-						'left' 		=> __( 'Left', 'elementor-extras' ),
-						'center' 	=> __( 'Center', 'elementor-extras' ),
-						'right' 	=> __( 'Right', 'elementor-extras' ),
+						'left' 		=> __( 'Left', 'landtech-extras-for-elementor' ),
+						'center' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
+						'right' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 					],
 					'condition'		=> [
 						'show_thumbnails!' => '',
@@ -2248,7 +2315,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_responsive_control(
 				'carousel_arrows_size',
 				[
-					'label' 		=> __( 'Size', 'elementor-extras' ),
+					'label' 		=> __( 'Size', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default'		=> [
 						'size' => 12,
@@ -2274,7 +2341,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_responsive_control(
 				'carousel_arrows_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default'		=> [
 						'size' => 0.4,
@@ -2301,7 +2368,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_responsive_control(
 				'carousel_arrows_distance',
 				[
-					'label' 		=> __( 'Distance', 'elementor-extras' ),
+					'label' 		=> __( 'Distance', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default'		=> [
 						'size' => 24,
@@ -2331,7 +2398,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_responsive_control(
 				'carousel_arrows_border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -2367,7 +2434,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->start_controls_tabs( 'carousel_arrows_tabs_hover' );
 
 			$this->start_controls_tab( 'carousel_arrows_tab_default', [
-				'label' => __( 'Default', 'elementor-extras' ),
+				'label' => __( 'Default', 'landtech-extras-for-elementor' ),
 				'condition'	=> [
 					'show_thumbnails!' => '',
 					'thumbnails_carousel!' => '',
@@ -2378,7 +2445,7 @@ class Gallery_Slider extends Extras_Widget {
 				$this->add_control(
 					'carousel_arrows_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-gallery-slider__gallery .ee-swiper__button i:before' => 'color: {{VALUE}};',
@@ -2394,7 +2461,7 @@ class Gallery_Slider extends Extras_Widget {
 				$this->add_control(
 					'carousel_arrows_background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-gallery-slider__gallery .ee-swiper__button' => 'background-color: {{VALUE}};',
@@ -2410,7 +2477,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->end_controls_tab();
 
 			$this->start_controls_tab( 'carousel_arrows_tab_hover', [
-				'label' => __( 'Hover', 'elementor-extras' ),
+				'label' => __( 'Hover', 'landtech-extras-for-elementor' ),
 				'condition'	=> [
 					'carousel_arrows!' => '',
 					'show_thumbnails!' => '',
@@ -2421,7 +2488,7 @@ class Gallery_Slider extends Extras_Widget {
 				$this->add_control(
 					'carousel_arrows_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-gallery-slider__gallery .ee-swiper__button:hover i:before' => 'color: {{VALUE}};',
@@ -2437,7 +2504,7 @@ class Gallery_Slider extends Extras_Widget {
 				$this->add_control(
 					'carousel_arrows_background_color_hover',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-gallery-slider__gallery .ee-swiper__button:hover' => 'background-color: {{VALUE}};',
@@ -2453,7 +2520,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->end_controls_tab();
 
 			$this->start_controls_tab( 'carousel_arrows_tab_disabled', [
-				'label' => __( 'Disabled', 'elementor-extras' ),
+				'label' => __( 'Disabled', 'landtech-extras-for-elementor' ),
 				'condition'	=> [
 					'show_thumbnails!' => '',
 					'thumbnails_carousel!' => '',
@@ -2464,7 +2531,7 @@ class Gallery_Slider extends Extras_Widget {
 				$this->add_responsive_control(
 					'carousel_arrows_opacity_disabled',
 					[
-						'label' 		=> __( 'Opacity', 'elementor-extras' ),
+						'label' 		=> __( 'Opacity', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SLIDER,
 						'range' 		=> [
 							'px' 		=> [
@@ -2493,7 +2560,7 @@ class Gallery_Slider extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_captions',
 			[
-				'label' 	=> __( 'Thumbnails Captions', 'elementor-extras' ),
+				'label' 	=> __( 'Thumbnails Captions', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'thumbnails_caption_type!' => '',
@@ -2505,19 +2572,19 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'vertical_align',
 				[
-					'label' 	=> __( 'Vertical Align', 'elementor-extras' ),
+					'label' 	=> __( 'Vertical Align', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::CHOOSE,
 					'options' 	=> [
 						'top' 	=> [
-							'title' 	=> __( 'Top', 'elementor-extras' ),
+							'title' 	=> __( 'Top', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-top',
 						],
 						'middle' 		=> [
-							'title' 	=> __( 'Middle', 'elementor-extras' ),
+							'title' 	=> __( 'Middle', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-middle',
 						],
 						'bottom' 		=> [
-							'title' 	=> __( 'Bottom', 'elementor-extras' ),
+							'title' 	=> __( 'Bottom', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-bottom',
 						],
 					],
@@ -2531,23 +2598,23 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'horizontal_align',
 				[
-					'label' 	=> __( 'Horizontal Align', 'elementor-extras' ),
+					'label' 	=> __( 'Horizontal Align', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::CHOOSE,
 					'options' 	=> [
 						'left' 	=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-right',
 						],
 						'justify' 		=> [
-							'title' 	=> __( 'Justify', 'elementor-extras' ),
+							'title' 	=> __( 'Justify', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-stretch',
 						],
 					],
@@ -2561,19 +2628,19 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'align',
 				[
-					'label' 	=> __( 'Text Align', 'elementor-extras' ),
+					'label' 	=> __( 'Text Align', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::CHOOSE,
 					'options' 	=> [
 						'left' 	=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -2591,7 +2658,7 @@ class Gallery_Slider extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -2605,7 +2672,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'text_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
@@ -2620,7 +2687,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'text_margin',
 				[
-					'label' 		=> __( 'Margin', 'elementor-extras' ),
+					'label' 		=> __( 'Margin', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
@@ -2637,7 +2704,7 @@ class Gallery_Slider extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'text_border',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '{{WRAPPER}} .ee-gallery__media__caption',
 					'separator' => '',
 					'condition' => [
@@ -2649,7 +2716,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'text_border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
@@ -2666,7 +2733,7 @@ class Gallery_Slider extends Extras_Widget {
 		$this->start_controls_section(
 			'section_thumbnails_hover_effects',
 			[
-				'label' 	=> __( 'Thumbnails Hover Effects', 'elementor-extras' ),
+				'label' 	=> __( 'Thumbnails Hover Effects', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'show_thumbnails!' => '',
@@ -2677,7 +2744,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'hover_thubmanils_images_heading',
 				[
-					'label' 	=> __( 'Images', 'elementor-extras' ),
+					'label' 	=> __( 'Images', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 				]
 			);
@@ -2699,12 +2766,12 @@ class Gallery_Slider extends Extras_Widget {
 
 			$this->start_controls_tabs( 'image_style' );
 
-				$this->start_controls_tab( 'image_style_default', [ 'label' => __( 'Default', 'elementor-extras' ), ] );
+				$this->start_controls_tab( 'image_style_default', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ), ] );
 
 					$this->add_control(
 						'image_background_color',
 						[
-							'label' 	=> __( 'Background Color', 'elementor-extras' ),
+							'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::COLOR,
 							'selectors' => [
 								'{{WRAPPER}} .ee-gallery__media-wrapper' => 'background-color: {{VALUE}};',
@@ -2715,7 +2782,7 @@ class Gallery_Slider extends Extras_Widget {
 					$this->add_responsive_control(
 						'image_opacity',
 						[
-							'label' 	=> __( 'Opacity (%)', 'elementor-extras' ),
+							'label' 	=> __( 'Opacity (%)', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::SLIDER,
 							'default' 	=> [
 								'size' 	=> 1,
@@ -2736,7 +2803,7 @@ class Gallery_Slider extends Extras_Widget {
 					$this->add_responsive_control(
 						'image_scale',
 						[
-							'label' 		=> __( 'Scale', 'elementor-extras' ),
+							'label' 		=> __( 'Scale', 'landtech-extras-for-elementor' ),
 							'type' 			=> Controls_Manager::SLIDER,
 							'range' 		=> [
 								'px' 		=> [
@@ -2770,12 +2837,12 @@ class Gallery_Slider extends Extras_Widget {
 
 				$this->end_controls_tab();
 
-				$this->start_controls_tab( 'image_style_hover', [ 'label' 	=> __( 'Hover', 'elementor-extras' ), ] );
+				$this->start_controls_tab( 'image_style_hover', [ 'label' 	=> __( 'Hover', 'landtech-extras-for-elementor' ), ] );
 
 					$this->add_control(
 						'image_background_color_hover',
 						[
-							'label' 	=> __( 'Background Color', 'elementor-extras' ),
+							'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::COLOR,
 							'selectors' => [
 								'{{WRAPPER}} .ee-gallery__media:hover .ee-gallery__media-wrapper' => 'background-color: {{VALUE}};',
@@ -2786,7 +2853,7 @@ class Gallery_Slider extends Extras_Widget {
 					$this->add_responsive_control(
 						'image_opacity_hover',
 						[
-							'label' 	=> __( 'Opacity (%)', 'elementor-extras' ),
+							'label' 	=> __( 'Opacity (%)', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::SLIDER,
 							'default' 	=> [
 								'size' 	=> 1,
@@ -2807,7 +2874,7 @@ class Gallery_Slider extends Extras_Widget {
 					$this->add_responsive_control(
 						'image_scale_hover',
 						[
-							'label' 		=> __( 'Scale', 'elementor-extras' ),
+							'label' 		=> __( 'Scale', 'landtech-extras-for-elementor' ),
 							'type' 			=> Controls_Manager::SLIDER,
 							'range' 		=> [
 								'px' 		=> [
@@ -2834,7 +2901,7 @@ class Gallery_Slider extends Extras_Widget {
 					$this->add_control(
 						'image_border_color_hover',
 						[
-							'label' 	=> __( 'Border Color', 'elementor-extras' ),
+							'label' 	=> __( 'Border Color', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::COLOR,
 							'selectors' => [
 								'{{WRAPPER}} .ee-gallery__media:hover .ee-gallery__media-wrapper' => 'border-color: {{VALUE}};',
@@ -2852,12 +2919,12 @@ class Gallery_Slider extends Extras_Widget {
 
 				$this->end_controls_tab();
 
-				$this->start_controls_tab( 'image_style_active', [ 'label' 	=> __( 'Active', 'elementor-extras' ), ] );
+				$this->start_controls_tab( 'image_style_active', [ 'label' 	=> __( 'Active', 'landtech-extras-for-elementor' ), ] );
 
 					$this->add_control(
 						'image_background_color_active',
 						[
-							'label' 	=> __( 'Background Color', 'elementor-extras' ),
+							'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::COLOR,
 							'selectors' => [
 								'{{WRAPPER}} .ee-gallery__item.is--active .ee-gallery__media-wrapper' => 'background-color: {{VALUE}};',
@@ -2868,7 +2935,7 @@ class Gallery_Slider extends Extras_Widget {
 					$this->add_responsive_control(
 						'image_opacity_active',
 						[
-							'label' 	=> __( 'Opacity (%)', 'elementor-extras' ),
+							'label' 	=> __( 'Opacity (%)', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::SLIDER,
 							'default' 	=> [
 								'size' 	=> 1,
@@ -2889,7 +2956,7 @@ class Gallery_Slider extends Extras_Widget {
 					$this->add_responsive_control(
 						'image_scale_active',
 						[
-							'label' 		=> __( 'Scale', 'elementor-extras' ),
+							'label' 		=> __( 'Scale', 'landtech-extras-for-elementor' ),
 							'type' 			=> Controls_Manager::SLIDER,
 							'range' 		=> [
 								'px' 		=> [
@@ -2916,7 +2983,7 @@ class Gallery_Slider extends Extras_Widget {
 					$this->add_control(
 						'image_border_color_active',
 						[
-							'label' 	=> __( 'Border Color', 'elementor-extras' ),
+							'label' 	=> __( 'Border Color', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::COLOR,
 							'selectors' => [
 								'{{WRAPPER}} .ee-gallery__item.is--active .ee-gallery__media-wrapper' => 'border-color: {{VALUE}};',
@@ -2939,7 +3006,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'hover_thubmanils_captions_heading',
 				[
-					'label' 	=> __( 'Captions', 'elementor-extras' ),
+					'label' 	=> __( 'Captions', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 					'condition' 	=> [
@@ -2967,29 +3034,29 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'caption_effect',
 				[
-					'label' 	=> __( 'Effect', 'elementor-extras' ),
+					'label' 	=> __( 'Effect', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> '',
 					'options' => [
-						''					=> __( 'None', 'elementor-extras' ),
-						'fade-in'			=> __( 'Fade In', 'elementor-extras' ),
-						'fade-out'			=> __( 'Fade Out', 'elementor-extras' ),
-						'from-top'			=> __( 'From Top', 'elementor-extras' ),
-						'from-right'		=> __( 'From Right', 'elementor-extras' ),
-						'from-bottom'		=> __( 'From Bottom', 'elementor-extras' ),
-						'from-left'			=> __( 'From Left', 'elementor-extras' ),
-						'fade-from-top'		=> __( 'Fade From Top', 'elementor-extras' ),
-						'fade-from-right'	=> __( 'Fade From Right', 'elementor-extras' ),
-						'fade-from-bottom'	=> __( 'Fade From Bottom', 'elementor-extras' ),
-						'fade-from-left'	=> __( 'Fade From Left', 'elementor-extras' ),
-						'to-top'			=> __( 'To Top', 'elementor-extras' ),
-						'to-right'			=> __( 'To Right', 'elementor-extras' ),
-						'to-bottom'			=> __( 'To Bottom', 'elementor-extras' ),
-						'to-left'			=> __( 'To Left', 'elementor-extras' ),
-						'fade-to-top'		=> __( 'Fade To Top', 'elementor-extras' ),
-						'fade-to-right'		=> __( 'Fade To Right', 'elementor-extras' ),
-						'fade-to-bottom'	=> __( 'Fade To Bottom', 'elementor-extras' ),
-						'fade-to-left'		=> __( 'Fade To Left', 'elementor-extras' ),
+						''					=> __( 'None', 'landtech-extras-for-elementor' ),
+						'fade-in'			=> __( 'Fade In', 'landtech-extras-for-elementor' ),
+						'fade-out'			=> __( 'Fade Out', 'landtech-extras-for-elementor' ),
+						'from-top'			=> __( 'From Top', 'landtech-extras-for-elementor' ),
+						'from-right'		=> __( 'From Right', 'landtech-extras-for-elementor' ),
+						'from-bottom'		=> __( 'From Bottom', 'landtech-extras-for-elementor' ),
+						'from-left'			=> __( 'From Left', 'landtech-extras-for-elementor' ),
+						'fade-from-top'		=> __( 'Fade From Top', 'landtech-extras-for-elementor' ),
+						'fade-from-right'	=> __( 'Fade From Right', 'landtech-extras-for-elementor' ),
+						'fade-from-bottom'	=> __( 'Fade From Bottom', 'landtech-extras-for-elementor' ),
+						'fade-from-left'	=> __( 'Fade From Left', 'landtech-extras-for-elementor' ),
+						'to-top'			=> __( 'To Top', 'landtech-extras-for-elementor' ),
+						'to-right'			=> __( 'To Right', 'landtech-extras-for-elementor' ),
+						'to-bottom'			=> __( 'To Bottom', 'landtech-extras-for-elementor' ),
+						'to-left'			=> __( 'To Left', 'landtech-extras-for-elementor' ),
+						'fade-to-top'		=> __( 'Fade To Top', 'landtech-extras-for-elementor' ),
+						'fade-to-right'		=> __( 'Fade To Right', 'landtech-extras-for-elementor' ),
+						'fade-to-bottom'	=> __( 'Fade To Bottom', 'landtech-extras-for-elementor' ),
+						'fade-to-left'		=> __( 'Fade To Left', 'landtech-extras-for-elementor' ),
 					],
 					'condition' 	=> [
 						'thumbnails_caption_type!' 	=> '',
@@ -3001,7 +3068,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->start_controls_tabs( 'caption_style' );
 
 				$this->start_controls_tab( 'caption_style_default', [
-					'label' 	=> __( 'Default', 'elementor-extras' ),
+					'label' 	=> __( 'Default', 'landtech-extras-for-elementor' ),
 					'condition' => [
 						'thumbnails_caption_type!' => '',
 					],
@@ -3010,7 +3077,7 @@ class Gallery_Slider extends Extras_Widget {
 					$this->add_control(
 						'text_color',
 						[
-							'label' 	=> __( 'Color', 'elementor-extras' ),
+							'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::COLOR,
 							'default' 	=> '',
 							'selectors' => [
@@ -3025,7 +3092,7 @@ class Gallery_Slider extends Extras_Widget {
 					$this->add_control(
 						'text_background_color',
 						[
-							'label' 	=> __( 'Background', 'elementor-extras' ),
+							'label' 	=> __( 'Background', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::COLOR,
 							'default' 	=> '',
 							'selectors' => [
@@ -3040,7 +3107,7 @@ class Gallery_Slider extends Extras_Widget {
 					$this->add_control(
 						'text_opacity',
 						[
-							'label' 	=> __( 'Opacity (%)', 'elementor-extras' ),
+							'label' 	=> __( 'Opacity (%)', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::SLIDER,
 							'default' 	=> [
 								'size' 	=> 1,
@@ -3077,7 +3144,7 @@ class Gallery_Slider extends Extras_Widget {
 				$this->end_controls_tab();
 
 				$this->start_controls_tab( 'caption_style_hover', [
-					'label' 	=> __( 'Hover', 'elementor-extras' ),
+					'label' 	=> __( 'Hover', 'landtech-extras-for-elementor' ),
 					'condition' => [
 						'thumbnails_caption_type!' => '',
 					],
@@ -3086,7 +3153,7 @@ class Gallery_Slider extends Extras_Widget {
 					$this->add_control(
 						'text_color_hover',
 						[
-							'label' 	=> __( 'Color', 'elementor-extras' ),
+							'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::COLOR,
 							'default' 	=> '',
 							'selectors' => [
@@ -3101,7 +3168,7 @@ class Gallery_Slider extends Extras_Widget {
 					$this->add_control(
 						'text_background_color_hover',
 						[
-							'label' 	=> __( 'Background', 'elementor-extras' ),
+							'label' 	=> __( 'Background', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::COLOR,
 							'default' 	=> '',
 							'selectors' => [
@@ -3116,7 +3183,7 @@ class Gallery_Slider extends Extras_Widget {
 					$this->add_control(
 						'text_opacity_hover',
 						[
-							'label' 	=> __( 'Opacity (%)', 'elementor-extras' ),
+							'label' 	=> __( 'Opacity (%)', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::SLIDER,
 							'default' 	=> [
 								'size' 	=> 1,
@@ -3141,7 +3208,7 @@ class Gallery_Slider extends Extras_Widget {
 					$this->add_control(
 						'text_border_color_hover',
 						[
-							'label' 	=> __( 'Border Color', 'elementor-extras' ),
+							'label' 	=> __( 'Border Color', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::COLOR,
 							'default' 	=> '',
 							'selectors' => [
@@ -3169,7 +3236,7 @@ class Gallery_Slider extends Extras_Widget {
 				$this->end_controls_tab();
 
 				$this->start_controls_tab( 'caption_style_active', [
-					'label' 	=> __( 'Active', 'elementor-extras' ),
+					'label' 	=> __( 'Active', 'landtech-extras-for-elementor' ),
 					'condition' => [
 						'thumbnails_caption_type!' => '',
 					],
@@ -3178,7 +3245,7 @@ class Gallery_Slider extends Extras_Widget {
 					$this->add_control(
 						'text_color_active',
 						[
-							'label' 	=> __( 'Color', 'elementor-extras' ),
+							'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::COLOR,
 							'default' 	=> '',
 							'selectors' => [
@@ -3193,7 +3260,7 @@ class Gallery_Slider extends Extras_Widget {
 					$this->add_control(
 						'text_background_color_active',
 						[
-							'label' 	=> __( 'Background', 'elementor-extras' ),
+							'label' 	=> __( 'Background', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::COLOR,
 							'default' 	=> '',
 							'selectors' => [
@@ -3208,7 +3275,7 @@ class Gallery_Slider extends Extras_Widget {
 					$this->add_control(
 						'text_opacity_active',
 						[
-							'label' 	=> __( 'Opacity (%)', 'elementor-extras' ),
+							'label' 	=> __( 'Opacity (%)', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::SLIDER,
 							'default' 	=> [
 								'size' 	=> 1,
@@ -3233,7 +3300,7 @@ class Gallery_Slider extends Extras_Widget {
 					$this->add_control(
 						'text_border_color_active',
 						[
-							'label' 	=> __( 'Border Color', 'elementor-extras' ),
+							'label' 	=> __( 'Border Color', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::COLOR,
 							'default' 	=> '',
 							'selectors' => [
@@ -3264,7 +3331,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_control(
 				'hover_thubmanils_overlay_heading',
 				[
-					'label' 	=> __( 'Overlay', 'elementor-extras' ),
+					'label' 	=> __( 'Overlay', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -3285,7 +3352,7 @@ class Gallery_Slider extends Extras_Widget {
 
 			$this->start_controls_tabs( 'overlay_style' );
 
-				$this->start_controls_tab( 'overlay_style_default', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+				$this->start_controls_tab( 'overlay_style_default', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 					$this->add_group_control(
 						Group_Control_Background::get_type(),
@@ -3294,6 +3361,7 @@ class Gallery_Slider extends Extras_Widget {
 							'types' 	=> [ 'classic', 'gradient' ],
 							'selector' 	=> '{{WRAPPER}} .ee-gallery__media__overlay',
 							'default'	=> 'classic',
+							// phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor group control option, not WP_Query.
 							'exclude'	=> [
 								'image',
 							]
@@ -3303,19 +3371,19 @@ class Gallery_Slider extends Extras_Widget {
 					$this->add_control(
 						'overlay_blend',
 						[
-							'label' 		=> __( 'Blend mode', 'elementor-extras' ),
+							'label' 		=> __( 'Blend mode', 'landtech-extras-for-elementor' ),
 							'type' 			=> Controls_Manager::SELECT,
 							'default' 		=> 'normal',
 							'options' => [
-								'normal'			=> __( 'Normal', 'elementor-extras' ),
-								'multiply'			=> __( 'Multiply', 'elementor-extras' ),
-								'screen'			=> __( 'Screen', 'elementor-extras' ),
-								'overlay'			=> __( 'Overlay', 'elementor-extras' ),
-								'darken'			=> __( 'Darken', 'elementor-extras' ),
-								'lighten'			=> __( 'Lighten', 'elementor-extras' ),
-								'color'				=> __( 'Color', 'elementor-extras' ),
-								'color-dodge'		=> __( 'Color Dodge', 'elementor-extras' ),
-								'hue'				=> __( 'Hue', 'elementor-extras' ),
+								'normal'			=> __( 'Normal', 'landtech-extras-for-elementor' ),
+								'multiply'			=> __( 'Multiply', 'landtech-extras-for-elementor' ),
+								'screen'			=> __( 'Screen', 'landtech-extras-for-elementor' ),
+								'overlay'			=> __( 'Overlay', 'landtech-extras-for-elementor' ),
+								'darken'			=> __( 'Darken', 'landtech-extras-for-elementor' ),
+								'lighten'			=> __( 'Lighten', 'landtech-extras-for-elementor' ),
+								'color'				=> __( 'Color', 'landtech-extras-for-elementor' ),
+								'color-dodge'		=> __( 'Color Dodge', 'landtech-extras-for-elementor' ),
+								'hue'				=> __( 'Hue', 'landtech-extras-for-elementor' ),
 							],
 							'selectors' 	=> [
 								'{{WRAPPER}} .ee-gallery__media__overlay' => 'mix-blend-mode: {{VALUE}};',
@@ -3327,7 +3395,12 @@ class Gallery_Slider extends Extras_Widget {
 						'overlay_blend_notice',
 						[
 							'type' 				=> Controls_Manager::RAW_HTML,
-							'raw' 				=> sprintf( __( 'Please check blend mode support for your browser %1$s here %2$s', 'elementor-extras' ), '<a href="https://caniuse.com/#search=mix-blend-mode" target="_blank">', '</a>' ),
+							'raw' 				=> sprintf(
+								/* translators: 1–2: link markup to caniuse.com mix-blend-mode. */
+								__( 'Please check blend mode support for your browser %1$s here %2$s', 'landtech-extras-for-elementor' ),
+								'<a href="https://caniuse.com/#search=mix-blend-mode" target="_blank">',
+								'</a>'
+							),
 							'content_classes' 	=> 'elementor-panel-alert elementor-panel-alert-warning',
 							'condition' 		=> [
 								'overlay_blend!' => 'normal'
@@ -3338,7 +3411,7 @@ class Gallery_Slider extends Extras_Widget {
 					$this->add_responsive_control(
 						'overlay_margin',
 						[
-							'label' 	=> __( 'Margin', 'elementor-extras' ),
+							'label' 	=> __( 'Margin', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::SLIDER,
 							'range' 	=> [
 								'px' 	=> [
@@ -3356,7 +3429,7 @@ class Gallery_Slider extends Extras_Widget {
 					$this->add_responsive_control(
 						'overlay_opacity',
 						[
-							'label' 	=> __( 'Opacity (%)', 'elementor-extras' ),
+							'label' 	=> __( 'Opacity (%)', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::SLIDER,
 							'default' 	=> [
 								'size' 	=> 1,
@@ -3378,14 +3451,14 @@ class Gallery_Slider extends Extras_Widget {
 						Group_Control_Border::get_type(),
 						[
 							'name' 		=> 'overlay_border',
-							'label' 	=> __( 'Border', 'elementor-extras' ),
+							'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 							'selector' 	=> '{{WRAPPER}} .ee-gallery__media__overlay',
 						]
 					);
 
 				$this->end_controls_tab();
 
-				$this->start_controls_tab( 'overlay_style_hover', [ 'label' => __( 'Hover', 'elementor-extras' ) ] );
+				$this->start_controls_tab( 'overlay_style_hover', [ 'label' => __( 'Hover', 'landtech-extras-for-elementor' ) ] );
 
 					$this->add_group_control(
 						Group_Control_Background::get_type(),
@@ -3394,6 +3467,7 @@ class Gallery_Slider extends Extras_Widget {
 							'types' 	=> [ 'classic', 'gradient' ],
 							'selector' 	=> '{{WRAPPER}} .ee-gallery__media:hover .ee-gallery__media__overlay',
 							'default'	=> 'classic',
+							// phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor group control option, not WP_Query.
 							'exclude'	=> [
 								'image',
 							]
@@ -3403,7 +3477,7 @@ class Gallery_Slider extends Extras_Widget {
 					$this->add_responsive_control(
 						'overlay_margin_hover',
 						[
-							'label' 	=> __( 'Margin', 'elementor-extras' ),
+							'label' 	=> __( 'Margin', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::SLIDER,
 							'range' 	=> [
 								'px' 	=> [
@@ -3421,7 +3495,7 @@ class Gallery_Slider extends Extras_Widget {
 					$this->add_responsive_control(
 						'overlay_opacity_hover',
 						[
-							'label' 	=> __( 'Opacity (%)', 'elementor-extras' ),
+							'label' 	=> __( 'Opacity (%)', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::SLIDER,
 							'range' 	=> [
 								'px' 	=> [
@@ -3440,14 +3514,14 @@ class Gallery_Slider extends Extras_Widget {
 						Group_Control_Border::get_type(),
 						[
 							'name' 		=> 'overlay_border_hover',
-							'label' 	=> __( 'Border', 'elementor-extras' ),
+							'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 							'selector' 	=> '{{WRAPPER}} .ee-gallery__media:hover .ee-gallery__media__overlay',
 						]
 					);
 
 				$this->end_controls_tab();
 
-				$this->start_controls_tab( 'overlay_style_active', [ 'label' => __( 'Active', 'elementor-extras' ) ] );
+				$this->start_controls_tab( 'overlay_style_active', [ 'label' => __( 'Active', 'landtech-extras-for-elementor' ) ] );
 
 					$this->add_group_control(
 						Group_Control_Background::get_type(),
@@ -3456,6 +3530,7 @@ class Gallery_Slider extends Extras_Widget {
 							'types' 	=> [ 'classic', 'gradient' ],
 							'selector' 	=> '{{WRAPPER}} .ee-gallery__item.is--active .ee-gallery__media__overlay',
 							'default'	=> 'classic',
+							// phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor group control option, not WP_Query.
 							'exclude'	=> [
 								'image',
 							]
@@ -3465,7 +3540,7 @@ class Gallery_Slider extends Extras_Widget {
 					$this->add_responsive_control(
 						'overlay_margin_active',
 						[
-							'label' 	=> __( 'Margin', 'elementor-extras' ),
+							'label' 	=> __( 'Margin', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::SLIDER,
 							'range' 	=> [
 								'px' 	=> [
@@ -3483,7 +3558,7 @@ class Gallery_Slider extends Extras_Widget {
 					$this->add_responsive_control(
 						'overlay_opacity_active',
 						[
-							'label' 	=> __( 'Opacity (%)', 'elementor-extras' ),
+							'label' 	=> __( 'Opacity (%)', 'landtech-extras-for-elementor' ),
 							'type' 		=> Controls_Manager::SLIDER,
 							'range' 	=> [
 								'px' 	=> [
@@ -3502,7 +3577,7 @@ class Gallery_Slider extends Extras_Widget {
 						Group_Control_Border::get_type(),
 						[
 							'name' 		=> 'overlay_border_active',
-							'label' 	=> __( 'Border', 'elementor-extras' ),
+							'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 							'selector' 	=> '{{WRAPPER}} .ee-gallery__item.is--active .ee-gallery__media__overlay',
 						]
 					);
@@ -3512,6 +3587,34 @@ class Gallery_Slider extends Extras_Widget {
 			$this->end_controls_tabs();
 
 		$this->end_controls_section();
+	}
+
+	/**
+	 * Effective gallery rows for the slider (Media Library or ACF).
+	 *
+	 * @since 2.2.54
+	 *
+	 * @param array<string, mixed> $settings Widget settings (display).
+	 * @return array<int, array<string, mixed>>
+	 */
+	protected function resolve_slider_gallery_dataset( array $settings ) {
+
+		$source = isset( $settings['gallery_source'] ) ? (string) $settings['gallery_source'] : 'media_library';
+
+		if ( 'acf_gallery' === $source && ACF_Gallery_Bridge::is_enabled() ) {
+			$post_id = isset( $settings['acf_post_id'] ) ? absint( $settings['acf_post_id'] ) : 0;
+
+			return ACF_Gallery_Bridge::get_items(
+				isset( $settings['acf_field_name'] ) ? $settings['acf_field_name'] : '',
+				$post_id
+			);
+		}
+
+		if ( ! empty( $settings['wp_gallery'] ) && is_array( $settings['wp_gallery'] ) ) {
+			return $settings['wp_gallery'];
+		}
+
+		return array();
 	}
 
 	/**
@@ -3525,8 +3628,23 @@ class Gallery_Slider extends Extras_Widget {
 	protected function render() {
 		$settings = $this->get_settings_for_display();
 
-		if ( ! $settings['wp_gallery'] )
+		$this->slider_gallery_dataset = $this->resolve_slider_gallery_dataset( $settings );
+
+		if ( empty( $this->slider_gallery_dataset ) ) {
+			if ( $this->_is_edit_mode ) {
+				$src = isset( $settings['gallery_source'] ) ? (string) $settings['gallery_source'] : '';
+				if ( 'acf_gallery' === $src && ! ACF_Gallery_Bridge::is_enabled() ) {
+					echo '<div class="ee-gallery--editor-notice">';
+					esc_html_e( 'ACF Gallery requires Advanced Custom Fields (ACF) and a valid Gallery field on the target post.', 'landtech-extras-for-elementor' );
+					echo '</div>';
+				} elseif ( 'acf_gallery' === $src && ACF_Gallery_Bridge::is_enabled() ) {
+					echo '<div class="ee-gallery--editor-notice">';
+					esc_html_e( 'No gallery images found. Check the ACF field name, Post ID, and that the field contains images on that post.', 'landtech-extras-for-elementor' );
+					echo '</div>';
+				}
+			}
 			return;
+		}
 
 		$this->add_render_attribute( [
 			'wrapper' => [
@@ -3565,6 +3683,11 @@ class Gallery_Slider extends Extras_Widget {
 			],
 		] );
 
+		$gallery_src = isset( $settings['gallery_source'] ) ? (string) $settings['gallery_source'] : '';
+		if ( 'acf_gallery' === $gallery_src && ACF_Gallery_Bridge::is_enabled() ) {
+			$this->add_render_attribute( 'wrapper', 'data-ltx-acf-gallery', '1' );
+		}
+
 		if ( $settings['columns'] ) {
 			$this->add_render_attribute( 'shortcode', 'columns', $settings['columns'] );
 		}
@@ -3573,7 +3696,7 @@ class Gallery_Slider extends Extras_Widget {
 			$this->add_render_attribute( 'shortcode', 'orderby', $settings['gallery_rand'] );
 		}
 
-		?><div <?php echo $this->get_render_attribute_string( 'wrapper' ); ?>>
+		?><div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
 			<?php $this->render_preview(); ?>
 			<?php $this->render_gallery(); ?>
 
@@ -3591,7 +3714,7 @@ class Gallery_Slider extends Extras_Widget {
 	protected function render_gallery() {
 		$settings = $this->get_settings_for_display();
 
-		$hide_single = '' !== $settings['thumbnails_hide_single'] && 2 > count( $settings['wp_gallery'] );
+		$hide_single = '' !== $settings['thumbnails_hide_single'] && 2 > count( $this->slider_gallery_dataset );
 
 		if ( '' === $settings['show_thumbnails'] || $hide_single ) {
 			return;
@@ -3653,14 +3776,14 @@ class Gallery_Slider extends Extras_Widget {
 			] );
 		}
 
-		?><div <?php echo $this->get_render_attribute_string( 'gallery-wrapper' ); ?>><?php 
+		?><div <?php $this->print_render_attribute_string( 'gallery-wrapper' ); ?>><?php 
 
 		if ( $is_carousel ) {
-			?><div <?php echo $this->get_render_attribute_string( 'swiper-container-wrapper' ); ?>><?php
-				?><div <?php echo $this->get_render_attribute_string( 'swiper-container' ); ?>><?php
+			?><div <?php $this->print_render_attribute_string( 'swiper-container-wrapper' ); ?>><?php
+				?><div <?php $this->print_render_attribute_string( 'swiper-container' ); ?>><?php
 		}
-					?><div <?php echo $this->get_render_attribute_string( 'gallery' ); ?>>
-						<?php echo $this->render_gallery_items(); ?>
+					?><div <?php $this->print_render_attribute_string( 'gallery' ); ?>>
+						<?php $this->render_gallery_items(); ?>
 					</div><?php
 
 		if ( $is_carousel ) {
@@ -3691,12 +3814,12 @@ class Gallery_Slider extends Extras_Widget {
 	protected function render_gallery_items() {
 
 		$settings 			= $this->get_settings_for_display();
-		$gallery 			= $settings['wp_gallery'];
+		$gallery 			= $this->slider_gallery_dataset;
 		$media_tag 			= 'figure';
 
 		foreach ( $gallery as $index => $item ) {
 
-			$item_url = ( in_array( 'url', $item ) ) ? $item['url'] : '';
+			$item_url = isset( $item['url'] ) ? $item['url'] : '';
 
 			$image = Module::get_image_info( $item['id'], $item_url, $settings['thumbnail_size'] );
 
@@ -3723,15 +3846,15 @@ class Gallery_Slider extends Extras_Widget {
 
 			?>
 
-			<div <?php echo $this->get_render_attribute_string( 'gallery-item' ); ?>>
+			<div <?php $this->print_render_attribute_string( 'gallery-item' ); ?>>
 
-				<<?php echo $media_tag; ?> <?php echo $this->get_render_attribute_string( $gallery_media_key ); ?>>
-					<div <?php echo $this->get_render_attribute_string( $gallery_media_wrapper_key ); ?>>
+				<<?php echo esc_html( $this->get_gallery_media_tag_name( $media_tag ) ); ?> <?php $this->print_render_attribute_string( $gallery_media_key ); ?>>
+					<div <?php $this->print_render_attribute_string( $gallery_media_wrapper_key ); ?>>
 						<?php $this->render_image_thumbnail( $image ); ?>
 						<?php $this->render_image_overlay(); ?>
 						<?php $this->render_image_caption( $item ); ?>
 					</div>
-				</<?php echo $media_tag; ?>>
+				</<?php echo esc_html( $this->get_gallery_media_tag_name( $media_tag ) ); ?>>
 				
 			</div>
 
@@ -3746,8 +3869,8 @@ class Gallery_Slider extends Extras_Widget {
 	 * @return void
 	 */
 	protected function render_image_thumbnail( $image ) {
-		?><div <?php echo $this->get_render_attribute_string( 'gallery-thumbnail' ); ?>>
-			<?php echo $image['image']; ?>
+		?><div <?php $this->print_render_attribute_string( 'gallery-thumbnail' ); ?>>
+			<?php echo wp_kses_post( $image['image'] ); ?>
 		</div><?php
 	}
 
@@ -3770,9 +3893,9 @@ class Gallery_Slider extends Extras_Widget {
 			return;
 		}
 
-		?><figcaption <?php echo $this->get_render_attribute_string( 'gallery-content' ); ?>>
-			<div <?php echo $this->get_render_attribute_string( 'gallery-caption' ); ?>>
-				<?php echo $caption; ?>
+		?><figcaption <?php $this->print_render_attribute_string( 'gallery-content' ); ?>>
+			<div <?php $this->print_render_attribute_string( 'gallery-caption' ); ?>>
+				<?php echo wp_kses_post( $caption ); ?>
 			</div>
 		</figcaption><?php
 	}
@@ -3784,7 +3907,7 @@ class Gallery_Slider extends Extras_Widget {
 	 * @return void
 	 */
 	protected function render_image_overlay() {
-		?><div <?php echo $this->get_render_attribute_string( 'gallery-overlay' ); ?>></div><?php
+		?><div <?php $this->print_render_attribute_string( 'gallery-overlay' ); ?>></div><?php
 	}
 
 	/**
@@ -3832,11 +3955,11 @@ class Gallery_Slider extends Extras_Widget {
 			}
 		}
 		
-		?><div <?php echo $this->get_render_attribute_string( 'preview' ); ?> dir="<?php echo $settings['direction']; ?>">
-			<div <?php echo $this->get_render_attribute_string( 'slider-container' ); ?>>
-				<div <?php echo $this->get_render_attribute_string( 'swiper-wrapper' ); ?>>
-					<div <?php echo $this->get_render_attribute_string( 'slider' ); ?>>
-						<?php echo $this->render_preview_items(); ?>
+		?><div <?php $this->print_render_attribute_string( 'preview' ); ?> dir="<?php echo esc_attr( in_array( $settings['direction'], array( 'ltr', 'rtl' ), true ) ? $settings['direction'] : 'ltr' ); ?>">
+			<div <?php $this->print_render_attribute_string( 'slider-container' ); ?>>
+				<div <?php $this->print_render_attribute_string( 'swiper-wrapper' ); ?>>
+					<div <?php $this->print_render_attribute_string( 'slider' ); ?>>
+						<?php $this->render_preview_items(); ?>
 					</div>
 				</div><?php
 
@@ -3859,7 +3982,7 @@ class Gallery_Slider extends Extras_Widget {
 	 */
 	private function render_preview_items() {
 		$settings 	= $this->get_settings_for_display();
-		$gallery 	= $settings['wp_gallery'];
+		$gallery 	= $this->slider_gallery_dataset;
 
 		foreach ( $gallery as $index => $item ) {
 			$url 		= Group_Control_Image_Size::get_attachment_image_src( $item['id'], 'preview', $settings );
@@ -3956,23 +4079,23 @@ class Gallery_Slider extends Extras_Widget {
 				] );
 			}
 
-			?><div <?php echo $this->get_render_attribute_string( $slide_key ); ?>>
-				<<?php echo $media_tag; ?> <?php echo $this->get_render_attribute_string( $media_key ); ?>>
-					<div <?php echo $this->get_render_attribute_string( $media_wrapper_key ); ?>>
-						<div <?php echo $this->get_render_attribute_string( $thumbnail_key ); ?>>
-							<img <?php echo $this->get_render_attribute_string( $image_key ); ?> />
+			?><div <?php $this->print_render_attribute_string( $slide_key ); ?>>
+				<<?php echo esc_html( $this->get_gallery_media_tag_name( $media_tag ) ); ?> <?php $this->print_render_attribute_string( $media_key ); ?>>
+					<div <?php $this->print_render_attribute_string( $media_wrapper_key ); ?>>
+						<div <?php $this->print_render_attribute_string( $thumbnail_key ); ?>>
+							<img <?php $this->print_render_attribute_string( $image_key ); ?> />
 						</div>
 						<?php if ( $captions ) { ?>
-						<div <?php echo $this->get_render_attribute_string( $content_key ); ?>>
-							<figcaption <?php echo $this->get_render_attribute_string( $caption_key ); ?>>
+						<div <?php $this->print_render_attribute_string( $content_key ); ?>>
+							<figcaption <?php $this->print_render_attribute_string( $caption_key ); ?>>
 								<?php foreach ( (array)$captions as $caption_type => $caption ) {
-									call_user_func_array( '\ElementorExtras\Modules\Image\Module::render_image_' . $caption_type, [ $caption ] );
+									call_user_func_array( '\LandTechExtras\Modules\Image\Module::render_image_' . $caption_type, [ $caption ] );
 								} ?>
 							</figcaption>
 						</div>
 						<?php } ?>
 					</div>
-				</<?php echo $media_tag; ?>>
+				</<?php echo esc_html( $this->get_gallery_media_tag_name( $media_tag ) ); ?>>
 			</div><?php
 
 		}
@@ -4004,8 +4127,8 @@ class Gallery_Slider extends Extras_Widget {
 			],
 		] );
 
-		?><div <?php echo $this->get_render_attribute_string( $nav_key ); ?>><?php
-			if ( 2 <= count( $settings['wp_gallery'] ) ) {
+		?><div <?php $this->print_render_attribute_string( $nav_key ); ?>><?php
+			if ( 2 <= count( $this->slider_gallery_dataset ) ) {
 				$this->render_swiper_arrows( $key );
 			}
 		?></div><?php
@@ -4056,11 +4179,11 @@ class Gallery_Slider extends Extras_Widget {
 			],
 		] );
 
-		?><div <?php echo $this->get_render_attribute_string( $prev_key ); ?>>
-			<i <?php echo $this->get_render_attribute_string( $prev_icon_key ); ?>></i>
+		?><div <?php $this->print_render_attribute_string( $prev_key ); ?>>
+			<i <?php $this->print_render_attribute_string( $prev_icon_key ); ?>></i>
 		</div>
-		<div <?php echo $this->get_render_attribute_string( $next_key ); ?>>
-			<i <?php echo $this->get_render_attribute_string( $next_icon_key ); ?>></i>
+		<div <?php $this->print_render_attribute_string( $next_key ); ?>>
+			<i <?php $this->print_render_attribute_string( $next_icon_key ); ?>></i>
 		</div><?php
 	}
 

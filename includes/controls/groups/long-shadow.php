@@ -1,5 +1,6 @@
 <?php
-namespace ElementorExtras;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras;
 
 use Elementor\Group_Control_Base;
 use Elementor\Controls_Manager;
@@ -35,17 +36,17 @@ class Group_Control_Long_Shadow extends Group_Control_Base {
 		$controls = [];
 
 		$controls['enable'] = [
-			'label'			=> _x( 'Long Shadow', 'Long Shadow Control', 'elementor-extras' ),
+			'label'			=> _x( 'Long Shadow', 'Long Shadow Control', 'landtech-extras-for-elementor' ),
 			'type' 			=> Controls_Manager::SWITCHER,
 			'default' 		=> '',
-			'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-			'label_off' 	=> __( 'No', 'elementor-extras' ),
+			'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+			'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 			'return_value' 	=> 'yes',
 			'frontend_available' => true,
 		];
 
 		$controls['color'] = [
-			'label'			=> _x( 'Color', 'Long Shadow Control', 'elementor-extras' ),
+			'label'			=> _x( 'Color', 'Long Shadow Control', 'landtech-extras-for-elementor' ),
 			'type' 		=> Controls_Manager::COLOR,
 			'global' => [
 				'default' => Global_Colors::COLOR_PRIMARY,
@@ -57,7 +58,7 @@ class Group_Control_Long_Shadow extends Group_Control_Base {
 		];
 
 		$controls['size'] = [
-			'label'			=> _x( 'Size', 'Long Shadow Control', 'elementor-extras' ),
+			'label'			=> _x( 'Size', 'Long Shadow Control', 'landtech-extras-for-elementor' ),
 			'type' 		=> Controls_Manager::SLIDER,
 			'default' 	=> [
 				'size' 	=> 50,
@@ -75,17 +76,17 @@ class Group_Control_Long_Shadow extends Group_Control_Base {
 		];
 
 		$controls['direction'] = [
-			'label' 		=> _x( 'Direction', 'Long Shadow Control', 'elementor-extras' ),
+			'label' 		=> _x( 'Direction', 'Long Shadow Control', 'landtech-extras-for-elementor' ),
 			'type' 		=> Controls_Manager::SELECT,
 			'options' 	=> [
-				'top' 			=> __( 'Top', 'elementor-extras' ),
-				'top-right' 	=> __( 'Top Right', 'elementor-extras' ),
-				'right' 		=> __( 'Right', 'elementor-extras' ),
-				'bottom-right' 	=> __( 'Bottom Right', 'elementor-extras' ),
-				'bottom' 		=> __( 'Bottom', 'elementor-extras' ),
-				'bottom-left' 	=> __( 'Bottom Left', 'elementor-extras' ),
-				'left' 			=> __( 'Left', 'elementor-extras' ),
-				'top-left' 		=> __( 'Top Left', 'elementor-extras' ),
+				'top' 			=> __( 'Top', 'landtech-extras-for-elementor' ),
+				'top-right' 	=> __( 'Top Right', 'landtech-extras-for-elementor' ),
+				'right' 		=> __( 'Right', 'landtech-extras-for-elementor' ),
+				'bottom-right' 	=> __( 'Bottom Right', 'landtech-extras-for-elementor' ),
+				'bottom' 		=> __( 'Bottom', 'landtech-extras-for-elementor' ),
+				'bottom-left' 	=> __( 'Bottom Left', 'landtech-extras-for-elementor' ),
+				'left' 			=> __( 'Left', 'landtech-extras-for-elementor' ),
+				'top-left' 		=> __( 'Top Left', 'landtech-extras-for-elementor' ),
 			],
 			'condition' => [
 				'enable!' => ''

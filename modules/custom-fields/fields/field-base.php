@@ -1,5 +1,6 @@
 <?php
-namespace ElementorExtras\Modules\CustomFields\Fields;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\CustomFields\Fields;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 

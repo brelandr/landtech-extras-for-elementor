@@ -1,5 +1,6 @@
 <?php
-namespace ElementorExtras\Compatibility\WPML;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Compatibility\WPML;
 
 use WPML_Elementor_Module_With_Items;
 
@@ -47,15 +48,15 @@ class Timeline extends WPML_Elementor_Module_With_Items {
 	 */
 	protected function get_title( $field ) {
 		if ( 'date' === $field ) {
-			return esc_html__( 'Timeline: Date', 'elementor-extras' );
+			return esc_html__( 'Timeline: Date', 'landtech-extras-for-elementor' );
 		}
 
 		if ( 'content' === $field ) {
-			return esc_html__( 'Timeline: Content', 'elementor-extras' );
+			return esc_html__( 'Timeline: Content', 'landtech-extras-for-elementor' );
 		}
 
 		if ( 'url' === $field ) {
-			return esc_html__( 'Timeline: Link', 'elementor-extras' );
+			return esc_html__( 'Timeline: Link', 'landtech-extras-for-elementor' );
 		}
 
 		return '';

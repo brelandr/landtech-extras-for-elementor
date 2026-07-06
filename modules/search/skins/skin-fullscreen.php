@@ -1,5 +1,6 @@
 <?php
-namespace ElementorExtras\Modules\Search\Skins;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Search\Skins;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -34,7 +35,7 @@ class Skin_Fullscreen extends Skin_Base {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Full Screen', 'elementor-extras' );
+		return __( 'Full Screen', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -69,15 +70,15 @@ class Skin_Fullscreen extends Skin_Base {
 			$this->add_control(
 				'toggle_effect',
 				[
-					'label' 	=> __( 'Toggle Effect', 'elementor-extras' ),
+					'label' 	=> __( 'Toggle Effect', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'slide-down',
 					'options' 	=> [
-						'zoom' 			=> __( 'Zoom', 'elementor-extras' ),
-						'slide-down' 	=> __( 'Slide Down', 'elementor-extras' ),
-						'slide-left' 	=> __( 'Slide Left', 'elementor-extras' ),
-						'slide-up' 		=> __( 'Slide Up', 'elementor-extras' ),
-						'slide-right' 	=> __( 'Slide Right', 'elementor-extras' ),
+						'zoom' 			=> __( 'Zoom', 'landtech-extras-for-elementor' ),
+						'slide-down' 	=> __( 'Slide Down', 'landtech-extras-for-elementor' ),
+						'slide-left' 	=> __( 'Slide Left', 'landtech-extras-for-elementor' ),
+						'slide-up' 		=> __( 'Slide Up', 'landtech-extras-for-elementor' ),
+						'slide-right' 	=> __( 'Slide Right', 'landtech-extras-for-elementor' ),
 					],
 					'prefix_class' => 'ee-search-form-toggle-effect--',
 				]
@@ -106,7 +107,7 @@ class Skin_Fullscreen extends Skin_Base {
 			$this->add_control(
 				'icon',
 				[
-					'label' => __( 'Icon', 'elementor-extras' ),
+					'label' => __( 'Icon', 'landtech-extras-for-elementor' ),
 					'type' => \Elementor\Controls_Manager::HIDDEN,
 					'default' => 'search',
 				]
@@ -144,8 +145,8 @@ class Skin_Fullscreen extends Skin_Base {
 			$this->add_responsive_control(
 				'form_border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
-					'description'	=> __( 'For perfectly rounded corners set this to half of the height', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'For perfectly rounded corners set this to half of the height', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> '',
@@ -185,7 +186,7 @@ class Skin_Fullscreen extends Skin_Base {
 		$this->start_controls_section(
 			'section_overlay_style',
 			[
-				'label' => __( 'Overlay', 'elementor-extras' ),
+				'label' => __( 'Overlay', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -193,7 +194,7 @@ class Skin_Fullscreen extends Skin_Base {
 			$this->add_responsive_control(
 				'overlay_distance',
 				[
-					'label' 		=> __( 'Distance', 'elementor-extras' ),
+					'label' 		=> __( 'Distance', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 0,
@@ -213,7 +214,7 @@ class Skin_Fullscreen extends Skin_Base {
 			$this->add_control(
 				'overlay_background_color',
 				[
-					'label' 	=> __( 'Background Color', 'elementor-extras' ),
+					'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'selectors' => [
 						'{{WRAPPER}} .ee-search-form__overlay' => 'background-color: {{VALUE}};',
@@ -250,7 +251,7 @@ class Skin_Fullscreen extends Skin_Base {
 			$this->add_responsive_control(
 				'button_size', 
 				[
-					'label' 		=> __( 'Size', 'elementor-extras' ),
+					'label' 		=> __( 'Size', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 		=> [
 						'size' 		=> '',
@@ -270,7 +271,7 @@ class Skin_Fullscreen extends Skin_Base {
 			$this->add_responsive_control(
 				'button_border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> '',
@@ -303,7 +304,7 @@ class Skin_Fullscreen extends Skin_Base {
 		/**
 		 * Add Skin Actions
 		 */
-		add_action( 'elementor-extras/search-form/fields/before_end', [ $this->parent, 'render_inline_filters' ], 10 );
+		add_action( 'landtech_extras/search-form/fields/before_end', [ $this->parent, 'render_inline_filters' ], 10 );
 
 		$this->render_form();
 	}
@@ -334,7 +335,7 @@ class Skin_Fullscreen extends Skin_Base {
 			],
 		] );
 
-		?><div <?php echo $this->parent->get_render_attribute_string( 'overlay' ); ?>><?php
+		?><div <?php $this->parent->print_render_attribute_string( 'overlay' ); ?>><?php
 			parent::render_form_container();
 			parent::render_filters();
 		?></div><?php
@@ -369,6 +370,6 @@ class Skin_Fullscreen extends Skin_Base {
 			],
 		] );
 
-		?><div <?php echo $this->parent->get_render_attribute_string( 'close' ); ?>><i class="eicon-close"></i></div><?php
+		?><div <?php $this->parent->print_render_attribute_string( 'close' ); ?>><i class="eicon-close"></i></div><?php
 	}
 }

@@ -318,13 +318,13 @@ body.rtl .ee-nav-tabs__tab .dashicons {
 body.rtl .ee-nav-tabs__link {
   margin: 0 6px 0 0;
 }
-.ee-nav-tabs #elementor_extras_support-tab,
-.ee-nav-tabs #elementor_extras_documentation-tab {
+.ee-nav-tabs #landtech_extras_support-tab,
+.ee-nav-tabs #landtech_extras_documentation-tab {
   float: right;
 }
-body.rtl .ee-nav-tabs #elementor_extras_support-tab,
+body.rtl .ee-nav-tabs #landtech_extras_support-tab,
 body.rtl
-  .ee-nav-tabs #elementor_extras_documentation-tab {
+  .ee-nav-tabs #landtech_extras_documentation-tab {
   float: left;
 }
 .ee-note:first-child {

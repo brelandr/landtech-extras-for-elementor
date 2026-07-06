@@ -1,8 +1,9 @@
 <?php
-namespace ElementorExtras\Modules\DisplayConditions\Conditions;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\DisplayConditions\Conditions;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Condition;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Condition;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -49,7 +50,7 @@ class User extends Condition {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Current User', 'elementor-extras' );
+		return __( 'Current User', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -64,8 +65,8 @@ class User extends Condition {
 		return [
 			'type' 			=> 'ee-query',
 			'default' 		=> '',
-			'placeholder'	=> __( 'Any', 'elementor-extras' ),
-			'description'	=> __( 'Works only when visitor is a logged in user. Leave blank for all users.', 'elementor-extras' ),
+			'placeholder'	=> __( 'Any', 'landtech-extras-for-elementor' ),
+			'description'	=> __( 'Works only when visitor is a logged in user. Leave blank for all users.', 'landtech-extras-for-elementor' ),
 			'multiple'		=> true,
 			'label_block' 	=> true,
 			'query_type'	=> 'users',

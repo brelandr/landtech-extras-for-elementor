@@ -1,13 +1,16 @@
 <?php
-namespace ElementorExtras\Modules\Posts\Widgets;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Posts\Widgets;
 
-// Extras for Elementor Classes
-use ElementorExtras\Utils;
-use ElementorExtras\Group_Control_Button_Effect;
-use ElementorExtras\Group_Control_Transition;
-use ElementorExtras\Modules\Posts\Skins;
-use ElementorExtras\Modules\Posts\Module;
-use ElementorExtras\Modules\Posts\Widgets\Posts_Base;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Utils;
+use LandTechExtras\Group_Control_Button_Effect;
+use LandTechExtras\Group_Control_Transition;
+use LandTechExtras\Modules\Posts\Skins;
+use LandTechExtras\Modules\Posts\Skins\Presets;
+use LandTechExtras\Modules\Posts\Skins\Presets\Skin_Posts_Preset_Base;
+use LandTechExtras\Modules\Posts\Module;
+use LandTechExtras\Modules\Posts\Widgets\Posts_Base;
 
 // Elementor Classes
 use Elementor\Repeater;
@@ -72,7 +75,7 @@ class Posts extends Posts_Base {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Posts Extra', 'elementor-extras' );
+		return __( 'Posts Extra', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -96,16 +99,47 @@ class Posts extends Posts_Base {
 	 * @return array
 	 */
 	public function get_script_depends() {
-		return [
-			'jquery-resize-ee',
-			'infinite-scroll-ee',
-			'isotope',
-			'filtery',
+		$deps = [
+			'landtech-extras-jquery-resize',
+			'landtech-extras-infinite-scroll',
+			'landtech-extras-filtery',
 		];
+
+		if ( function_exists( 'landtech_extras_posts_extra_should_enqueue_frontend_isotope' ) ) {
+			if ( landtech_extras_posts_extra_should_enqueue_frontend_isotope( $this ) ) {
+				$iso_stack = [ 'landtech-extras-isotope' ];
+				if ( function_exists( 'landtech_extras_posts_extra_widget_uses_packery_layout' ) && landtech_extras_posts_extra_widget_uses_packery_layout( $this ) ) {
+					$iso_stack[] = 'landtech-extras-packery';
+					$iso_stack[] = 'landtech-extras-isotope-packery-mode';
+				}
+				array_splice( $deps, 2, 0, $iso_stack );
+			}
+		} else {
+			// Back-compat: if policy helpers are unavailable, preserve historical dependency list.
+			array_splice( $deps, 2, 0, [ 'landtech-extras-isotope' ] );
+		}
+
+		return $deps;
 	}
 
 	public function get_keywords() {
 		return [ 'posts', 'cpt', 'loop', 'query', 'cards', 'custom post type', 'carousel' ];
+	}
+
+	/**
+	 * Tie the main stylesheet to this widget so Elementor enqueues it on every preview / frontend render path.
+	 *
+	 * Handles are registered earlier via {@see \LandTechExtras\LandTechExtrasPlugin::register_landtech_extras_frontend_style_handles()} on
+	 * `elementor/frontend/before_register_styles`.
+	 *
+	 * @since 2.2.54
+	 * @return string[]
+	 */
+	public function get_style_depends() {
+		return [
+			'landtech-extras-nicons',
+			'landtech-extras-frontend',
+		];
 	}
 
 	/**
@@ -129,6 +163,97 @@ class Posts extends Posts_Base {
 	protected function register_skins() {
 		$this->add_skin( new Skins\Skin_Classic( $this ) );
 		$this->add_skin( new Skins\Skin_Carousel( $this ) );
+		$this->add_skin( new Presets\Skin_Posts_Editorial( $this ) );
+		$this->add_skin( new Presets\Skin_Posts_Studio( $this ) );
+		$this->add_skin( new Presets\Skin_Posts_Brutalist( $this ) );
+		$this->add_skin( new Presets\Skin_Posts_Minimal( $this ) );
+		$this->add_skin( new Presets\Skin_Posts_Glass( $this ) );
+		$this->add_skin( new Presets\Skin_Posts_Magazine( $this ) );
+		$this->add_skin( new Presets\Skin_Posts_Lift( $this ) );
+		$this->add_skin( new Presets\Skin_Posts_Capsule( $this ) );
+		$this->add_skin( new Presets\Skin_Posts_Cinema( $this ) );
+		$this->add_skin( new Presets\Skin_Posts_Soft( $this ) );
+	}
+
+	/**
+	 * Normalize a skin slug candidate for `_wrapper` class suffix.
+	 *
+	 * @since 2.2.54
+	 * @param mixed $value Control value from settings payloads.
+	 * @return string Non-empty trimmed slug or ''.
+	 */
+	private function normalize_posts_extra_skin_slug_candidate( $value ) {
+		if ( ! is_scalar( $value ) ) {
+			return '';
+		}
+		$t = trim( (string) $value );
+		return '' !== $t ? $t : '';
+	}
+
+	/**
+	 * Resolve `_skin` for Posts Extra reliably in the preview canvas and on the frontend.
+	 *
+	 * During live canvas or AJAX renders, {@see Controls_Stack::get_settings()} may not yet
+	 * reflect the Skin dropdown; merged display settings (`get_settings_for_display`),
+	 * stored element data (`get_data`), or raw payloads (`get_raw_data`) supply `_skin`.
+	 * Without the slug, preset CSS never receives `ee-posts-extra-skin--*` on `_wrapper`.
+	 *
+	 * @since 2.2.54
+	 * @return string Skin id (classic, carousel, editorial, …) or empty string.
+	 */
+	private function get_posts_extra_resolved_skin_slug() {
+		$skin_id = '';
+
+		if ( method_exists( $this, 'get_settings' ) ) {
+			$skin_id = $this->normalize_posts_extra_skin_slug_candidate( $this->get_settings( '_skin' ) );
+		}
+
+		if ( '' === $skin_id && method_exists( $this, 'get_settings_for_display' ) ) {
+			$disp = $this->get_settings_for_display();
+			if ( is_array( $disp ) && array_key_exists( '_skin', $disp ) ) {
+				$skin_id = $this->normalize_posts_extra_skin_slug_candidate( $disp['_skin'] );
+			}
+		}
+
+		if ( '' === $skin_id && method_exists( $this, 'get_data' ) ) {
+			$stored = $this->get_data( 'settings' );
+			if ( is_array( $stored ) && isset( $stored['_skin'] ) ) {
+				$skin_id = $this->normalize_posts_extra_skin_slug_candidate( $stored['_skin'] );
+			}
+		}
+
+		if ( '' === $skin_id && method_exists( $this, 'get_raw_data' ) ) {
+			$raw = $this->get_raw_data();
+			if ( isset( $raw['settings']['_skin'] ) ) {
+				$skin_id = $this->normalize_posts_extra_skin_slug_candidate( $raw['settings']['_skin'] );
+			}
+		}
+
+		return $skin_id;
+	}
+
+	/**
+	 * Append preset skin modifier to `_wrapper` with Elementor’s attribute merge timing.
+	 *
+	 * Widget_Base prints `_wrapper` in `before_render()`, but Elementor invokes
+	 * {@see add_render_attributes()} immediately beforehand in `print_element()`.
+	 * Using this hook keeps the modifier reliable across Elementor versions.
+	 *
+	 * @since 2.2.54
+	 * @return void
+	 */
+	protected function add_render_attributes() {
+		parent::add_render_attributes();
+
+		$skin_id = $this->get_posts_extra_resolved_skin_slug();
+
+		if ( $skin_id && in_array( $skin_id, Skin_Posts_Preset_Base::get_all_preset_skin_ids(), true ) ) {
+			$class_base = str_replace( '_', '-', (string) $skin_id );
+			$class      = sanitize_html_class( $class_base );
+			if ( $class ) {
+				$this->add_render_attribute( '_wrapper', 'class', 'ee-posts-extra-skin--' . $class );
+			}
+		}
 	}
 
 	/**
@@ -164,7 +289,7 @@ class Posts extends Posts_Base {
 
 		$terms = get_terms( array(
 			'taxonomy' 	=> $taxonomy,
-			'exclude'	=> $this->get_skin_setting( 'filters_taxonomy_exclude_' . str_replace( '-', '_', $taxonomy ) ),
+			'exclude'	=> $this->get_skin_setting( 'filters_taxonomy_exclude_' . str_replace( '-', '_', $taxonomy ) ), // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- get_terms exclude list (term IDs); bounded by editor setting.
 			'orderby' 	=> $this->get_skin_setting( 'filters_orderby' ),
 			'order' 	=> $this->get_skin_setting( 'filters_order' ),
 		) );
@@ -190,7 +315,7 @@ class Posts extends Posts_Base {
 
 		$taxonomy_terms = get_terms([
 			'taxonomy' => $taxonomy,
-			'exclude'	=> $this->get_skin_setting( 'filters_taxonomy_exclude_' . str_replace( '-', '_', $taxonomy ) ),
+			'exclude'	=> $this->get_skin_setting( 'filters_taxonomy_exclude_' . str_replace( '-', '_', $taxonomy ) ), // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- get_terms exclude list (term IDs); bounded by editor setting.
 			'orderby' 	=> $this->get_skin_setting( 'filters_orderby' ),
 			'order' 	=> $this->get_skin_setting( 'filters_order' ),
 		]);
@@ -325,7 +450,7 @@ class Posts extends Posts_Base {
 		$this->start_controls_section(
 			'section_layout',
 			[
-				'label' => __( 'Layout', 'elementor-extras' ),
+				'label' => __( 'Layout', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -333,12 +458,12 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'skin_source',
 				[
-					'label' 	=> __( 'Post Skin', 'elementor-extras' ),
+					'label' 	=> __( 'Post Skin', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> '',
 					'options' 	=> [
-						''			=> __( 'Default', 'elementor-extras' ),
-						'template' 	=> __( 'Template', 'elementor-extras' ),
+						''			=> __( 'Default', 'landtech-extras-for-elementor' ),
+						'template' 	=> __( 'Template', 'landtech-extras-for-elementor' ),
 					],
 				]
 			);
@@ -346,8 +471,8 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'skin_template',
 				[
-					'label' 		=> __( 'Post Template', 'elementor-extras' ),
-					'placeholder'	=> __( 'Search...', 'elementor-extras' ),
+					'label' 		=> __( 'Post Template', 'landtech-extras-for-elementor' ),
+					'placeholder'	=> __( 'Search...', 'landtech-extras-for-elementor' ),
 					'type' 			=> 'ee-query',
 					'query_type' 	=> 'templates',
 					'label_block' 	=> false,
@@ -361,13 +486,13 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'columns',
 				[
-					'label' 	=> __( 'Columns', 'elementor-extras' ),
+					'label' 	=> __( 'Columns', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> '3',
 					'tablet_default' => '2',
 					'mobile_default' => '1',
 					'options' => [
-						''	=> __( 'Default', 'elementor-extras' ),
+						''	=> __( 'Default', 'landtech-extras-for-elementor' ),
 						'1' => '1',
 						'2' => '2',
 						'3' => '3',
@@ -386,8 +511,8 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'posts_per_page',
 				[
-					'label' => __( 'Posts Per Page', 'elementor-extras' ),
-					'title' => __( 'Important: This won\'t have any effect on archive pages and will be replaced by the default Wordpress setting.', 'elementor-extras' ),
+					'label' => __( 'Posts Per Page', 'landtech-extras-for-elementor' ),
+					'title' => __( 'Important: This won\'t have any effect on archive pages and will be replaced by the default Wordpress setting.', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::NUMBER,
 					'default' => 6,
 					'condition'	=> [
@@ -411,7 +536,7 @@ class Posts extends Posts_Base {
 		$this->start_controls_section(
 			'section_order',
 			[
-				'label' => __( 'Order', 'elementor-extras' ),
+				'label' => __( 'Order', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 				'condition' => [
 					'skin_source' => '',
@@ -422,7 +547,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_areas_order_heading',
 				[
-					'label' 	=> __( 'Areas', 'elementor-extras' ),
+					'label' 	=> __( 'Areas', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 				]
 			);
@@ -431,7 +556,7 @@ class Posts extends Posts_Base {
 				'order_areas_description',
 				[
 					'type' 				=> Controls_Manager::RAW_HTML,
-					'raw' 				=> __( 'Give each area an order number to define the order in which they appear in the post.', 'elementor-extras' ),
+					'raw' 				=> __( 'Give each area an order number to define the order in which they appear in the post.', 'landtech-extras-for-elementor' ),
 					'content_classes' 	=> 'elementor-panel-alert elementor-panel-alert-info',
 				]
 			);
@@ -439,7 +564,7 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'post_header_order',
 				[
-					'label' 	=> __( 'Header', 'elementor-extras' ),
+					'label' 	=> __( 'Header', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::NUMBER,
 					'default' 	=> 1,
 					'min'     	=> 1,
@@ -452,7 +577,7 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'post_media_order',
 				[
-					'label' 	=> __( 'Media', 'elementor-extras' ),
+					'label' 	=> __( 'Media', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::NUMBER,
 					'default' 	=> 1,
 					'min'     	=> 1,
@@ -465,7 +590,7 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'post_body_order',
 				[
-					'label' 	=> __( 'Body', 'elementor-extras' ),
+					'label' 	=> __( 'Body', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::NUMBER,
 					'default' 	=> 1,
 					'min'     	=> 1,
@@ -479,7 +604,7 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'post_footer_order',
 				[
-					'label' 	=> __( 'Footer', 'elementor-extras' ),
+					'label' 	=> __( 'Footer', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::NUMBER,
 					'default' 	=> 1,
 					'min'     	=> 1,
@@ -492,7 +617,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_parts_order_heading',
 				[
-					'label' 	=> __( 'Parts', 'elementor-extras' ),
+					'label' 	=> __( 'Parts', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -502,7 +627,7 @@ class Posts extends Posts_Base {
 				'order_parts_description',
 				[
 					'type' 				=> Controls_Manager::RAW_HTML,
-					'raw' 				=> __( 'Give each post part an order number to define the order in which they appear in post areas.', 'elementor-extras' ),
+					'raw' 				=> __( 'Give each post part an order number to define the order in which they appear in post areas.', 'landtech-extras-for-elementor' ),
 					'content_classes' 	=> 'elementor-panel-alert elementor-panel-alert-info',
 				]
 			);
@@ -510,7 +635,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_terms_order',
 				[
-					'label' 	=> __( 'Terms', 'elementor-extras' ),
+					'label' 	=> __( 'Terms', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::NUMBER,
 					'default' 	=> 1,
 					'min'     	=> 1,
@@ -523,7 +648,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_title_order',
 				[
-					'label' 	=> __( 'Title', 'elementor-extras' ),
+					'label' 	=> __( 'Title', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::NUMBER,
 					'default' 	=> 1,
 					'min'     	=> 1,
@@ -536,7 +661,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_excerpt_order',
 				[
-					'label' 	=> __( 'Excerpt', 'elementor-extras' ),
+					'label' 	=> __( 'Excerpt', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::NUMBER,
 					'default' 	=> 1,
 					'min'     	=> 1,
@@ -549,7 +674,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_button_order',
 				[
-					'label' 	=> __( 'Button', 'elementor-extras' ),
+					'label' 	=> __( 'Button', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::NUMBER,
 					'default' 	=> 1,
 					'min'     	=> 1,
@@ -562,7 +687,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_metas_order',
 				[
-					'label' 	=> __( 'Metas', 'elementor-extras' ),
+					'label' 	=> __( 'Metas', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::NUMBER,
 					'default' 	=> 1,
 					'min'     	=> 1,
@@ -572,7 +697,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_metas_order_heading',
 				[
-					'label' 	=> __( 'Metas', 'elementor-extras' ),
+					'label' 	=> __( 'Metas', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -582,7 +707,7 @@ class Posts extends Posts_Base {
 				'post_metas_order_description',
 				[
 					'type' 				=> Controls_Manager::RAW_HTML,
-					'raw' 				=> __( 'Order each meta inside any list of metas', 'elementor-extras' ),
+					'raw' 				=> __( 'Order each meta inside any list of metas', 'landtech-extras-for-elementor' ),
 					'content_classes' 	=> 'elementor-panel-alert elementor-panel-alert-info',
 				]
 			);
@@ -590,7 +715,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_author_order',
 				[
-					'label' 	=> __( 'Author', 'elementor-extras' ),
+					'label' 	=> __( 'Author', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::NUMBER,
 					'default' 	=> 1,
 					'min'     	=> 1,
@@ -603,7 +728,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_date_order',
 				[
-					'label' 	=> __( 'Date', 'elementor-extras' ),
+					'label' 	=> __( 'Date', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::NUMBER,
 					'default' 	=> 1,
 					'min'     	=> 1,
@@ -613,11 +738,11 @@ class Posts extends Posts_Base {
 				]
 			);
 
-			if ( is_woocommerce_active() ) {
+			if ( landtech_extras_is_woocommerce_active() ) {
 				$this->add_control(
 					'post_price_order',
 					[
-						'label' 	=> __( 'Price', 'elementor-extras' ),
+						'label' 	=> __( 'Price', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::NUMBER,
 						'default' 	=> 1,
 						'min'     	=> 1,
@@ -632,7 +757,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_comments_order',
 				[
-					'label' 	=> __( 'Comments', 'elementor-extras' ),
+					'label' 	=> __( 'Comments', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::NUMBER,
 					'default' 	=> 1,
 					'min'     	=> 1,
@@ -657,7 +782,7 @@ class Posts extends Posts_Base {
 		$this->start_controls_section(
 			'section_advanced',
 			[
-				'label' => __( 'Advanced', 'elementor-extras' ),
+				'label' => __( 'Advanced', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -665,12 +790,12 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'nothing_found_type',
 				[
-					'label' 		=> __( 'Show', 'elementor-extras' ),
+					'label' 		=> __( 'Show', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT,
 					'default' 		=> '',
 					'options' 		=> [
-						''			=> __( 'Text', 'elementor-extras' ),
-						'template'	=> __( 'Template', 'elementor-extras' ),
+						''			=> __( 'Text', 'landtech-extras-for-elementor' ),
+						'template'	=> __( 'Template', 'landtech-extras-for-elementor' ),
 					],
 				]
 			);
@@ -678,9 +803,9 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'nothing_found_message',
 				[
-					'label' 	=> __( 'Nothing Found Message', 'elementor-extras' ),
+					'label' 	=> __( 'Nothing Found Message', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXTAREA,
-					'default' 	=> __( 'It seems we can\'t find what you\'re looking for.', 'elementor-extras' ),
+					'default' 	=> __( 'It seems we can\'t find what you\'re looking for.', 'landtech-extras-for-elementor' ),
 					'dynamic' 	=> [
 						'active' => true,
 					],
@@ -693,8 +818,8 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'nothing_found_template',
 				[
-					'label' 		=> __( 'Template', 'elementor-extras' ),
-					'placeholder'	=> __( 'Search...', 'elementor-extras' ),
+					'label' 		=> __( 'Template', 'landtech-extras-for-elementor' ),
+					'placeholder'	=> __( 'Search...', 'landtech-extras-for-elementor' ),
 					'type' 			=> 'ee-query',
 					'query_type' 	=> 'templates',
 					'label_block' 	=> false,
@@ -711,7 +836,7 @@ class Posts extends Posts_Base {
 			'section_style_advanced',
 			[
 				'tab' 		=> Controls_Manager::TAB_STYLE,
-				'label' 	=> __( 'Advanced', 'elementor-extras' ),
+				'label' 	=> __( 'Advanced', 'landtech-extras-for-elementor' ),
 				'condition' => [
 					'nothing_found_message!' => '',
 				],
@@ -721,7 +846,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'nothing_found_style_heading',
 				[
-					'label' 	=> __( 'Nothing Found Message', 'elementor-extras' ),
+					'label' 	=> __( 'Nothing Found Message', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 				]
 			);
@@ -729,7 +854,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'nothing_found_color',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'global' => [
 						'default' => Global_Colors::COLOR_TEXT,
@@ -766,7 +891,7 @@ class Posts extends Posts_Base {
 		$this->start_controls_section(
 			'section_media',
 			[
-				'label' => __( 'Media', 'elementor-extras' ),
+				'label' => __( 'Media', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 				'condition' => [
 					'skin_source' => '',
@@ -777,7 +902,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_media',
 				[
-					'label' 		=> __( 'Show', 'elementor-extras' ),
+					'label' 		=> __( 'Show', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default'		=> 'yes',
 					'return_value' 	=> 'yes',
@@ -787,8 +912,8 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'image',
 				[
-					'label' => __( 'Placeholder Image', 'elementor-extras' ),
-					'description' => __( 'An image to be used for all posts that DO NOT have a featured image set.', 'elementor-extras' ),
+					'label' => __( 'Placeholder Image', 'landtech-extras-for-elementor' ),
+					'description' => __( 'An image to be used for all posts that DO NOT have a featured image set.', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::MEDIA,
 					'dynamic' => [
 						'active' => true,
@@ -805,7 +930,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_media_link',
 				[
-					'label' 		=> __( 'Enable Link', 'elementor-extras' ),
+					'label' 		=> __( 'Enable Link', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default'		=> 'yes',
 					'return_value' 	=> 'yes',
@@ -818,7 +943,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_media_blank',
 				[
-					'label' 		=> __( 'Open in New Tab', 'elementor-extras' ),
+					'label' 		=> __( 'Open in New Tab', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default'		=> '',
 					'return_value' 	=> 'yes',
@@ -832,7 +957,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_media_custom_height',
 				[
-					'label' 		=> __( 'Custom Height', 'elementor-extras' ),
+					'label' 		=> __( 'Custom Height', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default'		=> '',
 					'return_value' 	=> 'ratio',
@@ -846,20 +971,20 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_media_position',
 				[
-					'label' 		=> __( 'Position', 'elementor-extras' ),
+					'label' 		=> __( 'Position', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'left' 		=> [
-							'title' => __( 'Left', 'elementor-extras' ),
+							'title' => __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'eicon-h-align-left',
 						],
 						'' 			=> [
-							'title' => __( 'Block', 'elementor-extras' ),
+							'title' => __( 'Block', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'eicon-v-align-top',
 						],
 						'right' 	=> [
-							'title' => __( 'Right', 'elementor-extras' ),
+							'title' => __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'eicon-h-align-right',
 						],
 					],
@@ -873,13 +998,13 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_media_collapse',
 				[
-					'label' 		=> __( 'Collapse on', 'elementor-extras' ),
+					'label' 		=> __( 'Collapse on', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT,
 					'default' 		=> 'mobile',
 					'options' 		=> [
-						'none'		=> __( 'None', 'elementor-extras' ),
-						'tablet'	=> __( 'Tablet', 'elementor-extras' ),
-						'mobile'	=> __( 'Mobile', 'elementor-extras' ),
+						'none'		=> __( 'None', 'landtech-extras-for-elementor' ),
+						'tablet'	=> __( 'Tablet', 'landtech-extras-for-elementor' ),
+						'mobile'	=> __( 'Mobile', 'landtech-extras-for-elementor' ),
 					],
 					'prefix_class'	=> 'ee-posts-layout-collapse--',
 					'condition'		=> [
@@ -892,20 +1017,20 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'post_media_align',
 				[
-					'label' 		=> __( 'Vertical Align', 'elementor-extras' ),
+					'label' 		=> __( 'Vertical Align', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> 'stretch',
 					'options' 		=> [
 						'flex-start' => [
-							'title' 	=> __( 'Top', 'elementor-extras' ),
+							'title' 	=> __( 'Top', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-top',
 						],
 						'center' => [
-							'title' 	=> __( 'Middle', 'elementor-extras' ),
+							'title' 	=> __( 'Middle', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-middle',
 						],
 						'flex-end' => [
-							'title' 	=> __( 'Bottom', 'elementor-extras' ),
+							'title' 	=> __( 'Bottom', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-bottom',
 						],
 					],
@@ -924,24 +1049,24 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_media_align_flex',
 				[
-					'label' 		=> __( 'Vertical Align', 'elementor-extras' ),
+					'label' 		=> __( 'Vertical Align', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> 'stretch',
 					'options' 		=> [
 						'flex-start' => [
-							'title' 	=> __( 'Top', 'elementor-extras' ),
+							'title' 	=> __( 'Top', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-top',
 						],
 						'center' => [
-							'title' 	=> __( 'Middle', 'elementor-extras' ),
+							'title' 	=> __( 'Middle', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-middle',
 						],
 						'flex-end' => [
-							'title' 	=> __( 'Bottom', 'elementor-extras' ),
+							'title' 	=> __( 'Bottom', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-bottom',
 						],
 						'stretch' => [
-							'title' 	=> __( 'Stretch', 'elementor-extras' ),
+							'title' 	=> __( 'Stretch', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-stretch',
 						],
 					],
@@ -960,7 +1085,7 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'post_media_width',
 				[
-					'label' 		=> __( 'Width (%)', 'elementor-extras' ),
+					'label' 		=> __( 'Width (%)', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -986,7 +1111,7 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'post_media_height',
 				[
-					'label' 		=> __( 'Height', 'elementor-extras' ),
+					'label' 		=> __( 'Height', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -1007,7 +1132,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_media_thumbnail_heading',
 				[
-					'label' 	=> __( 'Thumbnail', 'elementor-extras' ),
+					'label' 	=> __( 'Thumbnail', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 					'condition'		=> [
@@ -1020,9 +1145,9 @@ class Posts extends Posts_Base {
 				Group_Control_Image_Size::get_type(),
 				[
 					'name' 			=> 'post_media_thumbnail_size',
-					'label' 		=> __( 'Thumbnail Size', 'elementor-extras' ),
+					'label' 		=> __( 'Thumbnail Size', 'landtech-extras-for-elementor' ),
 					'default' 		=> 'large',
-					'exclude' 		=> [ 'custom' ],
+					'exclude' 		=> [ 'custom' ], // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor control schema.
 					'condition'		=> [
 						'post_media!' => '',
 					],
@@ -1044,7 +1169,7 @@ class Posts extends Posts_Base {
 		$this->start_controls_section(
 			'section_terms',
 			[
-				'label' => __( 'Terms', 'elementor-extras' ),
+				'label' => __( 'Terms', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 				'condition' => [
 					'skin_source' => '',
@@ -1055,29 +1180,29 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_terms_position',
 				[
-					'label' 		=> __( 'Position', 'elementor-extras' ),
+					'label' 		=> __( 'Position', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> 'header',
 					'label_block'	=> false,
 					'options' 		=> [
 						'header'    	=> [
-							'title' 	=> __( 'Header', 'elementor-extras' ),
+							'title' 	=> __( 'Header', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'nicon nicon-position-header',
 						],
 						'media'    		=> [
-							'title' 	=> __( 'Media', 'elementor-extras' ),
+							'title' 	=> __( 'Media', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'nicon nicon-position-media',
 						],
 						'body'    		=> [
-							'title' 	=> __( 'Body', 'elementor-extras' ),
+							'title' 	=> __( 'Body', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'nicon nicon-position-body',
 						],
 						'footer'    	=> [
-							'title' 	=> __( 'Footer', 'elementor-extras' ),
+							'title' 	=> __( 'Footer', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'nicon nicon-position-footer',
 						],
 						''    			=> [
-							'title' 	=> __( 'Hide', 'elementor-extras' ),
+							'title' 	=> __( 'Hide', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon eicon-close',
 						],
 					],
@@ -1087,7 +1212,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_terms_link',
 				[
-					'label' 		=> __( 'Link to term', 'elementor-extras' ),
+					'label' 		=> __( 'Link to term', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default'		=> 'yes',
 					'return_value' 	=> 'yes',
@@ -1100,7 +1225,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_terms_taxonomy',
 				[
-					'label' 		=> __( 'Taxonomies', 'elementor-extras' ),
+					'label' 		=> __( 'Taxonomies', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT2,
 					'label_block' 	=> true,
 					'default' 		=> 'category',
@@ -1115,8 +1240,8 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_terms_count',
 				[
-					'label'   		=> __( 'Count', 'elementor-extras' ),
-					'description' 	=> __( 'How many terms to show (enter -1 to show all terms)', 'elementor-extras' ),
+					'label'   		=> __( 'Count', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'How many terms to show (enter -1 to show all terms)', 'landtech-extras-for-elementor' ),
 					'type'    		=> Controls_Manager::NUMBER,
 					'default' 		=> 1,
 					'condition' 	=> [
@@ -1128,10 +1253,10 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_terms_prefix',
 				[
-					'label' 		=> __( 'Prefix', 'elementor-extras' ),
+					'label' 		=> __( 'Prefix', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::TEXT,
 					'default' 		=> '',
-					'placeholder' 	=> __( 'Posted in', 'elementor-extras' ),
+					'placeholder' 	=> __( 'Posted in', 'landtech-extras-for-elementor' ),
 					'condition' => [
 						'post_terms_position!' => ''
 					],
@@ -1141,7 +1266,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_terms_separator',
 				[
-					'label' 		=> __( 'Separator', 'elementor-extras' ),
+					'label' 		=> __( 'Separator', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::TEXT,
 					'default' 		=> '·',
 					'condition' => [
@@ -1165,7 +1290,7 @@ class Posts extends Posts_Base {
 		$this->start_controls_section(
 			'section_title',
 			[
-				'label' => __( 'Title', 'elementor-extras' ),
+				'label' => __( 'Title', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 				'condition' => [
 					'skin_source' => '',
@@ -1176,25 +1301,25 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_title_position',
 				[
-					'label' 		=> __( 'Position', 'elementor-extras' ),
+					'label' 		=> __( 'Position', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> 'body',
 					'label_block'	=> false,
 					'options' 		=> [
 						'header'    	=> [
-							'title' 	=> __( 'Header', 'elementor-extras' ),
+							'title' 	=> __( 'Header', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'nicon nicon-position-header',
 						],
 						'media'    		=> [
-							'title' 	=> __( 'Media', 'elementor-extras' ),
+							'title' 	=> __( 'Media', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'nicon nicon-position-media',
 						],
 						'body'    		=> [
-							'title' 	=> __( 'Body', 'elementor-extras' ),
+							'title' 	=> __( 'Body', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'nicon nicon-position-body',
 						],
 						''    			=> [
-							'title' 	=> __( 'Hide', 'elementor-extras' ),
+							'title' 	=> __( 'Hide', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon eicon-close',
 						],
 					],
@@ -1204,7 +1329,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_title_link',
 				[
-					'label' 		=> __( 'Link to post', 'elementor-extras' ),
+					'label' 		=> __( 'Link to post', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default'		=> 'yes',
 					'return_value' 	=> 'yes',
@@ -1217,7 +1342,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_title_link_blank',
 				[
-					'label' 		=> __( 'Open in New Tab', 'elementor-extras' ),
+					'label' 		=> __( 'Open in New Tab', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default'		=> '',
 					'return_value' 	=> 'yes',
@@ -1231,17 +1356,17 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_title_element',
 				[
-					'label' 	=> __( 'HTML Element', 'elementor-extras' ),
+					'label' 	=> __( 'HTML Element', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'options' 	=> [
-						'h1' 	=> __( 'H1', 'elementor-extras' ),
-						'h2' 	=> __( 'H2', 'elementor-extras' ),
-						'h3' 	=> __( 'H3', 'elementor-extras' ),
-						'h4' 	=> __( 'H4', 'elementor-extras' ),
-						'h5' 	=> __( 'H5', 'elementor-extras' ),
-						'h6' 	=> __( 'H6', 'elementor-extras' ),
-						'div'	=> __( 'div', 'elementor-extras' ),
-						'span' 	=> __( 'span', 'elementor-extras' ),
+						'h1' 	=> __( 'H1', 'landtech-extras-for-elementor' ),
+						'h2' 	=> __( 'H2', 'landtech-extras-for-elementor' ),
+						'h3' 	=> __( 'H3', 'landtech-extras-for-elementor' ),
+						'h4' 	=> __( 'H4', 'landtech-extras-for-elementor' ),
+						'h5' 	=> __( 'H5', 'landtech-extras-for-elementor' ),
+						'h6' 	=> __( 'H6', 'landtech-extras-for-elementor' ),
+						'div'	=> __( 'div', 'landtech-extras-for-elementor' ),
+						'span' 	=> __( 'span', 'landtech-extras-for-elementor' ),
 					],
 					'default' => 'h2',
 				]
@@ -1262,7 +1387,7 @@ class Posts extends Posts_Base {
 		$this->start_controls_section(
 			'section_excerpt',
 			[
-				'label' => __( 'Excerpt', 'elementor-extras' ),
+				'label' => __( 'Excerpt', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 				'condition' => [
 					'skin_source' => '',
@@ -1273,25 +1398,25 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_excerpt_position',
 				[
-					'label' 		=> __( 'Position', 'elementor-extras' ),
+					'label' 		=> __( 'Position', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> 'body',
 					'label_block'	=> false,
 					'options' 		=> [
 						'media'    		=> [
-							'title' 	=> __( 'Media', 'elementor-extras' ),
+							'title' 	=> __( 'Media', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'nicon nicon-position-media',
 						],
 						'body'    		=> [
-							'title' 	=> __( 'Body', 'elementor-extras' ),
+							'title' 	=> __( 'Body', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'nicon nicon-position-body',
 						],
 						'footer'    	=> [
-							'title' 	=> __( 'Footer', 'elementor-extras' ),
+							'title' 	=> __( 'Footer', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'nicon nicon-position-footer',
 						],
 						''    			=> [
-							'title' 	=> __( 'Hide', 'elementor-extras' ),
+							'title' 	=> __( 'Hide', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon eicon-close',
 						],
 					],
@@ -1301,8 +1426,8 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_excerpt_trim_custom',
 				[
-					'label' 		=> __( 'Trim Custom Excerpts', 'elementor-extras' ),
-					'description'	=> __( 'Custom excerpts are set manually in the Excerpt field for each post. Enable this if you want to trim those down to the above length as well.' ),
+					'label' 		=> __( 'Trim Custom Excerpts', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Custom excerpts are set manually in the Excerpt field for each post. Enable this if you want to trim those down to the above length as well.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default'		=> '',
 					'return_value' 	=> 'yes',
@@ -1315,9 +1440,9 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_excerpt_length',
 				[
-					'label' 	=> __( 'Excerpt Length', 'elementor-extras' ),
+					'label' 	=> __( 'Excerpt Length', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::NUMBER,
-					'default' 	=> apply_filters( 'excerpt_length', 25 ),
+					'default' 	=> \LandTechExtras\landtech_extras_get_default_excerpt_length_for_control(),
 					'condition' => [
 						'post_excerpt_position!' => '',
 					],
@@ -1327,7 +1452,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_excerpt_more',
 				[
-					'label' 	=> __( 'Trimmed Suffix', 'elementor-extras' ),
+					'label' 	=> __( 'Trimmed Suffix', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXT,
 					'default' 	=> '&hellip;',
 					'condition' => [
@@ -1351,7 +1476,7 @@ class Posts extends Posts_Base {
 		$this->start_controls_section(
 			'section_button',
 			[
-				'label' => __( 'Button', 'elementor-extras' ),
+				'label' => __( 'Button', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 				'condition' => [
 					'skin_source' => '',
@@ -1362,37 +1487,37 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_button_position',
 				[
-					'label' 		=> __( 'Position', 'elementor-extras' ),
+					'label' 		=> __( 'Position', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'label_block'	=> false,
 					'options' 		=> [
 						'media'    		=> [
-							'title' 	=> __( 'Media', 'elementor-extras' ),
+							'title' 	=> __( 'Media', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'nicon nicon-position-media',
 						],
 						'body'    		=> [
-							'title' 	=> __( 'Body', 'elementor-extras' ),
+							'title' 	=> __( 'Body', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'nicon nicon-position-body',
 						],
 						'footer'    	=> [
-							'title' 	=> __( 'Footer', 'elementor-extras' ),
+							'title' 	=> __( 'Footer', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'nicon nicon-position-footer',
 						],
 						''    			=> [
-							'title' 	=> __( 'Hide', 'elementor-extras' ),
+							'title' 	=> __( 'Hide', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon eicon-close',
 						],
 					],
 				]
 			);
 
-			if ( is_woocommerce_active() ) {
+			if ( landtech_extras_is_woocommerce_active() ) {
 				$this->add_control(
 					'post_add_to_cart_media_warning',
 					[
 						'type' 				=> Controls_Manager::RAW_HTML,
-						'raw' 				=> __( 'Add to Cart button is not supported in Media area when when Media area link is enabled.', 'elementor-extras' ),
+						'raw' 				=> __( 'Add to Cart button is not supported in Media area when when Media area link is enabled.', 'landtech-extras-for-elementor' ),
 						'content_classes' 	=> 'elementor-panel-alert elementor-panel-alert-warning',
 						'condition'		=> [
 							'post_media_link!' => '',
@@ -1405,12 +1530,12 @@ class Posts extends Posts_Base {
 				$this->add_control(
 					'post_button_type',
 					[
-						'label' 	=> __( 'Type', 'elementor-extras' ),
+						'label' 	=> __( 'Type', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SELECT,
 						'default' 	=> 'add_to_cart',
 						'options' 	=> [
-							'' 				=> __( 'Read More', 'elementor-extras' ),
-							'add_to_cart' 	=> __( 'Add to Cart', 'elementor-extras' ),
+							'' 				=> __( 'Read More', 'landtech-extras-for-elementor' ),
+							'add_to_cart' 	=> __( 'Add to Cart', 'landtech-extras-for-elementor' ),
 						],
 						'condition' => [
 							'post_button_position!' => '',
@@ -1422,7 +1547,7 @@ class Posts extends Posts_Base {
 				$this->add_control(
 					'post_button_add_to_cart_text',
 					[
-						'label' 		=> __( 'Add To Cart Label', 'elementor-extras' ),
+						'label' 		=> __( 'Add To Cart Label', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::TEXT,
 						'default' 		=> '',
 						'condition' 	=> [
@@ -1437,9 +1562,9 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_read_more_text',
 				[
-					'label' 		=> __( 'Read More Label', 'elementor-extras' ),
+					'label' 		=> __( 'Read More Label', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::TEXT,
-					'default' 		=> __( 'Read more', 'elementor-extras' ),
+					'default' 		=> __( 'Read more', 'landtech-extras-for-elementor' ),
 					'condition' 	=> [
 						'post_button_position!' => '',
 					],
@@ -1449,7 +1574,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_button_blank',
 				[
-					'label' 		=> __( 'Open in New Tab', 'elementor-extras' ),
+					'label' 		=> __( 'Open in New Tab', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default'		=> '',
 					'return_value' 	=> 'yes',
@@ -1474,7 +1599,7 @@ class Posts extends Posts_Base {
 		$this->start_controls_section(
 			'section_metas',
 			[
-				'label' => __( 'Metas', 'elementor-extras' ),
+				'label' => __( 'Metas', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 				'condition' => [
 					'skin_source' => '',
@@ -1483,11 +1608,11 @@ class Posts extends Posts_Base {
 		);
 
 			$post_metas_options = [
-				'avatar'			=> __( 'Avatar', 'elementor-extras' ),
-				'author'			=> __( 'Author', 'elementor-extras' ),
-				'date' 				=> __( 'Date', 'elementor-extras' ),
-				'comments' 			=> __( 'Comments', 'elementor-extras' ),
-				// 'custom_fields' 	=> __( 'Custom Fields', 'elementor-extras' ),
+				'avatar'			=> __( 'Avatar', 'landtech-extras-for-elementor' ),
+				'author'			=> __( 'Author', 'landtech-extras-for-elementor' ),
+				'date' 				=> __( 'Date', 'landtech-extras-for-elementor' ),
+				'comments' 			=> __( 'Comments', 'landtech-extras-for-elementor' ),
+				// 'custom_fields' 	=> __( 'Custom Fields', 'landtech-extras-for-elementor' ),
 			];
 
 			$post_metas_defaults = [
@@ -1498,15 +1623,15 @@ class Posts extends Posts_Base {
 				// 'custom_fields',
 			];
 
-			if ( is_woocommerce_active() ) {
-				$post_metas_options['price'] = __( 'Price', 'elementor-extras' );
+			if ( landtech_extras_is_woocommerce_active() ) {
+				$post_metas_options['price'] = __( 'Price', 'landtech-extras-for-elementor' );
 				$post_metas_defaults[] = 'price';
 			}
 
 			$this->add_control(
 				'post_metas_separator',
 				[
-					'label' 		=> __( 'Separator', 'elementor-extras' ),
+					'label' 		=> __( 'Separator', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::TEXT,
 					'default' 		=> '·',
 				]
@@ -1515,7 +1640,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_metas',
 				[
-					'label' 		=> __( 'Metas', 'elementor-extras' ),
+					'label' 		=> __( 'Metas', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT2,
 					'multiple'		=> true,
 					'label_block'	=> true,
@@ -1528,7 +1653,7 @@ class Posts extends Posts_Base {
 			$this->register_date_content_controls();
 			$this->register_comments_content_controls();
 
-			if ( is_woocommerce_active() ) {
+			if ( landtech_extras_is_woocommerce_active() ) {
 			$this->register_price_content_controls(); }
 
 		$this->end_controls_section();
@@ -1545,7 +1670,7 @@ class Posts extends Posts_Base {
 		$this->add_control(
 			'post_avatar_heading',
 			[
-				'label' => __( 'Avatar', 'elementor-extras' ),
+				'label' => __( 'Avatar', 'landtech-extras-for-elementor' ),
 				'type' 	=> Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
@@ -1557,29 +1682,29 @@ class Posts extends Posts_Base {
 		$this->add_control(
 			'post_avatar_position',
 			[
-				'label' 		=> __( 'Position', 'elementor-extras' ),
+				'label' 		=> __( 'Position', 'landtech-extras-for-elementor' ),
 				'type' 			=> Controls_Manager::CHOOSE,
 				'default' 		=> 'footer',
 				'label_block'	=> false,
 				'options' 		=> [
 					'header'    	=> [
-						'title' 	=> __( 'Header', 'elementor-extras' ),
+						'title' 	=> __( 'Header', 'landtech-extras-for-elementor' ),
 						'icon' 		=> 'nicon nicon-position-header',
 					],
 					'media'    		=> [
-						'title' 	=> __( 'Media', 'elementor-extras' ),
+						'title' 	=> __( 'Media', 'landtech-extras-for-elementor' ),
 						'icon' 		=> 'nicon nicon-position-media',
 					],
 					'body'    		=> [
-						'title' 	=> __( 'Body', 'elementor-extras' ),
+						'title' 	=> __( 'Body', 'landtech-extras-for-elementor' ),
 						'icon' 		=> 'nicon nicon-position-body',
 					],
 					'footer'    	=> [
-						'title' 	=> __( 'Footer', 'elementor-extras' ),
+						'title' 	=> __( 'Footer', 'landtech-extras-for-elementor' ),
 						'icon' 		=> 'nicon nicon-position-footer',
 					],
 					''    			=> [
-						'title' 	=> __( 'Hide', 'elementor-extras' ),
+						'title' 	=> __( 'Hide', 'landtech-extras-for-elementor' ),
 						'icon' 		=> 'eicon eicon-close',
 					],
 				],
@@ -1592,7 +1717,7 @@ class Posts extends Posts_Base {
 		$this->add_control(
 			'post_avatar_link',
 			[
-				'label' 		=> __( 'Link to Author', 'elementor-extras' ),
+				'label' 		=> __( 'Link to Author', 'landtech-extras-for-elementor' ),
 				'type' 			=> Controls_Manager::SWITCHER,
 				'default'		=> '',
 				'return_value' 	=> 'yes',
@@ -1606,7 +1731,7 @@ class Posts extends Posts_Base {
 		$this->add_control(
 			'post_author_heading',
 			[
-				'label' => __( 'Author', 'elementor-extras' ),
+				'label' => __( 'Author', 'landtech-extras-for-elementor' ),
 				'type' 	=> Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition'	=> [
@@ -1618,29 +1743,29 @@ class Posts extends Posts_Base {
 		$this->add_control(
 			'post_author_position',
 			[
-				'label' 		=> __( 'Position', 'elementor-extras' ),
+				'label' 		=> __( 'Position', 'landtech-extras-for-elementor' ),
 				'type' 			=> Controls_Manager::CHOOSE,
 				'default' 		=> 'footer',
 				'label_block'	=> false,
 				'options' 		=> [
 					'header'    	=> [
-						'title' 	=> __( 'Header', 'elementor-extras' ),
+						'title' 	=> __( 'Header', 'landtech-extras-for-elementor' ),
 						'icon' 		=> 'nicon nicon-position-header',
 					],
 					'media'    		=> [
-						'title' 	=> __( 'Media', 'elementor-extras' ),
+						'title' 	=> __( 'Media', 'landtech-extras-for-elementor' ),
 						'icon' 		=> 'nicon nicon-position-media',
 					],
 					'body'    		=> [
-						'title' 	=> __( 'Body', 'elementor-extras' ),
+						'title' 	=> __( 'Body', 'landtech-extras-for-elementor' ),
 						'icon' 		=> 'nicon nicon-position-body',
 					],
 					'footer'    	=> [
-						'title' 	=> __( 'Footer', 'elementor-extras' ),
+						'title' 	=> __( 'Footer', 'landtech-extras-for-elementor' ),
 						'icon' 		=> 'nicon nicon-position-footer',
 					],
 					'' 				=> [
-						'title' 	=> __( 'Hide', 'elementor-extras' ),
+						'title' 	=> __( 'Hide', 'landtech-extras-for-elementor' ),
 						'icon' 		=> 'eicon eicon-close',
 					],
 				],
@@ -1653,7 +1778,7 @@ class Posts extends Posts_Base {
 		$this->add_control(
 			'post_author_link',
 			[
-				'label' 		=> __( 'Link to Author', 'elementor-extras' ),
+				'label' 		=> __( 'Link to Author', 'landtech-extras-for-elementor' ),
 				'type' 			=> Controls_Manager::SWITCHER,
 				'default'		=> '',
 				'return_value' 	=> 'yes',
@@ -1667,10 +1792,10 @@ class Posts extends Posts_Base {
 		$this->add_control(
 			'post_author_prefix',
 			[
-				'label' 		=> __( 'Prefix', 'elementor-extras' ),
+				'label' 		=> __( 'Prefix', 'landtech-extras-for-elementor' ),
 				'type' 			=> Controls_Manager::TEXT,
 				'default' 		=> '',
-				'placeholder' 	=> __( 'Posted by', 'elementor-extras' ),
+				'placeholder' 	=> __( 'Posted by', 'landtech-extras-for-elementor' ),
 				'condition' => [
 					'post_metas' => 'author',
 					'post_author_position!' => ''
@@ -1691,7 +1816,7 @@ class Posts extends Posts_Base {
 		$this->add_control(
 			'post_price_heading',
 			[
-				'label' => __( 'Price', 'elementor-extras' ),
+				'label' => __( 'Price', 'landtech-extras-for-elementor' ),
 				'type' 	=> Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
@@ -1704,29 +1829,29 @@ class Posts extends Posts_Base {
 		$this->add_control(
 			'post_price_position',
 			[
-				'label' 		=> __( 'Position', 'elementor-extras' ),
+				'label' 		=> __( 'Position', 'landtech-extras-for-elementor' ),
 				'type' 			=> Controls_Manager::CHOOSE,
 				'default' 		=> 'footer',
 				'label_block'	=> false,
 				'options' 		=> [
 					'header'    		=> [
-						'title' 	=> __( 'Header', 'elementor-extras' ),
+						'title' 	=> __( 'Header', 'landtech-extras-for-elementor' ),
 						'icon' 		=> 'nicon nicon-position-header',
 					],
 					'media'    		=> [
-						'title' 	=> __( 'Media', 'elementor-extras' ),
+						'title' 	=> __( 'Media', 'landtech-extras-for-elementor' ),
 						'icon' 		=> 'nicon nicon-position-media',
 					],
 					'body'    		=> [
-						'title' 	=> __( 'Body', 'elementor-extras' ),
+						'title' 	=> __( 'Body', 'landtech-extras-for-elementor' ),
 						'icon' 		=> 'nicon nicon-position-body',
 					],
 					'footer'    		=> [
-						'title' 	=> __( 'Footer', 'elementor-extras' ),
+						'title' 	=> __( 'Footer', 'landtech-extras-for-elementor' ),
 						'icon' 		=> 'nicon nicon-position-footer',
 					],
 					''				=> [
-						'title' 	=> __( 'Hide', 'elementor-extras' ),
+						'title' 	=> __( 'Hide', 'landtech-extras-for-elementor' ),
 						'icon' 		=> 'eicon eicon-close',
 					],
 				],
@@ -1750,7 +1875,7 @@ class Posts extends Posts_Base {
 		$this->add_control(
 			'post_date_heading',
 			[
-				'label' => __( 'Date', 'elementor-extras' ),
+				'label' => __( 'Date', 'landtech-extras-for-elementor' ),
 				'type' 	=> Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
@@ -1762,29 +1887,29 @@ class Posts extends Posts_Base {
 		$this->add_control(
 			'post_date_position',
 			[
-				'label' 		=> __( 'Position', 'elementor-extras' ),
+				'label' 		=> __( 'Position', 'landtech-extras-for-elementor' ),
 				'type' 			=> Controls_Manager::CHOOSE,
 				'default' 		=> 'footer',
 				'label_block'	=> false,
 				'options' 		=> [
 					'header'    	=> [
-						'title' 	=> __( 'Header', 'elementor-extras' ),
+						'title' 	=> __( 'Header', 'landtech-extras-for-elementor' ),
 						'icon' 		=> 'nicon nicon-position-header',
 					],
 					'media'    		=> [
-						'title' 	=> __( 'Media', 'elementor-extras' ),
+						'title' 	=> __( 'Media', 'landtech-extras-for-elementor' ),
 						'icon' 		=> 'nicon nicon-position-media',
 					],
 					'body'    		=> [
-						'title' 	=> __( 'Body', 'elementor-extras' ),
+						'title' 	=> __( 'Body', 'landtech-extras-for-elementor' ),
 						'icon' 		=> 'nicon nicon-position-body',
 					],
 					'footer'    	=> [
-						'title' 	=> __( 'Footer', 'elementor-extras' ),
+						'title' 	=> __( 'Footer', 'landtech-extras-for-elementor' ),
 						'icon' 		=> 'nicon nicon-position-footer',
 					],
 					'' 				=> [
-						'title' 	=> __( 'Hide', 'elementor-extras' ),
+						'title' 	=> __( 'Hide', 'landtech-extras-for-elementor' ),
 						'icon' 		=> 'eicon eicon-close',
 					],
 				],
@@ -1797,16 +1922,16 @@ class Posts extends Posts_Base {
 		$this->add_control(
 			'post_date_format',
 			[
-				'label'   => __( 'Date Format', 'elementor-extras' ),
+				'label'   => __( 'Date Format', 'landtech-extras-for-elementor' ),
 				'type'    => Controls_Manager::SELECT,
 				'options' => [
-					'default' 	=> __( 'Default', 'elementor-extras' ),
-					'' 			=> __( 'None', 'elementor-extras' ),
-					'F j, Y' 	=> date( 'F j, Y' ),
-					'Y-m-d' 	=> date( 'Y-m-d' ),
-					'm/d/Y' 	=> date( 'm/d/Y' ),
-					'd/m/Y' 	=> date( 'd/m/Y' ),
-					'custom' 	=> __( 'Custom', 'elementor-extras' ),
+					'default' 	=> __( 'Default', 'landtech-extras-for-elementor' ),
+					'' 			=> __( 'None', 'landtech-extras-for-elementor' ),
+					'F j, Y' 	=> wp_date( 'F j, Y' ),
+					'Y-m-d' 	=> wp_date( 'Y-m-d' ),
+					'm/d/Y' 	=> wp_date( 'm/d/Y' ),
+					'd/m/Y' 	=> wp_date( 'd/m/Y' ),
+					'custom' 	=> __( 'Custom', 'landtech-extras-for-elementor' ),
 				],
 				'condition'		=> [
 					'post_metas' => 'date',
@@ -1819,14 +1944,14 @@ class Posts extends Posts_Base {
 		$this->add_control(
 			'post_time_format',
 			[
-				'label'   => __( 'Time Format', 'elementor-extras' ),
+				'label'   => __( 'Time Format', 'landtech-extras-for-elementor' ),
 				'type'    => Controls_Manager::SELECT,
 				'options' => [
-					'default' 	=> __( 'Default', 'elementor-extras' ),
-					'' 			=> __( 'None', 'elementor-extras' ),
-					'g:i a' 	=> date( 'g:i a' ),
-					'g:i A' 	=> date( 'g:i A' ),
-					'H:i' 		=> date( 'H:i' ),
+					'default' 	=> __( 'Default', 'landtech-extras-for-elementor' ),
+					'' 			=> __( 'None', 'landtech-extras-for-elementor' ),
+					'g:i a' 	=> wp_date( 'g:i a' ),
+					'g:i A' 	=> wp_date( 'g:i A' ),
+					'H:i' 		=> wp_date( 'H:i' ),
 				],
 				'default' 	=> 'default',
 				'condition' => [
@@ -1840,9 +1965,9 @@ class Posts extends Posts_Base {
 		$this->add_control(
 			'post_date_custom_format',
 			[
-				'label'   			=> __( 'Custom Format', 'elementor-extras' ),
+				'label'   			=> __( 'Custom Format', 'landtech-extras-for-elementor' ),
 				'default' 			=> get_option( 'date_format' ) . ' ' . get_option( 'time_format' ),
-				'description' 		=> sprintf( '<a href="https://codex.wordpress.org/Formatting_Date_and_Time" target="_blank">%s</a>', __( 'Documentation on date and time formatting', 'elementor-extras' ) ),
+				'description' 		=> sprintf( '<a href="https://codex.wordpress.org/Formatting_Date_and_Time" target="_blank">%s</a>', __( 'Documentation on date and time formatting', 'landtech-extras-for-elementor' ) ),
 				'condition' 		=> [
 					'post_metas' 			=> 'date',
 					'post_date_position!' 	=> '',
@@ -1854,10 +1979,10 @@ class Posts extends Posts_Base {
 		$this->add_control(
 			'post_date_prefix',
 			[
-				'label' 		=> __( 'Date Prefix', 'elementor-extras' ),
+				'label' 		=> __( 'Date Prefix', 'landtech-extras-for-elementor' ),
 				'type' 			=> Controls_Manager::TEXT,
 				'default' 		=> '',
-				'placeholder' 	=> __( 'on', 'elementor-extras' ),
+				'placeholder' 	=> __( 'on', 'landtech-extras-for-elementor' ),
 				'condition' => [
 					'post_metas' => 'date',
 					'post_date_position!' => ''
@@ -1877,7 +2002,7 @@ class Posts extends Posts_Base {
 		$this->add_control(
 			'post_comments_heading',
 			[
-				'label' => __( 'Comments', 'elementor-extras' ),
+				'label' => __( 'Comments', 'landtech-extras-for-elementor' ),
 				'type' 	=> Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
@@ -1889,29 +2014,29 @@ class Posts extends Posts_Base {
 		$this->add_control(
 			'post_comments_position',
 			[
-				'label' 		=> __( 'Position', 'elementor-extras' ),
+				'label' 		=> __( 'Position', 'landtech-extras-for-elementor' ),
 				'type' 			=> Controls_Manager::CHOOSE,
 				'default' 		=> 'footer',
 				'label_block'	=> false,
 				'options' 		=> [
 					'header'    	=> [
-						'title' 	=> __( 'Header', 'elementor-extras' ),
+						'title' 	=> __( 'Header', 'landtech-extras-for-elementor' ),
 						'icon' 		=> 'nicon nicon-position-header',
 					],
 					'media'    		=> [
-						'title' 	=> __( 'Media', 'elementor-extras' ),
+						'title' 	=> __( 'Media', 'landtech-extras-for-elementor' ),
 						'icon' 		=> 'nicon nicon-position-media',
 					],
 					'body'    		=> [
-						'title' 	=> __( 'Body', 'elementor-extras' ),
+						'title' 	=> __( 'Body', 'landtech-extras-for-elementor' ),
 						'icon' 		=> 'nicon nicon-position-body',
 					],
 					'footer'    	=> [
-						'title' 	=> __( 'Footer', 'elementor-extras' ),
+						'title' 	=> __( 'Footer', 'landtech-extras-for-elementor' ),
 						'icon' 		=> 'nicon nicon-position-footer',
 					],
 					'' 				=> [
-						'title' 	=> __( 'Hide', 'elementor-extras' ),
+						'title' 	=> __( 'Hide', 'landtech-extras-for-elementor' ),
 						'icon' 		=> 'eicon eicon-close',
 					],
 				],
@@ -1924,10 +2049,10 @@ class Posts extends Posts_Base {
 		$this->add_control(
 			'post_comments_prefix',
 			[
-				'label' 		=> __( 'Prefix', 'elementor-extras' ),
+				'label' 		=> __( 'Prefix', 'landtech-extras-for-elementor' ),
 				'type' 			=> Controls_Manager::TEXT,
 				'default' 		=> '',
-				'placeholder' 	=> __( 'Comments:', 'elementor-extras' ),
+				'placeholder' 	=> __( 'Comments:', 'landtech-extras-for-elementor' ),
 				'condition' => [
 					'post_metas' => 'comments',
 					'post_comments_position!' => '',
@@ -1938,10 +2063,10 @@ class Posts extends Posts_Base {
 		$this->add_control(
 			'post_comments_suffix',
 			[
-				'label' 		=> __( 'Suffix', 'elementor-extras' ),
+				'label' 		=> __( 'Suffix', 'landtech-extras-for-elementor' ),
 				'type' 			=> Controls_Manager::TEXT,
 				'default' 		=> '',
-				'placeholder' 	=> __( 'comments', 'elementor-extras' ),
+				'placeholder' 	=> __( 'comments', 'landtech-extras-for-elementor' ),
 				'condition' => [
 					'post_metas' => 'comments',
 					'post_comments_position!' => '',
@@ -1961,7 +2086,7 @@ class Posts extends Posts_Base {
 		$this->start_controls_section(
 			'section_style_posts',
 			[
-				'label' => __( 'Posts', 'elementor-extras' ),
+				'label' => __( 'Posts', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -1969,20 +2094,20 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'posts_text_align',
 				[
-					'label' 		=> __( 'Align Text', 'elementor-extras' ),
+					'label' 		=> __( 'Align Text', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'left'    		=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -2003,12 +2128,12 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'post_overflow',
 				[
-					'label' 	=> __( 'Overflow', 'elementor-extras' ),
+					'label' 	=> __( 'Overflow', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> '',
 					'options' => [
-						''					=> __( 'Default', 'elementor-extras' ),
-						'hidden'			=> __( 'Hidden', 'elementor-extras' ),
+						''					=> __( 'Default', 'landtech-extras-for-elementor' ),
+						'hidden'			=> __( 'Hidden', 'landtech-extras-for-elementor' ),
 					],
 					'selectors' => [
 						'{{WRAPPER}} .ee-post' => 'overflow: {{VALUE}};',
@@ -2020,7 +2145,7 @@ class Posts extends Posts_Base {
 				'post_border_radius',
 				[
 					'type' 			=> Controls_Manager::DIMENSIONS,
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
 						'{{WRAPPER}} .ee-post' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -2030,12 +2155,12 @@ class Posts extends Posts_Base {
 
 			$this->start_controls_tabs( 'posts_tabs_hover' );
 
-			$this->start_controls_tab( 'posts_tab_default', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'posts_tab_default', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'post_background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-post' => 'background-color: {{VALUE}};',
@@ -2047,7 +2172,7 @@ class Posts extends Posts_Base {
 					Group_Control_Border::get_type(),
 					[
 						'name' 		=> 'post_border',
-						'label' 	=> __( 'Border', 'elementor-extras' ),
+						'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 						'selector' 	=> '{{WRAPPER}} .ee-post',
 					]
 				);
@@ -2063,12 +2188,12 @@ class Posts extends Posts_Base {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'posts_tab_hover', [ 'label' => __( 'Hover', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'posts_tab_hover', [ 'label' => __( 'Hover', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'post_background_color_hover',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-post:hover' => 'background-color: {{VALUE}};',
@@ -2079,7 +2204,7 @@ class Posts extends Posts_Base {
 				$this->add_control(
 					'post_border_color_hover',
 					[
-						'label' 	=> __( 'Border Color', 'elementor-extras' ),
+						'label' 	=> __( 'Border Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-post:hover' => 'border-color: {{VALUE}};',
@@ -2099,7 +2224,7 @@ class Posts extends Posts_Base {
 			$this->end_controls_tab();
 
 			$this->start_controls_tab( 'posts_tab_sticky', [
-				'label' => __( 'Sticky', 'elementor-extras' ),
+				'label' => __( 'Sticky', 'landtech-extras-for-elementor' ),
 				'condition' => [
 					'sticky_posts!' => '',
 				],
@@ -2108,7 +2233,7 @@ class Posts extends Posts_Base {
 				$this->add_control(
 					'post_background_color_sticky',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-post.sticky' => 'background-color: {{VALUE}};',
@@ -2122,7 +2247,7 @@ class Posts extends Posts_Base {
 				$this->add_control(
 					'post_border_color_sticky',
 					[
-						'label' 	=> __( 'Border Color', 'elementor-extras' ),
+						'label' 	=> __( 'Border Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-post.sticky' => 'border-color: {{VALUE}};',
@@ -2162,7 +2287,7 @@ class Posts extends Posts_Base {
 		$this->start_controls_section(
 			'section_style_header',
 			[
-				'label' => __( 'Header', 'elementor-extras' ),
+				'label' => __( 'Header', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 				'conditions' => [
 					'relation' => 'and',
@@ -2181,20 +2306,20 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'header_text_align',
 				[
-					'label' 		=> __( 'Align Text', 'elementor-extras' ),
+					'label' 		=> __( 'Align Text', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'left'    		=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -2208,7 +2333,7 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'header_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -2222,7 +2347,7 @@ class Posts extends Posts_Base {
 				'header_border_radius',
 				[
 					'type' 			=> Controls_Manager::DIMENSIONS,
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
 						'{{WRAPPER}} .ee-post__header' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -2233,12 +2358,12 @@ class Posts extends Posts_Base {
 
 			$this->start_controls_tabs( 'header_tabs_hover' );
 
-			$this->start_controls_tab( 'header_tab_default', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'header_tab_default', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'header_background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-post__header' => 'background-color: {{VALUE}};',
@@ -2250,7 +2375,7 @@ class Posts extends Posts_Base {
 				$this->add_control(
 					'header_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-post__header' => 'color: {{VALUE}};',
@@ -2261,12 +2386,12 @@ class Posts extends Posts_Base {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'header_tab_hover', [ 'label' => __( 'Hover', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'header_tab_hover', [ 'label' => __( 'Hover', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'header_background_color_hover',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-post:hover .ee-post__header' => 'background-color: {{VALUE}};',
@@ -2278,7 +2403,7 @@ class Posts extends Posts_Base {
 				$this->add_control(
 					'header_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-post:hover .ee-post__header' => 'color: {{VALUE}};',
@@ -2295,7 +2420,7 @@ class Posts extends Posts_Base {
 				'header_separator_heading',
 				[
 					'separator' => 'before',
-					'label' 	=> __( 'Separator', 'elementor-extras' ),
+					'label' 	=> __( 'Separator', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'condition' => [
 						'post_media' => ''
@@ -2306,7 +2431,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'header_separator_color',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'selectors' => [
 						'{{WRAPPER}} .ee-post__header' => 'border-color: {{VALUE}};',
@@ -2320,7 +2445,7 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'header_separator_size',
 				[
-					'label' 		=> __( 'Separator Size', 'elementor-extras' ),
+					'label' 		=> __( 'Separator Size', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -2343,7 +2468,7 @@ class Posts extends Posts_Base {
 				'header_metas',
 				[
 					'separator' 	=> 'before',
-					'label' 		=> __( '↳ Header Metas', 'elementor-extras' ),
+					'label' 		=> __( '↳ Header Metas', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::HEADING,
 					'conditions'	=> $header_metas_condition,
 				]
@@ -2353,7 +2478,7 @@ class Posts extends Posts_Base {
 				'header_metas_description',
 				[
 					'type' 				=> Controls_Manager::RAW_HTML,
-					'raw' 				=> __( 'Use these to style metas that appear only in the Header area', 'elementor-extras' ),
+					'raw' 				=> __( 'Use these to style metas that appear only in the Header area', 'landtech-extras-for-elementor' ),
 					'content_classes' 	=> 'elementor-panel-alert elementor-panel-alert-warning',
 					'conditions'		=> $header_metas_condition,
 				]
@@ -2362,7 +2487,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'header_metas_spacing',
 				[
-					'label' 		=> __( 'Spacing', 'elementor-extras' ),
+					'label' 		=> __( 'Spacing', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -2382,7 +2507,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'header_metas_distance',
 				[
-					'label' 		=> __( 'Distance', 'elementor-extras' ),
+					'label' 		=> __( 'Distance', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -2400,20 +2525,20 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'header_metas_text_align',
 				[
-					'label' 		=> __( 'Align Text', 'elementor-extras' ),
+					'label' 		=> __( 'Align Text', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'left'    		=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -2427,7 +2552,7 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'header_metas_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -2440,7 +2565,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'header_metas_color',
 				[
-					'label' 		=> __( 'Color', 'elementor-extras' ),
+					'label' 		=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::COLOR,
 					'selectors' 	=> [
 						'{{WRAPPER}} .ee-post__header .ee-post__metas--has-metas' => 'color: {{VALUE}};',
@@ -2452,7 +2577,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'header_metas_background_color',
 				[
-					'label' 	=> __( 'Background Color', 'elementor-extras' ),
+					'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'selectors' => [
 						'{{WRAPPER}} .ee-post__header .ee-post__metas--has-metas' => 'background-color: {{VALUE}};',
@@ -2465,7 +2590,7 @@ class Posts extends Posts_Base {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'header_metas_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -2489,7 +2614,7 @@ class Posts extends Posts_Base {
 		$this->start_controls_section(
 			'section_style_media',
 			[
-				'label' => __( 'Media', 'elementor-extras' ),
+				'label' => __( 'Media', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'post_media!' => '',
@@ -2501,7 +2626,7 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'media_margin',
 				[
-					'label' 		=> __( 'Margin', 'elementor-extras' ),
+					'label' 		=> __( 'Margin', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -2517,7 +2642,7 @@ class Posts extends Posts_Base {
 				'media_border_radius',
 				[
 					'type' 			=> Controls_Manager::DIMENSIONS,
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
 						'{{WRAPPER}} .ee-post__media' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -2528,7 +2653,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'media_z_index',
 				[
-					'label' 		=> __( 'Z-Index', 'elementor-extras' ),
+					'label' 		=> __( 'Z-Index', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::NUMBER,
 					'default' 		=> 1,
 					'selectors'		=> [
@@ -2540,24 +2665,24 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'media_content_vertical_aligment',
 				[
-					'label' 		=> __( 'Vertical Align', 'elementor-extras' ),
+					'label' 		=> __( 'Vertical Align', 'landtech-extras-for-elementor' ),
 					'label_block' 	=> false,
 					'type' 			=> Controls_Manager::CHOOSE,
 					'options' 		=> [
 						'top' 	=> [
-							'title' 	=> __( 'Initial', 'elementor-extras' ),
+							'title' 	=> __( 'Initial', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-top',
 						],
 						'middle' => [
-							'title' => __( 'Center', 'elementor-extras' ),
+							'title' => __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' => 'eicon-v-align-middle',
 						],
 						'bottom' 		=> [
-							'title' 	=> __( 'Opposite', 'elementor-extras' ),
+							'title' 	=> __( 'Opposite', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-bottom',
 						],
 						'stretch' => [
-							'title' 	=> __( 'Stretch', 'elementor-extras' ),
+							'title' 	=> __( 'Stretch', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-stretch',
 						],
 					],
@@ -2569,21 +2694,21 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'media_content_text_align',
 				[
-					'label' 		=> __( 'Align Text', 'elementor-extras' ),
+					'label' 		=> __( 'Align Text', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'label_block' 	=> false,
 					'default' 		=> '',
 					'options' 		=> [
 						'left'    		=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -2596,7 +2721,7 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'media_content_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -2608,7 +2733,7 @@ class Posts extends Posts_Base {
 			// $this->add_control(
 			// 	'media_thumbnail_style_heading',
 			// 	[
-			// 		'label' 	=> __( 'Thumbnail', 'elementor-extras' ),
+			// 		'label' 	=> __( 'Thumbnail', 'landtech-extras-for-elementor' ),
 			// 		'type' 		=> Controls_Manager::HEADING,
 			// 		'separator' => 'before',
 			// 	]
@@ -2618,15 +2743,15 @@ class Posts extends Posts_Base {
 			// 	'media_thumbnail_effect',
 			// 	[
 			// 		'separator'	=> 'after',
-			// 		'label' 	=> __( 'Effect', 'elementor-extras' ),
+			// 		'label' 	=> __( 'Effect', 'landtech-extras-for-elementor' ),
 			// 		'type' 		=> Controls_Manager::SELECT,
 			// 		'default' 	=> '',
 			// 		'options' => [
-			// 			''					=> __( 'None', 'elementor-extras' ),
-			// 			'rotate-to-left'	=> __( 'Rotate To Left', 'elementor-extras' ),
-			// 			'rotate-to-right'	=> __( 'Rotate To Right', 'elementor-extras' ),
-			// 			'rotate-from-left'	=> __( 'Rotate From Left', 'elementor-extras' ),
-			// 			'rotate-from-right'	=> __( 'Rotate From Right', 'elementor-extras' ),
+			// 			''					=> __( 'None', 'landtech-extras-for-elementor' ),
+			// 			'rotate-to-left'	=> __( 'Rotate To Left', 'landtech-extras-for-elementor' ),
+			// 			'rotate-to-right'	=> __( 'Rotate To Right', 'landtech-extras-for-elementor' ),
+			// 			'rotate-from-left'	=> __( 'Rotate From Left', 'landtech-extras-for-elementor' ),
+			// 			'rotate-from-right'	=> __( 'Rotate From Right', 'landtech-extras-for-elementor' ),
 			// 		],
 			// 		'prefix_class'	=> 'ee-posts-effect__thumbnail--',
 			// 	]
@@ -2638,7 +2763,7 @@ class Posts extends Posts_Base {
 				'media_metas',
 				[
 					'separator' 	=> 'before',
-					'label' 		=> __( '↳ Media Metas', 'elementor-extras' ),
+					'label' 		=> __( '↳ Media Metas', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::HEADING,
 					'conditions'	=> $media_metas_conditions,
 				]
@@ -2648,7 +2773,7 @@ class Posts extends Posts_Base {
 				'media_metas_description',
 				[
 					'type' 				=> Controls_Manager::RAW_HTML,
-					'raw' 				=> __( 'Use these to style metas that appear only in the Media area', 'elementor-extras' ),
+					'raw' 				=> __( 'Use these to style metas that appear only in the Media area', 'landtech-extras-for-elementor' ),
 					'content_classes' 	=> 'elementor-panel-alert elementor-panel-alert-warning',
 					'conditions'		=> $media_metas_conditions,
 				]
@@ -2657,7 +2782,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'media_metas_spacing',
 				[
-					'label' 		=> __( 'Spacing', 'elementor-extras' ),
+					'label' 		=> __( 'Spacing', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -2677,7 +2802,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'media_metas_distance',
 				[
-					'label' 		=> __( 'Distance', 'elementor-extras' ),
+					'label' 		=> __( 'Distance', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -2695,20 +2820,20 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'media_metas_text_align',
 				[
-					'label' 		=> __( 'Align Text', 'elementor-extras' ),
+					'label' 		=> __( 'Align Text', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'left'    		=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -2722,7 +2847,7 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'media_metas_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -2735,7 +2860,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'media_metas_color',
 				[
-					'label' 		=> __( 'Color', 'elementor-extras' ),
+					'label' 		=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::COLOR,
 					'selectors' 	=> [
 						'{{WRAPPER}} .ee-post__media .ee-post__metas--has-metas .ee-post__meta' => 'color: {{VALUE}};',
@@ -2747,7 +2872,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'media_metas_background_color',
 				[
-					'label' 		=> __( 'Background Color', 'elementor-extras' ),
+					'label' 		=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::COLOR,
 					'selectors' 	=> [
 						'{{WRAPPER}} .ee-post__media .ee-post__metas--has-metas' => 'background-color: {{VALUE}};',
@@ -2760,7 +2885,7 @@ class Posts extends Posts_Base {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 			=> 'media_metas_typography',
-					'label' 		=> __( 'Typography', 'elementor-extras' ),
+					'label' 		=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -2778,7 +2903,7 @@ class Posts extends Posts_Base {
 		$this->start_controls_section(
 			'section_style_body',
 			[
-				'label' => __( 'Body', 'elementor-extras' ),
+				'label' => __( 'Body', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 				'conditions' => [
 					'relation' => 'and',
@@ -2797,20 +2922,20 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'body_text_align',
 				[
-					'label' 		=> __( 'Align Text', 'elementor-extras' ),
+					'label' 		=> __( 'Align Text', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'left'    		=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -2824,7 +2949,7 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'body_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -2837,7 +2962,7 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'body_margin',
 				[
-					'label' 		=> __( 'Margin', 'elementor-extras' ),
+					'label' 		=> __( 'Margin', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -2851,7 +2976,7 @@ class Posts extends Posts_Base {
 				'body_border_radius',
 				[
 					'type' 			=> Controls_Manager::DIMENSIONS,
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
 						'{{WRAPPER}} .ee-post__body' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -2862,12 +2987,12 @@ class Posts extends Posts_Base {
 
 			$this->start_controls_tabs( 'body_tabs_hover' );
 
-			$this->start_controls_tab( 'body_tab_default', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'body_tab_default', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'body_background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-post__body' => 'background-color: {{VALUE}};',
@@ -2879,7 +3004,7 @@ class Posts extends Posts_Base {
 				$this->add_control(
 					'body_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-post__body' => 'color: {{VALUE}};',
@@ -2890,12 +3015,12 @@ class Posts extends Posts_Base {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'body_tab_hover', [ 'label' => __( 'Hover', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'body_tab_hover', [ 'label' => __( 'Hover', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'body_background_color_hover',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-post:hover .ee-post__body' => 'background-color: {{VALUE}};',
@@ -2907,7 +3032,7 @@ class Posts extends Posts_Base {
 				$this->add_control(
 					'body_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-post:hover .ee-post__body' => 'color: {{VALUE}};',
@@ -2926,7 +3051,7 @@ class Posts extends Posts_Base {
 				'body_metas',
 				[
 					'separator' 	=> 'before',
-					'label' 		=> __( '↳ Body Metas', 'elementor-extras' ),
+					'label' 		=> __( '↳ Body Metas', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::HEADING,
 					'conditions'	=> $body_metas_condition,
 				]
@@ -2936,7 +3061,7 @@ class Posts extends Posts_Base {
 				'body_metas_description',
 				[
 					'type' 				=> Controls_Manager::RAW_HTML,
-					'raw' 				=> __( 'Use these to style metas that appear only in the Body area', 'elementor-extras' ),
+					'raw' 				=> __( 'Use these to style metas that appear only in the Body area', 'landtech-extras-for-elementor' ),
 					'content_classes' 	=> 'elementor-panel-alert elementor-panel-alert-warning',
 					'conditions'		=> $body_metas_condition,
 				]
@@ -2945,7 +3070,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'body_metas_spacing',
 				[
-					'label' 		=> __( 'Spacing', 'elementor-extras' ),
+					'label' 		=> __( 'Spacing', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -2965,7 +3090,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'body_metas_distance',
 				[
-					'label' 		=> __( 'Distance', 'elementor-extras' ),
+					'label' 		=> __( 'Distance', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -2983,20 +3108,20 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'body_metas_text_align',
 				[
-					'label' 		=> __( 'Align Text', 'elementor-extras' ),
+					'label' 		=> __( 'Align Text', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'left'    		=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -3010,7 +3135,7 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'body_metas_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -3023,7 +3148,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'body_metas_color',
 				[
-					'label' 		=> __( 'Color', 'elementor-extras' ),
+					'label' 		=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::COLOR,
 					'selectors' 	=> [
 						'{{WRAPPER}} .ee-post__body .ee-post__metas--has-metas' => 'color: {{VALUE}};',
@@ -3035,7 +3160,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'body_metas_background_color',
 				[
-					'label' 		=> __( 'Background Color', 'elementor-extras' ),
+					'label' 		=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::COLOR,
 					'selectors' 	=> [
 						'{{WRAPPER}} .ee-post__body .ee-post__metas--has-metas' => 'background-color: {{VALUE}};',
@@ -3048,7 +3173,7 @@ class Posts extends Posts_Base {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 			=> 'body_metas_typography',
-					'label' 		=> __( 'Typography', 'elementor-extras' ),
+					'label' 		=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -3072,7 +3197,7 @@ class Posts extends Posts_Base {
 		$this->start_controls_section(
 			'section_style_footer',
 			[
-				'label' => __( 'Footer', 'elementor-extras' ),
+				'label' => __( 'Footer', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 				'conditions' => [
 					'relation' => 'and',
@@ -3091,20 +3216,20 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'footer_text_align',
 				[
-					'label' 		=> __( 'Align Text', 'elementor-extras' ),
+					'label' 		=> __( 'Align Text', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'left'    		=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -3118,7 +3243,7 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'footer_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -3131,7 +3256,7 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'footer_margin',
 				[
-					'label' 		=> __( 'Margin', 'elementor-extras' ),
+					'label' 		=> __( 'Margin', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -3145,7 +3270,7 @@ class Posts extends Posts_Base {
 				'footer_border_radius',
 				[
 					'type' 			=> Controls_Manager::DIMENSIONS,
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
 						'{{WRAPPER}} .ee-post__footer' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -3156,12 +3281,12 @@ class Posts extends Posts_Base {
 
 			$this->start_controls_tabs( 'footer_tabs_hover' );
 
-			$this->start_controls_tab( 'footer_tab_default', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'footer_tab_default', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'footer_background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-post__footer' => 'background-color: {{VALUE}};',
@@ -3173,7 +3298,7 @@ class Posts extends Posts_Base {
 				$this->add_control(
 					'footer_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-post__footer' => 'color: {{VALUE}};',
@@ -3185,7 +3310,7 @@ class Posts extends Posts_Base {
 				$this->add_control(
 					'footer_separator_heading',
 					[
-						'label' 	=> __( 'Separator', 'elementor-extras' ),
+						'label' 	=> __( 'Separator', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::HEADING,
 						'conditions' => $this->get_empty_area_condition( 'footer' ),
 					]
@@ -3194,7 +3319,7 @@ class Posts extends Posts_Base {
 				$this->add_control(
 					'footer_separator_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-post__footer' => 'border-color: {{VALUE}};',
@@ -3205,12 +3330,12 @@ class Posts extends Posts_Base {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'footer_tab_hover', [ 'label' => __( 'Hover', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'footer_tab_hover', [ 'label' => __( 'Hover', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'footer_background_color_hover',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-post:hover .ee-post__footer' => 'background-color: {{VALUE}};',
@@ -3222,7 +3347,7 @@ class Posts extends Posts_Base {
 				$this->add_control(
 					'footer_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}}  .ee-post:hover .ee-post__footer' => 'color: {{VALUE}};',
@@ -3234,7 +3359,7 @@ class Posts extends Posts_Base {
 				$this->add_control(
 					'footer_separator_heading_hover',
 					[
-						'label' 	=> __( 'Separator', 'elementor-extras' ),
+						'label' 	=> __( 'Separator', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::HEADING,
 						'conditions' => $this->get_empty_area_condition( 'footer' ),
 					]
@@ -3243,7 +3368,7 @@ class Posts extends Posts_Base {
 				$this->add_control(
 					'footer_separator_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-post:hover .ee-post__footer' => 'border-color: {{VALUE}};',
@@ -3260,7 +3385,7 @@ class Posts extends Posts_Base {
 				'footer_separator_size',
 				[
 					'separator'		=> 'before',
-					'label' 		=> __( 'Separator Size', 'elementor-extras' ),
+					'label' 		=> __( 'Separator Size', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -3281,7 +3406,7 @@ class Posts extends Posts_Base {
 				'footer_metas',
 				[
 					'separator' 	=> 'before',
-					'label' 		=> __( '↳ Footer Metas', 'elementor-extras' ),
+					'label' 		=> __( '↳ Footer Metas', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::HEADING,
 					'conditions'	=> $footer_metas_condition,
 				]
@@ -3291,7 +3416,7 @@ class Posts extends Posts_Base {
 				'footer_metas_description',
 				[
 					'type' 				=> Controls_Manager::RAW_HTML,
-					'raw' 				=> __( 'Use these to style metas that appear only in the Footer area', 'elementor-extras' ),
+					'raw' 				=> __( 'Use these to style metas that appear only in the Footer area', 'landtech-extras-for-elementor' ),
 					'content_classes' 	=> 'elementor-panel-alert elementor-panel-alert-warning',
 					'conditions'		=> $footer_metas_condition,
 				]
@@ -3300,7 +3425,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'footer_metas_spacing',
 				[
-					'label' 		=> __( 'Spacing', 'elementor-extras' ),
+					'label' 		=> __( 'Spacing', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -3320,7 +3445,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'footer_metas_distance',
 				[
-					'label' 		=> __( 'Distance', 'elementor-extras' ),
+					'label' 		=> __( 'Distance', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -3338,20 +3463,20 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'footer_metas_text_align',
 				[
-					'label' 		=> __( 'Align Text', 'elementor-extras' ),
+					'label' 		=> __( 'Align Text', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'left'    		=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -3365,7 +3490,7 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'footer_metas_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -3378,7 +3503,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'footer_metas_color',
 				[
-					'label' 		=> __( 'Color', 'elementor-extras' ),
+					'label' 		=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::COLOR,
 					'selectors' 	=> [
 						'{{WRAPPER}} .ee-post__footer .ee-post__metas--has-metas' => 'color: {{VALUE}};',
@@ -3390,7 +3515,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'footer_metas_background_color',
 				[
-					'label' 		=> __( 'Background Color', 'elementor-extras' ),
+					'label' 		=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::COLOR,
 					'selectors' 	=> [
 						'{{WRAPPER}} .ee-post__footer .ee-post__metas--has-metas' => 'background-color: {{VALUE}};',
@@ -3403,7 +3528,7 @@ class Posts extends Posts_Base {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 			=> 'footer_metas_typography',
-					'label' 		=> __( 'Typography', 'elementor-extras' ),
+					'label' 		=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -3427,7 +3552,7 @@ class Posts extends Posts_Base {
 		$this->start_controls_section(
 			'section_style_metas',
 			[
-				'label' 		=> __( 'Metas', 'elementor-extras' ),
+				'label' 		=> __( 'Metas', 'landtech-extras-for-elementor' ),
 				'tab'   		=> Controls_Manager::TAB_STYLE,
 				'conditions' => [
 					'relation' => 'and',
@@ -3471,7 +3596,7 @@ class Posts extends Posts_Base {
 				'metas_description',
 				[
 					'type' 				=> Controls_Manager::RAW_HTML,
-					'raw' 				=> __( 'The effects of the controls below can be overriden at an area level by using the options inside each separate area.', 'elementor-extras' ),
+					'raw' 				=> __( 'The effects of the controls below can be overriden at an area level by using the options inside each separate area.', 'landtech-extras-for-elementor' ),
 					'content_classes' 	=> 'elementor-panel-alert elementor-panel-alert-info',
 					'conditions'	=> [
 						'relation'	=> 'or',
@@ -3499,7 +3624,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'metas_spacing',
 				[
-					'label' 		=> __( 'Spacing', 'elementor-extras' ),
+					'label' 		=> __( 'Spacing', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -3539,7 +3664,7 @@ class Posts extends Posts_Base {
 				'author_avatar_heading',
 				[
 					'separator' 	=> 'before',
-					'label' 		=> __( 'Avatar', 'elementor-extras' ),
+					'label' 		=> __( 'Avatar', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::HEADING,
 					'condition' 	=> [
 						'post_avatar_position!' => '',
@@ -3550,20 +3675,20 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'author_avatar_display',
 				[
-					'label' 		=> __( 'Display', 'elementor-extras' ),
+					'label' 		=> __( 'Display', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> 'left',
 					'options' 		=> [
 						'left' 		=> [
-							'title' => __( 'Left', 'elementor-extras' ),
+							'title' => __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'eicon-h-align-left',
 						],
 						'top' 	=> [
-							'title' => __( 'Top', 'elementor-extras' ),
+							'title' => __( 'Top', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'eicon-v-align-top',
 						],
 						'right' 	=> [
-							'title' => __( 'Right', 'elementor-extras' ),
+							'title' => __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'eicon-h-align-right',
 						],
 					],
@@ -3578,20 +3703,20 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'author_avatar_vertical_align',
 				[
-					'label' 		=> __( 'Align', 'elementor-extras' ),
+					'label' 		=> __( 'Align', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> 'center',
 					'options' 		=> [
 						'flex-start'=> [
-							'title' => __( 'Top', 'elementor-extras' ),
+							'title' => __( 'Top', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'eicon-v-align-top',
 						],
 						'center' 	=> [
-							'title' => __( 'Center', 'elementor-extras' ),
+							'title' => __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'eicon-v-align-middle',
 						],
 						'flex-end' 	=> [
-							'title' => __( 'Bottom', 'elementor-extras' ),
+							'title' => __( 'Bottom', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'eicon-v-align-bottom',
 						],
 					],
@@ -3609,7 +3734,7 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'author_avatar_size',
 				[
-					'label' 		=> __( 'Size', 'elementor-extras' ),
+					'label' 		=> __( 'Size', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -3629,7 +3754,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'author_avatar_spacing',
 				[
-					'label' 		=> __( 'Spacing', 'elementor-extras' ),
+					'label' 		=> __( 'Spacing', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -3651,7 +3776,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'author_avatar_border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'%' 		=> [
@@ -3691,7 +3816,7 @@ class Posts extends Posts_Base {
 				'author_name_heading',
 				[
 					'separator' 	=> 'before',
-					'label' 		=> __( 'Author', 'elementor-extras' ),
+					'label' 		=> __( 'Author', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::HEADING,
 					'condition' 	=> [
 						'post_author_position!' => '',
@@ -3702,7 +3827,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'author_name_color',
 				[
-					'label' 		=> __( 'Color', 'elementor-extras' ),
+					'label' 		=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::COLOR,
 					'selectors' 	=> [
 						'{{WRAPPER}} .ee-post__meta--author' => 'color: {{VALUE}};',
@@ -3717,12 +3842,12 @@ class Posts extends Posts_Base {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 			=> 'author_name_typography',
-					'label' 		=> __( 'Typography', 'elementor-extras' ),
+					'label' 		=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
 					'selector' 		=> '{{WRAPPER}} .ee-post__meta--author',
-					'exclude'		=> [
+					'exclude'		=> [ // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor typography control keys.
 						'font_family',
 						'font_size',
 						'line_height',
@@ -3738,7 +3863,7 @@ class Posts extends Posts_Base {
 				'date_heading',
 				[
 					'separator' => 'before',
-					'label' 	=> __( 'Date', 'elementor-extras' ),
+					'label' 	=> __( 'Date', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'condition' 	=> [
 						'post_date_position!' => '',
@@ -3749,7 +3874,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'date_color',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'selectors' => [
 						'{{WRAPPER}} .ee-post__meta--date' => 'color: {{VALUE}};',
@@ -3764,12 +3889,12 @@ class Posts extends Posts_Base {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'date_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
 					'selector' 	=> '{{WRAPPER}} .ee-post__meta--date',
-					'exclude'	=> [
+					'exclude'	=> [ // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor typography control keys.
 						'font_family',
 						'font_size',
 						'line_height',
@@ -3781,12 +3906,12 @@ class Posts extends Posts_Base {
 				]
 			);
 
-			if ( is_woocommerce_active() ) {
+			if ( landtech_extras_is_woocommerce_active() ) {
 				$this->add_control(
 					'price_heading',
 					[
 						'separator' => 'before',
-						'label' 	=> __( 'Price', 'elementor-extras' ),
+						'label' 	=> __( 'Price', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::HEADING,
 						'condition' 	=> [
 							'post_price_position!' => '',
@@ -3798,7 +3923,7 @@ class Posts extends Posts_Base {
 				$this->add_control(
 					'price_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-post__meta--price' => 'color: {{VALUE}};',
@@ -3814,12 +3939,12 @@ class Posts extends Posts_Base {
 					Group_Control_Typography::get_type(),
 					[
 						'name' 		=> 'price_typography',
-						'label' 	=> __( 'Typography', 'elementor-extras' ),
+						'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 						'global' => [
 							'default' => Global_Typography::TYPOGRAPHY_TEXT,
 						],
 						'selector' 	=> '{{WRAPPER}} .ee-post__meta--price',
-						'exclude'	=> [
+						'exclude'	=> [ // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor typography control keys.
 							'font_family',
 							'font_size',
 							'line_height',
@@ -3837,7 +3962,7 @@ class Posts extends Posts_Base {
 				'comments_heading',
 				[
 					'separator' => 'before',
-					'label' 	=> __( 'Comments', 'elementor-extras' ),
+					'label' 	=> __( 'Comments', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'condition' => [
 						'post_comments_position!' => '',
@@ -3848,7 +3973,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'comments_color',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'selectors' => [
 						'{{WRAPPER}} .ee-post__meta--comments' => 'color: {{VALUE}};',
@@ -3863,12 +3988,12 @@ class Posts extends Posts_Base {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'comments_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
 					'selector' 	=> '{{WRAPPER}} .ee-post__meta--comments',
-					'exclude'	=> [
+					'exclude'	=> [ // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor typography control keys.
 						'font_family',
 						'font_size',
 						'line_height',
@@ -3895,7 +4020,7 @@ class Posts extends Posts_Base {
 		$this->start_controls_section(
 			'section_style_terms',
 			[
-				'label' => __( 'Terms', 'elementor-extras' ),
+				'label' => __( 'Terms', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'post_terms_position!' => '',
@@ -3907,7 +4032,7 @@ class Posts extends Posts_Base {
 				'terms_terms_heading',
 				[
 					'separator' => 'before',
-					'label' 	=> __( 'Terms', 'elementor-extras' ),
+					'label' 	=> __( 'Terms', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'condition' => [
 						'post_terms_position!' => '',
@@ -3918,20 +4043,20 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'terms_terms_align',
 				[
-					'label' 		=> __( 'Align Text', 'elementor-extras' ),
+					'label' 		=> __( 'Align Text', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'left'    		=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -3947,7 +4072,7 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'terms_distance',
 				[
-					'label' 		=> __( 'Distance', 'elementor-extras' ),
+					'label' 		=> __( 'Distance', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -3968,7 +4093,7 @@ class Posts extends Posts_Base {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'terms_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -3988,7 +4113,7 @@ class Posts extends Posts_Base {
 				'terms_term_heading',
 				[
 					'separator' => 'before',
-					'label' 	=> __( 'Term', 'elementor-extras' ),
+					'label' 	=> __( 'Term', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'condition' => [
 						'post_terms_position!' => '',
@@ -3999,7 +4124,7 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'terms_spacing',
 				[
-					'label' 		=> __( 'Horzontal Spacing', 'elementor-extras' ),
+					'label' 		=> __( 'Horzontal Spacing', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -4022,8 +4147,8 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'terms_vertical_spacing',
 				[
-					'label' 		=> __( 'Vertical Spacing', 'elementor-extras' ),
-					'description'	=> __( 'If you have multuple lines of terms, this will help you distance them from one another', 'elementor-extras' ),
+					'label' 		=> __( 'Vertical Spacing', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'If you have multuple lines of terms, this will help you distance them from one another', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -4044,7 +4169,7 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'terms_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -4060,7 +4185,7 @@ class Posts extends Posts_Base {
 				'terms_border_radius',
 				[
 					'type' 			=> Controls_Manager::DIMENSIONS,
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
 						'{{WRAPPER}} .ee-post__terms__link' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -4074,7 +4199,7 @@ class Posts extends Posts_Base {
 			$this->start_controls_tabs( 'terms_tabs_hover' );
 
 			$this->start_controls_tab( 'terms_tab_default', [
-				'label' 	=> __( 'Default', 'elementor-extras' ),
+				'label' 	=> __( 'Default', 'landtech-extras-for-elementor' ),
 				'condition' => [
 					'post_terms_position!' => '',
 				],
@@ -4083,7 +4208,7 @@ class Posts extends Posts_Base {
 				$this->add_control(
 					'terms_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-post__terms__link' => 'color: {{VALUE}};',
@@ -4097,7 +4222,7 @@ class Posts extends Posts_Base {
 				$this->add_control(
 					'terms_background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-post__terms__link' => 'background-color: {{VALUE}};',
@@ -4111,7 +4236,7 @@ class Posts extends Posts_Base {
 			$this->end_controls_tab();
 
 			$this->start_controls_tab( 'terms_tab_hover', [
-				'label' 		=> __( 'Hover', 'elementor-extras' ),
+				'label' 		=> __( 'Hover', 'landtech-extras-for-elementor' ),
 				'conditions'	=> [
 					'relation'	=> 'and',
 					'terms'		=> [
@@ -4132,7 +4257,7 @@ class Posts extends Posts_Base {
 				$this->add_control(
 					'terms_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-post__terms__link:hover' => 'color: {{VALUE}};',
@@ -4158,7 +4283,7 @@ class Posts extends Posts_Base {
 				$this->add_control(
 					'terms_background_color_hover',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-post__terms__link:hover' => 'background-color: {{VALUE}};',
@@ -4189,7 +4314,7 @@ class Posts extends Posts_Base {
 				'terms_separator_heading',
 				[
 					'separator' => 'before',
-					'label' 	=> __( 'Separator', 'elementor-extras' ),
+					'label' 	=> __( 'Separator', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'condition' => [
 						'post_terms_position!' => '',
@@ -4200,7 +4325,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'terms_separator_color',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'selectors' => [
 						'{{WRAPPER}} .ee-post__terms__separator' => 'color: {{VALUE}};',
@@ -4226,7 +4351,7 @@ class Posts extends Posts_Base {
 		$this->start_controls_section(
 			'section_style_title',
 			[
-				'label' 	=> __( 'Title', 'elementor-extras' ),
+				'label' 	=> __( 'Title', 'landtech-extras-for-elementor' ),
 				'tab'   	=> Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'post_title_position!' => '',
@@ -4238,20 +4363,20 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'title_align',
 				[
-					'label' 		=> __( 'Align Text', 'elementor-extras' ),
+					'label' 		=> __( 'Align Text', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'left'    		=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -4267,7 +4392,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'title_color',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'selectors' => [
 						'{{WRAPPER}} .ee-post__title__heading' => 'color: {{VALUE}};',
@@ -4281,7 +4406,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'title_background_color',
 				[
-					'label' 	=> __( 'Background Color', 'elementor-extras' ),
+					'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'selectors' => [
 						'{{WRAPPER}} .ee-post__title' => 'background-color: {{VALUE}};',
@@ -4292,7 +4417,7 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'title_margin',
 				[
-					'label' 		=> __( 'Margin', 'elementor-extras' ),
+					'label' 		=> __( 'Margin', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -4307,7 +4432,7 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'title_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -4323,7 +4448,7 @@ class Posts extends Posts_Base {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'title_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_SECONDARY,
 					],
@@ -4360,7 +4485,7 @@ class Posts extends Posts_Base {
 		$this->start_controls_section(
 			'section_style_excerpt',
 			[
-				'label' => __( 'Excerpt', 'elementor-extras' ),
+				'label' => __( 'Excerpt', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'post_excerpt_position!' => '',
@@ -4372,20 +4497,20 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'excerpt_align',
 				[
-					'label' 		=> __( 'Align Text', 'elementor-extras' ),
+					'label' 		=> __( 'Align Text', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'left'    		=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -4401,7 +4526,7 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'excerpt_margin',
 				[
-					'label' 		=> __( 'Margin', 'elementor-extras' ),
+					'label' 		=> __( 'Margin', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -4416,7 +4541,7 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'excerpt_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -4432,7 +4557,7 @@ class Posts extends Posts_Base {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'excerpt_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -4455,7 +4580,7 @@ class Posts extends Posts_Base {
 		$this->start_controls_section(
 			'section_style_button',
 			[
-				'label' => __( 'Button', 'elementor-extras' ),
+				'label' => __( 'Button', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'post_button_position!' => '',
@@ -4466,20 +4591,20 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'button_align',
 				[
-					'label' 		=> __( 'Align', 'elementor-extras' ),
+					'label' 		=> __( 'Align', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'left'    		=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -4495,7 +4620,7 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'button_margin',
 				[
-					'label' 		=> __( 'Margin', 'elementor-extras' ),
+					'label' 		=> __( 'Margin', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -4510,7 +4635,7 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'button_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -4526,7 +4651,7 @@ class Posts extends Posts_Base {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'button_border',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '{{WRAPPER}} .ee-post__read-more > *',
 				]
 			);
@@ -4535,7 +4660,7 @@ class Posts extends Posts_Base {
 				'button_border_radius',
 				[
 					'type' 			=> Controls_Manager::DIMENSIONS,
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
 						'{{WRAPPER}} .ee-post__read-more > *' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -4550,7 +4675,7 @@ class Posts extends Posts_Base {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'button_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -4561,7 +4686,7 @@ class Posts extends Posts_Base {
 			$this->add_responsive_control(
 				'read_more_distance',
 				[
-					'label' 		=> __( 'Spacing', 'elementor-extras' ),
+					'label' 		=> __( 'Spacing', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -4588,12 +4713,12 @@ class Posts extends Posts_Base {
 
 			$this->start_controls_tabs( 'button_tabs' );
 
-			$this->start_controls_tab( 'button_tab_default', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'button_tab_default', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'read_more_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-post__read-more > *' => 'color: {{VALUE}};',
@@ -4607,7 +4732,7 @@ class Posts extends Posts_Base {
 				$this->add_control(
 					'read_more_background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-post__read-more > *' => 'background-color: {{VALUE}};',
@@ -4620,12 +4745,12 @@ class Posts extends Posts_Base {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'button_tab_hover', [ 'label' => __( 'Hover', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'button_tab_hover', [ 'label' => __( 'Hover', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'read_more_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-post__read-more > *:hover' => 'color: {{VALUE}};',
@@ -4639,7 +4764,7 @@ class Posts extends Posts_Base {
 				$this->add_control(
 					'read_more_background_color_hover',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-post__read-more > *:hover' => 'background-color: {{VALUE}};',
@@ -4704,7 +4829,7 @@ class Posts extends Posts_Base {
 		$this->start_controls_section(
 			'section_style_hover_animation',
 			[
-				'label' 	=> __( 'Hover Effects', 'elementor-extras' ),
+				'label' 	=> __( 'Hover Effects', 'landtech-extras-for-elementor' ),
 				'tab'   	=> Controls_Manager::TAB_STYLE,
 				'condition'	=> [
 					'skin_source' => '',
@@ -4735,7 +4860,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'media_content_style_heading',
 				[
-					'label' 		=> __( 'Content', 'elementor-extras' ),
+					'label' 		=> __( 'Content', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::HEADING,
 					'separator' 	=> 'before',
 					'conditions'	=> $media_not_empty,
@@ -4745,29 +4870,29 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'media_content_effect',
 				[
-					'label' 	=> __( 'Effect', 'elementor-extras' ),
+					'label' 	=> __( 'Effect', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> '',
 					'options' => [
-						''					=> __( 'None', 'elementor-extras' ),
-						'fade-in'			=> __( 'Fade In', 'elementor-extras' ),
-						'fade-out'			=> __( 'Fade Out', 'elementor-extras' ),
-						'from-top'			=> __( 'From Top', 'elementor-extras' ),
-						'from-right'		=> __( 'From Right', 'elementor-extras' ),
-						'from-bottom'		=> __( 'From Bottom', 'elementor-extras' ),
-						'from-left'			=> __( 'From Left', 'elementor-extras' ),
-						'fade-from-top'		=> __( 'Fade From Top', 'elementor-extras' ),
-						'fade-from-right'	=> __( 'Fade From Right', 'elementor-extras' ),
-						'fade-from-bottom'	=> __( 'Fade From Bottom', 'elementor-extras' ),
-						'fade-from-left'	=> __( 'Fade From Left', 'elementor-extras' ),
-						'to-top'			=> __( 'To Top', 'elementor-extras' ),
-						'to-right'			=> __( 'To Right', 'elementor-extras' ),
-						'to-bottom'			=> __( 'To Bottom', 'elementor-extras' ),
-						'to-left'			=> __( 'To Left', 'elementor-extras' ),
-						'fade-to-top'		=> __( 'Fade To Top', 'elementor-extras' ),
-						'fade-to-right'		=> __( 'Fade To Right', 'elementor-extras' ),
-						'fade-to-bottom'	=> __( 'Fade To Bottom', 'elementor-extras' ),
-						'fade-to-left'		=> __( 'Fade To Left', 'elementor-extras' ),
+						''					=> __( 'None', 'landtech-extras-for-elementor' ),
+						'fade-in'			=> __( 'Fade In', 'landtech-extras-for-elementor' ),
+						'fade-out'			=> __( 'Fade Out', 'landtech-extras-for-elementor' ),
+						'from-top'			=> __( 'From Top', 'landtech-extras-for-elementor' ),
+						'from-right'		=> __( 'From Right', 'landtech-extras-for-elementor' ),
+						'from-bottom'		=> __( 'From Bottom', 'landtech-extras-for-elementor' ),
+						'from-left'			=> __( 'From Left', 'landtech-extras-for-elementor' ),
+						'fade-from-top'		=> __( 'Fade From Top', 'landtech-extras-for-elementor' ),
+						'fade-from-right'	=> __( 'Fade From Right', 'landtech-extras-for-elementor' ),
+						'fade-from-bottom'	=> __( 'Fade From Bottom', 'landtech-extras-for-elementor' ),
+						'fade-from-left'	=> __( 'Fade From Left', 'landtech-extras-for-elementor' ),
+						'to-top'			=> __( 'To Top', 'landtech-extras-for-elementor' ),
+						'to-right'			=> __( 'To Right', 'landtech-extras-for-elementor' ),
+						'to-bottom'			=> __( 'To Bottom', 'landtech-extras-for-elementor' ),
+						'to-left'			=> __( 'To Left', 'landtech-extras-for-elementor' ),
+						'fade-to-top'		=> __( 'Fade To Top', 'landtech-extras-for-elementor' ),
+						'fade-to-right'		=> __( 'Fade To Right', 'landtech-extras-for-elementor' ),
+						'fade-to-bottom'	=> __( 'Fade To Bottom', 'landtech-extras-for-elementor' ),
+						'fade-to-left'		=> __( 'Fade To Left', 'landtech-extras-for-elementor' ),
 					],
 					'conditions'	=> $media_not_empty,
 					'prefix_class'	=> 'ee-media-effect__content--',
@@ -4777,7 +4902,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'media_area_heading',
 				[
-					'label' 	=> __( 'Media', 'elementor-extras' ),
+					'label' 	=> __( 'Media', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator'	=> 'before',
 				]
@@ -4785,12 +4910,12 @@ class Posts extends Posts_Base {
 
 			$this->start_controls_tabs( 'media_tabs_hover' );
 
-			$this->start_controls_tab( 'media_tab_default', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'media_tab_default', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_responsive_control(
 					'media_area_scale',
 					[
-						'label' 		=> __( 'Scale', 'elementor-extras' ),
+						'label' 		=> __( 'Scale', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SLIDER,
 						'range' 		=> [
 							'px' 		=> [
@@ -4808,7 +4933,7 @@ class Posts extends Posts_Base {
 				$this->add_control(
 					'media_area_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-post__media__content *' => 'color: {{VALUE}};',
@@ -4829,19 +4954,19 @@ class Posts extends Posts_Base {
 					Group_Control_Border::get_type(),
 					[
 						'name' 		=> 'media_area_border',
-						'label' 	=> __( 'Border', 'elementor-extras' ),
+						'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 						'selector' 	=> '{{WRAPPER}} .ee-post__media',
 					]
 				);
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'media_tab_hover', [ 'label' => __( 'Hover', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'media_tab_hover', [ 'label' => __( 'Hover', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'media_area_heading_hover',
 					[
-						'label' 	=> __( 'Area', 'elementor-extras' ),
+						'label' 	=> __( 'Area', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::HEADING,
 					]
 				);
@@ -4849,7 +4974,7 @@ class Posts extends Posts_Base {
 				$this->add_responsive_control(
 					'media_area_scale_hover',
 					[
-						'label' 		=> __( 'Scale', 'elementor-extras' ),
+						'label' 		=> __( 'Scale', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SLIDER,
 						'range' 		=> [
 							'px' 		=> [
@@ -4867,7 +4992,7 @@ class Posts extends Posts_Base {
 				$this->add_control(
 					'media_area_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-post__media:hover .ee-post__media__content *' => 'color: {{VALUE}};',
@@ -4887,7 +5012,7 @@ class Posts extends Posts_Base {
 				$this->add_control(
 					'media_area_border_color_hover',
 					[
-						'label' 	=> __( 'Border Color', 'elementor-extras' ),
+						'label' 	=> __( 'Border Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-post__media:hover' => 'border-color: {{VALUE}};',
@@ -4902,7 +5027,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'media_thumbnail_heading',
 				[
-					'label' 	=> __( 'Thumbnail', 'elementor-extras' ),
+					'label' 	=> __( 'Thumbnail', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator'	=> 'before',
 				]
@@ -4910,12 +5035,12 @@ class Posts extends Posts_Base {
 
 			$this->start_controls_tabs( 'thumbnail_tabs_hover' );
 
-			$this->start_controls_tab( 'thumbnail_tab_default', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'thumbnail_tab_default', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_responsive_control(
 					'media_thumbnail_scale',
 					[
-						'label' 		=> __( 'Scale', 'elementor-extras' ),
+						'label' 		=> __( 'Scale', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SLIDER,
 						'range' 		=> [
 							'px' 		=> [
@@ -4940,12 +5065,12 @@ class Posts extends Posts_Base {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'thumbnail_tab_hover', [ 'label' => __( 'Hover', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'thumbnail_tab_hover', [ 'label' => __( 'Hover', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_responsive_control(
 					'media_thumbnail_scale_hover',
 					[
-						'label' 		=> __( 'Scale', 'elementor-extras' ),
+						'label' 		=> __( 'Scale', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SLIDER,
 						'range' 		=> [
 							'px' 		=> [
@@ -4975,7 +5100,7 @@ class Posts extends Posts_Base {
 			$this->add_control(
 				'media_overlay_heading',
 				[
-					'label' 	=> __( 'Overlay', 'elementor-extras' ),
+					'label' 	=> __( 'Overlay', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator'	=> 'before',
 				]
@@ -4983,7 +5108,7 @@ class Posts extends Posts_Base {
 
 			$this->start_controls_tabs( 'overlay_tabs_hover' );
 
-			$this->start_controls_tab( 'overlay_tab_default', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'overlay_tab_default', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_group_control(
 					Group_Control_Background::get_type(),
@@ -4992,7 +5117,7 @@ class Posts extends Posts_Base {
 						'types' 	=> [ 'classic', 'gradient' ],
 						'selector' 	=> '{{WRAPPER}} .ee-post__media__overlay',
 						'default'	=> 'classic',
-						'exclude'	=> [
+						'exclude'	=> [ // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor background control keys.
 							'image',
 						]
 					]
@@ -5001,19 +5126,19 @@ class Posts extends Posts_Base {
 				$this->add_control(
 					'media_overlay_blend',
 					[
-						'label' 		=> __( 'Blend mode', 'elementor-extras' ),
+						'label' 		=> __( 'Blend mode', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SELECT,
 						'default' 		=> 'normal',
 						'options' => [
-							'normal'			=> __( 'Normal', 'elementor-extras' ),
-							'multiply'			=> __( 'Multiply', 'elementor-extras' ),
-							'screen'			=> __( 'Screen', 'elementor-extras' ),
-							'overlay'			=> __( 'Overlay', 'elementor-extras' ),
-							'darken'			=> __( 'Darken', 'elementor-extras' ),
-							'lighten'			=> __( 'Lighten', 'elementor-extras' ),
-							'color'				=> __( 'Color', 'elementor-extras' ),
-							'color-dodge'		=> __( 'Color Dodge', 'elementor-extras' ),
-							'hue'				=> __( 'Hue', 'elementor-extras' ),
+							'normal'			=> __( 'Normal', 'landtech-extras-for-elementor' ),
+							'multiply'			=> __( 'Multiply', 'landtech-extras-for-elementor' ),
+							'screen'			=> __( 'Screen', 'landtech-extras-for-elementor' ),
+							'overlay'			=> __( 'Overlay', 'landtech-extras-for-elementor' ),
+							'darken'			=> __( 'Darken', 'landtech-extras-for-elementor' ),
+							'lighten'			=> __( 'Lighten', 'landtech-extras-for-elementor' ),
+							'color'				=> __( 'Color', 'landtech-extras-for-elementor' ),
+							'color-dodge'		=> __( 'Color Dodge', 'landtech-extras-for-elementor' ),
+							'hue'				=> __( 'Hue', 'landtech-extras-for-elementor' ),
 
 						],
 						'selectors' 	=> [
@@ -5026,7 +5151,12 @@ class Posts extends Posts_Base {
 					'media_overlay_blend_notice',
 					[
 						'type' 				=> Controls_Manager::RAW_HTML,
-						'raw' 				=> sprintf( __( 'Please check blend mode support for your browser %1$s here %2$s', 'elementor-extras' ), '<a href="https://caniuse.com/#search=mix-blend-mode" target="_blank">', '</a>' ),
+						'raw' 				=> sprintf(
+							/* translators: 1–2: link markup to caniuse.com mix-blend-mode. */
+							__( 'Please check blend mode support for your browser %1$s here %2$s', 'landtech-extras-for-elementor' ),
+							'<a href="https://caniuse.com/#search=mix-blend-mode" target="_blank">',
+							'</a>'
+						),
 						'content_classes' 	=> 'elementor-panel-alert elementor-panel-alert-warning',
 						'condition' 		=> [
 							'media_overlay_blend!' => 'normal'
@@ -5037,7 +5167,7 @@ class Posts extends Posts_Base {
 				$this->add_responsive_control(
 					'media_overlay_opacity',
 					[
-						'label' 		=> __( 'Opacity', 'elementor-extras' ),
+						'label' 		=> __( 'Opacity', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SLIDER,
 						'range' 		=> [
 							'px' 		=> [
@@ -5054,7 +5184,7 @@ class Posts extends Posts_Base {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'overlay_tab_hover', [ 'label' => __( 'Hover', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'overlay_tab_hover', [ 'label' => __( 'Hover', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_group_control(
 					Group_Control_Background::get_type(),
@@ -5063,7 +5193,7 @@ class Posts extends Posts_Base {
 						'types' 	=> [ 'classic', 'gradient' ],
 						'selector' 	=> '{{WRAPPER}} .ee-post__media:hover .ee-post__media__overlay',
 						'default'	=> 'classic',
-						'exclude'	=> [
+						'exclude'	=> [ // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor background control keys.
 							'image',
 						]
 					]
@@ -5072,7 +5202,7 @@ class Posts extends Posts_Base {
 				$this->add_responsive_control(
 					'media_overlay_opacity_hover',
 					[
-						'label' 		=> __( 'Opacity', 'elementor-extras' ),
+						'label' 		=> __( 'Opacity', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SLIDER,
 						'range' 		=> [
 							'px' 		=> [
@@ -5227,7 +5357,7 @@ class Posts extends Posts_Base {
 		 * @param object|WP_Post 	$post 			The current post
 		 * @param object|WP_Post 	$settings 		The widget settings
 		 */
-		return apply_filters( 'elementor_extras/widgets/posts/post_classes', $post_classes, $post, $this->get_settings() );
+		return apply_filters( 'landtech_extras/widgets/posts/post_classes', $post_classes, $post, $this->get_settings() );
 	}
 
 	/**

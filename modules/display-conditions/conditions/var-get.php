@@ -1,8 +1,9 @@
 <?php
-namespace ElementorExtras\Modules\DisplayConditions\Conditions;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\DisplayConditions\Conditions;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Condition;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Condition;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -37,7 +38,7 @@ class Var_Get extends Var_Base {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'GET', 'elementor-extras' );
+		return __( 'GET', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -53,11 +54,27 @@ class Var_Get extends Var_Base {
 	 */
 	public function check( $operator, $value, $name = null ) {
 		$show = false;
+		$key  = $this->sanitize_request_var_key( $name );
 
-		if ( isset( $_GET[ $name ] ) ) {
-			if ( '' === trim( $value ) ) {
+		if ( '' === $key || ! isset( $_GET[ $key ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only display condition on public requests.
+			return $this->compare( $show, true, $operator );
+		}
+
+		$raw = map_deep( wp_unslash( $_GET[ $key ] ), 'sanitize_text_field' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only display condition on public requests.
+
+		if ( is_array( $raw ) ) {
+			// MANUAL REVIEW REQUIRED: GET arrays not compared to target value; blank target only matches "presence".
+			if ( '' !== trim( (string) $value ) ) {
+				return $this->compare( $show, true, $operator );
+			}
+			$show = true;
+		} else {
+			$incoming = (string) $raw;
+			$value_in = sanitize_text_field( (string) $value );
+
+			if ( '' === trim( (string) $value ) ) {
 				$show = true;
-			} else if ( $value === $_GET[ $name ] ) {
+			} elseif ( $value_in === $incoming ) {
 				$show = true;
 			}
 		}

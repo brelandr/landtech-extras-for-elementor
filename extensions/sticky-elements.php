@@ -1,8 +1,9 @@
 <?php
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
 
-namespace ElementorExtras\Extensions;
+namespace LandTechExtras\Extensions;
 
-use ElementorExtras\Base\Extension_Base;
+use LandTechExtras\Base\Extension_Base;
 use Elementor\Controls_Manager;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -35,8 +36,8 @@ class Extension_Sticky_Elements extends Extension_Base {
 	 **/
 	public function get_script_depends() {
 		return [
-			'hc-sticky',
-			'jquery-resize-ee',
+			'landtech-extras-hc-sticky',
+			'landtech-extras-jquery-resize',
 		];
 	}
 
@@ -52,7 +53,7 @@ class Extension_Sticky_Elements extends Extension_Base {
 	 * @return bool
 	 */
 	public static function is_default_disabled() {
-		if ( is_elementor_pro_active() ) {
+		if ( landtech_extras_is_elementor_pro_active() ) {
 			return true;
 		}
 		return false;
@@ -67,13 +68,13 @@ class Extension_Sticky_Elements extends Extension_Base {
 
 		$message = '';
 
-		if ( is_elementor_pro_active() ) {
+		if ( landtech_extras_is_elementor_pro_active() ) {
 			$message = '<div class="ee-admin-notice ee-admin-notice--info notice notice-warning inline"><p>';
-			$message .= __( '<strong>IMPORTANT:</strong> Enabling this extension disables the default Elementor Pro sticky options.', 'elementor-extras' );
+			$message .= __( '<strong>IMPORTANT:</strong> Enabling this extension disables the default Elementor Pro sticky options.', 'landtech-extras-for-elementor' );
 			$message .= '</p></div>';
 		}
 
-		$message .= __( 'Adds an option to make any widget or section sticky when scrolling to it\'s position. Can be found under Advanced &rarr; Extras &rarr; Sticky.', 'elementor-extras' );
+		$message .= __( 'Adds an option to make any widget or section sticky when scrolling to it\'s position. Can be found under Advanced &rarr; Extras &rarr; Sticky.', 'landtech-extras-for-elementor' );
 
 		return $message;
 	}
@@ -127,7 +128,7 @@ class Extension_Sticky_Elements extends Extension_Base {
 				'sticky_warning',
 				[
 					'type' 					=> Controls_Manager::RAW_HTML,
-					'raw' 					=> __( 'You cannot make this section sticky if the "Stretch Section" is enabled. To make it work, use a section within a section, make the outer section stretched and the inner section sticky.', 'elementor-extras' ),
+					'raw' 					=> __( 'You cannot make this section sticky if the "Stretch Section" is enabled. To make it work, use a section within a section, make the outer section stretched and the inner section sticky.', 'landtech-extras-for-elementor' ),
 					'content_classes' 		=> 'elementor-panel-alert elementor-panel-alert-danger',
 					'separator'				=> 'before',
 					'condition'				=> [
@@ -138,12 +139,12 @@ class Extension_Sticky_Elements extends Extension_Base {
 		}
 
 		$element->add_control( 'sticky_enable', [
-			'label'			=> _x( 'Sticky', 'Sticky Control', 'elementor-extras' ),
+			'label'			=> _x( 'Sticky', 'Sticky Control', 'landtech-extras-for-elementor' ),
 			'type' 			=> Controls_Manager::SWITCHER,
 			'default' 		=> '',
 			'separator'		=> 'before',
-			'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-			'label_off' 	=> __( 'No', 'elementor-extras' ),
+			'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+			'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 			'return_value' 	=> 'yes',
 			'frontend_available'	=> true,
 		]);
@@ -152,7 +153,7 @@ class Extension_Sticky_Elements extends Extension_Base {
 			'sticky_info',
 			[
 				'type' 					=> Controls_Manager::RAW_HTML,
-				'raw' 					=> __( 'If your section contains just this element, make sure "Vertical Align" is set to "Top" for any parent sections.', 'elementor-extras' ),
+				'raw' 					=> __( 'If your section contains just this element, make sure "Vertical Align" is set to "Top" for any parent sections.', 'landtech-extras-for-elementor' ),
 				'content_classes' 		=> 'elementor-panel-alert elementor-panel-alert-info',
 				'separator'				=> 'before',
 				'condition' 			=> [
@@ -162,18 +163,18 @@ class Extension_Sticky_Elements extends Extension_Base {
 		);
 
 		$parent_options = [
-			'' 			=> __( 'Parent', 'elementor-extras' ),
-			'body' 		=> __( 'Page Body', 'elementor-extras' ),
-			'custom' 	=> __( 'Custom Parent', 'elementor-extras' ),
+			'' 			=> __( 'Parent', 'landtech-extras-for-elementor' ),
+			'body' 		=> __( 'Page Body', 'landtech-extras-for-elementor' ),
+			'custom' 	=> __( 'Custom Parent', 'landtech-extras-for-elementor' ),
 		];
 
 		if ( 'widget' === $element->get_type() ) {
-			$parent_options[''] = __( 'Parent Column', 'elementor-extras' );
-			$parent_options['section'] = __( 'Parent Section', 'elementor-extras' );
+			$parent_options[''] = __( 'Parent Column', 'landtech-extras-for-elementor' );
+			$parent_options['section'] = __( 'Parent Section', 'landtech-extras-for-elementor' );
 		}
 
 		$element->add_control( 'sticky_parent', [
-			'label'			=> _x( 'Stay in', 'Sticky Control', 'elementor-extras' ),
+			'label'			=> _x( 'Stay in', 'Sticky Control', 'landtech-extras-for-elementor' ),
 			'type' 			=> Controls_Manager::SELECT,
 			'default' 		=> '',
 			'options'		=> $parent_options,
@@ -184,9 +185,13 @@ class Extension_Sticky_Elements extends Extension_Base {
 		]);
 
 		$element->add_control( 'sticky_parent_selector', [
-			'label'			=> _x( 'Parent Selector', 'Sticky Control', 'elementor-extras' ),
-			'title' 		=> __( 'Add your custom id or class WITH the Pound or Dot key. e.g: #my-id or .my-class', 'elementor-extras' ),
-			'description'	=> sprintf( __( 'Set a class or ID to a column, section or any element that is a parent of this %s, then add that class here.', 'elementor-extras' ), $element->get_type() ),
+			'label'			=> _x( 'Parent Selector', 'Sticky Control', 'landtech-extras-for-elementor' ),
+			'title' 		=> __( 'Add your custom id or class WITH the Pound or Dot key. e.g: #my-id or .my-class', 'landtech-extras-for-elementor' ),
+			'description'	=> sprintf(
+				/* translators: %s: Element type name (e.g. section, widget). */
+				__( 'Set a class or ID to a column, section or any element that is a parent of this %s, then add that class here.', 'landtech-extras-for-elementor' ),
+				$element->get_type()
+			),
 			'type' 			=> Controls_Manager::TEXT,
 			'default' 		=> '',
 			'frontend_available'	=> true,
@@ -196,13 +201,13 @@ class Extension_Sticky_Elements extends Extension_Base {
 		]);
 
 		$element->add_control( 'sticky_unstick_on', [
-			'label' 	=> _x( 'Unstick on', 'Sticky Control', 'elementor-extras' ),
+			'label' 	=> _x( 'Unstick on', 'Sticky Control', 'landtech-extras-for-elementor' ),
 			'type' 		=> Controls_Manager::SELECT,
 			'default' 	=> 'mobile',
 			'options' 			=> [
-				'none' 		=> __( 'None', 'elementor-extras' ),
-				'tablet' 	=> __( 'Mobile and tablet', 'elementor-extras' ),
-				'mobile' 	=> __( 'Mobile only', 'elementor-extras' ),
+				'none' 		=> __( 'None', 'landtech-extras-for-elementor' ),
+				'tablet' 	=> __( 'Mobile and tablet', 'landtech-extras-for-elementor' ),
+				'mobile' 	=> __( 'Mobile only', 'landtech-extras-for-elementor' ),
 			],
 			'condition' => [
 				'sticky_enable!' => '',
@@ -211,12 +216,12 @@ class Extension_Sticky_Elements extends Extension_Base {
 		]);
 
 		$element->add_control( 'sticky_follow_scroll', [
-			'label'			=> _x( 'Follow Scroll', 'Sticky Control', 'elementor-extras' ),
-			'description'	=> __( 'When disabled, the sticky element will not move with the page if it is bigger than the browser window.', 'elementor-extras' ),
+			'label'			=> _x( 'Follow Scroll', 'Sticky Control', 'landtech-extras-for-elementor' ),
+			'description'	=> __( 'When disabled, the sticky element will not move with the page if it is bigger than the browser window.', 'landtech-extras-for-elementor' ),
 			'type' 			=> Controls_Manager::SWITCHER,
 			'default' 		=> 'yes',
-			'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-			'label_off' 	=> __( 'No', 'elementor-extras' ),
+			'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+			'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 			'return_value' 	=> 'yes',
 			'condition' => [
 				'sticky_enable!' => '',
@@ -225,7 +230,7 @@ class Extension_Sticky_Elements extends Extension_Base {
 		]);
 
 		$element->add_control( 'sticky_offset', [
-			'label' 	=> _x( 'Offset Top', 'Sticky Control', 'elementor-extras' ),
+			'label' 	=> _x( 'Offset Top', 'Sticky Control', 'landtech-extras-for-elementor' ),
 			'type' 		=> Controls_Manager::SLIDER,
 			'range' 	=> [
 				'px' 	=> [
@@ -243,7 +248,7 @@ class Extension_Sticky_Elements extends Extension_Base {
 		]);
 
 		$element->add_control( 'sticky_offset_bottom', [
-			'label' 	=> _x( 'Offset Bottom', 'Sticky Control', 'elementor-extras' ),
+			'label' 	=> _x( 'Offset Bottom', 'Sticky Control', 'landtech-extras-for-elementor' ),
 			'type' 		=> Controls_Manager::SLIDER,
 			'range' 	=> [
 				'px' 	=> [
@@ -285,7 +290,7 @@ class Extension_Sticky_Elements extends Extension_Base {
 			'sticky_elementor_warning',
 			[
 				'type' 					=> Controls_Manager::RAW_HTML,
-				'raw' 					=> __( 'Extras for Elementor: To use the default Sticky options in Elementor, disable the Extras "Sticky Elements" extension under Elementor > Extras > Extensions.', 'elementor-extras' ),
+				'raw' 					=> __( 'LandTech Extras for Elementor: To use the default Sticky options in Elementor, disable the Extras "Sticky Elements" extension under Elementor > Extras > Extensions.', 'landtech-extras-for-elementor' ),
 				'content_classes' 		=> 'elementor-panel-alert elementor-panel-alert-info',
 				'separator'				=> 'before',
 			]
@@ -303,7 +308,7 @@ class Extension_Sticky_Elements extends Extension_Base {
 	protected function add_actions() {
 
 		// Activate controls for widgets
-		add_action( 'elementor/element/common/section_elementor_extras_advanced/before_section_end', function( $element, $args ) {
+		add_action( 'elementor/element/common/section_landtech_extras_advanced/before_section_end', function( $element, $args ) {
 
 			$this->remove_elementor_sticky( $element );
 			$this->add_controls( $element, $args );
@@ -311,7 +316,7 @@ class Extension_Sticky_Elements extends Extension_Base {
 		}, 10, 2 );
 
 		// Activate controls for sections
-		add_action( 'elementor/element/section/section_elementor_extras_advanced/before_section_end', function( $element, $args ) {
+		add_action( 'elementor/element/section/section_landtech_extras_advanced/before_section_end', function( $element, $args ) {
 
 			$this->remove_elementor_sticky( $element );
 			$this->add_controls( $element, $args );

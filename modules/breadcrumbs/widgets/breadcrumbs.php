@@ -1,9 +1,10 @@
 <?php
-namespace ElementorExtras\Modules\Breadcrumbs\Widgets;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Breadcrumbs\Widgets;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Extras_Widget;
-use ElementorExtras\Utils;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Extras_Widget;
+use LandTechExtras\Utils;
 
 // Elementor Classes
 use Elementor\Icons_Manager;
@@ -64,7 +65,7 @@ class Breadcrumbs extends Extras_Widget {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Breadcrumbs', 'elementor-extras' );
+		return __( 'Breadcrumbs', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -90,19 +91,19 @@ class Breadcrumbs extends Extras_Widget {
 		$this->start_controls_section(
 			'section_content',
 			[
-				'label' => __( 'Display', 'elementor-extras' ),
+				'label' => __( 'Display', 'landtech-extras-for-elementor' ),
 			]
 		);
 
 			$this->add_control(
 				'source',
 				[
-					'label' 	=> __( 'Query Source', 'elementor-extras' ),
+					'label' 	=> __( 'Query Source', 'landtech-extras-for-elementor' ),
 					'type'		=> Controls_Manager::SELECT,
 					'default'	=> '',
 					'options'	=> [
-						''		=> __( 'Current Query', 'elementor-extras' ),
-						'id'	=> __( 'Custom Selection', 'elementor-extras' ),
+						''		=> __( 'Current Query', 'landtech-extras-for-elementor' ),
+						'id'	=> __( 'Custom Selection', 'landtech-extras-for-elementor' ),
 					]
 				]
 			);
@@ -110,7 +111,7 @@ class Breadcrumbs extends Extras_Widget {
 			$this->add_control(
 				'source_id',
 				[
-					'label' 		=> __( 'Page or Post', 'elementor-extras' ),
+					'label' 		=> __( 'Page or Post', 'landtech-extras-for-elementor' ),
 					'type' 			=> 'ee-query',
 					'query_type' 	=> 'posts',
 					'label_block' 	=> false,
@@ -124,11 +125,11 @@ class Breadcrumbs extends Extras_Widget {
 			$this->add_control(
 				'show_home',
 				[
-					'label' 		=> __( 'Show Home', 'elementor-extras' ),
+					'label' 		=> __( 'Show Home', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'yes',
 				]
 			);
@@ -136,11 +137,11 @@ class Breadcrumbs extends Extras_Widget {
 			$this->add_control(
 				'show_current',
 				[
-					'label' 		=> __( 'Show Current', 'elementor-extras' ),
+					'label' 		=> __( 'Show Current', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'yes',
 				]
 			);
@@ -148,7 +149,7 @@ class Breadcrumbs extends Extras_Widget {
 			$this->add_control(
 				'structured_data',
 				[
-					'label' 		=> __( 'Add Structured Data', 'elementor-extras' ),
+					'label' 		=> __( 'Add Structured Data', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
 				]
@@ -157,9 +158,9 @@ class Breadcrumbs extends Extras_Widget {
 			$this->add_control(
 				'home_text',
 				[
-					'label' 		=> __( 'Home Text', 'elementor-extras' ),
+					'label' 		=> __( 'Home Text', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::TEXT,
-					'default' 		=> __( 'Homepage', 'elementor-extras' ),
+					'default' 		=> __( 'Homepage', 'landtech-extras-for-elementor' ),
 					'dynamic'		=> [
 						'active'	=> true,
 						'categories' => [ TagsModule::POST_META_CATEGORY ]
@@ -179,18 +180,22 @@ class Breadcrumbs extends Extras_Widget {
 			$this->start_controls_section(
 				'section_single_' . $post_type,
 				[
-					'label' => sprintf( __( 'Single %s', 'elementor-extras' ), $label ),
+					'label' => sprintf(
+						/* translators: %s: Post type singular label. */
+						__( 'Single %s', 'landtech-extras-for-elementor' ),
+						$label
+					),
 				]
 			);
 
 				$this->add_control(
 					'single_' . $post_type . '_show_home',
 					[
-						'label' 		=> __( 'Show Home', 'elementor-extras' ),
+						'label' 		=> __( 'Show Home', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SWITCHER,
 						'default' 		=> 'yes',
-						'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-						'label_off' 	=> __( 'No', 'elementor-extras' ),
+						'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+						'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 						'return_value' 	=> 'yes',
 						'condition' 	=> [
 							'show_home!' => '',
@@ -201,11 +206,11 @@ class Breadcrumbs extends Extras_Widget {
 				$this->add_control(
 					'single_' . $post_type . '_show_cpt',
 					[
-						'label' 		=> __( 'Show Post Type', 'elementor-extras' ),
+						'label' 		=> __( 'Show Post Type', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SWITCHER,
 						'default' 		=> 'yes',
-						'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-						'label_off' 	=> __( 'No', 'elementor-extras' ),
+						'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+						'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 						'return_value' 	=> 'yes',
 					]
 				);
@@ -223,11 +228,11 @@ class Breadcrumbs extends Extras_Widget {
 				$this->add_control(
 					'single_' . $post_type . '_show_terms',
 					[
-						'label'		=> __( 'Taxonomy', 'elementor-extras' ),
+						'label'		=> __( 'Taxonomy', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SELECT,
 						'default' 	=> $tax_options_default,
 						'options' 	=> array_merge( [
-							'' => __( 'None', 'elementor-extras' ),
+							'' => __( 'None', 'landtech-extras-for-elementor' ),
 						], $taxonomies_options ),
 					]
 				);
@@ -236,11 +241,11 @@ class Breadcrumbs extends Extras_Widget {
 					$this->add_control(
 						'single_' . $post_type . '_show_parents',
 						[
-							'label' 		=> __( 'Show Parents', 'elementor-extras' ),
+							'label' 		=> __( 'Show Parents', 'landtech-extras-for-elementor' ),
 							'type' 			=> Controls_Manager::SWITCHER,
 							'default' 		=> 'yes',
-							'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-							'label_off' 	=> __( 'No', 'elementor-extras' ),
+							'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+							'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 							'return_value' 	=> 'yes',
 						]
 					);
@@ -249,11 +254,11 @@ class Breadcrumbs extends Extras_Widget {
 				$this->add_control(
 					'single_' . $post_type . '_show_current',
 					[
-						'label' 		=> __( 'Show Current', 'elementor-extras' ),
+						'label' 		=> __( 'Show Current', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SWITCHER,
 						'default' 		=> 'yes',
-						'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-						'label_off' 	=> __( 'No', 'elementor-extras' ),
+						'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+						'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 						'return_value' 	=> 'yes',
 						'condition' 	=> [
 							'show_current!' => '',
@@ -272,18 +277,22 @@ class Breadcrumbs extends Extras_Widget {
 			$this->start_controls_section(
 				'section_taxonomy_' . $taxonomy,
 				[
-					'label' => sprintf( __( '%s Archive', 'elementor-extras' ), $label ),
+					'label' => sprintf(
+						/* translators: %s: Taxonomy archive label. */
+						__( '%s Archive', 'landtech-extras-for-elementor' ),
+						$label
+					),
 				]
 			);
 
 				$this->add_control(
 					'taxonomy_' . $taxonomy . '_show_home',
 					[
-						'label' 		=> __( 'Show Home', 'elementor-extras' ),
+						'label' 		=> __( 'Show Home', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SWITCHER,
 						'default' 		=> 'yes',
-						'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-						'label_off' 	=> __( 'No', 'elementor-extras' ),
+						'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+						'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 						'return_value' 	=> 'yes',
 						'condition' 	=> [
 							'show_home!' => '',
@@ -294,11 +303,11 @@ class Breadcrumbs extends Extras_Widget {
 				$this->add_control(
 					'taxonomy_' . $taxonomy . '_show_cpt',
 					[
-						'label' 		=> __( 'Show Post Type', 'elementor-extras' ),
+						'label' 		=> __( 'Show Post Type', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SWITCHER,
 						'default' 		=> 'category' === $taxonomy || 'post_tag' === $taxonomy ? '' : 'yes',
-						'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-						'label_off' 	=> __( 'No', 'elementor-extras' ),
+						'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+						'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 						'return_value' 	=> 'yes',
 					]
 				);
@@ -306,11 +315,11 @@ class Breadcrumbs extends Extras_Widget {
 				$this->add_control(
 					'taxonomy_' . $taxonomy . '_show_taxonomy',
 					[
-						'label' 		=> __( 'Show Taxonomy', 'elementor-extras' ),
+						'label' 		=> __( 'Show Taxonomy', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SWITCHER,
 						'default' 		=> 'category' === $taxonomy || 'post_tag' === $taxonomy ? 'yes' : '',
-						'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-						'label_off' 	=> __( 'No', 'elementor-extras' ),
+						'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+						'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 						'return_value' 	=> 'yes',
 					]
 				);
@@ -318,7 +327,7 @@ class Breadcrumbs extends Extras_Widget {
 				$this->add_control(
 					'taxonomy_' . $taxonomy . '_taxonomy_link',
 					[
-						'label' 		=> __( 'Taxonomy Link', 'elementor-extras' ),
+						'label' 		=> __( 'Taxonomy Link', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::URL,
 						'placeholder' 	=> esc_url( home_url( '/' ) ),
 						'dynamic'		=> [ 'active' => true ],
@@ -333,11 +342,15 @@ class Breadcrumbs extends Extras_Widget {
 					$this->add_control(
 						'taxonomy_' . $taxonomy . '_show_parents',
 						[
-							'label' 		=> sprintf( __( 'Show Parent %s', 'elementor-extras' ), $label ),
+							'label' 		=> sprintf(
+								/* translators: %s: Taxonomy singular label. */
+								__( 'Show Parent %s', 'landtech-extras-for-elementor' ),
+								$label
+							),
 							'type' 			=> Controls_Manager::SWITCHER,
 							'default' 		=> 'yes',
-							'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-							'label_off' 	=> __( 'No', 'elementor-extras' ),
+							'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+							'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 							'return_value' 	=> 'yes',
 						]
 					);
@@ -346,11 +359,11 @@ class Breadcrumbs extends Extras_Widget {
 				$this->add_control(
 					'taxonomy_' . $taxonomy . '_show_current',
 					[
-						'label' 		=> __( 'Show Current', 'elementor-extras' ),
+						'label' 		=> __( 'Show Current', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SWITCHER,
 						'default' 		=> 'yes',
-						'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-						'label_off' 	=> __( 'No', 'elementor-extras' ),
+						'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+						'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 						'return_value' 	=> 'yes',
 						'condition' 	=> [
 							'show_current!' => '',
@@ -373,18 +386,22 @@ class Breadcrumbs extends Extras_Widget {
 				$this->start_controls_section(
 					'section_cpt_' . $post_type,
 					[
-						'label' => sprintf( __( '%s Archive', 'elementor-extras' ), $label ),
+						'label' => sprintf(
+							/* translators: %s: Custom post type archive label. */
+							__( '%s Archive', 'landtech-extras-for-elementor' ),
+							$label
+						),
 					]
 				);
 
 					$this->add_control(
 						'cpt_' . $post_type . '_show_home',
 						[
-							'label' 		=> __( 'Show Home', 'elementor-extras' ),
+							'label' 		=> __( 'Show Home', 'landtech-extras-for-elementor' ),
 							'type' 			=> Controls_Manager::SWITCHER,
 							'default' 		=> 'yes',
-							'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-							'label_off' 	=> __( 'No', 'elementor-extras' ),
+							'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+							'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 							'return_value' 	=> 'yes',
 							'condition' 	=> [
 								'show_home!' => '',
@@ -395,11 +412,11 @@ class Breadcrumbs extends Extras_Widget {
 					$this->add_control(
 						'cpt_' . $post_type . '_show_current',
 						[
-							'label' 		=> __( 'Show Current', 'elementor-extras' ),
+							'label' 		=> __( 'Show Current', 'landtech-extras-for-elementor' ),
 							'type' 			=> Controls_Manager::SWITCHER,
 							'default' 		=> 'yes',
-							'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-							'label_off' 	=> __( 'No', 'elementor-extras' ),
+							'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+							'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 							'return_value' 	=> 'yes',
 							'condition' 	=> [
 								'show_current!' => '',
@@ -415,19 +432,19 @@ class Breadcrumbs extends Extras_Widget {
 		$this->start_controls_section(
 			'section_separator',
 			[
-				'label' => __( 'Separator', 'elementor-extras' ),
+				'label' => __( 'Separator', 'landtech-extras-for-elementor' ),
 			]
 		);
 
 			$this->add_control(
 				'separator_type',
 				[
-					'label'		=> __( 'Type', 'elementor-extras' ),
+					'label'		=> __( 'Type', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'icon',
 					'options' 	=> [
-						'text' 		=> __( 'Text', 'elementor-extras' ),
-						'icon' 		=> __( 'Icon', 'elementor-extras' ),
+						'text' 		=> __( 'Text', 'landtech-extras-for-elementor' ),
+						'icon' 		=> __( 'Icon', 'landtech-extras-for-elementor' ),
 					],
 				]
 			);
@@ -435,9 +452,9 @@ class Breadcrumbs extends Extras_Widget {
 			$this->add_control(
 				'separator_text',
 				[
-					'label' 		=> __( 'Text', 'elementor-extras' ),
+					'label' 		=> __( 'Text', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::TEXT,
-					'default' 		=> __( '>', 'elementor-extras' ),
+					'default' 		=> __( '>', 'landtech-extras-for-elementor' ),
 					'condition'		=> [
 						'separator_type' => 'text'
 					],
@@ -447,7 +464,7 @@ class Breadcrumbs extends Extras_Widget {
 			$this->add_control(
 				'selected_separator_icon',
 				[
-					'label' => __( 'Icon', 'elementor-extras' ),
+					'label' => __( 'Icon', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::ICONS,
 					'fa4compatibility' => 'separator_icon',
 					'condition'		=> [
@@ -465,7 +482,7 @@ class Breadcrumbs extends Extras_Widget {
 		$this->start_controls_section(
 			'section_item_style',
 			[
-				'label' 	=> __( 'Crumbs', 'elementor-extras' ),
+				'label' 	=> __( 'Crumbs', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -473,24 +490,24 @@ class Breadcrumbs extends Extras_Widget {
 			$this->add_responsive_control(
 				'items_align',
 				[
-					'label' 		=> __( 'Align Crumbs', 'elementor-extras' ),
+					'label' 		=> __( 'Align Crumbs', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'left' 			=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-right',
 						],
 						'stretch' 		=> [
-							'title' 	=> __( 'Stretch', 'elementor-extras' ),
+							'title' 	=> __( 'Stretch', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-stretch',
 						],
 					],
@@ -501,20 +518,20 @@ class Breadcrumbs extends Extras_Widget {
 			$this->add_responsive_control(
 				'items_text_align',
 				[
-					'label' 		=> __( 'Align Text', 'elementor-extras' ),
+					'label' 		=> __( 'Align Text', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'left' 			=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -527,7 +544,7 @@ class Breadcrumbs extends Extras_Widget {
 			$this->add_control(
 				'item_spacing',
 				[
-					'label' 	=> __( 'Spacing', 'elementor-extras' ),
+					'label' 	=> __( 'Spacing', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default'	=> [
 						'size'	=> 12
@@ -548,7 +565,7 @@ class Breadcrumbs extends Extras_Widget {
 			$this->add_control(
 				'item_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -562,7 +579,7 @@ class Breadcrumbs extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'item_border',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '{{WRAPPER}} .ee-breadcrumbs__item',
 				]
 			);
@@ -570,7 +587,7 @@ class Breadcrumbs extends Extras_Widget {
 			$this->add_control(
 				'item_border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
@@ -583,7 +600,7 @@ class Breadcrumbs extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'item_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -593,12 +610,12 @@ class Breadcrumbs extends Extras_Widget {
 
 			$this->start_controls_tabs( 'crumb_style' );
 
-			$this->start_controls_tab( 'crumb_default', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'crumb_default', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'item_background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-breadcrumbs__item' => 'background-color: {{VALUE}};',
@@ -609,7 +626,7 @@ class Breadcrumbs extends Extras_Widget {
 				$this->add_control(
 					'item_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'global' => [
 							'default' => Global_Colors::COLOR_ACCENT,
@@ -623,12 +640,12 @@ class Breadcrumbs extends Extras_Widget {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'crumb_hover', [ 'label' => __( 'Hover', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'crumb_hover', [ 'label' => __( 'Hover', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'item_background_color_hover',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-breadcrumbs__item:hover' => 'background-color: {{VALUE}};',
@@ -639,7 +656,7 @@ class Breadcrumbs extends Extras_Widget {
 				$this->add_control(
 					'item_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -658,7 +675,7 @@ class Breadcrumbs extends Extras_Widget {
 		$this->start_controls_section(
 			'section_separator_style',
 			[
-				'label' 	=> __( 'Separators', 'elementor-extras' ),
+				'label' 	=> __( 'Separators', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -666,7 +683,7 @@ class Breadcrumbs extends Extras_Widget {
 			$this->add_control(
 				'separator_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -680,7 +697,7 @@ class Breadcrumbs extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'separator_border',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '{{WRAPPER}} .ee-breadcrumbs__separator',
 				]
 			);
@@ -688,7 +705,7 @@ class Breadcrumbs extends Extras_Widget {
 			$this->add_control(
 				'separator_border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
@@ -700,7 +717,7 @@ class Breadcrumbs extends Extras_Widget {
 			$this->add_control(
 				'separator_background_color',
 				[
-					'label' 	=> __( 'Background Color', 'elementor-extras' ),
+					'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'selectors' => [
 						'{{WRAPPER}} .ee-breadcrumbs__separator' => 'background-color: {{VALUE}};',
@@ -711,7 +728,7 @@ class Breadcrumbs extends Extras_Widget {
 			$this->add_control(
 				'separator_color',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'default'	=> '',
 					'selectors' => [
@@ -724,7 +741,7 @@ class Breadcrumbs extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'separator_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '{{WRAPPER}} .ee-breadcrumbs__separator',
 				]
 			);
@@ -734,7 +751,7 @@ class Breadcrumbs extends Extras_Widget {
 		$this->start_controls_section(
 			'section_current_style',
 			[
-				'label' 	=> __( 'Current', 'elementor-extras' ),
+				'label' 	=> __( 'Current', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -743,7 +760,7 @@ class Breadcrumbs extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'current_border',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '{{WRAPPER}} .ee-breadcrumbs__item--current',
 				]
 			);
@@ -751,7 +768,7 @@ class Breadcrumbs extends Extras_Widget {
 			$this->add_control(
 				'current_border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', '%' ],
 					'selectors' 	=> [
@@ -763,7 +780,7 @@ class Breadcrumbs extends Extras_Widget {
 			$this->add_control(
 				'current_background_color',
 				[
-					'label' 	=> __( 'Background Color', 'elementor-extras' ),
+					'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'selectors' => [
 						'{{WRAPPER}} .ee-breadcrumbs__item--current' => 'background-color: {{VALUE}};',
@@ -774,7 +791,7 @@ class Breadcrumbs extends Extras_Widget {
 			$this->add_control(
 				'current_color',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'global' => [
 						'default' => Global_Colors::COLOR_TEXT,
@@ -789,7 +806,7 @@ class Breadcrumbs extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'current_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '{{WRAPPER}} .ee-breadcrumbs__item--current .ee-breadcrumbs__text',
 				]
 			);
@@ -881,7 +898,7 @@ class Breadcrumbs extends Extras_Widget {
 			 * @since 2.2.0
 			 * @param string 			$separator_text 	The separator text setting
 			 */
-			$separator_text = apply_filters( 'elementor_extras/widgets/breadcrumbs/separator/text', $settings['separator_text'] );
+			$separator_text = apply_filters( 'landtech_extras/widgets/breadcrumbs/separator/text', $settings['separator_text'] );
 			$separator = '<span ' . $this->get_render_attribute_string( 'separator_text' ) . '>' . $separator_text . '</span>';
 		}
 
@@ -935,18 +952,17 @@ class Breadcrumbs extends Extras_Widget {
 				 * @since 2.2.0
 				 * @param WP_Query 	$_query 	The current query
 				 */
-				$_query = apply_filters( 'elementor_extras/widgets/breadcrumbs/query', $_query );
+				$_query = apply_filters( 'landtech_extras/widgets/breadcrumbs/query', $_query );
 
 				// Render using the new query
 				$this->render_breadcrumbs( $_query );
 
 				// Reset post data to original query
 				wp_reset_postdata();
-				wp_reset_query();
 
 			} else {
 
-				_e( 'Post or page not found', 'elementor-extras' );
+				esc_html_e( 'Post or page not found', 'landtech-extras-for-elementor' );
 
 			}
 		} else {
@@ -982,10 +998,14 @@ class Breadcrumbs extends Extras_Widget {
 		 * @since 2.2.0
 		 * @param string 			$post_title 	The markup for the separator
 		 */
-		$separator = apply_filters( 'elementor_extras/widgets/breadcrumbs/separator', $separator );
-		$markup = sprintf( '<li %1$s>%2$s</li>', $this->get_render_attribute_string( 'separator' ), $separator );
+		$separator = apply_filters( 'landtech_extras/widgets/breadcrumbs/separator', $separator );
 
-		if ( $output === true ) {
+		ob_start();
+		?><li <?php $this->print_render_attribute_string( 'separator' ); ?>><?php echo wp_kses_post( $separator ); ?></li><?php
+		$markup = ob_get_clean();
+
+		if ( true === $output ) {
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Full crumb markup assembled above with escaped separator text.
 			echo $markup;
 		} else {
 			return $markup;
@@ -1022,7 +1042,7 @@ class Breadcrumbs extends Extras_Widget {
 
 		$this->set_crumbs( $query );
 
-		?><ul <?php echo $this->get_render_attribute_string( 'breadcrumbs' ); ?>><?php
+		?><ul <?php $this->print_render_attribute_string( 'breadcrumbs' ); ?>><?php
 			$this->render_crumbs();
 		?></ul><?php
 	}
@@ -1194,7 +1214,7 @@ class Breadcrumbs extends Extras_Widget {
 		 * @param WP_Term 			$term 	The last term
 		 * @param Extras_Widget 	$this 	The current widget instance
 		 */
-		do_action( "elementor_extras/widgets/breadcrumbs/before/crumb/term/last/{$term_name}", $term, $this );
+		do_action( "landtech_extras/widgets/breadcrumbs/before/crumb/term/last/{$term_name}", $term, $this );
 
 		if ( '' !== $settings[ $prefix . '_show_current'] ) {
 			$this->add_crumb( 'taxonomy-archive', [
@@ -1237,7 +1257,7 @@ class Breadcrumbs extends Extras_Widget {
 		 * @param WP_Post 			$post 		The queried single post
 		 * @param Extras_Widget 	$this 		The current widget instance
 		 */
-		do_action( 'elementor_extras/widgets/breadcrumbs/before/crumb/single', $post, $this );
+		do_action( 'landtech_extras/widgets/breadcrumbs/before/crumb/single', $post, $this );
 
 		if ( 'post' === $post_type ) {
 			$this->add_blog();
@@ -1268,7 +1288,7 @@ class Breadcrumbs extends Extras_Widget {
 		 * @param WP_Post 			$post 		The queried single post
 		 * @param Extras_Widget 	$this 		The current widget instance
 		 */
-		do_action( 'elementor_extras/widgets/breadcrumbs/before/crumb/single', $post, $this );
+		do_action( 'landtech_extras/widgets/breadcrumbs/before/crumb/single', $post, $this );
 
 		if (  array_key_exists( $prefix . '_show_current', $settings ) && '' !== $settings[ $prefix . '_show_current'] ) {
 			$this->add_crumb( 'single', [
@@ -1308,7 +1328,7 @@ class Breadcrumbs extends Extras_Widget {
 			 * @param WP_Post 			$parent 	The page object
 			 * @param Extras_Widget 	$this 		The current widget instance
 			 */
-			do_action( "elementor_extras/widgets/breadcrumbs/before/crumb/page", $parent, $this );
+			do_action( "landtech_extras/widgets/breadcrumbs/before/crumb/page", $parent, $this );
 
 			$this->add_crumb( 'ancestor', [
 				'key' 		=> 'ancestor-' . $parent,
@@ -1340,7 +1360,7 @@ class Breadcrumbs extends Extras_Widget {
 			 * @param WP_Post 			$blog 	The blog page
 			 * @param Extras_Widget 	$this 	The current widget instance
 			 */
-			do_action( "elementor_extras/widgets/breadcrumbs/before/crumb/single/blog", $blog, $this );
+			do_action( "landtech_extras/widgets/breadcrumbs/before/crumb/single/blog", $blog, $this );
 
 			$this->add_crumb( 'blog', [
 				'key' 		=> 'blog',
@@ -1402,7 +1422,7 @@ class Breadcrumbs extends Extras_Widget {
 		 * @param object 			$post_type_object 	The queried post type object
 		 * @param Extras_Widget 	$this 				The current widget instance
 		 */
-		do_action( "elementor_extras/widgets/breadcrumbs/before/crumb/post_type/{$post_type}", $post_type_object, $this );
+		do_action( "landtech_extras/widgets/breadcrumbs/before/crumb/post_type/{$post_type}", $post_type_object, $this );
 
 		switch ( $post_type ) {
 			case 'post':
@@ -1501,7 +1521,7 @@ class Breadcrumbs extends Extras_Widget {
 			 * @param WP_Term 			$term 	The queried term
 			 * @param Extras_Widget 	$this 	The current widget instance
 			 */
-			do_action( "elementor_extras/widgets/breadcrumbs/before/crumb/term/{$term->slug}", $term, $this );
+			do_action( "landtech_extras/widgets/breadcrumbs/before/crumb/term/{$term->slug}", $term, $this );
 
 			$this->add_crumb( 'taxonomy-terms', [
 				'key' 		=> 'term-' . $term_id,
@@ -1541,12 +1561,16 @@ class Breadcrumbs extends Extras_Widget {
 		 * @param WP_Post 			$post 		The page object
 		 * @param Extras_Widget 	$this 		The current widget instance
 		 */
-		do_action( "elementor_extras/widgets/breadcrumbs/before/crumb/tag", $tag, $this );
+		do_action( "landtech_extras/widgets/breadcrumbs/before/crumb/tag", $tag, $this );
 
 		$this->add_crumb( 'tag', [
 			'key' 		=> 'tag',
 			'ids' 		=> [ $tag->term_id, $tag->slug ],
-			'content' 	=> sprintf( __( 'Tag: %s', 'elementor-extras' ), $tag->name ),
+			'content' 	=> sprintf(
+				/* translators: %s: Tag name. */
+				__( 'Tag: %s', 'landtech-extras-for-elementor' ),
+				$tag->name
+			),
 		] );
 	}
 
@@ -1569,12 +1593,17 @@ class Breadcrumbs extends Extras_Widget {
 		 * @since 2.2.0
 		 * @param Extras_Widget 	$this 		The current widget instance
 		 */
-		do_action( "elementor_extras/widgets/breadcrumbs/before/crumb/day", $this );
+		do_action( "landtech_extras/widgets/breadcrumbs/before/crumb/day", $this );
 
 		$this->add_crumb( 'day', [
 			'key' 		=> 'day',
 			'ids' 		=> [ get_the_time('j') ],
-			'content' 	=> sprintf( __( '%1$s %2$s Archives', 'elementor-extras' ), get_the_time('F'), get_the_time('jS') ),
+			'content' 	=> sprintf(
+				/* translators: 1: Month name, 2: Ordinal day of month. */
+				__( '%1$s %2$s Archives', 'landtech-extras-for-elementor' ),
+				get_the_time('F'),
+				get_the_time('jS')
+			),
 		] );
 	}
 
@@ -1596,12 +1625,16 @@ class Breadcrumbs extends Extras_Widget {
 		 * @since 2.2.0
 		 * @param Extras_Widget 	$this 		The current widget instance
 		 */
-		do_action( "elementor_extras/widgets/breadcrumbs/before/crumb/month", $this );
+		do_action( "landtech_extras/widgets/breadcrumbs/before/crumb/month", $this );
 
 		$this->add_crumb( 'month', [
 			'key' 		=> 'month',
 			'ids' 		=> [ get_the_time('m') ],
-			'content' 	=> sprintf( __( '%s Archives', 'elementor-extras' ), get_the_time('F') ),
+			'content' 	=> sprintf(
+				/* translators: %s: Month name. */
+				__( '%s Archives', 'landtech-extras-for-elementor' ),
+				get_the_time('F')
+			),
 		] );
 	}
 
@@ -1620,12 +1653,16 @@ class Breadcrumbs extends Extras_Widget {
 		 * @since 2.2.0
 		 * @param Extras_Widget 	$this 		The current widget instance
 		 */
-		do_action( "elementor_extras/widgets/breadcrumbs/before/crumb/year", $this );
+		do_action( "landtech_extras/widgets/breadcrumbs/before/crumb/year", $this );
 
 		$this->add_crumb( 'year', [
 			'key' 		=> 'year',
 			'ids' 		=> [ get_the_time('Y') ],
-			'content' 	=> sprintf( __( '%s Archives', 'elementor-extras' ), get_the_time('Y') ),
+			'content' 	=> sprintf(
+				/* translators: %s: Four-digit year. */
+				__( '%s Archives', 'landtech-extras-for-elementor' ),
+				get_the_time('Y')
+			),
 		] );
 	}
 
@@ -1649,12 +1686,16 @@ class Breadcrumbs extends Extras_Widget {
 		 * @param WP_User 			$post 		The queried author
 		 * @param Extras_Widget 	$this 		The current widget instance
 		 */
-		do_action( "elementor_extras/widgets/breadcrumbs/before/crumb/author", $author, $this );
+		do_action( "landtech_extras/widgets/breadcrumbs/before/crumb/author", $author, $this );
 
 		$this->add_crumb( 'author', [
 			'key' 		=> 'author',
 			'ids' 		=> [ $userdata->user_nicename ],
-			'content' 	=> sprintf( __( 'Author: %s', 'elementor-extras' ), $userdata->display_name ),
+			'content' 	=> sprintf(
+				/* translators: %s: Author display name. */
+				__( 'Author: %s', 'landtech-extras-for-elementor' ),
+				$userdata->display_name
+			),
 		] );
 	}
 
@@ -1673,13 +1714,17 @@ class Breadcrumbs extends Extras_Widget {
 		 * @since 2.2.0
 		 * @param Extras_Widget 	$this 		The current widget instance
 		 */
-		do_action( "elementor_extras/widgets/breadcrumbs/before/crumb/search", $this );
+		do_action( "landtech_extras/widgets/breadcrumbs/before/crumb/search", $this );
 
 		$this->add_crumb( 'search', [
 			'current' 	=> true,
 			'separator'	=> false,
 			'key' 		=> 'search',
-			'content' 	=> sprintf( __( 'Search results for: %s', 'elementor-extras' ), get_search_query() ),
+			'content' 	=> sprintf(
+				/* translators: %s: Search query string. */
+				__( 'Search results for: %s', 'landtech-extras-for-elementor' ),
+				get_search_query()
+			),
 		] );
 	}
 
@@ -1698,13 +1743,13 @@ class Breadcrumbs extends Extras_Widget {
 		 * @since 2.2.0
 		 * @param Extras_Widget 	$this 		The current widget instance
 		 */
-		do_action( "elementor_extras/widgets/breadcrumbs/before/crumb/404", $this );
+		do_action( "landtech_extras/widgets/breadcrumbs/before/crumb/404", $this );
 
 		$this->add_crumb( '404', [
 			'current' 	=> true,
 			'separator'	=> false,
 			'key' 		=> '404',
-			'content' 	=> __( 'Page not found', 'elementor-extras' ),
+			'content' 	=> __( 'Page not found', 'landtech-extras-for-elementor' ),
 		] );
 	}
 
@@ -1802,15 +1847,15 @@ class Breadcrumbs extends Extras_Widget {
 		 * @since 2.2.0
 		 * @param Extras_Widget 	$this 		The current widget instance
 		 */
-		do_action( "elementor_extras/widgets/breadcrumbs/before/crumb", $this );
+		do_action( "landtech_extras/widgets/breadcrumbs/before/crumb", $this );
 
-		?><li <?php echo $this->get_render_attribute_string( $item_key ); ?>>
-			<<?php echo $link_tag; ?> <?php echo $this->get_render_attribute_string( $link_key ); ?>>
-				<span <?php echo $this->get_render_attribute_string( $text_key ); ?>>
-					<?php echo $args['content']; ?>
+		?><li <?php $this->print_render_attribute_string( $item_key ); ?>>
+			<<?php echo esc_html( $link_tag ); ?> <?php $this->print_render_attribute_string( $link_key ); ?>>
+				<span <?php $this->print_render_attribute_string( $text_key ); ?>>
+					<?php echo wp_kses_post( $args['content'] ); ?>
 				</span>
-			</<?php echo $link_tag; ?>>
-			<meta <?php echo $this->get_render_attribute_string( $pos_key ); ?>>
+			</<?php echo esc_html( $link_tag ); ?>>
+			<meta <?php $this->print_render_attribute_string( $pos_key ); ?>>
 		</li><?php
 
 		if ( ! $args['current'] )
@@ -1822,7 +1867,7 @@ class Breadcrumbs extends Extras_Widget {
 		 * @since 2.2.0
 		 * @param Extras_Widget 	$this 		The current widget instance
 		 */
-		do_action( "elementor_extras/widgets/breadcrumbs/after/crumb", $this );
+		do_action( "landtech_extras/widgets/breadcrumbs/after/crumb", $this );
 
 		/**
 		 * Before Separator
@@ -1832,7 +1877,7 @@ class Breadcrumbs extends Extras_Widget {
 		 * @since 2.2.0
 		 * @param Extras_Widget 	$this 		The current widget instance
 		 */
-		do_action( "elementor_extras/widgets/breadcrumbs/before/separator", $this );
+		do_action( "landtech_extras/widgets/breadcrumbs/before/separator", $this );
 
 		if ( false === $args['current'] ) {
 			$this->render_separator();
@@ -1846,7 +1891,7 @@ class Breadcrumbs extends Extras_Widget {
 		 * @since 2.2.0
 		 * @param Extras_Widget 	$this 		The current widget instance
 		 */
-		do_action( "elementor_extras/widgets/breadcrumbs/after/separator", $this );
+		do_action( "landtech_extras/widgets/breadcrumbs/after/separator", $this );
 	}
 
 	/**
@@ -1870,7 +1915,7 @@ class Breadcrumbs extends Extras_Widget {
 		 * @since 2.2.43
 		 * @param string  	$crumbs 	The array of crumbs
 		 */
-		$this->crumbs = apply_filters( "elementor_extras/widgets/breadcrumbs/crumbs", $this->crumbs );
+		$this->crumbs = apply_filters( "landtech_extras/widgets/breadcrumbs/crumbs", $this->crumbs );
 
 		foreach ( $this->crumbs as $name => $args ) {
 			$this->render_crumb( $name, $index, $args );

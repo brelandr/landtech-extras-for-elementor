@@ -1,8 +1,9 @@
 <?php
-namespace ElementorExtras\Modules\DisplayConditions\Conditions;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\DisplayConditions\Conditions;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Condition;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Condition;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -49,7 +50,7 @@ class Day extends Condition {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Day of Week', 'elementor-extras' );
+		return __( 'Day of Week', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -65,13 +66,13 @@ class Day extends Condition {
 			'type' 			=> Controls_Manager::SELECT2,
 			'multiple'		=> true,
 			'options' => [
-				'1' => __( 'Monday', 'elementor-extras' ),
-				'2' => __( 'Tuesday', 'elementor-extras' ),
-				'3' => __( 'Wednesday', 'elementor-extras' ),
-				'4' => __( 'Thursday', 'elementor-extras' ),
-				'5' => __( 'Friday', 'elementor-extras' ),
-				'6' => __( 'Saturday', 'elementor-extras' ),
-				'0' => __( 'Sunday', 'elementor-extras' ),
+				'1' => __( 'Monday', 'landtech-extras-for-elementor' ),
+				'2' => __( 'Tuesday', 'landtech-extras-for-elementor' ),
+				'3' => __( 'Wednesday', 'landtech-extras-for-elementor' ),
+				'4' => __( 'Thursday', 'landtech-extras-for-elementor' ),
+				'5' => __( 'Friday', 'landtech-extras-for-elementor' ),
+				'6' => __( 'Saturday', 'landtech-extras-for-elementor' ),
+				'0' => __( 'Sunday', 'landtech-extras-for-elementor' ),
 			],
 			'label_block'	=> true,
 			'default' 		=> '1',

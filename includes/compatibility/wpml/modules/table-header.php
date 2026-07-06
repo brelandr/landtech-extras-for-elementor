@@ -1,5 +1,6 @@
 <?php
-namespace ElementorExtras\Compatibility\WPML;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Compatibility\WPML;
 
 use WPML_Elementor_Module_With_Items;
 
@@ -45,7 +46,7 @@ class Table_Header extends WPML_Elementor_Module_With_Items {
 	 */
 	protected function get_title( $field ) {
 		if ( 'cell_text' === $field ) {
-			return esc_html__( 'Table: Header Cell Text', 'elementor-extras' );
+			return esc_html__( 'Table: Header Cell Text', 'landtech-extras-for-elementor' );
 		}
 
 		return '';

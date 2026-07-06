@@ -1,5 +1,6 @@
 <?php
-namespace ElementorExtras;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras;
 
 use \Elementor\Base_Data_Control;
 
@@ -39,12 +40,12 @@ class Control_Snazzy extends Base_Data_Control {
 	 * @return array Control default settings.
 	 */
 	protected function get_default_settings() {
-		$plugin = \ElementorExtras\ElementorExtrasPlugin::$instance;
+		$plugin = \LandTechExtras\LandTechExtrasPlugin::$instance;
 
 		return [
 			'snazzy_options' => [
-				'key' 		=> $plugin->settings->get_option( 'snazzy_maps_api_key', 'elementor_extras_apis', false ),
-				'endpoint'	=> $plugin->settings->get_option( 'snazzy_maps_endpoint', 'elementor_extras_apis', false ) || 'explore',
+				'key' 		=> $plugin->settings->get_option( 'snazzy_maps_api_key', 'landtech_extras_apis', false ),
+				'endpoint'	=> $plugin->settings->get_option( 'snazzy_maps_endpoint', 'landtech_extras_apis', false ) || 'explore',
 				'term'		=> 'color',
 			],
 			'label_block'	=> true,
@@ -66,9 +67,9 @@ class Control_Snazzy extends Base_Data_Control {
 		?>
 		<# if ( data.snazzy_options.key ) { #>
 			<div class="elementor-control-field ee-control-field">
-				<label for="<?php echo $control_uid; ?>" class="elementor-control-title ee-control-field__title">{{{ data.label }}}</label>
+				<label for="<?php echo esc_attr( $control_uid ); ?>" class="elementor-control-title ee-control-field__title">{{{ data.label }}}</label>
 				<div class="elementor-control-input-wrapper ee-control-field__input-wrapper">
-					<select id="<?php echo $control_uid; ?>" class="elementor-select2  ee-control ee-control--select2" type="select2" data-setting="{{ data.name }}">
+					<select id="<?php echo esc_attr( $control_uid ); ?>" class="elementor-select2  ee-control ee-control--select2" type="select2" data-setting="{{ data.name }}">
 					<# if ( data.controlValue ) {
 						var value = JSON.parse( data.controlValue ); #>
 						<option selected value="{{ value.id }}">{{{ value.name }}}</option>
@@ -82,7 +83,16 @@ class Control_Snazzy extends Base_Data_Control {
 		<# } else { #>
 			<div class="elementor-control-field-description">
 				<div class="elementor-panel-alert elementor-panel-alert-warning">
-					<?php printf( __( 'Looks like you haven\'t added your Snazzy Maps API key. Click %1$shere%2$s to set it up.', 'elementor-extras' ), '<a target="_blank" href="' . admin_url( 'admin.php?page=elementor-extras#elementor_extras_apis' ) . '">', '</a>' ); ?>		
+					<?php
+					echo wp_kses_post(
+						sprintf(
+							/* translators: 1–2: opening and closing link markup to plugin API settings. */
+							__( 'Looks like you haven\'t added your Snazzy Maps API key. Click %1$shere%2$s to set it up.', 'landtech-extras-for-elementor' ),
+							'<a target="_blank" href="' . esc_url( admin_url( 'admin.php?page=landtech-extras#landtech_extras_apis' ) ) . '">',
+							'</a>'
+						)
+					);
+					?>
 				</div>
 			</div>
 		<# } #>

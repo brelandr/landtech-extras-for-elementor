@@ -1,9 +1,10 @@
 <?php
-namespace ElementorExtras\Modules\DisplayConditions;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\DisplayConditions;
 
-// Extras for Elementor Classes
-use ElementorExtras\Utils;
-use ElementorExtras\Base\Module_Base;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Utils;
+use LandTechExtras\Base\Module_Base;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -69,28 +70,28 @@ class Module extends Module_Base {
 	public function get_groups() {
 		return [
 			self::VISITOR_GROUP => [
-				'label' => __( 'Visitor', 'elementor-extras' ),
+				'label' => __( 'Visitor', 'landtech-extras-for-elementor' ),
 			],
 			self::DATE_TIME_GROUP => [
-				'label' => __( 'Date & Time', 'elementor-extras' ),
+				'label' => __( 'Date & Time', 'landtech-extras-for-elementor' ),
 			],
 			self::SINGLE_GROUP => [
-				'label' => __( 'Single', 'elementor-extras' ),
+				'label' => __( 'Single', 'landtech-extras-for-elementor' ),
 			],
 			self::ARCHIVE_GROUP => [
-				'label' => __( 'Archive', 'elementor-extras' ),
+				'label' => __( 'Archive', 'landtech-extras-for-elementor' ),
 			],
 			self::ACF_GROUP => [
-				'label' => __( 'Post ACF', 'elementor-extras' ),
+				'label' => __( 'Post ACF', 'landtech-extras-for-elementor' ),
 			],
 			self::EDD_GROUP => [
-				'label' => __( 'Easy Digital Downloads', 'elementor-extras' ),
+				'label' => __( 'Easy Digital Downloads', 'landtech-extras-for-elementor' ),
 			],
 			self::VAR_GROUP => [
-				'label' => __( 'Variables', 'elementor-extras' ),
+				'label' => __( 'Variables', 'landtech-extras-for-elementor' ),
 			],
 			self::MISC_GROUP => [
-				'label' => __( 'Misc', 'elementor-extras' ),
+				'label' => __( 'Misc', 'landtech-extras-for-elementor' ),
 			],
 		];
 	}
@@ -216,15 +217,15 @@ class Module extends Module_Base {
 
 		foreach ( $conditions as $index => $condition ) {
 
-			$key 		= $condition['ee_condition_key'];
+			$key 		= $condition['ltxe_condition_key'];
 			$name 		= null;
 
-			if ( array_key_exists( 'ee_condition_' . $key . '_name' , $condition ) ) {
-				$name = $condition['ee_condition_' . $key . '_name'];
+			if ( array_key_exists( 'ltxe_condition_' . $key . '_name' , $condition ) ) {
+				$name = $condition['ltxe_condition_' . $key . '_name'];
 			}
 
-			$operator 	= $condition['ee_condition_operator'];
-			$value 		= $condition['ee_condition_' . $key . '_value'];
+			$operator 	= $condition['ltxe_condition_operator'];
+			$value 		= $condition['ltxe_condition_' . $key . '_value'];
 
 			$_condition = $this->get_conditions( $key );
 
@@ -261,28 +262,28 @@ class Module extends Module_Base {
 	 */
 	public function add_actions() {
 		// Activate controls for widgets
-		add_action( 'elementor/element/common/section_elementor_extras_advanced/before_section_end', function( $element, $args ) {
+		add_action( 'elementor/element/common/section_landtech_extras_advanced/before_section_end', function( $element, $args ) {
 			$this->add_controls( $element, $args );
 		}, 10, 2 );
 
-		add_action( 'elementor/element/section/section_elementor_extras_advanced/before_section_end', function( $element, $args ) {
+		add_action( 'elementor/element/section/section_landtech_extras_advanced/before_section_end', function( $element, $args ) {
 			$this->add_controls( $element, $args );
 		}, 10, 2 );
 
-		add_action( 'elementor/element/container/section_elementor_extras_advanced/before_section_end', function( $element, $args ) {
+		add_action( 'elementor/element/container/section_landtech_extras_advanced/before_section_end', function( $element, $args ) {
 			$this->add_controls( $element, $args );
 		}, 10, 2 );
 
 		// Conditions for widgets
 		add_action( 'elementor/widget/render_content', function( $widget_content, $element ) {
 			$settings = $element->get_settings();
-			if ( ! empty( $settings['ee_display_conditions_enable'] ) && 'yes' === $settings[ 'ee_display_conditions_enable' ] ) {
+			if ( ! empty( $settings['ltxe_display_conditions_enable'] ) && 'yes' === $settings[ 'ltxe_display_conditions_enable' ] ) {
 
 				// Set the conditions
-				$this->set_conditions( $element->get_id(), $settings['ee_display_conditions'] );
+				$this->set_conditions( $element->get_id(), $settings['ltxe_display_conditions'] );
 
-				if ( ! $this->is_visible( $element->get_id(), $settings['ee_display_conditions_relation'] ) ) { // Check the conditions
-					if ( 'yes' !== $settings['ee_display_conditions_output'] ) {
+				if ( ! $this->is_visible( $element->get_id(), $settings['ltxe_display_conditions_relation'] ) ) { // Check the conditions
+					if ( 'yes' !== $settings['ltxe_display_conditions_output'] ) {
 						return; // And on frontend we stop the rendering of the widget
 					}
 				}
@@ -296,12 +297,12 @@ class Module extends Module_Base {
 		add_action( 'elementor/frontend/widget/before_render', function( $element ) {
 			$settings = $element->get_settings();
 
-			if ( ! empty( $settings['ee_display_conditions_enable'] ) && 'yes' === $settings[ 'ee_display_conditions_enable' ] ) {
+			if ( ! empty( $settings['ltxe_display_conditions_enable'] ) && 'yes' === $settings[ 'ltxe_display_conditions_enable' ] ) {
 
 				// Set the conditions
-				$this->set_conditions( $element->get_id(), $settings['ee_display_conditions'] );
+				$this->set_conditions( $element->get_id(), $settings['ltxe_display_conditions'] );
 
-				if ( ! $this->is_visible( $element->get_id(), $settings['ee_display_conditions_relation'] ) ) { // Check the conditions
+				if ( ! $this->is_visible( $element->get_id(), $settings['ltxe_display_conditions_relation'] ) ) { // Check the conditions
 					$element->add_render_attribute( '_wrapper', 'class', 'ee-conditions--hidden' );
 				}
 			}
@@ -312,12 +313,12 @@ class Module extends Module_Base {
 		add_action( 'elementor/frontend/section/before_render', function( $element ) {
 			$settings = $element->get_settings();
 
-			if ( ! empty( $settings['ee_display_conditions_enable'] ) && 'yes' === $settings[ 'ee_display_conditions_enable' ] ) {
+			if ( ! empty( $settings['ltxe_display_conditions_enable'] ) && 'yes' === $settings[ 'ltxe_display_conditions_enable' ] ) {
 
 				// Set the conditions
-				$this->set_conditions( $element->get_id(), $settings['ee_display_conditions'] );
+				$this->set_conditions( $element->get_id(), $settings['ltxe_display_conditions'] );
 
-				if ( ! $this->is_visible( $element->get_id(), $settings['ee_display_conditions_relation'] ) ) { // Check the conditions
+				if ( ! $this->is_visible( $element->get_id(), $settings['ltxe_display_conditions_relation'] ) ) { // Check the conditions
 					$element->add_render_attribute( '_wrapper', 'class', 'ee-conditions--hidden' );
 				}
 			}
@@ -327,11 +328,11 @@ class Module extends Module_Base {
 		add_action( 'elementor/frontend/container/before_render', function( $element ) {
 			$settings = $element->get_settings();
 
-			if ( ! empty( $settings['ee_display_conditions_enable'] ) && 'yes' === $settings[ 'ee_display_conditions_enable' ] ) {
+			if ( ! empty( $settings['ltxe_display_conditions_enable'] ) && 'yes' === $settings[ 'ltxe_display_conditions_enable' ] ) {
 
-				$this->set_conditions( $element->get_id(), $settings['ee_display_conditions'] );
+				$this->set_conditions( $element->get_id(), $settings['ltxe_display_conditions'] );
 
-				if ( ! $this->is_visible( $element->get_id(), $settings['ee_display_conditions_relation'] ) ) {
+				if ( ! $this->is_visible( $element->get_id(), $settings['ltxe_display_conditions_relation'] ) ) {
 					$element->add_render_attribute( '_wrapper', 'class', 'ee-conditions--hidden' );
 				}
 			}
@@ -353,13 +354,13 @@ class Module extends Module_Base {
 		$element_type = $element->get_type();
 
 		$element->add_control(
-			'ee_display_conditions_enable',
+			'ltxe_display_conditions_enable',
 			[
-				'label'			=> __( 'Display Conditions', 'elementor-extras' ),
+				'label'			=> __( 'Display Conditions', 'landtech-extras-for-elementor' ),
 				'type' 			=> Controls_Manager::SWITCHER,
 				'default' 		=> '',
-				'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-				'label_off' 	=> __( 'No', 'elementor-extras' ),
+				'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+				'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 				'return_value' 	=> 'yes',
 				'frontend_available'	=> true,
 			]
@@ -367,41 +368,45 @@ class Module extends Module_Base {
 
 		if ( 'widget' === $element_type ) {
 			$element->add_control(
-				'ee_display_conditions_output',
+				'ltxe_display_conditions_output',
 				[
-					'label'		=> __( 'Output HTML', 'elementor-extras' ),
-					'description' => sprintf( __( 'If enabled, the HTML code will exist on the page but the %s will be hidden using CSS.', 'elementor-extras' ), $element_type ),
+					'label'		=> __( 'Output HTML', 'landtech-extras-for-elementor' ),
+					'description' => sprintf(
+						/* translators: %s: Element type (e.g. widget). */
+						__( 'If enabled, the HTML code will exist on the page but the %s will be hidden using CSS.', 'landtech-extras-for-elementor' ),
+						$element_type
+					),
 					'default'	=> 'yes',
 					'type' 		=> Controls_Manager::SWITCHER,
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'yes',
 					'frontend_available' => true,
 					'condition'	=> [
-						'ee_display_conditions_enable' => 'yes',
+						'ltxe_display_conditions_enable' => 'yes',
 					],
 				]
 			);
 		}
 
 		$element->add_control(
-			'ee_display_conditions_relation',
+			'ltxe_display_conditions_relation',
 			[
-				'label'		=> __( 'Display on', 'elementor-extras' ),
+				'label'		=> __( 'Display on', 'landtech-extras-for-elementor' ),
 				'type' 		=> Controls_Manager::SELECT,
 				'default' 	=> 'all',
 				'options' 	=> [
-					'all' 		=> __( 'All conditions met', 'elementor-extras' ),
-					'any' 		=> __( 'Any condition met', 'elementor-extras' ),
+					'all' 		=> __( 'All conditions met', 'landtech-extras-for-elementor' ),
+					'any' 		=> __( 'Any condition met', 'landtech-extras-for-elementor' ),
 				],
 				'condition'	=> [
-					'ee_display_conditions_enable' => 'yes',
+					'ltxe_display_conditions_enable' => 'yes',
 				],
 			]
 		);
 
 		$this->_conditions_repeater->add_control(
-			'ee_condition_key',
+			'ltxe_condition_key',
 			[
 				'type' 			=> Controls_Manager::SELECT,
 				'default' 		=> 'authentication',
@@ -413,14 +418,14 @@ class Module extends Module_Base {
 		$this->add_name_controls();
 
 		$this->_conditions_repeater->add_control(
-			'ee_condition_operator',
+			'ltxe_condition_operator',
 			[
 				'type' 			=> Controls_Manager::SELECT,
 				'default' 		=> 'is',
 				'label_block' 	=> true,
 				'options' 		=> [
-					'is' 		=> __( 'Is', 'elementor-extras' ),
-					'not' 		=> __( 'Is not', 'elementor-extras' ),
+					'is' 		=> __( 'Is', 'landtech-extras-for-elementor' ),
+					'not' 		=> __( 'Is not', 'landtech-extras-for-elementor' ),
 				],
 			]
 		);
@@ -428,22 +433,22 @@ class Module extends Module_Base {
 		$this->add_value_controls();
 
 		$element->add_control(
-			'ee_display_conditions',
+			'ltxe_display_conditions',
 			[
-				'label' 	=> __( 'Conditions', 'elementor-extras' ),
+				'label' 	=> __( 'Conditions', 'landtech-extras-for-elementor' ),
 				'type' 		=> Controls_Manager::REPEATER,
 				'default' 	=> [
 					[
-						'ee_condition_key' 					=> 'authentication',
-						'ee_condition_operator' 			=> 'is',
-						'ee_condition_authentication_value' => 'authenticated',
+						'ltxe_condition_key' 					=> 'authentication',
+						'ltxe_condition_operator' 			=> 'is',
+						'ltxe_condition_authentication_value' => 'authenticated',
 					],
 				],
 				'condition'		=> [
-					'ee_display_conditions_enable' => 'yes',
+					'ltxe_display_conditions_enable' => 'yes',
 				],
 				'fields' 		=> $this->_conditions_repeater->get_controls(),
-				'title_field' 	=> __( 'Display If', 'elementor-extras'),
+				'title_field' 	=> __( 'Display If', 'landtech-extras-for-elementor'),
 			]
 		);
 	}
@@ -470,12 +475,12 @@ class Module extends Module_Base {
 			}
 
 			$condition_name 	= $_condition->get_name();
-			$control_key 		= 'ee_condition_' . $condition_name . '_name';
+			$control_key 		= 'ltxe_condition_' . $condition_name . '_name';
 			$control_settings 	= $_condition->get_name_control();
 
 			// Show this only if the user select this specific condition
 			$control_settings['condition'] = [
-				'ee_condition_key' => $condition_name,
+				'ltxe_condition_key' => $condition_name,
 			];
 
 			// 
@@ -501,12 +506,12 @@ class Module extends Module_Base {
 		foreach ( $this->_conditions as $_condition ) {
 
 			$condition_name 	= $_condition->get_name();
-			$control_key 		= 'ee_condition_' . $condition_name . '_value';
+			$control_key 		= 'ltxe_condition_' . $condition_name . '_value';
 			$control_settings 	= $_condition->get_value_control();
 
 			// Show this only if the user select this specific condition
 			$control_settings['condition'] = [
-				'ee_condition_key' => $condition_name,
+				'ltxe_condition_key' => $condition_name,
 			];
 
 			// 

@@ -1,9 +1,10 @@
 <?php
-namespace ElementorExtras\Modules\MediaPlayer\Widgets;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\MediaPlayer\Widgets;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Extras_Widget;
-use ElementorExtras\Modules\MediaPlayer\Skins;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Extras_Widget;
+use LandTechExtras\Modules\MediaPlayer\Skins;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -49,7 +50,7 @@ class HTML5_Video extends Extras_Widget {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Video Player', 'elementor-extras' );
+		return __( 'Video Player', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -74,9 +75,9 @@ class HTML5_Video extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
-			'video-player',
-			'jquery-appear',
-			'iphone-inline-video',
+			'landtech-extras-video-player',
+			'landtech-extras-jquery-appear',
+			'landtech-extras-iphone-inline-video',
 		];
 	}
 
@@ -102,7 +103,7 @@ class HTML5_Video extends Extras_Widget {
 		$this->start_controls_section(
 			'section_content',
 			[
-				'label' 	=> __( 'Content', 'elementor-extras' ),
+				'label' 	=> __( 'Content', 'landtech-extras-for-elementor' ),
 			]
 		);
 
@@ -111,19 +112,19 @@ class HTML5_Video extends Extras_Widget {
 			$this->start_controls_tab(
 				'tab_source_mp4',
 				[
-					'label' => __( 'MP4', 'elementor-extras' ),
+					'label' => __( 'MP4', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 				$this->add_control(
 					'video_source',
 					[
-						'label' 		=> __( 'Source', 'elementor-extras' ),
+						'label' 		=> __( 'Source', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SELECT,
 						'default'		=> 'url',
 						'options'		=> [
-							'url'		=> __( 'URL', 'elementor-extras' ),
-							'file'		=> __( 'File', 'elementor-extras' ),
+							'url'		=> __( 'URL', 'landtech-extras-for-elementor' ),
+							'file'		=> __( 'File', 'landtech-extras-for-elementor' ),
 						],
 					]
 				);
@@ -131,9 +132,9 @@ class HTML5_Video extends Extras_Widget {
 				$this->add_control(
 					'video_url',
 					[
-						'label' 		=> __( 'URL', 'elementor-extras' ),
+						'label' 		=> __( 'URL', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::TEXT,
-						'description' 	=> __( 'Insert URL to an .mp4 video file', 'elementor-extras' ),
+						'description' 	=> __( 'Insert URL to an .mp4 video file', 'landtech-extras-for-elementor' ),
 						'dynamic' 		=> [
 							'active' 	=> true,
 							'categories' => [
@@ -150,7 +151,7 @@ class HTML5_Video extends Extras_Widget {
 				$this->add_control(
 					'video_file',
 					[
-						'label' 		=> __( 'File', 'elementor-extras' ),
+						'label' 		=> __( 'File', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::MEDIA,
 						'dynamic' 		=> [
 							'active' 	=> true,
@@ -171,19 +172,19 @@ class HTML5_Video extends Extras_Widget {
 			$this->start_controls_tab(
 				'tab_source_m4v',
 				[
-					'label' => __( 'M4V', 'elementor-extras' ),
+					'label' => __( 'M4V', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 				$this->add_control(
 					'video_source_m4v',
 					[
-						'label' 		=> __( 'Source', 'elementor-extras' ),
+						'label' 		=> __( 'Source', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SELECT,
 						'default'		=> 'url',
 						'options'		=> [
-							'url'		=> __( 'URL', 'elementor-extras' ),
-							'file'		=> __( 'File', 'elementor-extras' ),
+							'url'		=> __( 'URL', 'landtech-extras-for-elementor' ),
+							'file'		=> __( 'File', 'landtech-extras-for-elementor' ),
 						],
 					]
 				);
@@ -191,9 +192,9 @@ class HTML5_Video extends Extras_Widget {
 				$this->add_control(
 					'video_url_m4v',
 					[
-						'label' 		=> __( 'URL', 'elementor-extras' ),
+						'label' 		=> __( 'URL', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::TEXT,
-						'description' 	=> __( 'Insert URL to a .m4v video file', 'elementor-extras' ),
+						'description' 	=> __( 'Insert URL to a .m4v video file', 'landtech-extras-for-elementor' ),
 						'dynamic' 		=> [
 							'active' 	=> true,
 							'categories' => [
@@ -210,7 +211,7 @@ class HTML5_Video extends Extras_Widget {
 				$this->add_control(
 					'video_file_m4v',
 					[
-						'label' 		=> __( 'File', 'elementor-extras' ),
+						'label' 		=> __( 'File', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::MEDIA,
 						'dynamic' 		=> [
 							'active' 	=> true,
@@ -231,19 +232,19 @@ class HTML5_Video extends Extras_Widget {
 			$this->start_controls_tab(
 				'tab_source_ogg',
 				[
-					'label' => __( 'OGG', 'elementor-extras' ),
+					'label' => __( 'OGG', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 				$this->add_control(
 					'video_source_ogg',
 					[
-						'label' 		=> __( 'Source', 'elementor-extras' ),
+						'label' 		=> __( 'Source', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SELECT,
 						'default'		=> 'url',
 						'options'		=> [
-							'url'		=> __( 'URL', 'elementor-extras' ),
-							'file'		=> __( 'File', 'elementor-extras' ),
+							'url'		=> __( 'URL', 'landtech-extras-for-elementor' ),
+							'file'		=> __( 'File', 'landtech-extras-for-elementor' ),
 						],
 					]
 				);
@@ -251,9 +252,9 @@ class HTML5_Video extends Extras_Widget {
 				$this->add_control(
 					'video_url_ogg',
 					[
-						'label' 		=> __( 'URL', 'elementor-extras' ),
+						'label' 		=> __( 'URL', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::TEXT,
-						'description' 	=> __( 'Insert URL to an .ogg video file', 'elementor-extras' ),
+						'description' 	=> __( 'Insert URL to an .ogg video file', 'landtech-extras-for-elementor' ),
 						'dynamic' 		=> [
 							'active' 	=> true,
 						],
@@ -270,7 +271,7 @@ class HTML5_Video extends Extras_Widget {
 				$this->add_control(
 					'video_file_ogg',
 					[
-						'label' 		=> __( 'File', 'elementor-extras' ),
+						'label' 		=> __( 'File', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::MEDIA,
 						'dynamic' 		=> [
 							'active' 	=> true,
@@ -291,19 +292,19 @@ class HTML5_Video extends Extras_Widget {
 			$this->start_controls_tab(
 				'tab_source_webm',
 				[
-					'label' => __( 'WEBM', 'elementor-extras' ),
+					'label' => __( 'WEBM', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 				$this->add_control(
 					'video_source_webm',
 					[
-						'label' 		=> __( 'Source', 'elementor-extras' ),
+						'label' 		=> __( 'Source', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SELECT,
 						'default'		=> 'url',
 						'options'		=> [
-							'url'		=> __( 'URL', 'elementor-extras' ),
-							'file'		=> __( 'File', 'elementor-extras' ),
+							'url'		=> __( 'URL', 'landtech-extras-for-elementor' ),
+							'file'		=> __( 'File', 'landtech-extras-for-elementor' ),
 						],
 					]
 				);
@@ -311,9 +312,9 @@ class HTML5_Video extends Extras_Widget {
 				$this->add_control(
 					'video_url_webm',
 					[
-						'label' 		=> __( 'URL', 'elementor-extras' ),
+						'label' 		=> __( 'URL', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::TEXT,
-						'description' 	=> __( 'Insert URL to a .webm video file', 'elementor-extras' ),
+						'description' 	=> __( 'Insert URL to a .webm video file', 'landtech-extras-for-elementor' ),
 						'dynamic' 		=> [
 							'active' 	=> true,
 							'categories' => [
@@ -330,7 +331,7 @@ class HTML5_Video extends Extras_Widget {
 				$this->add_control(
 					'video_file_webm',
 					[
-						'label' 		=> __( 'File', 'elementor-extras' ),
+						'label' 		=> __( 'File', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::MEDIA,
 						'dynamic' 		=> [
 							'active' 	=> true,
@@ -353,7 +354,7 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_control(
 				'video_cover',
 				[
-					'label' 		=> __( 'Choose Cover', 'elementor-extras' ),
+					'label' 		=> __( 'Choose Cover', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::MEDIA,
 					'dynamic' 		=> [ 'active' => true ],
 					'separator'		=> 'before',
@@ -364,7 +365,7 @@ class HTML5_Video extends Extras_Widget {
 				Group_Control_Image_Size::get_type(),
 				[
 					'name' 		=> 'video_cover',
-					'label' 	=> __( 'Cover Size', 'elementor-extras' ),
+					'label' 	=> __( 'Cover Size', 'landtech-extras-for-elementor' ),
 					'default' 	=> 'large',
 					'condition'	=> [
 						'video_cover[url]!'		=> '',
@@ -377,14 +378,14 @@ class HTML5_Video extends Extras_Widget {
 		$this->start_controls_section(
 			'section_settings',
 			[
-				'label' => __( 'Settings', 'elementor-extras' ),
+				'label' => __( 'Settings', 'landtech-extras-for-elementor' ),
 			]
 		);
 
 			$this->add_control(
 				'video_behaviour_heading',
 				[
-					'label' 	=> __( 'Behaviour', 'elementor-extras' ),
+					'label' 	=> __( 'Behaviour', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 				]
 			);
@@ -392,11 +393,11 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_control(
 				'video_autoplay',
 				[
-					'label' 		=> __( 'Auto Play', 'elementor-extras' ),
+					'label' 		=> __( 'Auto Play', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'autoplay',
 				]
 			);
@@ -405,7 +406,7 @@ class HTML5_Video extends Extras_Widget {
 				'video_autoplay_notice',
 				[
 					'type' 				=> Controls_Manager::RAW_HTML,
-					'raw' 				=> __( 'Many browsers don\'t allow videos with sound to autoplay without user interaction. To avoid this, enable the "Start Muted" control to disable sound so that the video autoplays correctly.', 'elementor-extras' ),
+					'raw' 				=> __( 'Many browsers don\'t allow videos with sound to autoplay without user interaction. To avoid this, enable the "Start Muted" control to disable sound so that the video autoplays correctly.', 'landtech-extras-for-elementor' ),
 					'content_classes' 	=> 'elementor-panel-alert elementor-panel-alert-warning',
 					'condition' 		=> [
 						'video_autoplay!' => ''
@@ -416,12 +417,12 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_control(
 				'video_stop_others',
 				[
-					'label' 		=> __( 'Stop Others', 'elementor-extras' ),
-					'description' 	=> __( 'Stop all other videos on page when this video is played.', 'elementor-extras' ),
+					'label' 		=> __( 'Stop Others', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'Stop all other videos on page when this video is played.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'yes',
 					'frontend_available' => true,
 				]
@@ -430,12 +431,12 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_control(
 				'video_play_viewport',
 				[
-					'label' 		=> __( 'Play in Viewport', 'elementor-extras' ),
-					'description' 	=> __( 'Autoplay video when the player is in viewport', 'elementor-extras' ),
+					'label' 		=> __( 'Play in Viewport', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'Autoplay video when the player is in viewport', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'yes',
 					'condition'	=> [
 						'video_autoplay'		=> 'autoplay',
@@ -447,12 +448,12 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_control(
 				'video_stop_viewport',
 				[
-					'label' 		=> __( 'Stop on leave', 'elementor-extras' ),
-					'description' 	=> __( 'Stop video when the player has left the viewport', 'elementor-extras' ),
+					'label' 		=> __( 'Stop on leave', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'Stop video when the player has left the viewport', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'yes',
 					'condition'	=> [
 						'video_autoplay'		=> 'autoplay',
@@ -465,11 +466,11 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_control(
 				'video_restart_on_pause',
 				[
-					'label' 		=> __( 'Restart on pause', 'elementor-extras' ),
+					'label' 		=> __( 'Restart on pause', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'yes',
 					'frontend_available'	=> true,
 				]
@@ -478,11 +479,11 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_control(
 				'video_loop',
 				[
-					'label' 		=> __( 'Loop', 'elementor-extras' ),
+					'label' 		=> __( 'Loop', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'loop',
 				]
 			);
@@ -490,12 +491,12 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_control(
 				'video_end_at_last_frame',
 				[
-					'label' 		=> __( 'End at last frame', 'elementor-extras' ),
-					'description' 	=> __( 'End the video at the last frame instead of showing the first one.', 'elementor-extras' ),
+					'label' 		=> __( 'End at last frame', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'End the video at the last frame instead of showing the first one.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'yes',
 					'condition'	=> [
 						'video_loop'	=> '',
@@ -507,7 +508,7 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_responsive_control(
 				'video_speed',
 				[
-					'label' 	=> __( 'Playback Speed', 'elementor-extras' ),
+					'label' 	=> __( 'Playback Speed', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 1,
@@ -526,7 +527,7 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_control(
 				'video_display_heading',
 				[
-					'label' 	=> __( 'Display', 'elementor-extras' ),
+					'label' 	=> __( 'Display', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -535,11 +536,11 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_control(
 				'video_show_buttons',
 				[
-					'label' 		=> __( 'Show Buttons', 'elementor-extras' ),
+					'label' 		=> __( 'Show Buttons', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'show',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'show',
 				]
 			);
@@ -547,11 +548,11 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_control(
 				'video_show_bar',
 				[
-					'label' 		=> __( 'Show Bar', 'elementor-extras' ),
+					'label' 		=> __( 'Show Bar', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'show',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'show',
 				]
 			);
@@ -559,7 +560,7 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_control(
 				'video_bar_hide',
 				[
-					'label' 		=> __( 'Hide Bar When Playing', 'elementor-extras' ),
+					'label' 		=> __( 'Hide Bar When Playing', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'hide',
 					'prefix_class' 	=> 'ee-video-player-bar--',
@@ -573,11 +574,11 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_control(
 				'video_show_rewind',
 				[
-					'label' 		=> __( 'Show Rewind', 'elementor-extras' ),
+					'label' 		=> __( 'Show Rewind', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'show',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'show',
 					'condition' 	=> [
 						'video_restart_on_pause!' => 'yes',
@@ -588,11 +589,11 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_control(
 				'video_show_time',
 				[
-					'label' 		=> __( 'Show Time', 'elementor-extras' ),
+					'label' 		=> __( 'Show Time', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'show',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'show',
 					'condition'	=> [
 						'video_show_bar!'		=> '',
@@ -603,11 +604,11 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_control(
 				'video_show_progress',
 				[
-					'label' 		=> __( 'Show Progress', 'elementor-extras' ),
+					'label' 		=> __( 'Show Progress', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'show',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'show',
 					'condition'	=> [
 						'video_show_bar!'		=> '',
@@ -618,11 +619,11 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_control(
 				'video_show_duration',
 				[
-					'label' 		=> __( 'Show Duration', 'elementor-extras' ),
+					'label' 		=> __( 'Show Duration', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'show',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'show',
 					'condition'	=> [
 						'video_show_bar!'		=> '',
@@ -633,11 +634,11 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_control(
 				'video_show_fs',
 				[
-					'label' 		=> __( 'Show Fullscreen', 'elementor-extras' ),
+					'label' 		=> __( 'Show Fullscreen', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'show',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'show',
 					'condition'	=> [
 						'video_show_bar!'		=> '',
@@ -648,11 +649,11 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_control(
 				'video_fs_hide_download',
 				[
-					'label' 		=> __( 'Hide Fullscreen Download', 'elementor-extras' ),
+					'label' 		=> __( 'Hide Fullscreen Download', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'condition' 	=> [
 						'video_show_fs!' => '',
 					],
@@ -662,11 +663,11 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_control(
 				'video_fs_no_rightclick',
 				[
-					'label' 		=> __( 'Disable Fullscreen Right Click', 'elementor-extras' ),
+					'label' 		=> __( 'Disable Fullscreen Right Click', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 					'condition' 	=> [
 						'video_show_fs!' => '',
@@ -677,7 +678,7 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_control(
 				'video_volume_heading',
 				[
-					'label' 	=> __( 'Volume', 'elementor-extras' ),
+					'label' 	=> __( 'Volume', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -686,11 +687,11 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_control(
 				'video_show_volume',
 				[
-					'label' 		=> __( 'Show Volume', 'elementor-extras' ),
+					'label' 		=> __( 'Show Volume', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'show',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'show',
 					'condition'	=> [
 						'video_show_bar!'		=> '',
@@ -701,11 +702,11 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_control(
 				'video_show_volume_icon',
 				[
-					'label' 		=> __( 'Show Volume Icon', 'elementor-extras' ),
+					'label' 		=> __( 'Show Volume Icon', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'show',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'show',
 					'condition'	=> [
 						'video_show_bar!'		=> '',
@@ -717,11 +718,11 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_control(
 				'video_show_volume_bar',
 				[
-					'label' 		=> __( 'Show Volume Bar', 'elementor-extras' ),
+					'label' 		=> __( 'Show Volume Bar', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'show',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'show',
 					'condition'	=> [
 						'video_show_bar!'		=> '',
@@ -733,11 +734,11 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_control(
 				'video_start_muted',
 				[
-					'label' 		=> __( 'Start Muted', 'elementor-extras' ),
+					'label' 		=> __( 'Start Muted', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'condition'	=> [
 						'video_autoplay!'	=> '',
 					]
@@ -747,7 +748,7 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_responsive_control(
 				'video_volume',
 				[
-					'label' 	=> __( 'Initial Volume', 'elementor-extras' ),
+					'label' 	=> __( 'Initial Volume', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 0.8,
@@ -771,7 +772,7 @@ class HTML5_Video extends Extras_Widget {
 		$this->start_controls_section(
 			'section_video_style',
 			[
-				'label' => __( 'Player', 'elementor-extras' ),
+				'label' => __( 'Player', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -779,7 +780,7 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_responsive_control(
 				'video_width',
 				[
-					'label' 		=> __( 'Width', 'elementor-extras' ),
+					'label' 		=> __( 'Width', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> '',
@@ -804,19 +805,19 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_responsive_control(
 				'video_align',
 				[
-					'label' => __( 'Alignment', 'elementor-extras' ),
+					'label' => __( 'Alignment', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::CHOOSE,
 					'options' => [
 						'left' => [
-							'title' => __( 'Left', 'elementor-extras' ),
+							'title' => __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' => 'eicon-h-align-left',
 						],
 						'center' => [
-							'title' => __( 'Center', 'elementor-extras' ),
+							'title' => __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' => 'eicon-h-align-center',
 						],
 						'right' => [
-							'title' => __( 'Right', 'elementor-extras' ),
+							'title' => __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' => 'eicon-h-align-right',
 						],
 					],
@@ -831,7 +832,7 @@ class HTML5_Video extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'video_border',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '{{WRAPPER}} .ee-video-player',
 				]
 			);
@@ -839,7 +840,7 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_control(
 				'video_border_radius',
 				[
-					'label' 			=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 			=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 					=> Controls_Manager::DIMENSIONS,
 					'size_units' 			=> [ 'px', '%' ],
 					'selectors' 			=> [
@@ -861,7 +862,7 @@ class HTML5_Video extends Extras_Widget {
 		$this->start_controls_section(
 			'section_video_overlay',
 			[
-				'label' => __( 'Overlay', 'elementor-extras' ),
+				'label' => __( 'Overlay', 'landtech-extras-for-elementor' ),
 				'tab' 	=> Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -869,7 +870,7 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_control(
 				'video_overlay_background',
 				[
-					'label' 	=> __( 'Background', 'elementor-extras' ),
+					'label' 	=> __( 'Background', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'default'	=> '#000000',
 					'selectors' => [
@@ -881,7 +882,7 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_responsive_control(
 				'video_overlay_opacity',
 				[
-					'label' 	=> __( 'Opacity (%)', 'elementor-extras' ),
+					'label' 	=> __( 'Opacity (%)', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 0.8,
@@ -904,7 +905,7 @@ class HTML5_Video extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style',
 			[
-				'label' => __( 'Interface', 'elementor-extras' ),
+				'label' => __( 'Interface', 'landtech-extras-for-elementor' ),
 				'tab' 	=> Controls_Manager::TAB_STYLE,
 				'conditions' => [
 					'relation' 	=> 'or',
@@ -927,7 +928,7 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_control(
 				'video_controls_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'default' 		=> [
 						'top' 		=> 100,
@@ -949,14 +950,14 @@ class HTML5_Video extends Extras_Widget {
 			$this->start_controls_tab(
 				'video_controls',
 				[
-					'label' => __( 'Default', 'elementor-extras' ),
+					'label' => __( 'Default', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 				$this->add_control(
 					'video_controls_foreground',
 					[
-						'label' 	=> __( 'Controls Color', 'elementor-extras' ),
+						'label' 	=> __( 'Controls Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '#ffffff',
 						'selectors' => [
@@ -971,7 +972,7 @@ class HTML5_Video extends Extras_Widget {
 				$this->add_control(
 					'video_controls_background',
 					[
-						'label' 	=> __( 'Controls Background', 'elementor-extras' ),
+						'label' 	=> __( 'Controls Background', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'global' => [
 							'default' => Global_Colors::COLOR_PRIMARY,
@@ -986,7 +987,7 @@ class HTML5_Video extends Extras_Widget {
 				$this->add_control(
 					'video_controls_opacity',
 					[
-						'label' 	=> __( 'Controls Opacity (%)', 'elementor-extras' ),
+						'label' 	=> __( 'Controls Opacity (%)', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SLIDER,
 						'default' 	=> [
 							'size' 	=> 0.9,
@@ -1009,7 +1010,7 @@ class HTML5_Video extends Extras_Widget {
 					Group_Control_Border::get_type(),
 					[
 						'name' 		=> 'video_controls_border',
-						'label' 	=> __( 'Border', 'elementor-extras' ),
+						'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 						'selector' 	=>
 							'{{WRAPPER}} .ee-video-player__controls .ee-player__controls__overlay .ee-player__control,
 							 {{WRAPPER}} .ee-video-player__controls .ee-player__controls__bar',
@@ -1031,14 +1032,14 @@ class HTML5_Video extends Extras_Widget {
 			$this->start_controls_tab(
 				'video_controls_hover',
 				[
-					'label' => __( 'Hover', 'elementor-extras' ),
+					'label' => __( 'Hover', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 				$this->add_control(
 					'video_controls_foreground_hover',
 					[
-						'label' 	=> __( 'Controls Color', 'elementor-extras' ),
+						'label' 	=> __( 'Controls Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -1053,7 +1054,7 @@ class HTML5_Video extends Extras_Widget {
 				$this->add_control(
 					'video_controls_background_hover',
 					[
-						'label' 	=> __( 'Controls Background', 'elementor-extras' ),
+						'label' 	=> __( 'Controls Background', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -1066,7 +1067,7 @@ class HTML5_Video extends Extras_Widget {
 				$this->add_control(
 					'video_controls_opacity_hover',
 					[
-						'label' 	=> __( 'Controls Opacity (%)', 'elementor-extras' ),
+						'label' 	=> __( 'Controls Opacity (%)', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SLIDER,
 						'default' 	=> [
 							'size' 	=> 1,
@@ -1089,7 +1090,7 @@ class HTML5_Video extends Extras_Widget {
 					Group_Control_Border::get_type(),
 					[
 						'name' 		=> 'video_controls_border_hover',
-						'label' 	=> __( 'Border', 'elementor-extras' ),
+						'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 						'selector' 	=>
 							'(desktop+){{WRAPPER}} .ee-video-player__controls .ee-player__controls__overlay .ee-player__control:hover,
 							{{WRAPPER}} .ee-video-player__controls .ee-player__controls__bar:hover',
@@ -1115,7 +1116,7 @@ class HTML5_Video extends Extras_Widget {
 		$this->start_controls_section(
 			'section_buttons_style',
 			[
-				'label' => __( 'Buttons', 'elementor-extras' ),
+				'label' => __( 'Buttons', 'landtech-extras-for-elementor' ),
 				'tab' 	=> Controls_Manager::TAB_STYLE,
 				'condition'		=> [
 					'video_show_buttons!' => '',
@@ -1126,7 +1127,7 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_responsive_control(
 				'video_buttons_size',
 				[
-					'label' => __( 'Size (%)', 'elementor-extras' ),
+					'label' => __( 'Size (%)', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::SLIDER,
 					'default' => [
 						'size' => 60,
@@ -1149,7 +1150,7 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_responsive_control(
 				'video_buttons_spacing',
 				[
-					'label' => __( 'Controls Spacing', 'elementor-extras' ),
+					'label' => __( 'Controls Spacing', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::SLIDER,
 					'default' => [
 						'size' => '',
@@ -1174,7 +1175,7 @@ class HTML5_Video extends Extras_Widget {
 		$this->start_controls_section(
 			'section_bar_style',
 			[
-				'label' => __( 'Bar', 'elementor-extras' ),
+				'label' => __( 'Bar', 'landtech-extras-for-elementor' ),
 				'tab' 	=> Controls_Manager::TAB_STYLE,
 				'condition'		=> [
 					'video_show_bar!' => '',
@@ -1185,7 +1186,7 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_responsive_control(
 				'video_bar_padding',
 				[
-					'label' 	=> __( 'Padding', 'elementor-extras' ),
+					'label' 	=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> '',
@@ -1209,7 +1210,7 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_responsive_control(
 				'video_bar_margin',
 				[
-					'label' 	=> __( 'Distance', 'elementor-extras' ),
+					'label' 	=> __( 'Distance', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> '',
@@ -1233,7 +1234,7 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_control(
 				'video_bar_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'selectors' 	=> [
 						'{{WRAPPER}} .ee-video-player__controls .ee-player__controls__bar' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -1248,7 +1249,7 @@ class HTML5_Video extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'bar',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -1259,7 +1260,7 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_control(
 				'controls_heading',
 				[
-					'label' 	=> __( 'Controls', 'elementor-extras' ),
+					'label' 	=> __( 'Controls', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator'	=> 'before',
 					'condition'		=> [
@@ -1271,7 +1272,7 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_responsive_control(
 				'video_bar_zoom',
 				[
-					'label' 	=> __( 'Zoom', 'elementor-extras' ),
+					'label' 	=> __( 'Zoom', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> '',
@@ -1296,7 +1297,7 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_responsive_control(
 				'video_bar_spacing',
 				[
-					'label' 	=> __( 'Spacing', 'elementor-extras' ),
+					'label' 	=> __( 'Spacing', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> '',
@@ -1322,7 +1323,7 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_control(
 				'controls_progress_heading',
 				[
-					'label' 	=> __( 'Progress', 'elementor-extras' ),
+					'label' 	=> __( 'Progress', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator'	=> 'before',
 					'condition'	=> [
@@ -1335,7 +1336,7 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_responsive_control(
 				'progress_width',
 				[
-					'label' 	=> __( 'Width', 'elementor-extras' ),
+					'label' 	=> __( 'Width', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -1357,7 +1358,7 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_control(
 				'controls_volume_heading',
 				[
-					'label' 	=> __( 'Volume', 'elementor-extras' ),
+					'label' 	=> __( 'Volume', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator'	=> 'before',
 					'condition'	=> [
@@ -1371,7 +1372,7 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_responsive_control(
 				'volume_width',
 				[
-					'label' 	=> __( 'Width', 'elementor-extras' ),
+					'label' 	=> __( 'Width', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -1426,7 +1427,7 @@ class HTML5_Video extends Extras_Widget {
 			],
 		] );
 
-		?><div <?php echo $this->get_render_attribute_string( 'video-wrapper' ); ?>>
+		?><div <?php $this->print_render_attribute_string( 'video-wrapper' ); ?>>
 			<?php $this->render_video(); ?>
 			<?php $this->render_cover(); ?>
 			<?php $this->render_controls(); ?>
@@ -1477,7 +1478,7 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_render_attribute( 'video', 'poster', $url );
 		}
 
-		?><video <?php echo $this->get_render_attribute_string( 'video' ); ?>><?php
+		?><video <?php $this->print_render_attribute_string( 'video' ); ?>><?php
 
 			$video_url = ( 'file' === $settings['video_source'] ) ? $settings['video_file']['url'] : $settings['video_url'];
 			$video_url_m4v = ( 'file' === $settings['video_source_m4v'] ) ? $settings['video_file_m4v']['url'] : $settings['video_url_m4v'];
@@ -1489,28 +1490,28 @@ class HTML5_Video extends Extras_Widget {
 					'src' => $video_url,
 					'type' => 'video/mp4',
 				] );
-			?><source <?php echo $this->get_render_attribute_string( 'source-mp4' ); ?>><?php } ?>
+			?><source <?php $this->print_render_attribute_string( 'source-mp4' ); ?>><?php } ?>
 
 			<?php if ( $video_url_m4v ) {
 				$this->add_render_attribute( 'source-m4v', [
 					'src' => $video_url_m4v,
 					'type' => 'video/m4v',
 				] );
-			?><source <?php echo $this->get_render_attribute_string( 'source-m4v' ); ?>><?php } ?>
+			?><source <?php $this->print_render_attribute_string( 'source-m4v' ); ?>><?php } ?>
 
 			<?php if ( $video_url_ogg ) {
 				$this->add_render_attribute( 'source-ogg', [
 					'src' => $video_url_ogg,
 					'type' => 'video/ogg',
 				] );
-			?><source <?php echo $this->get_render_attribute_string( 'source-wav' ); ?>><?php } ?>
+			?><source <?php $this->print_render_attribute_string( 'source-wav' ); ?>><?php } ?>
 
 			<?php if ( $video_url_webm ) {
 				$this->add_render_attribute( 'source-webm', [
 					'src' => $video_url_webm,
 					'type' => 'video/webm',
 				] );
-			?><source <?php echo $this->get_render_attribute_string( 'source-webm' ); ?>><?php } ?>
+			?><source <?php $this->print_render_attribute_string( 'source-webm' ); ?>><?php } ?>
 
 		</video><?php
 	}
@@ -1528,7 +1529,7 @@ class HTML5_Video extends Extras_Widget {
 				'ee-player__cover',
 			],
 		] );
-		?><div <?php echo $this->get_render_attribute_string( 'video-cover' ); ?>></div><?php
+		?><div <?php $this->print_render_attribute_string( 'video-cover' ); ?>></div><?php
 	}
 
 	/**
@@ -1571,14 +1572,14 @@ class HTML5_Video extends Extras_Widget {
 		] );
 
 		?>
-		<div <?php echo $this->get_render_attribute_string( 'controls' ); ?>><?php
+		<div <?php $this->print_render_attribute_string( 'controls' ); ?>><?php
 
 			$this->render_overlay();
 
 			if ( 'show' === $settings['video_show_bar'] ) {
 
-				?><div <?php echo $this->get_render_attribute_string( 'bar-wrapper' ); ?>>
-					<div <?php echo $this->get_render_attribute_string( 'bar' ); ?>>
+				?><div <?php $this->print_render_attribute_string( 'bar-wrapper' ); ?>>
+					<div <?php $this->print_render_attribute_string( 'bar' ); ?>>
 
 						<?php if ( 'yes' !== $settings['video_restart_on_pause'] && 'show' === $settings['video_show_rewind'] ) {
 							$this->add_render_attribute( 'control-rewind', [
@@ -1590,9 +1591,9 @@ class HTML5_Video extends Extras_Widget {
 									'nicon-rewind',
 								],
 							] );
-						?><div <?php echo $this->get_render_attribute_string( 'control-rewind' ); ?>></div><?php } ?>
+						?><div <?php $this->print_render_attribute_string( 'control-rewind' ); ?>></div><?php } ?>
 						
-						<div <?php echo $this->get_render_attribute_string( 'control-play' ); ?>></div>
+						<div <?php $this->print_render_attribute_string( 'control-play' ); ?>></div>
 
 						<?php if ( $settings['video_show_time'] ) {
 							$this->add_render_attribute( 'control-time', [
@@ -1602,7 +1603,7 @@ class HTML5_Video extends Extras_Widget {
 									'ee-player__controls__time',
 								],
 							] );
-						?><div <?php echo $this->get_render_attribute_string( 'control-time' ); ?>>00:00</div><?php } ?>
+						?><div <?php $this->print_render_attribute_string( 'control-time' ); ?>>00:00</div><?php } ?>
 
 						<?php if ( $settings['video_show_progress'] ) {
 							$this->add_render_attribute( [
@@ -1626,9 +1627,9 @@ class HTML5_Video extends Extras_Widget {
 									],
 								],
 							] );
-						?><div <?php echo $this->get_render_attribute_string( 'control-progress' ); ?>>
-							<div <?php echo $this->get_render_attribute_string( 'control-progress-time' ); ?>></div>
-							<div <?php echo $this->get_render_attribute_string( 'control-progress-track' ); ?>></div>
+						?><div <?php $this->print_render_attribute_string( 'control-progress' ); ?>>
+							<div <?php $this->print_render_attribute_string( 'control-progress-time' ); ?>></div>
+							<div <?php $this->print_render_attribute_string( 'control-progress-track' ); ?>></div>
 						</div><?php } ?>
 
 						<?php if ( $settings['video_show_duration'] ) {
@@ -1639,7 +1640,7 @@ class HTML5_Video extends Extras_Widget {
 									'ee-player__control--indicator',
 								],
 							] );
-						?><div <?php echo $this->get_render_attribute_string( 'control-duration' ); ?>>00:00</div><?php } ?>
+						?><div <?php $this->print_render_attribute_string( 'control-duration' ); ?>>00:00</div><?php } ?>
 
 						<?php if ( $settings['video_show_volume'] ) {
 							$this->add_render_attribute( 'control-volume', [
@@ -1648,7 +1649,7 @@ class HTML5_Video extends Extras_Widget {
 									'ee-player__controls__volume',
 								],
 							] );
-						?><div <?php echo $this->get_render_attribute_string( 'control-volume' ); ?>>
+						?><div <?php $this->print_render_attribute_string( 'control-volume' ); ?>>
 
 							<?php if ( $settings['video_show_volume_icon'] ) {
 								$this->add_render_attribute( 'control-volume-icon', [
@@ -1659,7 +1660,7 @@ class HTML5_Video extends Extras_Widget {
 										'nicon-volume',
 									],
 								] );
-							?><div <?php echo $this->get_render_attribute_string( 'control-volume-icon' ); ?>></div><?php } ?>
+							?><div <?php $this->print_render_attribute_string( 'control-volume-icon' ); ?>></div><?php } ?>
 
 							<?php if ( $settings['video_show_volume_bar'] ) {
 								$this->add_render_attribute( [
@@ -1684,9 +1685,9 @@ class HTML5_Video extends Extras_Widget {
 										],
 									],
 								] );
-							?><div <?php echo $this->get_render_attribute_string( 'control-volume-bar' ); ?>>
-								<div <?php echo $this->get_render_attribute_string( 'control-volume-bar-amount' ); ?>></div>
-								<div <?php echo $this->get_render_attribute_string( 'control-volume-bar-track' ); ?>></div>
+							?><div <?php $this->print_render_attribute_string( 'control-volume-bar' ); ?>>
+								<div <?php $this->print_render_attribute_string( 'control-volume-bar-amount' ); ?>></div>
+								<div <?php $this->print_render_attribute_string( 'control-volume-bar-track' ); ?>></div>
 							</div><?php } ?>
 
 						</div><?php } ?>
@@ -1701,7 +1702,7 @@ class HTML5_Video extends Extras_Widget {
 									'nicon-expand'
 								],
 							] );
-						?><div <?php echo $this->get_render_attribute_string( 'control-fullscreen' ); ?>></div><?php } ?>
+						?><div <?php $this->print_render_attribute_string( 'control-fullscreen' ); ?>></div><?php } ?>
 
 					</div><!-- .ee-player__controls__bar -->
 				</div><!-- .ee-player__controls__bar-wrapper -->
@@ -1737,7 +1738,7 @@ class HTML5_Video extends Extras_Widget {
 				],
 			] );
 
-			?><ul <?php echo $this->get_render_attribute_string( 'overlay' ); ?>><?php
+			?><ul <?php $this->print_render_attribute_string( 'overlay' ); ?>><?php
 
 				if ( 'yes' !== $settings['video_restart_on_pause'] && 'show' === $settings['video_show_rewind'] ) {
 					$this->add_render_attribute( 'overlay-rewind', [
@@ -1748,9 +1749,9 @@ class HTML5_Video extends Extras_Widget {
 							'nicon-rewind',
 						],
 					] )
-					?><li <?php echo $this->get_render_attribute_string( 'overlay-rewind' ); ?>></li><?php }
+					?><li <?php $this->print_render_attribute_string( 'overlay-rewind' ); ?>></li><?php }
 
-				?><li <?php echo $this->get_render_attribute_string( 'overlay-play' ); ?>></li>
+				?><li <?php $this->print_render_attribute_string( 'overlay-play' ); ?>></li>
 			</ul>
 		<?php }
 	}
@@ -1786,9 +1787,9 @@ class HTML5_Video extends Extras_Widget {
 			} );
 
 			#><div {{{ view.getRenderAttributeString( 'video-wrapper' ) }}}>
-				<?php echo $this->_video_template(); ?>
-				<?php echo $this->_cover_template(); ?>
-				<?php echo $this->_controls_template(); ?>
+				<?php $this->_video_template(); ?>
+				<?php $this->_cover_template(); ?>
+				<?php $this->_controls_template(); ?>
 			</div><!-- .ee-player -->
 		<# } #><?php
 	}

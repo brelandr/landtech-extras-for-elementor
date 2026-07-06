@@ -1,5 +1,6 @@
 <?php
-namespace ElementorExtras\Modules\Search\Conditions;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Search\Conditions;
 
 use Elementor\Controls_Manager;
 use ElementorPro\Modules\ThemeBuilder\Conditions\Condition_Base;
@@ -23,11 +24,11 @@ class Search_Id extends Condition_Base {
 	}
 
 	public function get_label() {
-		return __( 'Extras Search Results', 'elementor-extras' );
+		return __( 'Extras Search Results', 'landtech-extras-for-elementor' );
 	}
 
 	public function check( $args = null ) {
-		return is_search() && get_query_var('ee_search_id') === $args['id'];
+		return is_search() && get_query_var('ltxe_search_id') === $args['id'];
 	}
 
 	protected function _register_controls() {
@@ -36,7 +37,7 @@ class Search_Id extends Condition_Base {
 			[
 				'section' 		=> 'settings',
 				'type' 			=> Controls_Manager::TEXT,
-				'placeholder'	=> __( 'Search ID', 'elementor-extras' )
+				'placeholder'	=> __( 'Search ID', 'landtech-extras-for-elementor' )
 			]
 		);
 	}

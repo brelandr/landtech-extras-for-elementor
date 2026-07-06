@@ -1,9 +1,10 @@
 <?php
-namespace ElementorExtras\Modules\CustomFields\Fields;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\CustomFields\Fields;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Module_Base;
-use ElementorExtras\Modules\CustomFields\Fields\Field_Base;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Module_Base;
+use LandTechExtras\Modules\CustomFields\Fields\Field_Base;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -35,7 +36,7 @@ class Pods extends Field_Base {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Pods', 'elementor-extras' );
+		return __( 'Pods', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -126,11 +127,13 @@ class Pods extends Field_Base {
 		$field = $field_data['field'];
 		$value = empty( $field_data['value'] ) ? '' : $field_data['value'];
 
-		if ( $field && ! empty( $field['type'] ) && in_array( $field['type'], [ 'date', 'datetime' ] ) ) {
+		if ( $field && ! empty( $field['type'] ) && in_array( $field['type'], [ 'date', 'datetime' ], true ) ) {
 
 			$timestamp = strtotime( $value );
 
-			$value = date( 'Y-m-d', $timestamp );
+			if ( false !== $timestamp ) {
+				$value = wp_date( 'Y-m-d', $timestamp );
+			}
 		}
 
 		return wp_kses_post( $value );

@@ -1,8 +1,9 @@
 <?php
-namespace ElementorExtras\Modules\DisplayConditions\Conditions;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\DisplayConditions\Conditions;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Condition;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Condition;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -49,7 +50,7 @@ class Time extends Condition {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Time of Day', 'elementor-extras' );
+		return __( 'Time of Day', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -62,7 +63,7 @@ class Time extends Condition {
 	 */
 	public function get_value_control() {
 		return [
-			'label'		=> __( 'Before', 'elementor-extras' ),
+			'label'		=> __( 'Before', 'landtech-extras-for-elementor' ),
 			'type' 		=> \Elementor\Controls_Manager::DATE_TIME,
 			'picker_options' => [
 				'dateFormat' 	=> "H:i",
@@ -87,8 +88,9 @@ class Time extends Condition {
 	 */
 	public function check( $operator, $value, $name = null ) {
 		// Split control valur into two dates
-		$time 	= date( 'H:i', strtotime( preg_replace('/\s+/', '', $value ) ) );
-		$now 	= date( 'H:i', strtotime("now") + ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS ) );
+		$parsed = strtotime( preg_replace( '/\s+/', '', $value ) );
+		$time   = false !== $parsed ? wp_date( 'H:i', $parsed ) : '';
+		$now    = wp_date( 'H:i', current_time( 'timestamp' ) );
 
 		// Default returned bool to false
 		$show 	= false;

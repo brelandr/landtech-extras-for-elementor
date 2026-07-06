@@ -1,8 +1,9 @@
 <?php
-namespace ElementorExtras\Modules\Image;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Image;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Module_Base;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Module_Base;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -106,14 +107,14 @@ class Module extends Module_Base {
 	}
 
 	public static function render_image_title( $title ) {
-		?><div class="ee-caption__title"><?php echo $title; ?></div><?php
+		?><div class="ee-caption__title"><?php echo wp_kses_post( $title ); ?></div><?php
 	}
 
 	public static function render_image_caption( $caption ) {
-		?><div class="ee-caption__caption"><?php echo $caption; ?></div><?php
+		?><div class="ee-caption__caption"><?php echo wp_kses_post( $caption ); ?></div><?php
 	}
 
 	public static function render_image_description( $description ) {
-		?><div class="ee-caption__description"><?php echo $description; ?></div><?php
+		?><div class="ee-caption__description"><?php echo wp_kses_post( $description ); ?></div><?php
 	}
 }

@@ -1,8 +1,9 @@
 <?php
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
 
-namespace ElementorExtras\Extensions;
+namespace LandTechExtras\Extensions;
 
-use ElementorExtras\Base\Extension_Base;
+use LandTechExtras\Base\Extension_Base;
 use Elementor\Controls_Manager;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -23,9 +24,9 @@ class Extension_Parallax_Background extends Extension_Base {
 	 **/
 	public function get_script_depends() {
 		return [
-			'parallax-background',
-			'jquery-resize-ee',
-			'jquery-visible',
+			'landtech-extras-parallax-background',
+			'landtech-extras-jquery-resize',
+			'landtech-extras-jquery-visible',
 		];
 	}
 
@@ -35,7 +36,7 @@ class Extension_Parallax_Background extends Extension_Base {
 	 * @since 1.8.0
 	 **/
 	public static function get_description() {
-		return __( 'Adds parallax options for the background image of a section. Can be found under Style &rarr; Background &rarr; Extras if a background image is selected.', 'elementor-extras' );
+		return __( 'Adds parallax options for the background image of a section. Can be found under Style &rarr; Background &rarr; Extras if a background image is selected.', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -50,7 +51,7 @@ class Extension_Parallax_Background extends Extension_Base {
 	 * @return bool
 	 */
 	public static function is_default_disabled() {
-		if ( is_elementor_pro_active() ) {
+		if ( landtech_extras_is_elementor_pro_active() ) {
 			return true;
 		}
 		return false;
@@ -68,7 +69,7 @@ class Extension_Parallax_Background extends Extension_Base {
 		$element_type = $element->get_type();
 		$elementor_pro_condition = [];
 
-		if ( is_elementor_pro_active() ) {
+		if ( landtech_extras_is_elementor_pro_active() ) {
 			$elementor_pro_condition = [
 				'background_motion_fx_motion_fx_scrolling' => '', // Elementor Pro Scrolling Effect should be off
 			];
@@ -78,7 +79,7 @@ class Extension_Parallax_Background extends Extension_Base {
 			'parallax_heading',
 			[
 				'type'		=> Controls_Manager::HEADING,
-				'label' 	=> __( 'Extras', 'elementor-extras' ),
+				'label' 	=> __( 'Extras', 'landtech-extras-for-elementor' ),
 				'separator' => 'before',
 				'condition'	=> array_merge(
 					[
@@ -92,11 +93,11 @@ class Extension_Parallax_Background extends Extension_Base {
 		$element->add_control(
 			'parallax_background_enable',
 			[
-				'label'					=> _x( 'Parallax Background', 'Parallax Background', 'elementor-extras' ),
+				'label'					=> _x( 'Parallax Background', 'Parallax Background', 'landtech-extras-for-elementor' ),
 				'type' 					=> Controls_Manager::SWITCHER,
 				'default' 				=> '',
-				'label_on' 				=> __( 'Yes', 'elementor-extras' ),
-				'label_off' 			=> __( 'No', 'elementor-extras' ),
+				'label_on' 				=> __( 'Yes', 'landtech-extras-for-elementor' ),
+				'label_off' 			=> __( 'No', 'landtech-extras-for-elementor' ),
 				'return_value' 			=> 'yes',
 				'frontend_available' 	=> true,
 				'condition'				=> array_merge(
@@ -111,7 +112,7 @@ class Extension_Parallax_Background extends Extension_Base {
 		$element->add_responsive_control(
 			'parallax_background_speed',
 			[
-				'label' 		=> _x( 'Parallax Speed', 'Parallax Control', 'elementor-extras' ),
+				'label' 		=> _x( 'Parallax Speed', 'Parallax Control', 'landtech-extras-for-elementor' ),
 				'type' 			=> Controls_Manager::SLIDER,
 				'default'		=> [
 					'size'			=> 0.5,
@@ -136,14 +137,14 @@ class Extension_Parallax_Background extends Extension_Base {
 		$element->add_control(
 			'parallax_background_direction',
 			[
-				'label' 	=> _x( 'Parallax Direction', 'Parallax Control', 'elementor-extras' ),
+				'label' 	=> _x( 'Parallax Direction', 'Parallax Control', 'landtech-extras-for-elementor' ),
 				'type' 		=> Controls_Manager::SELECT,
 				'default' 	=> 'down',
 				'options' 	=> [
-					'up' 	=> __( 'Up', 'elementor-extras' ),
-					'down' 	=> __( 'Down', 'elementor-extras' ),
-					'left' 	=> __( 'Left', 'elementor-extras' ),
-					'right' => __( 'Right', 'elementor-extras' ),
+					'up' 	=> __( 'Up', 'landtech-extras-for-elementor' ),
+					'down' 	=> __( 'Down', 'landtech-extras-for-elementor' ),
+					'left' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
+					'right' => __( 'Right', 'landtech-extras-for-elementor' ),
 				],
 				'condition'				=> array_merge(
 					[

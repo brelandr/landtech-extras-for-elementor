@@ -1,8 +1,9 @@
 <?php
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
 
-namespace ElementorExtras\Extensions;
+namespace LandTechExtras\Extensions;
 
-use ElementorExtras\Base\Extension_Base;
+use LandTechExtras\Base\Extension_Base;
 use Elementor\Controls_Manager;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -23,7 +24,7 @@ class Extension_Portfolio_Parallax extends Extension_Base {
 	 **/
 	public function get_script_depends() {
 		return [
-			'parallax-gallery',
+			'landtech-extras-parallax-gallery',
 		];
 	}
 
@@ -33,7 +34,7 @@ class Extension_Portfolio_Parallax extends Extension_Base {
 	 * @since 1.8.0
 	 **/
 	public static function get_description() {
-		return __( 'Adds options to parallax gallery items for the Elementor Pro Portfolio widget. Can be found under Content &rarr; Extras &rarr; Parallax.', 'elementor-extras' );
+		return __( 'Adds options to parallax gallery items for the Elementor Pro Portfolio widget. Can be found under Content &rarr; LandTech Extras &rarr; Parallax.', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -46,9 +47,9 @@ class Extension_Portfolio_Parallax extends Extension_Base {
 	private function add_controls( $element, $args ) {
 
 		$element->start_controls_section(
-			'section_elementor_extras',
+			'section_landtech_extras',
 			[
-				'label' => __( 'Extras', 'elementor-extras' ),
+				'label' => __( 'LandTech Extras', 'landtech-extras-for-elementor' ),
 			]
 		);
 
@@ -58,11 +59,11 @@ class Extension_Portfolio_Parallax extends Extension_Base {
 			$element->add_control(
 				'parallax_enable',
 				[
-					'label'			=> __( 'Parallax', 'elementor-extras' ),
+					'label'			=> __( 'Parallax', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'yes',
 					'frontend_available' => true,
 				]
@@ -71,13 +72,13 @@ class Extension_Portfolio_Parallax extends Extension_Base {
 			$element->add_control(
 				'parallax_disable_on',
 				[
-					'label' 	=> __( 'Disable for', 'elementor-extras' ),
+					'label' 	=> __( 'Disable for', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'mobile',
 					'options' 			=> [
-						'none' 		=> __( 'None', 'elementor-extras' ),
-						'mobile' 	=> __( 'Mobile only', 'elementor-extras' ),
-						'tablet' 	=> __( 'Mobile and tablet', 'elementor-extras' ),
+						'none' 		=> __( 'None', 'landtech-extras-for-elementor' ),
+						'mobile' 	=> __( 'Mobile only', 'landtech-extras-for-elementor' ),
+						'tablet' 	=> __( 'Mobile and tablet', 'landtech-extras-for-elementor' ),
 					],
 					'condition' => [
 						'parallax_enable' => 'yes',
@@ -89,7 +90,7 @@ class Extension_Portfolio_Parallax extends Extension_Base {
 			$element->add_responsive_control(
 				'parallax_speed',
 				[
-					'label' 	=> __( 'Parallax speed', 'elementor-extras' ),
+					'label' 	=> __( 'Parallax speed', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default'	=> [
 						'size'	=> 0.5

@@ -1,5 +1,6 @@
 <?php
-namespace ElementorExtras\Compatibility\WPML;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Compatibility\WPML;
 
 use WPML_Elementor_Module_With_Items;
 
@@ -46,11 +47,11 @@ class Toggle_Element extends WPML_Elementor_Module_With_Items {
 	 */
 	protected function get_title( $field ) {
 		if ( 'text' === $field ) {
-			return esc_html__( 'Toggle Element: Label', 'elementor-extras' );
+			return esc_html__( 'Toggle Element: Label', 'landtech-extras-for-elementor' );
 		}
 
 		if ( 'content' === $field ) {
-			return esc_html__( 'Toggle Element: Content', 'elementor-extras' );
+			return esc_html__( 'Toggle Element: Content', 'landtech-extras-for-elementor' );
 		}
 
 		return '';

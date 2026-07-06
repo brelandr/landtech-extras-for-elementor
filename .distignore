@@ -1,0 +1,62 @@
+# .distignore — files/folders excluded from WordPress.org SVN deployment.
+# Used by tools like wp-dist-archive and the official WP.org deploy GitHub Actions.
+# Mirrors the --exclude flags in create-plugin-zip.sh.
+
+# Version control
+.git
+.gitignore
+.gitattributes
+.github
+
+# Dev tools / linters
+vendor/
+node_modules/
+phpcs.xml
+phpcs.xml.dist
+phpcs.security.xml
+composer.json
+composer.lock
+package.json
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Build scripts and CI helpers
+scripts/
+create-plugin-zip.sh
+*.sh
+
+# Editor / IDE config
+.cursorrules
+.cursor/
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Source (uncompiled) assets — ship only compiled output
+assets/src/
+
+# Test suites
+tests/
+phpunit.xml
+phpunit.xml.dist
+
+# Markdown docs (not readme.txt)
+*.md
+admin/*.md
+includes/*.md
+modules/*.md
+
+# Secret / credential files
+.lmfwc-credentials.local
+lmfwc-credentials.local.example
+
+# WP Plugin Check dev tool (local only — never submit to WP.org)
+.plugin-check/
+
+# Temp / scratch
+*.zip
+.deploy-trigger
+.deploy-test
+.release

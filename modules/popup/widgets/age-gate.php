@@ -1,12 +1,13 @@
 <?php
-namespace ElementorExtras\Modules\Popup\Widgets;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Popup\Widgets;
 
-// Extras for Elementor Classes
-use ElementorExtras\Utils;
-use ElementorExtras\Group_Control_Transition;
-use ElementorExtras\Base\Extras_Widget;
-use ElementorExtras\Modules\Popup\Skins;
-use ElementorExtras\Modules\Popup\Module as Module;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Utils;
+use LandTechExtras\Group_Control_Transition;
+use LandTechExtras\Base\Extras_Widget;
+use LandTechExtras\Modules\Popup\Skins;
+use LandTechExtras\Modules\Popup\Module as Module;
 
 // Elementor Classes
 use Elementor\Icons_Manager;
@@ -56,7 +57,7 @@ class Age_Gate extends Extras_Widget {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Age Gate', 'elementor-extras' );
+		return __( 'Age Gate', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -81,7 +82,7 @@ class Age_Gate extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
-			'magnific-popup',
+			'landtech-extras-glightbox',
 		];
 	}
 
@@ -95,7 +96,7 @@ class Age_Gate extends Extras_Widget {
 	 */
 	public function get_style_depends() {
 		return [
-			'magnific-popup',
+			'landtech-extras-glightbox',
 		];
 	}
 
@@ -130,7 +131,7 @@ class Age_Gate extends Extras_Widget {
 		$this->start_controls_section(
 			'section_settings',
 			[
-				'label' => __( 'Settings', 'elementor-extras' ),
+				'label' => __( 'Settings', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -138,11 +139,11 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'popup_open',
 				[
-					'label' 		=> __( 'Show Popup in Editor', 'elementor-extras' ),
+					'label' 		=> __( 'Show Popup in Editor', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -151,12 +152,12 @@ class Age_Gate extends Extras_Widget {
 				$this->add_control(
 					'popup_open_admin',
 					[
-						'label' 		=> __( 'Always Show for Admins', 'elementor-extras' ),
-						'description' 	=> __( 'Have the popup open every time you visit the page if you\'re an Admin. This will help you test the functionality on the frontend without actually being granted access and losing the popup once you enter a correct age. Turn it off when you\'re done customising this widget.', 'elementor-extras' ),	
+						'label' 		=> __( 'Always Show for Admins', 'landtech-extras-for-elementor' ),
+						'description' 	=> __( 'Have the popup open every time you visit the page if you\'re an Admin. This will help you test the functionality on the frontend without actually being granted access and losing the popup once you enter a correct age. Turn it off when you\'re done customising this widget.', 'landtech-extras-for-elementor' ),	
 						'type' 			=> Controls_Manager::SWITCHER,
 						'default' 		=> 'yes',
-						'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-						'label_off' 	=> __( 'No', 'elementor-extras' ),
+						'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+						'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 						'frontend_available' => true,
 					]
 				);
@@ -165,7 +166,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'popup_animation',
 				[
-					'label' 	=> __( 'Animation', 'elementor-extras' ),
+					'label' 	=> __( 'Animation', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default'	=> 'zoom-in',
 					'options' 	=> Module::get_animation_options(),
@@ -176,7 +177,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'age',
 				[
-					'label'			=> __( 'Required Age', 'elementor-extras' ),
+					'label'			=> __( 'Required Age', 'landtech-extras-for-elementor' ),
 					'type'			=> Controls_Manager::NUMBER,
 					'separator' 	=> 'before',
 					'default'		=> 18,
@@ -191,19 +192,19 @@ class Age_Gate extends Extras_Widget {
 		$this->start_controls_section(
 			'section_form',
 			[
-				'label' => __( 'Form', 'elementor-extras' ),
+				'label' => __( 'Form', 'landtech-extras-for-elementor' ),
 			]
 		);
 
 			$this->add_control(
 				'hide_form_on_denied',
 				[
-					'label' 		=> __( 'Hide If Denied', 'elementor-extras' ),
-					'description'	=> __( 'If access is denied, remove entire form and header and just show the denied message.', 'elementor-extras' ),
+					'label' 		=> __( 'Hide If Denied', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'If access is denied, remove entire form and header and just show the denied message.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);
@@ -211,11 +212,11 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'clear_form_on_denied',
 				[
-					'label' 		=> __( 'Clear On Submit', 'elementor-extras' ),
+					'label' 		=> __( 'Clear On Submit', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 					'condition'		=> [
 						'hide_form_on_denied!' => 'yes'
@@ -226,20 +227,24 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'denied',
 				[
-					'label' 		=> __( 'Access Denied', 'elementor-extras' ),
-					'description'	=> __( 'Override the default Access Denied message.', 'elementor-extras' ),
-					'title'			=> __( 'Use %s to display the required age.', 'elementor-extras' ),
+					'label' 		=> __( 'Access Denied', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Override the default Access Denied message.', 'landtech-extras-for-elementor' ),
+					'title'			=>
+					/* translators: %s: Placeholder for the minimum age in user-facing messages. */
+					__( 'Use %s to display the required age.', 'landtech-extras-for-elementor' ),
 					'dynamic'		=> [ 'active' => true ],
 					'type' 			=> Controls_Manager::TEXT,
-					'default'		=> __( 'Sorry, you must be at least %s to access this website.', 'elementor-extras' ),
-					'placeholder'	=> __( 'Sorry, you must be at least %s to access this website.', 'elementor-extras' ),
+					/* translators: %s: Minimum age number placeholder in the access-denied message. */
+					'default'		=> __( 'Sorry, you must be at least %s to access this website.', 'landtech-extras-for-elementor' ),
+					/* translators: %s: Minimum age number placeholder in the access-denied message. */
+					'placeholder'	=> __( 'Sorry, you must be at least %s to access this website.', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 			$this->add_control(
 				'header_heading',
 				[
-					'label' 	=> __( 'Header', 'elementor-extras' ),
+					'label' 	=> __( 'Header', 'landtech-extras-for-elementor' ),
 					'separator' => 'before',
 					'type' 		=> Controls_Manager::HEADING,
 				]
@@ -248,28 +253,28 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'title',
 				[
-					'label' 	=> __( 'Title', 'elementor-extras' ),
+					'label' 	=> __( 'Title', 'landtech-extras-for-elementor' ),
 					'dynamic'	=> [ 'active' => true ],
 					'type' 		=> Controls_Manager::TEXT,
-					'default'	=> __( 'What\'s your age?', 'elementor-extras' ),
+					'default'	=> __( 'What\'s your age?', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 			$this->add_control(
 				'title_tag',
 				[
-					'label' 	=> __( 'Title HTML Tag', 'elementor-extras' ),
+					'label' 	=> __( 'Title HTML Tag', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'options' 	=> [
-						'h1' 	=> __( 'H1', 'elementor-extras' ),
-						'h2' 	=> __( 'H2', 'elementor-extras' ),
-						'h3' 	=> __( 'H3', 'elementor-extras' ),
-						'h4' 	=> __( 'H4', 'elementor-extras' ),
-						'h5' 	=> __( 'H5', 'elementor-extras' ),
-						'h6' 	=> __( 'H6', 'elementor-extras' ),
-						'div' 	=> __( 'div', 'elementor-extras' ),
-						'span' 	=> __( 'span', 'elementor-extras' ),
-						'p' 	=> __( 'p', 'elementor-extras' ),
+						'h1' 	=> __( 'H1', 'landtech-extras-for-elementor' ),
+						'h2' 	=> __( 'H2', 'landtech-extras-for-elementor' ),
+						'h3' 	=> __( 'H3', 'landtech-extras-for-elementor' ),
+						'h4' 	=> __( 'H4', 'landtech-extras-for-elementor' ),
+						'h5' 	=> __( 'H5', 'landtech-extras-for-elementor' ),
+						'h6' 	=> __( 'H6', 'landtech-extras-for-elementor' ),
+						'div' 	=> __( 'div', 'landtech-extras-for-elementor' ),
+						'span' 	=> __( 'span', 'landtech-extras-for-elementor' ),
+						'p' 	=> __( 'p', 'landtech-extras-for-elementor' ),
 					],
 					'default' => 'h1',
 				]
@@ -278,17 +283,17 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'description',
 				[
-					'label' 	=> __( 'Description', 'elementor-extras' ),
+					'label' 	=> __( 'Description', 'landtech-extras-for-elementor' ),
 					'dynamic'	=> [ 'active' => true ],
 					'type' 		=> Controls_Manager::TEXT,
-					'default'	=> __( 'Let\'s find out if we can let you in', 'elementor-extras' ),
+					'default'	=> __( 'Let\'s find out if we can let you in', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 			$this->add_control(
 				'input_heading',
 				[
-					'label' 	=> __( 'Input', 'elementor-extras' ),
+					'label' 	=> __( 'Input', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -297,14 +302,14 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'input_size',
 				[
-					'label' => __( 'Input Size', 'elementor-extras' ),
+					'label' => __( 'Input Size', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::SELECT,
 					'options' => [
-						'xs' => __( 'Extra Small', 'elementor-extras' ),
-						'sm' => __( 'Small', 'elementor-extras' ),
-						'md' => __( 'Medium', 'elementor-extras' ),
-						'lg' => __( 'Large', 'elementor-extras' ),
-						'xl' => __( 'Extra Large', 'elementor-extras' ),
+						'xs' => __( 'Extra Small', 'landtech-extras-for-elementor' ),
+						'sm' => __( 'Small', 'landtech-extras-for-elementor' ),
+						'md' => __( 'Medium', 'landtech-extras-for-elementor' ),
+						'lg' => __( 'Large', 'landtech-extras-for-elementor' ),
+						'xl' => __( 'Extra Large', 'landtech-extras-for-elementor' ),
 					],
 					'default' => 'sm',
 				]
@@ -313,10 +318,10 @@ class Age_Gate extends Extras_Widget {
 			$this->add_responsive_control(
 				'input_width',
 				[
-					'label' => __( 'Width', 'elementor-extras' ),
+					'label' => __( 'Width', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::SELECT,
 					'options' => [
-						'' => __( 'Default', 'elementor-extras' ),
+						'' => __( 'Default', 'landtech-extras-for-elementor' ),
 						'100' => '100%',
 						'80' => '80%',
 						'75' => '75%',
@@ -335,7 +340,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'button_heading',
 				[
-					'label' 	=> __( 'Button', 'elementor-extras' ),
+					'label' 	=> __( 'Button', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -344,16 +349,16 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'button_text',
 				[
-					'label' => __( 'Text', 'elementor-extras' ),
+					'label' => __( 'Text', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::TEXT,
-					'default' => __( 'Let me in', 'elementor-extras' ),
+					'default' => __( 'Let me in', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 			$this->add_control(
 				'button_size',
 				[
-					'label' => __( 'Size', 'elementor-extras' ),
+					'label' => __( 'Size', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::SELECT,
 					'default' => 'sm',
 					'options' => Utils::get_button_sizes(),
@@ -363,10 +368,10 @@ class Age_Gate extends Extras_Widget {
 			$this->add_responsive_control(
 				'button_width',
 				[
-					'label' => __( 'Column Width', 'elementor-extras' ),
+					'label' => __( 'Column Width', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::SELECT,
 					'options' => [
-						'' => __( 'Default', 'elementor-extras' ),
+						'' => __( 'Default', 'landtech-extras-for-elementor' ),
 						'100' => '100%',
 						'80' => '80%',
 						'75' => '75%',
@@ -385,23 +390,23 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'button_align',
 				[
-					'label' => __( 'Alignment', 'elementor-extras' ),
+					'label' => __( 'Alignment', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::CHOOSE,
 					'options' => [
 						'start' => [
-							'title' => __( 'Left', 'elementor-extras' ),
+							'title' => __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' => 'fa fa-align-left',
 						],
 						'center' => [
-							'title' => __( 'Center', 'elementor-extras' ),
+							'title' => __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' => 'fa fa-align-center',
 						],
 						'end' => [
-							'title' => __( 'Right', 'elementor-extras' ),
+							'title' => __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' => 'fa fa-align-right',
 						],
 						'stretch' => [
-							'title' => __( 'Justified', 'elementor-extras' ),
+							'title' => __( 'Justified', 'landtech-extras-for-elementor' ),
 							'icon' => 'fa fa-align-justify',
 						],
 					],
@@ -413,7 +418,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'selected_button_icon',
 				[
-					'label' => __( 'Icon', 'elementor-extras' ),
+					'label' => __( 'Icon', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::ICONS,
 					'fa4compatibility' => 'button_icon',
 				]
@@ -422,12 +427,12 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'button_icon_align',
 				[
-					'label' => __( 'Icon Position', 'elementor-extras' ),
+					'label' => __( 'Icon Position', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::SELECT,
 					'default' => 'left',
 					'options' => [
-						'left' => __( 'Before', 'elementor-extras' ),
-						'right' => __( 'After', 'elementor-extras' ),
+						'left' => __( 'Before', 'landtech-extras-for-elementor' ),
+						'right' => __( 'After', 'landtech-extras-for-elementor' ),
 					],
 					'condition' => [
 						'selected_button_icon[value]!' => '',
@@ -438,7 +443,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'button_icon_indent',
 				[
-					'label' => __( 'Icon Spacing', 'elementor-extras' ),
+					'label' => __( 'Icon Spacing', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::SLIDER,
 					'range' => [
 						'px' => [
@@ -458,12 +463,12 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'button_css_id',
 				[
-					'label' => __( 'Button ID', 'elementor-extras' ),
+					'label' => __( 'Button ID', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::TEXT,
 					'default' => '',
-					'title' => __( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'elementor-extras' ),
+					'title' => __( 'Add your custom id WITHOUT the Pound key. e.g: my-id', 'landtech-extras-for-elementor' ),
 					'label_block' => false,
-					'description' => __( 'Please make sure the ID is unique and not used elsewhere on the page this form is displayed. This field allows <code>A-z 0-9</code> & underscore chars without spaces.', 'elementor-extras' ),
+					'description' => __( 'Please make sure the ID is unique and not used elsewhere on the page this form is displayed. This field allows <code>A-z 0-9</code> & underscore chars without spaces.', 'landtech-extras-for-elementor' ),
 				]
 			);
 
@@ -472,7 +477,7 @@ class Age_Gate extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_popup',
 			[
-				'label' => __( 'Popup', 'elementor-extras' ),
+				'label' => __( 'Popup', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -480,20 +485,20 @@ class Age_Gate extends Extras_Widget {
 			$this->add_responsive_control(
 				'popup_valign',
 				[
-					'label' 		=> __( 'Vertical Placement', 'elementor-extras' ),
+					'label' 		=> __( 'Vertical Placement', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> 'middle',
 					'options' 		=> [
 						'top'    		=> [
-							'title' 	=> __( 'Top', 'elementor-extras' ),
+							'title' 	=> __( 'Top', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-top',
 						],
 						'middle' 		=> [
-							'title' 	=> __( 'Middle', 'elementor-extras' ),
+							'title' 	=> __( 'Middle', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-middle',
 						],
 						'bottom' 		=> [
-							'title' 	=> __( 'Bottom', 'elementor-extras' ),
+							'title' 	=> __( 'Bottom', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-bottom',
 						],
 					],
@@ -504,7 +509,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_responsive_control(
 				'popup_width',
 				[
-					'label' 		=> __( 'Max. Width', 'elementor-extras' ),
+					'label' 		=> __( 'Max. Width', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'size_units' 	=> [ 'px', '%' ],
 					'range' 		=> [
@@ -526,7 +531,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'popup_border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -544,7 +549,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'popup_background',
 				[
-					'label' 	=> __( 'Background Color', 'elementor-extras' ),
+					'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'default'	=> '',
 					'selectors' => [
@@ -556,7 +561,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'popup_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -569,7 +574,7 @@ class Age_Gate extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'popup_border',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '.ee-mfp-popup-{{ID}} .ee-age-gate__content,
 									.ee-mfp-popup-{{ID}} .mfp-figure',
 				]
@@ -588,7 +593,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'popup_overlay_heading',
 				[
-					'label' 	=> __( 'Overlay', 'elementor-extras' ),
+					'label' 	=> __( 'Overlay', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -597,7 +602,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'popup_overlay_background',
 				[
-					'label' 	=> __( 'Background Color', 'elementor-extras' ),
+					'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'default'	=> '',
 					'selectors' => [
@@ -609,7 +614,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_responsive_control(
 				'popup_overlay_opacity',
 				[
-					'label' 	=> __( 'Opacity (%)', 'elementor-extras' ),
+					'label' 	=> __( 'Opacity (%)', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 0.8,
@@ -638,19 +643,19 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'popup_overlay_blend',
 				[
-					'label' 		=> __( 'Blend mode', 'elementor-extras' ),
+					'label' 		=> __( 'Blend mode', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT,
 					'default' 		=> 'normal',
 					'options' => [
-						'normal'			=> __( 'Normal', 'elementor-extras' ),
-						'multiply'			=> __( 'Multiply', 'elementor-extras' ),
-						'screen'			=> __( 'Screen', 'elementor-extras' ),
-						'overlay'			=> __( 'Overlay', 'elementor-extras' ),
-						'darken'			=> __( 'Darken', 'elementor-extras' ),
-						'lighten'			=> __( 'Lighten', 'elementor-extras' ),
-						'color'				=> __( 'Color', 'elementor-extras' ),
-						'color-dodge'		=> __( 'Color Dodge', 'elementor-extras' ),
-						'hue'				=> __( 'Hue', 'elementor-extras' ),
+						'normal'			=> __( 'Normal', 'landtech-extras-for-elementor' ),
+						'multiply'			=> __( 'Multiply', 'landtech-extras-for-elementor' ),
+						'screen'			=> __( 'Screen', 'landtech-extras-for-elementor' ),
+						'overlay'			=> __( 'Overlay', 'landtech-extras-for-elementor' ),
+						'darken'			=> __( 'Darken', 'landtech-extras-for-elementor' ),
+						'lighten'			=> __( 'Lighten', 'landtech-extras-for-elementor' ),
+						'color'				=> __( 'Color', 'landtech-extras-for-elementor' ),
+						'color-dodge'		=> __( 'Color Dodge', 'landtech-extras-for-elementor' ),
+						'hue'				=> __( 'Hue', 'landtech-extras-for-elementor' ),
 					],
 					'selectors' 	=> [
 						'.mfp-bg.ee-mfp-popup-{{ID}}' => 'mix-blend-mode: {{VALUE}};',
@@ -663,7 +668,7 @@ class Age_Gate extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_header',
 			[
-				'label' => __( 'Header', 'elementor-extras' ),
+				'label' => __( 'Header', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -671,7 +676,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'header_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -683,7 +688,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'header_background',
 				[
-					'label' 	=> __( 'Background Color', 'elementor-extras' ),
+					'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'default'	=> '',
 					'selectors' => [
@@ -696,7 +701,7 @@ class Age_Gate extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'header_border',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '.ee-mfp-popup-{{ID}} .ee-age-gate__header',
 				]
 			);
@@ -704,7 +709,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'title_style_heading',
 				[
-					'label' 	=> __( 'Title', 'elementor-extras' ),
+					'label' 	=> __( 'Title', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -713,20 +718,20 @@ class Age_Gate extends Extras_Widget {
 			$this->add_responsive_control(
 				'title_align',
 				[
-					'label' 		=> __( 'Text Align', 'elementor-extras' ),
+					'label' 		=> __( 'Text Align', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'left' 			=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -740,7 +745,7 @@ class Age_Gate extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'title_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
 					],
@@ -751,7 +756,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'title_color',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'default'	=> '',
 					'selectors' => [
@@ -763,7 +768,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_responsive_control(
 				'title_distance',
 				[
-					'label' 		=> __( 'Distance', 'elementor-extras' ),
+					'label' 		=> __( 'Distance', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -780,7 +785,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'description_heading',
 				[
-					'label' 	=> __( 'Description', 'elementor-extras' ),
+					'label' 	=> __( 'Description', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -789,20 +794,20 @@ class Age_Gate extends Extras_Widget {
 			$this->add_responsive_control(
 				'description_align',
 				[
-					'label' 		=> __( 'Text Align', 'elementor-extras' ),
+					'label' 		=> __( 'Text Align', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'left' 			=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -816,7 +821,7 @@ class Age_Gate extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'description_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -827,7 +832,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'description_color',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'default'	=> '',
 					'selectors' => [
@@ -839,7 +844,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_responsive_control(
 				'description_distance',
 				[
-					'label' 		=> __( 'Distance', 'elementor-extras' ),
+					'label' 		=> __( 'Distance', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -858,7 +863,7 @@ class Age_Gate extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_form',
 			[
-				'label' => __( 'Form', 'elementor-extras' ),
+				'label' => __( 'Form', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -866,7 +871,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'content_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -879,7 +884,7 @@ class Age_Gate extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'content_border',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '.ee-mfp-popup-{{ID}} .ee-age-gate__content,
 									.ee-mfp-popup-{{ID}} .mfp-figure',
 				]
@@ -898,7 +903,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'column_gap',
 				[
-					'label' => __( 'Columns Gap', 'elementor-extras' ),
+					'label' => __( 'Columns Gap', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::SLIDER,
 					'default' => [
 						'size' => 10,
@@ -919,7 +924,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'row_gap',
 				[
-					'label' => __( 'Rows Gap', 'elementor-extras' ),
+					'label' => __( 'Rows Gap', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::SLIDER,
 					'default' => [
 						'size' => 10,
@@ -941,7 +946,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'form_background',
 				[
-					'label' 	=> __( 'Background Color', 'elementor-extras' ),
+					'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'default'	=> '',
 					'selectors' => [
@@ -953,7 +958,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'input_style_heading',
 				[
-					'label' 	=> __( 'Input', 'elementor-extras' ),
+					'label' 	=> __( 'Input', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -962,7 +967,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'input_text_color',
 				[
-					'label' => __( 'Text Color', 'elementor-extras' ),
+					'label' => __( 'Text Color', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::COLOR,
 					'selectors' => [
 						'.ee-mfp-popup-{{ID}} .elementor-field' => 'color: {{VALUE}};',
@@ -973,7 +978,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'input_background_color',
 				[
-					'label' => __( 'Background Color', 'elementor-extras' ),
+					'label' => __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::COLOR,
 					'default' => '#ffffff',
 					'selectors' => [
@@ -985,7 +990,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'input_border_width',
 				[
-					'label' => __( 'Border Width', 'elementor-extras' ),
+					'label' => __( 'Border Width', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::DIMENSIONS,
 					'placeholder' => '1',
 					'size_units' => [ 'px' ],
@@ -998,7 +1003,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'input_border_radius',
 				[
-					'label' => __( 'Border Radius', 'elementor-extras' ),
+					'label' => __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::DIMENSIONS,
 					'size_units' => [ 'px', '%' ],
 					'selectors' => [
@@ -1010,7 +1015,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'input_border_color',
 				[
-					'label' => __( 'Border Color', 'elementor-extras' ),
+					'label' => __( 'Border Color', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::COLOR,
 					'selectors' => [
 						'.ee-mfp-popup-{{ID}} .elementor-field' => 'border-color: {{VALUE}};',
@@ -1032,7 +1037,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'button_style_heading',
 				[
-					'label' 	=> __( 'Button', 'elementor-extras' ),
+					'label' 	=> __( 'Button', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -1061,7 +1066,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'button_border_radius',
 				[
-					'label' => __( 'Border Radius', 'elementor-extras' ),
+					'label' => __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::DIMENSIONS,
 					'size_units' => [ 'px', '%' ],
 					'selectors' => [
@@ -1073,7 +1078,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'button_text_padding',
 				[
-					'label' => __( 'Text Padding', 'elementor-extras' ),
+					'label' => __( 'Text Padding', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::DIMENSIONS,
 					'size_units' => [ 'px', 'em', '%' ],
 					'selectors' => [
@@ -1087,14 +1092,14 @@ class Age_Gate extends Extras_Widget {
 			$this->start_controls_tab(
 				'tab_button_normal',
 				[
-					'label' => __( 'Normal', 'elementor-extras' ),
+					'label' => __( 'Normal', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 			$this->add_control(
 				'button_background_color',
 				[
-					'label' => __( 'Background Color', 'elementor-extras' ),
+					'label' => __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::COLOR,
 					'global' => [
 						'default' => Global_Colors::COLOR_PRIMARY,
@@ -1108,7 +1113,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'button_text_color',
 				[
-					'label' => __( 'Text Color', 'elementor-extras' ),
+					'label' => __( 'Text Color', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::COLOR,
 					'default' => '',
 					'selectors' => [
@@ -1122,14 +1127,14 @@ class Age_Gate extends Extras_Widget {
 			$this->start_controls_tab(
 				'tab_button_hover',
 				[
-					'label' => __( 'Hover', 'elementor-extras' ),
+					'label' => __( 'Hover', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 			$this->add_control(
 				'button_background_hover_color',
 				[
-					'label' => __( 'Background Color', 'elementor-extras' ),
+					'label' => __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::COLOR,
 					'selectors' => [
 						'.ee-mfp-popup-{{ID}} .elementor-button:hover' => 'background-color: {{VALUE}};',
@@ -1140,7 +1145,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'button_hover_color',
 				[
-					'label' => __( 'Text Color', 'elementor-extras' ),
+					'label' => __( 'Text Color', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::COLOR,
 					'selectors' => [
 						'.ee-mfp-popup-{{ID}} .elementor-button:hover' => 'color: {{VALUE}};',
@@ -1151,7 +1156,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'button_hover_border_color',
 				[
-					'label' => __( 'Border Color', 'elementor-extras' ),
+					'label' => __( 'Border Color', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::COLOR,
 					'selectors' => [
 						'.ee-mfp-popup-{{ID}} .elementor-button:hover' => 'border-color: {{VALUE}};',
@@ -1165,7 +1170,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'button_hover_animation',
 				[
-					'label' => __( 'Animation', 'elementor-extras' ),
+					'label' => __( 'Animation', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::HOVER_ANIMATION,
 				]
 			);
@@ -1177,7 +1182,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'denied_style_heading',
 				[
-					'label' 	=> __( 'Denied Message', 'elementor-extras' ),
+					'label' 	=> __( 'Denied Message', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -1206,7 +1211,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'denied_border_radius',
 				[
-					'label' => __( 'Border Radius', 'elementor-extras' ),
+					'label' => __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::DIMENSIONS,
 					'size_units' => [ 'px', '%' ],
 					'selectors' => [
@@ -1218,7 +1223,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'denied_text_padding',
 				[
-					'label' => __( 'Text Padding', 'elementor-extras' ),
+					'label' => __( 'Text Padding', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::DIMENSIONS,
 					'size_units' => [ 'px', 'em', '%' ],
 					'selectors' => [
@@ -1230,7 +1235,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'denied_background_color',
 				[
-					'label' => __( 'Background Color', 'elementor-extras' ),
+					'label' => __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::COLOR,
 					'selectors' => [
 						'.ee-mfp-popup-{{ID}} .ee-notification--error' => 'background-color: {{VALUE}};',
@@ -1241,7 +1246,7 @@ class Age_Gate extends Extras_Widget {
 			$this->add_control(
 				'denied_text_color',
 				[
-					'label' => __( 'Text Color', 'elementor-extras' ),
+					'label' => __( 'Text Color', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::COLOR,
 					'default' => '',
 					'selectors' => [
@@ -1290,7 +1295,7 @@ class Age_Gate extends Extras_Widget {
 					'ee-age-gate__content',
 					'ee-age-gate-' . $this->get_id(),
 					'zoom-anim-dialog',
-					'mfp-hide',
+					'mfp-hide glightbox-hide',
 				],
 			],
 		] );
@@ -1299,15 +1304,15 @@ class Age_Gate extends Extras_Widget {
 			$this->add_render_attribute( 'content', 'class', 'mfp-with-anim' );
 		}
 
-		?><div <?php echo $this->get_render_attribute_string( 'wrapper' ) ; ?>>
+		?><div <?php $this->print_render_attribute_string( 'wrapper' ) ; ?>>
 
-			<?php echo $this->render_placeholder( [
-				'body' => __( 'Make sure you place this widget in an Elementor template used on all pages such as the header or footer.', 'elementor-extras' ),
+			<?php $this->render_placeholder( [
+				'body' => __( 'Make sure you place this widget in an Elementor template used on all pages such as the header or footer.', 'landtech-extras-for-elementor' ),
 			] ); ?>
 
-			<a <?php echo $this->get_render_attribute_string( 'trigger' ) ; ?>></a>
+			<a <?php $this->print_render_attribute_string( 'trigger' ) ; ?>></a>
 
-			<div <?php echo $this->get_render_attribute_string( 'content' ) ; ?>>
+			<div <?php $this->print_render_attribute_string( 'content' ) ; ?>>
 				<?php $this->render_header(); ?>
 				<?php $this->render_body(); ?>
 			</div>
@@ -1332,7 +1337,7 @@ class Age_Gate extends Extras_Widget {
 			'ee-popup__header',
 		] );
 
-		?><div <?php echo $this->get_render_attribute_string( 'header' ) ; ?>>
+		?><div <?php $this->print_render_attribute_string( 'header' ) ; ?>>
 			<?php $this->render_title(); ?>
 			<?php $this->render_description(); ?>
 		</div><?php
@@ -1357,9 +1362,9 @@ class Age_Gate extends Extras_Widget {
 			'ee-popup__header__title',
 		] );
 
-		?><<?php echo $title_tag; ?> <?php echo $this->get_render_attribute_string( 'title' ) ; ?>>
-			<?php echo $settings['title']; ?>
-		</<?php echo $title_tag; ?>><?php
+		?><<?php echo esc_html( $this->ltxe_sanitize_heading_tag( $title_tag ) ); ?> <?php $this->print_render_attribute_string( 'title' ) ; ?>>
+			<?php echo wp_kses_post( $settings['title'] ); ?>
+		</<?php echo esc_html( $this->ltxe_sanitize_heading_tag( $title_tag ) ); ?>><?php
 	}
 
 	/**
@@ -1379,8 +1384,8 @@ class Age_Gate extends Extras_Widget {
 			'ee-popup__header__description',
 		] );
 
-		?><div <?php echo $this->get_render_attribute_string( 'description' ) ; ?>>
-			<?php echo $settings['description']; ?>
+		?><div <?php $this->print_render_attribute_string( 'description' ) ; ?>>
+			<?php echo wp_kses_post( $settings['description'] ); ?>
 		</div><?php
 	}
 
@@ -1477,18 +1482,18 @@ class Age_Gate extends Extras_Widget {
 		$migrated = isset( $settings['__fa4_migrated']['selected_button_icon'] );
 		$is_new = empty( $settings['button_icon'] ) && Icons_Manager::is_migration_allowed();
 
-		?><div <?php echo $this->get_render_attribute_string( 'content-body' ) ; ?>><?php
+		?><div <?php $this->print_render_attribute_string( 'content-body' ) ; ?>><?php
 			$this->render_denied();
-			?><form <?php echo $this->get_render_attribute_string( 'form' ) ; ?>>
-				<div <?php echo $this->get_render_attribute_string( 'form-fields' ) ; ?>>
-					<div <?php echo $this->get_render_attribute_string( 'form-field-age' ) ; ?>>
-						<input <?php echo $this->get_render_attribute_string( 'field-age' ) ; ?> />
+			?><form <?php $this->print_render_attribute_string( 'form' ) ; ?>>
+				<div <?php $this->print_render_attribute_string( 'form-fields' ) ; ?>>
+					<div <?php $this->print_render_attribute_string( 'form-field-age' ) ; ?>>
+						<input <?php $this->print_render_attribute_string( 'field-age' ) ; ?> />
 					</div>
-					<div <?php echo $this->get_render_attribute_string( 'form-field-button' ) ; ?>>
-						<button <?php echo $this->get_render_attribute_string( 'field-submit' ) ; ?>>
+					<div <?php $this->print_render_attribute_string( 'form-field-button' ) ; ?>>
+						<button <?php $this->print_render_attribute_string( 'field-submit' ) ; ?>>
 							<span><?php
 								if ( ! empty( $settings['button_icon'] ) || ! empty( $settings['selected_button_icon']['value'] ) ) {
-									?><span <?php echo $this->get_render_attribute_string( 'field-submit-icon' ); ?>><?php
+									?><span <?php $this->print_render_attribute_string( 'field-submit-icon' ); ?>><?php
 										if ( $is_new || $migrated ) {
 											Icons_Manager::render_icon( $settings['selected_button_icon'], [ 'aria-hidden' => 'true' ] );
 										} else {
@@ -1496,8 +1501,8 @@ class Age_Gate extends Extras_Widget {
 										}
 									?></span><?php
 								}
-								?><span <?php echo $this->get_render_attribute_string( 'field-submit-text' ) ; ?>><?php
-									echo $settings['button_text'];
+								?><span <?php $this->print_render_attribute_string( 'field-submit-text' ) ; ?>><?php
+									echo esc_html( $settings['button_text'] );
 								?></span>
 							</span>
 						</button>
@@ -1521,8 +1526,8 @@ class Age_Gate extends Extras_Widget {
 			'ee-notification--error',
 		] );
 
-		?><div <?php echo $this->get_render_attribute_string( 'denied' ) ; ?>>
-			<?php printf( $settings['denied'], $settings['age'] ); ?>
+		?><div <?php $this->print_render_attribute_string( 'denied' ) ; ?>>
+			<?php echo wp_kses_post( str_replace( '%s', esc_html( (string) $settings['age'] ), $settings['denied'] ) ); ?>
 		</div><?php
 	}
 

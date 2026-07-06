@@ -1,11 +1,12 @@
 <?php
-namespace ElementorExtras\Modules\Toggle\Widgets;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Toggle\Widgets;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Extras_Widget;
-use ElementorExtras\Modules\Toggle\Skins;
-use ElementorExtras\Modules\TemplatesControl\Module as TemplatesControl;
-use ElementorExtras\Group_Control_Transition;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Extras_Widget;
+use LandTechExtras\Modules\Toggle\Skins;
+use LandTechExtras\Modules\TemplatesControl\Module as TemplatesControl;
+use LandTechExtras\Group_Control_Transition;
 
 // Elementor Classes
 use Elementor\Repeater;
@@ -58,7 +59,7 @@ class Toggle_Element extends Extras_Widget {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Toggle Element', 'elementor-extras' );
+		return __( 'Toggle Element', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -83,9 +84,8 @@ class Toggle_Element extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
-			'toggle-element',
-			'gsap-js',
-			'jquery-resize-ee',
+			'landtech-extras-toggle-element',
+			'landtech-extras-jquery-resize',
 		];
 	}
 
@@ -120,7 +120,7 @@ class Toggle_Element extends Extras_Widget {
 		$this->start_controls_section(
 			'section_elements',
 			[
-				'label' => __( 'Elements', 'elementor-extras' ),
+				'label' => __( 'Elements', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -129,7 +129,7 @@ class Toggle_Element extends Extras_Widget {
 
 			$repeater->start_controls_tabs( 'elements_repeater' );
 
-			$repeater->start_controls_tab( 'element_content', [ 'label' => __( 'Content', 'elementor-extras' ) ] );
+			$repeater->start_controls_tab( 'element_content', [ 'label' => __( 'Content', 'landtech-extras-for-elementor' ) ] );
 
 				$repeater->add_control(
 					'text',
@@ -137,7 +137,7 @@ class Toggle_Element extends Extras_Widget {
 						'default'	=> '',
 						'type'		=> Controls_Manager::TEXT,
 						'dynamic'	=> [ 'active' => true ],
-						'label' 	=> __( 'Label', 'elementor-extras' ),
+						'label' 	=> __( 'Label', 'landtech-extras-for-elementor' ),
 						'separator' => 'none',
 					]
 				);
@@ -145,9 +145,9 @@ class Toggle_Element extends Extras_Widget {
 				$repeater->add_control(
 					'hash',
 					[
-						'label' 	=> __( 'Hash', 'elementor-extras' ),
-						'title'   	=> __( 'Add the hashtag name WITHOUT the # characters', 'elementor-extras' ),
-						'description' => __('The hashtag is used for automatically activating this element when it\'s present in the URL.', 'elementor-extras'),
+						'label' 	=> __( 'Hash', 'landtech-extras-for-elementor' ),
+						'title'   	=> __( 'Add the hashtag name WITHOUT the # characters', 'landtech-extras-for-elementor' ),
+						'description' => __('The hashtag is used for automatically activating this element when it\'s present in the URL.', 'landtech-extras-for-elementor'),
 						'type'		=> Controls_Manager::TEXT,
 						'default'	=> '',
 						'dynamic'	=> [ 'active' => true ],
@@ -157,7 +157,7 @@ class Toggle_Element extends Extras_Widget {
 				$repeater->add_control(
 					'selected_icon',
 					[
-						'label' 		=> __( 'Icon', 'elementor-extras' ),
+						'label' 		=> __( 'Icon', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::ICONS,
 						'fa4compatibility' => 'icon',
 					]
@@ -166,13 +166,13 @@ class Toggle_Element extends Extras_Widget {
 				$repeater->add_control(
 					'icon_align',
 					[
-						'label' 	=> __( 'Icon Position', 'elementor-extras' ),
+						'label' 	=> __( 'Icon Position', 'landtech-extras-for-elementor' ),
 						'label_block' => false,
 						'type' 		=> Controls_Manager::SELECT,
 						'default' 	=> 'left',
 						'options' 	=> [
-							'left' 		=> __( 'Before', 'elementor-extras' ),
-							'right' 	=> __( 'After', 'elementor-extras' ),
+							'left' 		=> __( 'Before', 'landtech-extras-for-elementor' ),
+							'right' 	=> __( 'After', 'landtech-extras-for-elementor' ),
 						],
 						'condition' => [
 							'icon!' => '',
@@ -183,7 +183,7 @@ class Toggle_Element extends Extras_Widget {
 				$repeater->add_control(
 					'icon_indent',
 					[
-						'label' 	=> __( 'Icon Spacing', 'elementor-extras' ),
+						'label' 	=> __( 'Icon Spacing', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SLIDER,
 						'range' 	=> [
 							'px' 	=> [
@@ -203,12 +203,12 @@ class Toggle_Element extends Extras_Widget {
 				$repeater->add_control(
 					'content_type',
 					[
-						'label'		=> __( 'Type', 'elementor-extras' ),
+						'label'		=> __( 'Type', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SELECT,
 						'default' 	=> 'text',
 						'options' 	=> [
-							'text' 		=> __( 'Text', 'elementor-extras' ),
-							'template' 	=> __( 'Template', 'elementor-extras' ),
+							'text' 		=> __( 'Text', 'landtech-extras-for-elementor' ),
+							'template' 	=> __( 'Template', 'landtech-extras-for-elementor' ),
 						],
 					]
 				);
@@ -216,10 +216,10 @@ class Toggle_Element extends Extras_Widget {
 				$repeater->add_control(
 					'content',
 					[
-						'label' 	=> __( 'Content', 'elementor-extras' ),
+						'label' 	=> __( 'Content', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::WYSIWYG,
 						'dynamic'	=> [ 'active' => true ],
-						'default' 	=> __( 'I am the content ready to be toggled', 'elementor-extras' ),
+						'default' 	=> __( 'I am the content ready to be toggled', 'landtech-extras-for-elementor' ),
 						'condition'	=> [
 							'content_type' => 'text',
 						],
@@ -235,12 +235,12 @@ class Toggle_Element extends Extras_Widget {
 
 			$repeater->end_controls_tab();
 
-			$repeater->start_controls_tab( 'element_label', [ 'label' => __( 'Style', 'elementor-extras' ) ] );
+			$repeater->start_controls_tab( 'element_label', [ 'label' => __( 'Style', 'landtech-extras-for-elementor' ) ] );
 
 				$repeater->add_control(
 					'text_color',
 					[
-						'label' 	=> __( 'Label Color', 'elementor-extras' ),
+						'label' 	=> __( 'Label Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -252,7 +252,7 @@ class Toggle_Element extends Extras_Widget {
 				$repeater->add_control(
 					'text_active_color',
 					[
-						'label' 	=> __( 'Active Label Color', 'elementor-extras' ),
+						'label' 	=> __( 'Active Label Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -265,7 +265,7 @@ class Toggle_Element extends Extras_Widget {
 				$repeater->add_control(
 					'active_color',
 					[
-						'label' 	=> __( 'Indicator Color', 'elementor-extras' ),
+						'label' 	=> __( 'Indicator Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'global' => [
 							'default' => Global_Colors::COLOR_PRIMARY,
@@ -280,16 +280,16 @@ class Toggle_Element extends Extras_Widget {
 			$this->add_control(
 				'elements',
 				[
-					'label' 	=> __( 'Elements', 'elementor-extras' ),
+					'label' 	=> __( 'Elements', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::REPEATER,
 					'default' 	=> [
 						[
 							'text' 	=> '',
-							'content' => __( 'I am the content ready to be toggled', 'elementor-extras' ),
+							'content' => __( 'I am the content ready to be toggled', 'landtech-extras-for-elementor' ),
 						],
 						[
 							'text' 	=> '',
-							'content' => __( 'I am the content of another element ready to be toggled', 'elementor-extras' ),
+							'content' => __( 'I am the content of another element ready to be toggled', 'landtech-extras-for-elementor' ),
 						],
 					],
 					'fields' 		=> $repeater->get_controls(),
@@ -302,7 +302,7 @@ class Toggle_Element extends Extras_Widget {
 		$this->start_controls_section(
 			'section_toggle',
 			[
-				'label' => __( 'Toggle', 'elementor-extras' ),
+				'label' => __( 'Toggle', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -310,8 +310,8 @@ class Toggle_Element extends Extras_Widget {
 			$this->add_control(
 				'toggle_inactive',
 				[
-					'label' 		=> __( 'Start Hidden', 'elementor-extras' ),
-					'description'	=> __( 'Don\'t show any of the elements initially.', 'elementor-extras' ),
+					'label' 		=> __( 'Start Hidden', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Don\'t show any of the elements initially.', 'landtech-extras-for-elementor' ),
 					'default'		=> '',
 					'type' 			=> Controls_Manager::SWITCHER,
 					'frontend_available' => true,
@@ -321,8 +321,8 @@ class Toggle_Element extends Extras_Widget {
 			$this->add_control(
 				'toggle_active_index',
 				[
-					'label'			=> __( 'Default Index', 'elementor-extras' ),
-					'title'   		=> __( 'The index of the default active element.', 'elementor-extras' ),
+					'label'			=> __( 'Default Index', 'landtech-extras-for-elementor' ),
+					'title'   		=> __( 'The index of the default active element.', 'landtech-extras-for-elementor' ),
 					'type'			=> Controls_Manager::NUMBER,
 					'default'		=> 1,
 					'min'			=> 1,
@@ -337,8 +337,8 @@ class Toggle_Element extends Extras_Widget {
 			$this->add_control(
 				'toggle_hash_load',
 				[
-					'label' 		=> __( 'Load Hash', 'elementor-extras' ),
-					'description'	=> __( 'When the page loads, if the hash of an element is present in the URL, that element will be activated.', 'elementor-extras' ),
+					'label' 		=> __( 'Load Hash', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'When the page loads, if the hash of an element is present in the URL, that element will be activated.', 'landtech-extras-for-elementor' ),
 					'default'		=> '',
 					'type' 			=> Controls_Manager::SWITCHER,
 					'return_value' 	=> 'yes',
@@ -352,8 +352,8 @@ class Toggle_Element extends Extras_Widget {
 			$this->add_control(
 				'toggle_hash_navigation',
 				[
-					'label' 		=> __( 'Navigation Hash', 'elementor-extras' ),
-					'description'	=> __( 'If clicking on a link to containing any of the hashes, the page will scroll to this widget and toggle the element specified by the hash.', 'elementor-extras' ),
+					'label' 		=> __( 'Navigation Hash', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'If clicking on a link to containing any of the hashes, the page will scroll to this widget and toggle the element specified by the hash.', 'landtech-extras-for-elementor' ),
 					'default'		=> '',
 					'type' 			=> Controls_Manager::SWITCHER,
 					'return_value' 	=> 'yes',
@@ -365,8 +365,8 @@ class Toggle_Element extends Extras_Widget {
 			$this->add_control(
 				'toggle_hash',
 				[
-					'label' 		=> __( 'Toggle Hash', 'elementor-extras' ),
-					'description'	=> __( 'When toggling, a hashtag will be added to the current URL. If turned off, you can still activate an element by including its hash in the URL.', 'elementor-extras' ),
+					'label' 		=> __( 'Toggle Hash', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'When toggling, a hashtag will be added to the current URL. If turned off, you can still activate an element by including its hash in the URL.', 'landtech-extras-for-elementor' ),
 					'default'		=> '',
 					'type' 			=> Controls_Manager::SWITCHER,
 					'return_value' 	=> 'yes',
@@ -377,12 +377,12 @@ class Toggle_Element extends Extras_Widget {
 			$this->add_control(
 				'toggle_position',
 				[
-					'label'		=> __( 'Position', 'elementor-extras' ),
+					'label'		=> __( 'Position', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'before',
 					'options' 	=> [
-						'before'  	=> __( 'Before', 'elementor-extras' ),
-						'after' 	=> __( 'After', 'elementor-extras' ),
+						'before'  	=> __( 'Before', 'landtech-extras-for-elementor' ),
+						'after' 	=> __( 'After', 'landtech-extras-for-elementor' ),
 					],
 				]
 			);
@@ -390,7 +390,7 @@ class Toggle_Element extends Extras_Widget {
 			$this->add_control(
 				'indicator_speed',
 				[
-					'label' 	=> __( 'Indicator Speed', 'elementor-extras' ),
+					'label' 	=> __( 'Indicator Speed', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -409,7 +409,7 @@ class Toggle_Element extends Extras_Widget {
 			$this->add_control(
 				'toggle_hide_empty',
 				[
-					'label' 		=> __( 'Hide Empty Items', 'elementor-extras' ),
+					'label' 		=> __( 'Hide Empty Items', 'landtech-extras-for-elementor' ),
 					'default'		=> '',
 					'type' 			=> Controls_Manager::SWITCHER,
 					'return_value' 	=> 'yes',
@@ -419,8 +419,8 @@ class Toggle_Element extends Extras_Widget {
 			$this->add_control(
 				'refresh_widgets',
 				[
-					'label' 		=> __( 'Refresh Template Widgets', 'elementor-extras' ),
-					'description'	=> __( 'If you are using templates as content for the elements, this option will refresh any frontend functionality for all elements inside those template when toggling. Turn this off if you notice strange behaviour or broken elements inside the template.', 'elementor-extras' ),
+					'label' 		=> __( 'Refresh Template Widgets', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'If you are using templates as content for the elements, this option will refresh any frontend functionality for all elements inside those template when toggling. Turn this off if you notice strange behaviour or broken elements inside the template.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
 					'frontend_available' => true,
@@ -432,7 +432,7 @@ class Toggle_Element extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_toggler',
 			[
-				'label' => __( 'Toggler', 'elementor-extras' ),
+				'label' => __( 'Toggler', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -440,12 +440,12 @@ class Toggle_Element extends Extras_Widget {
 			$this->add_control(
 				'toggle_style',
 				[
-					'label'		=> __( 'Style', 'elementor-extras' ),
+					'label'		=> __( 'Style', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'round',
 					'options' 	=> [
-						'round'  => __( 'Round', 'elementor-extras' ),
-						'square' => __( 'Square', 'elementor-extras' ),
+						'round'  => __( 'Round', 'landtech-extras-for-elementor' ),
+						'square' => __( 'Square', 'landtech-extras-for-elementor' ),
 					],
 					'prefix_class' => 'ee-toggle-element--',
 				]
@@ -454,20 +454,20 @@ class Toggle_Element extends Extras_Widget {
 			$this->add_responsive_control(
 				'toggle_align',
 				[
-					'label' 		=> __( 'Align', 'elementor-extras' ),
+					'label' 		=> __( 'Align', 'landtech-extras-for-elementor' ),
 					'label_block'	=> false,
 					'type' 			=> Controls_Manager::CHOOSE,
 					'options' 		=> [
 						'left'    		=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-right',
 						],
 					],
@@ -481,7 +481,7 @@ class Toggle_Element extends Extras_Widget {
 			$this->add_responsive_control(
 				'toggle_zoom',
 				[
-					'label' 	=> __( 'Zoom', 'elementor-extras' ),
+					'label' 	=> __( 'Zoom', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 16,
@@ -502,7 +502,7 @@ class Toggle_Element extends Extras_Widget {
 			$this->add_control(
 				'toggle_spacing',
 				[
-					'label' 	=> __( 'Distance', 'elementor-extras' ),
+					'label' 	=> __( 'Distance', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 24,
@@ -524,7 +524,7 @@ class Toggle_Element extends Extras_Widget {
 			$this->add_control(
 				'toggle_padding',
 				[
-					'label' 	=> __( 'Padding', 'elementor-extras' ),
+					'label' 	=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 6,
@@ -546,7 +546,7 @@ class Toggle_Element extends Extras_Widget {
 			$this->add_responsive_control(
 				'toggle_width',
 				[
-					'label' 	=> __( 'Width (%)', 'elementor-extras' ),
+					'label' 	=> __( 'Width (%)', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -564,7 +564,7 @@ class Toggle_Element extends Extras_Widget {
 			$this->add_responsive_control(
 				'toggle_radius',
 				[
-					'label' 	=> __( 'Radius', 'elementor-extras' ),
+					'label' 	=> __( 'Radius', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 4,
@@ -589,7 +589,7 @@ class Toggle_Element extends Extras_Widget {
 			$this->add_control(
 				'toggle_background',
 				[
-					'label' 	=> __( 'Background Color', 'elementor-extras' ),
+					'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'selectors' => [
 						'{{WRAPPER}} .ee-toggle-element__controls-wrapper' => 'background-color: {{VALUE}};'
@@ -610,7 +610,7 @@ class Toggle_Element extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_indicator',
 			[
-				'label' => __( 'Indicator', 'elementor-extras' ),
+				'label' => __( 'Indicator', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -618,7 +618,7 @@ class Toggle_Element extends Extras_Widget {
 			$this->add_control(
 				'indicator_color',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'global' => [
 						'active' => false,
@@ -640,7 +640,7 @@ class Toggle_Element extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_labels',
 			[
-				'label' => __( 'Labels', 'elementor-extras' ),
+				'label' => __( 'Labels', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -649,7 +649,7 @@ class Toggle_Element extends Extras_Widget {
 				'labels_info',
 				[
 					'type' 				=> Controls_Manager::RAW_HTML,
-					'raw' 				=> __( 'After adjusting some of these settings, interact with the toggler so that the position of the indicator is updated. ', 'elementor-extras' ),
+					'raw' 				=> __( 'After adjusting some of these settings, interact with the toggler so that the position of the indicator is updated. ', 'landtech-extras-for-elementor' ),
 					'content_classes' 	=> 'elementor-panel-alert elementor-panel-alert-info',
 				]
 			);
@@ -657,14 +657,14 @@ class Toggle_Element extends Extras_Widget {
 			$this->add_control(
 				'labels_stack',
 				[
-					'label'		=> __( 'Stack On', 'elementor-extras' ),
+					'label'		=> __( 'Stack On', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> '',
 					'options' 	=> [
-						''  		=> __( 'None', 'elementor-extras' ),
-						'desktop'  	=> __( 'All', 'elementor-extras' ),
-						'tablet'  	=> __( 'Tablet & Mobile', 'elementor-extras' ),
-						'mobile' 	=> __( 'Mobile', 'elementor-extras' ),
+						''  		=> __( 'None', 'landtech-extras-for-elementor' ),
+						'desktop'  	=> __( 'All', 'landtech-extras-for-elementor' ),
+						'tablet'  	=> __( 'Tablet & Mobile', 'landtech-extras-for-elementor' ),
+						'mobile' 	=> __( 'Mobile', 'landtech-extras-for-elementor' ),
 					],
 					'prefix_class' => 'ee-toggle-element--stack-',
 				]
@@ -673,24 +673,24 @@ class Toggle_Element extends Extras_Widget {
 			$this->add_responsive_control(
 				'labels_align',
 				[
-					'label' 		=> __( 'Inline Align', 'elementor-extras' ),
-					'description' 	=> __( 'Label alignment only works if you set a custom width for the toggler.', 'elementor-extras' ),
+					'label' 		=> __( 'Inline Align', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'Label alignment only works if you set a custom width for the toggler.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'options' 		=> [
 						'start'    => [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-center',
 						],
 						'end' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-right',
 						],
 						'stretch' 		=> [
-							'title' 	=> __( 'Justify', 'elementor-extras' ),
+							'title' 	=> __( 'Justify', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-stretch',
 						],
 					],
@@ -702,23 +702,23 @@ class Toggle_Element extends Extras_Widget {
 			$this->add_responsive_control(
 				'stacked_labels_align',
 				[
-					'label' 		=> __( 'Stacked Align', 'elementor-extras' ),
+					'label' 		=> __( 'Stacked Align', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'options' 		=> [
 						'start'    => [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-center',
 						],
 						'end' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-right',
 						],
 						'stretch' 		=> [
-							'title' 	=> __( 'Justify', 'elementor-extras' ),
+							'title' 	=> __( 'Justify', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-stretch',
 						],
 					],
@@ -730,21 +730,21 @@ class Toggle_Element extends Extras_Widget {
 			$this->add_responsive_control(
 				'text_align',
 				[
-					'label' 		=> __( 'Align Label Text', 'elementor-extras' ),
-					'description' 	=> __( 'Label text alignment only works if your labels have text.', 'elementor-extras' ),
+					'label' 		=> __( 'Align Label Text', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'Label text alignment only works if your labels have text.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'left'    		=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -757,7 +757,7 @@ class Toggle_Element extends Extras_Widget {
 			$this->add_control(
 				'labels_padding',
 				[
-					'label' 	=> __( 'Padding', 'elementor-extras' ),
+					'label' 	=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -777,7 +777,7 @@ class Toggle_Element extends Extras_Widget {
 				[
 					'name' 		=> 'labels_typography',
 					'selector' 	=> '{{WRAPPER}} .ee-toggle-element__controls__item',
-					'exclude'	=> ['font_size', 'line_height'],
+					'exclude'	=> ['font_size', 'line_height'], // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor control schema.
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -794,12 +794,12 @@ class Toggle_Element extends Extras_Widget {
 
 			$this->start_controls_tabs( 'labels_style' );
 
-			$this->start_controls_tab( 'labels_style_default', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'labels_style_default', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'labels_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-toggle-element__controls__item' => 'color: {{VALUE}};'
@@ -809,12 +809,12 @@ class Toggle_Element extends Extras_Widget {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'labels_style_hover', [ 'label' => __( 'Hover', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'labels_style_hover', [ 'label' => __( 'Hover', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'labels_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-toggle-element__controls__item:hover' => 'color: {{VALUE}};'
@@ -824,12 +824,12 @@ class Toggle_Element extends Extras_Widget {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'labels_style_active', [ 'label' => __( 'Active', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'labels_style_active', [ 'label' => __( 'Active', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'labels_color_active',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-toggle-element__controls__item.ee--is-active,
@@ -847,7 +847,7 @@ class Toggle_Element extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_content',
 			[
-				'label' => __( 'Content', 'elementor-extras' ),
+				'label' => __( 'Content', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -866,7 +866,7 @@ class Toggle_Element extends Extras_Widget {
 			$this->add_control(
 				'content_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -878,7 +878,7 @@ class Toggle_Element extends Extras_Widget {
 			$this->add_control(
 				'content_margin',
 				[
-					'label' 		=> __( 'Margin', 'elementor-extras' ),
+					'label' 		=> __( 'Margin', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -891,7 +891,7 @@ class Toggle_Element extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'content',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '{{WRAPPER}} .ee-toggle-element__element',
 				]
 			);
@@ -899,7 +899,7 @@ class Toggle_Element extends Extras_Widget {
 			$this->add_responsive_control(
 				'content_border_radius',
 				[
-					'label' 	=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 	=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -917,7 +917,7 @@ class Toggle_Element extends Extras_Widget {
 			$this->add_control(
 				'content_foreground',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'separator' => 'before',
 					'selectors'	=> [
@@ -987,10 +987,10 @@ class Toggle_Element extends Extras_Widget {
 		] );
 
 		?>
-		<div <?php echo $this->get_render_attribute_string( 'wrapper' ); ?>>
-			<div <?php echo $this->get_render_attribute_string( 'toggle' ); ?>>
+		<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
+			<div <?php $this->print_render_attribute_string( 'toggle' ); ?>>
 				<?php if ( 'before' === $settings['toggle_position'] ) $this->render_toggle(); ?>
-				<div <?php echo $this->get_render_attribute_string( 'elements' ); ?>>
+				<div <?php $this->print_render_attribute_string( 'elements' ); ?>>
 					<?php foreach ( $settings['elements'] as $index => $item ) {
 
 						if ( 'yes' === $settings['toggle_hide_empty'] ) {
@@ -1008,7 +1008,7 @@ class Toggle_Element extends Extras_Widget {
 							]
 						] );
 
-						?><div <?php echo $this->get_render_attribute_string( $element_key ); ?>><?php
+						?><div <?php $this->print_render_attribute_string( $element_key ); ?>><?php
 
 						switch ( $item['content_type'] ) {
 							case 'text':
@@ -1072,12 +1072,12 @@ class Toggle_Element extends Extras_Widget {
 	public function render_toggle() {
 		$settings = $this->get_settings_for_display();
 
-		?><div <?php echo $this->get_render_attribute_string( 'controls-wrapper' ); ?>>
-			<div <?php echo $this->get_render_attribute_string( 'indicator' ); ?>></div><?php
+		?><div <?php $this->print_render_attribute_string( 'controls-wrapper' ); ?>>
+			<div <?php $this->print_render_attribute_string( 'indicator' ); ?>></div><?php
 
 			if ( $settings['elements'] ) {
 
-			?><ul <?php echo $this->get_render_attribute_string( 'controls' ); ?>><?php
+			?><ul <?php $this->print_render_attribute_string( 'controls' ); ?>><?php
 				foreach ( $settings['elements'] as $index => $item ) {
 					if ( 'yes' === $settings['toggle_hide_empty'] ) {
 						if ( ! $this->has_item_content( $item ) ) {
@@ -1117,15 +1117,15 @@ class Toggle_Element extends Extras_Widget {
 					if ( ! empty( $item['text'] ) ) {
 						$this->add_render_attribute( $control_key, 'class', 'ee--is-empty' ); }
 
-					?><li <?php echo $this->get_render_attribute_string( $control_key ); ?>><?php
+					?><li <?php $this->print_render_attribute_string( $control_key ); ?>><?php
 
 						if ( $has_icon ) {
 							$this->render_toggle_item_icon( $index, $item ); }
 
 						if ( ! empty( $item['text'] ) && ! $has_icon ) {
-							?><span <?php echo $this->get_render_attribute_string( $control_text_key ); ?>><?php }
+							?><span <?php $this->print_render_attribute_string( $control_text_key ); ?>><?php }
 
-						if ( ! empty( $item['text'] ) ) { echo $item['text']; } else if ( ! $has_icon ) { echo '&nbsp;'; }
+						if ( ! empty( $item['text'] ) ) { echo esc_html( $item['text'] ); } else if ( ! $has_icon ) { echo '&nbsp;'; }
 
 						if ( ! empty( $item['text'] ) && ! $has_icon ) {
 							?></span><?php }
@@ -1162,7 +1162,7 @@ class Toggle_Element extends Extras_Widget {
 			] );
 		}
 
-		?><span <?php echo $this->get_render_attribute_string( $icon_key ); ?>><?php
+		?><span <?php $this->print_render_attribute_string( $icon_key ); ?>><?php
 			if ( $is_new || $migrated ) {
 				Icons_Manager::render_icon( $item['selected_icon'], [ 'aria-hidden' => 'true' ] );
 			} else {
@@ -1180,7 +1180,7 @@ class Toggle_Element extends Extras_Widget {
 	 * @return void
 	 */
 	protected function render_text( $index, $item ) {
-		echo $this->parse_text_editor( $item['content'] );
+		echo wp_kses_post( $this->parse_text_editor( $item['content'] ) );
 	}
 
 	/**

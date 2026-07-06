@@ -1,5 +1,6 @@
 <?php
-namespace ElementorExtras;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras;
 
 use Elementor\Group_Control_Base;
 use Elementor\Controls_Manager;
@@ -43,12 +44,12 @@ class Group_Control_Button_Effect extends Group_Control_Base {
 	public static function get_types() {
 		if ( is_null( self::$_types ) ) {
 			self::$_types = [
-				'' 			=> __( 'None', 'elementor-extras' ),
-				'clone' 	=> __( 'Clone', 'elementor-extras' ),
-				'flip' 		=> __( 'Flip', 'elementor-extras' ),
-				'back' 		=> __( 'Background', 'elementor-extras' ),
-				'3d' 		=> __( '3D', 'elementor-extras' ),
-				'cube' 		=> __( 'Cube', 'elementor-extras' ),
+				'' 			=> __( 'None', 'landtech-extras-for-elementor' ),
+				'clone' 	=> __( 'Clone', 'landtech-extras-for-elementor' ),
+				'flip' 		=> __( 'Flip', 'landtech-extras-for-elementor' ),
+				'back' 		=> __( 'Background', 'landtech-extras-for-elementor' ),
+				'3d' 		=> __( '3D', 'landtech-extras-for-elementor' ),
+				'cube' 		=> __( 'Cube', 'landtech-extras-for-elementor' ),
 			];
 		}
 
@@ -66,8 +67,8 @@ class Group_Control_Button_Effect extends Group_Control_Base {
 	public static function get_filters() {
 		if ( is_null( self::$_filters ) ) {
 			self::$_filters = [
-				'displace' 	=> __( 'Displace', 'elementor-extras' ),
-				'blur' 		=> __( 'Blur', 'elementor-extras' ),
+				'displace' 	=> __( 'Displace', 'landtech-extras-for-elementor' ),
+				'blur' 		=> __( 'Blur', 'landtech-extras-for-elementor' ),
 			];
 		}
 
@@ -85,9 +86,9 @@ class Group_Control_Button_Effect extends Group_Control_Base {
 	public static function get_entrances() {
 		if ( is_null( self::$_entrances ) ) {
 			self::$_entrances = [
-				'cover' 	=> __( 'Cover', 'elementor-extras' ),
-				'move' 		=> __( 'Move', 'elementor-extras' ),
-				'push' 		=> __( 'Push', 'elementor-extras' ),
+				'cover' 	=> __( 'Cover', 'landtech-extras-for-elementor' ),
+				'move' 		=> __( 'Move', 'landtech-extras-for-elementor' ),
+				'push' 		=> __( 'Push', 'landtech-extras-for-elementor' ),
 			];
 		}
 
@@ -105,10 +106,10 @@ class Group_Control_Button_Effect extends Group_Control_Base {
 	public static function get_easings() {
 		if ( is_null( self::$_easings ) ) {
 			self::$_easings = [
-				'linear' 		=> __( 'Linear', 'elementor-extras' ),
-				'ease-in' 		=> __( 'Ease In', 'elementor-extras' ),
-				'ease-out' 		=> __( 'Ease Out', 'elementor-extras' ),
-				'ease-in-out' 	=> __( 'Ease In Out', 'elementor-extras' ),
+				'linear' 		=> __( 'Linear', 'landtech-extras-for-elementor' ),
+				'ease-in' 		=> __( 'Ease In', 'landtech-extras-for-elementor' ),
+				'ease-out' 		=> __( 'Ease Out', 'landtech-extras-for-elementor' ),
+				'ease-in-out' 	=> __( 'Ease In Out', 'landtech-extras-for-elementor' ),
 			];
 		}
 
@@ -123,20 +124,20 @@ class Group_Control_Button_Effect extends Group_Control_Base {
 		$controls = [];
 
 		$controls['heading'] = [
-			'label'			=> _x( 'Effect', 'Effect Control', 'elementor-extras' ),
+			'label'			=> _x( 'Effect', 'Effect Control', 'landtech-extras-for-elementor' ),
 			'type' 			=> Controls_Manager::HEADING,
 			'separator' 	=> 'before',
 		];
 
 		$controls['type'] = [
-			'label'			=> _x( 'Type', 'Effect Control', 'elementor-extras' ),
+			'label'			=> _x( 'Type', 'Effect Control', 'landtech-extras-for-elementor' ),
 			'type' 			=> Controls_Manager::SELECT,
 			'default' 		=> '',
 			'options'		=> self::get_types(),
 		];
 
 		$controls['entrance'] = [
-			'label'			=> _x( 'Entrance', 'Effect Control', 'elementor-extras' ),
+			'label'			=> _x( 'Entrance', 'Effect Control', 'landtech-extras-for-elementor' ),
 			'type' 			=> Controls_Manager::SELECT,
 			'default' 		=> 'cover',
 			'options'		=> self::get_entrances(),
@@ -146,7 +147,7 @@ class Group_Control_Button_Effect extends Group_Control_Base {
 		];
 
 		$controls['text'] = [
-			'label'			=> _x( 'Text', 'Effect Control', 'elementor-extras' ),
+			'label'			=> _x( 'Text', 'Effect Control', 'landtech-extras-for-elementor' ),
 			'type' 			=> Controls_Manager::TEXT,
 			'default' 		=> '',
 			'condition'		=> [
@@ -155,24 +156,24 @@ class Group_Control_Button_Effect extends Group_Control_Base {
 		];
 
 		$controls['direction'] = [
-			'label'			=> _x( 'Direction', 'Effect Control', 'elementor-extras' ),
+			'label'			=> _x( 'Direction', 'Effect Control', 'landtech-extras-for-elementor' ),
 			'type' 			=> Controls_Manager::CHOOSE,
 			'default' 		=> 'down',
 			'options' => [
 				'down' 		=> [
-					'title' => __( 'Down', 'elementor-extras' ),
+					'title' => __( 'Down', 'landtech-extras-for-elementor' ),
 					'icon' 	=> 'eicon-v-align-bottom',
 				],
 				'up'    	=> [
-					'title' => __( 'Up', 'elementor-extras' ),
+					'title' => __( 'Up', 'landtech-extras-for-elementor' ),
 					'icon' 	=> 'eicon-v-align-top',
 				],
 				'right' 	=> [
-					'title' => __( 'Right', 'elementor-extras' ),
+					'title' => __( 'Right', 'landtech-extras-for-elementor' ),
 					'icon' 	=> 'eicon-h-align-right',
 				],
 				'left' 		=> [
-					'title' => __( 'Left', 'elementor-extras' ),
+					'title' => __( 'Left', 'landtech-extras-for-elementor' ),
 					'icon' 	=> 'eicon-h-align-left',
 				],
 			],
@@ -183,12 +184,12 @@ class Group_Control_Button_Effect extends Group_Control_Base {
 		];
 
 		$controls['orientation'] = [
-			'label'			=> _x( 'Orientation', 'Effect Control', 'elementor-extras' ),
+			'label'			=> _x( 'Orientation', 'Effect Control', 'landtech-extras-for-elementor' ),
 			'type' 			=> Controls_Manager::SELECT,
 			'default' 		=> 'horizontal',
 			'options' => [
-				'horizontal' 	=> __( 'Horizontal', 'elementor-extras' ),
-				'vertical' 		=> __( 'Vertical', 'elementor-extras' ),
+				'horizontal' 	=> __( 'Horizontal', 'landtech-extras-for-elementor' ),
+				'vertical' 		=> __( 'Vertical', 'landtech-extras-for-elementor' ),
 			],
 			'condition' 	=> [
 				'direction' => '',
@@ -197,20 +198,20 @@ class Group_Control_Button_Effect extends Group_Control_Base {
 		];
 
 		$controls['shape'] = [
-			'label'			=> _x( 'Shape', 'Effect Control', 'elementor-extras' ),
+			'label'			=> _x( 'Shape', 'Effect Control', 'landtech-extras-for-elementor' ),
 			'type' 			=> Controls_Manager::CHOOSE,
 			'default' 		=> '',
 			'options' => [
 				''    	=> [
-					'title' => __( 'Square', 'elementor-extras' ),
+					'title' => __( 'Square', 'landtech-extras-for-elementor' ),
 					'icon' 	=> 'nicon nicon-shape-square',
 				],
 				'round' 	=> [
-					'title' => __( 'Round', 'elementor-extras' ),
+					'title' => __( 'Round', 'landtech-extras-for-elementor' ),
 					'icon' 	=> 'nicon nicon-shape-round',
 				],
 				'skewed' 	=> [
-					'title' => __( 'Skewed', 'elementor-extras' ),
+					'title' => __( 'Skewed', 'landtech-extras-for-elementor' ),
 					'icon' 	=> 'nicon nicon-shape-skewed',
 				],
 			],
@@ -221,11 +222,11 @@ class Group_Control_Button_Effect extends Group_Control_Base {
 		];
 
 		$controls['double'] = [
-			'label' 		=> __( 'Double', 'elementor-extras' ),
+			'label' 		=> __( 'Double', 'landtech-extras-for-elementor' ),
 			'type' 			=> Controls_Manager::SWITCHER,
 			'default' 		=> '',
-			'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-			'label_off' 	=> __( 'No', 'elementor-extras' ),
+			'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+			'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 			'return_value' 	=> 'double',
 			'condition' 	=> [
 				'type' 		=> [ 'back' ],
@@ -233,7 +234,7 @@ class Group_Control_Button_Effect extends Group_Control_Base {
 		];
 
 		$controls['color'] = [
-			'label' 	=> __( 'Effect Color', 'elementor-extras' ),
+			'label' 	=> __( 'Effect Color', 'landtech-extras-for-elementor' ),
 			'type' 		=> Controls_Manager::COLOR,
 			'default' 	=> '#FFFFFF',
 			'selectors' => [
@@ -245,7 +246,7 @@ class Group_Control_Button_Effect extends Group_Control_Base {
 		];
 
 		$controls['background_color'] = [
-			'label' 	=> __( 'Effect Background', 'elementor-extras' ),
+			'label' 	=> __( 'Effect Background', 'landtech-extras-for-elementor' ),
 			'type' 		=> Controls_Manager::COLOR,
 			'default' 	=> '#000000',
 			'selectors' => [
@@ -258,13 +259,13 @@ class Group_Control_Button_Effect extends Group_Control_Base {
 		];
 
 		$controls['zoom'] = [
-			'label'			=> _x( 'Zoom', 'Effect Control', 'elementor-extras' ),
+			'label'			=> _x( 'Zoom', 'Effect Control', 'landtech-extras-for-elementor' ),
 			'type' 			=> Controls_Manager::SELECT,
 			'default' 		=> '',
 			'options'		=> [
-				'' 			=> __( 'Default', 'elementor-extras' ),
-				'zoom-in' 	=> __( 'Zoom In', 'elementor-extras' ),
-				'zoom-out' 	=> __( 'Zoom Out', 'elementor-extras' ),
+				'' 			=> __( 'Default', 'landtech-extras-for-elementor' ),
+				'zoom-in' 	=> __( 'Zoom In', 'landtech-extras-for-elementor' ),
+				'zoom-out' 	=> __( 'Zoom Out', 'landtech-extras-for-elementor' ),
 			],
 			'condition' 	=> [
 				'type' 		=> [ 'clone', '3d', 'flip', 'cube' ]
@@ -272,7 +273,7 @@ class Group_Control_Button_Effect extends Group_Control_Base {
 		];
 
 		$controls['easing'] = [
-			'label'			=> _x( 'Easing', 'Effect Control', 'elementor-extras' ),
+			'label'			=> _x( 'Easing', 'Effect Control', 'landtech-extras-for-elementor' ),
 			'type' 			=> Controls_Manager::SELECT,
 			'default' 		=> 'ease-in-out',
 			'options'		=> self::get_easings(),
@@ -286,7 +287,7 @@ class Group_Control_Button_Effect extends Group_Control_Base {
 		];
 
 		$controls['duration'] = [
-			'label'			=> _x( 'Duration', 'Effect Control', 'elementor-extras' ),
+			'label'			=> _x( 'Duration', 'Effect Control', 'landtech-extras-for-elementor' ),
 			'type' 			=> Controls_Manager::NUMBER,
 			'default' 		=> 0.2,
 			'min' 			=> 0.05,

@@ -1,5 +1,6 @@
 <?php
-namespace ElementorExtras;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -16,7 +17,7 @@ abstract class Settings_Page {
 
 	const PAGE_ID = '';
 
-	const UPDATED_INSTA_ACCESS_TOKEN 			= 'elementor_extras_updated_instagram_access_token';
+	const UPDATED_INSTA_ACCESS_TOKEN 			= 'landtech_extras_updated_instagram_access_token';
 	const REFRESH_INSTA_ACCESS_TOKEN_ENDPOINT 	= 'https://graph.instagram.com/refresh_access_token';
 
 	/**
@@ -30,7 +31,7 @@ abstract class Settings_Page {
 	function __construct() {
 
 		$this->settings_api 	= new Settings_API;
-		$this->settings_prefix 	= 'elementor_extras_';
+		$this->settings_prefix 	= 'landtech_extras_';
 	
 		// actions
 		add_action( 'admin_menu', 				[ $this, 'menu' ], 200 );
@@ -189,7 +190,7 @@ abstract class Settings_Page {
 	 * @access public
 	*/
 	public function render_page_title() {
-		?><h1><?php echo $this->get_page_title(); ?></h1><?php
+		?><h1><?php echo esc_html( $this->get_page_title() ); ?></h1><?php
 	}
 
 	/**
@@ -235,10 +236,11 @@ abstract class Settings_Page {
 	*/
 	public function render_page_tab( $tab_id, $tab, $active = false ) {
 
-		$_class_active = $active ? ' nav-tab-active' : '';
+		$class_active_fragment = $active ? ' nav-tab-active' : '';
+		$tab_id                = sanitize_key( (string) $tab_id );
 
-		?><a id='ee-admin-tab-<?php echo $tab_id; ?>' class='ee-admin__tabs__tab nav-tab <?php echo $_class_active; ?>' href='#tab-<?php echo $tab_id; ?>'>
-			<?php echo $tab['label']; ?>
+		?><a id="<?php echo esc_attr( 'ee-admin-tab-' . $tab_id ); ?>" class="<?php echo esc_attr( 'ee-admin__tabs__tab nav-tab' . $class_active_fragment ); ?>" href="<?php echo esc_url( '#tab-' . $tab_id ); ?>">
+			<?php echo esc_html( $tab['label'] ); ?>
 		</a><?php
 	}
 
@@ -257,7 +259,7 @@ abstract class Settings_Page {
 		
 		// append
 		$this->notices[] = array(
-			'content'	=> $text,
+			'content'	=> $content,
 			'class'		=> $class,
 			'wrap'		=> $wrap
 		);
@@ -272,11 +274,15 @@ abstract class Settings_Page {
 	* @access private
 	*/
 	private function maybe_remove_notices() {
-		$extras_pages = [
-			'elementor_extras_license',
-		];
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
 
-		if ( empty( $_GET['page'] ) || ! in_array( $_GET['page'], $extras_pages, true ) ) {
+		$extras_pages = array();
+
+		$current = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only routing for notice suppression UI.
+
+		if ( empty( $current ) || ! in_array( $current, $extras_pages, true ) ) {
 			return;
 		}
 
@@ -317,13 +323,15 @@ abstract class Settings_Page {
 			$open = '';
 			$close = '';
 				
-			if ( $notice['wrap'] ) {
-				$open = "<{$notice['wrap']}>";
-				$close = "</{$notice['wrap']}>";
+			if ( ! empty( $notice['wrap'] ) ) {
+				$allowed = [ 'p', 'div', 'span', 'strong', 'li' ];
+				$wrap    = in_array( $notice['wrap'], $allowed, true ) ? $notice['wrap'] : 'p';
+				$open    = '<' . $wrap . '>';
+				$close   = '</' . $wrap . '>';
 			}
 				
 			?>
-			<div class="notice is-dismissible <?php echo esc_attr( $notice['class'] ); ?> ee-admin-notice"><?php echo $open . $notice['text'] . $close; ?></div>
+			<div class="notice is-dismissible <?php echo esc_attr( $notice['class'] ); ?> ee-admin-notice"><?php echo wp_kses_post( $open ) . wp_kses_post( $notice['content'] ?? '' ) . wp_kses_post( $close ); ?></div>
 			<?php
 				
 		}

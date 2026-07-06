@@ -1,8 +1,9 @@
 <?php
-namespace ElementorExtras\Modules\DisplayConditions\Conditions;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\DisplayConditions\Conditions;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Condition;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Condition;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -37,7 +38,7 @@ class Acf_Choice extends Acf_Base {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'ACF Choice', 'elementor-extras' );
+		return __( 'ACF Choice', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -50,8 +51,8 @@ class Acf_Choice extends Acf_Base {
 	 */
 	public function get_name_control() {
 		return wp_parse_args( [
-			'description'	=> __( 'Search ACF "Select", "Checkbox" and "Radio" fields by label.', 'elementor-extras' ),
-			'placeholder'	=> __( 'Search Fields', 'elementor-extras' ),
+			'description'	=> __( 'Search ACF "Select", "Checkbox" and "Radio" fields by label.', 'landtech-extras-for-elementor' ),
+			'placeholder'	=> __( 'Search Fields', 'landtech-extras-for-elementor' ),
 		], $this->get_name_control_options() );
 	}
 
@@ -81,8 +82,8 @@ class Acf_Choice extends Acf_Base {
 		return [
 			'type' 			=> Controls_Manager::TEXTAREA,
 			'default' 		=> '',
-			'placeholder'	=> __( 'Choices', 'elementor-extras' ),
-			'description'	=> __( 'Enter each accepted choice on a separate line. You can specify the value ( red ) or both value and label ( red : Red ). Leave blank to check if the field is set.', 'elementor-extras' ),
+			'placeholder'	=> __( 'Choices', 'landtech-extras-for-elementor' ),
+			'description'	=> __( 'Enter each accepted choice on a separate line. You can specify the value ( red ) or both value and label ( red : Red ). Leave blank to check if the field is set.', 'landtech-extras-for-elementor' ),
 			'label_block' 	=> true,
 		];
 	}

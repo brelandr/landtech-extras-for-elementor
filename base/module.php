@@ -1,6 +1,7 @@
 <?php
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
 
-namespace ElementorExtras\Base;
+namespace LandTechExtras\Base;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -88,29 +89,28 @@ abstract class Module_Base {
 	 * @access public
 	 * @since 1.6.0
 	 *
+	 * @param \Elementor\Widgets_Manager|null $widgets_manager Widgets manager passed from {@see 'elementor/widgets/register'} (Elementor 3.5+).
 	 * @return void
 	 */
-	public function init_widgets() {
-		$widget_manager = \Elementor\Plugin::instance()->widgets_manager;
+	public function init_widgets( $widgets_manager = null ) {
+		$widget_manager = $widgets_manager instanceof \Elementor\Widgets_Manager
+			? $widgets_manager
+			: \Elementor\Plugin::instance()->widgets_manager;
 
 		foreach ( $this->get_widgets() as $widget ) {
 
 			$class_name = $this->reflection->getNamespaceName() . '\Widgets\\' . $widget;
 
-			if ( $class_name::requires_elementor_pro() && ! is_elementor_pro_active() ) {
+			if ( $class_name::requires_elementor_pro() && ! landtech_extras_is_elementor_pro_active() ) {
 				continue;
 			}
 
-			$module_filename = $this->get_name();
 			$widget_name = strtolower( $widget );
-			$widget_filename = str_replace( '_', '-', $widget_name );
 
 			// Skip widget if it's disabled in admin settings
 			if ( $this->is_widget_disabled( $widget_name ) ) {
 				continue;
 			}
-
-			$widget_filename = ELEMENTOR_EXTRAS_PATH . "includes/modules/{$module_filename}/widgets/{$widget_filename}.php";
 
 			$widget_manager->register( new $class_name() );
 		}
@@ -130,8 +130,8 @@ abstract class Module_Base {
 			return false;
 
 		$option_name 	= 'enable_' . $widget_name;
-		$section 		= 'elementor_extras_widgets';
-		$option 		= \ElementorExtras\ElementorExtrasPlugin::instance()->settings->get_option( $option_name, $section, false );
+		$section 		= 'landtech_extras_widgets';
+		$option 		= \LandTechExtras\LandTechExtrasPlugin::instance()->settings->get_option( $option_name, $section, false );
 
 		if ( 'off' === $option ) {
 			return true;
@@ -163,7 +163,7 @@ abstract class Module_Base {
 	 * @return bool
 	 */
 	public static function is_supported() {
-		return ! self::requires_elementor_pro() || ( self::requires_elementor_pro() && is_elementor_pro_active() );
+		return ! self::requires_elementor_pro() || ( self::requires_elementor_pro() && landtech_extras_is_elementor_pro_active() );
 	}
 
 	/**

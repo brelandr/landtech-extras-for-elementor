@@ -1,12 +1,13 @@
 <?php
-namespace ElementorExtras\Modules\Search\Widgets;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Search\Widgets;
 
-// Extras for Elementor Classes
-use ElementorExtras\Utils;
-use ElementorExtras\Base\Extras_Widget;
-use ElementorExtras\Modules\Search\Skins;
-use ElementorExtras\Modules\Search\Module as Module;
-use ElementorExtras\Group_Control_Transition;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Utils;
+use LandTechExtras\Base\Extras_Widget;
+use LandTechExtras\Modules\Search\Skins;
+use LandTechExtras\Modules\Search\Module as Module;
+use LandTechExtras\Group_Control_Transition;
 
 // Elementor Classes
 use Elementor\Utils as ElementorUtils;
@@ -112,7 +113,7 @@ class Search_Form extends Extras_Widget {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Search Form', 'elementor-extras' );
+		return __( 'Search Form', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -136,7 +137,7 @@ class Search_Form extends Extras_Widget {
 	 * @return array
 	 */
 	public function get_script_depends() {
-		return [ 'jquery-elementor-select2' ];
+		return [ 'landtech-extras-elementor-select2' ];
 	}
 
 	/**
@@ -183,7 +184,11 @@ class Search_Form extends Extras_Widget {
 
 		if ( $condition_show_all ) {
 
-			$label = '' !== trim( $this->get_filter_control_setting( $type, 'all_label' ) ) ? $this->get_filter_control_setting( $type, 'all_label' ) : sprintf( __( 'All %s', 'elementor-extras' ), $this->_filters[ $type ]['label'] );
+			$label = '' !== trim( $this->get_filter_control_setting( $type, 'all_label' ) ) ? $this->get_filter_control_setting( $type, 'all_label' ) : sprintf(
+				/* translators: %s: Filter category label (e.g. Categories). */
+				__( 'All %s', 'landtech-extras-for-elementor' ),
+				$this->_filters[ $type ]['label']
+			);
 
 			$this->_filters[ $type ]['values'][] = [
 				'name'  => 'all',
@@ -272,7 +277,7 @@ class Search_Form extends Extras_Widget {
 
 		if ( $post_types && in_array( 'post_type', $filter_types ) ) {
 			$this->_filters['post_type'] = [
-				'label' => __( 'Post Types', 'elementor-extras' ),
+				'label' => __( 'Post Types', 'landtech-extras-for-elementor' ),
 				'inline' => '' !== $settings['filter_post_type_inline'],
 			];
 			
@@ -319,7 +324,7 @@ class Search_Form extends Extras_Widget {
 
 		if ( $authors && in_array( 'author', $filter_types ) ) {
 			$this->_filters['author'] = [
-				'label' => __( 'Authors', 'elementor-extras' ),
+				'label' => __( 'Authors', 'landtech-extras-for-elementor' ),
 				'inline' => '' !== $settings['filter_author_inline'],
 			];
 
@@ -461,17 +466,17 @@ class Search_Form extends Extras_Widget {
 		$this->start_controls_section(
 			'section_settings',
 			[
-				'label' => __( 'Settings', 'elementor-extras' ),
+				'label' => __( 'Settings', 'landtech-extras-for-elementor' ),
 			]
 		);
 
-			if ( is_elementor_pro_active() ) {
+			if ( landtech_extras_is_elementor_pro_active() ) {
 
 				$this->add_control(
 					'search_id',
 					[
-						'label' 		=> __( 'Search ID', 'elementor-extras' ),
-						'description' 	=> __( 'Enter a unique ID for the search results page.', 'elementor-extras' ),
+						'label' 		=> __( 'Search ID', 'landtech-extras-for-elementor' ),
+						'description' 	=> __( 'Enter a unique ID for the search results page.', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::TEXT,
 					]
 				);
@@ -491,22 +496,22 @@ class Search_Form extends Extras_Widget {
 		$this->start_controls_section(
 			'section_filters',
 			[
-				'label' => __( 'Restrictions & Filters', 'elementor-extras' ),
+				'label' => __( 'Restrictions & Filters', 'landtech-extras-for-elementor' ),
 			]
 		);
 
 			$this->add_control(
 				'filter_types',
 				[	
-					'label'			=> __( 'Restrict to', 'elementor-extras' ),
+					'label'			=> __( 'Restrict to', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT2,
 					'label_block' 	=> true,
 					'default' 		=> [],
 					'options'		=> array_merge(
 						Utils::get_taxonomies_options(),
 						[
-							'post_type' => __( 'Post Type', 'elementor-extras' ),
-							'author' 	=> __( 'Author', 'elementor-extras' ),
+							'post_type' => __( 'Post Type', 'landtech-extras-for-elementor' ),
+							'author' 	=> __( 'Author', 'landtech-extras-for-elementor' ),
 						]
 					),
 					'multiple' 		=> true,
@@ -516,7 +521,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_control(
 				'filters_titles',
 				[
-					'label' 		=> __( 'Show Filter Titles', 'elementor-extras' ),
+					'label' 		=> __( 'Show Filter Titles', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
 					'condition'		=> [
@@ -528,8 +533,8 @@ class Search_Form extends Extras_Widget {
 			$this->add_control(
 				'filters_strict',
 				[
-					'label' 		=> __( 'Strict Filters Mode', 'elementor-extras' ),
-					'description'	=> __( 'In strict mode, when selecting \'All\' in filters, the results will not include posts that don\'t have a term belonging to this taxonomy.', 'elementor-extras'),
+					'label' 		=> __( 'Strict Filters Mode', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'In strict mode, when selecting \'All\' in filters, the results will not include posts that don\'t have a term belonging to this taxonomy.', 'landtech-extras-for-elementor'),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
 				]
@@ -538,7 +543,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_control(
 				'filter_post_type_heading',
 				[
-					'label' 	=> __( 'Post Types', 'elementor-extras' ),
+					'label' 	=> __( 'Post Types', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 					'condition'		=> [
@@ -550,7 +555,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_control(
 				'filter_post_type_fields',
 				[
-					'label' 		=> __( 'Show Filters', 'elementor-extras' ),
+					'label' 		=> __( 'Show Filters', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
 					'condition'		=> [
@@ -562,7 +567,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_control(
 				'filter_post_type_inline',
 				[
-					'label' 		=> __( 'Show Inline', 'elementor-extras' ),
+					'label' 		=> __( 'Show Inline', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
 					'condition'		=> [
@@ -575,7 +580,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_control(
 				'filter_post_type_all',
 				[
-					'label' 		=> __( 'Show All Option', 'elementor-extras' ),
+					'label' 		=> __( 'Show All Option', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
 					'condition' 	=> [
@@ -588,7 +593,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_control(
 				'filter_post_type_checked',
 				[
-					'label' 		=> __( 'Show Checked', 'elementor-extras' ),
+					'label' 		=> __( 'Show Checked', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
 					'condition'		=> [
@@ -603,7 +608,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_control(
 				'filter_post_type_exclude',
 				[	
-					'label'			=> __( 'Exclude', 'elementor-extras' ),
+					'label'			=> __( 'Exclude', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT2,
 					'label_block' 	=> true,
 					'default' 		=> '',
@@ -618,13 +623,13 @@ class Search_Form extends Extras_Widget {
 			$this->add_control(
 				'filter_post_type_control',
 				[
-					'label' 		=> __( 'Field Type', 'elementor-extras' ),
+					'label' 		=> __( 'Field Type', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT,
 					'default' 		=> 'select',
 					'options'		=> [
-						'checkbox'		=> __( 'Checkboxes', 'elementor-extras' ),
-						'radio'		=> __( 'Radio Buttons', 'elementor-extras' ),
-						'select'	=> __( 'Dropdown', 'elementor-extras' ),
+						'checkbox'		=> __( 'Checkboxes', 'landtech-extras-for-elementor' ),
+						'radio'		=> __( 'Radio Buttons', 'landtech-extras-for-elementor' ),
+						'select'	=> __( 'Dropdown', 'landtech-extras-for-elementor' ),
 					],
 					'condition'		=> [
 						'filter_types' => 'post_type',
@@ -637,7 +642,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_control(
 				'filter_author_heading',
 				[
-					'label' 	=> __( 'Authors', 'elementor-extras' ),
+					'label' 	=> __( 'Authors', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 					'condition'		=> [
@@ -649,7 +654,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_control(
 				'filter_author_fields',
 				[
-					'label' 		=> __( 'Show Filters', 'elementor-extras' ),
+					'label' 		=> __( 'Show Filters', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
 					'condition'		=> [
@@ -661,7 +666,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_control(
 				'filter_author_inline',
 				[
-					'label' 		=> __( 'Show Inline', 'elementor-extras' ),
+					'label' 		=> __( 'Show Inline', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
 					'condition'		=> [
@@ -674,7 +679,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_control(
 				'filter_author_all',
 				[
-					'label' 		=> __( 'Show All Option', 'elementor-extras' ),
+					'label' 		=> __( 'Show All Option', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
 					'condition' 	=> [
@@ -687,7 +692,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_control(
 				'filter_author_checked',
 				[
-					'label' 		=> __( 'Show Checked', 'elementor-extras' ),
+					'label' 		=> __( 'Show Checked', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
 					'condition' 	=> [
@@ -702,7 +707,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_control(
 				'filter_author_exclude',
 				[	
-					'label'			=> __( 'Exclude', 'elementor-extras' ),
+					'label'			=> __( 'Exclude', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT2,
 					'label_block' 	=> true,
 					'default' 		=> '',
@@ -717,13 +722,13 @@ class Search_Form extends Extras_Widget {
 			$this->add_control(
 				'filter_author_control',
 				[
-					'label' 		=> __( 'Filter Type', 'elementor-extras' ),
+					'label' 		=> __( 'Filter Type', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT,
 					'default' 		=> 'select',
 					'options'		=> [
-						'checkbox'		=> __( 'Checkboxes', 'elementor-extras' ),
-						'radio'		=> __( 'Radio Buttons', 'elementor-extras' ),
-						'select'	=> __( 'Dropdown', 'elementor-extras' ),
+						'checkbox'		=> __( 'Checkboxes', 'landtech-extras-for-elementor' ),
+						'radio'		=> __( 'Radio Buttons', 'landtech-extras-for-elementor' ),
+						'select'	=> __( 'Dropdown', 'landtech-extras-for-elementor' ),
 					],
 					'condition'		=> [
 						'filter_types' => 'author',
@@ -756,7 +761,7 @@ class Search_Form extends Extras_Widget {
 				$this->add_control(
 					$control_prefix . '_fields',
 					[
-						'label' 		=> __( 'Show Filters', 'elementor-extras' ),
+						'label' 		=> __( 'Show Filters', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SWITCHER,
 						'default' 		=> '',
 						'condition'		=> [
@@ -768,7 +773,7 @@ class Search_Form extends Extras_Widget {
 				$this->add_control(
 					$control_prefix . '_inline',
 					[
-						'label' 		=> __( 'Show Inline', 'elementor-extras' ),
+						'label' 		=> __( 'Show Inline', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SWITCHER,
 						'default' 		=> '',
 						'condition'		=> [
@@ -781,7 +786,7 @@ class Search_Form extends Extras_Widget {
 				$this->add_control(
 					$control_prefix . '_all',
 					[
-						'label' 		=> __( 'Show All Option', 'elementor-extras' ),
+						'label' 		=> __( 'Show All Option', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SWITCHER,
 						'default' 		=> 'yes',
 						'condition' => [
@@ -794,7 +799,7 @@ class Search_Form extends Extras_Widget {
 				$this->add_control(
 					$control_prefix . '_checked',
 					[
-						'label' 		=> __( 'Show Checked', 'elementor-extras' ),
+						'label' 		=> __( 'Show Checked', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SWITCHER,
 						'default' 		=> '',
 						'condition' 	=> [
@@ -809,7 +814,7 @@ class Search_Form extends Extras_Widget {
 				$this->add_control(
 					$control_prefix . '_exclude',
 					[
-						'label'			=> __( 'Exclude', 'elementor-extras' ),
+						'label'			=> __( 'Exclude', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SELECT2,
 						'label_block' 	=> true,
 						'multiple'		=> true,
@@ -824,7 +829,7 @@ class Search_Form extends Extras_Widget {
 				$this->add_control(
 					$control_prefix . '_all_label',
 					[
-						'label' 	=> __( 'All Label', 'elementor-extras' ),
+						'label' 	=> __( 'All Label', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::TEXT,
 						'default' 	=> '',
 						'condition'		=> [
@@ -838,13 +843,13 @@ class Search_Form extends Extras_Widget {
 				$this->add_control(
 					$control_prefix . '_control',
 					[
-						'label' 		=> __( 'Filter Type', 'elementor-extras' ),
+						'label' 		=> __( 'Filter Type', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SELECT,
 						'default' 		=> 'select',
 						'options'		=> [
-							'checkbox'		=> __( 'Checkboxes', 'elementor-extras' ),
-							'radio'		=> __( 'Radio Buttons', 'elementor-extras' ),
-							'select'	=> __( 'Dropdown', 'elementor-extras' ),
+							'checkbox'		=> __( 'Checkboxes', 'landtech-extras-for-elementor' ),
+							'radio'		=> __( 'Radio Buttons', 'landtech-extras-for-elementor' ),
+							'select'	=> __( 'Dropdown', 'landtech-extras-for-elementor' ),
 						],
 						'condition' 	=> [
 							'filter_types' => $name,
@@ -870,14 +875,14 @@ class Search_Form extends Extras_Widget {
 		$this->start_controls_section(
 			'section_button',
 			[
-				'label' => __( 'Submit Button', 'elementor-extras' ),
+				'label' => __( 'Submit Button', 'landtech-extras-for-elementor' ),
 			]
 		);
 
 			$this->add_control(
 				'heading_icon_content',
 				[
-					'label' 	=> __( 'Icon', 'elementor-extras' ),
+					'label' 	=> __( 'Icon', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 				]
 			);
@@ -896,14 +901,14 @@ class Search_Form extends Extras_Widget {
 		$this->start_controls_section(
 			'section_input',
 			[
-				'label' => __( 'Keyword Field', 'elementor-extras' ),
+				'label' => __( 'Keyword Field', 'landtech-extras-for-elementor' ),
 			]
 		);
 
 			$this->add_control(
 				'heading_input_content',
 				[
-					'label' 	=> __( 'Input', 'elementor-extras' ),
+					'label' 	=> __( 'Input', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -912,9 +917,9 @@ class Search_Form extends Extras_Widget {
 			$this->add_control(
 				'input_placeholder',
 				[
-					'label' 	=> __( 'Placeholder', 'elementor-extras' ),
+					'label' 	=> __( 'Placeholder', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::TEXT,
-					'default' 	=> __( 'What are you looking for?', 'elementor-extras' ),
+					'default' 	=> __( 'What are you looking for?', 'landtech-extras-for-elementor' ),
 				]
 			);
 
@@ -945,7 +950,7 @@ class Search_Form extends Extras_Widget {
 		$this->start_controls_section(
 			'section_form_style',
 			[
-				'label' => __( 'Form', 'elementor-extras' ),
+				'label' => __( 'Form', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -953,20 +958,20 @@ class Search_Form extends Extras_Widget {
 			$this->add_responsive_control(
 				'alignment',
 				[
-					'label' => __( 'Alignment', 'elementor-extras' ),
+					'label' => __( 'Alignment', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::CHOOSE,
 					'label_block' => false,
 					'options' => [
 						'left' => [
-							'title' => __( 'Left', 'elementor-extras' ),
+							'title' => __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' => 'eicon-h-align-left',
 						],
 						'center' => [
-							'title' => __( 'Center', 'elementor-extras' ),
+							'title' => __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' => 'eicon-h-align-center',
 						],
 						'right' => [
-							'title' => __( 'Right', 'elementor-extras' ),
+							'title' => __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' => 'eicon-h-align-right',
 						],
 					],
@@ -979,7 +984,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_control(
 				'collapse_spacing',
 				[
-					'label' 		=> __( 'Collapse Spacing', 'elementor-extras' ),
+					'label' 		=> __( 'Collapse Spacing', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
 					'prefix_class'	=> 'ee-search-form-spacing--',
@@ -992,7 +997,7 @@ class Search_Form extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'form_border',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '{{WRAPPER}} .ee-search-form.ee-search-form-skin--classic .ee-search-form__container,
 									{{WRAPPER}} .ee-search-form.ee-search-form-skin--fullscreen .ee-search-form__container,
 									{{WRAPPER}} .ee-search-form.ee-search-form-skin--expand .ee-search-form__fields,
@@ -1007,7 +1012,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_control(
 				'fields_style_heading',
 				[
-					'label' 	=> __( 'Fields', 'elementor-extras' ),
+					'label' 	=> __( 'Fields', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -1016,7 +1021,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_responsive_control(
 				'spacing',
 				[
-					'label' 		=> __( 'Spacing', 'elementor-extras' ),
+					'label' 		=> __( 'Spacing', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 		=> [
 						'size' 		=> '',
@@ -1046,7 +1051,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_responsive_control(
 				'padding', 
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 		=> [
 						'size' 		=> '',
@@ -1067,7 +1072,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_responsive_control(
 				'height', 
 				[
-					'label' 		=> __( 'Height', 'elementor-extras' ),
+					'label' 		=> __( 'Height', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 		=> [
 						'size' 		=> '',
@@ -1089,8 +1094,8 @@ class Search_Form extends Extras_Widget {
 			$this->add_responsive_control(
 				'fields_border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
-					'description'	=> __( 'For perfectly rounded corners set this to half of the height', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'For perfectly rounded corners set this to half of the height', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> '',
@@ -1117,7 +1122,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_responsive_control(
 				'separator_width',
 				[
-					'label' 		=> __( 'Separator Width', 'elementor-extras' ),
+					'label' 		=> __( 'Separator Width', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> '',
@@ -1143,7 +1148,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_control(
 				'separator_color',
 				[
-					'label' 	=> __( 'Separator Color', 'elementor-extras' ),
+					'label' 	=> __( 'Separator Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'selectors' => [
 						'{{WRAPPER}} .ee-form__fields .ee-form__field:not(:first-child)' => 'border-color: {{VALUE}};',
@@ -1158,10 +1163,10 @@ class Search_Form extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'fields_border',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '{{WRAPPER}} .ee-form__field__control--text,
 									{{WRAPPER}} .ee-form__field--check label i',
-					'exclude'	=> ['color'],
+					'exclude'	=> ['color'], // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor control schema.
 					'condition' => [
 						'collapse_spacing' => '',
 					],
@@ -1172,7 +1177,7 @@ class Search_Form extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'fields_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -1192,12 +1197,12 @@ class Search_Form extends Extras_Widget {
 
 			$this->start_controls_tabs( 'fields_style' );
 
-			$this->start_controls_tab( 'fields_style_default', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'fields_style_default', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'fields_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-form__field__control--text' => 'color: {{VALUE}};',
@@ -1208,7 +1213,7 @@ class Search_Form extends Extras_Widget {
 				$this->add_control(
 					'fields_background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-form__field__control--text' => 'background-color: {{VALUE}};',
@@ -1219,7 +1224,7 @@ class Search_Form extends Extras_Widget {
 				$this->add_control(
 					'fields_border_color',
 					[
-						'label' 	=> __( 'Border Color', 'elementor-extras' ),
+						'label' 	=> __( 'Border Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-form__field__control--text,
@@ -1245,12 +1250,12 @@ class Search_Form extends Extras_Widget {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'fields_style_focus', [ 'label' => __( 'Focus', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'fields_style_focus', [ 'label' => __( 'Focus', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'fields_color_focus',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-form__field__control--text:focus,
@@ -1266,7 +1271,7 @@ class Search_Form extends Extras_Widget {
 				$this->add_control(
 					'fields_background_color_focus',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-form__field__control--text:focus,
@@ -1279,7 +1284,7 @@ class Search_Form extends Extras_Widget {
 				$this->add_control(
 					'fields_border_color_focus',
 					[
-						'label' 	=> __( 'Border Color', 'elementor-extras' ),
+						'label' 	=> __( 'Border Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-form__field__control--text:focus,
@@ -1324,7 +1329,7 @@ class Search_Form extends Extras_Widget {
 		$this->start_controls_section(
 			'section_filters_style',
 			[
-				'label' => __( 'Filters', 'elementor-extras' ),
+				'label' => __( 'Filters', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -1332,7 +1337,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_control(
 				'filters_custom',
 				[
-					'label' 		=> __( 'Custom', 'elementor-extras' ),
+					'label' 		=> __( 'Custom', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
 					'separator' 	=> 'after',
@@ -1342,7 +1347,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_control(
 				'filters_layout_heading',
 				[
-					'label' 	=> __( 'Layout', 'elementor-extras' ),
+					'label' 	=> __( 'Layout', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 				]
 			);
@@ -1350,7 +1355,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_responsive_control(
 				'columns',
 				[
-					'label' 	=> __( 'Columns', 'elementor-extras' ),
+					'label' 	=> __( 'Columns', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> '3',
 					'tablet_default' 	=> '2',
@@ -1371,7 +1376,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_responsive_control(
 				'filters_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -1383,7 +1388,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_responsive_control(
 				'filters_distance', 
 				[
-					'label' 		=> __( 'Distance', 'elementor-extras' ),
+					'label' 		=> __( 'Distance', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 		=> [
 						'size' 		=> '',
@@ -1406,7 +1411,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_responsive_control(
 				'filters_horizontal_spacing', 
 				[
-					'label' 		=> __( 'Horizontal Spacing', 'elementor-extras' ),
+					'label' 		=> __( 'Horizontal Spacing', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 		=> [
 						'size' 		=> 24,
@@ -1427,7 +1432,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_responsive_control(
 				'filters_vertical_spacing', 
 				[
-					'label' 		=> __( 'Vertical Spacing', 'elementor-extras' ),
+					'label' 		=> __( 'Vertical Spacing', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 		=> [
 						'size' 		=> 24,
@@ -1448,7 +1453,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_control(
 				'filters_titles_heading',
 				[
-					'label' 	=> __( 'Titles', 'elementor-extras' ),
+					'label' 	=> __( 'Titles', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -1458,7 +1463,7 @@ class Search_Form extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'filters_titles_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -1469,7 +1474,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_responsive_control(
 				'filters_titles_margin',
 				[
-					'label' 		=> __( 'Margin', 'elementor-extras' ),
+					'label' 		=> __( 'Margin', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -1481,7 +1486,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_control(
 				'filters_labels_heading',
 				[
-					'label' 	=> __( 'Labels', 'elementor-extras' ),
+					'label' 	=> __( 'Labels', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -1491,7 +1496,7 @@ class Search_Form extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'filters_labels_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -1502,7 +1507,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_control(
 				'filters_checkboxes_heading',
 				[
-					'label' 	=> __( 'Checkboxes', 'elementor-extras' ),
+					'label' 	=> __( 'Checkboxes', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -1511,7 +1516,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_responsive_control(
 				'filters_checkboxes_size', 
 				[
-					'label' 		=> __( 'Size', 'elementor-extras' ),
+					'label' 		=> __( 'Size', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 		=> [
 						'size' 		=> '',
@@ -1536,7 +1541,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_responsive_control(
 				'filters_checkboxes_border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> '',
@@ -1559,7 +1564,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_responsive_control(
 				'filters_check_distance', 
 				[
-					'label' 		=> __( 'Distance', 'elementor-extras' ),
+					'label' 		=> __( 'Distance', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 		=> [
 						'size' 		=> '',
@@ -1580,7 +1585,7 @@ class Search_Form extends Extras_Widget {
 			$this->start_controls_tabs( 'filters_check_style' );
 
 			$this->start_controls_tab( 'filters_check_style_default', [
-				'label' => __( 'Default', 'elementor-extras' ),
+				'label' => __( 'Default', 'landtech-extras-for-elementor' ),
 				'condition' => [
 					'filters_custom!' => '',
 				],
@@ -1589,7 +1594,7 @@ class Search_Form extends Extras_Widget {
 				$this->add_control(
 					'filters_check_background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-form__field--check label i' => 'background-color: {{VALUE}};',
@@ -1603,7 +1608,7 @@ class Search_Form extends Extras_Widget {
 				$this->add_control(
 					'filters_check_border_color',
 					[
-						'label' 	=> __( 'Border Color', 'elementor-extras' ),
+						'label' 	=> __( 'Border Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-form__field--check label i' => 'border-color: {{VALUE}};',
@@ -1628,7 +1633,7 @@ class Search_Form extends Extras_Widget {
 			$this->end_controls_tab();
 
 			$this->start_controls_tab( 'filters_check_style_hover', [
-				'label' => __( 'Hover', 'elementor-extras' ),
+				'label' => __( 'Hover', 'landtech-extras-for-elementor' ),
 				'condition' => [
 					'filters_custom!' => '',
 				],
@@ -1637,7 +1642,7 @@ class Search_Form extends Extras_Widget {
 				$this->add_control(
 					'filters_check_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'global' => [
 							'default' => Global_Colors::COLOR_PRIMARY,
@@ -1654,7 +1659,7 @@ class Search_Form extends Extras_Widget {
 				$this->add_control(
 					'filters_check_background_color_hover',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-form__field--check.ee-custom:hover label i' => 'background-color: {{VALUE}};',
@@ -1668,7 +1673,7 @@ class Search_Form extends Extras_Widget {
 				$this->add_control(
 					'filters_check_border_color_hover',
 					[
-						'label' 	=> __( 'Border Color', 'elementor-extras' ),
+						'label' 	=> __( 'Border Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-form__field--check.ee-custom:hover label i' => 'border-color: {{VALUE}};',
@@ -1693,7 +1698,7 @@ class Search_Form extends Extras_Widget {
 			$this->end_controls_tab();
 
 			$this->start_controls_tab( 'filters_check_style_checked', [
-				'label' => __( 'Checked', 'elementor-extras' ),
+				'label' => __( 'Checked', 'landtech-extras-for-elementor' ),
 				'condition' => [
 					'filters_custom!' => '',
 				],
@@ -1703,7 +1708,7 @@ class Search_Form extends Extras_Widget {
 				$this->add_control(
 					'filters_check_accent_checked',
 					[
-						'label' 	=> __( 'Accent Color', 'elementor-extras' ),
+						'label' 	=> __( 'Accent Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'global' => [
 							'default' => Global_Colors::COLOR_PRIMARY,
@@ -1721,7 +1726,7 @@ class Search_Form extends Extras_Widget {
 				$this->add_control(
 					'filters_check_border_color_checked',
 					[
-						'label' 	=> __( 'Border Color', 'elementor-extras' ),
+						'label' 	=> __( 'Border Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-form__field__control--check:checked + label i' => 'border-color: {{VALUE}};',
@@ -1750,7 +1755,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_control(
 				'filters_dropdown_heading',
 				[
-					'label' 	=> __( 'Dropdowns', 'elementor-extras' ),
+					'label' 	=> __( 'Dropdowns', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -1759,7 +1764,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_responsive_control(
 				'filters_dropdown_padding', 
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'allowed_dimensions' => 'horizontal',
@@ -1775,7 +1780,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_responsive_control(
 				'filters_dropdown_items_padding', 
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' => [
@@ -1790,7 +1795,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_group_control(
 				Group_Control_Box_Shadow::get_type(),
 				[
-					'label' 	=> __( 'Options Box Shadow', 'elementor-extras' ),
+					'label' 	=> __( 'Options Box Shadow', 'landtech-extras-for-elementor' ),
 					'name' 		=> 'filters_dropdown_options_box_shadow',
 					'selector' 	=> '.ee-select2__dropdown.ee-select2__dropdown--{{ID}}',
 					'condition' => [
@@ -1803,7 +1808,7 @@ class Search_Form extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'filters_dropdown_options_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -1818,7 +1823,7 @@ class Search_Form extends Extras_Widget {
 			$this->start_controls_tabs( 'filters_dropdown_items_style' );
 
 			$this->start_controls_tab( 'filters_dropdown_items_style_default', [
-				'label' => __( 'Default', 'elementor-extras' ),
+				'label' => __( 'Default', 'landtech-extras-for-elementor' ),
 				'condition' => [
 					'filters_custom!' => '',
 				],
@@ -1827,7 +1832,7 @@ class Search_Form extends Extras_Widget {
 				$this->add_control(
 					'filters_dropdown_items_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'.ee-select2__dropdown--{{ID}} .select2-results__option' => 'color: {{VALUE}};',
@@ -1841,7 +1846,7 @@ class Search_Form extends Extras_Widget {
 				$this->add_control(
 					'filters_dropdown_items_background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'.ee-select2__dropdown--{{ID}} .select2-results__option[aria-selected]' => 'background-color: {{VALUE}};',
@@ -1855,7 +1860,7 @@ class Search_Form extends Extras_Widget {
 			$this->end_controls_tab();
 
 			$this->start_controls_tab( 'filters_dropdown_items_style_hover', [
-				'label' => __( 'Hover', 'elementor-extras' ),
+				'label' => __( 'Hover', 'landtech-extras-for-elementor' ),
 				'condition' => [
 					'filters_custom!' => '',
 				],
@@ -1864,7 +1869,7 @@ class Search_Form extends Extras_Widget {
 				$this->add_control(
 					'filters_dropdown_items_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'.ee-select2__dropdown.ee-select2__dropdown--{{ID}} .select2-results__option.select2-results__option--highlighted[aria-selected]' => 'color: {{VALUE}};',
@@ -1878,7 +1883,7 @@ class Search_Form extends Extras_Widget {
 				$this->add_control(
 					'filters_dropdown_items_background_color_hover',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'global' => [
 							'default' => Global_Colors::COLOR_PRIMARY,
@@ -1895,7 +1900,7 @@ class Search_Form extends Extras_Widget {
 			$this->end_controls_tab();
 
 			$this->start_controls_tab( 'filters_dropdown_items_style_selected', [
-				'label' => __( 'Selected', 'elementor-extras' ),
+				'label' => __( 'Selected', 'landtech-extras-for-elementor' ),
 				'condition' => [
 					'filters_custom!' => '',
 				],
@@ -1904,7 +1909,7 @@ class Search_Form extends Extras_Widget {
 				$this->add_control(
 					'filters_dropdown_items_color_highlighted',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'.ee-select2__dropdown.ee-select2__dropdown--{{ID}} .select2-results__option[aria-selected=true]' => 'color: {{VALUE}};',
@@ -1918,7 +1923,7 @@ class Search_Form extends Extras_Widget {
 				$this->add_control(
 					'filters_dropdown_items_background_color_selected',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'.ee-select2__dropdown.ee-select2__dropdown--{{ID}} .select2-results__option[aria-selected=true]' => 'background-color: {{VALUE}};',
@@ -1948,19 +1953,19 @@ class Search_Form extends Extras_Widget {
 		$this->start_controls_section(
 			'section_button_style',
 			[
-				'label' => __( 'Submit Button', 'elementor-extras' ),
+				'label' => __( 'Submit Button', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
 
 			$this->start_controls_tabs( 'button_style' );
 
-			$this->start_controls_tab( 'button_style_default', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'button_style_default', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'button_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-search-form__submit' => 'color: {{VALUE}};',
@@ -1971,7 +1976,7 @@ class Search_Form extends Extras_Widget {
 				$this->add_control(
 					'button_background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'global' => [
 							'default' => Global_Colors::COLOR_PRIMARY,
@@ -1985,7 +1990,7 @@ class Search_Form extends Extras_Widget {
 				$this->add_control(
 					'button_border_color',
 					[
-						'label' 	=> __( 'Border Color', 'elementor-extras' ),
+						'label' 	=> __( 'Border Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-search-form__submit' => 'border-color: {{VALUE}};',
@@ -2009,12 +2014,12 @@ class Search_Form extends Extras_Widget {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'button_style_hover', [ 'label' => __( 'Hover', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'button_style_hover', [ 'label' => __( 'Hover', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'button_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-search-form__submit:hover' => 'color: {{VALUE}};',
@@ -2025,7 +2030,7 @@ class Search_Form extends Extras_Widget {
 				$this->add_control(
 					'button_background_color_hover',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-search-form__submit:hover' => 'background-color: {{VALUE}};',
@@ -2036,7 +2041,7 @@ class Search_Form extends Extras_Widget {
 				$this->add_control(
 					'button_border_color_hover',
 					[
-						'label' 	=> __( 'Border Color', 'elementor-extras' ),
+						'label' 	=> __( 'Border Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-search-form__submit:hover' => 'border-color: {{VALUE}};',
@@ -2066,7 +2071,7 @@ class Search_Form extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'button_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -2089,7 +2094,7 @@ class Search_Form extends Extras_Widget {
 		$this->start_controls_section(
 			'section_input_style',
 			[
-				'label' => __( 'Keyword Field', 'elementor-extras' ),
+				'label' => __( 'Keyword Field', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -2097,7 +2102,7 @@ class Search_Form extends Extras_Widget {
 			$this->add_responsive_control(
 				'input_width',
 				[
-					'label' 	=> __( 'Width', 'elementor-extras' ),
+					'label' 	=> __( 'Width', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> '',
@@ -2116,12 +2121,12 @@ class Search_Form extends Extras_Widget {
 
 			$this->start_controls_tabs( 'input_style' );
 
-			$this->start_controls_tab( 'input_style_default', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'input_style_default', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'input_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-form__field__control.ee-search-form__input' => 'color: {{VALUE}};',
@@ -2132,7 +2137,7 @@ class Search_Form extends Extras_Widget {
 				$this->add_control(
 					'placeholder_color',
 					[
-						'label' 	=> __( 'Placeholder Color', 'elementor-extras' ),
+						'label' 	=> __( 'Placeholder Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => Utils::get_placeholder_selectors( '{{WRAPPER}} .ee-form__field__control.ee-search-form__input', 'color: {{VALUE}};' ),
 					]
@@ -2141,7 +2146,7 @@ class Search_Form extends Extras_Widget {
 				$this->add_control(
 					'input_background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-form__field__control.ee-search-form__input' => 'background-color: {{VALUE}};',
@@ -2152,7 +2157,7 @@ class Search_Form extends Extras_Widget {
 				$this->add_control(
 					'input_border_color',
 					[
-						'label' 	=> __( 'Border Color', 'elementor-extras' ),
+						'label' 	=> __( 'Border Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-form__field__control.ee-search-form__input' => 'border-color: {{VALUE}};',
@@ -2165,12 +2170,12 @@ class Search_Form extends Extras_Widget {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'input_style_focus', [ 'label' => __( 'Focus', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'input_style_focus', [ 'label' => __( 'Focus', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'input_color_focus',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-form__field__control.ee-search-form__input:focus' => 'color: {{VALUE}};',
@@ -2181,7 +2186,7 @@ class Search_Form extends Extras_Widget {
 				$this->add_control(
 					'placeholder_color_focus',
 					[
-						'label' 	=> __( 'Placeholder Color', 'elementor-extras' ),
+						'label' 	=> __( 'Placeholder Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => Utils::get_placeholder_selectors( '{{WRAPPER}} .ee-form__field__control.ee-search-form__input:focus', 'color: {{VALUE}};' ),
 					]
@@ -2190,7 +2195,7 @@ class Search_Form extends Extras_Widget {
 				$this->add_control(
 					'input_background_color_focus',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-form__field__control.ee-search-form__input:focus' => 'background-color: {{VALUE}};',
@@ -2201,7 +2206,7 @@ class Search_Form extends Extras_Widget {
 				$this->add_control(
 					'input_border_color_focus',
 					[
-						'label' 	=> __( 'Border Color', 'elementor-extras' ),
+						'label' 	=> __( 'Border Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-form__field__control.ee-search-form__input:focus' => 'border-color: {{VALUE}};',
@@ -2275,7 +2280,7 @@ class Search_Form extends Extras_Widget {
 			],
 		] );
 
-		?><div <?php echo $this->get_render_attribute_string( 'filters' ); ?>><?php
+		?><div <?php $this->print_render_attribute_string( 'filters' ); ?>><?php
 			foreach ( $this->_fields as $category => $field ) {
 
 				if ( true === $field['inline'] ) {
@@ -2322,8 +2327,10 @@ class Search_Form extends Extras_Widget {
 		$field_key 	= $this->get_repeater_setting_key( 'category', 'filters', $category );
 
 		if ( 'select' === $settings['filter_' . $category . '_control'] || $is_inline ) {
-			add_action( 'elementor-extras/search-form/{$category}/options/before', [ $this, 'render_filter_select_start' ], 10, 2 );
-			add_action( 'elementor-extras/search-form/{$category}/options/after', [ $this, 'render_filter_select_end' ], 10, 1 );
+			$hook_before = 'landtech_extras/search-form/' . $category . '/options/before';
+			$hook_after  = 'landtech_extras/search-form/' . $category . '/options/after';
+			add_action( $hook_before, [ $this, 'render_filter_select_start' ], 10, 2 );
+			add_action( $hook_after, [ $this, 'render_filter_select_end' ], 10, 1 );
 		}
 
 
@@ -2339,7 +2346,7 @@ class Search_Form extends Extras_Widget {
 				],
 			] );
 
-			?><div <?php echo $this->get_render_attribute_string( $field_key ); ?>><?php
+			?><div <?php $this->print_render_attribute_string( $field_key ); ?>><?php
 		}
 
 		if ( '' !== $settings['filters_titles'] && ! $is_inline ) {
@@ -2353,8 +2360,10 @@ class Search_Form extends Extras_Widget {
 		}
 
 		if ( 'select' === $settings['filter_' . $category . '_control'] || $is_inline ) {
-			remove_action( 'elementor-extras/search-form/{$category}/options/before', [ $this, 'render_filter_select_start' ], 10 );
-			remove_action( 'elementor-extras/search-form/{$category}/options/after', [ $this, 'render_filter_select_end' ], 10, 1 );
+			$hook_before = 'landtech_extras/search-form/' . $category . '/options/before';
+			$hook_after  = 'landtech_extras/search-form/' . $category . '/options/after';
+			remove_action( $hook_before, [ $this, 'render_filter_select_start' ], 10 );
+			remove_action( $hook_after, [ $this, 'render_filter_select_end' ], 10 );
 		}
 	}
 
@@ -2375,8 +2384,8 @@ class Search_Form extends Extras_Widget {
 			],
 		] );
 
-		?><div <?php echo $this->get_render_attribute_string( $title_key ); ?>>
-			<?php echo $field['label']; ?>
+		?><div <?php $this->print_render_attribute_string( $title_key ); ?>>
+			<?php echo esc_html( $field['label'] ); ?>
 		</div><?php
 	}
 
@@ -2389,22 +2398,22 @@ class Search_Form extends Extras_Widget {
 	public function render_filter_options( $category, $field ) {
 
 		/**
-		 * elementor-extras/search-form/{$category}/options/before hook
+		 * landtech_extras/search-form/{$category}/options/before hook
 		 *
 		 * @since 2.1.0
 		 */
-		do_action( 'elementor-extras/search-form/{$category}/options/before', $category, $field );
+		do_action( 'landtech_extras/search-form/' . $category . '/options/before', $category, $field );
 		
 		foreach ( $field['values'] as $values ) { ?>
 			<?php $this->render_filter_option( $category, $values ); ?>
 		<?php }
 
 		/**
-		 * elementor-extras/search-form/{$category}/options/after hook
+		 * landtech_extras/search-form/{$category}/options/after hook
 		 *
 		 * @since 2.1.0
 		 */
-		do_action( 'elementor-extras/search-form/{$category}/options/after', $category );
+		do_action( 'landtech_extras/search-form/' . $category . '/options/after', $category );
 	}
 
 	/**
@@ -2499,13 +2508,13 @@ class Search_Form extends Extras_Widget {
 			] );
 		} ?>
 
-		<div <?php echo $this->get_render_attribute_string( $option_key ); ?>>
-			<input <?php echo $this->get_render_attribute_string( $input_key ); ?>>
-			<label <?php echo $this->get_render_attribute_string( $label_key ); ?>>
+		<div <?php $this->print_render_attribute_string( $option_key ); ?>>
+			<input <?php $this->print_render_attribute_string( $input_key ); ?>>
+			<label <?php $this->print_render_attribute_string( $label_key ); ?>>
 				<?php if ( '' !== $settings['filters_custom'] ) { ?>
-					<i <?php echo $this->get_render_attribute_string( $icon_key ); ?>></i>
+					<i <?php $this->print_render_attribute_string( $icon_key ); ?>></i>
 				<?php } ?>
-				<?php echo $field['title']; ?>
+				<?php echo esc_html( $field['title'] ); ?>
 			</label>
 		</div><?php
 	}
@@ -2533,8 +2542,8 @@ class Search_Form extends Extras_Widget {
 			]
 		] ); ?>
 
-		<option <?php echo $this->get_render_attribute_string( $option_key ); ?>>
-			<?php echo $field['title']; ?>
+		<option <?php $this->print_render_attribute_string( $option_key ); ?>>
+			<?php echo esc_html( $field['title'] ); ?>
 		</option><?php
 	}
 
@@ -2561,7 +2570,7 @@ class Search_Form extends Extras_Widget {
 			],
 			$select_key => [
 				'name' 	=> $category,
-				'id'	=> 'ee_filter_' . $category . '_' . $this->get_id(),
+				'id'	=> 'ltxe_filter_' . $category . '_' . $this->get_id(),
 				'class' => [
 					'ee-search-form__filters-category__filter',
 					'ee-form__field__control',
@@ -2576,8 +2585,8 @@ class Search_Form extends Extras_Widget {
 			$this->add_render_attribute( $option_key, 'class', 'ee-custom' );
 		}
 
-		?><div <?php echo $this->get_render_attribute_string( $option_key ); ?>>
-			<select <?php echo $this->get_render_attribute_string( $select_key ); ?>><?php // Wee need this for focus states
+		?><div <?php $this->print_render_attribute_string( $option_key ); ?>>
+			<select <?php $this->print_render_attribute_string( $select_key ); ?>><?php // Wee need this for focus states
 
 	}
 
@@ -2603,7 +2612,7 @@ class Search_Form extends Extras_Widget {
 		] );
 
 				?></select>
-			<label <?php echo $this->get_render_attribute_string( $label_key ); ?>></label>
+			<label <?php $this->print_render_attribute_string( $label_key ); ?>></label>
 		</div><?php
 	}
 
@@ -2626,10 +2635,10 @@ class Search_Form extends Extras_Widget {
 			}
 		}
 
-		$this->render_hidden_field( 'ee_search_query', '', 'ee-form__field__control--sent' );
+		$this->render_hidden_field( 'ltxe_search_query', '', 'ee-form__field__control--sent' );
 
 		if ( '' !== $settings['search_id'] ) {
-			$this->render_hidden_field( 'ee_search_id', $settings['search_id'], 'ee-form__field__control--sent' );
+			$this->render_hidden_field( 'ltxe_search_id', $settings['search_id'], 'ee-form__field__control--sent' );
 		}
 	}
 
@@ -2651,7 +2660,7 @@ class Search_Form extends Extras_Widget {
 			'value' => $value,
 		] );
 
-		?><input <?php echo $this->get_render_attribute_string( $hidden_key ); ?> /><?php
+		?><input <?php $this->print_render_attribute_string( $hidden_key ); ?> /><?php
 	}
 
 	/**

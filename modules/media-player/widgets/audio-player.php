@@ -1,10 +1,11 @@
 <?php
-namespace ElementorExtras\Modules\MediaPlayer\Widgets;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\MediaPlayer\Widgets;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Extras_Widget;
-use ElementorExtras\Modules\MediaPlayer\Skins;
-use ElementorExtras\Group_Control_Transition;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Extras_Widget;
+use LandTechExtras\Modules\MediaPlayer\Skins;
+use LandTechExtras\Group_Control_Transition;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -48,7 +49,7 @@ class Audio_Player extends Extras_Widget {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Audio Player', 'elementor-extras' );
+		return __( 'Audio Player', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -73,8 +74,8 @@ class Audio_Player extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
-			'audio-player',
-			'jquery-appear',
+			'landtech-extras-audio-player',
+			'landtech-extras-jquery-appear',
 		];
 	}
 
@@ -99,7 +100,7 @@ class Audio_Player extends Extras_Widget {
 		$this->start_controls_section(
 			'section_playlist',
 			[
-				'label' 	=> __( 'Playlist', 'elementor-extras' ),
+				'label' 	=> __( 'Playlist', 'landtech-extras-for-elementor' ),
 			]
 		);
 
@@ -108,11 +109,11 @@ class Audio_Player extends Extras_Widget {
 			$repeater->add_control(
 				'title',
 				[
-					'label' 		=> __( 'Title', 'elementor-extras' ),
+					'label' 		=> __( 'Title', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::TEXT,
 					'dynamic' 		=> [ 'active' => true ],
 					'label_block' 	=> true,
-					'default' 		=> __( 'No title', 'elementor-extras' ),
+					'default' 		=> __( 'No title', 'landtech-extras-for-elementor' ),
 				]
 			);
 
@@ -121,19 +122,19 @@ class Audio_Player extends Extras_Widget {
 			$repeater->start_controls_tab(
 				'tab_source_mpeg',
 				[
-					'label' => __( 'MP3', 'elementor-extras' ),
+					'label' => __( 'MP3', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 				$repeater->add_control(
 					'audio_source',
 					[
-						'label' 		=> __( 'Source', 'elementor-extras' ),
+						'label' 		=> __( 'Source', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SELECT,
 						'default'		=> 'file',
 						'options'		=> [
-							'file'		=> __( 'File', 'elementor-extras' ),
-							'url'		=> __( 'External', 'elementor-extras' ),
+							'file'		=> __( 'File', 'landtech-extras-for-elementor' ),
+							'url'		=> __( 'External', 'landtech-extras-for-elementor' ),
 						],
 					]
 				);
@@ -141,7 +142,7 @@ class Audio_Player extends Extras_Widget {
 				$repeater->add_control(
 					'source_mpeg',
 					[
-						'label' 		=> __( 'File', 'elementor-extras' ),
+						'label' 		=> __( 'File', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::MEDIA,
 						'dynamic' 		=> [
 							'active' 	=> true,
@@ -160,9 +161,9 @@ class Audio_Player extends Extras_Widget {
 				$repeater->add_control(
 					'source_mpeg_url',
 					[
-						'label' 		=> __( 'URL', 'elementor-extras' ),
+						'label' 		=> __( 'URL', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::TEXT,
-						'description' 	=> __( 'Insert URL to an .mp3 audio file', 'elementor-extras' ),
+						'description' 	=> __( 'Insert URL to an .mp3 audio file', 'landtech-extras-for-elementor' ),
 						'dynamic' 		=> [
 							'active' 	=> true,
 							'categories' => [
@@ -181,19 +182,19 @@ class Audio_Player extends Extras_Widget {
 			$repeater->start_controls_tab(
 				'tab_source_m4a',
 				[
-					'label' => __( 'M4A', 'elementor-extras' ),
+					'label' => __( 'M4A', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 				$repeater->add_control(
 					'audio_source_m4a',
 					[
-						'label' 		=> __( 'Source', 'elementor-extras' ),
+						'label' 		=> __( 'Source', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SELECT,
 						'default'		=> 'file',
 						'options'		=> [
-							'file'		=> __( 'File', 'elementor-extras' ),
-							'url'		=> __( 'External', 'elementor-extras' ),
+							'file'		=> __( 'File', 'landtech-extras-for-elementor' ),
+							'url'		=> __( 'External', 'landtech-extras-for-elementor' ),
 						],
 					]
 				);
@@ -201,7 +202,7 @@ class Audio_Player extends Extras_Widget {
 				$repeater->add_control(
 					'source_m4a',
 					[
-						'label' 		=> __( 'File', 'elementor-extras' ),
+						'label' 		=> __( 'File', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::MEDIA,
 						'dynamic' 		=> [
 							'active' 	=> true,
@@ -220,9 +221,9 @@ class Audio_Player extends Extras_Widget {
 				$repeater->add_control(
 					'source_m4a_url',
 					[
-						'label' 		=> __( 'URL', 'elementor-extras' ),
+						'label' 		=> __( 'URL', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::TEXT,
-						'description' 	=> __( 'Insert URL to an .m4a audio file', 'elementor-extras' ),
+						'description' 	=> __( 'Insert URL to an .m4a audio file', 'landtech-extras-for-elementor' ),
 						'dynamic' 		=> [
 							'active' 	=> true,
 							'categories' => [
@@ -241,19 +242,19 @@ class Audio_Player extends Extras_Widget {
 			$repeater->start_controls_tab(
 				'tab_source_wav',
 				[
-					'label' => __( 'WAV', 'elementor-extras' ),
+					'label' => __( 'WAV', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 				$repeater->add_control(
 					'audio_source_wav',
 					[
-						'label' 		=> __( 'Source', 'elementor-extras' ),
+						'label' 		=> __( 'Source', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SELECT,
 						'default'		=> 'file',
 						'options'		=> [
-							'file'		=> __( 'File', 'elementor-extras' ),
-							'url'		=> __( 'External', 'elementor-extras' ),
+							'file'		=> __( 'File', 'landtech-extras-for-elementor' ),
+							'url'		=> __( 'External', 'landtech-extras-for-elementor' ),
 						],
 					]
 				);
@@ -261,7 +262,7 @@ class Audio_Player extends Extras_Widget {
 				$repeater->add_control(
 					'source_wav',
 					[
-						'label' 		=> __( 'File', 'elementor-extras' ),
+						'label' 		=> __( 'File', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::MEDIA,
 						'dynamic' 		=> [
 							'active' 	=> true,
@@ -280,9 +281,9 @@ class Audio_Player extends Extras_Widget {
 				$repeater->add_control(
 					'source_wav_url',
 					[
-						'label' 		=> __( 'URL', 'elementor-extras' ),
+						'label' 		=> __( 'URL', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::TEXT,
-						'description' 	=> __( 'Insert URL to an .wav audio file', 'elementor-extras' ),
+						'description' 	=> __( 'Insert URL to an .wav audio file', 'landtech-extras-for-elementor' ),
 						'dynamic' 		=> [
 							'active' 	=> true,
 							'categories' => [
@@ -301,19 +302,19 @@ class Audio_Player extends Extras_Widget {
 			$repeater->start_controls_tab(
 				'tab_source_ogg',
 				[
-					'label' => __( 'OGG', 'elementor-extras' ),
+					'label' => __( 'OGG', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 				$repeater->add_control(
 					'audio_source_ogg',
 					[
-						'label' 		=> __( 'Source', 'elementor-extras' ),
+						'label' 		=> __( 'Source', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SELECT,
 						'default'		=> 'file',
 						'options'		=> [
-							'file'		=> __( 'File', 'elementor-extras' ),
-							'url'		=> __( 'External', 'elementor-extras' ),
+							'file'		=> __( 'File', 'landtech-extras-for-elementor' ),
+							'url'		=> __( 'External', 'landtech-extras-for-elementor' ),
 						],
 					]
 				);
@@ -321,7 +322,7 @@ class Audio_Player extends Extras_Widget {
 				$repeater->add_control(
 					'source_ogg',
 					[
-						'label' 		=> __( 'File', 'elementor-extras' ),
+						'label' 		=> __( 'File', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::MEDIA,
 						'dynamic' 		=> [
 							'active' 	=> true,
@@ -340,9 +341,9 @@ class Audio_Player extends Extras_Widget {
 				$repeater->add_control(
 					'source_ogg_url',
 					[
-						'label' 		=> __( 'URL', 'elementor-extras' ),
+						'label' 		=> __( 'URL', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::TEXT,
-						'description' 	=> __( 'Insert URL to an .ogg audio file', 'elementor-extras' ),
+						'description' 	=> __( 'Insert URL to an .ogg audio file', 'landtech-extras-for-elementor' ),
 						'dynamic' 		=> [
 							'active' 	=> true,
 							'categories' => [
@@ -379,14 +380,14 @@ class Audio_Player extends Extras_Widget {
 		$this->start_controls_section(
 			'section_settings',
 			[
-				'label' => __( 'Settings', 'elementor-extras' ),
+				'label' => __( 'Settings', 'landtech-extras-for-elementor' ),
 			]
 		);
 
 			$this->add_control(
 				'behaviour_heading',
 				[
-					'label' 	=> __( 'Behaviour', 'elementor-extras' ),
+					'label' 	=> __( 'Behaviour', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 				]
 			);
@@ -394,13 +395,13 @@ class Audio_Player extends Extras_Widget {
 			$this->add_control(
 				'preload',
 				[
-					'label' 		=> __( 'Preload', 'elementor-extras' ),
+					'label' 		=> __( 'Preload', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT,
 					'default'		=> 'auto',
 					'options'		=> [
-						'auto'		=> __( 'Auto', 'elementor-extras' ),
-						'metadata'	=> __( 'Metadata', 'elementor-extras' ),
-						'none'		=> __( 'None', 'elementor-extras' ),
+						'auto'		=> __( 'Auto', 'landtech-extras-for-elementor' ),
+						'metadata'	=> __( 'Metadata', 'landtech-extras-for-elementor' ),
+						'none'		=> __( 'None', 'landtech-extras-for-elementor' ),
 					],
 				]
 			);
@@ -408,11 +409,11 @@ class Audio_Player extends Extras_Widget {
 			$this->add_control(
 				'autoplay',
 				[
-					'label' 		=> __( 'Auto Play', 'elementor-extras' ),
+					'label' 		=> __( 'Auto Play', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'yes',
 					'frontend_available' => true,
 				]
@@ -422,7 +423,7 @@ class Audio_Player extends Extras_Widget {
 				'autoplay_notice',
 				[
 					'type' 				=> Controls_Manager::RAW_HTML,
-					'raw' 				=> __( 'Many browsers don\'t allow sound to autoplay without user interaction.', 'elementor-extras' ),
+					'raw' 				=> __( 'Many browsers don\'t allow sound to autoplay without user interaction.', 'landtech-extras-for-elementor' ),
 					'content_classes' 	=> 'elementor-panel-alert elementor-panel-alert-warning',
 					'condition' 		=> [
 						'autoplay!' => ''
@@ -433,22 +434,22 @@ class Audio_Player extends Extras_Widget {
 			$this->add_control(
 				'loop',
 				[
-					'label' 		=> __( 'Loop Track', 'elementor-extras' ),
+					'label' 		=> __( 'Loop Track', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 			$this->add_control(
 				'loop_playlist',
 				[
-					'label' 		=> __( 'Loop Playlist', 'elementor-extras' ),
+					'label' 		=> __( 'Loop Playlist', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 					'condition'		=> [
 						'loop!'		=> 'yes',
@@ -459,7 +460,7 @@ class Audio_Player extends Extras_Widget {
 			$this->add_control(
 				'display_heading',
 				[
-					'label' 	=> __( 'Display', 'elementor-extras' ),
+					'label' 	=> __( 'Display', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator'	=> 'before',
 				]
@@ -468,11 +469,11 @@ class Audio_Player extends Extras_Widget {
 			$this->add_control(
 				'show_restart',
 				[
-					'label' 		=> __( 'Show Restart', 'elementor-extras' ),
+					'label' 		=> __( 'Show Restart', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'show',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'show',
 				]
 			);
@@ -480,11 +481,11 @@ class Audio_Player extends Extras_Widget {
 			$this->add_control(
 				'show_time',
 				[
-					'label' 		=> __( 'Show Time', 'elementor-extras' ),
+					'label' 		=> __( 'Show Time', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'show',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'show',
 				]
 			);
@@ -492,11 +493,11 @@ class Audio_Player extends Extras_Widget {
 			$this->add_control(
 				'show_progress',
 				[
-					'label' 		=> __( 'Show Progress', 'elementor-extras' ),
+					'label' 		=> __( 'Show Progress', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'show',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'show',
 				]
 			);
@@ -504,11 +505,11 @@ class Audio_Player extends Extras_Widget {
 			$this->add_control(
 				'show_duration',
 				[
-					'label' 		=> __( 'Show Duration', 'elementor-extras' ),
+					'label' 		=> __( 'Show Duration', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'show',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'show',
 				]
 			);
@@ -516,11 +517,11 @@ class Audio_Player extends Extras_Widget {
 			$this->add_control(
 				'show_playlist',
 				[
-					'label' 		=> __( 'Enable Playlist', 'elementor-extras' ),
+					'label' 		=> __( 'Enable Playlist', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'show',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'show',
 				]
 			);
@@ -528,11 +529,11 @@ class Audio_Player extends Extras_Widget {
 			$this->add_control(
 				'show_playlist_start',
 				[
-					'label' 		=> __( 'Show Playlist', 'elementor-extras' ),
+					'label' 		=> __( 'Show Playlist', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'show',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'show',
 					'condition'		=> [
 						'show_playlist!' => '',
@@ -543,11 +544,11 @@ class Audio_Player extends Extras_Widget {
 			$this->add_control(
 				'show_playlist_control',
 				[
-					'label' 		=> __( 'Show Playlist Button', 'elementor-extras' ),
+					'label' 		=> __( 'Show Playlist Button', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'show',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'show',
 					'condition'		=> [
 						'show_playlist!' => '',
@@ -558,7 +559,7 @@ class Audio_Player extends Extras_Widget {
 			$this->add_control(
 				'volume_heading',
 				[
-					'label' 	=> __( 'Volume', 'elementor-extras' ),
+					'label' 	=> __( 'Volume', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator'	=> 'before',
 				]
@@ -567,11 +568,11 @@ class Audio_Player extends Extras_Widget {
 			$this->add_control(
 				'show_volume',
 				[
-					'label' 		=> __( 'Show Volume', 'elementor-extras' ),
+					'label' 		=> __( 'Show Volume', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'show',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'show',
 				]
 			);
@@ -579,11 +580,11 @@ class Audio_Player extends Extras_Widget {
 			$this->add_control(
 				'show_volume_icon',
 				[
-					'label' 		=> __( 'Show Volume Icon', 'elementor-extras' ),
+					'label' 		=> __( 'Show Volume Icon', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'show',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'show',
 					'condition'	=> [
 						'show_volume!'	=> '',
@@ -594,11 +595,11 @@ class Audio_Player extends Extras_Widget {
 			$this->add_control(
 				'show_volume_bar',
 				[
-					'label' 		=> __( 'Show Volume Bar', 'elementor-extras' ),
+					'label' 		=> __( 'Show Volume Bar', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'show',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'show',
 					'condition'	=> [
 						'show_volume!'	=> '',
@@ -609,7 +610,7 @@ class Audio_Player extends Extras_Widget {
 			$this->add_responsive_control(
 				'volume',
 				[
-					'label' 	=> __( 'Initial Volume', 'elementor-extras' ),
+					'label' 	=> __( 'Initial Volume', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 0.8,
@@ -630,7 +631,7 @@ class Audio_Player extends Extras_Widget {
 		$this->start_controls_section(
 			'section_player_style',
 			[
-				'label' => __( 'Player', 'elementor-extras' ),
+				'label' => __( 'Player', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -638,7 +639,7 @@ class Audio_Player extends Extras_Widget {
 			$this->add_responsive_control(
 				'width',
 				[
-					'label' 		=> __( 'Width', 'elementor-extras' ),
+					'label' 		=> __( 'Width', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> '',
@@ -663,7 +664,7 @@ class Audio_Player extends Extras_Widget {
 			$this->add_responsive_control(
 				'padding',
 				[
-					'label' 	=> __( 'Padding', 'elementor-extras' ),
+					'label' 	=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> '',
@@ -684,19 +685,19 @@ class Audio_Player extends Extras_Widget {
 			$this->add_responsive_control(
 				'align',
 				[
-					'label' => __( 'Alignment', 'elementor-extras' ),
+					'label' => __( 'Alignment', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::CHOOSE,
 					'options' => [
 						'left' => [
-							'title' => __( 'Left', 'elementor-extras' ),
+							'title' => __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' => 'eicon-h-align-left',
 						],
 						'center' => [
-							'title' => __( 'Center', 'elementor-extras' ),
+							'title' => __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' => 'eicon-h-align-center',
 						],
 						'right' => [
-							'title' => __( 'Right', 'elementor-extras' ),
+							'title' => __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' => 'eicon-h-align-right',
 						],
 					],
@@ -711,7 +712,7 @@ class Audio_Player extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'player_border',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '{{WRAPPER}} .ee-audio-player__controls',
 				]
 			);
@@ -719,7 +720,7 @@ class Audio_Player extends Extras_Widget {
 			$this->add_control(
 				'player_border_radius',
 				[
-					'label' 			=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 			=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 					=> Controls_Manager::DIMENSIONS,
 					'size_units' 			=> [ 'px', '%' ],
 					'selectors' 			=> [
@@ -741,7 +742,7 @@ class Audio_Player extends Extras_Widget {
 		$this->start_controls_section(
 			'section_controls_style',
 			[
-				'label' => __( 'Controls', 'elementor-extras' ),
+				'label' => __( 'Controls', 'landtech-extras-for-elementor' ),
 				'tab' 	=> Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -749,7 +750,7 @@ class Audio_Player extends Extras_Widget {
 			$this->add_responsive_control(
 				'zoom',
 				[
-					'label' 	=> __( 'Zoom', 'elementor-extras' ),
+					'label' 	=> __( 'Zoom', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> '',
@@ -771,7 +772,7 @@ class Audio_Player extends Extras_Widget {
 			$this->add_responsive_control(
 				'controls_spacing',
 				[
-					'label' 	=> __( 'Controls Spacing', 'elementor-extras' ),
+					'label' 	=> __( 'Controls Spacing', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> '',
@@ -794,7 +795,7 @@ class Audio_Player extends Extras_Widget {
 			$this->add_control(
 				'controls_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'default' 		=> [
 						'top' 		=> 100,
@@ -813,7 +814,7 @@ class Audio_Player extends Extras_Widget {
 			$this->add_control(
 				'controls_progress_heading',
 				[
-					'label' 	=> __( 'Progress', 'elementor-extras' ),
+					'label' 	=> __( 'Progress', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator'	=> 'before',
 					'condition'	=> [
@@ -825,7 +826,7 @@ class Audio_Player extends Extras_Widget {
 			$this->add_responsive_control(
 				'progress_width',
 				[
-					'label' 	=> __( 'Width', 'elementor-extras' ),
+					'label' 	=> __( 'Width', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -846,7 +847,7 @@ class Audio_Player extends Extras_Widget {
 			$this->add_control(
 				'controls_play_heading',
 				[
-					'label' 	=> __( 'Play Icon', 'elementor-extras' ),
+					'label' 	=> __( 'Play Icon', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator'	=> 'before',
 				]
@@ -855,7 +856,7 @@ class Audio_Player extends Extras_Widget {
 			$this->add_responsive_control(
 				'play_icon_size',
 				[
-					'label' 	=> __( 'Size', 'elementor-extras' ),
+					'label' 	=> __( 'Size', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -873,7 +874,7 @@ class Audio_Player extends Extras_Widget {
 			$this->add_control(
 				'controls_volume_heading',
 				[
-					'label' 	=> __( 'Volume', 'elementor-extras' ),
+					'label' 	=> __( 'Volume', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator'	=> 'before',
 					'condition'	=> [
@@ -886,7 +887,7 @@ class Audio_Player extends Extras_Widget {
 			$this->add_responsive_control(
 				'volume_width',
 				[
-					'label' 	=> __( 'Width', 'elementor-extras' ),
+					'label' 	=> __( 'Width', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -908,7 +909,7 @@ class Audio_Player extends Extras_Widget {
 			$this->add_control(
 				'controls_style_heading',
 				[
-					'label' 	=> __( 'All Controls', 'elementor-extras' ),
+					'label' 	=> __( 'All Controls', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator'	=> 'before',
 				]
@@ -919,14 +920,14 @@ class Audio_Player extends Extras_Widget {
 			$this->start_controls_tab(
 				'controls_default',
 				[
-					'label' => __( 'Default', 'elementor-extras' ),
+					'label' => __( 'Default', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 				$this->add_control(
 					'controls_foreground',
 					[
-						'label' 	=> __( 'Foreground', 'elementor-extras' ),
+						'label' 	=> __( 'Foreground', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '#FFFFFF',
 						'selectors' => [
@@ -939,7 +940,7 @@ class Audio_Player extends Extras_Widget {
 				$this->add_control(
 					'controls_background',
 					[
-						'label' 	=> __( 'Background', 'elementor-extras' ),
+						'label' 	=> __( 'Background', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'global' => [
 							'default' => Global_Colors::COLOR_PRIMARY,
@@ -953,7 +954,7 @@ class Audio_Player extends Extras_Widget {
 				$this->add_control(
 					'controls_opacity',
 					[
-						'label' 	=> __( 'Controls Opacity (%)', 'elementor-extras' ),
+						'label' 	=> __( 'Controls Opacity (%)', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SLIDER,
 						'default' 	=> [
 							'size' 	=> 0.9,
@@ -976,14 +977,14 @@ class Audio_Player extends Extras_Widget {
 			$this->start_controls_tab(
 				'controls_hover',
 				[
-					'label' => __( 'Hover', 'elementor-extras' ),
+					'label' => __( 'Hover', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 				$this->add_control(
 					'controls_foreground_hover',
 					[
-						'label' 	=> __( 'Foreground', 'elementor-extras' ),
+						'label' 	=> __( 'Foreground', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -996,7 +997,7 @@ class Audio_Player extends Extras_Widget {
 				$this->add_control(
 					'controls_background_hover',
 					[
-						'label' 	=> __( 'Background', 'elementor-extras' ),
+						'label' 	=> __( 'Background', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -1008,7 +1009,7 @@ class Audio_Player extends Extras_Widget {
 				$this->add_control(
 					'controls_opacity_hover',
 					[
-						'label' 	=> __( 'Controls Opacity (%)', 'elementor-extras' ),
+						'label' 	=> __( 'Controls Opacity (%)', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SLIDER,
 						'default' 	=> [
 							'size' 	=> 1,
@@ -1034,7 +1035,7 @@ class Audio_Player extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'controls',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -1048,7 +1049,7 @@ class Audio_Player extends Extras_Widget {
 		$this->start_controls_section(
 			'section_playlist_style',
 			[
-				'label' => __( 'Playlist', 'elementor-extras' ),
+				'label' => __( 'Playlist', 'landtech-extras-for-elementor' ),
 				'tab' 	=> Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'show_playlist!' => '',
@@ -1059,7 +1060,7 @@ class Audio_Player extends Extras_Widget {
 			$this->add_responsive_control(
 				'playlist_height',
 				[
-					'label' 	=> __( 'Max. Height', 'elementor-extras' ),
+					'label' 	=> __( 'Max. Height', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -1081,7 +1082,7 @@ class Audio_Player extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'playlist',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -1095,7 +1096,7 @@ class Audio_Player extends Extras_Widget {
 			$this->add_control(
 				'playlist_background',
 				[
-					'label' 	=> __( 'Background', 'elementor-extras' ),
+					'label' 	=> __( 'Background', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'global'	=> [
 						'default' => Global_Colors::COLOR_SECONDARY,
@@ -1113,7 +1114,7 @@ class Audio_Player extends Extras_Widget {
 				'heading_playlist_separator',
 				[
 					'type'		=> Controls_Manager::HEADING,
-					'label' 	=> __( 'Separator', 'elementor-extras' ),
+					'label' 	=> __( 'Separator', 'landtech-extras-for-elementor' ),
 					'separator' => 'before',
 					'condition' => [
 						'show_playlist!' => '',
@@ -1124,7 +1125,7 @@ class Audio_Player extends Extras_Widget {
 			$this->add_responsive_control(
 				'playlist_links_separator_thickness',
 				[
-					'label' 		=> __( 'Thickness', 'elementor-extras' ),
+					'label' 		=> __( 'Thickness', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -1145,7 +1146,7 @@ class Audio_Player extends Extras_Widget {
 				'heading_playlist_links',
 				[
 					'type'		=> Controls_Manager::HEADING,
-					'label' 	=> __( 'Links', 'elementor-extras' ),
+					'label' 	=> __( 'Links', 'landtech-extras-for-elementor' ),
 					'separator' => 'before',
 					'condition' => [
 						'show_playlist!' => '',
@@ -1156,7 +1157,7 @@ class Audio_Player extends Extras_Widget {
 			$this->add_responsive_control(
 				'playlist_links_spacing',
 				[
-					'label' 		=> __( 'Spacing', 'elementor-extras' ),
+					'label' 		=> __( 'Spacing', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default'		=> [
 						'size'		=> 0,
@@ -1179,7 +1180,7 @@ class Audio_Player extends Extras_Widget {
 			$this->add_control(
 				'playlist_links_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'selectors' 	=> [
 						'{{WRAPPER}} .ee-player__playlist__item' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -1194,7 +1195,7 @@ class Audio_Player extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'playlist_links_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -1219,12 +1220,12 @@ class Audio_Player extends Extras_Widget {
 
 			$this->start_controls_tabs( 'playlist_tabs' );
 
-			$this->start_controls_tab( 'playlist_default', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'playlist_default', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'playlist_links_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'condition' => [
@@ -1239,7 +1240,7 @@ class Audio_Player extends Extras_Widget {
 				$this->add_control(
 					'playlist_links_separator_color',
 					[
-						'label' 	=> __( 'Separator Color', 'elementor-extras' ),
+						'label' 	=> __( 'Separator Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'condition' => [
@@ -1254,7 +1255,7 @@ class Audio_Player extends Extras_Widget {
 				$this->add_control(
 					'playlist_links_background',
 					[
-						'label' 	=> __( 'Background', 'elementor-extras' ),
+						'label' 	=> __( 'Background', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -1268,12 +1269,12 @@ class Audio_Player extends Extras_Widget {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'playlist_hover', [ 'label' => __( 'Hover', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'playlist_hover', [ 'label' => __( 'Hover', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'playlist_links_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'condition' => [
@@ -1288,7 +1289,7 @@ class Audio_Player extends Extras_Widget {
 				$this->add_control(
 					'playlist_links_separator_color_hover',
 					[
-						'label' 	=> __( 'Separator Color', 'elementor-extras' ),
+						'label' 	=> __( 'Separator Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'condition' => [
@@ -1303,7 +1304,7 @@ class Audio_Player extends Extras_Widget {
 				$this->add_control(
 					'playlist_links_background_hover',
 					[
-						'label' 	=> __( 'Background', 'elementor-extras' ),
+						'label' 	=> __( 'Background', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'global' => [
 							'default' => Global_Colors::COLOR_ACCENT,
@@ -1319,12 +1320,12 @@ class Audio_Player extends Extras_Widget {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'playlist_current', [ 'label' => __( 'Current', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'playlist_current', [ 'label' => __( 'Current', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'playlist_links_color_current',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'condition' => [
@@ -1340,7 +1341,7 @@ class Audio_Player extends Extras_Widget {
 				$this->add_control(
 					'playlist_links_separator_color_current',
 					[
-						'label' 	=> __( 'Separator Color', 'elementor-extras' ),
+						'label' 	=> __( 'Separator Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'condition' => [
@@ -1356,7 +1357,7 @@ class Audio_Player extends Extras_Widget {
 				$this->add_control(
 					'playlist_links_background_current',
 					[
-						'label' 	=> __( 'Background', 'elementor-extras' ),
+						'label' 	=> __( 'Background', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'global' => [
 							'default' => Global_Colors::COLOR_PRIMARY,
@@ -1399,7 +1400,7 @@ class Audio_Player extends Extras_Widget {
 			],
 		] );
 
-		?><div <?php echo $this->get_render_attribute_string( 'audio-wrapper' ); ?>>
+		?><div <?php $this->print_render_attribute_string( 'audio-wrapper' ); ?>>
 			<?php $this->render_controls(); ?>
 		</div><!-- .ee-audio-player -->
 		<?php
@@ -1463,9 +1464,9 @@ class Audio_Player extends Extras_Widget {
 		] );
 
 		?>
-		<div <?php echo $this->get_render_attribute_string( 'controls' ); ?>>
-			<div <?php echo $this->get_render_attribute_string( 'bar-wrapper' ); ?>>
-				<div <?php echo $this->get_render_attribute_string( 'bar' ); ?>>
+		<div <?php $this->print_render_attribute_string( 'controls' ); ?>>
+			<div <?php $this->print_render_attribute_string( 'bar-wrapper' ); ?>>
+				<div <?php $this->print_render_attribute_string( 'bar' ); ?>>
 
 					<?php if ( $settings['show_restart'] ) {
 						$this->add_render_attribute( 'control-rewind', [
@@ -1477,16 +1478,16 @@ class Audio_Player extends Extras_Widget {
 								'nicon-rewind',
 							],
 						] );
-					?><div <?php echo $this->get_render_attribute_string( 'control-rewind' ); ?>></div><?php } ?>
+					?><div <?php $this->print_render_attribute_string( 'control-rewind' ); ?>></div><?php } ?>
 
 					<?php if ( count( $settings[ 'playlist' ] ) > 1 ) {
-					?><div <?php echo $this->get_render_attribute_string( 'control-previous' ); ?>></div>
+					?><div <?php $this->print_render_attribute_string( 'control-previous' ); ?>></div>
 					<?php } ?>
 
-					<div <?php echo $this->get_render_attribute_string( 'control-play' ); ?>></div>
+					<div <?php $this->print_render_attribute_string( 'control-play' ); ?>></div>
 
 					<?php if ( count( $settings[ 'playlist' ] ) > 1 ) {
-					?><div <?php echo $this->get_render_attribute_string( 'control-next' ); ?>></div>
+					?><div <?php $this->print_render_attribute_string( 'control-next' ); ?>></div>
 					<?php } ?>
 
 					<?php if ( $settings['show_time'] ) {
@@ -1497,7 +1498,7 @@ class Audio_Player extends Extras_Widget {
 								'ee-player__controls__time',
 							],
 						] );
-					?><div <?php echo $this->get_render_attribute_string( 'control-time' ); ?>>00:00</div><?php } ?>
+					?><div <?php $this->print_render_attribute_string( 'control-time' ); ?>>00:00</div><?php } ?>
 
 					<?php if ( $settings['show_progress'] ) {
 						$this->add_render_attribute( [
@@ -1521,9 +1522,9 @@ class Audio_Player extends Extras_Widget {
 								],
 							],
 						] );
-					?><div <?php echo $this->get_render_attribute_string( 'control-progress' ); ?>>
-						<div <?php echo $this->get_render_attribute_string( 'control-progress-time' ); ?>></div>
-						<div <?php echo $this->get_render_attribute_string( 'control-progress-track' ); ?>></div>
+					?><div <?php $this->print_render_attribute_string( 'control-progress' ); ?>>
+						<div <?php $this->print_render_attribute_string( 'control-progress-time' ); ?>></div>
+						<div <?php $this->print_render_attribute_string( 'control-progress-track' ); ?>></div>
 					</div><?php } ?>
 
 					<?php if ( $settings['show_duration'] ) {
@@ -1534,7 +1535,7 @@ class Audio_Player extends Extras_Widget {
 								'ee-player__control--indicator',
 							],
 						] );
-					?><div <?php echo $this->get_render_attribute_string( 'control-duration' ); ?>>00:00</div><?php } ?>
+					?><div <?php $this->print_render_attribute_string( 'control-duration' ); ?>>00:00</div><?php } ?>
 
 					<?php if ( $settings['show_volume'] ) {
 						$this->add_render_attribute( 'control-volume', [
@@ -1543,7 +1544,7 @@ class Audio_Player extends Extras_Widget {
 								'ee-player__controls__volume',
 							],
 						] );
-					?><div <?php echo $this->get_render_attribute_string( 'control-volume' ); ?>>
+					?><div <?php $this->print_render_attribute_string( 'control-volume' ); ?>>
 
 						<?php if ( $settings['show_volume_icon'] ) {
 							$this->add_render_attribute( 'control-volume-icon', [
@@ -1554,7 +1555,7 @@ class Audio_Player extends Extras_Widget {
 									'nicon-volume',
 								],
 							] );
-						?><div <?php echo $this->get_render_attribute_string( 'control-volume-icon' ); ?>></div><?php } ?>
+						?><div <?php $this->print_render_attribute_string( 'control-volume-icon' ); ?>></div><?php } ?>
 
 						<?php if ( $settings['show_volume_bar'] ) {
 							$this->add_render_attribute( [
@@ -1579,9 +1580,9 @@ class Audio_Player extends Extras_Widget {
 									],
 								],
 							] );
-						?><div <?php echo $this->get_render_attribute_string( 'control-volume-bar' ); ?>>
-							<div <?php echo $this->get_render_attribute_string( 'control-volume-bar-amount' ); ?>></div>
-							<div <?php echo $this->get_render_attribute_string( 'control-volume-bar-track' ); ?>></div>
+						?><div <?php $this->print_render_attribute_string( 'control-volume-bar' ); ?>>
+							<div <?php $this->print_render_attribute_string( 'control-volume-bar-amount' ); ?>></div>
+							<div <?php $this->print_render_attribute_string( 'control-volume-bar-track' ); ?>></div>
 						</div><?php } ?>
 
 					</div><?php } ?>
@@ -1596,7 +1597,7 @@ class Audio_Player extends Extras_Widget {
 								'fa-list-ul',
 							],
 						] );
-					?><div <?php echo $this->get_render_attribute_string( 'control-browse' ); ?>></div><?php } ?>
+					?><div <?php $this->print_render_attribute_string( 'control-browse' ); ?>></div><?php } ?>
 
 				</div><!-- .ee-player__controls__bar -->
 			</div><!-- .ee-player__controls__bar-wrapper -->
@@ -1647,8 +1648,8 @@ class Audio_Player extends Extras_Widget {
 		}
 
 		?>
-		<div <?php echo $this->get_render_attribute_string( 'playlist-wrapper' ); ?>>
-			<ul <?php echo $this->get_render_attribute_string( 'playlist' ); ?>>
+		<div <?php $this->print_render_attribute_string( 'playlist-wrapper' ); ?>>
+			<ul <?php $this->print_render_attribute_string( 'playlist' ); ?>>
 				<?php foreach ( $settings['playlist'] as $index => $item ) {
 
 					$sources = [];
@@ -1675,11 +1676,11 @@ class Audio_Player extends Extras_Widget {
 						]
 					);
 
-					?><li <?php echo $this->get_render_attribute_string( $playlist_item_key ); ?>>
-						<span  <?php echo $this->get_render_attribute_string( 'playlist-item-title' ); ?>>
-							<?php echo $item['title']; ?>
+					?><li <?php $this->print_render_attribute_string( $playlist_item_key ); ?>>
+						<span  <?php $this->print_render_attribute_string( 'playlist-item-title' ); ?>>
+							<?php echo esc_html( $item['title'] ); ?>
 						</span>
-						<span  <?php echo $this->get_render_attribute_string( 'playlist-item-duration' ); ?>>00:00</span>
+						<span  <?php $this->print_render_attribute_string( 'playlist-item-duration' ); ?>>00:00</span>
 						<?php $this->render_audio( $item, $index ); ?>
 					</li><!-- .ee-player__playlist__item -->
 				<?php } ?>
@@ -1744,35 +1745,35 @@ class Audio_Player extends Extras_Widget {
 			$this->add_render_attribute( $audio_key, 'loop', 'true' );
 		}
 
-		?><audio <?php echo $this->get_render_attribute_string( $audio_key ); ?>>
+		?><audio <?php $this->print_render_attribute_string( $audio_key ); ?>>
 			
 			<?php if ( ! empty( $item['sources']['mpeg'] ) ) {
 				$this->add_render_attribute( $mp3_key, [
 					'src' => $item['sources']['mpeg'],
 					'type' => 'audio/mp3',
 				] );
-			?><source <?php echo $this->get_render_attribute_string( $mp3_key ); ?>><?php } ?>
+			?><source <?php $this->print_render_attribute_string( $mp3_key ); ?>><?php } ?>
 
 			<?php if ( ! empty( $item['sources']['m4a'] ) ) {
 				$this->add_render_attribute( $m4a_key, [
 					'src' => $item['sources']['m4a'],
 					'type' => 'audio/x-m4a',
 				] );
-			?><source <?php echo $this->get_render_attribute_string( $m4a_key ); ?>><?php } ?>
+			?><source <?php $this->print_render_attribute_string( $m4a_key ); ?>><?php } ?>
 
 			<?php if ( ! empty( $item['sources']['wav'] ) ) {
 				$this->add_render_attribute( $wav_key, [
 					'src' => $item['sources']['wav'],
 					'type' => 'audio/wav',
 				] );
-			?><source <?php echo $this->get_render_attribute_string( $wav_key ); ?>><?php } ?>
+			?><source <?php $this->print_render_attribute_string( $wav_key ); ?>><?php } ?>
 
 			<?php if ( ! empty( $item['sources']['ogg'] ) ) {
 				$this->add_render_attribute( $ogg_key, [
 					'src' => $item['sources']['ogg'],
 					'type' => 'audio/ogg',
 				] );
-			?><source <?php echo $this->get_render_attribute_string( $ogg_key ); ?>><?php } ?>
+			?><source <?php $this->print_render_attribute_string( $ogg_key ); ?>><?php } ?>
 
 		</audio><?php
 	}
@@ -1797,7 +1798,7 @@ class Audio_Player extends Extras_Widget {
 		} );
 
 		#><div {{{ view.getRenderAttributeString( 'audio-wrapper' ) }}}>
-			<?php echo $this->_controls_template(); ?>
+			<?php $this->_controls_template(); ?>
 		</div><!-- .ee-audio-player --><?php
 	}
 

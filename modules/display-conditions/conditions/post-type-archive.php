@@ -1,9 +1,10 @@
 <?php
-namespace ElementorExtras\Modules\DisplayConditions\Conditions;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\DisplayConditions\Conditions;
 
-// Extras for Elementor Classes
-use ElementorExtras\Utils;
-use ElementorExtras\Base\Condition;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Utils;
+use LandTechExtras\Base\Condition;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -50,7 +51,7 @@ class Post_Type_Archive extends Condition {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Post Type', 'elementor-extras' );
+		return __( 'Post Type', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -65,8 +66,8 @@ class Post_Type_Archive extends Condition {
 		return [
 			'type' 			=> Controls_Manager::SELECT2,
 			'default' 		=> '',
-			'placeholder'	=> __( 'Any', 'elementor-extras' ),
-			'description'	=> __( 'Leave blank or select all for any post type.', 'elementor-extras' ),
+			'placeholder'	=> __( 'Any', 'landtech-extras-for-elementor' ),
+			'description'	=> __( 'Leave blank or select all for any post type.', 'landtech-extras-for-elementor' ),
 			'multiple'		=> true,
 			'label_block' 	=> true,
 			'options' 		=> Utils::get_public_post_types_options(),

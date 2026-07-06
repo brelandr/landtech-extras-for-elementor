@@ -1,8 +1,9 @@
 <?php
-namespace ElementorExtras\Base;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Base;
 
-// Extras for Elementor Classes
-use ElementorExtras\Utils;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Utils;
 
 // Elementor Classes
 use Elementor\Controls_Manager;

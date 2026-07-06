@@ -1,12 +1,13 @@
 <?php
-namespace ElementorExtras\Modules\Posts\Skins;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Posts\Skins;
 
-// Extras for Elementor Classes
-use ElementorExtras\Utils;
-use ElementorExtras\Base\Extras_Widget;
-use ElementorExtras\Modules\Posts\Module as PostsModule;
-use ElementorExtras\Modules\CustomFields\Module as CustomFields;
-use ElementorExtras\Modules\TemplatesControl\Module as TemplatesControl;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Utils;
+use LandTechExtras\Base\Extras_Widget;
+use LandTechExtras\Modules\Posts\Module as PostsModule;
+use LandTechExtras\Modules\CustomFields\Module as CustomFields;
+use LandTechExtras\Modules\TemplatesControl\Module as TemplatesControl;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -64,8 +65,8 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			$this->add_control(
 				'widget_helpers',
 				[
-					'label' 		=> __( 'Editor Helper', 'elementor-extras' ),
-					'description'	=> __( 'Shows labels overlaid on posts to help your easily identify each post area', 'elementor-extras' ),
+					'label' 		=> __( 'Editor Helper', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Shows labels overlaid on posts to help your easily identify each post area', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default'		=> '',
 					'return_value' 	=> 'on',
@@ -87,7 +88,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		$this->add_responsive_control(
 			'grid_columns_spacing',
 			[
-				'label' 			=> __( 'Columns Spacing', 'elementor-extras' ),
+				'label' 			=> __( 'Columns Spacing', 'landtech-extras-for-elementor' ),
 				'type' 				=> Controls_Manager::SLIDER,
 				'default'			=> [
 					'size' => 24,
@@ -115,7 +116,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		$this->add_responsive_control(
 			'grid_rows_spacing',
 			[
-				'label' 			=> __( 'Rows Spacing', 'elementor-extras' ),
+				'label' 			=> __( 'Rows Spacing', 'landtech-extras-for-elementor' ),
 				'type' 				=> Controls_Manager::SLIDER,
 				'size_units' 		=> [ 'px' ],
 				'default'			=> [
@@ -145,24 +146,24 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		$this->add_responsive_control(
 			'layout_align',
 			[
-				'label' 		=> __( 'Vertical Align', 'elementor-extras' ),
+				'label' 		=> __( 'Vertical Align', 'landtech-extras-for-elementor' ),
 				'type' 			=> Controls_Manager::CHOOSE,
 				'default' 		=> 'stretch',
 				'options' 		=> [
 					'top' 			=> [
-						'title' 	=> __( 'Top', 'elementor-extras' ),
+						'title' 	=> __( 'Top', 'landtech-extras-for-elementor' ),
 						'icon' 		=> 'eicon-v-align-top',
 					],
 					'middle' 		=> [
-						'title' 	=> __( 'Middle', 'elementor-extras' ),
+						'title' 	=> __( 'Middle', 'landtech-extras-for-elementor' ),
 						'icon' 		=> 'eicon-v-align-middle',
 					],
 					'bottom' 		=> [
-						'title' 	=> __( 'Bottom', 'elementor-extras' ),
+						'title' 	=> __( 'Bottom', 'landtech-extras-for-elementor' ),
 						'icon' 		=> 'eicon-v-align-bottom',
 					],
 					'stretch' 		=> [
-						'title' 	=> __( 'Stretch', 'elementor-extras' ),
+						'title' 	=> __( 'Stretch', 'landtech-extras-for-elementor' ),
 						'icon' 		=> 'eicon-v-align-stretch',
 					],
 				],
@@ -176,8 +177,8 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		$this->add_control(
 			'layout_equalize',
 			[
-				'label' 		=> __( 'Force Equal Height', 'elementor-extras' ),
-				'description'	=> __( 'This option tries to give a 100% height to all relevant wrappers inside your template. You will still need to set your desired columns and sections Vertical Align attribute to Space Between, Space Around or Space Evenly if you want your elements to stretch.', 'elementor-extras' ),
+				'label' 		=> __( 'Force Equal Height', 'landtech-extras-for-elementor' ),
+				'description'	=> __( 'This option tries to give a 100% height to all relevant wrappers inside your template. You will still need to set your desired columns and sections Vertical Align attribute to Space Between, Space Around or Space Evenly if you want your elements to stretch.', 'landtech-extras-for-elementor' ),
 				'type' 			=> Controls_Manager::SWITCHER,
 				'default'		=> '',
 				'return_value' 	=> 'stretch',
@@ -192,20 +193,20 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		$this->add_responsive_control(
 			'layout_halign',
 			[
-				'label' 		=> __( 'Horizontal Align', 'elementor-extras' ),
+				'label' 		=> __( 'Horizontal Align', 'landtech-extras-for-elementor' ),
 				'type' 			=> Controls_Manager::CHOOSE,
 				'default' 		=> 'left',
 				'options' 		=> [
 					'left'    		=> [
-						'title' 	=> __( 'Left', 'elementor-extras' ),
+						'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 						'icon' 		=> 'eicon-h-align-left',
 					],
 					'center' 		=> [
-						'title' 	=> __( 'Center', 'elementor-extras' ),
+						'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 						'icon' 		=> 'eicon-h-align-center',
 					],
 					'right' 		=> [
-						'title' 	=> __( 'Right', 'elementor-extras' ),
+						'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 						'icon' 		=> 'eicon-h-align-right',
 					],
 				],
@@ -236,7 +237,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param array 			$link 	The original post link
 		 * @param object|WP_Post 	$post  	The current post
 		 */
-		return apply_filters( 'elementor_extras/widgets/posts/link', get_permalink( $post ), $post );
+		return apply_filters( 'landtech_extras/widgets/posts/link', get_permalink( $post ), $post );
 	}
 
 	/**
@@ -261,8 +262,8 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		}
 
 		// Add filters
-		add_filter( 'excerpt_more', [ $this, 'custom_excerpt_more_filter' ], 999 );
-		add_filter( 'excerpt_length', [ $this, 'custom_excerpt_length' ], 999 );
+		add_filter( 'excerpt_more', [ $this, 'landtech_extras_posts_excerpt_more_filter' ], 999 );
+		add_filter( 'excerpt_length', [ $this, 'landtech_extras_posts_excerpt_length' ], 999 );
 		add_filter( 'wp_calculate_image_srcset_meta', '__return_null' );
 
 		$this->before_loop();
@@ -299,7 +300,6 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		}
 
 		wp_reset_postdata();
-		wp_reset_query();
 
 		$this->render_loop_end();
 		$this->after_loop();
@@ -308,8 +308,8 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 
 		// Remove filters
 		remove_filter( 'wp_calculate_image_srcset_meta', '__return_null' );
-		remove_filter( 'excerpt_length', [ $this, 'custom_excerpt_length' ], 999 );
-		remove_filter( 'excerpt_more', [ $this, 'custom_excerpt_more_filter' ], 999 );
+		remove_filter( 'excerpt_length', [ $this, 'landtech_extras_posts_excerpt_length' ], 999 );
+		remove_filter( 'excerpt_more', [ $this, 'landtech_extras_posts_excerpt_more_filter' ], 999 );
 	}
 
 	/**
@@ -321,46 +321,46 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 	public function render_not_found() {
 		$this->parent->add_render_attribute('not-found', 'class', 'ee-posts__nothing-found');
 
-		?><div <?php echo $this->parent->get_render_attribute_string('not-found'); ?>><?php
+		?><div <?php $this->parent->print_render_attribute_string('not-found'); ?>><?php
 			if ( '' !== $this->parent->get_settings( 'nothing_found_type' ) ) {
 				TemplatesControl::render_template_content( $this->parent->get_settings( 'nothing_found_template' ), $this->parent, true );
 			} else {
-				echo $this->parent->get_settings_for_display( 'nothing_found_message' );
+				echo wp_kses_post( $this->parent->get_settings_for_display( 'nothing_found_message' ) );
 			}
 		?></div><?php
 	}
 
 	/**
-	 * Custom Excerpt Length
-	 * 
-	 * Applies the custom excerpt length
+	 * Applies the custom excerpt length (`excerpt_length` filter callback).
 	 *
 	 * @since  1.6.0
-	 * @return void
+	 * @param int $length Default excerpt length from WordPress or other filters.
+	 * @return int
 	 */
-	public function custom_excerpt_length() {
-		return $this->parent->get_settings( 'post_excerpt_length' );
+	public function landtech_extras_posts_excerpt_length( $length ) {
+		unset( $length );
+		return (int) $this->parent->get_settings( 'post_excerpt_length' );
 	}
 
 	/**
-	 * Custom Excerpt More Filter
-	 *
-	 * Filter for setting the custom more suffix
+	 * Filter for setting the custom more suffix.
 	 *
 	 * @since 2.1.0
+	 * @param string $more Original more string.
+	 * @return string
 	 */
-	public function custom_excerpt_more_filter( $more ) {
+	public function landtech_extras_posts_excerpt_more_filter( $more ) {
+		unset( $more );
 		return $this->parent->get_settings( 'post_excerpt_more' );
 	}
 
 	/**
-	 * Custom Excerpt More
-	 * 
-	 * Returns the post excerpt more suffix text
+	 * Returns the post excerpt more suffix text for manual trimming.
 	 *
-	 * @since 2.1.0
+	 * @since  2.1.0
+	 * @return string
 	 */
-	public function custom_excerpt_more() {
+	public function landtech_extras_posts_excerpt_more_suffix() {
 		return $this->parent->get_settings( 'post_excerpt_more' );
 	}
 
@@ -395,7 +395,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			$this->parent->add_render_attribute( 'loop', 'class', 'ee-grid--' . $this->parent->get_settings( 'classic_layout' ) );
 		}
 
-		?><div <?php echo $this->parent->get_render_attribute_string( 'loop' ); ?>><?php
+		?><div <?php $this->parent->print_render_attribute_string( 'loop' ); ?>><?php
 	}
 
 	/**
@@ -413,7 +413,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			'ee-grid__item--sizer',
 		] );
 
-		?><div <?php echo $this->parent->get_render_attribute_string( 'sizer' ); ?>></div><?php
+		?><div <?php $this->parent->print_render_attribute_string( 'sizer' ); ?>></div><?php
 	}
 
 	/**
@@ -471,7 +471,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			],
 		] );
 
-		?><div <?php echo $this->parent->get_render_attribute_string( $post_content_key ); ?>><?php
+		?><div <?php $this->parent->print_render_attribute_string( $post_content_key ); ?>><?php
 			$this->render_post_header();
 			$this->render_post_body();
 			$this->render_post_footer();
@@ -487,7 +487,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 	 * @return void
 	 */
 	protected function render_post_start() {
-		global $post;
+		global $post, $wp_query;
 
 		$grid_item_key = 'grid-item-' . get_the_ID();
 
@@ -495,6 +495,24 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			'ee-grid__item',
 			'ee-loop__item',
 		] );
+
+		if (
+			function_exists( 'landtech_extras_posts_extra_widget_uses_packery_layout' )
+			&& landtech_extras_posts_extra_widget_uses_packery_layout( $this->parent )
+			&& $wp_query instanceof \WP_Query
+			&& 0 === (int) $wp_query->current_post
+		) {
+			$this->parent->add_render_attribute( $grid_item_key, 'class', 'ltxee-packery-featured' );
+		}
+
+		if (
+			function_exists( 'landtech_extras_posts_extra_widget_uses_packery_layout' )
+			&& landtech_extras_posts_extra_widget_uses_packery_layout( $this->parent )
+			&& $wp_query instanceof \WP_Query
+			&& 1 === (int) $wp_query->current_post
+		) {
+			$this->parent->add_render_attribute( $grid_item_key, 'class', 'ltxee-packery-second' );
+		}
 
 		/**
 		 * Item Classes Filter
@@ -506,13 +524,13 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param object|WP_Post 	$post 			The current post
 		 * @param object|WP_Post 	$settings 		The widget settings
 		 */
-		$item_classes = apply_filters( 'elementor_extras/widgets/posts/item_classes', [], $post, $this->parent->get_settings() );
+		$item_classes = apply_filters( 'landtech_extras/widgets/posts/item_classes', [], $post, $this->parent->get_settings() );
 
 		$this->parent->add_render_attribute( $grid_item_key, 'class', $item_classes );
 
 		$this->before_grid_item();
 
-		?><div <?php echo $this->parent->get_render_attribute_string( $grid_item_key ); ?>><?php
+		?><div <?php $this->parent->print_render_attribute_string( $grid_item_key ); ?>><?php
 			$this->after_grid_item_start();
 			?><article <?php post_class( $this->parent->get_post_classes() ); ?>><?php
 	}
@@ -538,7 +556,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param array 	$settings 	The current widget settings
 		 * @param int 		$post_id 	The post ID
 		 */
-		do_action( 'elementor_extras/widgets/posts/before_post_header', $settings, $post->ID );
+		do_action( 'landtech_extras/widgets/posts/before_post_header', $settings, $post->ID );
 
 		$area = 'header';
 
@@ -552,7 +570,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 
 			$this->parent->add_helper_render_attribute( $post_header_key, 'Header' );
 
-			?><div <?php echo $this->parent->get_render_attribute_string( 'post-header-' . get_the_ID() ); ?>><?php
+			?><div <?php $this->parent->print_render_attribute_string( 'post-header-' . get_the_ID() ); ?>><?php
 				$this->render_post_parts( $area );
 			?></div><!-- .ee-post__header --><?php
 		}
@@ -566,7 +584,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param array 	$settings 	The current widget settings
 		 * @param int 		$post_id 	The post ID
 		 */
-		do_action( 'elementor_extras/widgets/posts/after_post_header', $settings, $post->ID );
+		do_action( 'landtech_extras/widgets/posts/after_post_header', $settings, $post->ID );
 
 	}
 
@@ -591,7 +609,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param array 	$settings 	The current widget settings
 		 * @param int 		$post_id 	The post ID
 		 */
-		do_action( 'elementor_extras/widgets/posts/before_post_media', $settings, $post->ID );
+		do_action( 'landtech_extras/widgets/posts/before_post_media', $settings, $post->ID );
 
 		$area 				= 'media';
 		$media_tag 			= 'div';
@@ -628,7 +646,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 					 * @param array $media_link 	The original post link
 					 * @param object|WP_Post $post  The current post
 					 */
-					'href' => apply_filters( 'elementor_extras/widgets/posts/media/link', $this->get_post_link( $post ), $post ),
+					'href' => apply_filters( 'landtech_extras/widgets/posts/media/link', $this->get_post_link( $post ), $post ),
 				],
 			] );
 
@@ -654,18 +672,18 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			] );
 		}
 
-		?><<?php echo $media_tag; ?> <?php echo $this->parent->get_render_attribute_string( $media_key ); ?>><?php
+		?><<?php echo esc_html( $media_tag ); ?> <?php $this->parent->print_render_attribute_string( $media_key ); ?>><?php
 			$this->render_post_media_thumbnail();
 			$this->render_post_media_overlay();
 
 		if ( ! $this->parent->is_empty_area( $area ) ) {
 
-			?><div <?php echo $this->parent->get_render_attribute_string( $media_content_key ); ?>><?php
+			?><div <?php $this->parent->print_render_attribute_string( $media_content_key ); ?>><?php
 				$this->render_post_parts( $area );
 			?></div><!-- .ee-post__media__content --><?php
 		}
 
-		?></<?php echo $media_tag; ?>><!-- .ee-post__media --><?php
+		?></<?php echo esc_html( $media_tag ); ?>><!-- .ee-post__media --><?php
 
 		/**
 		 * After Post Media
@@ -676,7 +694,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param array 	$settings 	The current widget settings
 		 * @param int 		$post_id 	The post ID
 		 */
-		do_action( 'elementor_extras/widgets/posts/after_post_media', $settings, $post->ID );
+		do_action( 'landtech_extras/widgets/posts/after_post_media', $settings, $post->ID );
 	}
 
 	/**
@@ -700,7 +718,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param array 	$settings 	The current widget settings
 		 * @param int 		$post_id 	The post ID
 		 */
-		do_action( 'elementor_extras/widgets/posts/before_post_body', $settings, $post->ID );
+		do_action( 'landtech_extras/widgets/posts/before_post_body', $settings, $post->ID );
 
 		$area = 'body';
 
@@ -716,7 +734,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 
 		$this->parent->add_helper_render_attribute( $body_key, 'Body' );
 
-		?><div <?php echo $this->parent->get_render_attribute_string( $body_key ); ?>><?php
+		?><div <?php $this->parent->print_render_attribute_string( $body_key ); ?>><?php
 			$this->render_post_parts( $area );
 		?></div><!-- .ee-post__body --><?php
 
@@ -729,7 +747,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param array 	$settings 	The current widget settings
 		 * @param int 		$post_id 	The post ID
 		 */
-		do_action( 'elementor_extras/widgets/posts/after_post_body', $settings, $post->ID );
+		do_action( 'landtech_extras/widgets/posts/after_post_body', $settings, $post->ID );
 	}
 
 	/**
@@ -752,7 +770,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param array 	$settings 	The current widget settings
 		 * @param int 		$post_id 	The post ID
 		 */
-		do_action( "elementor_extras/widgets/posts/before_post_footer", $settings, $post->ID );
+		do_action( "landtech_extras/widgets/posts/before_post_footer", $settings, $post->ID );
 
 		$area = 'footer';
 		$footer_key = 'post-footer-' . get_the_ID();
@@ -767,7 +785,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 
 		$this->parent->add_helper_render_attribute( $footer_key, 'Footer' );
 
-		?><div <?php echo $this->parent->get_render_attribute_string( $footer_key ); ?>><?php
+		?><div <?php $this->parent->print_render_attribute_string( $footer_key ); ?>><?php
 			$this->render_post_parts( $area );
 		?></div><!-- .ee-post__footer --><?php
 
@@ -780,7 +798,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param array 	$settings 	The current widget settings
 		 * @param int 		$post_id 	The post ID
 		 */
-		do_action( 'elementor_extras/widgets/posts/after_post_footer', $settings, $post->ID );
+		do_action( 'landtech_extras/widgets/posts/after_post_footer', $settings, $post->ID );
 	}
 
 	/**
@@ -808,7 +826,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param array 	$settings 	The current widget settings
 		 * @param int 		$post_id 	The post ID
 		 */
-		do_action( "elementor_extras/widgets/posts/after_{$area}_start", $this->parent->get_settings(), $post->ID );
+		do_action( "landtech_extras/widgets/posts/after_{$area}_start", $this->parent->get_settings(), $post->ID );
 
 		foreach ( $_ordered_parts as $part => $index ) {
 
@@ -823,7 +841,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			 * @param array 	$settings 	The current widget settings
 		 	 * @param int 		$post_id 	The post ID
 			 */
-			do_action( "elementor_extras/widgets/posts/before_{$area}_{$part}", $this->parent->get_settings(), $post->ID );
+			do_action( "landtech_extras/widgets/posts/before_{$area}_{$part}", $this->parent->get_settings(), $post->ID );
 
 			call_user_func( array( $this, 'render_post_' . $part ), $area );
 
@@ -838,7 +856,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			 * @param array 	$settings 	The current widget settings
 		 	 * @param int 		$post_id 	The post ID
 			 */
-			do_action( "elementor_extras/widgets/posts/after_{$area}_{$part}", $this->parent->get_settings(), $post->ID );
+			do_action( "landtech_extras/widgets/posts/after_{$area}_{$part}", $this->parent->get_settings(), $post->ID );
 		}
 
 		/**
@@ -851,7 +869,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param array 	$settings 	The current widget settings
 		 * @param int 		$post_id 	The post ID
 		 */
-		do_action( "elementor_extras/widgets/posts/before_{$area}_end", $this->parent->get_settings(), $post->ID );
+		do_action( "landtech_extras/widgets/posts/before_{$area}_end", $this->parent->get_settings(), $post->ID );
 	}
 
 	/**
@@ -893,13 +911,13 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 				$this->parent->add_render_attribute( $metas_area_key, 'class', 'ee-post__metas--has-metas' );
 			}
 
-			?><div <?php echo $this->parent->get_render_attribute_string( $metas_area_key ); ?>><?php
+			?><div <?php $this->parent->print_render_attribute_string( $metas_area_key ); ?>><?php
 
 				$this->render_post_avatar( $area );
 
 				if ( $this->parent->metas_in_area( $area ) ) {
 
-					?><ul <?php echo $this->parent->get_render_attribute_string( $metas_list_key ); ?>><?php
+					?><ul <?php $this->parent->print_render_attribute_string( $metas_list_key ); ?>><?php
 
 						$_ordered_parts = $this->parent->get_ordered_post_parts( PostsModule::get_meta_parts() );
 
@@ -914,7 +932,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 						 * @param array 	$settings 	The current widget settings
 		 				 * @param int 		$post_id 	The post ID
 						 */
-						do_action( "elementor_extras/widgets/posts/before_{$area}_metas", $this->parent->get_settings(), $post->ID );
+						do_action( "landtech_extras/widgets/posts/before_{$area}_metas", $this->parent->get_settings(), $post->ID );
 
 						foreach ( $_ordered_parts as $meta => $index ) {
 
@@ -929,7 +947,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 					 * @param int 		$post_id 	The post ID
 							 * @param string 	$area 	The area the meta resides in
 							 */
-							do_action( "elementor_extras/widgets/posts/before_{$meta}", $this->parent->get_settings(), $post->ID, $area );
+							do_action( "landtech_extras/widgets/posts/before_{$meta}", $this->parent->get_settings(), $post->ID, $area );
 
 							call_user_func( array( $this, 'render_post_' . $meta ), $area );
 
@@ -944,7 +962,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 					 * @param int 		$post_id 	The post ID
 							 * @param string 	$area 	The area the meta resides in
 							 */
-							do_action( "elementor_extras/widgets/posts/after_{$meta}", $this->parent->get_settings(), $post->ID, $area );
+							do_action( "landtech_extras/widgets/posts/after_{$meta}", $this->parent->get_settings(), $post->ID, $area );
 						}
 
 						/**
@@ -958,7 +976,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 						 * @param array 	$settings 	The current widget settings
 		 				 * @param int 		$post_id 	The post ID
 						 */
-						do_action( "elementor_extras/widgets/posts/after_{$area}_metas", $this->parent->get_settings(), $post->ID );
+						do_action( "landtech_extras/widgets/posts/after_{$area}_metas", $this->parent->get_settings(), $post->ID );
 
 					?></ul><?php
 
@@ -1012,9 +1030,10 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param string 			$post_thumbnail 	The html for the thumbnail of the post
 		 * @param object|WP_Post 	$post 				The current post
 		 */
-		$post_thumbnail = apply_filters( 'elementor_extras/widgets/posts/thumbnail', $post_thumbnail, $post );
+		$post_thumbnail = apply_filters( 'landtech_extras/widgets/posts/thumbnail', $post_thumbnail, $post );
 		
-		?><div <?php echo $this->parent->get_render_attribute_string( $thumbnail_key ); ?>><?php
+		?><div <?php $this->parent->print_render_attribute_string( $thumbnail_key ); ?>><?php
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Post thumbnail HTML from filters and Featured Image markup.
 			echo $post_thumbnail;
 		?></div><?php
 	}
@@ -1033,7 +1052,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			'ee-media__overlay',
 		] );
 
-		?><div <?php echo $this->parent->get_render_attribute_string( $overlay_key ); ?>></div><?php
+		?><div <?php $this->parent->print_render_attribute_string( $overlay_key ); ?>></div><?php
 	}
 
 	/**
@@ -1079,11 +1098,11 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		$this->parent->add_helper_render_attribute( $terms_key, 'Terms' );
 
 		?>
-		<ul <?php echo $this->parent->get_render_attribute_string( $terms_key ); ?>>
+		<ul <?php $this->parent->print_render_attribute_string( $terms_key ); ?>>
 
 			<?php if ( $settings['post_terms_prefix'] ) { ?>
-			<li <?php echo $this->parent->get_render_attribute_string( $term_prefix_key ); ?>>
-				<?php echo $settings['post_terms_prefix']; ?>
+			<li <?php $this->parent->print_render_attribute_string( $term_prefix_key ); ?>>
+				<?php echo esc_html( $settings['post_terms_prefix'] ); ?>
 			</li>
 			<?php } ?>
 
@@ -1115,10 +1134,10 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 				}
 			?>
 
-				<li <?php echo $this->parent->get_render_attribute_string( $term_render_key ); ?>>
-					<<?php echo $terms_tag; ?> <?php echo $this->parent->get_render_attribute_string( $term_link_render_key ); ?>>
-						<?php echo $term->name; ?>
-					</<?php echo $terms_tag; ?>><?php echo $this->render_terms_separator(); ?>
+				<li <?php $this->parent->print_render_attribute_string( $term_render_key ); ?>>
+					<<?php echo esc_html( $terms_tag ); ?> <?php $this->parent->print_render_attribute_string( $term_link_render_key ); ?>>
+						<?php echo esc_html( $term->name ); ?>
+					</<?php echo esc_html( $terms_tag ); ?>><?php $this->render_terms_separator(); ?>
 				</li>
 
 			<?php $count++; } ?>
@@ -1165,7 +1184,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 					 * @param array $title_link 	The original post link
 					 * @param object|WP_Post $post  The current post
 					 */
-					'href' 	=> apply_filters( 'elementor_extras/widgets/posts/title/link', $this->get_post_link( $post ), $post )
+					'href' 	=> apply_filters( 'landtech_extras/widgets/posts/title/link', $this->get_post_link( $post ), $post )
 				]
 			] );
 
@@ -1194,14 +1213,14 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param string 			$post_title 	The original post date time
 		 * @param object|WP_Post 	$post 			The current post
 		 */
-		$post_title = apply_filters_deprecated( 'ee_posts_title', [ $post_title, $post ], '2.1.3', 'elementor_extras/widgets/posts/post_title' );
-		$post_title = apply_filters( 'elementor_extras/widgets/posts/title', $post_title, $post );
+		$post_title = apply_filters_deprecated( 'ltxe_posts_title', [ $post_title, $post ], '2.1.3', 'landtech_extras/widgets/posts/post_title' );
+		$post_title = apply_filters( 'landtech_extras/widgets/posts/title', $post_title, $post );
 
-		?><<?php echo $title_tag; ?> <?php echo $this->parent->get_render_attribute_string( $title_key ); ?>>
-			<<?php echo $heading_tag; ?> <?php echo $this->parent->get_render_attribute_string( $heading_key ); ?>><?php
-				echo $post_title;
-			?></<?php echo $heading_tag; ?>>
-		</<?php echo $title_tag; ?>><?php
+		?><<?php echo esc_html( $title_tag ); ?> <?php $this->parent->print_render_attribute_string( $title_key ); ?>>
+			<<?php echo esc_html( $this->parent->ltxe_sanitize_heading_tag( $heading_tag ) ); ?> <?php $this->parent->print_render_attribute_string( $heading_key ); ?>><?php
+				echo wp_kses_post( $post_title );
+			?></<?php echo esc_html( $this->parent->ltxe_sanitize_heading_tag( $heading_tag ) ); ?>>
+		</<?php echo esc_html( $title_tag ); ?>><?php
 	}
 
 	/**
@@ -1216,7 +1235,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 
 		$separator = $this->parent->get_settings( 'post_metas_separator' );
 
-		?><span <?php echo $this->parent->get_render_attribute_string( 'metas-separator' ); ?>><?php echo $separator; ?></span><?php
+		?><span <?php $this->parent->print_render_attribute_string( 'metas-separator' ); ?>><?php echo esc_html( $separator ); ?></span><?php
 	}
 
 	/**
@@ -1231,7 +1250,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 
 		$separator = $this->parent->get_settings( 'post_terms_separator' );
 
-		?><span <?php echo $this->parent->get_render_attribute_string( 'terms-separator' ); ?>><?php echo $separator; ?></span><?php
+		?><span <?php $this->parent->print_render_attribute_string( 'terms-separator' ); ?>><?php echo esc_html( $separator ); ?></span><?php
 	}
 
 	/**
@@ -1261,11 +1280,11 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			],
 		] );
 
-		?><li <?php echo $this->parent->get_render_attribute_string( $meta_author_key ); ?>>
+		?><li <?php $this->parent->print_render_attribute_string( $meta_author_key ); ?>>
 			<?php if ( $has_link ) : ?>
-				<a <?php echo $this->parent->get_render_attribute_string( $meta_author_link_key ); ?>>
+				<a <?php $this->parent->print_render_attribute_string( $meta_author_link_key ); ?>>
 			<?php endif; ?>
-				<?php echo $this->parent->get_settings('post_author_prefix'); ?> <?php the_author(); ?><?php echo $this->render_metas_separator(); ?>
+				<?php echo esc_html( $this->parent->get_settings( 'post_author_prefix' ) ); ?> <?php the_author(); ?><?php $this->render_metas_separator(); ?>
 			<?php if ( $has_link ) : ?></a><?php endif; ?>
 		</li>
 		<?php
@@ -1302,9 +1321,9 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			],
 		] );
 
-		?><div <?php echo $this->parent->get_render_attribute_string( $meta_avatar_key ); ?>>
+		?><div <?php $this->parent->print_render_attribute_string( $meta_avatar_key ); ?>>
 			<?php if ( $has_link ) : ?>
-				<a <?php echo $this->parent->get_render_attribute_string( $meta_avatar_link_key ); ?>>
+				<a <?php $this->parent->print_render_attribute_string( $meta_avatar_link_key ); ?>>
 			<?php endif; ?>
 				<?php echo get_avatar( get_the_author_meta( 'ID' ), 64, '', get_the_author_meta( 'display_name' ), $args ); ?>
 			<?php if ( $has_link ) : ?></a><?php endif; ?>
@@ -1353,12 +1372,12 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param string 		 $post_date_time 	The original post date time
 		 * @param object|WP_Post $post  			The current post
 		 */
-		$post_date_time = apply_filters_deprecated( 'ee_posts_date_time', [ $post_date_time, $post ], '2.1.3', 'elementor_extras/widgets/posts/date_time' );
-		$post_date_time = apply_filters( 'elementor_extras/widgets/posts/date_time', $post_date_time, $post );
+		$post_date_time = apply_filters_deprecated( 'ltxe_posts_date_time', [ $post_date_time, $post ], '2.1.3', 'landtech_extras/widgets/posts/date_time' );
+		$post_date_time = apply_filters( 'landtech_extras/widgets/posts/date_time', $post_date_time, $post );
 
-		?><li <?php echo $this->parent->get_render_attribute_string( $meta_date_key ); ?>><?php
-			echo $settings['post_date_prefix'] . ' ' . $post_date_time;
-			echo $this->render_metas_separator();
+		?><li <?php $this->parent->print_render_attribute_string( $meta_date_key ); ?>><?php
+			echo esc_html( $settings['post_date_prefix'] ) . ' ' . wp_kses_post( $post_date_time );
+			$this->render_metas_separator();
 		?></li><?php
 	}
 
@@ -1370,14 +1389,16 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 	 * @return void
 	 */
 	protected function render_post_price( $area = 'footer' ) {
-		if ( ! is_woocommerce_active() || ! function_exists( 'wc_get_product' ) )
+		if ( ! landtech_extras_is_woocommerce_active() || ! function_exists( 'wc_get_product' ) )
 			return;
 
 		if ( ! $this->parent->is_in_area( 'price', $area ) )
 			return;
 
+		// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals -- WooCommerce price template requires global $product per wc_get_template().
 		global $product;
 		$product = wc_get_product();
+		// phpcs:enable
 
 		if ( empty( $product ) )
 			return;
@@ -1394,9 +1415,9 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			],
 		] );
 
-		?><li <?php echo $this->parent->get_render_attribute_string( $meta_date_key ); ?>>
+		?><li <?php $this->parent->print_render_attribute_string( $meta_date_key ); ?>>
 			<?php wc_get_template( '/single-product/price.php' ); ?>
-			<?php echo $this->render_metas_separator(); ?>
+			<?php $this->render_metas_separator(); ?>
 		</li><?php
 	}
 
@@ -1436,8 +1457,8 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param string 			$post_comments_prefix 	The initial post comments prefix
 		 * @param object|WP_Post 	$post  					The current post
 		 */
-		$post_comments_prefix = apply_filters_deprecated( 'ee_posts_comments_prefix', [ $post_comments_prefix, $post ], '2.1.3', 'elementor_extras/widgets/posts/comments/prefix' );
-		$post_comments_prefix = apply_filters( 'elementor_extras/widgets/posts/comments/prefix', $post_comments_prefix, $post );
+		$post_comments_prefix = apply_filters_deprecated( 'ltxe_posts_comments_prefix', [ $post_comments_prefix, $post ], '2.1.3', 'landtech_extras/widgets/posts/comments/prefix' );
+		$post_comments_prefix = apply_filters( 'landtech_extras/widgets/posts/comments/prefix', $post_comments_prefix, $post );
 
 		/**
 		 * Comments Count Filter
@@ -1448,8 +1469,8 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param string 			$post_comments 	The initial post comments count
 		 * @param object|WP_Post 	$post  			The current post
 		 */
-		$post_comments = apply_filters_deprecated( 'ee_posts_comments', [ $post_comments, $post ], '2.1.3', 'elementor_extras/widgets/posts/comments' );
-		$post_comments = apply_filters( 'elementor_extras/widgets/posts/comments', $post_comments, $post );
+		$post_comments = apply_filters_deprecated( 'ltxe_posts_comments', [ $post_comments, $post ], '2.1.3', 'landtech_extras/widgets/posts/comments' );
+		$post_comments = apply_filters( 'landtech_extras/widgets/posts/comments', $post_comments, $post );
 
 		/**
 		 * Comments Suffix Filter
@@ -1460,14 +1481,14 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param string 			$post_comments_suffix 	The initial post comments suffix
 		 * @param object|WP_Post 	$post  					The current post
 		 */
-		$post_comments_suffix = apply_filters_deprecated( 'ee_posts_comments_suffix', [ $post_comments_suffix, $post ], '2.1.3', 'elementor_extras/widgets/posts/comments/prefix' );
-		$post_comments_suffix = apply_filters( 'elementor_extras/widgets/posts/comments/suffix', $post_comments_suffix, $post );
+		$post_comments_suffix = apply_filters_deprecated( 'ltxe_posts_comments_suffix', [ $post_comments_suffix, $post ], '2.1.3', 'landtech_extras/widgets/posts/comments/prefix' );
+		$post_comments_suffix = apply_filters( 'landtech_extras/widgets/posts/comments/suffix', $post_comments_suffix, $post );
 
-		?><li <?php echo $this->parent->get_render_attribute_string( $comments_key ); ?>><?php
-			echo $post_comments_prefix;
-			echo $post_comments;
-			echo $post_comments_suffix;
-			echo $this->render_metas_separator();
+		?><li <?php $this->parent->print_render_attribute_string( $comments_key ); ?>><?php
+			echo esc_html( $post_comments_prefix );
+			echo esc_html( (string) $post_comments );
+			echo esc_html( $post_comments_suffix );
+			$this->render_metas_separator();
 		?></li><?php
 	}
 
@@ -1480,7 +1501,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 	 */
 	protected function render_post_excerpt( $area = 'body' ) {
 
-		if ( ! $this->parent->is_in_area( 'excerpt', $area ) || ! $this->custom_excerpt_length() )
+		if ( ! $this->parent->is_in_area( 'excerpt', $area ) || ! $this->landtech_extras_posts_excerpt_length( 0 ) )
 			return;
 
 		global $post;
@@ -1493,7 +1514,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		$this->parent->add_helper_render_attribute( $post_excerpt_key, 'Excerpt' );
 
 		if ( 'yes' === $this->parent->get_settings( 'post_excerpt_trim_custom' ) ) {
-			$post_excerpt = wp_trim_words( $post_excerpt, $this->custom_excerpt_length(), $this->custom_excerpt_more() );
+			$post_excerpt = wp_trim_words( $post_excerpt, $this->landtech_extras_posts_excerpt_length( 0 ), $this->landtech_extras_posts_excerpt_more_suffix() );
 		}
 
 		if ( 'media' === $area ) $tag = 'span';
@@ -1507,12 +1528,12 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param string 			$post_excerpt 	The original excerpt
 		 * @param object|WP_Post 	$post  			The current post
 		 */
-		$post_excerpt = apply_filters_deprecated( 'ee_posts_excerpt', [ $post_excerpt, $post ], '2.1.3', 'elementor_extras/widgets/posts/excerpt' );
-		$post_excerpt = apply_filters( 'elementor_extras/widgets/posts/excerpt', $post_excerpt, $post );
+		$post_excerpt = apply_filters_deprecated( 'ltxe_posts_excerpt', [ $post_excerpt, $post ], '2.1.3', 'landtech_extras/widgets/posts/excerpt' );
+		$post_excerpt = apply_filters( 'landtech_extras/widgets/posts/excerpt', $post_excerpt, $post );
 
-		?><<?php echo $post_excerpt_tag; ?> <?php echo $this->parent->get_render_attribute_string( $post_excerpt_key ); ?>><?php
-			echo $post_excerpt;
-		?></<?php echo $post_excerpt_tag; ?>><?php
+		?><<?php echo esc_html( $post_excerpt_tag ); ?> <?php $this->parent->print_render_attribute_string( $post_excerpt_key ); ?>><?php
+			echo wp_kses_post( $post_excerpt );
+		?></<?php echo esc_html( $post_excerpt_tag ); ?>><?php
 	}
 
 	/**
@@ -1574,7 +1595,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 				 * @param array $button_link 	The original post link
 				 * @param object|WP_Post $post  The current post
 				 */
-				'href' 	=> apply_filters( 'elementor_extras/widgets/posts/button/link', $button_link, $post ),
+				'href' 	=> apply_filters( 'landtech_extras/widgets/posts/button/link', $button_link, $post ),
 			] );
 
 			if ( '' !== $settings['post_button_blank'] ) {
@@ -1593,12 +1614,12 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param string 		 $button_text 	The original text
 		 * @param object|WP_Post $post  		The current post
 		 */
-		$button_text = apply_filters( 'elementor_extras/widgets/posts/button/text', $settings['post_read_more_text'], $post );
+		$button_text = apply_filters( 'landtech_extras/widgets/posts/button/text', $settings['post_read_more_text'], $post );
 
-		?><div <?php echo $this->parent->get_render_attribute_string( $post_read_more_key ); ?>>
-			<<?php echo $button_tag; ?> <?php echo $this->parent->get_render_attribute_string( $post_button_key ); ?>>
-				<?php echo $button_text; ?>
-			</<?php echo $button_tag; ?>>
+		?><div <?php $this->parent->print_render_attribute_string( $post_read_more_key ); ?>>
+			<<?php echo esc_html( $button_tag ); ?> <?php $this->parent->print_render_attribute_string( $post_button_key ); ?>>
+				<?php echo esc_html( $button_text ); ?>
+			</<?php echo esc_html( $button_tag ); ?>>
 		</div><?php
 	}
 
@@ -1610,7 +1631,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 	 * @return void
 	 */
 	protected function render_add_to_cart_button( $area = 'body' ) {
-		if ( ! is_woocommerce_active() )
+		if ( ! landtech_extras_is_woocommerce_active() )
 			return;
 
 		if ( 'media' === $area && 'yes' === $this->parent->get_settings('post_media_link') )
@@ -1630,7 +1651,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		add_filter( 'woocommerce_loop_add_to_cart_args', [ $this, 'filter_woocommerce_add_to_cart_button_args' ], 10, 2 ); 
 		add_filter( 'woocommerce_product_add_to_cart_text', [ $this, 'filter_woocommerce_add_to_cart_button_text' ], 10, 2 ); 
 		
-		?><div <?php echo $this->parent->get_render_attribute_string( $add_to_cart_key ); ?>><?php
+		?><div <?php $this->parent->print_render_attribute_string( $add_to_cart_key ); ?>><?php
 			woocommerce_template_loop_add_to_cart();
 		?></div><?php
 
@@ -1679,8 +1700,8 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param string 			$add_to_cart_text 	The original text
 		 * @param object|WP_Product $product  			The current woocommerce product
 		 */
-		$add_to_cart_text = apply_filters( 'elementor_extras/widgets/posts/button/text', $add_to_cart_text, $product );
-		$add_to_cart_text = apply_filters( 'elementor_extras/widgets/posts/add_to_cart/text', $add_to_cart_text, $product );
+		$add_to_cart_text = apply_filters( 'landtech_extras/widgets/posts/button/text', $add_to_cart_text, $product );
+		$add_to_cart_text = apply_filters( 'landtech_extras/widgets/posts/add_to_cart/text', $add_to_cart_text, $product );
 		
 		return $add_to_cart_text;
 	}
@@ -1733,7 +1754,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param array 	$settings 	The current widget settings
 		 * @param int 		$post_id 	The post ID
 		 */
-		do_action( 'elementor_extras/widgets/posts/before_loop', $this->parent->get_settings(), $post->ID );
+		do_action( 'landtech_extras/widgets/posts/before_loop', $this->parent->get_settings(), $post->ID );
 	}
 
 	/**
@@ -1756,7 +1777,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param array 	$settings 	The current widget settings
 		 * @param int 		$post_id 	The post ID
 		 */
-		do_action( 'elementor_extras/widgets/posts/before_grid_item', $this->parent->get_settings(), $post->ID );
+		do_action( 'landtech_extras/widgets/posts/before_grid_item', $this->parent->get_settings(), $post->ID );
 	}
 
 	/**
@@ -1781,7 +1802,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param array 	$settings 	The current widget settings
 		 * @param int 		$post_id 	The post ID
 		 */
-		do_action( 'elementor_extras/widgets/posts/after_grid_item_start', $this->parent->get_settings(), $post->ID );
+		do_action( 'landtech_extras/widgets/posts/after_grid_item_start', $this->parent->get_settings(), $post->ID );
 	}
 
 	/**
@@ -1805,7 +1826,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param array 	$settings 	The current widget settings
 		 * @param int 		$post_id 	The post ID
 		 */
-		do_action( 'elementor_extras/widgets/posts/before_grid_item_end', $this->parent->get_settings(), $post->ID );
+		do_action( 'landtech_extras/widgets/posts/before_grid_item_end', $this->parent->get_settings(), $post->ID );
 	}
 
 	/**
@@ -1828,7 +1849,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param array 	$settings 	The current widget settings
 		 * @param int 		$post_id 	The post ID
 		 */
-		do_action( 'elementor_extras/widgets/posts/after_grid_item', $this->parent->get_settings(), $post->ID );
+		do_action( 'landtech_extras/widgets/posts/after_grid_item', $this->parent->get_settings(), $post->ID );
 	}
 
 	/**
@@ -1851,7 +1872,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param array 	$settings 	The current widget settings
 		 * @param int 		$post_id 	The post ID
 		 */
-		do_action( 'elementor_extras/widgets/posts/after_loop', $this->parent->get_settings(), $post->ID );
+		do_action( 'landtech_extras/widgets/posts/after_loop', $this->parent->get_settings(), $post->ID );
 	}
 
 	/**

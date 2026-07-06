@@ -172,9 +172,7 @@ build_org_assets() {
 	fi
 
 	mkdir -p "${assets_dir}"
-	local tmp
 	tmp="$(mktemp -d)"
-	trap 'rm -rf "${tmp}"' RETURN
 
 	sips -s format png "${icon_svg}" --out "${tmp}/icon-256x256.png" >/dev/null
 	sips -z 128 128 "${tmp}/icon-256x256.png" --out "${tmp}/icon-128x128.png" >/dev/null
@@ -200,6 +198,7 @@ build_org_assets() {
 	fi
 
 	svn add --force "${assets_dir}"
+	rm -rf "${tmp}"
 	echo "Refreshed plugin-directory assets in ${assets_dir}"
 }
 

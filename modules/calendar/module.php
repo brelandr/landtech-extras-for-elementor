@@ -1,9 +1,10 @@
 <?php
-namespace ElementorExtras\Modules\Calendar;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Calendar;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Module_Base;
-use ElementorExtras\Modules\CustomFields\Module as CustomFieldsModule;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Module_Base;
+use LandTechExtras\Modules\CustomFields\Module as CustomFieldsModule;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 

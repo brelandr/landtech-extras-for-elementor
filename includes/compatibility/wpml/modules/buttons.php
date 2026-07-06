@@ -1,5 +1,6 @@
 <?php
-namespace ElementorExtras\Compatibility\WPML;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Compatibility\WPML;
 
 use WPML_Elementor_Module_With_Items;
 
@@ -48,19 +49,19 @@ class Buttons extends WPML_Elementor_Module_With_Items {
 	 */
 	protected function get_title( $field ) {
 		if ( 'text' === $field ) {
-			return esc_html__( 'Buttons: Text', 'elementor-extras' );
+			return esc_html__( 'Buttons: Text', 'landtech-extras-for-elementor' );
 		}
 
 		if ( 'tooltip_content' === $field ) {
-			return esc_html__( 'Buttons: Tooltip Content', 'elementor-extras' );
+			return esc_html__( 'Buttons: Tooltip Content', 'landtech-extras-for-elementor' );
 		}
 
 		if ( 'url' === $field ) {
-			return esc_html__( 'Buttons: Link', 'elementor-extras' );
+			return esc_html__( 'Buttons: Link', 'landtech-extras-for-elementor' );
 		}
 
 		if ( 'button_effect_text' === $field ) {
-			return esc_html__( 'Buttons: Effect Text', 'elementor-extras' );
+			return esc_html__( 'Buttons: Effect Text', 'landtech-extras-for-elementor' );
 		}
 
 		return '';

@@ -1,6 +1,7 @@
 <?php
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
 
-namespace ElementorExtras\Base;
+namespace LandTechExtras\Base;
 
 use Elementor\Widget_Base;
 
@@ -31,7 +32,7 @@ abstract class Extras_Widget extends Widget_Base {
 	 *
 	 * @var null|array
 	 */
-	private $ee_loop_dynamic_settings = [];
+	private $ltxe_loop_dynamic_settings = [];
 
 	/**
 	 * Get Categories
@@ -42,7 +43,7 @@ abstract class Extras_Widget extends Widget_Base {
 	 * @return array
 	 */
 	public function get_categories() {
-		return [ 'elementor-extras' ];
+		return [ 'landtech-extras' ];
 	}
 
 	/**
@@ -50,12 +51,12 @@ abstract class Extras_Widget extends Widget_Base {
 	 *
 	 * Returning true prevents serving cached HTML that could be wrong for WP_Query loops,
 	 * user/state-dependent behavior, or settings evaluated at render time. Opt in per widget
-	 * with {@see static::ee_allows_element_html_cache()} when the output is fully static.
+	 * with {@see static::ltxe_allows_element_html_cache()} when the output is fully static.
 	 *
 	 * @since 2.2.53
 	 */
 	protected function is_dynamic_content(): bool {
-		return ! static::ee_allows_element_html_cache();
+		return ! static::ltxe_allows_element_html_cache();
 	}
 
 	/**
@@ -63,7 +64,7 @@ abstract class Extras_Widget extends Widget_Base {
 	 *
 	 * @since 2.2.53
 	 */
-	protected static function ee_allows_element_html_cache(): bool {
+	protected static function ltxe_allows_element_html_cache(): bool {
 		return false;
 	}
 
@@ -106,6 +107,19 @@ abstract class Extras_Widget extends Widget_Base {
 	}
 
 	/**
+	 * Allowlisted heading / title tag for dynamic opening and closing HTML tags.
+	 *
+	 * @param string $tag Requested tag.
+	 * @return string
+	 */
+	public function ltxe_sanitize_heading_tag( $tag ) {
+		$tag = strtolower( (string) $tag );
+		$allowed = array( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'span', 'p' );
+
+		return in_array( $tag, $allowed, true ) ? $tag : 'h3';
+	}
+
+	/**
 	 * Method for adding editor helper attributes
 	 *
 	 * Adds attributes that enable a display of a label for a specific html element
@@ -140,10 +154,12 @@ abstract class Extras_Widget extends Widget_Base {
 		$defaults = [
 			'title_tag' => 'h4',
 			'title' => $this->get_title(),
-			'body' 	=> __( 'This is a placeholder for this widget and will not shown on the page.', 'elementor-extras' ),
+			'body' 	=> __( 'This is a placeholder for this widget and will not shown on the page.', 'landtech-extras-for-elementor' ),
 		];
 
 		$args = wp_parse_args( $args, $defaults );
+
+		$title_tag = $this->ltxe_sanitize_heading_tag( $args['title_tag'] );
 
 		$this->add_render_attribute([
 			'ee-placeholder' => [
@@ -157,11 +173,11 @@ abstract class Extras_Widget extends Widget_Base {
 			],
 		]);
 
-		?><div <?php echo $this->get_render_attribute_string( 'ee-placeholder' ); ?>>
-			<<?php echo $args['title_tag']; ?> <?php echo $this->get_render_attribute_string( 'ee-placeholder-title' ); ?>>
-				<?php echo $args['title']; ?>
-			</<?php echo $args['title_tag']; ?>>
-			<div <?php echo $this->get_render_attribute_string( 'ee-placeholder-body' ); ?>><?php echo $args['body']; ?></div>
+		?><div <?php $this->print_render_attribute_string( 'ee-placeholder' ); ?>>
+			<<?php echo esc_html( $title_tag ); ?> <?php $this->print_render_attribute_string( 'ee-placeholder-title' ); ?>>
+				<?php echo wp_kses_post( $args['title'] ); ?>
+			</<?php echo esc_html( $title_tag ); ?>>
+			<div <?php $this->print_render_attribute_string( 'ee-placeholder-body' ); ?>><?php echo wp_kses_post( $args['body'] ); ?></div>
 		</div><?php
 	}
 
@@ -242,7 +258,7 @@ abstract class Extras_Widget extends Widget_Base {
 		$all_settings 	= $this->get_settings();
 		$controls 		= $this->get_controls();
 		
-		$this->ee_loop_dynamic_settings[ $post_id ] = [];
+		$this->ltxe_loop_dynamic_settings[ $post_id ] = [];
 
 		foreach ( $controls as $control ) {
 			$control_name = $control['name'];
@@ -261,7 +277,7 @@ abstract class Extras_Widget extends Widget_Base {
 				$parsed_value = $control_obj->parse_tags( $settings[ '__dynamic__' ][ $control_name ], $dynamic_settings );
 			}
 
-			$this->ee_loop_dynamic_settings[ $post_id ][ $control_name ] = $parsed_value;
+			$this->ltxe_loop_dynamic_settings[ $post_id ][ $control_name ] = $parsed_value;
 		}
 	}
 
@@ -280,12 +296,12 @@ abstract class Extras_Widget extends Widget_Base {
 	protected function get_settings_for_loop_display( $post_id = false ) {
 
 		if ( $post_id ) {
-			if ( array_key_exists( $post_id, $this->ee_loop_dynamic_settings ) ) {
-				return $this->ee_loop_dynamic_settings[ $post_id ];
+			if ( array_key_exists( $post_id, $this->ltxe_loop_dynamic_settings ) ) {
+				return $this->ltxe_loop_dynamic_settings[ $post_id ];
 			}
 		}
 
-		return $this->ee_loop_dynamic_settings;
+		return $this->ltxe_loop_dynamic_settings;
 	}
 
 	/**
@@ -304,5 +320,28 @@ abstract class Extras_Widget extends Widget_Base {
 		}
 
 		return implode( '_', [ $this->get_id(), $post->ID ] );
+	}
+
+	/**
+	 * Print HTML attributes from Elementor's render attribute API.
+	 *
+	 * Must remain public: {@see \Elementor\Controls_Stack::print_render_attribute_string()}.
+	 *
+	 * @param string $element Render key.
+	 * @return void
+	 */
+	public function print_render_attribute_string( $element ) {
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Widget_Base::get_render_attribute_string() returns escaped attribute HTML.
+		echo $this->get_render_attribute_string( $element );
+	}
+
+	/**
+	 * Allowlisted tag for gallery-style media wrappers (figure vs anchor).
+	 *
+	 * @param string $tag Tag name.
+	 * @return string
+	 */
+	protected function get_gallery_media_tag_name( $tag ) {
+		return in_array( $tag, array( 'figure', 'a' ), true ) ? $tag : 'figure';
 	}
 }

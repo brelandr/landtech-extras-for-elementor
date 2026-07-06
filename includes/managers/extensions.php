@@ -1,5 +1,6 @@
 <?php
-namespace ElementorExtras;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
@@ -35,19 +36,41 @@ class Extensions_Manager {
 
 		$this->_extensions = [];
 
-		$available_extensions = $this->available_extensions;
+		/**
+		 * Extra extension IDs registered by the Premium add-on (files may live under `LANDTECH_EXTRAS_PREMIUM_PATH`).
+		 *
+		 * @since 2.2.74
+		 *
+		 * @param string[] $ids Hyphenated extension slugs.
+		 */
+		$available_extensions = apply_filters( 'landtech_extras/available_extensions', $this->available_extensions );
+
+		if ( ! is_array( $available_extensions ) ) {
+			$available_extensions = $this->available_extensions;
+		}
 
 		foreach ( $available_extensions as $index => $extension_id ) {
-			$extension_filename = str_replace( '_', '-', $extension_id );
-			$extension_name = str_replace( '-', '_', $extension_id );
+			$extension_name     = str_replace( '-', '_', $extension_id );
+			$basename           = str_replace( '_', '-', $extension_id );
+			$ext_path           = LANDTECH_EXTRAS_PATH . "extensions/{$basename}.php";
 
-			$extension_filename = ELEMENTOR_EXTRAS_PATH . "extensions/{$extension_filename}.php";
+			if ( ! is_readable( $ext_path ) && defined( 'LANDTECH_EXTRAS_PREMIUM_PATH' ) ) {
+				$premium_try = trailingslashit( wp_normalize_path( (string) constant( 'LANDTECH_EXTRAS_PREMIUM_PATH' ) ) )
+					. "extensions/{$basename}.php";
+				if ( is_readable( $premium_try ) ) {
+					$ext_path = $premium_try;
+				}
+			}
 
-			require( $extension_filename );
+			if ( ! is_readable( $ext_path ) ) {
+				continue;
+			}
+
+			require_once $ext_path;
 
 			$class_name = str_replace( '-', '_', $extension_id );
 
-			$class_name = 'ElementorExtras\Extensions\Extension_' . ucwords( $class_name );
+			$class_name = 'LandTechExtras\Extensions\Extension_' . ucwords( $class_name );
 
 			if ( ! $this->is_available( $extension_name ) )
 				unset( $this->available_extensions[ $index ] );
@@ -60,7 +83,7 @@ class Extensions_Manager {
 			$this->register_extension( $extension_id, new $class_name() );
 		}
 
-		do_action( 'elementor_extras/extensions/extensions_registered', $this );
+		do_action( 'landtech_extras/extensions/extensions_registered', $this );
 	}
 
 	/**
@@ -76,8 +99,8 @@ class Extensions_Manager {
 			return false;
 
 		$option_name 	= 'enable_' . $extension_name;
-		$section 		= 'elementor_extras_extensions';
-		$option 		= \ElementorExtras\ElementorExtrasPlugin::instance()->settings->get_option( $option_name, $section, false );
+		$section 		= 'landtech_extras_extensions';
+		$option 		= \LandTechExtras\LandTechExtrasPlugin::instance()->settings->get_option( $option_name, $section, false );
 
 		return ( 'off' === $option ) || ( ! $option && $this->is_default_disabled( $extension_name ) );
 	}
@@ -95,7 +118,7 @@ class Extensions_Manager {
 			return false;
 
 		$class_name = str_replace( '-', '_', $extension_name );
-		$class_name = 'ElementorExtras\Extensions\Extension_' . ucwords( $class_name );
+		$class_name = 'LandTechExtras\Extensions\Extension_' . ucwords( $class_name );
 
 		if ( $class_name::is_default_disabled() )
 			return true;
@@ -116,9 +139,9 @@ class Extensions_Manager {
 			return false;
 
 		$class_name = str_replace( '-', '_', $extension_name );
-		$class_name = 'ElementorExtras\Extensions\Extension_' . ucwords( $class_name );
+		$class_name = 'LandTechExtras\Extensions\Extension_' . ucwords( $class_name );
 
-		if ( $class_name::requires_elementor_pro() && ! is_elementor_pro_active() )
+		if ( $class_name::requires_elementor_pro() && ! landtech_extras_is_elementor_pro_active() )
 			return false;
 
 		return true;
@@ -167,7 +190,7 @@ class Extensions_Manager {
 	 * @since 0.1.0
 	 *
 	 * @param $extension_id
-	 * @return bool|\ElementorExtras\Extension_Base
+	 * @return bool|\LandTechExtras\Extension_Base
 	 */
 	public function get_extension( $extension_id ) {
 		$extensions = $this->get_extensions();
@@ -176,7 +199,7 @@ class Extensions_Manager {
 	}
 
 	private function require_files() {
-		require( ELEMENTOR_EXTRAS_PATH . 'base/extension.php' );
+		require_once LANDTECH_EXTRAS_PATH . 'base/extension.php';
 	}
 
 	public function __construct() {

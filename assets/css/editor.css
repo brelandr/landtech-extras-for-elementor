@@ -38,21 +38,21 @@
 .elementor-control-type-ee-snazzy .elementor-control-input-wrapper {
   width: 135px;
 }
-.elementor-control-ee_display_conditions,
+.elementor-control-ltxe_display_conditions,
 .elementor-control-post_acf_fields {
   padding: 0 20px 15px;
 }
-.elementor-control-ee_display_conditions label:empty + .elementor-control-input-wrapper,
+.elementor-control-ltxe_display_conditions label:empty + .elementor-control-input-wrapper,
 .elementor-control-post_acf_fields label:empty + .elementor-control-input-wrapper {
   margin-top: 0 !important;
 }
-.elementor-control-ee_display_conditions .elementor-control:not(:last-child) {
+.elementor-control-ltxe_display_conditions .elementor-control:not(:last-child) {
   padding-bottom: 0;
 }
-.elementor-control-ee_display_conditions .elementor-control-title {
+.elementor-control-ltxe_display_conditions .elementor-control-title {
   margin-top: 12px;
 }
-.elementor-control-ee_display_conditions .elementor-repeater-row-controls {
+.elementor-control-ltxe_display_conditions .elementor-repeater-row-controls {
   padding-bottom: 15px;
 }
 #elementor-theme-builder-conditions .elementor-control input[type=text] {

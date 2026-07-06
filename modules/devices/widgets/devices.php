@@ -1,8 +1,9 @@
 <?php
-namespace ElementorExtras\Modules\Devices\Widgets;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Devices\Widgets;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Extras_Widget;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Extras_Widget;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -45,7 +46,7 @@ class Devices extends Extras_Widget {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Devices', 'elementor-extras' );
+		return __( 'Devices', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -70,9 +71,9 @@ class Devices extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
-			'video-player',
-			'iphone-inline-video',
-			'jquery-appear'
+			'landtech-extras-video-player',
+			'landtech-extras-iphone-inline-video',
+			'landtech-extras-jquery-appear'
 		];
 	}
 
@@ -86,35 +87,35 @@ class Devices extends Extras_Widget {
 		$this->start_controls_section(
 			'section_content',
 			[
-				'label' => __( 'Device', 'elementor-extras' ),
+				'label' => __( 'Device', 'landtech-extras-for-elementor' ),
 			]
 		);
 
 			$this->add_control(
 				'device_type',
 				[
-					'label' 		=> __( 'Type', 'elementor-extras' ),
+					'label' 		=> __( 'Type', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default'		=> 'phone',
 					'options' 		=> [
 						'phone' 		=> [
-							'title' => __( 'Phone', 'elementor-extras' ),
+							'title' => __( 'Phone', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'fa fa-mobile-phone',
 						],
 						'tablet' 	=> [
-							'title' => __( 'Tablet', 'elementor-extras' ),
+							'title' => __( 'Tablet', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'fa fa-tablet',
 						],
 						'laptop' 	=> [
-							'title' => __( 'Laptop', 'elementor-extras' ),
+							'title' => __( 'Laptop', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'fa fa-laptop',
 						],
 						'desktop' 	=> [
-							'title' => __( 'Desktop', 'elementor-extras' ),
+							'title' => __( 'Desktop', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'fa fa-desktop',
 						],
 						'window' 	=> [
-							'title' => __( 'Window', 'elementor-extras' ),
+							'title' => __( 'Window', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'nicon nicon-window',
 						],
 					],
@@ -125,12 +126,12 @@ class Devices extends Extras_Widget {
 			$this->add_control(
 				'device_media_type',
 				[
-					'label' 		=> __( 'Media Type', 'elementor-extras' ),
+					'label' 		=> __( 'Media Type', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT,
 					'default' 		=> 'image',
 					'options' 		=> [
-						'image'  	=> __( 'Image', 'elementor-extras' ),
-						'video'  	=> __( 'Video', 'elementor-extras' ),
+						'image'  	=> __( 'Image', 'landtech-extras-for-elementor' ),
+						'video'  	=> __( 'Video', 'landtech-extras-for-elementor' ),
 					],
 				]
 			);
@@ -138,16 +139,16 @@ class Devices extends Extras_Widget {
 			$this->add_control(
 				'device_orientation',
 				[
-					'label' 		=> __( 'Orientation', 'elementor-extras' ),
+					'label' 		=> __( 'Orientation', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default'		=> 'portrait',
 					'options' 		=> [
 						'portrait' 	=> [
-							'title' => __( 'Portrait', 'elementor-extras' ),
+							'title' => __( 'Portrait', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'nicon nicon-mobile-portrait',
 						],
 						'landscape' => [
-							'title' => __( 'Landscape', 'elementor-extras' ),
+							'title' => __( 'Landscape', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'nicon nicon-mobile-landscape',
 						],
 					],
@@ -162,12 +163,12 @@ class Devices extends Extras_Widget {
 			$this->add_control(
 				'device_orientation_control',
 				[
-					'label' 		=> __( 'Orientation Control', 'elementor-extras' ),
-					'description'	=> __( 'Show orientation control on frontend. ', 'elementor-extras' ),
+					'label' 		=> __( 'Orientation Control', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Show orientation control on frontend. ', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'no',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'yes',
 					'condition'		=> [
 						'device_type'					=> [ 'phone', 'tablet' ],
@@ -180,20 +181,20 @@ class Devices extends Extras_Widget {
 			$this->add_responsive_control(
 				'device_align',
 				[
-					'label' 		=> __( 'Alignment', 'elementor-extras' ),
+					'label' 		=> __( 'Alignment', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default'		=> 'center',
 					'options' 		=> [
 						'left' 		=> [
-							'title' => __( 'Left', 'elementor-extras' ),
+							'title' => __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'eicon-h-align-left',
 						],
 						'center' 	=> [
-							'title' => __( 'Center', 'elementor-extras' ),
+							'title' => __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'eicon-h-align-center',
 						],
 						'right' 	=> [
-							'title' => __( 'Right', 'elementor-extras' ),
+							'title' => __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 	=> 'eicon-h-align-right',
 						],
 					],
@@ -206,7 +207,7 @@ class Devices extends Extras_Widget {
 			$this->add_responsive_control(
 				'device_width',
 				[
-					'label' 		=> __( 'Maximum Width', 'elementor-extras' ),
+					'label' 		=> __( 'Maximum Width', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'default' 		=> [
 						'size' 		=> '',
@@ -235,7 +236,7 @@ class Devices extends Extras_Widget {
 		$this->start_controls_section(
 			'section_screenshot',
 			[
-				'label' 	=> __( 'Screen', 'elementor-extras' ),
+				'label' 	=> __( 'Screen', 'landtech-extras-for-elementor' ),
 				'condition'	=> [
 					'device_media_type'				=> [ 'image' ],
 				]
@@ -247,14 +248,14 @@ class Devices extends Extras_Widget {
 			$this->start_controls_tab(
 				'tab_media_portrait',
 				[
-					'label' => __( 'Default', 'elementor-extras' ),
+					'label' => __( 'Default', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 				$this->add_control(
 					'media_portrait_screenshot',
 					[
-						'label' => __( 'Choose Screenshot', 'elementor-extras' ),
+						'label' => __( 'Choose Screenshot', 'landtech-extras-for-elementor' ),
 						'type' 	=> Controls_Manager::MEDIA,
 						'dynamic' => [ 'active' => true ],
 						'default' => [
@@ -270,7 +271,7 @@ class Devices extends Extras_Widget {
 					'screen_phone_notice',
 					[
 						'type' 				=> Controls_Manager::RAW_HTML,
-						'raw' 				=> __( 'Use an image or video with the ratio of 16:9', 'elementor-extras' ),
+						'raw' 				=> __( 'Use an image or video with the ratio of 16:9', 'landtech-extras-for-elementor' ),
 						'content_classes' 	=> 'elementor-panel-alert elementor-panel-alert-info',
 						'condition' 		=> [
 							'device_type' => [ 'phone', 'desktop' ],
@@ -282,7 +283,7 @@ class Devices extends Extras_Widget {
 					'screen_tablet_notice',
 					[
 						'type' 				=> Controls_Manager::RAW_HTML,
-						'raw' 				=> __( 'Use an image or video with the ratio of 4:3', 'elementor-extras' ),
+						'raw' 				=> __( 'Use an image or video with the ratio of 4:3', 'landtech-extras-for-elementor' ),
 						'content_classes' 	=> 'elementor-panel-alert elementor-panel-alert-info',
 						'condition' 		=> [
 							'device_type' => 'tablet'
@@ -294,7 +295,7 @@ class Devices extends Extras_Widget {
 					'screen_laptop_notice',
 					[
 						'type' 				=> Controls_Manager::RAW_HTML,
-						'raw' 				=> __( 'Use an image or video with the ratio of 16:10', 'elementor-extras' ),
+						'raw' 				=> __( 'Use an image or video with the ratio of 16:10', 'landtech-extras-for-elementor' ),
 						'content_classes' 	=> 'elementor-panel-alert elementor-panel-alert-info',
 						'condition' 		=> [
 							'device_type' => 'laptop'
@@ -306,7 +307,7 @@ class Devices extends Extras_Widget {
 					Group_Control_Image_Size::get_type(),
 					[
 						'name' 			=> 'media_portrait_screenshot',
-						'label' 		=> __( 'Screenshot Size', 'elementor-extras' ),
+						'label' 		=> __( 'Screenshot Size', 'landtech-extras-for-elementor' ),
 						'default' 		=> 'large',
 						'condition'		=> [
 							'media_portrait_screenshot[url]!'	=> '',
@@ -318,11 +319,11 @@ class Devices extends Extras_Widget {
 				$this->add_control(
 					'media_portrait_screenshot_scrollable',
 					[
-						'label' 		=> __( 'Scrollable', 'elementor-extras' ),
+						'label' 		=> __( 'Scrollable', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SWITCHER,
 						'default' 		=> 'no',
-						'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-						'label_off' 	=> __( 'No', 'elementor-extras' ),
+						'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+						'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 						'return_value' 	=> 'scrollable',
 						'prefix_class'	=> 'ee-device-portrait-',
 						'condition'		=> [
@@ -336,24 +337,24 @@ class Devices extends Extras_Widget {
 				$this->add_responsive_control(
 					'media_portrait_screenshot_align',
 					[
-						'label' 		=> __( 'Vertical Align', 'elementor-extras' ),
+						'label' 		=> __( 'Vertical Align', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::CHOOSE,
 						'default'		=> 'flex-start',
 						'options' 		=> [
 							'flex-start' 		=> [
-								'title' => __( 'Top', 'elementor-extras' ),
+								'title' => __( 'Top', 'landtech-extras-for-elementor' ),
 								'icon' 	=> 'nicon nicon-mobile-screen-top',
 							],
 							'center' 	=> [
-								'title' => __( 'Middle', 'elementor-extras' ),
+								'title' => __( 'Middle', 'landtech-extras-for-elementor' ),
 								'icon' 	=> 'nicon nicon-mobile-screen-center',
 							],
 							'flex-end' 	=> [
-								'title' => __( 'Bottom', 'elementor-extras' ),
+								'title' => __( 'Bottom', 'landtech-extras-for-elementor' ),
 								'icon' 	=> 'nicon nicon-mobile-screen-bottom',
 							],
 							'initial' 	=> [
-								'title' => __( 'Custom', 'elementor-extras' ),
+								'title' => __( 'Custom', 'landtech-extras-for-elementor' ),
 								'icon' 	=> 'nicon nicon-mobile-screen-custom',
 							],
 						],
@@ -373,7 +374,7 @@ class Devices extends Extras_Widget {
 				$this->add_control(
 					'media_portrait_screenshot_position',
 					[
-						'label' 		=> __( 'Offset Top (%)', 'elementor-extras' ),
+						'label' 		=> __( 'Offset Top (%)', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SLIDER,
 						'default' 		=> [
 							'size' 		=> 0,
@@ -403,7 +404,7 @@ class Devices extends Extras_Widget {
 			$this->start_controls_tab(
 				'tab_media_landscape',
 				[
-					'label' => __( 'Landscape', 'elementor-extras' ),
+					'label' => __( 'Landscape', 'landtech-extras-for-elementor' ),
 					'condition'	=> [
 						'device_orientation_control' 	=> 'yes',
 						'device_type'					=> [ 'phone', 'tablet' ],
@@ -415,7 +416,7 @@ class Devices extends Extras_Widget {
 				$this->add_control(
 					'media_landscape_screenshot',
 					[
-						'label' 		=> __( 'Choose Screenshot', 'elementor-extras' ),
+						'label' 		=> __( 'Choose Screenshot', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::MEDIA,
 						'dynamic' 		=> [ 'active' => true ],
 						'condition'		=> [
@@ -430,7 +431,7 @@ class Devices extends Extras_Widget {
 					Group_Control_Image_Size::get_type(),
 					[
 						'name' 		=> 'media_landscape_screenshot', // Actually its `image_size`
-						'label' 	=> __( 'Screenshot Size', 'elementor-extras' ),
+						'label' 	=> __( 'Screenshot Size', 'landtech-extras-for-elementor' ),
 						'default' 	=> 'large',
 						'condition'	=> [
 							'device_orientation_control' 		=> 'yes',
@@ -444,11 +445,11 @@ class Devices extends Extras_Widget {
 				$this->add_control(
 					'media_landscape_screenshot_scrollable',
 					[
-						'label' 		=> __( 'Scrollable', 'elementor-extras' ),
+						'label' 		=> __( 'Scrollable', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SWITCHER,
 						'default' 		=> 'no',
-						'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-						'label_off' 	=> __( 'No', 'elementor-extras' ),
+						'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+						'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 						'return_value' 	=> 'scrollable',
 						'prefix_class'	=> 'ee-device-landscape-',
 						'condition'	=> [
@@ -463,24 +464,24 @@ class Devices extends Extras_Widget {
 				$this->add_responsive_control(
 					'media_landscape_screenshot_align',
 					[
-						'label' 		=> __( 'Vertical Align', 'elementor-extras' ),
+						'label' 		=> __( 'Vertical Align', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::CHOOSE,
 						'default'		=> 'flex-start',
 						'options' 		=> [
 							'flex-start' 		=> [
-								'title' => __( 'Top', 'elementor-extras' ),
+								'title' => __( 'Top', 'landtech-extras-for-elementor' ),
 								'icon' 	=> 'nicon nicon-mobile-screen-top',
 							],
 							'center' 	=> [
-								'title' => __( 'Middle', 'elementor-extras' ),
+								'title' => __( 'Middle', 'landtech-extras-for-elementor' ),
 								'icon' 	=> 'nicon nicon-mobile-screen-center',
 							],
 							'flex-end' 	=> [
-								'title' => __( 'Bottom', 'elementor-extras' ),
+								'title' => __( 'Bottom', 'landtech-extras-for-elementor' ),
 								'icon' 	=> 'nicon nicon-mobile-screen-bottom',
 							],
 							'initial' 	=> [
-								'title' => __( 'Custom', 'elementor-extras' ),
+								'title' => __( 'Custom', 'landtech-extras-for-elementor' ),
 								'icon' 	=> 'nicon nicon-mobile-screen-custom',
 							],
 						],
@@ -501,7 +502,7 @@ class Devices extends Extras_Widget {
 				$this->add_control(
 					'media_landscape_screenshot_position',
 					[
-						'label' 		=> __( 'Offset Top (%)', 'elementor-extras' ),
+						'label' 		=> __( 'Offset Top (%)', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SLIDER,
 						'default' 		=> [
 							'size' 		=> 0,
@@ -536,7 +537,7 @@ class Devices extends Extras_Widget {
 		$this->start_controls_section(
 			'section_video',
 			[
-				'label' 	=> __( 'Video', 'elementor-extras' ),
+				'label' 	=> __( 'Video', 'landtech-extras-for-elementor' ),
 				'condition'	=> [
 					'device_media_type'	=> 'video',
 				]
@@ -548,7 +549,7 @@ class Devices extends Extras_Widget {
 			$this->start_controls_tab(
 				'tab_source_mp4',
 				[
-					'label' => __( 'MP4', 'elementor-extras' ),
+					'label' => __( 'MP4', 'landtech-extras-for-elementor' ),
 					'condition'	=> [
 						'device_media_type'	=> [ 'video' ],
 					],
@@ -558,12 +559,12 @@ class Devices extends Extras_Widget {
 				$this->add_control(
 					'video_source',
 					[
-						'label' 		=> __( 'Source', 'elementor-extras' ),
+						'label' 		=> __( 'Source', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SELECT,
 						'default'		=> 'url',
 						'options'		=> [
-							'url'		=> __( 'URL', 'elementor-extras' ),
-							'file'		=> __( 'File', 'elementor-extras' ),
+							'url'		=> __( 'URL', 'landtech-extras-for-elementor' ),
+							'file'		=> __( 'File', 'landtech-extras-for-elementor' ),
 						],
 					]
 				);
@@ -571,7 +572,7 @@ class Devices extends Extras_Widget {
 				$this->add_control(
 					'video_url',
 					[
-						'label' 		=> __( 'URL', 'elementor-extras' ),
+						'label' 		=> __( 'URL', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::TEXT,
 						'dynamic' 		=> [
 							'active' 	=> true,
@@ -586,7 +587,7 @@ class Devices extends Extras_Widget {
 				$this->add_control(
 					'video_file',
 					[
-						'label' 		=> __( 'File', 'elementor-extras' ),
+						'label' 		=> __( 'File', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::MEDIA,
 						'dynamic' 		=> [
 							'active' 	=> true,
@@ -608,7 +609,7 @@ class Devices extends Extras_Widget {
 			$this->start_controls_tab(
 				'tab_source_m4v',
 				[
-					'label' => __( 'M4V', 'elementor-extras' ),
+					'label' => __( 'M4V', 'landtech-extras-for-elementor' ),
 					'condition'	=> [
 						'device_media_type'	=> [ 'video' ],
 					],
@@ -618,12 +619,12 @@ class Devices extends Extras_Widget {
 				$this->add_control(
 					'video_source_m4v',
 					[
-						'label' 		=> __( 'Source', 'elementor-extras' ),
+						'label' 		=> __( 'Source', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SELECT,
 						'default'		=> 'url',
 						'options'		=> [
-							'url'		=> __( 'URL', 'elementor-extras' ),
-							'file'		=> __( 'File', 'elementor-extras' ),
+							'url'		=> __( 'URL', 'landtech-extras-for-elementor' ),
+							'file'		=> __( 'File', 'landtech-extras-for-elementor' ),
 						],
 					]
 				);
@@ -631,7 +632,7 @@ class Devices extends Extras_Widget {
 				$this->add_control(
 					'video_url_m4v',
 					[
-						'label' 		=> __( 'URL', 'elementor-extras' ),
+						'label' 		=> __( 'URL', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::TEXT,
 						'dynamic' 		=> [
 							'active' 	=> true,
@@ -646,7 +647,7 @@ class Devices extends Extras_Widget {
 				$this->add_control(
 					'video_file_m4v',
 					[
-						'label' 		=> __( 'File', 'elementor-extras' ),
+						'label' 		=> __( 'File', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::MEDIA,
 						'dynamic' 		=> [
 							'active' 	=> true,
@@ -668,7 +669,7 @@ class Devices extends Extras_Widget {
 			$this->start_controls_tab(
 				'tab_source_ogg',
 				[
-					'label' => __( 'OGG', 'elementor-extras' ),
+					'label' => __( 'OGG', 'landtech-extras-for-elementor' ),
 					'condition'	=> [
 						'device_media_type'	=> [ 'video' ],
 					],
@@ -678,12 +679,12 @@ class Devices extends Extras_Widget {
 				$this->add_control(
 					'video_source_ogg',
 					[
-						'label' 		=> __( 'Source', 'elementor-extras' ),
+						'label' 		=> __( 'Source', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SELECT,
 						'default'		=> 'url',
 						'options'		=> [
-							'url'		=> __( 'URL', 'elementor-extras' ),
-							'file'		=> __( 'File', 'elementor-extras' ),
+							'url'		=> __( 'URL', 'landtech-extras-for-elementor' ),
+							'file'		=> __( 'File', 'landtech-extras-for-elementor' ),
 						],
 					]
 				);
@@ -691,7 +692,7 @@ class Devices extends Extras_Widget {
 				$this->add_control(
 					'video_url_ogg',
 					[
-						'label' 		=> __( 'URL', 'elementor-extras' ),
+						'label' 		=> __( 'URL', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::TEXT,
 						'dynamic' 		=> [
 							'active' 	=> true,
@@ -706,7 +707,7 @@ class Devices extends Extras_Widget {
 				$this->add_control(
 					'video_file_ogg',
 					[
-						'label' 		=> __( 'File', 'elementor-extras' ),
+						'label' 		=> __( 'File', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::MEDIA,
 						'dynamic' 		=> [
 							'active' 	=> true,
@@ -728,7 +729,7 @@ class Devices extends Extras_Widget {
 			$this->start_controls_tab(
 				'tab_source_webm',
 				[
-					'label' => __( 'WEBM', 'elementor-extras' ),
+					'label' => __( 'WEBM', 'landtech-extras-for-elementor' ),
 					'condition'	=> [
 						'device_media_type'	=> [ 'video' ],
 					],
@@ -738,12 +739,12 @@ class Devices extends Extras_Widget {
 				$this->add_control(
 					'video_source_webm',
 					[
-						'label' 		=> __( 'Source', 'elementor-extras' ),
+						'label' 		=> __( 'Source', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SELECT,
 						'default'		=> 'url',
 						'options'		=> [
-							'url'		=> __( 'URL', 'elementor-extras' ),
-							'file'		=> __( 'File', 'elementor-extras' ),
+							'url'		=> __( 'URL', 'landtech-extras-for-elementor' ),
+							'file'		=> __( 'File', 'landtech-extras-for-elementor' ),
 						],
 					]
 				);
@@ -751,7 +752,7 @@ class Devices extends Extras_Widget {
 				$this->add_control(
 					'video_url_webm',
 					[
-						'label' 		=> __( 'URL', 'elementor-extras' ),
+						'label' 		=> __( 'URL', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::TEXT,
 						'dynamic' 		=> [
 							'active' 	=> true,
@@ -766,7 +767,7 @@ class Devices extends Extras_Widget {
 				$this->add_control(
 					'video_file_webm',
 					[
-						'label' 		=> __( 'File', 'elementor-extras' ),
+						'label' 		=> __( 'File', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::MEDIA,
 						'dynamic' 		=> [
 							'active' 	=> true,
@@ -790,7 +791,7 @@ class Devices extends Extras_Widget {
 			$this->add_control(
 				'video_cover',
 				[
-					'label' 		=> __( 'Choose Cover', 'elementor-extras' ),
+					'label' 		=> __( 'Choose Cover', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::MEDIA,
 					'dynamic' 		=> [ 'active' => true ],
 					'separator'		=> 'before',
@@ -804,7 +805,7 @@ class Devices extends Extras_Widget {
 				Group_Control_Image_Size::get_type(),
 				[
 					'name' 		=> 'video_cover',
-					'label' 	=> __( 'Cover Size', 'elementor-extras' ),
+					'label' 	=> __( 'Cover Size', 'landtech-extras-for-elementor' ),
 					'default' 	=> 'large',
 					'condition'	=> [
 						'video_cover[url]!'		=> '',
@@ -816,7 +817,7 @@ class Devices extends Extras_Widget {
 			$this->add_control(
 				'video_behaviour_heading',
 				[
-					'label' 	=> __( 'Behaviour', 'elementor-extras' ),
+					'label' 	=> __( 'Behaviour', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 					'condition'	=> [
@@ -828,11 +829,11 @@ class Devices extends Extras_Widget {
 			$this->add_control(
 				'video_autoplay',
 				[
-					'label' 		=> __( 'Auto Play', 'elementor-extras' ),
+					'label' 		=> __( 'Auto Play', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'autoplay',
 					'condition'	=> [
 						'device_media_type'	=> [ 'video' ],
@@ -844,7 +845,7 @@ class Devices extends Extras_Widget {
 				'video_autoplay_notice',
 				[
 					'type' 				=> Controls_Manager::RAW_HTML,
-					'raw' 				=> __( 'Many browsers don\'t allow videos with sound to autoplay without user interaction. To avoid this, enable the "Start Muted" control to disable sound so that the video autoplays correctly.', 'elementor-extras' ),
+					'raw' 				=> __( 'Many browsers don\'t allow videos with sound to autoplay without user interaction. To avoid this, enable the "Start Muted" control to disable sound so that the video autoplays correctly.', 'landtech-extras-for-elementor' ),
 					'content_classes' 	=> 'elementor-panel-alert elementor-panel-alert-warning',
 					'condition' 		=> [
 						'video_autoplay!' => '',
@@ -856,12 +857,12 @@ class Devices extends Extras_Widget {
 			$this->add_control(
 				'video_stop_others',
 				[
-					'label' 		=> __( 'Stop Others', 'elementor-extras' ),
-					'description' 	=> __( 'Stop all other videos on page when this video is played.', 'elementor-extras' ),
+					'label' 		=> __( 'Stop Others', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'Stop all other videos on page when this video is played.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'yes',
 					'frontend_available' => true,
 					'condition'		=> [
@@ -873,12 +874,12 @@ class Devices extends Extras_Widget {
 			$this->add_control(
 				'video_play_viewport',
 				[
-					'label' 		=> __( 'Play in Viewport', 'elementor-extras' ),
-					'description' 	=> __( 'Autoplay video when the player is in viewport', 'elementor-extras' ),
+					'label' 		=> __( 'Play in Viewport', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'Autoplay video when the player is in viewport', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'yes',
 					'condition'	=> [
 						'device_media_type'	=> [ 'video' ],
@@ -891,12 +892,12 @@ class Devices extends Extras_Widget {
 			$this->add_control(
 				'video_stop_viewport',
 				[
-					'label' 		=> __( 'Stop on leave', 'elementor-extras' ),
-					'description' 	=> __( 'Stop video when the player has left the viewport', 'elementor-extras' ),
+					'label' 		=> __( 'Stop on leave', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'Stop video when the player has left the viewport', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'yes',
 					'condition'	=> [
 						'device_media_type'		=> [ 'video' ],
@@ -910,11 +911,11 @@ class Devices extends Extras_Widget {
 			$this->add_control(
 				'video_restart_on_pause',
 				[
-					'label' 		=> __( 'Restart on pause', 'elementor-extras' ),
+					'label' 		=> __( 'Restart on pause', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'yes',
 					'frontend_available'	=> true,
 					'condition'		=> [
@@ -926,11 +927,11 @@ class Devices extends Extras_Widget {
 			$this->add_control(
 				'video_loop',
 				[
-					'label' 		=> __( 'Loop', 'elementor-extras' ),
+					'label' 		=> __( 'Loop', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'loop',
 					'condition'		=> [
 						'device_media_type'	=> [ 'video' ],
@@ -941,12 +942,12 @@ class Devices extends Extras_Widget {
 			$this->add_control(
 				'video_end_at_last_frame',
 				[
-					'label' 		=> __( 'End at last frame', 'elementor-extras' ),
-					'description' 	=> __( 'End the video at the last frame instead of showing the first one.', 'elementor-extras' ),
+					'label' 		=> __( 'End at last frame', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'End the video at the last frame instead of showing the first one.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'yes',
 					'condition'	=> [
 						'device_media_type'	=> [ 'video' ],
@@ -959,7 +960,7 @@ class Devices extends Extras_Widget {
 			$this->add_responsive_control(
 				'video_speed',
 				[
-					'label' 	=> __( 'Playback Speed', 'elementor-extras' ),
+					'label' 	=> __( 'Playback Speed', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 1,
@@ -981,7 +982,7 @@ class Devices extends Extras_Widget {
 			$this->add_control(
 				'video_display_heading',
 				[
-					'label' 	=> __( 'Display', 'elementor-extras' ),
+					'label' 	=> __( 'Display', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 					'condition'	=> [
@@ -993,11 +994,11 @@ class Devices extends Extras_Widget {
 			$this->add_control(
 				'video_show_buttons',
 				[
-					'label' 		=> __( 'Show Buttons', 'elementor-extras' ),
+					'label' 		=> __( 'Show Buttons', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'show',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'show',
 					'condition'	=> [
 						'device_media_type'	=> [ 'video' ],
@@ -1008,11 +1009,11 @@ class Devices extends Extras_Widget {
 			$this->add_control(
 				'video_show_bar',
 				[
-					'label' 		=> __( 'Show Bar', 'elementor-extras' ),
+					'label' 		=> __( 'Show Bar', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'show',
 					'condition'	=> [
 						'device_media_type'	=> [ 'video' ],
@@ -1023,7 +1024,7 @@ class Devices extends Extras_Widget {
 			$this->add_control(
 				'video_bar_hide',
 				[
-					'label' 		=> __( 'Hide Bar When Playing', 'elementor-extras' ),
+					'label' 		=> __( 'Hide Bar When Playing', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'hide',
 					'prefix_class' 	=> 'ee-video-player-bar--',
@@ -1037,11 +1038,11 @@ class Devices extends Extras_Widget {
 			$this->add_control(
 				'video_show_rewind',
 				[
-					'label' 		=> __( 'Show Rewind', 'elementor-extras' ),
+					'label' 		=> __( 'Show Rewind', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'show',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'show',
 					'condition' 	=> [
 						'device_media_type'	=> [ 'video' ],
@@ -1053,11 +1054,11 @@ class Devices extends Extras_Widget {
 			$this->add_control(
 				'video_show_time',
 				[
-					'label' 		=> __( 'Show Time', 'elementor-extras' ),
+					'label' 		=> __( 'Show Time', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'show',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'show',
 					'condition'	=> [
 						'device_media_type'	=> [ 'video' ],
@@ -1069,11 +1070,11 @@ class Devices extends Extras_Widget {
 			$this->add_control(
 				'video_show_progress',
 				[
-					'label' 		=> __( 'Show Progress', 'elementor-extras' ),
+					'label' 		=> __( 'Show Progress', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'show',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'show',
 					'condition'	=> [
 						'device_media_type'	=> [ 'video' ],
@@ -1085,11 +1086,11 @@ class Devices extends Extras_Widget {
 			$this->add_control(
 				'video_show_duration',
 				[
-					'label' 		=> __( 'Show Duration', 'elementor-extras' ),
+					'label' 		=> __( 'Show Duration', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'show',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'show',
 					'condition'	=> [
 						'device_media_type'	=> [ 'video' ],
@@ -1101,11 +1102,11 @@ class Devices extends Extras_Widget {
 			$this->add_control(
 				'video_show_fs',
 				[
-					'label' 		=> __( 'Show Fullscreen', 'elementor-extras' ),
+					'label' 		=> __( 'Show Fullscreen', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'show',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'show',
 					'condition'	=> [
 						'device_media_type'	=> [ 'video' ],
@@ -1117,7 +1118,7 @@ class Devices extends Extras_Widget {
 			$this->add_control(
 				'video_volume_heading',
 				[
-					'label' 	=> __( 'Volume', 'elementor-extras' ),
+					'label' 	=> __( 'Volume', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HEADING,
 					'separator' => 'before',
 					'condition'	=> [
@@ -1129,11 +1130,11 @@ class Devices extends Extras_Widget {
 			$this->add_control(
 				'video_show_volume',
 				[
-					'label' 		=> __( 'Show Volume', 'elementor-extras' ),
+					'label' 		=> __( 'Show Volume', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'show',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'show',
 					'condition'	=> [
 						'device_media_type'	=> [ 'video' ],
@@ -1145,11 +1146,11 @@ class Devices extends Extras_Widget {
 			$this->add_control(
 				'video_show_volume_icon',
 				[
-					'label' 		=> __( 'Show Volume Icon', 'elementor-extras' ),
+					'label' 		=> __( 'Show Volume Icon', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'show',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'show',
 					'condition'	=> [
 						'video_show_bar!'		=> '',
@@ -1162,11 +1163,11 @@ class Devices extends Extras_Widget {
 			$this->add_control(
 				'video_show_volume_bar',
 				[
-					'label' 		=> __( 'Show Volume Bar', 'elementor-extras' ),
+					'label' 		=> __( 'Show Volume Bar', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'show',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'show',
 					'condition'	=> [
 						'video_show_bar!'		=> '',
@@ -1179,11 +1180,11 @@ class Devices extends Extras_Widget {
 			$this->add_control(
 				'video_start_muted',
 				[
-					'label' 		=> __( 'Start Muted', 'elementor-extras' ),
+					'label' 		=> __( 'Start Muted', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'condition'	=> [
 						'video_autoplay!'	=> '',
 						'device_media_type'	=> [ 'video' ],
@@ -1194,7 +1195,7 @@ class Devices extends Extras_Widget {
 			$this->add_responsive_control(
 				'video_volume',
 				[
-					'label' 	=> __( 'Initial Volume', 'elementor-extras' ),
+					'label' 	=> __( 'Initial Volume', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 0.8,
@@ -1219,7 +1220,7 @@ class Devices extends Extras_Widget {
 		$this->start_controls_section(
 			'section_device_style',
 			[
-				'label' => __( 'Device', 'elementor-extras' ),
+				'label' => __( 'Device', 'landtech-extras-for-elementor' ),
 				'tab' 	=> Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -1227,12 +1228,12 @@ class Devices extends Extras_Widget {
 			$this->add_control(
 				'device_override_style',
 				[
-					'label' 		=> __( 'Override Style', 'elementor-extras' ),
-					'description'	=> __( 'Override default device style', 'elementor-extras' ),
+					'label' 		=> __( 'Override Style', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Override default device style', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'no',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'yes',
 				]
 			);
@@ -1240,15 +1241,15 @@ class Devices extends Extras_Widget {
 			$this->add_control(
 				'device_skin',
 				[
-					'label' 		=> __( 'Skin', 'elementor-extras' ),
+					'label' 		=> __( 'Skin', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT,
 					'default' 		=> 'jetblack',
 					'options' 		=> [
-						'jetblack'  => __( 'Jet black', 'elementor-extras' ),
-						'black'  	=> __( 'Black', 'elementor-extras' ),
-						'silver'  	=> __( 'Silver', 'elementor-extras' ),
-						'gold'  	=> __( 'Gold', 'elementor-extras' ),
-						'rosegold'  => __( 'Rose Gold', 'elementor-extras' ),
+						'jetblack'  => __( 'Jet black', 'landtech-extras-for-elementor' ),
+						'black'  	=> __( 'Black', 'landtech-extras-for-elementor' ),
+						'silver'  	=> __( 'Silver', 'landtech-extras-for-elementor' ),
+						'gold'  	=> __( 'Gold', 'landtech-extras-for-elementor' ),
+						'rosegold'  => __( 'Rose Gold', 'landtech-extras-for-elementor' ),
 						],
 					'prefix_class'	=> 'ee-device-skin-',
 					'condition'		=> [
@@ -1261,7 +1262,7 @@ class Devices extends Extras_Widget {
 			$this->add_control(
 				'device_frame_background',
 				[
-					'label' 	=> __( 'Device Background', 'elementor-extras' ),
+					'label' 	=> __( 'Device Background', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'default'	=> '',
 					'selectors' => [
@@ -1277,12 +1278,12 @@ class Devices extends Extras_Widget {
 			$this->add_control(
 				'device_overlay_tone',
 				[
-					'label'       	=> __( 'Tone', 'elementor-extras' ),
+					'label'       	=> __( 'Tone', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT,
 					'default' 		=> 'light',
 					'options' 		=> [
-						'light'  	=> __( 'Light', 'elementor-extras' ),
-						'dark'  	=> __( 'Dark', 'elementor-extras' ),
+						'light'  	=> __( 'Light', 'landtech-extras-for-elementor' ),
+						'dark'  	=> __( 'Dark', 'landtech-extras-for-elementor' ),
 						],
 					'prefix_class'	=> 'ee-device-controls-tone-',
 					'condition'		=> [
@@ -1294,7 +1295,7 @@ class Devices extends Extras_Widget {
 			$this->add_control(
 				'device_overlay_opacity',
 				[
-					'label' 	=> __( 'Opacity (%)', 'elementor-extras' ),
+					'label' 	=> __( 'Opacity (%)', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 0.2,
@@ -1320,7 +1321,7 @@ class Devices extends Extras_Widget {
 		$this->start_controls_section(
 			'section_orientation_style',
 			[
-				'label' => __( 'Orientation Control', 'elementor-extras' ),
+				'label' => __( 'Orientation Control', 'landtech-extras-for-elementor' ),
 				'tab' 	=> Controls_Manager::TAB_STYLE,
 				'condition'	=> [
 					'device_orientation_control!' => '',
@@ -1333,14 +1334,14 @@ class Devices extends Extras_Widget {
 			$this->start_controls_tab(
 				'orientation_default',
 				[
-					'label' => __( 'Default', 'elementor-extras' ),
+					'label' => __( 'Default', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 				$this->add_control(
 					'orientation_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-device__orientation' => 'color: {{VALUE}}',
@@ -1353,14 +1354,14 @@ class Devices extends Extras_Widget {
 			$this->start_controls_tab(
 				'orientation_hover',
 				[
-					'label' => __( 'Hover', 'elementor-extras' ),
+					'label' => __( 'Hover', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 				$this->add_control(
 					'orientation_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-device__orientation:hover' => 'color: {{VALUE}}',
@@ -1377,7 +1378,7 @@ class Devices extends Extras_Widget {
 		$this->start_controls_section(
 			'section_video_style',
 			[
-				'label' => __( 'Video', 'elementor-extras' ),
+				'label' => __( 'Video', 'landtech-extras-for-elementor' ),
 				'tab' 	=> Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'device_media_type' => 'video',
@@ -1389,12 +1390,12 @@ class Devices extends Extras_Widget {
 			$this->add_control(
 				'video_cover_screen',
 				[
-					'label' 		=> __( 'Cover Screen', 'elementor-extras' ),
+					'label' 		=> __( 'Cover Screen', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
 					'return_value'	=> 'cover',
-					'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-					'label_off' 	=> __( 'No', 'elementor-extras' ),
+					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'condition'		=> [
 						'device_media_type'				=> 'video',
 						'device_type!'					=> 'window' ,
@@ -1408,7 +1409,7 @@ class Devices extends Extras_Widget {
 		$this->start_controls_section(
 			'section_screen_style',
 			[
-				'label' => __( 'Screen', 'elementor-extras' ),
+				'label' => __( 'Screen', 'landtech-extras-for-elementor' ),
 				'tab' 	=> Controls_Manager::TAB_STYLE,
 				'condition'		=> [
 					'device_media_type'		=> [ 'image' ],
@@ -1421,7 +1422,7 @@ class Devices extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' 		=> 'device_screen_border',
-					'label' 	=> __( 'Border', 'elementor-extras' ),
+					'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 					'selector' 	=> '{{WRAPPER}} .ee-device-wrapper .ee-device__media__screen figure',
 					'condition'		=> [
 						'device_type'			=> [ 'window' ],
@@ -1433,7 +1434,7 @@ class Devices extends Extras_Widget {
 			$this->add_control(
 				'device_screen_radius',
 				[
-					'label' 			=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 			=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 					=> Controls_Manager::DIMENSIONS,
 					'size_units' 			=> [ 'px', '%' ],
 					'allowed_dimensions'	=> [ 'bottom', 'left' ],
@@ -1452,7 +1453,7 @@ class Devices extends Extras_Widget {
 		$this->start_controls_section(
 			'section_video_overlay',
 			[
-				'label' => __( 'Video Overlay', 'elementor-extras' ),
+				'label' => __( 'Video Overlay', 'landtech-extras-for-elementor' ),
 				'tab' 	=> Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'device_media_type'	=> 'video',
@@ -1463,7 +1464,7 @@ class Devices extends Extras_Widget {
 			$this->add_control(
 				'video_overlay_background',
 				[
-					'label' 	=> __( 'Background', 'elementor-extras' ),
+					'label' 	=> __( 'Background', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'default'	=> '#000000',
 					'selectors' => [
@@ -1478,7 +1479,7 @@ class Devices extends Extras_Widget {
 			$this->add_responsive_control(
 				'video_overlay_opacity',
 				[
-					'label' 	=> __( 'Opacity (%)', 'elementor-extras' ),
+					'label' 	=> __( 'Opacity (%)', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> 0.8,
@@ -1504,7 +1505,7 @@ class Devices extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style',
 			[
-				'label' => __( 'Video Interface', 'elementor-extras' ),
+				'label' => __( 'Video Interface', 'landtech-extras-for-elementor' ),
 				'tab' 	=> Controls_Manager::TAB_STYLE,
 				'conditions' => [
 					'relation' 	=> 'and',
@@ -1537,7 +1538,7 @@ class Devices extends Extras_Widget {
 			$this->add_control(
 				'video_controls_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'default' 		=> [
 						'top' 		=> 100,
@@ -1559,14 +1560,14 @@ class Devices extends Extras_Widget {
 			$this->start_controls_tab(
 				'video_controls',
 				[
-					'label' => __( 'Default', 'elementor-extras' ),
+					'label' => __( 'Default', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 				$this->add_control(
 					'video_controls_foreground',
 					[
-						'label' 	=> __( 'Controls Color', 'elementor-extras' ),
+						'label' 	=> __( 'Controls Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '#000000',
 						'selectors' => [
@@ -1581,7 +1582,7 @@ class Devices extends Extras_Widget {
 				$this->add_control(
 					'video_controls_background',
 					[
-						'label' 	=> __( 'Controls Background', 'elementor-extras' ),
+						'label' 	=> __( 'Controls Background', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '#FFFFFF',
 						'selectors' => [
@@ -1594,7 +1595,7 @@ class Devices extends Extras_Widget {
 				$this->add_control(
 					'video_controls_opacity',
 					[
-						'label' 	=> __( 'Controls Opacity (%)', 'elementor-extras' ),
+						'label' 	=> __( 'Controls Opacity (%)', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SLIDER,
 						'default' 	=> [
 							'size' 	=> 0.9,
@@ -1617,7 +1618,7 @@ class Devices extends Extras_Widget {
 					Group_Control_Border::get_type(),
 					[
 						'name' 		=> 'video_controls_border',
-						'label' 	=> __( 'Border', 'elementor-extras' ),
+						'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 						'selector' 	=>
 							'{{WRAPPER}} .ee-video-player__controls .ee-player__controls__overlay .ee-player__control,
 							 {{WRAPPER}} .ee-video-player__controls .ee-player__controls__bar',
@@ -1639,14 +1640,14 @@ class Devices extends Extras_Widget {
 			$this->start_controls_tab(
 				'video_controls_hover',
 				[
-					'label' => __( 'Hover', 'elementor-extras' ),
+					'label' => __( 'Hover', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 				$this->add_control(
 					'video_controls_foreground_hover',
 					[
-						'label' 	=> __( 'Controls Color', 'elementor-extras' ),
+						'label' 	=> __( 'Controls Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -1661,7 +1662,7 @@ class Devices extends Extras_Widget {
 				$this->add_control(
 					'video_controls_background_hover',
 					[
-						'label' 	=> __( 'Controls Background', 'elementor-extras' ),
+						'label' 	=> __( 'Controls Background', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'default'	=> '',
 						'selectors' => [
@@ -1674,7 +1675,7 @@ class Devices extends Extras_Widget {
 				$this->add_control(
 					'video_controls_opacity_hover',
 					[
-						'label' 	=> __( 'Controls Opacity (%)', 'elementor-extras' ),
+						'label' 	=> __( 'Controls Opacity (%)', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SLIDER,
 						'default' 	=> [
 							'size' 	=> 1,
@@ -1697,7 +1698,7 @@ class Devices extends Extras_Widget {
 					Group_Control_Border::get_type(),
 					[
 						'name' 		=> 'video_controls_border_hover',
-						'label' 	=> __( 'Border', 'elementor-extras' ),
+						'label' 	=> __( 'Border', 'landtech-extras-for-elementor' ),
 						'selector' 	=>
 							'(desktop+){{WRAPPER}} .ee-video-player__controls .ee-player__controls__overlay .ee-player__control:hover,
 							{{WRAPPER}} .ee-video-player__controls .ee-player__controls__bar:hover',
@@ -1723,7 +1724,7 @@ class Devices extends Extras_Widget {
 		$this->start_controls_section(
 			'section_buttons_style',
 			[
-				'label' => __( 'Video Buttons', 'elementor-extras' ),
+				'label' => __( 'Video Buttons', 'landtech-extras-for-elementor' ),
 				'tab' 	=> Controls_Manager::TAB_STYLE,
 				'condition'		=> [
 					'device_media_type' => 'video',
@@ -1735,7 +1736,7 @@ class Devices extends Extras_Widget {
 			$this->add_responsive_control(
 				'video_buttons_size',
 				[
-					'label' => __( 'Size (%)', 'elementor-extras' ),
+					'label' => __( 'Size (%)', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::SLIDER,
 					'default' => [
 						'size' => 60,
@@ -1758,7 +1759,7 @@ class Devices extends Extras_Widget {
 			$this->add_responsive_control(
 				'video_buttons_spacing',
 				[
-					'label' => __( 'Controls Spacing', 'elementor-extras' ),
+					'label' => __( 'Controls Spacing', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::SLIDER,
 					'default' => [
 						'size' => '',
@@ -1783,7 +1784,7 @@ class Devices extends Extras_Widget {
 		$this->start_controls_section(
 			'section_bar_style',
 			[
-				'label' => __( 'Video Bar', 'elementor-extras' ),
+				'label' => __( 'Video Bar', 'landtech-extras-for-elementor' ),
 				'tab' 	=> Controls_Manager::TAB_STYLE,
 				'condition'		=> [
 					'device_media_type' => 'video',
@@ -1795,7 +1796,7 @@ class Devices extends Extras_Widget {
 			$this->add_responsive_control(
 				'video_bar_padding',
 				[
-					'label' 	=> __( 'Padding', 'elementor-extras' ),
+					'label' 	=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> '',
@@ -1819,7 +1820,7 @@ class Devices extends Extras_Widget {
 			$this->add_responsive_control(
 				'video_bar_margin',
 				[
-					'label' 	=> __( 'Distance', 'elementor-extras' ),
+					'label' 	=> __( 'Distance', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> '',
@@ -1843,7 +1844,7 @@ class Devices extends Extras_Widget {
 			$this->add_control(
 				'video_bar_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'selectors' 	=> [
 						'{{WRAPPER}} .ee-video-player__controls .ee-player__controls__bar' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -1857,7 +1858,7 @@ class Devices extends Extras_Widget {
 			$this->add_responsive_control(
 				'video_bar_zoom',
 				[
-					'label' 	=> __( 'Controls Zoom', 'elementor-extras' ),
+					'label' 	=> __( 'Controls Zoom', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> '',
@@ -1882,7 +1883,7 @@ class Devices extends Extras_Widget {
 			$this->add_responsive_control(
 				'video_bar_spacing',
 				[
-					'label' 	=> __( 'Controls Spacing', 'elementor-extras' ),
+					'label' 	=> __( 'Controls Spacing', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'default' 	=> [
 						'size' 	=> '',
@@ -1990,21 +1991,21 @@ class Devices extends Extras_Widget {
 			$this->add_render_attribute('device', 'class', 'has--orientation-control');
 		}
 
-		?><div <?php echo $this->get_render_attribute_string('device-wrapper'); ?>>
-			<div <?php echo $this->get_render_attribute_string('device'); ?>>
+		?><div <?php $this->print_render_attribute_string('device-wrapper'); ?>>
+			<div <?php $this->print_render_attribute_string('device'); ?>>
 
 				<?php if ( 'yes' === $settings['device_orientation_control'] && 'image' === $settings['device_media_type'] ) { ?>
-					<div <?php echo $this->get_render_attribute_string('device-orientation'); ?>></div>
+					<div <?php $this->print_render_attribute_string('device-orientation'); ?>></div>
 				<?php } ?>
 
-				<div <?php echo $this->get_render_attribute_string('device-shape'); ?>>
-					<?php include ELEMENTOR_EXTRAS_PATH . 'assets/shapes/' . $device_type . '.svg'; ?>
+				<div <?php $this->print_render_attribute_string('device-shape'); ?>>
+					<?php include LANDTECH_EXTRAS_PATH . 'assets/shapes/' . $device_type . '.svg'; ?>
 				</div><!-- .ee-device__shape -->
 
-				<div <?php echo $this->get_render_attribute_string('device-media'); ?>>
-					<div <?php echo $this->get_render_attribute_string('device-media-inner'); ?>>
-						<div <?php echo $this->get_render_attribute_string('device-media-screen'); ?>>
-							<div <?php echo $this->get_render_attribute_string('device-media-screen-inner'); ?>>
+				<div <?php $this->print_render_attribute_string('device-media'); ?>>
+					<div <?php $this->print_render_attribute_string('device-media-inner'); ?>>
+						<div <?php $this->print_render_attribute_string('device-media-screen'); ?>>
+							<div <?php $this->print_render_attribute_string('device-media-screen-inner'); ?>>
 								<?php if ( 'image' === $settings['device_media_type'] ) { ?>
 									<?php $this->render_type_image( 'media_portrait_screenshot' ); ?>
 								<?php } elseif ( 'video' === $settings['device_media_type'] ) { ?>
@@ -2013,15 +2014,21 @@ class Devices extends Extras_Widget {
 							</div><!-- .ee-device__media__screen__inner -->
 						</div><!-- .ee-device__media__screen -->
 
-					<?php if ( 'image' === $settings['device_media_type'] && '' !== $settings['media_landscape_screenshot']['url'] ) { ?>
-						<div <?php echo $this->get_render_attribute_string('device-media-screen-landscape'); ?>>
-							<div <?php echo $this->get_render_attribute_string('device-media-screen-inner'); ?>>
+					<?php
+					$landscape_shot = isset( $settings['media_landscape_screenshot'] ) && is_array( $settings['media_landscape_screenshot'] )
+						? $settings['media_landscape_screenshot']
+						: array();
+					$landscape_url  = isset( $landscape_shot['url'] ) ? (string) $landscape_shot['url'] : '';
+					if ( 'image' === $settings['device_media_type'] && '' !== $landscape_url ) {
+						?>
+						<div <?php $this->print_render_attribute_string('device-media-screen-landscape'); ?>>
+							<div <?php $this->print_render_attribute_string('device-media-screen-inner'); ?>>
 								<figure>
 									<?php $this->render_type_image( 'media_landscape_screenshot' ); ?>
 								</figure>
 							</div><!-- .ee-device__media__screen__inner -->
 						</div><!-- .ee-device__media__screen__landscape -->
-					<?php } ?>
+					<?php } // End landscape image block. ?>
 
 					</div><!-- .ee-device__media__inner -->
 				</div><!-- .ee-device__media -->
@@ -2041,8 +2048,12 @@ class Devices extends Extras_Widget {
 	protected function render_type_image( $control ) {
 		$settings = $this->get_settings_for_display();
 
-		if ( '' !== $settings['media_portrait_screenshot']['url'] ) { ?>
-			<figure><?php echo Group_Control_Image_Size::get_attachment_image_html( $settings, $control ); ?></figure>
+		$shot = isset( $settings[ $control ] ) && is_array( $settings[ $control ] ) ? $settings[ $control ] : array();
+		$url  = isset( $shot['url'] ) ? (string) $shot['url'] : '';
+
+		if ( '' !== $url ) { ?>
+			<figure><?php echo Group_Control_Image_Size::get_attachment_image_html( $settings, $control ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor Group_Control_Image_Size::get_attachment_image_html returns escaped <img> markup.
+			?></figure>
 		<?php }
 	}
 
@@ -2069,7 +2080,7 @@ class Devices extends Extras_Widget {
 			],
 		] );
 
-		?><div <?php echo $this->get_render_attribute_string( 'video-wrapper' ); ?>>
+		?><div <?php $this->print_render_attribute_string( 'video-wrapper' ); ?>>
 			<?php $this->render_video(); ?>
 			<?php $this->render_cover(); ?>
 			<?php $this->render_controls(); ?>
@@ -2117,7 +2128,7 @@ class Devices extends Extras_Widget {
 			$this->add_render_attribute( 'video', 'poster', $url );
 		}
 
-		?><video <?php echo $this->get_render_attribute_string( 'video' ); ?>><?php
+		?><video <?php $this->print_render_attribute_string( 'video' ); ?>><?php
 			
 			$video_url = ( 'file' === $settings['video_source'] ) ? $settings['video_file']['url'] : $settings['video_url'];
 			$video_url_m4v = ( 'file' === $settings['video_source_m4v'] ) ? $settings['video_file_m4v']['url'] : $settings['video_url_m4v'];
@@ -2129,28 +2140,28 @@ class Devices extends Extras_Widget {
 					'src' => $video_url,
 					'type' => 'video/mp4',
 				] );
-			?><source <?php echo $this->get_render_attribute_string( 'source-mp4' ); ?>><?php } ?>
+			?><source <?php $this->print_render_attribute_string( 'source-mp4' ); ?>><?php } ?>
 
 			<?php if ( $video_url_m4v ) {
 				$this->add_render_attribute( 'source-m4v', [
 					'src' => $video_url_m4v,
 					'type' => 'video/m4v',
 				] );
-			?><source <?php echo $this->get_render_attribute_string( 'source-m4v' ); ?>><?php } ?>
+			?><source <?php $this->print_render_attribute_string( 'source-m4v' ); ?>><?php } ?>
 
 			<?php if ( $video_url_ogg ) {
 				$this->add_render_attribute( 'source-ogg', [
 					'src' => $video_url_ogg,
 					'type' => 'video/ogg',
 				] );
-			?><source <?php echo $this->get_render_attribute_string( 'source-wav' ); ?>><?php } ?>
+			?><source <?php $this->print_render_attribute_string( 'source-wav' ); ?>><?php } ?>
 
 			<?php if ( $video_url_webm ) {
 				$this->add_render_attribute( 'source-webm', [
 					'src' => $video_url_webm,
 					'type' => 'video/webm',
 				] );
-			?><source <?php echo $this->get_render_attribute_string( 'source-webm' ); ?>><?php } ?>
+			?><source <?php $this->print_render_attribute_string( 'source-webm' ); ?>><?php } ?>
 
 		</video><?php
 	}
@@ -2170,7 +2181,7 @@ class Devices extends Extras_Widget {
 				'ee-player__cover',
 			],
 		] );
-		?><div <?php echo $this->get_render_attribute_string( 'video-cover' ); ?>></div><?php
+		?><div <?php $this->print_render_attribute_string( 'video-cover' ); ?>></div><?php
 	}
 
 	/**
@@ -2215,7 +2226,7 @@ class Devices extends Extras_Widget {
 		] );
 
 		?>
-		<div <?php echo $this->get_render_attribute_string( 'controls' ); ?>><?php
+		<div <?php $this->print_render_attribute_string( 'controls' ); ?>><?php
 
 			/**
 			 * Before overlay.
@@ -2224,7 +2235,7 @@ class Devices extends Extras_Widget {
 			 *
 			 * @since 2.2.0
 			 */
-			do_action( 'elementor_extras/widgets/devices/video/before_overlay' );
+			do_action( 'landtech_extras/widgets/devices/video/before_overlay' );
 
 			$this->render_overlay();
 
@@ -2235,7 +2246,7 @@ class Devices extends Extras_Widget {
 			 *
 			 * @since 2.2.0
 			 */
-			do_action( 'elementor_extras/widgets/devices/video/before_overlay' );
+			do_action( 'landtech_extras/widgets/devices/video/before_overlay' );
 
 			if ( 'show' === $settings['video_show_bar'] ) {
 
@@ -2246,10 +2257,10 @@ class Devices extends Extras_Widget {
 				 *
 				 * @since 2.2.0
 				 */
-				do_action( 'elementor_extras/widgets/devices/video/before_bar' );
+				do_action( 'landtech_extras/widgets/devices/video/before_bar' );
 
-				?><div <?php echo $this->get_render_attribute_string( 'bar-wrapper' ); ?>>
-					<div <?php echo $this->get_render_attribute_string( 'bar' ); ?>>
+				?><div <?php $this->print_render_attribute_string( 'bar-wrapper' ); ?>>
+					<div <?php $this->print_render_attribute_string( 'bar' ); ?>>
 
 						<?php if ( 'yes' !== $settings['video_restart_on_pause'] && 'show' === $settings['video_show_rewind'] ) {
 							$this->add_render_attribute( 'control-rewind', [
@@ -2261,9 +2272,9 @@ class Devices extends Extras_Widget {
 									'nicon-rewind',
 								],
 							] );
-						?><div <?php echo $this->get_render_attribute_string( 'control-rewind' ); ?>></div><?php } ?>
+						?><div <?php $this->print_render_attribute_string( 'control-rewind' ); ?>></div><?php } ?>
 						
-						<div <?php echo $this->get_render_attribute_string( 'control-play' ); ?>></div>
+						<div <?php $this->print_render_attribute_string( 'control-play' ); ?>></div>
 
 						<?php if ( $settings['video_show_time'] ) {
 							$this->add_render_attribute( 'control-time', [
@@ -2273,7 +2284,7 @@ class Devices extends Extras_Widget {
 									'ee-player__controls__time',
 								],
 							] );
-						?><div <?php echo $this->get_render_attribute_string( 'control-time' ); ?>>00:00</div><?php } ?>
+						?><div <?php $this->print_render_attribute_string( 'control-time' ); ?>>00:00</div><?php } ?>
 
 						<?php if ( $settings['video_show_progress'] ) {
 							$this->add_render_attribute( [
@@ -2297,9 +2308,9 @@ class Devices extends Extras_Widget {
 									],
 								],
 							] );
-						?><div <?php echo $this->get_render_attribute_string( 'control-progress' ); ?>>
-							<div <?php echo $this->get_render_attribute_string( 'control-progress-time' ); ?>></div>
-							<div <?php echo $this->get_render_attribute_string( 'control-progress-track' ); ?>></div>
+						?><div <?php $this->print_render_attribute_string( 'control-progress' ); ?>>
+							<div <?php $this->print_render_attribute_string( 'control-progress-time' ); ?>></div>
+							<div <?php $this->print_render_attribute_string( 'control-progress-track' ); ?>></div>
 						</div><?php } ?>
 
 						<?php if ( $settings['video_show_duration'] ) {
@@ -2310,7 +2321,7 @@ class Devices extends Extras_Widget {
 									'ee-player__control--indicator',
 								],
 							] );
-						?><div <?php echo $this->get_render_attribute_string( 'control-duration' ); ?>>00:00</div><?php } ?>
+						?><div <?php $this->print_render_attribute_string( 'control-duration' ); ?>>00:00</div><?php } ?>
 
 						<?php if ( $settings['video_show_volume'] ) {
 							$this->add_render_attribute( 'control-volume', [
@@ -2319,7 +2330,7 @@ class Devices extends Extras_Widget {
 									'ee-player__controls__volume',
 								],
 							] );
-						?><div <?php echo $this->get_render_attribute_string( 'control-volume' ); ?>>
+						?><div <?php $this->print_render_attribute_string( 'control-volume' ); ?>>
 
 							<?php if ( $settings['video_show_volume_icon'] ) {
 								$this->add_render_attribute( 'control-volume-icon', [
@@ -2330,7 +2341,7 @@ class Devices extends Extras_Widget {
 										'nicon-volume',
 									],
 								] );
-							?><div <?php echo $this->get_render_attribute_string( 'control-volume-icon' ); ?>></div><?php } ?>
+							?><div <?php $this->print_render_attribute_string( 'control-volume-icon' ); ?>></div><?php } ?>
 
 							<?php if ( $settings['video_show_volume_bar'] ) {
 								$this->add_render_attribute( [
@@ -2355,9 +2366,9 @@ class Devices extends Extras_Widget {
 										],
 									],
 								] );
-							?><div <?php echo $this->get_render_attribute_string( 'control-volume-bar' ); ?>>
-								<div <?php echo $this->get_render_attribute_string( 'control-volume-bar-amount' ); ?>></div>
-								<div <?php echo $this->get_render_attribute_string( 'control-volume-bar-track' ); ?>></div>
+							?><div <?php $this->print_render_attribute_string( 'control-volume-bar' ); ?>>
+								<div <?php $this->print_render_attribute_string( 'control-volume-bar-amount' ); ?>></div>
+								<div <?php $this->print_render_attribute_string( 'control-volume-bar-track' ); ?>></div>
 							</div><?php } ?>
 
 						</div><?php } ?>
@@ -2372,7 +2383,7 @@ class Devices extends Extras_Widget {
 									'nicon-expand'
 								],
 							] );
-						?><div <?php echo $this->get_render_attribute_string( 'control-fullscreen' ); ?>></div><?php } ?>
+						?><div <?php $this->print_render_attribute_string( 'control-fullscreen' ); ?>></div><?php } ?>
 
 					</div><!-- .ee-player__controls__bar -->
 				</div><!-- .ee-player__controls__bar-wrapper --><?php
@@ -2384,7 +2395,7 @@ class Devices extends Extras_Widget {
 				 *
 				 * @since 2.2.0
 				 */
-				do_action( 'elementor_extras/widgets/devices/video/after_bar' );
+				do_action( 'landtech_extras/widgets/devices/video/after_bar' );
 				
 			}
 		?></div><!-- .ee-video-player__controls -->
@@ -2420,7 +2431,7 @@ class Devices extends Extras_Widget {
 				],
 			] );
 
-			?><ul <?php echo $this->get_render_attribute_string( 'overlay' ); ?>><?php
+			?><ul <?php $this->print_render_attribute_string( 'overlay' ); ?>><?php
 
 				if ( 'yes' !== $settings['video_restart_on_pause'] && 'show' === $settings['video_show_rewind'] ) {
 					$this->add_render_attribute( 'overlay-rewind', [
@@ -2431,9 +2442,9 @@ class Devices extends Extras_Widget {
 							'nicon-rewind',
 						],
 					] )
-					?><li <?php echo $this->get_render_attribute_string( 'overlay-rewind' ); ?>></li><?php }
+					?><li <?php $this->print_render_attribute_string( 'overlay-rewind' ); ?>></li><?php }
 
-				?><li <?php echo $this->get_render_attribute_string( 'overlay-play' ); ?>></li>
+				?><li <?php $this->print_render_attribute_string( 'overlay-play' ); ?>></li>
 			</ul>
 		<?php }
 	}
@@ -2555,7 +2566,7 @@ class Devices extends Extras_Widget {
 							</div><!-- .ee-device__media__screen__inner -->
 						</div><!-- .ee-device__media__screen -->
 
-					<# if ( 'image' === settings.device_media_type && '' !== settings.media_landscape_screenshot.url ) { #>
+					<# if ( 'image' === settings.device_media_type && settings.media_landscape_screenshot && '' !== settings.media_landscape_screenshot.url ) { #>
 						<div {{{ view.getRenderAttributeString( 'device-media-screen-landscape') }}}>
 							<div {{{ view.getRenderAttributeString( 'device-media-screen-inner') }}}>
 								<figure>
@@ -2602,9 +2613,9 @@ class Devices extends Extras_Widget {
 			} );
 
 			#><div {{{ view.getRenderAttributeString( 'video-wrapper' ) }}}>
-				<?php echo $this->_video_template(); ?>
-				<?php echo $this->_cover_template(); ?>
-				<?php echo $this->_controls_template(); ?>
+				<?php $this->_video_template(); ?>
+				<?php $this->_cover_template(); ?>
+				<?php $this->_controls_template(); ?>
 			</div><!-- .ee-player -->
 		<# } #><?php
 	}

@@ -1,9 +1,10 @@
 <?php
-namespace ElementorExtras\Modules\Unfold\Widgets;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Unfold\Widgets;
 
-// Extras for Elementor Classes
-use ElementorExtras\Utils;
-use ElementorExtras\Base\Extras_Widget;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Utils;
+use LandTechExtras\Base\Extras_Widget;
 
 // Elementor Classes
 use Elementor\Icons_Manager;
@@ -45,7 +46,7 @@ class Unfold extends Extras_Widget {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Unfold', 'elementor-extras' );
+		return __( 'Unfold', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -70,9 +71,8 @@ class Unfold extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
-			'unfold',
-			'gsap-js',
-			'jquery-visible',
+			'landtech-extras-unfold',
+			'landtech-extras-jquery-visible',
 		];
 	}
 
@@ -87,7 +87,7 @@ class Unfold extends Extras_Widget {
 		$this->start_controls_section(
 			'section_content',
 			[
-				'label' => __( 'Content', 'elementor-extras' ),
+				'label' => __( 'Content', 'landtech-extras-for-elementor' ),
 			]
 		);
 
@@ -97,26 +97,26 @@ class Unfold extends Extras_Widget {
 					'label' 	=> '',
 					'type' 		=> Controls_Manager::WYSIWYG,
 					'dynamic' 	=> [ 'active' => true ],
-					'default' 	=> __( 'A Cultural Response to Cimate Change profiles the work of the artists in the Unfold exhibition and also proposes a number of creative and innovative responses to climate change aimed at stimulating discourse and a wider engagement with the climate debate. The texts by Gerald Bast, Steve Kapelke, Chris Rapley, David Buckland, Chris Wainwright and Helga Kromp-Kolb provoke, within an educational context, a discussion around what are the legitimate agendas for arts education and arts practitioners, in relation to some of the most pressing and urgent issues of our times.', 'elementor-extras' ),
+					'default' 	=> __( 'A Cultural Response to Cimate Change profiles the work of the artists in the Unfold exhibition and also proposes a number of creative and innovative responses to climate change aimed at stimulating discourse and a wider engagement with the climate debate. The texts by Gerald Bast, Steve Kapelke, Chris Rapley, David Buckland, Chris Wainwright and Helga Kromp-Kolb provoke, within an educational context, a discussion around what are the legitimate agendas for arts education and arts practitioners, in relation to some of the most pressing and urgent issues of our times.', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 			$this->add_responsive_control(
 				'text_align',
 				[
-					'label' 	=> __( 'Text Align', 'elementor-extras' ),
+					'label' 	=> __( 'Text Align', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::CHOOSE,
 					'options' 	=> [
 						'left'    	=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 	=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 	=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -130,12 +130,12 @@ class Unfold extends Extras_Widget {
 			$this->add_control(
 				'visible_type',
 				[
-					'label' 	=> __( 'Visible', 'elementor-extras' ),
+					'label' 	=> __( 'Visible', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> '',
 					'options' 	=> [
-						'' 		=> __( 'Percentage', 'elementor-extras' ),
-						'lines' => __( 'Lines', 'elementor-extras' ),
+						'' 		=> __( 'Percentage', 'landtech-extras-for-elementor' ),
+						'lines' => __( 'Lines', 'landtech-extras-for-elementor' ),
 					],
 					'frontend_available' => 'true'
 				]
@@ -144,7 +144,7 @@ class Unfold extends Extras_Widget {
 			$this->add_control(
 				'visible_percentage',
 				[
-					'label' 	=> __( 'Visible Amount (%)', 'elementor-extras' ),
+					'label' 	=> __( 'Visible Amount (%)', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'dynamic' 	=> [ 'active' => true ],
 					'default'	=> [
@@ -166,7 +166,7 @@ class Unfold extends Extras_Widget {
 			$this->add_control(
 				'visible_lines',
 				[
-					'label' 	=> __( 'Visible Amount (lines)', 'elementor-extras' ),
+					'label' 	=> __( 'Visible Amount (lines)', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'dynamic' 	=> [ 'active' => true ],
 					'default'	=> [
@@ -189,7 +189,7 @@ class Unfold extends Extras_Widget {
 				'content_valid_warning',
 				[
 					'type' 				=> Controls_Manager::RAW_HTML,
-					'raw' 				=> __( 'Make sure your WYSIWYG content is valid HTML (no unclosed tags) in order for the widget to calculate the number of lines shown correctly.', 'elementor-extras' ),
+					'raw' 				=> __( 'Make sure your WYSIWYG content is valid HTML (no unclosed tags) in order for the widget to calculate the number of lines shown correctly.', 'landtech-extras-for-elementor' ),
 					'content_classes' 	=> 'elementor-panel-alert elementor-panel-alert-warning',
 					'condition'			=> [
 						'visible_type' => 'lines'
@@ -202,7 +202,7 @@ class Unfold extends Extras_Widget {
 		$this->start_controls_section(
 			'section_settings',
 			[
-				'label' => __( 'Settings', 'elementor-extras' ),
+				'label' => __( 'Settings', 'landtech-extras-for-elementor' ),
 			]
 		);
 
@@ -211,14 +211,14 @@ class Unfold extends Extras_Widget {
 			$this->start_controls_tab(
 				'tab_unfold',
 				[
-					'label' => __( 'Unfold', 'elementor-extras' ),
+					'label' => __( 'Unfold', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 				$this->add_control(
 					'duration_unfold',
 					[
-						'label' 	=> __( 'Duration', 'elementor-extras' ),
+						'label' 	=> __( 'Duration', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SLIDER,
 						'dynamic' 	=> [ 'active' => true ],
 						'default'	=> [
@@ -238,17 +238,17 @@ class Unfold extends Extras_Widget {
 				$this->add_control(
 					'animation_unfold',
 					[
-						'label'		=> __( 'Animation', 'elementor-extras' ),
+						'label'		=> __( 'Animation', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SELECT,
 						'default' 	=> 'Power4',
 						'options' 	=> [
-							'Power0' 		=> __( 'Linear', 'elementor-extras' ),
-							'Power4' 		=> __( 'Break', 'elementor-extras' ),
-							'Back' 			=> __( 'Back', 'elementor-extras' ),
-							'Elastic' 		=> __( 'Elastic', 'elementor-extras' ),
-							'Bounce' 		=> __( 'Bounce', 'elementor-extras' ),
-							'SlowMo' 		=> __( 'SlowMo', 'elementor-extras' ),
-							'SteppedEase' 	=> __( 'Step', 'elementor-extras' ),
+							'Power0' 		=> __( 'Linear', 'landtech-extras-for-elementor' ),
+							'Power4' 		=> __( 'Break', 'landtech-extras-for-elementor' ),
+							'Back' 			=> __( 'Back', 'landtech-extras-for-elementor' ),
+							'Elastic' 		=> __( 'Elastic', 'landtech-extras-for-elementor' ),
+							'Bounce' 		=> __( 'Bounce', 'landtech-extras-for-elementor' ),
+							'SlowMo' 		=> __( 'SlowMo', 'landtech-extras-for-elementor' ),
+							'SteppedEase' 	=> __( 'Step', 'landtech-extras-for-elementor' ),
 						],
 						'frontend_available' => true
 					]
@@ -257,13 +257,13 @@ class Unfold extends Extras_Widget {
 				$this->add_control(
 					'easing_unfold',
 					[
-						'label'		=> __( 'Easing', 'elementor-extras' ),
+						'label'		=> __( 'Easing', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SELECT,
 						'default' 	=> 'easeInOut',
 						'options' 	=> [
-							'easeInOut' 			=> __( 'Ease In Out', 'elementor-extras' ),
-							'easeIn' 				=> __( 'Ease In', 'elementor-extras' ),
-							'easeOut' 				=> __( 'Ease Out', 'elementor-extras' ),
+							'easeInOut' 			=> __( 'Ease In Out', 'landtech-extras-for-elementor' ),
+							'easeIn' 				=> __( 'Ease In', 'landtech-extras-for-elementor' ),
+							'easeOut' 				=> __( 'Ease Out', 'landtech-extras-for-elementor' ),
 						],
 						'condition' => [
 							'animation_unfold!' => [ 'SlowMo', 'SteppedEase' ]
@@ -275,7 +275,7 @@ class Unfold extends Extras_Widget {
 				$this->add_control(
 					'steps_unfold',
 					[
-						'label' 	=> __( 'Steps', 'elementor-extras' ),
+						'label' 	=> __( 'Steps', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SLIDER,
 						'dynamic' 	=> [ 'active' => true ],
 						'default'	=> [
@@ -297,7 +297,7 @@ class Unfold extends Extras_Widget {
 				$this->add_control(
 					'slow_unfold',
 					[
-						'label' 	=> __( 'Slow Amount', 'elementor-extras' ),
+						'label' 	=> __( 'Slow Amount', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SLIDER,
 						'dynamic' 	=> [ 'active' => true ],
 						'default'	=> [
@@ -320,12 +320,12 @@ class Unfold extends Extras_Widget {
 				$this->add_control(
 					'focus_open',
 					[
-						'label' 		=> __( 'Keep Focus', 'elementor-extras' ),
-						'description'	=> __( 'When unfolding, keep focus on top of content or the scroll position at the time of starting the unfold.', 'elementor-extras' ),
+						'label' 		=> __( 'Keep Focus', 'landtech-extras-for-elementor' ),
+						'description'	=> __( 'When unfolding, keep focus on top of content or the scroll position at the time of starting the unfold.', 'landtech-extras-for-elementor' ),
 						'options'		=> [
-							''			=> __( 'Default', 'elementor-extras' ),
-							'top'		=> __( 'Top of Content', 'elementor-extras' ),
-							'scroll'	=> __( 'Scroll Position', 'elementor-extras' ),
+							''			=> __( 'Default', 'landtech-extras-for-elementor' ),
+							'top'		=> __( 'Top of Content', 'landtech-extras-for-elementor' ),
+							'scroll'	=> __( 'Scroll Position', 'landtech-extras-for-elementor' ),
 						],
 						'type' 			=> Controls_Manager::SELECT,
 						'default' 		=> '',
@@ -338,14 +338,14 @@ class Unfold extends Extras_Widget {
 			$this->start_controls_tab(
 				'tab_fold',
 				[
-					'label' => __( 'Fold', 'elementor-extras' ),
+					'label' => __( 'Fold', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 				$this->add_control(
 					'duration_fold',
 					[
-						'label' 	=> __( 'Duration', 'elementor-extras' ),
+						'label' 	=> __( 'Duration', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SLIDER,
 						'dynamic' 	=> [ 'active' => true ],
 						'default'	=> [
@@ -365,17 +365,17 @@ class Unfold extends Extras_Widget {
 				$this->add_control(
 					'animation_fold',
 					[
-						'label'		=> __( 'Animation', 'elementor-extras' ),
+						'label'		=> __( 'Animation', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SELECT,
 						'default' 	=> 'Power4',
 						'options' 	=> [
-							'Power0' 		=> __( 'Linear', 'elementor-extras' ),
-							'Power4' 		=> __( 'Break', 'elementor-extras' ),
-							'Back' 			=> __( 'Back', 'elementor-extras' ),
-							'Elastic' 		=> __( 'Elastic', 'elementor-extras' ),
-							'Bounce' 		=> __( 'Bounce', 'elementor-extras' ),
-							'SlowMo' 		=> __( 'SlowMo', 'elementor-extras' ),
-							'SteppedEase' 	=> __( 'Step', 'elementor-extras' ),
+							'Power0' 		=> __( 'Linear', 'landtech-extras-for-elementor' ),
+							'Power4' 		=> __( 'Break', 'landtech-extras-for-elementor' ),
+							'Back' 			=> __( 'Back', 'landtech-extras-for-elementor' ),
+							'Elastic' 		=> __( 'Elastic', 'landtech-extras-for-elementor' ),
+							'Bounce' 		=> __( 'Bounce', 'landtech-extras-for-elementor' ),
+							'SlowMo' 		=> __( 'SlowMo', 'landtech-extras-for-elementor' ),
+							'SteppedEase' 	=> __( 'Step', 'landtech-extras-for-elementor' ),
 						],
 						'frontend_available' => true
 					]
@@ -384,13 +384,13 @@ class Unfold extends Extras_Widget {
 				$this->add_control(
 					'easing_fold',
 					[
-						'label'		=> __( 'Easing', 'elementor-extras' ),
+						'label'		=> __( 'Easing', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SELECT,
 						'default' 	=> 'easeInOut',
 						'options' 	=> [
-							'easeInOut' 			=> __( 'Ease In Out', 'elementor-extras' ),
-							'easeIn' 				=> __( 'Ease In', 'elementor-extras' ),
-							'easeOut' 				=> __( 'Ease Out', 'elementor-extras' ),
+							'easeInOut' 			=> __( 'Ease In Out', 'landtech-extras-for-elementor' ),
+							'easeIn' 				=> __( 'Ease In', 'landtech-extras-for-elementor' ),
+							'easeOut' 				=> __( 'Ease Out', 'landtech-extras-for-elementor' ),
 						],
 						'condition' => [
 							'animation_fold!' => [ 'SlowMo', 'SteppedEase' ]
@@ -402,7 +402,7 @@ class Unfold extends Extras_Widget {
 				$this->add_control(
 					'steps_fold',
 					[
-						'label' 	=> __( 'Steps', 'elementor-extras' ),
+						'label' 	=> __( 'Steps', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SLIDER,
 						'dynamic' 	=> [ 'active' => true ],
 						'default'	=> [
@@ -424,7 +424,7 @@ class Unfold extends Extras_Widget {
 				$this->add_control(
 					'slow_fold',
 					[
-						'label' 	=> __( 'Slow Amount', 'elementor-extras' ),
+						'label' 	=> __( 'Slow Amount', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SLIDER,
 						'dynamic' 	=> [ 'active' => true ],
 						'default'	=> [
@@ -447,8 +447,8 @@ class Unfold extends Extras_Widget {
 				$this->add_control(
 					'focus_close',
 					[
-						'label' 		=> __( 'Keep Focus', 'elementor-extras' ),
-						'description'	=> __( 'When folding, keep focus on content', 'elementor-extras' ),
+						'label' 		=> __( 'Keep Focus', 'landtech-extras-for-elementor' ),
+						'description'	=> __( 'When folding, keep focus on content', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SWITCHER,
 						'default' 		=> '',
 						'return_value' 	=> 'yes',
@@ -465,14 +465,14 @@ class Unfold extends Extras_Widget {
 		$this->start_controls_section(
 			'section_separator_content',
 			[
-				'label' => __( 'Separator', 'elementor-extras' ),
+				'label' => __( 'Separator', 'landtech-extras-for-elementor' ),
 			]
 		);
 
 			$this->add_control(
 				'separator',
 				[
-					'label' 		=> __( 'Hide Separator', 'elementor-extras' ),
+					'label' 		=> __( 'Hide Separator', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> '',
 					'return_value' 	=> 'yes',
@@ -487,31 +487,31 @@ class Unfold extends Extras_Widget {
 		$this->start_controls_section(
 			'section_trigger',
 			[
-				'label' => __( 'Button', 'elementor-extras' ),
+				'label' => __( 'Button', 'landtech-extras-for-elementor' ),
 			]
 		);
 
 			$this->start_controls_tabs( 'tabs_trigger_content' );
 
 			$this->start_controls_tab(
-				'tab_trigger_closed', [ 'label' => __( 'Folded', 'elementor-extras' ), ]
+				'tab_trigger_closed', [ 'label' => __( 'Folded', 'landtech-extras-for-elementor' ), ]
 			);
 
 				$this->add_control(
 					'text_closed',
 					[
-						'label' 		=> __( 'Label', 'elementor-extras' ),
+						'label' 		=> __( 'Label', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::TEXT,
 						'dynamic' 		=> [ 'active' => true ],
-						'default' 		=> __( 'Read more', 'elementor-extras' ),
-						'placeholder' 	=> __( 'Read more', 'elementor-extras' ),
+						'default' 		=> __( 'Read more', 'landtech-extras-for-elementor' ),
+						'placeholder' 	=> __( 'Read more', 'landtech-extras-for-elementor' ),
 					]
 				);
 
 				$this->add_control(
 					'selected_icon',
 					[
-						'label' => __( 'Icon', 'elementor-extras' ),
+						'label' => __( 'Icon', 'landtech-extras-for-elementor' ),
 						'type' => Controls_Manager::ICONS,
 						'fa4compatibility' => 'icon',
 					]
@@ -520,24 +520,24 @@ class Unfold extends Extras_Widget {
 			$this->end_controls_tab();
 
 			$this->start_controls_tab(
-				'tab_trigger_open', [ 'label' => __( 'Unfolded', 'elementor-extras' ), ]
+				'tab_trigger_open', [ 'label' => __( 'Unfolded', 'landtech-extras-for-elementor' ), ]
 			);
 
 				$this->add_control(
 					'text_open',
 					[
-						'label' 		=> __( 'Label', 'elementor-extras' ),
+						'label' 		=> __( 'Label', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::TEXT,
 						'dynamic' 		=> [ 'active' => true ],
-						'default' 		=> __( 'Read less', 'elementor-extras' ),
-						'placeholder' 	=> __( 'Read less', 'elementor-extras' ),
+						'default' 		=> __( 'Read less', 'landtech-extras-for-elementor' ),
+						'placeholder' 	=> __( 'Read less', 'landtech-extras-for-elementor' ),
 					]
 				);
 
 				$this->add_control(
 					'selected_icon_open',
 					[
-						'label' => __( 'Icon', 'elementor-extras' ),
+						'label' => __( 'Icon', 'landtech-extras-for-elementor' ),
 						'type' => Controls_Manager::ICONS,
 						'label_block' => true,
 						'fa4compatibility' => 'icon_open',
@@ -551,23 +551,23 @@ class Unfold extends Extras_Widget {
 			$this->add_responsive_control(
 				'align',
 				[
-					'label' 	=> __( 'Alignment', 'elementor-extras' ),
+					'label' 	=> __( 'Alignment', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::CHOOSE,
 					'options' 	=> [
 						'left'    	=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-left',
 						],
 						'center' 	=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-center',
 						],
 						'right' 	=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-right',
 						],
 						'justify' 	=> [
-							'title' 	=> __( 'Stretch', 'elementor-extras' ),
+							'title' 	=> __( 'Stretch', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-stretch',
 						],
 					],
@@ -580,7 +580,7 @@ class Unfold extends Extras_Widget {
 			$this->add_control(
 				'size',
 				[
-					'label' 	=> __( 'Size', 'elementor-extras' ),
+					'label' 	=> __( 'Size', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'sm',
 					'options' 	=> Utils::get_button_sizes(),
@@ -590,12 +590,12 @@ class Unfold extends Extras_Widget {
 			$this->add_control(
 				'icon_align',
 				[
-					'label' 	=> __( 'Icon Position', 'elementor-extras' ),
+					'label' 	=> __( 'Icon Position', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'left',
 					'options' 	=> [
-						'left' 		=> __( 'Before', 'elementor-extras' ),
-						'right' 	=> __( 'After', 'elementor-extras' ),
+						'left' 		=> __( 'Before', 'landtech-extras-for-elementor' ),
+						'right' 	=> __( 'After', 'landtech-extras-for-elementor' ),
 					],
 					'conditions'=> [
 						'relation' => 'or',
@@ -618,7 +618,7 @@ class Unfold extends Extras_Widget {
 			$this->add_control(
 				'icon_indent',
 				[
-					'label' 	=> __( 'Icon Spacing', 'elementor-extras' ),
+					'label' 	=> __( 'Icon Spacing', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'dynamic' 	=> [ 'active' => true ],
 					'range' 	=> [
@@ -656,19 +656,19 @@ class Unfold extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_content',
 			[
-				'label' => __( 'Content', 'elementor-extras' ),
+				'label' => __( 'Content', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
 
 			$text_columns = range( 1, 10 );
 			$text_columns = array_combine( $text_columns, $text_columns );
-			$text_columns[''] = __( 'Default', 'elementor-extras' );
+			$text_columns[''] = __( 'Default', 'landtech-extras-for-elementor' );
 
 			$this->add_responsive_control(
 				'text_columns',
 				[
-					'label' => __( 'Columns', 'elementor-extras' ),
+					'label' => __( 'Columns', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::SELECT,
 					'separator' => 'before',
 					'options' => $text_columns,
@@ -681,7 +681,7 @@ class Unfold extends Extras_Widget {
 			$this->add_responsive_control(
 				'column_gap',
 				[
-					'label' => __( 'Columns Gap', 'elementor-extras' ),
+					'label' => __( 'Columns Gap', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::SLIDER,
 					'size_units' => [ 'px', '%', 'em', 'vw' ],
 					'range' => [
@@ -710,7 +710,7 @@ class Unfold extends Extras_Widget {
 			$this->add_control(
 				'content_color',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'selectors' => [
 						'{{WRAPPER}} .ee-unfold__content' => 'color: {{VALUE}};',
@@ -721,7 +721,7 @@ class Unfold extends Extras_Widget {
 			$this->add_control(
 				'content_background',
 				[
-					'label' 	=> __( 'Background Color', 'elementor-extras' ),
+					'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'selectors' => [
 						'{{WRAPPER}} .ee-unfold__content' => 'background-color: {{VALUE}};',
@@ -732,7 +732,7 @@ class Unfold extends Extras_Widget {
 			$this->add_control(
 				'content_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px' ],
 					'selectors' 	=> [
@@ -757,7 +757,7 @@ class Unfold extends Extras_Widget {
 		$this->start_controls_section(
 			'section_separator_style',
 			[
-				'label' 	=> __( 'Separator', 'elementor-extras' ),
+				'label' 	=> __( 'Separator', 'landtech-extras-for-elementor' ),
 				'tab' 		=> Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'separator!' => 'yes'
@@ -768,7 +768,7 @@ class Unfold extends Extras_Widget {
 			$this->add_control(
 				'separator_height',
 				[
-					'label' 	=> __( 'Height', 'elementor-extras' ),
+					'label' 	=> __( 'Height', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'dynamic' 	=> [ 'active' => true ],
 					'default'	=> [
@@ -812,7 +812,7 @@ class Unfold extends Extras_Widget {
 		$this->start_controls_section(
 			'section_trigger_style',
 			[
-				'label' => __( 'Button', 'elementor-extras' ),
+				'label' => __( 'Button', 'landtech-extras-for-elementor' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -820,7 +820,7 @@ class Unfold extends Extras_Widget {
 			$this->add_control(
 				'trigger_distance',
 				[
-					'label' 	=> __( 'Distance', 'elementor-extras' ),
+					'label' 	=> __( 'Distance', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'dynamic' 	=> [ 'active' => true ],
 					'default'	=> [
@@ -841,7 +841,7 @@ class Unfold extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' => 'typography',
-					'label' => __( 'Typography', 'elementor-extras' ),
+					'label' => __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -854,14 +854,14 @@ class Unfold extends Extras_Widget {
 			$this->start_controls_tab(
 				'tab_button_normal',
 				[
-					'label' => __( 'Normal', 'elementor-extras' ),
+					'label' => __( 'Normal', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 			$this->add_control(
 				'button_text_color',
 				[
-					'label' => __( 'Text Color', 'elementor-extras' ),
+					'label' => __( 'Text Color', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::COLOR,
 					'default' => '',
 					'selectors' => [
@@ -873,7 +873,7 @@ class Unfold extends Extras_Widget {
 			$this->add_control(
 				'background_color',
 				[
-					'label' => __( 'Background Color', 'elementor-extras' ),
+					'label' => __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::COLOR,
 					'global' => [
 						'default' => Global_Colors::COLOR_SECONDARY,
@@ -889,14 +889,14 @@ class Unfold extends Extras_Widget {
 			$this->start_controls_tab(
 				'tab_button_hover',
 				[
-					'label' => __( 'Hover', 'elementor-extras' ),
+					'label' => __( 'Hover', 'landtech-extras-for-elementor' ),
 				]
 			);
 
 			$this->add_control(
 				'hover_color',
 				[
-					'label' => __( 'Text Color', 'elementor-extras' ),
+					'label' => __( 'Text Color', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::COLOR,
 					'selectors' => [
 						'{{WRAPPER}} a.ee-button:hover, {{WRAPPER}} .ee-button:hover' => 'color: {{VALUE}};',
@@ -907,7 +907,7 @@ class Unfold extends Extras_Widget {
 			$this->add_control(
 				'button_background_hover_color',
 				[
-					'label' => __( 'Background Color', 'elementor-extras' ),
+					'label' => __( 'Background Color', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::COLOR,					
 					'selectors' => [
 						'{{WRAPPER}} a.ee-button:hover, {{WRAPPER}} .ee-button:hover' => 'background-color: {{VALUE}};',
@@ -918,7 +918,7 @@ class Unfold extends Extras_Widget {
 			$this->add_control(
 				'button_hover_border_color',
 				[
-					'label' => __( 'Border Color', 'elementor-extras' ),
+					'label' => __( 'Border Color', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::COLOR,
 					'condition' => [
 						'border_border!' => '',
@@ -937,7 +937,7 @@ class Unfold extends Extras_Widget {
 				Group_Control_Border::get_type(),
 				[
 					'name' => 'border',
-					'label' => __( 'Border', 'elementor-extras' ),
+					'label' => __( 'Border', 'landtech-extras-for-elementor' ),
 					'placeholder' => '1px',
 					'default' => '1px',
 					'selector' => '{{WRAPPER}} .ee-button',
@@ -948,7 +948,7 @@ class Unfold extends Extras_Widget {
 			$this->add_control(
 				'border_radius',
 				[
-					'label' => __( 'Border Radius', 'elementor-extras' ),
+					'label' => __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::DIMENSIONS,
 					'size_units' => [ 'px', '%' ],
 					'selectors' => [
@@ -968,7 +968,7 @@ class Unfold extends Extras_Widget {
 			$this->add_control(
 				'text_padding',
 				[
-					'label' => __( 'Text Padding', 'elementor-extras' ),
+					'label' => __( 'Text Padding', 'landtech-extras-for-elementor' ),
 					'type' => Controls_Manager::DIMENSIONS,
 					'size_units' => [ 'px', 'em', '%' ],
 					'selectors' => [
@@ -1029,16 +1029,16 @@ class Unfold extends Extras_Widget {
 			$this->add_render_attribute( 'button', 'class', 'ee-size-' . $settings['size'] );
 		}
 
-		?><div <?php echo $this->get_render_attribute_string( 'wrapper' ); ?>>
-			<div <?php echo $this->get_render_attribute_string( 'mask' ); ?>>
-				<div <?php echo $this->get_render_attribute_string( 'content' ); ?>>
-					<?php echo $this->parse_text_editor( $settings['content'] ); ?>
+		?><div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
+			<div <?php $this->print_render_attribute_string( 'mask' ); ?>>
+				<div <?php $this->print_render_attribute_string( 'content' ); ?>>
+					<?php echo wp_kses_post( $this->parse_text_editor( $settings['content'] ) ); ?>
 				</div>
-				<div <?php echo $this->get_render_attribute_string( 'separator' ); ?>></div>
+				<div <?php $this->print_render_attribute_string( 'separator' ); ?>></div>
 			</div>
-			<div <?php echo $this->get_render_attribute_string( 'trigger' ); ?>>
-				<span <?php echo $this->get_render_attribute_string( 'button-wrapper' ); ?>>
-					<span <?php echo $this->get_render_attribute_string( 'button' ); ?>>
+			<div <?php $this->print_render_attribute_string( 'trigger' ); ?>>
+				<span <?php $this->print_render_attribute_string( 'button-wrapper' ); ?>>
+					<span <?php $this->print_render_attribute_string( 'button' ); ?>>
 						<?php $this->render_text(); ?>
 					</span>
 				</span>
@@ -1068,12 +1068,12 @@ class Unfold extends Extras_Widget {
 			],
 		] );
 
-		?><span <?php echo $this->get_render_attribute_string( 'content-wrapper' ); ?>><?php
+		?><span <?php $this->print_render_attribute_string( 'content-wrapper' ); ?>><?php
 
 				$this->render_icon( 'icon', 'closed' );
 				$this->render_icon( 'icon_open', 'open' );
 
-			?><span <?php echo $this->get_render_attribute_string( 'text' ); ?>><?php echo $settings['text_closed']; ?></span>
+			?><span <?php $this->print_render_attribute_string( 'text' ); ?>><?php echo esc_html( $settings['text_closed'] ); ?></span>
 		</span>
 		<?php
 	}
@@ -1110,11 +1110,11 @@ class Unfold extends Extras_Widget {
 			] );
 		}
 
-		?><span <?php echo $this->get_render_attribute_string( 'icon-wrapper-' . $type ); ?>><?php
+		?><span <?php $this->print_render_attribute_string( 'icon-wrapper-' . $type ); ?>><?php
 			if ( $is_new || $migrated ) {
 				Icons_Manager::render_icon( $settings['selected_' . $setting_key ], [ 'aria-hidden' => 'true' ] );
 			} else {
-				?><i <?php echo $this->get_render_attribute_string( 'icon-' . $type ); ?>></i><?php
+				?><i <?php $this->print_render_attribute_string( 'icon-' . $type ); ?>></i><?php
 			}	
 		?></span><?php
 	}
@@ -1175,7 +1175,7 @@ class Unfold extends Extras_Widget {
 			<div {{{ view.getRenderAttributeString( 'trigger' ) }}}>
 				<span {{{ view.getRenderAttributeString( 'button-wrapper' ) }}}>
 					<span {{{ view.getRenderAttributeString( 'button' ) }}}>
-						<?php echo $this->_text_template(); ?>
+						<?php $this->_text_template(); ?>
 					</span>
 				</span>
 			</div>

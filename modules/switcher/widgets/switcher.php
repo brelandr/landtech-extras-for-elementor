@@ -1,10 +1,11 @@
 <?php
-namespace ElementorExtras\Modules\Switcher\Widgets;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\Switcher\Widgets;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Extras_Widget;
-use ElementorExtras\Modules\Switcher\Skins;
-use ElementorExtras\Group_Control_Transition;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Extras_Widget;
+use LandTechExtras\Modules\Switcher\Skins;
+use LandTechExtras\Group_Control_Transition;
 
 // Elementor Classes
 use Elementor\Repeater;
@@ -60,7 +61,7 @@ class Switcher extends Extras_Widget {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Switcher', 'elementor-extras' );
+		return __( 'Switcher', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -85,14 +86,24 @@ class Switcher extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
-			'ee-switcher',
-			'parallax-element',
-			'gsap-js',
-			'splittext',
-			'custom-ease',
-			'jquery-resize-ee',
-			'jquery-appear',
-			'jquery-visible',
+			'landtech-extras-switcher',
+			'landtech-extras-parallax-element',
+			'landtech-extras-splitting',
+			'landtech-extras-jquery-resize',
+			'landtech-extras-jquery-appear',
+			'landtech-extras-jquery-visible',
+		];
+	}
+
+	/**
+	 * Get Style Depends
+	 *
+	 * @since  2.2.71
+	 * @return array
+	 */
+	public function get_style_depends() {
+		return [
+			'landtech-extras-splitting',
 		];
 	}
 
@@ -136,7 +147,7 @@ class Switcher extends Extras_Widget {
 		$this->start_controls_section(
 			'section_items',
 			[
-				'label' => __( 'Content', 'elementor-extras' ),
+				'label' => __( 'Content', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			]
 		);
@@ -144,12 +155,12 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'layout',
 				[
-					'label' 	=> __( 'Skin', 'elementor-extras' ),
+					'label' 	=> __( 'Skin', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default'	=> 'default',
 					'options' 	=> [
-						'default' 	=> __( 'Default', 'elementor-extras' ),
-						'overlay' 	=> __( 'Overlay', 'elementor-extras' ),
+						'default' 	=> __( 'Default', 'landtech-extras-for-elementor' ),
+						'overlay' 	=> __( 'Overlay', 'landtech-extras-for-elementor' ),
 					],
 					'prefix_class' => 'ee-switcher-skin--',
 				]
@@ -159,12 +170,12 @@ class Switcher extends Extras_Widget {
 
 			$content->start_controls_tabs( 'items_repeater' );
 
-			$content->start_controls_tab( 'tab_content', [ 'label' => __( 'Content', 'elementor-extras' ) ] );
+			$content->start_controls_tab( 'tab_content', [ 'label' => __( 'Content', 'landtech-extras-for-elementor' ) ] );
 
 				$content->add_control(
 					'image',
 					[
-						'label' 	=> __( 'Image', 'elementor-extras' ),
+						'label' 	=> __( 'Image', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::MEDIA,
 						'dynamic' 	=> [ 'active' => true ],
 						'default' 	=> [
@@ -176,18 +187,18 @@ class Switcher extends Extras_Widget {
 				$content->add_control(
 					'title',
 					[
-						'label' 	=> __( 'Title', 'elementor-extras' ),
+						'label' 	=> __( 'Title', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::TEXT,
 						'dynamic' 	=> [ 'active' => true ],
-						'default' 	=> __( 'Content Title', 'elementor-extras' ),
+						'default' 	=> __( 'Content Title', 'landtech-extras-for-elementor' ),
 					]
 				);
 
 				$content->add_control(
 					'description',
 					[
-						'label' 		=> __( 'Description', 'elementor-extras' ),
-						'description'	=> __( 'Remeber to enables the display of description under the Settings section.', 'elementor-extras' ),
+						'label' 		=> __( 'Description', 'landtech-extras-for-elementor' ),
+						'description'	=> __( 'Remeber to enables the display of description under the Settings section.', 'landtech-extras-for-elementor' ),
 						'dynamic' 		=> [ 'active' => true ],
 						'type' 			=> Controls_Manager::WYSIWYG,
 						'default' 		=> '',
@@ -198,17 +209,17 @@ class Switcher extends Extras_Widget {
 				$content->add_control(
 					'label',
 					[
-						'label' 	=> __( 'Label', 'elementor-extras' ),
+						'label' 	=> __( 'Label', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::TEXT,
 						'dynamic' 	=> [ 'active' => true ],
-						'default' 	=> __( 'Navigation Label', 'elementor-extras' ),
+						'default' 	=> __( 'Navigation Label', 'landtech-extras-for-elementor' ),
 					]
 				);
 
 				$content->add_control(
 					'selected_icon',
 					[
-						'label' => __( 'Icon', 'elementor-extras' ),
+						'label' => __( 'Icon', 'landtech-extras-for-elementor' ),
 						'type' => Controls_Manager::ICONS,
 						'skin' => 'inline',
 						'label_block' => false,
@@ -219,12 +230,12 @@ class Switcher extends Extras_Widget {
 				$content->add_control(
 					'icon_align',
 					[
-						'label' 	=> __( 'Icon Position', 'elementor-extras' ),
+						'label' 	=> __( 'Icon Position', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SELECT,
 						'default' 	=> 'left',
 						'options' 	=> [
-							'left' 		=> __( 'Before', 'elementor-extras' ),
-							'right' 	=> __( 'After', 'elementor-extras' ),
+							'left' 		=> __( 'Before', 'landtech-extras-for-elementor' ),
+							'right' 	=> __( 'After', 'landtech-extras-for-elementor' ),
 						],
 						'condition' => [
 							'selected_icon[value]!' => '',
@@ -235,7 +246,7 @@ class Switcher extends Extras_Widget {
 				$content->add_control(
 					'icon_indent',
 					[
-						'label' 	=> __( 'Icon Spacing', 'elementor-extras' ),
+						'label' 	=> __( 'Icon Spacing', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::SLIDER,
 						'range' 	=> [
 							'px' 	=> [
@@ -255,12 +266,12 @@ class Switcher extends Extras_Widget {
 
 			$content->end_controls_tab();
 
-			$content->start_controls_tab( 'tab_settings', [ 'label' => __( 'Settings', 'elementor-extras' ) ] );
+			$content->start_controls_tab( 'tab_settings', [ 'label' => __( 'Settings', 'landtech-extras-for-elementor' ) ] );
 
 				$content->add_control(
 					'link',
 					[
-						'label' 		=> __( 'Link', 'elementor-extras' ),
+						'label' 		=> __( 'Link', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::URL,
 						'dynamic' 		=> [ 'active' => true ],
 						'placeholder' 	=> esc_url( home_url( '/' ) ),
@@ -270,12 +281,12 @@ class Switcher extends Extras_Widget {
 
 			$content->end_controls_tab();
 
-			$content->start_controls_tab( 'tab_style', [ 'label' => __( 'Style', 'elementor-extras' ) ] );
+			$content->start_controls_tab( 'tab_style', [ 'label' => __( 'Style', 'landtech-extras-for-elementor' ) ] );
 
 				$content->add_control(
 					'background_switcher_heading',
 					[
-						'label' => __( 'Background Switcher', 'elementor-extras' ),
+						'label' => __( 'Background Switcher', 'landtech-extras-for-elementor' ),
 						'type'	=> Controls_Manager::HEADING,
 					]
 				);
@@ -283,7 +294,7 @@ class Switcher extends Extras_Widget {
 				$content->add_control(
 					'background_switcher_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'frontend_available' => true,
 					]
@@ -296,23 +307,23 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'items',
 				[
-					'label' 	=> __( 'Items', 'elementor-extras' ),
+					'label' 	=> __( 'Items', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::REPEATER,
 					'default' 	=> [
 						[
-							'title' 	=> __( 'Title', 'elementor-extras' ),
-							'label' 	=> __( 'Item #1', 'elementor-extras' ),
-							'description' => __( 'Lorem ipsum dolor sit amet, dictas evertitur philosophia an duo. At tamquam similique constituam vis, his tale similique disputationi an.', 'elementor-extras' ),
+							'title' 	=> __( 'Title', 'landtech-extras-for-elementor' ),
+							'label' 	=> __( 'Item #1', 'landtech-extras-for-elementor' ),
+							'description' => __( 'Lorem ipsum dolor sit amet, dictas evertitur philosophia an duo. At tamquam similique constituam vis, his tale similique disputationi an.', 'landtech-extras-for-elementor' ),
 						],
 						[
-							'title' 	=> __( 'Title', 'elementor-extras' ),
-							'label' 	=> __( 'Item #2', 'elementor-extras' ),
-							'description' => __( 'Periculis voluptatum vis ad, ex nam alienum iudicabit reprehendunt. Movet iisque voluptatum nec at.', 'elementor-extras' ),
+							'title' 	=> __( 'Title', 'landtech-extras-for-elementor' ),
+							'label' 	=> __( 'Item #2', 'landtech-extras-for-elementor' ),
+							'description' => __( 'Periculis voluptatum vis ad, ex nam alienum iudicabit reprehendunt. Movet iisque voluptatum nec at.', 'landtech-extras-for-elementor' ),
 						],
 						[
-							'title' 	=> __( 'Title', 'elementor-extras' ),
-							'label' 	=> __( 'Item #2', 'elementor-extras' ),
-							'description' => __( 'Hinc novum id mei, mel nominavi probatus id. Meis iudicabit ei nam, vidit latine atomorum vim at, ne pro purto cotidieque.', 'elementor-extras' ),
+							'title' 	=> __( 'Title', 'landtech-extras-for-elementor' ),
+							'label' 	=> __( 'Item #2', 'landtech-extras-for-elementor' ),
+							'description' => __( 'Hinc novum id mei, mel nominavi probatus id. Meis iudicabit ei nam, vidit latine atomorum vim at, ne pro purto cotidieque.', 'landtech-extras-for-elementor' ),
 						],
 					],
 					'fields' 		=> $content->get_controls(),
@@ -323,7 +334,7 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'linking_heading',
 				[
-					'label' => __( 'Linking', 'elementor-extras' ),
+					'label' => __( 'Linking', 'landtech-extras-for-elementor' ),
 					'type'	=> Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -332,13 +343,13 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'link_to',
 				[
-					'label' 	=> __( 'Link to', 'elementor-extras' ),
+					'label' 	=> __( 'Link to', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'custom',
 					'options' 	=> [
-						'file' 			=> __( 'Media File', 'elementor-extras' ),
-						'attachment' 	=> __( 'Attachment Page', 'elementor-extras' ),
-						'custom' 		=> __( 'Item URL', 'elementor-extras' ),
+						'file' 			=> __( 'Media File', 'landtech-extras-for-elementor' ),
+						'attachment' 	=> __( 'Attachment Page', 'landtech-extras-for-elementor' ),
+						'custom' 		=> __( 'Item URL', 'landtech-extras-for-elementor' ),
 					],
 				]
 			);
@@ -346,7 +357,7 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'link_image',
 				[
-					'label' 		=> __( 'Link Image', 'elementor-extras' ),
+					'label' 		=> __( 'Link Image', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default'		=> 'yes',
 					'return_value' 	=> 'yes',
@@ -359,7 +370,7 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'link_title',
 				[
-					'label' 		=> __( 'Link Title', 'elementor-extras' ),
+					'label' 		=> __( 'Link Title', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default'		=> 'yes',
 					'return_value' 	=> 'yes',
@@ -369,8 +380,8 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'link_description',
 				[
-					'label' 		=> __( 'Link Description', 'elementor-extras' ),
-					'description' 	=> __( 'Make sure you don\'t have any links inside your descriptions in order to avoid HTML and display errors', 'elementor-extras' ),
+					'label' 		=> __( 'Link Description', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'Make sure you don\'t have any links inside your descriptions in order to avoid HTML and display errors', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default'		=> '',
 					'return_value' 	=> 'yes',
@@ -383,14 +394,14 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'link_open_lightbox',
 				[
-					'label' 	=> __( 'Lightbox', 'elementor-extras' ),
+					'label' 	=> __( 'Lightbox', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> 'default',
 					'separator' => 'before',
 					'options' 	=> [
-						'default' 	=> __( 'Default', 'elementor-extras' ),
-						'yes' 		=> __( 'Yes', 'elementor-extras' ),
-						'no' 		=> __( 'No', 'elementor-extras' ),
+						'default' 	=> __( 'Default', 'landtech-extras-for-elementor' ),
+						'yes' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+						'no' 		=> __( 'No', 'landtech-extras-for-elementor' ),
 					],
 					'condition' => [
 						'link_to' 		=> 'file',
@@ -401,7 +412,7 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'lightbox_slideshow',
 				[
-					'label' 	=> __( 'Lightbox Slideshow', 'elementor-extras' ),
+					'label' 	=> __( 'Lightbox Slideshow', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SWITCHER,
 					'default' 	=> 'yes',
 					'condition' => [
@@ -426,14 +437,14 @@ class Switcher extends Extras_Widget {
 		$this->start_controls_section(
 			'section_settings',
 			[
-				'label' => __( 'Settings', 'elementor-extras' ),
+				'label' => __( 'Settings', 'landtech-extras-for-elementor' ),
 			]
 		);
 
 			$this->add_control(
 				'settings_switcher_heading',
 				[
-					'label' => __( 'General', 'elementor-extras' ),
+					'label' => __( 'General', 'landtech-extras-for-elementor' ),
 					'type'	=> Controls_Manager::HEADING,
 				]
 			);
@@ -441,7 +452,7 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'autoplay',
 				[
-					'label' 		=> __( 'Autoplay', 'elementor-extras' ),
+					'label' 		=> __( 'Autoplay', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default'		=> '',
 					'return_value' 	=> 'yes',
@@ -452,8 +463,8 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'duration',
 				[
-					'label' 		=> __( 'Autoplay Duration (s)', 'elementor-extras' ),
-					'description'	=> __( 'How long should an item stay on screen before being switched.', 'elementor-extras' ),
+					'label' 		=> __( 'Autoplay Duration (s)', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'How long should an item stay on screen before being switched.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -472,7 +483,7 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'autoplay_preview',
 				[
-					'label' 		=> __( 'Autoplay in Editor', 'elementor-extras' ),
+					'label' 		=> __( 'Autoplay in Editor', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default'		=> '',
 					'return_value' 	=> 'yes',
@@ -486,7 +497,7 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'autoplay_cancel',
 				[
-					'label' 		=> __( 'Stop on Interaction', 'elementor-extras' ),
+					'label' 		=> __( 'Stop on Interaction', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default'		=> '',
 					'return_value' 	=> 'yes',
@@ -500,7 +511,7 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'loop',
 				[
-					'label' 		=> __( 'Loop', 'elementor-extras' ),
+					'label' 		=> __( 'Loop', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default'		=> '',
 					'return_value' 	=> 'yes',
@@ -511,7 +522,7 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'background_switcher_heading',
 				[
-					'label' => __( 'Background switcher', 'elementor-extras' ),
+					'label' => __( 'Background switcher', 'landtech-extras-for-elementor' ),
 					'type'	=> Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -520,8 +531,8 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'background_switcher',
 				[
-					'label' 		=> __( 'Enable', 'elementor-extras' ),
-					'description' 	=> __( 'Turn on changing of widget, section or page background color when switching items.', 'elementor-extras' ),
+					'label' 		=> __( 'Enable', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'Turn on changing of widget, section or page background color when switching items.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default'		=> '',
 					'return_value' 	=> 'yes',
@@ -533,7 +544,7 @@ class Switcher extends Extras_Widget {
 				'background_switcher_notice',
 				[
 					'type' 				=> Controls_Manager::RAW_HTML,
-					'raw' 				=> __( 'Select the background color for each item under Content > Item > Style Tab.', 'elementor-extras' ),
+					'raw' 				=> __( 'Select the background color for each item under Content > Item > Style Tab.', 'landtech-extras-for-elementor' ),
 					'content_classes' 	=> 'elementor-panel-alert elementor-panel-alert-info',
 					'condition' 		=> [
 						'background_switcher!' => ''
@@ -544,13 +555,13 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'background_switcher_element',
 				[
-					'label' 	=> __( 'Change Element', 'elementor-extras' ),
+					'label' 	=> __( 'Change Element', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default' 	=> '',
 					'options' 	=> [
-						'' 			=> __( 'Body', 'elementor-extras' ),
-						'widget' 	=> __( 'Widget', 'elementor-extras' ),
-						'section' 	=> __( 'Section', 'elementor-extras' ),
+						'' 			=> __( 'Body', 'landtech-extras-for-elementor' ),
+						'widget' 	=> __( 'Widget', 'landtech-extras-for-elementor' ),
+						'section' 	=> __( 'Section', 'landtech-extras-for-elementor' ),
 					],
 					'condition' 		=> [
 						'background_switcher!' => ''
@@ -562,7 +573,7 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'settings_images_heading',
 				[
-					'label' => __( 'Images', 'elementor-extras' ),
+					'label' => __( 'Images', 'landtech-extras-for-elementor' ),
 					'type'	=> Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -572,8 +583,8 @@ class Switcher extends Extras_Widget {
 				Group_Control_Image_Size::get_type(),
 				[
 					'name' 		=> 'image', // Actually its `original_image_size`.
-					'label' 	=> __( 'Image Size', 'elementor-extras' ),
-					'exclude'	=> ['custom'],
+					'label' 	=> __( 'Image Size', 'landtech-extras-for-elementor' ),
+					'exclude'	=> ['custom'], // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor control schema.
 					'default' 	=> 'full',
 				]
 			);
@@ -581,7 +592,7 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'settings_title_heading',
 				[
-					'label' => __( 'Title', 'elementor-extras' ),
+					'label' => __( 'Title', 'landtech-extras-for-elementor' ),
 					'type'	=> Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -590,17 +601,17 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'title_heading_tag',
 				[
-					'label' 	=> __( 'HTML Tag', 'elementor-extras' ),
+					'label' 	=> __( 'HTML Tag', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'options' 	=> [
-						'h1' 	=> __( 'H1', 'elementor-extras' ),
-						'h2' 	=> __( 'H2', 'elementor-extras' ),
-						'h3' 	=> __( 'H3', 'elementor-extras' ),
-						'h4' 	=> __( 'H4', 'elementor-extras' ),
-						'h5' 	=> __( 'H5', 'elementor-extras' ),
-						'h6' 	=> __( 'H6', 'elementor-extras' ),
-						'div'	=> __( 'div', 'elementor-extras' ),
-						'span' 	=> __( 'span', 'elementor-extras' ),
+						'h1' 	=> __( 'H1', 'landtech-extras-for-elementor' ),
+						'h2' 	=> __( 'H2', 'landtech-extras-for-elementor' ),
+						'h3' 	=> __( 'H3', 'landtech-extras-for-elementor' ),
+						'h4' 	=> __( 'H4', 'landtech-extras-for-elementor' ),
+						'h5' 	=> __( 'H5', 'landtech-extras-for-elementor' ),
+						'h6' 	=> __( 'H6', 'landtech-extras-for-elementor' ),
+						'div'	=> __( 'div', 'landtech-extras-for-elementor' ),
+						'span' 	=> __( 'span', 'landtech-extras-for-elementor' ),
 					],
 					'default' => 'h1',
 				]
@@ -609,7 +620,7 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'settings_description_heading',
 				[
-					'label' => __( 'Description', 'elementor-extras' ),
+					'label' => __( 'Description', 'landtech-extras-for-elementor' ),
 					'type'	=> Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -618,8 +629,8 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'description',
 				[
-					'label' 		=> __( 'Enable', 'elementor-extras' ),
-					'description' 	=> __( 'Disable this to hide the description wrappers completely.', 'elementor-extras' ),
+					'label' 		=> __( 'Enable', 'landtech-extras-for-elementor' ),
+					'description' 	=> __( 'Disable this to hide the description wrappers completely.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default'		=> '',
 					'return_value' 	=> 'yes',
@@ -629,7 +640,7 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'settings_navigation_heading',
 				[
-					'label' => __( 'Navigation', 'elementor-extras' ),
+					'label' => __( 'Navigation', 'landtech-extras-for-elementor' ),
 					'type'	=> Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -638,14 +649,14 @@ class Switcher extends Extras_Widget {
 			$this->add_responsive_control(
 				'menu',
 				[
-					'label' 	=> __( 'Menu', 'elementor-extras' ),
+					'label' 	=> __( 'Menu', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default'	=> 'show',
 					'tablet_default' 	=> 'show',
 					'mobile_default' 	=> 'hide',
 					'options' 	=> [
-						'show' 	=> __( 'Show', 'elementor-extras' ),
-						'hide' 	=> __( 'Hide', 'elementor-extras' ),
+						'show' 	=> __( 'Show', 'landtech-extras-for-elementor' ),
+						'hide' 	=> __( 'Hide', 'landtech-extras-for-elementor' ),
 					],
 					'frontend_available' => true,
 					'prefix_class' => 'ee-switcher-menu%s-',
@@ -655,14 +666,14 @@ class Switcher extends Extras_Widget {
 			$this->add_responsive_control(
 				'arrows',
 				[
-					'label' 			=> __( 'Arrows', 'elementor-extras' ),
+					'label' 			=> __( 'Arrows', 'landtech-extras-for-elementor' ),
 					'type' 				=> Controls_Manager::SELECT,
 					'default'			=> 'hide',
 					'tablet_default' 	=> 'hide',
 					'mobile_default' 	=> 'show',
 					'options' 	=> [
-						'show' 	=> __( 'Show', 'elementor-extras' ),
-						'hide' 	=> __( 'Hide', 'elementor-extras' ),
+						'show' 	=> __( 'Show', 'landtech-extras-for-elementor' ),
+						'hide' 	=> __( 'Hide', 'landtech-extras-for-elementor' ),
 					],
 					'frontend_available' => true,
 					'prefix_class' => 'ee-switcher-arrows%s-',
@@ -683,15 +694,15 @@ class Switcher extends Extras_Widget {
 		$this->start_controls_section(
 			'_section_effects',
 			[
-				'label' => __( 'Effects', 'elementor-extras' ),
+				'label' => __( 'Effects', 'landtech-extras-for-elementor' ),
 			]
 		);
 
 			$this->add_control(
 				'effect_entrance',
 				[
-					'label' 		=> __( 'Entrance Animation', 'elementor-extras' ),
-					'description'	=> __( 'Animate the first item when entering viewport.', 'elementor-extras' ),
+					'label' 		=> __( 'Entrance Animation', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Animate the first item when entering viewport.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default'		=> 'yes',
 					'return_value' 	=> 'yes',
@@ -702,7 +713,7 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'effect_entrance_preview',
 				[
-					'label' 		=> __( 'Preview in Editor', 'elementor-extras' ),
+					'label' 		=> __( 'Preview in Editor', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default'		=> '',
 					'return_value' 	=> 'yes',
@@ -717,8 +728,8 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'speed',
 				[
-					'label' 		=> __( 'Animation Speed (s)', 'elementor-extras' ),
-					'description'	=> __( 'The time it takes for the transition to complete.', 'elementor-extras' ),
+					'label' 		=> __( 'Animation Speed (s)', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'The time it takes for the transition to complete.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -734,7 +745,7 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'effects_media_heading',
 				[
-					'label' => __( 'Media', 'elementor-extras' ),
+					'label' => __( 'Media', 'landtech-extras-for-elementor' ),
 					'type'	=> Controls_Manager::HEADING,
 					'separator'	=> 'before',
 				]
@@ -743,29 +754,29 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'effect_media',
 				[
-					'label' 	=> __( 'Media Effect', 'elementor-extras' ),
+					'label' 	=> __( 'Media Effect', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default'	=> 'swipeLeft',
 					'options' 	=> [
-						'coverLeft' 			=> __( 'Cover Left', 'elementor-extras' ),
-						'coverRight' 			=> __( 'Cover Right', 'elementor-extras' ),
-						'coverBottom' 			=> __( 'Cover Bottom', 'elementor-extras' ),
-						'coverTop'	 			=> __( 'Cover Top', 'elementor-extras' ),
-						'uncoverLeft' 			=> __( 'Uncover Left', 'elementor-extras' ),
-						'uncoverRight' 			=> __( 'Uncover Right', 'elementor-extras' ),
-						'uncoverBottom' 		=> __( 'Uncover Bottom', 'elementor-extras' ),
-						'uncoverTop' 			=> __( 'Uncover Top', 'elementor-extras' ),
-						'fade' 					=> __( 'Fade', 'elementor-extras' ),
-						'slideLeft' 			=> __( 'Slide Left', 'elementor-extras' ),
-						'slideRight' 			=> __( 'Slide Right', 'elementor-extras' ),
-						'slideTop' 				=> __( 'Slide Top', 'elementor-extras' ),
-						'slideBottom' 			=> __( 'Slide Bottom', 'elementor-extras' ),
-						'flipHorizontal' 		=> __( 'Flip Horizontal', 'elementor-extras' ),
-						'flipVertical' 			=> __( 'Flip Vertical', 'elementor-extras' ),
-						'swipeLeft' 			=> __( 'Swipe Left', 'elementor-extras' ),
-						'swipeRight' 			=> __( 'Swipe Right', 'elementor-extras' ),
-						'swipeBottom' 			=> __( 'Swipe Bottom', 'elementor-extras' ),
-						'swipeTop' 				=> __( 'Swipe Top', 'elementor-extras' ),
+						'coverLeft' 			=> __( 'Cover Left', 'landtech-extras-for-elementor' ),
+						'coverRight' 			=> __( 'Cover Right', 'landtech-extras-for-elementor' ),
+						'coverBottom' 			=> __( 'Cover Bottom', 'landtech-extras-for-elementor' ),
+						'coverTop'	 			=> __( 'Cover Top', 'landtech-extras-for-elementor' ),
+						'uncoverLeft' 			=> __( 'Uncover Left', 'landtech-extras-for-elementor' ),
+						'uncoverRight' 			=> __( 'Uncover Right', 'landtech-extras-for-elementor' ),
+						'uncoverBottom' 		=> __( 'Uncover Bottom', 'landtech-extras-for-elementor' ),
+						'uncoverTop' 			=> __( 'Uncover Top', 'landtech-extras-for-elementor' ),
+						'fade' 					=> __( 'Fade', 'landtech-extras-for-elementor' ),
+						'slideLeft' 			=> __( 'Slide Left', 'landtech-extras-for-elementor' ),
+						'slideRight' 			=> __( 'Slide Right', 'landtech-extras-for-elementor' ),
+						'slideTop' 				=> __( 'Slide Top', 'landtech-extras-for-elementor' ),
+						'slideBottom' 			=> __( 'Slide Bottom', 'landtech-extras-for-elementor' ),
+						'flipHorizontal' 		=> __( 'Flip Horizontal', 'landtech-extras-for-elementor' ),
+						'flipVertical' 			=> __( 'Flip Vertical', 'landtech-extras-for-elementor' ),
+						'swipeLeft' 			=> __( 'Swipe Left', 'landtech-extras-for-elementor' ),
+						'swipeRight' 			=> __( 'Swipe Right', 'landtech-extras-for-elementor' ),
+						'swipeBottom' 			=> __( 'Swipe Bottom', 'landtech-extras-for-elementor' ),
+						'swipeTop' 				=> __( 'Swipe Top', 'landtech-extras-for-elementor' ),
 					],
 					'frontend_available' => true,
 				]
@@ -774,7 +785,7 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'effect_media_zoom',
 				[
-					'label' 		=> __( 'Zoom', 'elementor-extras' ),
+					'label' 		=> __( 'Zoom', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default'		=> 'yes',
 					'return_value' 	=> 'yes',
@@ -800,7 +811,7 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'effects_text_heading',
 				[
-					'label' => __( 'Title', 'elementor-extras' ),
+					'label' => __( 'Title', 'landtech-extras-for-elementor' ),
 					'type'	=> Controls_Manager::HEADING,
 					'separator'	=> 'before',
 				]
@@ -809,16 +820,16 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'effect_title',
 				[
-					'label' 	=> __( 'Title Effect', 'elementor-extras' ),
+					'label' 	=> __( 'Title Effect', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default'	=> 'slideLeft',
 					'options' 	=> [
-						'slideLeft' 	=> __( 'Slide Left', 'elementor-extras' ),
-						'slideRight' 	=> __( 'Slide Right', 'elementor-extras' ),
-						'slideTop' 		=> __( 'Slide Top', 'elementor-extras' ),
-						'slideBottom' 	=> __( 'Slide Bottom', 'elementor-extras' ),
-						'fade' 			=> __( 'Fade', 'elementor-extras' ),
-						'scale'			=> __( 'Scale', 'elementor-extras' ),
+						'slideLeft' 	=> __( 'Slide Left', 'landtech-extras-for-elementor' ),
+						'slideRight' 	=> __( 'Slide Right', 'landtech-extras-for-elementor' ),
+						'slideTop' 		=> __( 'Slide Top', 'landtech-extras-for-elementor' ),
+						'slideBottom' 	=> __( 'Slide Bottom', 'landtech-extras-for-elementor' ),
+						'fade' 			=> __( 'Fade', 'landtech-extras-for-elementor' ),
+						'scale'			=> __( 'Scale', 'landtech-extras-for-elementor' ),
 					],
 					'frontend_available' => true,
 				]
@@ -827,8 +838,8 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'effect_title_stagger',
 				[
-					'label' 		=> __( 'Character Delay', 'elementor-extras' ),
-					'description'	=> __( 'Wether or not to animate each character with a slight delay.', 'elementor-extras' ),
+					'label' 		=> __( 'Character Delay', 'landtech-extras-for-elementor' ),
+					'description'	=> __( 'Wether or not to animate each character with a slight delay.', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default'		=> 'yes',
 					'return_value' 	=> 'yes',
@@ -850,14 +861,14 @@ class Switcher extends Extras_Widget {
 		$this->start_controls_section(
 			'section_interactions',
 			[
-				'label' => __( 'Interactions', 'elementor-extras' ),
+				'label' => __( 'Interactions', 'landtech-extras-for-elementor' ),
 			]
 		);
 
 			$this->add_control(
 				'pan_heading',
 				[
-					'label' => __( 'Mouse Parallax', 'elementor-extras' ),
+					'label' => __( 'Mouse Parallax', 'landtech-extras-for-elementor' ),
 					'type'	=> Controls_Manager::HEADING,
 				]
 			);
@@ -865,7 +876,7 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'parallax_enable',
 				[
-					'label' 		=> __( 'Enable', 'elementor-extras' ),
+					'label' 		=> __( 'Enable', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default'		=> '',
 					'return_value' 	=> 'yes',
@@ -876,7 +887,7 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'parallax_amount',
 				[
-					'label' 		=> __( 'Pan Amount', 'elementor-extras' ),
+					'label' 		=> __( 'Pan Amount', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -895,13 +906,13 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'parallax_pan_axis',
 				[
-					'label' 	=> __( 'Pan Axis', 'elementor-extras' ),
+					'label' 	=> __( 'Pan Axis', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default'	=> 'both',
 					'options' 	=> [
-						'both' 			=> __( 'Both', 'elementor-extras' ),
-						'vertical' 		=> __( 'Vertical', 'elementor-extras' ),
-						'horizontal' 	=> __( 'Horizontal', 'elementor-extras' ),
+						'both' 			=> __( 'Both', 'landtech-extras-for-elementor' ),
+						'vertical' 		=> __( 'Vertical', 'landtech-extras-for-elementor' ),
+						'horizontal' 	=> __( 'Horizontal', 'landtech-extras-for-elementor' ),
 					],
 					'frontend_available' => true,
 					'condition'	=> [
@@ -913,7 +924,7 @@ class Switcher extends Extras_Widget {
 			// $this->add_control(
 			// 	'tilt_heading',
 			// 	[
-			// 		'label' => __( 'Tilt', 'elementor-extras' ),
+			// 		'label' => __( 'Tilt', 'landtech-extras-for-elementor' ),
 			// 		'type'	=> Controls_Manager::HEADING,
 			// 		'separator' => 'before',
 			// 		'condition'	=> [
@@ -925,11 +936,11 @@ class Switcher extends Extras_Widget {
 			// $this->add_control(
 			// 	'tilt_enable',
 			// 	[
-			// 		'label'			=> __( 'Enable', 'elementor-extras' ),
+			// 		'label'			=> __( 'Enable', 'landtech-extras-for-elementor' ),
 			// 		'type' 			=> Controls_Manager::SWITCHER,
 			// 		'default' 		=> '',
-			// 		'label_on' 		=> __( 'Yes', 'elementor-extras' ),
-			// 		'label_off' 	=> __( 'No', 'elementor-extras' ),
+			// 		'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
+			// 		'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 			// 		'return_value' 	=> 'yes',
 			// 		'frontend_available' => true,
 			// 		'condition'	=> [
@@ -941,13 +952,13 @@ class Switcher extends Extras_Widget {
 			// $this->add_control(
 			// 	'tilt_axis',
 			// 	[
-			// 		'label'			=> __( 'Axis', 'elementor-extras' ),
+			// 		'label'			=> __( 'Axis', 'landtech-extras-for-elementor' ),
 			// 		'type' 			=> Controls_Manager::SELECT,
 			// 		'default' 		=> '',
 			// 		'options' 			=> [
-			// 			'' 		=> __( 'Both', 'elementor-extras' ),
-			// 			'x' 	=> __( 'X Only', 'elementor-extras' ),
-			// 			'y' 	=> __( 'Y Only', 'elementor-extras' ),
+			// 			'' 		=> __( 'Both', 'landtech-extras-for-elementor' ),
+			// 			'x' 	=> __( 'X Only', 'landtech-extras-for-elementor' ),
+			// 			'y' 	=> __( 'Y Only', 'landtech-extras-for-elementor' ),
 			// 		],
 			// 		'frontend_available' => true,
 			// 		'condition' => [
@@ -960,7 +971,7 @@ class Switcher extends Extras_Widget {
 			// $this->add_control(
 			// 	'tilt_amount',
 			// 	[
-			// 		'label' 	=> __( 'Amount', 'elementor-extras' ),
+			// 		'label' 	=> __( 'Amount', 'landtech-extras-for-elementor' ),
 			// 		'type' 		=> Controls_Manager::SLIDER,
 			// 		'range' 	=> [
 			// 			'px' 	=> [
@@ -982,7 +993,7 @@ class Switcher extends Extras_Widget {
 			// $this->add_control(
 			// 	'tilt_scale',
 			// 	[
-			// 		'label' 	=> __( 'Scale', 'elementor-extras' ),
+			// 		'label' 	=> __( 'Scale', 'landtech-extras-for-elementor' ),
 			// 		'type' 		=> Controls_Manager::SLIDER,
 			// 		'range' 	=> [
 			// 			'px' 	=> [
@@ -1005,7 +1016,7 @@ class Switcher extends Extras_Widget {
 			// $this->add_control(
 			// 	'tilt_speed',
 			// 	[
-			// 		'label' 	=> __( 'Speed', 'elementor-extras' ),
+			// 		'label' 	=> __( 'Speed', 'landtech-extras-for-elementor' ),
 			// 		'type' 		=> Controls_Manager::SLIDER,
 			// 		'range' 	=> [
 			// 			'px' 	=> [
@@ -1038,7 +1049,7 @@ class Switcher extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_layout',
 			[
-				'label' => __( 'Layout', 'elementor-extras' ),
+				'label' => __( 'Layout', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -1046,13 +1057,13 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'layout_stack',
 				[
-					'label' 	=> __( 'Stack on', 'elementor-extras' ),
+					'label' 	=> __( 'Stack on', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SELECT,
 					'default'	=> 'tablet',
 					'options' 	=> [
-						'mobile' 	=> __( 'Mobile', 'elementor-extras' ),
-						'tablet' 	=> __( 'Tablet', 'elementor-extras' ),
-						'desktop' 	=> __( 'Desktop', 'elementor-extras' ),
+						'mobile' 	=> __( 'Mobile', 'landtech-extras-for-elementor' ),
+						'tablet' 	=> __( 'Tablet', 'landtech-extras-for-elementor' ),
+						'desktop' 	=> __( 'Desktop', 'landtech-extras-for-elementor' ),
 					],
 					'condition'		=> [
 						'layout' => 'default',
@@ -1064,7 +1075,7 @@ class Switcher extends Extras_Widget {
 			$this->add_responsive_control(
 				'layout_height',
 				[
-					'label' 		=> __( 'Min Height', 'elementor-extras' ),
+					'label' 		=> __( 'Min Height', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -1089,7 +1100,7 @@ class Switcher extends Extras_Widget {
 			$this->add_responsive_control(
 				'layout_spacing',
 				[
-					'label' 	=> __( 'Spacing', 'elementor-extras' ),
+					'label' 	=> __( 'Spacing', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::SLIDER,
 					'range' 	=> [
 						'px' 	=> [
@@ -1111,7 +1122,7 @@ class Switcher extends Extras_Widget {
 			$this->add_responsive_control(
 				'layout_content_padding',
 				[
-					'label' 		=> __( 'Content Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Content Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -1128,24 +1139,24 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'layout_vertical_aligment',
 				[
-					'label' 		=> __( 'Vertical Align', 'elementor-extras' ),
+					'label' 		=> __( 'Vertical Align', 'landtech-extras-for-elementor' ),
 					'label_block' 	=> false,
 					'type' 			=> Controls_Manager::CHOOSE,
 					'options' 		=> [
 						'flex-start' 	=> [
-							'title' 	=> __( 'Top', 'elementor-extras' ),
+							'title' 	=> __( 'Top', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-top',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Middle', 'elementor-extras' ),
+							'title' 	=> __( 'Middle', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-middle',
 						],
 						'flex-end' 		=> [
-							'title' 	=> __( 'Bottom', 'elementor-extras' ),
+							'title' 	=> __( 'Bottom', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-bottom',
 						],
 						'stretch' 		=> [
-							'title' 	=> __( 'Stretch', 'elementor-extras' ),
+							'title' 	=> __( 'Stretch', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-v-align-stretch',
 						],
 					],
@@ -1160,7 +1171,7 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'layout_reverse',
 				[
-					'label' 		=> __( 'Reverse', 'elementor-extras' ),
+					'label' 		=> __( 'Reverse', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default'		=> '',
 					'return_value' 	=> 'reverse',
@@ -1185,7 +1196,7 @@ class Switcher extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_media',
 			[
-				'label' => __( 'Media', 'elementor-extras' ),
+				'label' => __( 'Media', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -1193,7 +1204,7 @@ class Switcher extends Extras_Widget {
 			$this->add_responsive_control(
 				'media_width',
 				[
-					'label' 		=> __( 'Width', 'elementor-extras' ),
+					'label' 		=> __( 'Width', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -1221,7 +1232,7 @@ class Switcher extends Extras_Widget {
 			$this->add_responsive_control(
 				'media_height',
 				[
-					'label' 		=> __( 'Min Height', 'elementor-extras' ),
+					'label' 		=> __( 'Min Height', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -1249,7 +1260,7 @@ class Switcher extends Extras_Widget {
 			$this->add_responsive_control(
 				'media_border_radius',
 				[
-					'label' 		=> __( 'Border Radius', 'elementor-extras' ),
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -1271,7 +1282,7 @@ class Switcher extends Extras_Widget {
 				[
 					'name' 		=> 'media',
 					'selector' 	=> '{{WRAPPER}} .ee-switcher__media',
-					'exclude'	=> [ 'box_shadow_position' ],
+					'exclude'	=> [ 'box_shadow_position' ], // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor control schema.
 					'separator'	=> '',
 				]
 			);
@@ -1279,7 +1290,7 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'media_overlay',
 				[
-					'label' => __( 'Overlay', 'elementor-extras' ),
+					'label' => __( 'Overlay', 'landtech-extras-for-elementor' ),
 					'type'	=> Controls_Manager::HEADING,
 					'condition'		=> [
 						'layout' => 'overlay',
@@ -1291,7 +1302,7 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'media_overlay_color',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'selectors' => [
 						'{{WRAPPER}} .ee-media__overlay' => 'background-color: {{VALUE}};',
@@ -1305,19 +1316,19 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'media_overlay_blend',
 				[
-					'label' 		=> __( 'Blend mode', 'elementor-extras' ),
+					'label' 		=> __( 'Blend mode', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SELECT,
 					'default' 		=> 'normal',
 					'options' => [
-						'normal'			=> __( 'Normal', 'elementor-extras' ),
-						'multiply'			=> __( 'Multiply', 'elementor-extras' ),
-						'screen'			=> __( 'Screen', 'elementor-extras' ),
-						'overlay'			=> __( 'Overlay', 'elementor-extras' ),
-						'darken'			=> __( 'Darken', 'elementor-extras' ),
-						'lighten'			=> __( 'Lighten', 'elementor-extras' ),
-						'color'				=> __( 'Color', 'elementor-extras' ),
-						'color-dodge'		=> __( 'Color Dodge', 'elementor-extras' ),
-						'hue'				=> __( 'Hue', 'elementor-extras' ),
+						'normal'			=> __( 'Normal', 'landtech-extras-for-elementor' ),
+						'multiply'			=> __( 'Multiply', 'landtech-extras-for-elementor' ),
+						'screen'			=> __( 'Screen', 'landtech-extras-for-elementor' ),
+						'overlay'			=> __( 'Overlay', 'landtech-extras-for-elementor' ),
+						'darken'			=> __( 'Darken', 'landtech-extras-for-elementor' ),
+						'lighten'			=> __( 'Lighten', 'landtech-extras-for-elementor' ),
+						'color'				=> __( 'Color', 'landtech-extras-for-elementor' ),
+						'color-dodge'		=> __( 'Color Dodge', 'landtech-extras-for-elementor' ),
+						'hue'				=> __( 'Hue', 'landtech-extras-for-elementor' ),
 					],
 					'selectors' 	=> [
 						'{{WRAPPER}} .ee-switcher__media__overlay' => 'mix-blend-mode: {{VALUE}};',
@@ -1332,7 +1343,12 @@ class Switcher extends Extras_Widget {
 				'media_overlay_blend_notice',
 				[
 					'type' 				=> Controls_Manager::RAW_HTML,
-					'raw' 				=> sprintf( __( 'Please check blend mode support for your browser %1$s here %2$s', 'elementor-extras' ), '<a href="https://caniuse.com/#search=mix-blend-mode" target="_blank">', '</a>' ),
+					'raw' 				=> sprintf(
+						/* translators: 1–2: link markup to caniuse.com mix-blend-mode. */
+						__( 'Please check blend mode support for your browser %1$s here %2$s', 'landtech-extras-for-elementor' ),
+						'<a href="https://caniuse.com/#search=mix-blend-mode" target="_blank">',
+						'</a>'
+					),
 					'content_classes' 	=> 'elementor-panel-alert elementor-panel-alert-warning',
 					'condition' 		=> [
 						'overlay_blend!' => 'normal',
@@ -1363,7 +1379,7 @@ class Switcher extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_title',
 			[
-				'label' => __( 'Title', 'elementor-extras' ),
+				'label' => __( 'Title', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -1371,7 +1387,7 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'title_color',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'selectors' => [
 						'{{WRAPPER}} .ee-switcher__title' => 'color: {{VALUE}};',
@@ -1382,20 +1398,20 @@ class Switcher extends Extras_Widget {
 			$this->add_responsive_control(
 				'title_align',
 				[
-					'label' 		=> __( 'Align', 'elementor-extras' ),
+					'label' 		=> __( 'Align', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'left'    		=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -1408,7 +1424,7 @@ class Switcher extends Extras_Widget {
 			$this->add_responsive_control(
 				'title_overlap',
 				[
-					'label' 		=> __( 'Overlap', 'elementor-extras' ),
+					'label' 		=> __( 'Overlap', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'vw' 		=> [
@@ -1434,7 +1450,7 @@ class Switcher extends Extras_Widget {
 			$this->add_responsive_control(
 				'title_distance',
 				[
-					'label' 		=> __( 'Distance', 'elementor-extras' ),
+					'label' 		=> __( 'Distance', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -1451,7 +1467,7 @@ class Switcher extends Extras_Widget {
 			$this->add_responsive_control(
 				'title_font_size',
 				[
-					'label' 		=> __( 'Font Size (vw)', 'elementor-extras' ),
+					'label' 		=> __( 'Font Size (vw)', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -1472,8 +1488,8 @@ class Switcher extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'title_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
-					'exclude'	=> [ 'font_size', 'font_style' ],
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
+					'exclude'	=> [ 'font_size', 'font_style' ], // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor control schema.
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
 					],
@@ -1496,7 +1512,7 @@ class Switcher extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_description',
 			[
-				'label' => __( 'Description', 'elementor-extras' ),
+				'label' => __( 'Description', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'description!' => '',
@@ -1507,7 +1523,7 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'description_color',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'selectors' => [
 						'{{WRAPPER}} .ee-switcher__descriptions__description' => 'color: {{VALUE}};',
@@ -1521,20 +1537,20 @@ class Switcher extends Extras_Widget {
 			$this->add_responsive_control(
 				'description_align',
 				[
-					'label' 		=> __( 'Align', 'elementor-extras' ),
+					'label' 		=> __( 'Align', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'left'    		=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -1550,7 +1566,7 @@ class Switcher extends Extras_Widget {
 			$this->add_responsive_control(
 				'description_overlap',
 				[
-					'label' 		=> __( 'Overlap', 'elementor-extras' ),
+					'label' 		=> __( 'Overlap', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'vw' 		=> [
@@ -1577,7 +1593,7 @@ class Switcher extends Extras_Widget {
 			$this->add_responsive_control(
 				'description_distance',
 				[
-					'label' 		=> __( 'Distance', 'elementor-extras' ),
+					'label' 		=> __( 'Distance', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -1598,7 +1614,7 @@ class Switcher extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'description_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_TEXT,
 					],
@@ -1624,7 +1640,7 @@ class Switcher extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_menu',
 			[
-				'label' => __( 'Menu', 'elementor-extras' ),
+				'label' => __( 'Menu', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -1632,7 +1648,7 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'menu_layout_heading',
 				[
-					'label' => __( 'Layout', 'elementor-extras' ),
+					'label' => __( 'Layout', 'landtech-extras-for-elementor' ),
 					'type'	=> Controls_Manager::HEADING,
 				]
 			);
@@ -1640,16 +1656,16 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'menu_direction',
 				[
-					'label' 		=> __( 'Direction', 'elementor-extras' ),
+					'label' 		=> __( 'Direction', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> 'row',
 					'options' 		=> [
 						'row'    	=> [
-							'title' 	=> __( 'Vertical', 'elementor-extras' ),
+							'title' 	=> __( 'Vertical', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'nicon nicon-block',
 						],
 						'column' 		=> [
-							'title' 	=> __( 'Horizontal', 'elementor-extras' ),
+							'title' 	=> __( 'Horizontal', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'nicon nicon-inline',
 						],
 					],
@@ -1660,24 +1676,24 @@ class Switcher extends Extras_Widget {
 			$this->add_responsive_control(
 				'menu_align',
 				[
-					'label' 		=> __( 'Align', 'elementor-extras' ),
+					'label' 		=> __( 'Align', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> 'justify',
 					'options' 		=> [
 						'left' 			=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-center',
 						],
 						'right' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-right',
 						],
 						'justify' 		=> [
-							'title' 	=> __( 'Stretch', 'elementor-extras' ),
+							'title' 	=> __( 'Stretch', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-stretch',
 						],
 					],
@@ -1689,20 +1705,20 @@ class Switcher extends Extras_Widget {
 			$this->add_responsive_control(
 				'menu_text_align',
 				[
-					'label' 		=> __( 'Text Align', 'elementor-extras' ),
+					'label' 		=> __( 'Text Align', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::CHOOSE,
 					'default' 		=> '',
 					'options' 		=> [
 						'flex-start'	=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-center',
 						],
 						'flex-end' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'fa fa-align-right',
 						],
 					],
@@ -1719,7 +1735,7 @@ class Switcher extends Extras_Widget {
 			$this->add_responsive_control(
 				'menu_distance',
 				[
-					'label' 		=> __( 'Distance', 'elementor-extras' ),
+					'label' 		=> __( 'Distance', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -1736,7 +1752,7 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'menu_items_heading',
 				[
-					'label' => __( 'Items', 'elementor-extras' ),
+					'label' => __( 'Items', 'landtech-extras-for-elementor' ),
 					'type'	=> Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -1745,7 +1761,7 @@ class Switcher extends Extras_Widget {
 			$this->add_responsive_control(
 				'menu_items_spacing',
 				[
-					'label' 		=> __( 'Spacing', 'elementor-extras' ),
+					'label' 		=> __( 'Spacing', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -1764,7 +1780,7 @@ class Switcher extends Extras_Widget {
 			$this->add_responsive_control(
 				'menu_items_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::DIMENSIONS,
 					'size_units' 	=> [ 'px', 'em', '%' ],
 					'selectors' 	=> [
@@ -1777,7 +1793,7 @@ class Switcher extends Extras_Widget {
 				Group_Control_Typography::get_type(),
 				[
 					'name' 		=> 'menu_typography',
-					'label' 	=> __( 'Typography', 'elementor-extras' ),
+					'label' 	=> __( 'Typography', 'landtech-extras-for-elementor' ),
 					'global' => [
 						'default' => Global_Typography::TYPOGRAPHY_ACCENT,
 					],
@@ -1799,12 +1815,12 @@ class Switcher extends Extras_Widget {
 
 			$this->start_controls_tabs( 'menu_items_tabs' );
 
-			$this->start_controls_tab( 'menu_items_tab_default', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'menu_items_tab_default', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'menu_items_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-switcher__nav__item' => 'color: {{VALUE}};',
@@ -1815,7 +1831,7 @@ class Switcher extends Extras_Widget {
 				$this->add_control(
 					'menu_items_background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-switcher__nav__item' => 'background-color: {{VALUE}};',
@@ -1825,12 +1841,12 @@ class Switcher extends Extras_Widget {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'menu_items_tab_hover', [ 'label' => __( 'Hover', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'menu_items_tab_hover', [ 'label' => __( 'Hover', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'menu_items_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-switcher__nav__item:hover' => 'color: {{VALUE}};',
@@ -1841,7 +1857,7 @@ class Switcher extends Extras_Widget {
 				$this->add_control(
 					'menu_items_background_color_hover',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-switcher__nav__item:hover' => 'background-color: {{VALUE}};',
@@ -1851,12 +1867,12 @@ class Switcher extends Extras_Widget {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'menu_items_tab_active', [ 'label' => __( 'Active', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'menu_items_tab_active', [ 'label' => __( 'Active', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'menu_items_color_active',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-switcher__nav__item.is--active' => 'color: {{VALUE}};',
@@ -1867,7 +1883,7 @@ class Switcher extends Extras_Widget {
 				$this->add_control(
 					'menu_items_background_color_active',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-switcher__nav__item.is--active' => 'background-color: {{VALUE}};',
@@ -1882,7 +1898,7 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'menu_style_loader',
 				[
-					'label' => __( 'Separator', 'elementor-extras' ),
+					'label' => __( 'Separator', 'landtech-extras-for-elementor' ),
 					'type'	=> Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -1891,7 +1907,7 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'menu_separator_color',
 				[
-					'label' 	=> __( 'Color', 'elementor-extras' ),
+					'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'selectors' => [
 						'{{WRAPPER}} .ee-loader' => 'background-color: {{VALUE}};',
@@ -1902,7 +1918,7 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'menu_loader_color',
 				[
-					'label' 	=> __( 'Loader Color', 'elementor-extras' ),
+					'label' 	=> __( 'Loader Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'global' => [
 						'default' => Global_Colors::COLOR_PRIMARY,
@@ -1916,7 +1932,7 @@ class Switcher extends Extras_Widget {
 			$this->add_responsive_control(
 				'menu_separator_thickness',
 				[
-					'label' 		=> __( 'Thickness', 'elementor-extras' ),
+					'label' 		=> __( 'Thickness', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -1948,7 +1964,7 @@ class Switcher extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_arrows',
 			[
-				'label' => __( 'Arrows', 'elementor-extras' ),
+				'label' => __( 'Arrows', 'landtech-extras-for-elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -1956,7 +1972,7 @@ class Switcher extends Extras_Widget {
 			$this->add_responsive_control(
 				'arrows_distance',
 				[
-					'label' 		=> __( 'Distance', 'elementor-extras' ),
+					'label' 		=> __( 'Distance', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -1973,24 +1989,24 @@ class Switcher extends Extras_Widget {
 			$this->add_responsive_control(
 				'arrows_align',
 				[
-					'label' 			=> __( 'Align', 'elementor-extras' ),
+					'label' 			=> __( 'Align', 'landtech-extras-for-elementor' ),
 					'type' 				=> Controls_Manager::CHOOSE,
 					'mobile_default' 	=> 'center',
 					'options' 			=> [
 						'flex-start' 	=> [
-							'title' 	=> __( 'Left', 'elementor-extras' ),
+							'title' 	=> __( 'Left', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-left',
 						],
 						'center' 		=> [
-							'title' 	=> __( 'Center', 'elementor-extras' ),
+							'title' 	=> __( 'Center', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-center',
 						],
 						'flex-end' 		=> [
-							'title' 	=> __( 'Right', 'elementor-extras' ),
+							'title' 	=> __( 'Right', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-right',
 						],
 						'space-between' => [
-							'title' 	=> __( 'Stretch', 'elementor-extras' ),
+							'title' 	=> __( 'Stretch', 'landtech-extras-for-elementor' ),
 							'icon' 		=> 'eicon-h-align-stretch',
 						],
 					],
@@ -2004,7 +2020,7 @@ class Switcher extends Extras_Widget {
 			$this->add_responsive_control(
 				'arrows_spacing',
 				[
-					'label' 		=> __( 'Spacing', 'elementor-extras' ),
+					'label' 		=> __( 'Spacing', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -2024,7 +2040,7 @@ class Switcher extends Extras_Widget {
 			$this->add_responsive_control(
 				'arrows_padding',
 				[
-					'label' 		=> __( 'Padding', 'elementor-extras' ),
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -2045,7 +2061,7 @@ class Switcher extends Extras_Widget {
 			$this->add_responsive_control(
 				'arrows_size',
 				[
-					'label' 		=> __( 'Size', 'elementor-extras' ),
+					'label' 		=> __( 'Size', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -2076,12 +2092,12 @@ class Switcher extends Extras_Widget {
 
 			$this->start_controls_tabs( 'arrows_tabs' );
 
-			$this->start_controls_tab( 'arrows_tab_default', [ 'label' => __( 'Default', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'arrows_tab_default', [ 'label' => __( 'Default', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'arrows_color',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-arrow' => 'color: {{VALUE}};',
@@ -2092,7 +2108,7 @@ class Switcher extends Extras_Widget {
 				$this->add_control(
 					'arrows_background_color',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-arrow' => 'background-color: {{VALUE}};',
@@ -2103,7 +2119,7 @@ class Switcher extends Extras_Widget {
 				$this->add_responsive_control(
 					'arrows_opacity',
 					[
-						'label' 		=> __( 'Opacity', 'elementor-extras' ),
+						'label' 		=> __( 'Opacity', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SLIDER,
 						'range' 		=> [
 							'px' 		=> [
@@ -2120,12 +2136,12 @@ class Switcher extends Extras_Widget {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'arrows_tab_hover', [ 'label' => __( 'Hover', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'arrows_tab_hover', [ 'label' => __( 'Hover', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'arrows_color_hover',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-arrow:hover' => 'color: {{VALUE}};',
@@ -2136,7 +2152,7 @@ class Switcher extends Extras_Widget {
 				$this->add_control(
 					'arrows_background_color_hover',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-arrow:hover' => 'background-color: {{VALUE}};',
@@ -2147,7 +2163,7 @@ class Switcher extends Extras_Widget {
 				$this->add_responsive_control(
 					'arrows_opacity_hover',
 					[
-						'label' 		=> __( 'Opacity', 'elementor-extras' ),
+						'label' 		=> __( 'Opacity', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SLIDER,
 						'range' 		=> [
 							'px' 		=> [
@@ -2164,12 +2180,12 @@ class Switcher extends Extras_Widget {
 
 			$this->end_controls_tab();
 
-			$this->start_controls_tab( 'arrows_tab_disabled', [ 'label' => __( 'Disabled', 'elementor-extras' ) ] );
+			$this->start_controls_tab( 'arrows_tab_disabled', [ 'label' => __( 'Disabled', 'landtech-extras-for-elementor' ) ] );
 
 				$this->add_control(
 					'arrows_color_disabled',
 					[
-						'label' 	=> __( 'Color', 'elementor-extras' ),
+						'label' 	=> __( 'Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-arrow.ee-arrow--disabled' => 'color: {{VALUE}};',
@@ -2180,7 +2196,7 @@ class Switcher extends Extras_Widget {
 				$this->add_control(
 					'arrows_background_color_disabled',
 					[
-						'label' 	=> __( 'Background Color', 'elementor-extras' ),
+						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
 						'selectors' => [
 							'{{WRAPPER}} .ee-arrow.ee-arrow--disabled' => 'background-color: {{VALUE}};',
@@ -2191,7 +2207,7 @@ class Switcher extends Extras_Widget {
 				$this->add_responsive_control(
 					'arrows_opacity_disabled',
 					[
-						'label' 		=> __( 'Opacity', 'elementor-extras' ),
+						'label' 		=> __( 'Opacity', 'landtech-extras-for-elementor' ),
 						'type' 			=> Controls_Manager::SLIDER,
 						'range' 		=> [
 							'px' 		=> [
@@ -2213,7 +2229,7 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'arrows_style_loader',
 				[
-					'label' => __( 'Loader', 'elementor-extras' ),
+					'label' => __( 'Loader', 'landtech-extras-for-elementor' ),
 					'type'	=> Controls_Manager::HEADING,
 					'separator' => 'before',
 				]
@@ -2222,7 +2238,7 @@ class Switcher extends Extras_Widget {
 			$this->add_control(
 				'arrows_loader_color',
 				[
-					'label' 	=> __( 'Loader Color', 'elementor-extras' ),
+					'label' 	=> __( 'Loader Color', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::COLOR,
 					'global' => [
 						'default' => Global_Colors::COLOR_PRIMARY,
@@ -2236,7 +2252,7 @@ class Switcher extends Extras_Widget {
 			$this->add_responsive_control(
 				'arrows_loader_thickness',
 				[
-					'label' 		=> __( 'Thickness', 'elementor-extras' ),
+					'label' 		=> __( 'Thickness', 'landtech-extras-for-elementor' ),
 					'type' 			=> Controls_Manager::SLIDER,
 					'range' 		=> [
 						'px' 		=> [
@@ -2293,15 +2309,15 @@ class Switcher extends Extras_Widget {
 
 		?>
 
-		<div <?php echo $this->get_render_attribute_string( 'switcher' ); ?>>
-			<div <?php echo $this->get_render_attribute_string( 'switcher-wrapper' ); ?>>
+		<div <?php $this->print_render_attribute_string( 'switcher' ); ?>>
+			<div <?php $this->print_render_attribute_string( 'switcher-wrapper' ); ?>>
 	
-				<div <?php echo $this->get_render_attribute_string( 'switcher-media-wrapper' ); ?>>
+				<div <?php $this->print_render_attribute_string( 'switcher-media-wrapper' ); ?>>
 					<?php $this->render_media_loop(); ?>
 				</div>
 
-				<div <?php echo $this->get_render_attribute_string( 'switcher-content-wrapper' ); ?>>
-					<div <?php echo $this->get_render_attribute_string( 'switcher-content' ); ?>>
+				<div <?php $this->print_render_attribute_string( 'switcher-content-wrapper' ); ?>>
+					<div <?php $this->print_render_attribute_string( 'switcher-content' ); ?>>
 						<?php
 						$this->render_titles_loop();
 						$this->render_descriptions_loop();
@@ -2329,11 +2345,11 @@ class Switcher extends Extras_Widget {
 
 		$this->add_render_attribute( 'items', 'class', 'ee-switcher__titles' );
 
-		?><div <?php echo $this->get_render_attribute_string( 'items' ); ?>>
+		?><div <?php $this->print_render_attribute_string( 'items' ); ?>>
 			<?php foreach ( $settings['items'] as $index => $item ) {
 
-				$title_tag 		= 'div';
-				$heading_tag 	= $settings['title_heading_tag'];
+				$title_tag     = 'div';
+				$heading_tag   = $this->ltxe_sanitize_heading_tag( $settings['title_heading_tag'] );
 				$item_key 		= $this->get_repeater_setting_key( 'item', 'items', $index );
 				$item_title_key = $this->get_repeater_setting_key( 'item-title', 'items', $index );
 
@@ -2352,9 +2368,9 @@ class Switcher extends Extras_Widget {
 				}
 			?>
 
-			<<?php echo $title_tag; ?> <?php echo $this->get_render_attribute_string( $item_key ); ?>>
-				<<?php echo $heading_tag; ?> <?php echo $this->get_render_attribute_string( $item_title_key ); ?>><?php echo $item['title']; ?></<?php echo $heading_tag; ?>>
-			</<?php echo $title_tag; ?>>
+			<<?php echo esc_html( $title_tag ); ?> <?php $this->print_render_attribute_string( $item_key ); ?>>
+				<<?php echo esc_html( $heading_tag ); ?> <?php $this->print_render_attribute_string( $item_title_key ); ?>><?php echo esc_html( $item['title'] ); ?></<?php echo esc_html( $heading_tag ); ?>>
+			</<?php echo esc_html( $title_tag ); ?>>
 
 			<?php } ?>
 		</div>
@@ -2379,7 +2395,7 @@ class Switcher extends Extras_Widget {
 
 		?>
 
-		<div <?php echo $this->get_render_attribute_string( 'descriptions' ); ?>>
+		<div <?php $this->print_render_attribute_string( 'descriptions' ); ?>>
 			<?php foreach ( $settings['items'] as $index => $item ) {
 
 				$description_tag = 'div';
@@ -2393,9 +2409,9 @@ class Switcher extends Extras_Widget {
 				}
 			?>
 
-			<<?php echo $description_tag; ?> <?php echo $this->get_render_attribute_string( $description_key ); ?>>
-				<?php echo $item['description']; ?>
-			</<?php echo $description_tag; ?>>
+			<<?php echo esc_html( $description_tag ); ?> <?php $this->print_render_attribute_string( $description_key ); ?>>
+				<?php echo wp_kses_post( $item['description'] ); ?>
+			</<?php echo esc_html( $description_tag ); ?>>
 
 			<?php } ?>
 		</div>
@@ -2437,8 +2453,8 @@ class Switcher extends Extras_Widget {
 
 		?>
 
-		<div <?php echo $this->get_render_attribute_string( 'media' ); ?>>
-			<div <?php echo $this->get_render_attribute_string( 'media-items' ); ?>>
+		<div <?php $this->print_render_attribute_string( 'media' ); ?>>
+			<div <?php $this->print_render_attribute_string( 'media-items' ); ?>>
 				<?php foreach ( $settings['items'] as $index => $item ) {
 
 					$media_tag			= 'div';
@@ -2456,19 +2472,19 @@ class Switcher extends Extras_Widget {
 					}
 				?>
 
-				<<?php echo $media_tag; ?> <?php echo $this->get_render_attribute_string( $media_item_key ); ?>><?php
+				<<?php echo esc_html( $media_tag ); ?> <?php $this->print_render_attribute_string( $media_item_key ); ?>><?php
 					$this->add_render_attribute( $image_key, [
 						'src' 	=> $this->get_item_image_url( $item ),
 						'alt' 	=> Control_Media::get_image_alt( $item['image'] ),
 						'title' => Control_Media::get_image_title( $item['image'] )
 					] );
 
-					?><img <?php echo $this->get_render_attribute_string( $image_key ) ?>/>
-				</<?php echo $media_tag; ?>>
+					?><img <?php $this->print_render_attribute_string( $image_key ) ?>/>
+				</<?php echo esc_html( $media_tag ); ?>>
 
 				<?php } ?>
 			</div>
-			<div <?php echo $this->get_render_attribute_string( 'media-overlay' ); ?>></div>
+			<div <?php $this->print_render_attribute_string( 'media-overlay' ); ?>></div>
 		</div>
 
 		<?php
@@ -2505,7 +2521,7 @@ class Switcher extends Extras_Widget {
 			$this->add_render_attribute( 'nav', 'class', 'ee-nav--inline' );
 		} ?>
 
-		<ul  <?php echo $this->get_render_attribute_string( 'nav' ); ?>>
+		<ul  <?php $this->print_render_attribute_string( 'nav' ); ?>>
 			<?php foreach ( $settings['items'] as $index => $item ) {
 
 				$has_icon 				= false;
@@ -2554,24 +2570,24 @@ class Switcher extends Extras_Widget {
 				]);
 			?>
 
-			<li <?php echo $this->get_render_attribute_string( $nav_item_key ); ?>><?php
+			<li <?php $this->print_render_attribute_string( $nav_item_key ); ?>><?php
 				if ( $has_icon ) {
-					?><span <?php echo $this->get_render_attribute_string( $nav_icon_wrapper_key ); ?>><?php
+					?><span <?php $this->print_render_attribute_string( $nav_icon_wrapper_key ); ?>><?php
 					if ( $is_new || $migrated ) {
 						Icons_Manager::render_icon( $item['selected_icon'], [ 'aria-hidden' => 'true' ], 'i' );
 					} else {
-						?><span <?php echo $this->get_render_attribute_string( $nav_item_icon_key ); ?>></span><?php
+						?><span <?php $this->print_render_attribute_string( $nav_item_icon_key ); ?>></span><?php
 					}
 					?></span><?php
 				}
 
 				if ( '' !== $item['label'] ) {
-					?><span <?php echo $this->get_render_attribute_string( $nav_item_label_key ); ?>><?php
-						echo $item['label'];
+					?><span <?php $this->print_render_attribute_string( $nav_item_label_key ); ?>><?php
+						echo esc_html( $item['label'] );
 					?></span><?php 
 				}
-				?><span <?php echo $this->get_render_attribute_string( 'loader' ); ?>>
-					<span <?php echo $this->get_render_attribute_string( 'loader-progress' ); ?>></span>
+				?><span <?php $this->print_render_attribute_string( 'loader' ); ?>>
+					<span <?php $this->print_render_attribute_string( 'loader-progress' ); ?>></span>
 				</span>
 			</li>
 
@@ -2613,21 +2629,21 @@ class Switcher extends Extras_Widget {
 			],
 		] );
 
+		$switcher_clip_id = 'clipLoader' . $this->get_id();
 		?>
-
-		<ul <?php echo $this->get_render_attribute_string( 'arrows' ); ?>>
-			<li <?php echo $this->get_render_attribute_string( 'arrow-prev' ); ?>>
-				<i <?php echo $this->get_render_attribute_string( 'arrow-prev-icon' ); ?>></i>
+		<ul <?php $this->print_render_attribute_string( 'arrows' ); ?>>
+			<li <?php $this->print_render_attribute_string( 'arrow-prev' ); ?>>
+				<i <?php $this->print_render_attribute_string( 'arrow-prev-icon' ); ?>></i>
 			</li>
-			<li <?php echo $this->get_render_attribute_string( 'arrow-next' ); ?>>
-				<i <?php echo $this->get_render_attribute_string( 'arrow-next-icon' ); ?>></i>
+			<li <?php $this->print_render_attribute_string( 'arrow-next' ); ?>>
+				<i <?php $this->print_render_attribute_string( 'arrow-next-icon' ); ?>></i>
 				<svg x="0px" y="0px" viewBox="0 0 80 80" xml:space="preserve" class="ee-arrow__svg">
 					<defs>
-						<clipPath id="clipLoader<?php echo $this->get_id(); ?>">
+						<clipPath id="<?php echo esc_attr( $switcher_clip_id ); ?>">
 							<circle cx="40" cy="40" r="40"/>
 						</clipPath>
 					</defs>
-					<circle transform="rotate(-90 40 40)" class="ee-arrow__circle--loader" stroke-dasharray="227" stroke-dashoffset="227" cx="40" cy="40" r="40" fill="transparent" stroke="transparent" stroke-width="4" vector-effect="non-scaling-stroke" clip-path="url(#clipLoader<?php echo $this->get_id(); ?>)" />
+					<circle transform="rotate(-90 40 40)" class="ee-arrow__circle--loader" stroke-dasharray="227" stroke-dashoffset="227" cx="40" cy="40" r="40" fill="transparent" stroke="transparent" stroke-width="4" vector-effect="non-scaling-stroke" clip-path="url(#<?php echo esc_attr( $switcher_clip_id ); ?>)" />
 				</svg>
 			</li>
 		</ul><?php
@@ -2652,8 +2668,8 @@ class Switcher extends Extras_Widget {
 			],
 		] );
 
-		?><div <?php echo $this->get_render_attribute_string( 'loader' ); ?>>
-			<span <?php echo $this->get_render_attribute_string( 'loader-inner' ); ?>></span>
+		?><div <?php $this->print_render_attribute_string( 'loader' ); ?>>
+			<span <?php $this->print_render_attribute_string( 'loader-inner' ); ?>></span>
 		</div><?php
 	}
 

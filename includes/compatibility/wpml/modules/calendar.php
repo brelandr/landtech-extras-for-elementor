@@ -1,5 +1,6 @@
 <?php
-namespace ElementorExtras\Compatibility\WPML;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Compatibility\WPML;
 
 use WPML_Elementor_Module_With_Items;
 
@@ -46,11 +47,11 @@ class Calendar extends WPML_Elementor_Module_With_Items {
 	 */
 	protected function get_title( $field ) {
 		if ( 'title' === $field ) {
-			return esc_html__( 'Calendar: Event Title', 'elementor-extras' );
+			return esc_html__( 'Calendar: Event Title', 'landtech-extras-for-elementor' );
 		}
 
 		if ( 'url' === $field ) {
-			return esc_html__( 'Calendar: Event Link', 'elementor-extras' );
+			return esc_html__( 'Calendar: Event Link', 'landtech-extras-for-elementor' );
 		}
 
 		return '';

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<ruleset name="landtech-extras-for-elementor-security">
+	<description>Optional full WordPress.Security pass (often noisy on legacy Widget templates).</description>
+
+	<arg name="extensions" value="php"/>
+	<arg name="colors"/>
+
+	<file>.</file>
+
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern>*/node_modules/*</exclude-pattern>
+	<exclude-pattern>*/assets/lib/*</exclude-pattern>
+	<exclude-pattern>*/scripts/*</exclude-pattern>
+
+	<rule ref="WordPress.Security"/>
+</ruleset>

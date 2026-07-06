@@ -1,8 +1,9 @@
 <?php
-namespace ElementorExtras\Modules\DisplayConditions\Conditions;
+// Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
+namespace LandTechExtras\Modules\DisplayConditions\Conditions;
 
-// Extras for Elementor Classes
-use ElementorExtras\Base\Condition;
+// LandTech Extras for Elementor Classes
+use LandTechExtras\Base\Condition;
 
 // Elementor Classes
 use Elementor\Controls_Manager;
@@ -49,7 +50,7 @@ class Browser extends Condition {
 	 * @return string
 	 */
 	public function get_title() {
-		return __( 'Browser', 'elementor-extras' );
+		return __( 'Browser', 'landtech-extras-for-elementor' );
 	}
 
 	/**
@@ -66,12 +67,12 @@ class Browser extends Condition {
 			'default' 		=> 'ie',
 			'label_block' 	=> true,
 			'options' 		=> [
-				'ie'			=> 'Internet Explorer',
-				'firefox'		=> 'Mozilla Firefox',
-				'chrome'		=> 'Google Chrome',
-				'opera_mini'	=> 'Opera Mini',
-				'opera'			=> 'Opera',
-				'safari'		=> 'Safari',
+				'ie'         => __( 'Internet Explorer', 'landtech-extras-for-elementor' ),
+				'firefox'    => __( 'Mozilla Firefox', 'landtech-extras-for-elementor' ),
+				'chrome'     => __( 'Google Chrome', 'landtech-extras-for-elementor' ),
+				'opera_mini' => __( 'Opera Mini', 'landtech-extras-for-elementor' ),
+				'opera'      => __( 'Opera', 'landtech-extras-for-elementor' ),
+				'safari'     => __( 'Safari', 'landtech-extras-for-elementor' ),
 			],
 		];
 	}
@@ -99,26 +100,26 @@ class Browser extends Condition {
 			'opera'			=> 'Opera',
 			'safari'		=> 'Safari',
 		];
+		$user_agent = isset( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) : '';
 
 		$show = false;
 
 		if ( 'ie' === $value ) {
-			if ( false !== strpos( $_SERVER['HTTP_USER_AGENT'], $browsers[ $value ][0] ) || false !== strpos( $_SERVER['HTTP_USER_AGENT'], $browsers[ $value ][1] ) ) {
+			if ( '' !== $user_agent && ( false !== strpos( $user_agent, $browsers[ $value ][0] ) || false !== strpos( $user_agent, $browsers[ $value ][1] ) ) ) {
 				$show = true;
 			}
 		} else {
-			if ( false !== strpos( $_SERVER['HTTP_USER_AGENT'], $browsers[ $value ] ) ) {
+			if ( '' !== $user_agent && isset( $browsers[ $value ] ) && false !== strpos( $user_agent, $browsers[ $value ] ) ) {
 				$show = true;
 
 				// Additional check for Chrome that returns Safari
 				if ( 'safari' === $value || 'firefox' === $value ) {
-					if ( false !== strpos( $_SERVER['HTTP_USER_AGENT'], 'Chrome' ) ) {
+					if ( false !== strpos( $user_agent, 'Chrome' ) ) {
 						$show = false;
 					}
 				}
 			}
 		}
-		
 
 		return $this->compare( $show, true, $operator );
 	}
