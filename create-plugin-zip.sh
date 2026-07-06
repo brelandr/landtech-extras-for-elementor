@@ -57,6 +57,7 @@ verify_pack_artifacts() {
 	local 	req=(
 		"landtech-extras.php"
 		"includes/landtech-extras-bootstrap-guard.php"
+		"includes/playground-demo-seeder.php"
 		"readme.txt"
 		"assets/blueprints/blueprint.json"
 		"modules/posts/widgets/posts.php"
