@@ -4,12 +4,12 @@ Contributors: brelandr
 Tags: elementor, page-builder, widgets, addons, extensions
 Requires at least: 6.2
 Tested up to: 7.0
-Stable tag: 2.2.98
+Stable tag: 2.2.99
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Elementor widgets and extensions — GPL-maintained fork of Elementor Extras (Extras for Elementor). Calendar, gallery, maps, navigation, posts layouts, and editor extensions.
+Elementor widgets and extensions — GPL fork of Elementor Extras. Gallery, calendar, maps, posts, navigation, and editor tools.
 
 == Description ==
 
@@ -169,6 +169,10 @@ From the plugin root, after **`npm install`**, run **`npm run build:assets`** to
 Before publishing a public GitHub mirror, verify any **Repository** or **Source** URL in this readme returns HTTP 200 (WordPress.org reviewers check linked URLs).
 
 == Changelog ==
+
+= 2.2.99 =
+
+* Fix: Shorten readme short description to meet WordPress.org 150-character limit.
 
 = 2.2.98 =
 
