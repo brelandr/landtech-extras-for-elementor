@@ -27,6 +27,8 @@
 				$target			= $(element),
 
 				$sections		= null,
+				$elements		= null,
+				$sectionLinks	= null,
 				$links			= null,
 
 				scrollTop 		= null,
@@ -58,6 +60,34 @@
 				plugin._construct();
 			};
 
+			plugin.readDataAttr = function( $element, name ) {
+				var camelKey = name.replace( /-([a-z])/g, function( match, letter ) {
+					return letter.toUpperCase();
+				} );
+
+				if ( typeof $element.data( camelKey ) !== 'undefined' ) {
+					return $element.data( camelKey );
+				}
+
+				return $element.attr( 'data-' + name );
+			};
+
+			plugin.readDataOffset = function( $element, name ) {
+				var value = plugin.readDataAttr( $element, name );
+
+				if ( typeof value === 'object' && null !== value && 'size' in value ) {
+					value = value.size;
+				}
+
+				value = parseFloat( value );
+
+				return isNaN( value ) ? 0 : value;
+			};
+
+			plugin.getScrollTop = function() {
+				return $window.scrollTop() || window.pageYOffset || document.documentElement.scrollTop || 0;
+			};
+
 			plugin._construct = function() {
 
 				plugin.setup();
@@ -73,9 +103,10 @@
 			plugin.setup = function() {
 				
 				$window				= plugin.opts.scope;
+				$document			= $( document );
 				$body 				= $('body');
 				$sections 			= $('');
-				$sectionLinks 		=  $target.find( '.ee-scroll-indicator__element__link' )
+				$sectionLinks 		= $target.find( '.ee-scroll-indicator__element__link' );
 				$elements 			= $target.find('.ee-scroll-indicator__element');
 				circleLength 		= parseInt(Math.PI*($elements.eq(0).find('circle').attr('r')*2));
 				windowHeight 		= $window.height();
@@ -84,8 +115,8 @@
 				$target.addClass( 'is--active' );
 
 				$elements.each( function() {
-					var sectionId = $(this).data('selector'),
-						$_section = $( "#" + sectionId );
+					var sectionId = plugin.readDataAttr( $( this ), 'selector' ),
+						$_section = sectionId ? $( "#" + sectionId ) : $();
 					
 					if ( $_section.length )
 						$sections = $sections.add( $_section );
@@ -97,6 +128,7 @@
 
 			plugin.events = function() {
 				$window.on('scroll', plugin.checkRead );
+				$document.on('scroll', plugin.checkRead );
 				$window.on('resize', plugin.resetScroll);
 
 				if ( plugin.opts.click ) {
@@ -140,7 +172,7 @@
 					$element = plugin.getDefaultSectionLink();
 
 				if ( _id ) {
-					$_element = plugin.getChapters().filter( '[data-selector=' + _id + ']' ).children( '.ee-scroll-indicator__element__link' );
+					var $_element = plugin.getChapters().filter( '[data-selector="' + _id + '"]' ).children( '.ee-scroll-indicator__element__link' );
 					
 					if ( $_element.length )
 						$element = $_element;
@@ -171,7 +203,7 @@
 			};
 
 			plugin.update = function() {
-				scrollTop = $window.scrollTop();
+				scrollTop = plugin.getScrollTop();
 
 				$sections.each( function( index, value ) {
 					var $section = $(this),
@@ -259,14 +291,17 @@
 
 			plugin.updateSectionVars = function( index, $section ) {
 
-				var start 		= plugin.getSectionLink( $section ).parent().data('start'),
-					startOffset = plugin.getSectionLink( $section ).parent().data('start-offset'),
-					end 		= plugin.getSectionLink( $section ).parent().data('end'),
-					endOffset 	= plugin.getSectionLink( $section ).parent().data('end-offset');
+				var $indicatorElement = plugin.getSectionLink( $section ).parent(),
+					start 		= plugin.readDataAttr( $indicatorElement, 'start' ),
+					startOffset = plugin.readDataOffset( $indicatorElement, 'start-offset' ),
+					end 		= plugin.readDataAttr( $indicatorElement, 'end' ),
+					endOffset 	= plugin.readDataOffset( $indicatorElement, 'end-offset' ),
+					sectionTop 	= $section.is( 'body' ) ? 0 : $section.offset().top,
+					sectionHeight = $section.is( 'body' ) ? docHeight : $section.outerHeight();
 
-				scrollTop 				= $window.scrollTop();
-				currentSectionTop 		= $section.offset().top + startOffset;
-				currentSectionHeight 	= $section.outerHeight() - startOffset - endOffset;
+				scrollTop 				= plugin.getScrollTop();
+				currentSectionTop 		= sectionTop + startOffset;
+				currentSectionHeight 	= sectionHeight - startOffset - endOffset;
 				currentSectionLink 		= plugin.getSectionLink( $section );
 
 				startTopToTop 			= scrollTop >= currentSectionTop;
@@ -330,6 +365,7 @@
 
 			plugin.destroy = function() {
 				$window.off('scroll', plugin.checkRead );
+				$document.off('scroll', plugin.checkRead );
 				$window.off('resize', plugin.resetScroll);
 				$target.off('click', 'a', plugin.onClick );
 

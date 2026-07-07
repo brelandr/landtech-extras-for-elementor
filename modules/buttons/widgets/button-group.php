@@ -1409,6 +1409,9 @@ class Button_Group extends Extras_Widget {
 					if ( ! empty( $item['link']['nofollow'] ) ) {
 						$this->add_render_attribute( $wrapper_key, 'rel', 'nofollow' );
 					}
+				} else {
+					$this->add_render_attribute( $wrapper_key, 'href', '#' );
+					$this->add_render_attribute( $wrapper_key, 'class', 'ee-button-wrapper--no-link' );
 				}
 
 				if ( ! empty( $item['size'] ) ) {
@@ -1427,23 +1430,31 @@ class Button_Group extends Extras_Widget {
 					$this->add_render_attribute( $wrapper_key, 'id', $item['_element_id'] );
 				}
 
-				if ( 'yes' === $item['button_custom_style'] ) {
+				if ( 'yes' === $item['button_custom_style'] && ! empty( $item['button_effect_type'] ) ) {
+
+					$effect_direction   = isset( $item['button_effect_direction'] ) ? $item['button_effect_direction'] : '';
+					$effect_entrance    = ! empty( $item['button_effect_entrance'] ) ? $item['button_effect_entrance'] : 'cover';
+					$effect_orientation = ! empty( $item['button_effect_orientation'] ) ? $item['button_effect_orientation'] : 'horizontal';
 
 					$this->add_render_attribute( $wrapper_key, 'class', [
 						'ee-effect',
-						'ee-effect-type--' . $item['button_effect_type']
+						'ee-effect-type--' . $item['button_effect_type'],
 					] );
 
-					if ( in_array( $item['button_effect_type'], array( 'clone', 'back', '3d', 'flip', 'cube' )) && '' !== $item['button_effect_direction'] ) {
-						$this->add_render_attribute( $wrapper_key, 'class', [
-							'ee-effect-direction--' . $item['button_effect_direction']
-						] );
-					}
-
-					if ( in_array( $item['button_effect_type'], array( 'back' )) && '' !== $item['button_effect_orientation'] && '' === $item['button_effect_direction'] ) {
-						$this->add_render_attribute( $wrapper_key, 'class', [
-							'ee-effect-orientation--' . $item['button_effect_orientation']
-						] );
+					if ( in_array( $item['button_effect_type'], array( 'clone', 'back', '3d', 'flip', 'cube' ), true ) ) {
+						if ( '' !== $effect_direction ) {
+							$this->add_render_attribute( $wrapper_key, 'class', [
+								'ee-effect-direction--' . $effect_direction,
+							] );
+						} elseif ( 'back' === $item['button_effect_type'] ) {
+							$this->add_render_attribute( $wrapper_key, 'class', [
+								'ee-effect-orientation--' . $effect_orientation,
+							] );
+						} else {
+							$this->add_render_attribute( $wrapper_key, 'class', [
+								'ee-effect-direction--down',
+							] );
+						}
 					}
 
 					if ( in_array( $item['button_effect_type'], array( 'flip' )) ) {
@@ -1476,19 +1487,19 @@ class Button_Group extends Extras_Widget {
 						] );
 					}
 
-					if ( in_array( $item['button_effect_type'], array( 'clone' )) ) {
+					if ( in_array( $item['button_effect_type'], array( 'clone' ), true ) ) {
 						$this->add_render_attribute( $wrapper_key, 'class', [
-							'ee-effect-entrance--' . $item['button_effect_entrance']
+							'ee-effect-entrance--' . $effect_entrance,
 						] );
 					}
 
-					if ( in_array( $item['button_effect_type'], array( 'clone', '3d', 'flip', 'cube' )) ) {
+					if ( in_array( $item['button_effect_type'], array( 'clone', '3d', 'flip', 'cube' ), true ) && ! empty( $item['button_effect_zoom'] ) ) {
 						$this->add_render_attribute( $wrapper_key, 'class', [
 							'ee-effect-zoom--' . $item['button_effect_zoom']
 						] );
 					}
 
-					if ( in_array( $item['button_effect_type'], array( 'clone', 'back' )) ) {
+					if ( in_array( $item['button_effect_type'], array( 'clone', 'back' ), true ) && ! empty( $item['button_effect_shape'] ) ) {
 						$this->add_render_attribute( $wrapper_key, 'class', [
 							'ee-effect-shape--' . $item['button_effect_shape']
 						] );

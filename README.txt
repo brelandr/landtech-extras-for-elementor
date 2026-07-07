@@ -4,20 +4,30 @@ Contributors: brelandr
 Tags: elementor, page-builder, widgets, addons, extensions
 Requires at least: 6.2
 Tested up to: 7.0
-Stable tag: 2.2.81
+Stable tag: 2.2.98
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Elementor widgets and extensions by Land Tech Web Designs. Free on WordPress.org; updates via the plugin directory only.
+Elementor widgets and extensions — GPL-maintained fork of Elementor Extras (Extras for Elementor). Calendar, gallery, maps, navigation, posts layouts, and editor extensions.
 
 == Description ==
 
-**Disclaimer:** Independent fork of the original Elementor Extras plugin by Namogo. Not affiliated with or endorsed by Namogo or Elementor Ltd. Original credits: Namogo (Elementor Extras). Maintained by Land Tech Web Designs.
+**Disclaimer:** Independent fork of the original **Elementor Extras** plugin (also known as **Extras for Elementor**, by Namogo). Not affiliated with or endorsed by Namogo or Elementor Ltd. Original credits: Namogo (Elementor Extras). Maintained by Land Tech Web Designs.
 
-**LandTech Extras for Elementor** adds widgets and editor extensions on top of Elementor. Configure optional API keys (Google Maps, Snazzy Maps, Instagram, and optional bring-your-own-key LLM credentials when using the separate **LandTech Extras add-on** AI workspace) under **Elementor → LandTech Extras → APIs** when needed.
+**LandTech Extras for Elementor** is a free, actively maintained replacement for sites that relied on Elementor Extras / Extras for Elementor. It adds creative **Elementor widgets** (gallery, calendar, Google Map, posts grids, navigation, popups, and more) and **editor extensions** (display conditions, parallax, sticky elements, tooltips) on top of Elementor. Existing Elementor templates that used Elementor Extras widget slugs (for example `ee-calendar`, `posts-extra`, `ee-gallery`) continue to work after you switch to this plugin.
 
-Elementor compatibility is documented in the main plugin PHP header (Elementor tested up to fields).
+Configure optional API keys (Google Maps, Snazzy Maps, Instagram, and optional bring-your-own-key LLM credentials when using the separate **LandTech Extras add-on** AI workspace) under **Elementor → LandTech Extras → APIs** when needed.
+
+== Widgets and extensions ==
+
+Find widgets in the Elementor panel under the **LandTech Extras for Elementor** category. Widget type slugs match the upstream Elementor Extras fork for easier migration.
+
+**Widgets:** Age Gate (`ee-age-gate`), Audio Player (`ee-audio-player`), Breadcrumbs (`ee-breadcrumbs`), Buttons / Button Group (`button-group`), Calendar (`ee-calendar`), Circle Progress (`circle-progress`), Devices (`devices-extended`), Gallery (`gallery-extra`), Gallery Slider (`gallery-slider`), Google Map (`ee-google-map`), Heading Extra (`heading-extended`), Hotspots (`hotspots`), HTML5 Video Player (`html5-video`), Image Comparison (`image-comparison`), Inline SVG (`ee-inline-svg`), Offcanvas (`ee-offcanvas`), Popup (`ee-popup`), Posts Extra / Portfolio / Carousel layouts (`posts-extra`), Random Image (`ee-random-image`), Scroll Indicator (`ee-scroll-indicator`), Search Form (`ee-search-form`), Slide Menu (`ee-slide-menu`), Switcher (`ee-switcher`), Table (`table`), Text Divider (`text-divider`), Timeline (`timeline`), Toggle Element (`ee-toggle-element`), Unfold (`unfold`).
+
+**Editor extensions** (Advanced tab on Elementor elements): Display Conditions, Parallax Background, Parallax Elements, Portfolio Parallax, Sticky Elements, Tooltips.
+
+Disable unused widgets under **Elementor → LandTech Extras → Widgets** to speed up the editor.
 
 == Try It Live - Preview This Plugin Instantly ==
 
@@ -94,6 +104,18 @@ Follow the [Google Maps API key guide](https://developers.google.com/maps/docume
 
 No. This is an independent fork of the original Elementor Extras plugin by Namogo, maintained by Land Tech Web Designs. It is not affiliated with or endorsed by Namogo or Elementor Ltd.
 
+= Is this a replacement for Elementor Extras / Extras for Elementor? =
+
+Yes. LandTech Extras for Elementor is an independent, GPLv3-maintained continuation of the Elementor Extras (Extras for Elementor) widget set. It is intended for sites that need those Elementor widgets and extensions without relying on the discontinued original distribution. Widget type slugs (`ee-calendar`, `posts-extra`, and similar) are preserved so existing Elementor JSON templates can load after you deactivate the old plugin and activate LandTech Extras.
+
+= Can I migrate from Elementor Extras or Namogo Extras? =
+
+In most cases, yes. Export your Elementor templates, replace the old plugin with **LandTech Extras for Elementor**, and re-open pages in Elementor. Widgets should resolve under the LandTech Extras category. Re-save pages if Elementor prompts you to update data. Compare your widget list with the **Widgets and extensions** section above; optional API keys (Maps, Instagram) must be re-entered under **Elementor → LandTech Extras → APIs**.
+
+= Does this plugin include Gutenberg blocks? =
+
+No. LandTech Extras adds **Elementor** widgets and Elementor editor extensions only. Search terms like “Elementor blocks” usually refer to Elementor widgets or sections; this plugin does not register WordPress block editor blocks.
+
 = What prefix does this plugin use in code? =
 
 PHP functions, hooks, options, and transients use the **`landtech_extras_`** or **`ltxe_`** prefix (four or more characters). Script/style handles use **`landtech-extras-`**. Namespaced PHP classes live under **`LandTechExtras\`**. Elementor widget type slugs (for example `ee-calendar` or `posts-extra`) are retained from the upstream Elementor Extras fork so existing Elementor templates keep working; they are Elementor element identifiers, not WordPress options or hooks.
@@ -147,6 +169,95 @@ From the plugin root, after **`npm install`**, run **`npm run build:assets`** to
 Before publishing a public GitHub mirror, verify any **Repository** or **Source** URL in this readme returns HTTP 200 (WordPress.org reviewers check linked URLs).
 
 == Changelog ==
+
+= 2.2.98 =
+
+* Fix: Playground Button Group demo ships fallback page CSS (padding, colors, effect backgrounds) so hover effects are visible when Elementor post CSS is incomplete.
+* Fix: Playground Switcher demo shows Design / Build / Launch on the frontend — entrance animation now falls back when the appear plugin does not fire; nav stays visible on all breakpoints.
+* Fix: Playground Devices demo seeds a phone screenshot, scrollable screen content, and orientation toggle instead of an empty mockup.
+
+= 2.2.97 =
+
+* Docs: readme SEO — short description, widget catalog, and FAQ entries for Elementor Extras / Extras for Elementor migration and replacement terminology.
+
+= 2.2.96 =
+
+* Add: Optional sanitized SVG uploads — Elementor → LandTech Extras → Advanced → Allow SVG uploads (admin opt-in; files sanitized on upload; works with Elementor media controls).
+* Add: Inline SVG widget **Source** control — choose Media Library or **Custom URL** so you can link to an .svg without uploading through WordPress.
+* Fix: Playground Inline SVG demo enables Override Color and uses the bundled SVG URL source.
+
+= 2.2.95 =
+
+* Fix: Buttons widget hover effects did not animate because transition CSS targeted the wrong pseudo-elements; base styles now apply transitions to `.ee-button:before` / `:after` with sensible defaults.
+* Fix: Buttons without a link now use a no-op `#` href (with preventDefault) so click and hover behave consistently on the frontend.
+* Fix: Custom button effect modifier classes (direction, entrance) fall back to control defaults when unset so Clone/Background effects are not stuck in a neutral state.
+* Fix: Button Group tooltip init no longer throws when tooltip delay settings are absent (non-tooltip buttons).
+* Fix: Playground demo pages regenerate Elementor post CSS after seeding so per-button effect colors and timing apply.
+
+= 2.2.94 =
+
+* Fix: Calendar event clicks did nothing on the Default skin because the events panel stayed `display: none` even when `show-events` was toggled; the panel now overlays the month view when a day with events is clicked.
+* Fix: Calendar event title links without a URL now open the events panel instead of doing nothing.
+* Fix: Playground Calendar demo seeds compact skin with sample manual events so click-to-reveal behavior is testable.
+
+= 2.2.93 =
+
+* Fix: Switcher widget stayed blank on the published frontend because entrance animation hides all slides until jQuery Appear fires; above-the-fold widgets now trigger appear immediately and nav/arrows opacity animations accept combined jQuery targets.
+* Fix: anime.js helper now resolves arrays of jQuery collections (nav + arrows) for TweenMax.set/to calls used by Switcher.
+
+= 2.2.92 =
+
+* Fix: Scroll Indicator progress never updated because jQuery `.data('start-offset')` / `.data('end-offset')` do not read HTML `data-start-offset` attributes (camelCase keys required); offsets are now read reliably and full-page body tracking uses document height.
+* Fix: Playground Scroll Indicator demo seeds three anchored sections (List skin) with matching heading CSS IDs and scrollable content between them.
+
+= 2.2.91 =
+
+* Fix: Age Gate and Popup modals showed a blank white box because legacy Magnific Popup animation CSS hides `.mfp-with-anim` until `.mfp-ready` is on the container; GLightbox now adds that class on open.
+* Fix: Playground Age Gate demo seeds title, description, required age, button label, and classic skin.
+
+= 2.2.90 =
+
+* Fix: Popup and Age Gate modals opened empty because inline content kept `mfp-hide` / `glightbox-hide` (`display: none !important`) after the GLightbox migration; hide classes are now stripped before inline slides load.
+* Fix: Playground Popup demo seeds title, body copy, classic skin, and an Open modal click trigger.
+
+= 2.2.89 =
+
+* Fix: Unfold open/close animation failed because the anime.js timeline shim did not return the timeline from chained `.to()` calls (GSAP-style `.add().to().to()`).
+* Fix: Playground Unfold demo now seeds multi-paragraph content, 35% visible height, and Read more / Read less labels.
+
+= 2.2.88 =
+
+* Fix: Switcher widget stayed invisible on the frontend because the anime.js timeline shim did not understand GSAP label positions (`animateAll`, `animateAll+=`, `-=`); Switcher and Unfold animations now resolve correctly.
+* Fix: Playground Switcher demo seeds three panels with images, classic skin, and entrance animation off for a reliable Live Preview.
+
+= 2.2.87 =
+
+* Fix: Playground Inline SVG demo now ships a bundled SVG URL plus color, sizing, and hover settings (empty settings previously rendered a blank frontend).
+
+= 2.2.86 =
+
+* Fix: Playground Button Group demo now seeds Clone, Flip, Background, 3D, and Cube hover effects (custom per-button styling was previously unset).
+
+= 2.2.85 =
+
+* Fix: Gallery Slider thumbnail clicks now use explicit slide indexes, Swiper loop/fade/RTL handling, and auto-height updates so the preview image stays visible when navigating.
+* Fix: Gallery Slider preview skips broken attachment URLs and falls back to the gallery item URL when needed.
+* Fix: Playground Gallery Slider demo enables Elementor lightbox on preview images.
+
+= 2.2.84 =
+
+* Fix: Playground critical error — store `_elementor_page_settings` as a PHP array (not JSON text) so Elementor page rendering does not fatal on PHP 8.
+* Fix: Playground seeder sets the admin user during blueprint runPHP so Elementor document saves succeed.
+
+= 2.2.83 =
+
+* Fix: Playground demo homepage rebuilt with styled CSS hero, category sections, and card links to all 28 free widget demos (Elementor HTML widget).
+* Fix: Demo pages use the Elementor header/footer template and hide the theme page title for cleaner previews.
+
+= 2.2.82 =
+
+* Fix: Timeline demo works on WordPress Playground — widget registers on free Elementor (custom items); Posts source still requires Elementor Pro.
+* Fix: Playground Timeline demo seeds custom milestone items with sample content and images.
 
 = 2.2.81 =
 

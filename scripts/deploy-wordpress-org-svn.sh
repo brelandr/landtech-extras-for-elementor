@@ -3,7 +3,7 @@
 # Deploy LandTech Extras for Elementor (WordPress.org free build) to plugins.svn.wordpress.org.
 #
 # Populates trunk/, creates tags/<version>/ from trunk, and refreshes plugin-directory assets/
-# (icon/banner PNGs generated from .plugin-check/.wordpress-org/*.svg).
+# (icon/banner PNGs generated from wordpress-org-assets/*.svg).
 #
 # File set mirrors create-plugin-zip.sh (same rsync excludes; no LMFWC inject; scripts/ excluded).
 #
@@ -32,7 +32,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SVN_URL="https://plugins.svn.wordpress.org/landtech-extras-for-elementor"
 SVN_DIR="${LANDTECH_EXTRAS_SVN_DIR:-${SCRIPT_DIR}/../landtech-extras-for-elementor-svn}"
-ORG_ASSET_SRC="${SCRIPT_DIR}/.plugin-check/.wordpress-org"
+ORG_ASSET_SRC="${SCRIPT_DIR}/wordpress-org-assets"
 
 DO_CHECKOUT=0
 DO_COMMIT=0
@@ -129,6 +129,7 @@ rsync_excludes=(
 	--exclude='.distignore'
 	--exclude='.release'
 	--exclude='scripts/'
+	--exclude='wordpress-org-assets/'
 	--exclude='.plugin-check/'
 )
 
@@ -163,7 +164,7 @@ build_org_assets() {
 	local tmp=""
 
 	if [[ ! -f "${icon_svg}" || ! -f "${banner_svg}" ]]; then
-		echo "Error: missing ${ORG_ASSET_SRC}/{icon,banner}.svg — add WordPress.org asset sources first." >&2
+		echo "Error: missing ${ORG_ASSET_SRC}/{icon,banner}.svg — add WordPress.org asset sources first (not Plugin Check placeholders)." >&2
 		exit 1
 	fi
 	if ! command -v sips >/dev/null 2>&1; then

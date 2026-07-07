@@ -3083,11 +3083,29 @@
   -ms-flex-order: 2;
   order: 2;
 }
+.ee-calendar-skin--default .ee-calendar__month {
+  position: relative;
+}
 .ee-calendar-skin--default .ee-calendar__events {
   display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  background: #ffffff;
+  overflow: auto;
+  transform: none;
+}
+.ee-calendar-skin--default .ee-calendar__month.show-events .ee-calendar__events {
+  display: block;
 }
 .ee-calendar-skin--default .ee-calendar__day--event .ee-calendar__day__header {
   background: rgba(0, 0, 0, 0.05);
+}
+.ee-calendar-skin--default .ee-calendar__day--event {
+  cursor: pointer;
 }
 .ee-calendar-skin--compact .ee-calendar {
   max-width: 450px;
@@ -6443,10 +6461,15 @@ body.ee-offcanvas--open [canvas] {
   transition: none;
 }
 .ee-effect .ee-button,
-.ee-effect .ee-button-content-wrapper,
-.ee-effect:before,
-.ee-effect:after {
+.ee-effect .ee-button:before,
+.ee-effect .ee-button:after,
+.ee-effect .ee-button-content-wrapper {
   transition-property: all;
+  transition-duration: 0.35s;
+  transition-timing-function: ease-in-out;
+}
+.ee-button-wrapper--no-link {
+  cursor: pointer;
 }
 .ee-u-1\/1 {
   width: 100% !important;

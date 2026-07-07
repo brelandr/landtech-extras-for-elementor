@@ -76,6 +76,10 @@
 			$.each( sections, function( extension, callback ) {
 				elementorFrontend.hooks.addAction( 'frontend/element_ready/section', callback );
 			});
+
+			$( document ).on( 'click', '.ee-button-wrapper--no-link', function( event ) {
+				event.preventDefault();
+			} );
 		},
 
 		getRefreshableWidgets : function() {
@@ -165,6 +169,41 @@
 			}
 
 			return ee.getItems( elementSettings, setting );
+		},
+
+		/**
+		 * GLightbox inline slides need hide classes removed; !important beats inline display.
+		 *
+		 * @param {jQuery} $element Popup content wrapper.
+		 * @return {HTMLElement|null}
+		 */
+		prepareGlightboxInlineNode : function( $element ) {
+			var node = $element && $element.length ? $element.get( 0 ) : null;
+
+			if ( node ) {
+				node.classList.remove( 'mfp-hide', 'glightbox-hide' );
+				node.style.removeProperty( 'display' );
+			}
+
+			return node;
+		},
+
+		/**
+		 * Magnific Popup entrance CSS expects .mfp-ready on the container; GLightbox does not add it.
+		 *
+		 * @param {string|number} scopeId Elementor widget scope ID.
+		 * @return {void}
+		 */
+		markGlightboxPopupReady : function( scopeId ) {
+			$( '.glightbox-container.ee-mfp-popup-' + scopeId ).addClass( 'mfp-ready' );
+		},
+
+		/**
+		 * @param {string|number} scopeId Elementor widget scope ID.
+		 * @return {void}
+		 */
+		unmarkGlightboxPopupReady : function( scopeId ) {
+			$( '.glightbox-container.ee-mfp-popup-' + scopeId ).removeClass( 'mfp-ready mfp-removing' );
 		},
 
 		getElementType : function ( $element ) {
@@ -505,6 +544,7 @@
 				skin 			= ee.getElementSkin( $scope ),
 				$window 		= ee.getWindow(),
 				scrollIndicatorArgs = {
+					scope 		: $window,
 					progress 	: 'circle',
 					click 		: 'yes' === elementSettings.click,
 				};
@@ -541,6 +581,7 @@
 				skin 			= ee.getElementSkin( $scope ),
 				$window 		= ee.getWindow(),
 				scrollIndicatorArgs = {
+					scope 		: $window,
 					mode 		: 'anchor',
 					progress 	: 'background',
 					click 		: 'yes' === elementSettings.click,
@@ -584,6 +625,7 @@
 			}
 
 			var scrollIndicatorArgs = {
+					scope 			: $window,
 					autoHover 		: 'yes' === elementSettings[ skin + 'show_on_focus' ],
 					progress 		: 'background',
 					click 			: 'yes' === elementSettings.click,
@@ -651,7 +693,7 @@
 
 			ee.Calendar.elementSettings 	= ee.getElementSettings( $scope );
 
-			var $calendar 	= $scope.find( '.ee-calendar' ),
+			var $calendar 	= $scope.find( '.ee-calendar' ),
 				$template 	= $calendar.find( '#ee-calendar__template' ).html(),
 				$events 	= $calendar.find( '.ee-calendar-event' ),
 				leftArrow 	= elementorFrontend.config.is_rtl ? 'right' : 'left',
@@ -799,12 +841,7 @@
 					clickEvents 				: {
 						click: function ( target ) {
 							if ( target.events.length ) {
-								var daysContainer = $calendar.find('.ee-calendar__month');
-									daysContainer.toggleClass('show-events', true );
-									
-								$calendar.find('.ee-calendar__events__hide').click( function() {
-									daysContainer.toggleClass('show-events', false);
-								});
+								ee.Calendar.showEventsPanel( $calendar );
 							}
 						},
 						nextInterval: function () {
@@ -819,13 +856,34 @@
 					},
 				};
 
+			ee.Calendar.showEventsPanel = function( $cal ) {
+				$cal.find( '.ee-calendar__month' ).addClass( 'show-events' );
+			};
+
+			ee.Calendar.hideEventsPanel = function( $cal ) {
+				$cal.find( '.ee-calendar__month' ).removeClass( 'show-events' );
+			};
+
+			ee.Calendar.bindEventsPanel = function( $cal ) {
+				$cal.on( 'click', '.ee-calendar__events__hide', function( event ) {
+					event.preventDefault();
+					ee.Calendar.hideEventsPanel( $cal );
+				} );
+
+				$cal.on( 'click', '.ee-calendar__day__event a:not([href]), .ee-calendar__events__event a:not([href])', function( event ) {
+					event.preventDefault();
+					ee.Calendar.showEventsPanel( $cal );
+				} );
+			};
+
 			ee.Calendar.init = function() {
 				ee.Calendar.setupEvents();
 
 				if ( $calendar.length ) {
+					ee.Calendar.bindEventsPanel( $calendar );
 					$calendar.clndr( calendarArgs );
 				}
-			}
+			};
 
 			ee.Calendar.setupEvents = function() {
 				$events.each( function() {
@@ -1578,7 +1636,7 @@
 					};
 				} else {
 					slide = {
-						content: $content.get( 0 ),
+						content: ee.prepareGlightboxInlineNode( $content ),
 						type: 'inline',
 					};
 				}
@@ -1600,9 +1658,11 @@
 					},
 					slideHTML: '<div class="gslide"><div class="gslide-inner-content"><div class="ginner-container"><div class="gslide-media"></div></div></div><button class="gclose gbtn ee-popup__close mfp-close ' + closeHAlignClass + ' ' + closeVAlignClass + ' eicon-close" title="Close"></button></div>',
 					afterOpen: function() {
+						ee.markGlightboxPopupReady( scopeId );
 						ee.Popup.onOpen( glightboxInstance, $trigger );
 					},
 					beforeClose: function() {
+						ee.unmarkGlightboxPopupReady( scopeId );
 						if ( 'yes' !== ee.Popup.elementSettings.popup_prevent_scroll ) {
 							$html.css( { overflow: '' } );
 						}
@@ -1846,7 +1906,7 @@
 				return GLightbox( {
 					elements: [
 						{
-							content: $popup.get( 0 ),
+							content: ee.prepareGlightboxInlineNode( $popup ),
 							type: 'inline',
 						},
 					],
@@ -1857,6 +1917,12 @@
 					keyboardNavigation: elementorFrontend.isEditMode(),
 					cssClasses: {
 						container: 'glightbox-container ee-mfp-popup ee-mfp-popup-' + scopeId + ' ' + popupVAlignClass + ' ' + ee.AgeGate.elementSettings.popup_animation,
+					},
+					afterOpen: function() {
+						ee.markGlightboxPopupReady( scopeId );
+					},
+					beforeClose: function() {
+						ee.unmarkGlightboxPopupReady( scopeId );
 					},
 				} );
 			};
@@ -1973,8 +2039,8 @@
 			var $media 			= $scope.find( '.ee-switcher__media-wrapper' ),
 				$content 		= $scope.find( '.ee-switcher__titles' ),
 				switcherArgs 	= {
-					mediaEffect 		: ee.Switcher.elementSettings.effect_media,
-					contentEffect 		: ee.Switcher.elementSettings.effect_title,
+					mediaEffect 		: ee.Switcher.elementSettings.effect_media || 'swipeLeft',
+					contentEffect 		: ee.Switcher.elementSettings.effect_title || 'slideLeft',
 					entranceAnimation 	: 'yes' === ee.Switcher.elementSettings.effect_entrance,
 					contentEffectZoom 	: 'yes' === ee.Switcher.elementSettings.effect_media_zoom,
 					contentStagger		: 'yes' === ee.Switcher.elementSettings.effect_title_stagger,
@@ -2068,6 +2134,17 @@
 
 				$scope.eeSwitcher( switcherArgs );
 
+				var switcherInstance = $scope.data( 'eeSwitcher' );
+
+				if ( switcherInstance && switcherInstance.maybeAppear ) {
+					switcherInstance.maybeAppear();
+					window.setTimeout( function() {
+						if ( switcherInstance.maybeAppear ) {
+							switcherInstance.maybeAppear();
+						}
+					}, 150 );
+				}
+
 				ee.onElementRemove( $scope, function() {
 					ee.Switcher.maybeDestroy();
 				});
@@ -2085,7 +2162,13 @@
 
 			var elementSettings = ee.getElementSettings( $scope ),
 				$wrapper 	= $scope.find( '.ee-inline-svg' ),
-				url 		= '' !== elementSettings.svg.url ? elementSettings.svg.url : $wrapper.data('url');
+				url 		= $wrapper.data( 'url' ) || '';
+
+			if ( 'url' === elementSettings.svg_source && elementSettings.svg_custom_url && elementSettings.svg_custom_url.url ) {
+				url = elementSettings.svg_custom_url.url;
+			} else if ( elementSettings.svg && elementSettings.svg.url ) {
+				url = elementSettings.svg.url;
+			}
 
 			ee.InlineSvg.init = function() {
 
@@ -2952,6 +3035,7 @@
 						disableOnInteraction 	: '' !== elementSettings.autoplay_disable_on_interaction,
 						stopOnHover 			: 'yes' === elementSettings.pause_on_hover,
 						loop 					: 'yes' === elementSettings.infinite,
+						rtl 					: 'rtl' === elementSettings.direction,
 						arrows 					: '' !== elementSettings.show_arrows,
 						arrowPrev 				: '.ee-swiper__button--prev-slider',
 						arrowNext 				: '.ee-swiper__button--next-slider',
@@ -3043,8 +3127,16 @@
 					ee.GallerySlider.initSliders( $scope, sliderInstance, carouselInstance || false );
 					ee.Carousel.onAfterInit( $swiperSlider, sliderInstance, sliderSettings );
 
+					if ( sliderInstance && 'function' === typeof sliderInstance.update ) {
+						sliderInstance.update();
+					}
+
 					if ( hasCarousel && carouselInstance ) {
 						ee.Carousel.onAfterInit( $swiperCarousel, carouselInstance, carouselSettings );
+
+						if ( 'function' === typeof carouselInstance.update ) {
+							carouselInstance.update();
+						}
 					}
 				};
 
@@ -3099,17 +3191,42 @@
 				ee.GallerySlider.events( data );
 			};
 
+			ee.GallerySlider.getThumbIndex = function( $thumb, $thumbs ) {
+				var index = $thumb.data( 'galleryIndex' );
+
+				if ( 'undefined' === typeof index ) {
+					index = parseInt( $thumb.attr( 'data-gallery-index' ), 10 );
+				}
+
+				if ( ! isNaN( index ) && index >= 0 ) {
+					return index;
+				}
+
+				return $thumbs.index( $thumb[0] );
+			};
+
 			ee.GallerySlider.slideToIndex = function( swiper, index, useLoop ) {
 				if ( ! swiper || 'function' !== typeof swiper.slideTo ) {
 					return;
 				}
 
-				if ( useLoop && 'function' === typeof swiper.slideToLoop ) {
-					swiper.slideToLoop( index );
+				index = parseInt( index, 10 );
+
+				if ( isNaN( index ) || index < 0 ) {
 					return;
 				}
 
-				swiper.slideTo( index );
+				var loopEnabled = useLoop && swiper.params && swiper.params.loop;
+
+				if ( loopEnabled && 'function' === typeof swiper.slideToLoop ) {
+					swiper.slideToLoop( index );
+				} else {
+					swiper.slideTo( index );
+				}
+
+				if ( swiper.params && swiper.params.autoHeight && 'function' === typeof swiper.updateAutoHeight ) {
+					swiper.updateAutoHeight( swiper.params.speed || 300 );
+				}
 			};
 
 			ee.GallerySlider.events = function( data ) {
@@ -3125,7 +3242,11 @@
 
 				$thumbs.on( 'click', function( e ) {
 					e.preventDefault();
-					ee.GallerySlider.slideToIndex( data.slider, $thumbs.index( this ), sliderSettings.element.loop );
+					ee.GallerySlider.slideToIndex(
+						data.slider,
+						ee.GallerySlider.getThumbIndex( $( this ), $thumbs ),
+						sliderSettings.element.loop
+					);
 				});
 			};
 
@@ -3306,7 +3427,20 @@
 
 				if ( settings.element.loop ) {
 					swiperArgs.loop = true;
-					// swiperArgs.loopedSlides = $slides.length;
+
+					if ( $slides.length ) {
+						swiperArgs.loopedSlides = $slides.length;
+					}
+				}
+
+				if ( settings.element.rtl ) {
+					swiperArgs.rtl = true;
+				}
+
+				if ( 'fade' === swiperArgs.effect ) {
+					swiperArgs.fadeEffect = {
+						crossFade: true,
+					};
 				}
 
 				// Autplay
@@ -3522,21 +3656,31 @@
 
 				tooltips.remove( $scope );
 
-				if ( '' !== ee.Tooltips.elementSettings[ skin + 'delay_in' ].size ) {
-					hotipsArgs.delayIn = ee.Tooltips.elementSettings[ skin + 'delay_in' ].size;
-				} else if ( ee.Tooltips.globalSettings.ltxe_tooltips_delay_in.size ) {
+				if ( ! $hotspots.length ) {
+					return;
+				}
+
+				var delayInSetting = ee.Tooltips.elementSettings[ skin + 'delay_in' ];
+
+				if ( delayInSetting && '' !== delayInSetting.size ) {
+					hotipsArgs.delayIn = delayInSetting.size;
+				} else if ( ee.Tooltips.globalSettings && ee.Tooltips.globalSettings.ltxe_tooltips_delay_in && ee.Tooltips.globalSettings.ltxe_tooltips_delay_in.size ) {
 					hotipsArgs.delayIn = ee.Tooltips.globalSettings.ltxe_tooltips_delay_in.size;
 				}
 
-				if ( '' !== ee.Tooltips.elementSettings[ skin + 'delay_out' ].size ) {
-					hotipsArgs.delayOut = ee.Tooltips.elementSettings[ skin + 'delay_out' ].size;
-				} else if ( ee.Tooltips.globalSettings.ltxe_tooltips_delay_out.size ) {
+				var delayOutSetting = ee.Tooltips.elementSettings[ skin + 'delay_out' ];
+
+				if ( delayOutSetting && '' !== delayOutSetting.size ) {
+					hotipsArgs.delayOut = delayOutSetting.size;
+				} else if ( ee.Tooltips.globalSettings && ee.Tooltips.globalSettings.ltxe_tooltips_delay_out && ee.Tooltips.globalSettings.ltxe_tooltips_delay_out.size ) {
 					hotipsArgs.delayOut = ee.Tooltips.globalSettings.ltxe_tooltips_delay_out.size;
 				}
 
-				if ( '' !== ee.Tooltips.elementSettings[ skin + 'duration' ].size ) {
-					hotipsArgs.speed = ee.Tooltips.elementSettings[ skin + 'duration' ].size;
-				} else if ( ee.Tooltips.globalSettings.ltxe_tooltips_duration.size ) {
+				var durationSetting = ee.Tooltips.elementSettings[ skin + 'duration' ];
+
+				if ( durationSetting && '' !== durationSetting.size ) {
+					hotipsArgs.speed = durationSetting.size;
+				} else if ( ee.Tooltips.globalSettings && ee.Tooltips.globalSettings.ltxe_tooltips_duration && ee.Tooltips.globalSettings.ltxe_tooltips_duration.size ) {
 					hotipsArgs.speed = ee.Tooltips.globalSettings.ltxe_tooltips_duration.size;
 				}
 

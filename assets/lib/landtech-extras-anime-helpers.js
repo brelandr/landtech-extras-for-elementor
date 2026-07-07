@@ -19,7 +19,21 @@
 		if ( target.jquery ) {
 			return target.get();
 		}
-		if ( NodeList.prototype.isPrototypeOf( target ) || Array.isArray( target ) ) {
+		if ( Array.isArray( target ) ) {
+			var nodes = [];
+			var i;
+
+			for ( i = 0; i < target.length; i++ ) {
+				if ( target[ i ] && target[ i ].jquery ) {
+					nodes = nodes.concat( target[ i ].get() );
+				} else if ( target[ i ] ) {
+					nodes.push( target[ i ] );
+				}
+			}
+
+			return nodes;
+		}
+		if ( NodeList.prototype.isPrototypeOf( target ) ) {
 			return Array.prototype.slice.call( target );
 		}
 		return [ target ];
@@ -109,6 +123,83 @@
 				}
 			}
 		}
+	}
+
+	/**
+	 * Resolve GSAP-style timeline positions for anime.js (seconds → ms).
+	 *
+	 * Supports label names, label+=seconds, +=seconds, -=seconds, and numeric seconds.
+	 *
+	 * @param {string|number|undefined} offset  GSAP position parameter.
+	 * @param {Object<string,number>} labels    Label name → start time (ms).
+	 * @param {number} endTime                    Current timeline end (ms).
+	 * @return {number} Start time in ms.
+	 */
+	function ltxeResolveTimelineOffset( offset, labels, endTime ) {
+		var match;
+		var labelName;
+		var seconds;
+
+		if ( 'undefined' === typeof offset || null === offset ) {
+			return endTime;
+		}
+
+		if ( 'number' === typeof offset ) {
+			return offset * 1000;
+		}
+
+		if ( 'string' !== typeof offset ) {
+			return endTime;
+		}
+
+		match = offset.match( /^([A-Za-z0-9_-]+)\+=([0-9.]+)$/ );
+		if ( match ) {
+			labelName = match[ 1 ];
+			seconds   = parseFloat( match[ 2 ] );
+			if ( ! Object.prototype.hasOwnProperty.call( labels, labelName ) ) {
+				labels[ labelName ] = 0;
+			}
+			return labels[ labelName ] + ( seconds * 1000 );
+		}
+
+		match = offset.match( /^([A-Za-z0-9_-]+)-=([0-9.]+)$/ );
+		if ( match ) {
+			labelName = match[ 1 ];
+			seconds   = parseFloat( match[ 2 ] );
+			if ( ! Object.prototype.hasOwnProperty.call( labels, labelName ) ) {
+				labels[ labelName ] = 0;
+			}
+			return labels[ labelName ] - ( seconds * 1000 );
+		}
+
+		if ( Object.prototype.hasOwnProperty.call( labels, offset ) ) {
+			return labels[ offset ];
+		}
+
+		if ( 0 === offset.indexOf( '-=' ) ) {
+			return endTime - ( parseFloat( offset.slice( 2 ) ) * 1000 );
+		}
+
+		if ( 0 === offset.indexOf( '+=' ) ) {
+			return endTime + ( parseFloat( offset.slice( 2 ) ) * 1000 );
+		}
+
+		if ( /^[A-Za-z0-9_-]+$/.test( offset ) ) {
+			labels[ offset ] = 0;
+			return 0;
+		}
+
+		return endTime;
+	}
+
+	/**
+	 * @param {Object} tl Anime timeline instance.
+	 * @param {number} startMs Start offset in ms.
+	 * @param {number} durationMs Animation duration in ms.
+	 * @param {number} endTime Current end time ref.
+	 */
+	function ltxeTrackTimelineEnd( startMs, durationMs, endTime ) {
+		return Math.max( endTime, startMs + durationMs );
 	}
 
 	window.ltxeAnimate = {
@@ -203,10 +294,30 @@
 		},
 
 		timeline: function( options ) {
+			var labels = {};
+			var endTime = 0;
 			var tl = window.anime.timeline( {
 				easing: ltxeEase,
 				complete: options && options.onComplete ? options.onComplete : undefined,
 			} );
+			var animeAdd = tl.add.bind( tl );
+
+			tl.add = function( arg1, arg2 ) {
+				var startMs;
+				var durationMs;
+
+				if ( 'string' === typeof arg1 && ( 'undefined' === typeof arg2 || 'number' === typeof arg2 || 'string' === typeof arg2 ) ) {
+					startMs = ltxeResolveTimelineOffset( arg2, labels, endTime );
+					labels[ arg1 ] = startMs;
+					return tl;
+				}
+
+				startMs = ltxeResolveTimelineOffset( arg2, labels, endTime );
+				durationMs = arg1 && arg1.duration ? arg1.duration : 0;
+				endTime = ltxeTrackTimelineEnd( startMs, durationMs, endTime );
+				animeAdd( arg1, startMs );
+				return tl;
+			};
 
 			tl.to = function( targets, duration, props, offset ) {
 				var mapped = ltxeMapProps( props );
@@ -215,27 +326,37 @@
 					duration: ( duration || 0 ) * 1000,
 					easing: mapped.easing || ltxeEase,
 				};
+				var startMs;
 				delete mapped.easing;
 				Object.assign( addOpts, mapped );
-				return this.add( addOpts, offset );
+				startMs = ltxeResolveTimelineOffset( offset, labels, endTime );
+				endTime = ltxeTrackTimelineEnd( startMs, addOpts.duration, endTime );
+				animeAdd( addOpts, startMs );
+				return tl;
 			};
 
 			tl.set = function( targets, props, offset ) {
 				window.ltxeAnimate.set( targets, props );
-				return this;
+				return tl;
 			};
 
 			tl.staggerFromTo = function( targets, duration, fromProps, toProps, stagger, offset ) {
 				var from = ltxeMapProps( fromProps );
 				var to = ltxeMapProps( toProps );
-				return this.add( {
+				var addOpts = {
 					targets: ltxeTargets( targets ),
-					...from,
-					...to,
 					duration: ( duration || 0 ) * 1000,
 					delay: window.anime.stagger( ( stagger || 0 ) * 1000 ),
 					easing: to.easing || from.easing || ltxeEase,
-				}, offset );
+				};
+				var startMs;
+				Object.assign( addOpts, from, to );
+				delete addOpts.easing;
+				addOpts.easing = to.easing || from.easing || ltxeEase;
+				startMs = ltxeResolveTimelineOffset( offset, labels, endTime );
+				endTime = ltxeTrackTimelineEnd( startMs, addOpts.duration, endTime );
+				animeAdd( addOpts, startMs );
+				return tl;
 			};
 
 			tl.kill = function() {

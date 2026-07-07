@@ -458,6 +458,17 @@ class Settings extends Settings_Page {
 					'no' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 				]
 			],
+			[
+				'name'		=> 'enable_svg_uploads',
+				'label'		=> __( 'Allow SVG uploads', 'landtech-extras-for-elementor' ),
+				'desc' 		=> __( 'Lets users with upload permission add .svg files to the Media Library (sanitized on upload). Required for the Inline SVG widget when using the Media Library source. You can also paste an SVG URL in the widget without enabling this.', 'landtech-extras-for-elementor' ),
+				'type'		=> 'radio',
+				'default'	=> 'no',
+				'options'	=> [
+					'yes' 	=> __( 'Yes', 'landtech-extras-for-elementor' ),
+					'no' 	=> __( 'No', 'landtech-extras-for-elementor' ),
+				]
+			],
 		];
 
 		return $fields;

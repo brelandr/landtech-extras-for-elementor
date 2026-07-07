@@ -86,12 +86,44 @@ class Inline_Svg extends Extras_Widget {
 		);
 
 			$this->add_control(
+				'svg_source',
+				[
+					'label'   => __( 'Source', 'landtech-extras-for-elementor' ),
+					'type'    => Controls_Manager::SELECT,
+					'default' => 'media',
+					'options' => [
+						'media' => __( 'Media Library', 'landtech-extras-for-elementor' ),
+						'url'   => __( 'Custom URL', 'landtech-extras-for-elementor' ),
+					],
+					'frontend_available' => true,
+				]
+			);
+
+			$this->add_control(
 				'svg',
 				[
 					'label' 	=> __( 'Choose file', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::MEDIA,
 					'dynamic' 	=> [ 'active' => true ],
 					'frontend_available' => true,
+					'condition' => [
+						'svg_source' => 'media',
+					],
+				]
+			);
+
+			$this->add_control(
+				'svg_custom_url',
+				[
+					'label'       => __( 'SVG URL', 'landtech-extras-for-elementor' ),
+					'description' => __( 'Direct link to an .svg file (same site or CORS-enabled). Enable Allow SVG uploads under Elementor → LandTech Extras → Advanced to use the Media Library instead.', 'landtech-extras-for-elementor' ),
+					'type'        => Controls_Manager::URL,
+					'dynamic'     => [ 'active' => true ],
+					'placeholder' => 'https://example.com/icon.svg',
+					'frontend_available' => true,
+					'condition'   => [
+						'svg_source' => 'url',
+					],
 				]
 			);
 
@@ -324,9 +356,10 @@ class Inline_Svg extends Extras_Widget {
 	protected function render() {
 		$settings 	= $this->get_settings_for_display();
 		$tag 		= 'div';
+		$svg_url    = $this->get_svg_file_url( $settings );
 
-		if ( empty( $settings['svg']['url'] ) ) {
-			$this->render_placeholder( [ 'body' => __( 'Select your SVG file.', 'landtech-extras-for-elementor' ) ] );
+		if ( '' === $svg_url ) {
+			$this->render_placeholder( [ 'body' => __( 'Select your SVG file or enter an SVG URL.', 'landtech-extras-for-elementor' ) ] );
 			return;
 		}
 
@@ -337,7 +370,7 @@ class Inline_Svg extends Extras_Widget {
 			],
 			'svg' => [
 				'class' 	=> 'ee-inline-svg',
-				'data-url' 	=> $settings['svg']['url'],
+				'data-url' 	=> $svg_url,
 			],
 		] );
 
@@ -359,6 +392,28 @@ class Inline_Svg extends Extras_Widget {
 		?><div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
 			<<?php echo esc_html( $tag ); ?> <?php $this->print_render_attribute_string( 'svg' ); ?>></<?php echo esc_html( $tag ); ?>>
 		</div><?php
+	}
+
+	/**
+	 * Resolve the SVG file URL from widget settings.
+	 *
+	 * @since 2.2.96
+	 *
+	 * @param array<string,mixed> $settings Widget settings.
+	 * @return string
+	 */
+	protected function get_svg_file_url( $settings ) {
+		$source = isset( $settings['svg_source'] ) ? $settings['svg_source'] : 'media';
+
+		if ( 'url' === $source && ! empty( $settings['svg_custom_url']['url'] ) ) {
+			return esc_url_raw( $settings['svg_custom_url']['url'] );
+		}
+
+		if ( ! empty( $settings['svg']['url'] ) ) {
+			return esc_url_raw( $settings['svg']['url'] );
+		}
+
+		return '';
 	}
 
 	/**

@@ -69,13 +69,13 @@ class Timeline extends Posts_Base {
 	/**
 	 * Requires elementor pro
 	 *
-	 * Uses {@see Posts_Base} query controls (Elementor Pro group control).
+	 * Custom timeline items work on free Elementor; Posts source uses Pro query controls.
 	 *
 	 * @since  0.1.0
 	 * @return bool
 	 */
 	public static function requires_elementor_pro() {
-		return true;
+		return false;
 	}
 
 	/**

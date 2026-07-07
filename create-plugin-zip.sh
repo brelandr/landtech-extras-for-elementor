@@ -217,6 +217,7 @@ rsync -a \
 	--exclude='.distignore' \
 	--exclude='.release' \
 	--exclude='scripts/' \
+	--exclude='wordpress-org-assets/' \
 	--exclude='.plugin-check/' \
 	"${SCRIPT_DIR}/" "${TEMP_PLUGIN}/"
 

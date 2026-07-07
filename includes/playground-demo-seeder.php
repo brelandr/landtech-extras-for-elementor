@@ -23,6 +23,11 @@ function landtech_extras_seed_playground_demos() {
 		return 0;
 	}
 
+	// Blueprint runPHP may not inherit the login step's user context.
+	if ( function_exists( 'wp_set_current_user' ) ) {
+		wp_set_current_user( 1 );
+	}
+
 	require_once ABSPATH . 'wp-admin/includes/media.php';
 	require_once ABSPATH . 'wp-admin/includes/file.php';
 	require_once ABSPATH . 'wp-admin/includes/image.php';
@@ -38,11 +43,14 @@ function landtech_extras_seed_playground_demos() {
 	$groups = array();
 
 	foreach ( $demos as $demo ) {
+		$page_settings = isset( $demo['page_settings'] ) && is_array( $demo['page_settings'] ) ? $demo['page_settings'] : array();
+
 		$page_id = landtech_extras_playground_create_elementor_page(
 			$demo['title'],
 			$demo['slug'],
 			$demo['intro'],
-			$demo['widgets']
+			$demo['widgets'],
+			$page_settings
 		);
 
 		if ( $page_id <= 0 ) {
@@ -63,7 +71,7 @@ function landtech_extras_seed_playground_demos() {
 		);
 	}
 
-	$home_id = landtech_extras_playground_create_homepage( $groups, $pages );
+	$home_id = landtech_extras_playground_create_homepage( $groups, $pages, $demos, $images );
 	landtech_extras_playground_assign_nav_menu( $home_id, $groups, $pages );
 
 	if ( $home_id > 0 ) {
@@ -282,8 +290,9 @@ function landtech_extras_playground_get_demo_definitions( array $images ) {
 				landtech_extras_playground_widget(
 					'gallery-slider',
 					array(
-						'gallery_type' => 'wordpress',
 						'wp_gallery'   => $wp_gallery,
+						'link_to'      => 'file',
+						'open_lightbox' => 'yes',
 					)
 				),
 			),
@@ -401,9 +410,7 @@ function landtech_extras_playground_get_demo_definitions( array $images ) {
 			'widgets' => array(
 				landtech_extras_playground_widget(
 					'timeline',
-					array(
-						'posts_per_page' => 4,
-					)
+					landtech_extras_playground_timeline_settings( $images )
 				),
 			),
 		),
@@ -413,7 +420,10 @@ function landtech_extras_playground_get_demo_definitions( array $images ) {
 			'group'   => 'Content & Posts',
 			'intro'   => __( 'Event calendar widget with month navigation.', 'landtech-extras-for-elementor' ),
 			'widgets' => array(
-				landtech_extras_playground_widget( 'ee-calendar', array() ),
+				landtech_extras_playground_widget(
+					'ee-calendar',
+					landtech_extras_playground_calendar_settings()
+				),
 			),
 		),
 		array(
@@ -449,9 +459,15 @@ function landtech_extras_playground_get_demo_definitions( array $images ) {
 			'title'   => 'Button Group Demo',
 			'slug'    => 'demo-button-group',
 			'group'   => 'Typography & Buttons',
-			'intro'   => __( 'Group of styled buttons with hover effects.', 'landtech-extras-for-elementor' ),
+			'intro'   => __( 'Hover each button to preview Clone, Flip, Background, 3D, and Cube effects.', 'landtech-extras-for-elementor' ),
 			'widgets' => array(
-				landtech_extras_playground_widget( 'button-group', array() ),
+				landtech_extras_playground_widget(
+					'button-group',
+					landtech_extras_playground_button_group_settings()
+				),
+			),
+			'page_settings' => array(
+				'custom_css' => landtech_extras_playground_button_group_custom_css(),
 			),
 		),
 		array(
@@ -514,12 +530,15 @@ function landtech_extras_playground_get_demo_definitions( array $images ) {
 			'title'   => 'Switcher Demo',
 			'slug'    => 'demo-switcher',
 			'group'   => 'Navigation & UI',
-			'intro'   => __( 'Tabbed switcher for toggling between content panels.', 'landtech-extras-for-elementor' ),
+			'intro'   => __( 'Click Design, Build, or Launch to switch panels — images and copy animate on the frontend.', 'landtech-extras-for-elementor' ),
 			'widgets' => array(
 				landtech_extras_playground_widget(
 					'ee-switcher',
 					landtech_extras_playground_switcher_settings( $images )
 				),
+			),
+			'page_settings' => array(
+				'custom_css' => landtech_extras_playground_switcher_custom_css(),
 			),
 		),
 		array(
@@ -540,7 +559,10 @@ function landtech_extras_playground_get_demo_definitions( array $images ) {
 			'group'   => 'Navigation & UI',
 			'intro'   => __( 'Reveal hidden content with an unfold animation.', 'landtech-extras-for-elementor' ),
 			'widgets' => array(
-				landtech_extras_playground_widget( 'unfold', array() ),
+				landtech_extras_playground_widget(
+					'unfold',
+					landtech_extras_playground_unfold_settings()
+				),
 			),
 		),
 		array(
@@ -549,7 +571,10 @@ function landtech_extras_playground_get_demo_definitions( array $images ) {
 			'group'   => 'Navigation & UI',
 			'intro'   => __( 'Modal popup triggered by a button or link.', 'landtech-extras-for-elementor' ),
 			'widgets' => array(
-				landtech_extras_playground_widget( 'ee-popup', array() ),
+				landtech_extras_playground_widget(
+					'ee-popup',
+					landtech_extras_playground_popup_settings()
+				),
 			),
 		),
 		array(
@@ -558,7 +583,10 @@ function landtech_extras_playground_get_demo_definitions( array $images ) {
 			'group'   => 'Navigation & UI',
 			'intro'   => __( 'Age verification overlay for restricted content.', 'landtech-extras-for-elementor' ),
 			'widgets' => array(
-				landtech_extras_playground_widget( 'ee-age-gate', array() ),
+				landtech_extras_playground_widget(
+					'ee-age-gate',
+					landtech_extras_playground_age_gate_settings()
+				),
 			),
 		),
 		array(
@@ -587,14 +615,45 @@ function landtech_extras_playground_get_demo_definitions( array $images ) {
 			'widgets' => array(
 				landtech_extras_playground_widget(
 					'ee-scroll-indicator',
+					landtech_extras_playground_scroll_indicator_settings()
+				),
+				landtech_extras_playground_widget(
+					'heading',
 					array(
-						'_skin' => 'bar',
+						'title'       => __( 'Part 1 — Start', 'landtech-extras-for-elementor' ),
+						'_element_id' => 'ltxe-scroll-part-1',
 					)
 				),
 				landtech_extras_playground_widget(
 					'text-editor',
 					array(
-						'editor' => str_repeat( '<p>' . esc_html__( 'Scroll down to preview the scroll indicator widget.', 'landtech-extras-for-elementor' ) . '</p>', 12 ),
+						'editor' => str_repeat( '<p>' . esc_html__( 'Scroll to see the indicator track this section.', 'landtech-extras-for-elementor' ) . '</p>', 8 ),
+					)
+				),
+				landtech_extras_playground_widget(
+					'heading',
+					array(
+						'title'       => __( 'Part 2 — Middle', 'landtech-extras-for-elementor' ),
+						'_element_id' => 'ltxe-scroll-part-2',
+					)
+				),
+				landtech_extras_playground_widget(
+					'text-editor',
+					array(
+						'editor' => str_repeat( '<p>' . esc_html__( 'Keep scrolling — the active item and progress ring should update.', 'landtech-extras-for-elementor' ) . '</p>', 8 ),
+					)
+				),
+				landtech_extras_playground_widget(
+					'heading',
+					array(
+						'title'       => __( 'Part 3 — End', 'landtech-extras-for-elementor' ),
+						'_element_id' => 'ltxe-scroll-part-3',
+					)
+				),
+				landtech_extras_playground_widget(
+					'text-editor',
+					array(
+						'editor' => str_repeat( '<p>' . esc_html__( 'Final section — indicator should mark this block as read when you reach the bottom.', 'landtech-extras-for-elementor' ) . '</p>', 8 ),
 					)
 				),
 			),
@@ -603,20 +662,126 @@ function landtech_extras_playground_get_demo_definitions( array $images ) {
 			'title'   => 'Devices Demo',
 			'slug'    => 'demo-devices',
 			'group'   => 'Utilities',
-			'intro'   => __( 'Device mockups for showcasing responsive designs.', 'landtech-extras-for-elementor' ),
+			'intro'   => __( 'Phone mockup with a scrollable screenshot — click the rotate icon to switch orientation.', 'landtech-extras-for-elementor' ),
 			'widgets' => array(
-				landtech_extras_playground_widget( 'devices-extended', array() ),
+				landtech_extras_playground_widget(
+					'devices-extended',
+					landtech_extras_playground_devices_settings( $images )
+				),
 			),
 		),
 		array(
 			'title'   => 'Inline SVG Demo',
 			'slug'    => 'demo-inline-svg',
 			'group'   => 'Utilities',
-			'intro'   => __( 'Inline SVG icon with color and stroke controls.', 'landtech-extras-for-elementor' ),
+			'intro'   => __( 'Inline SVG loaded from a file — hover to see the secondary color; edit Color and Hover Color in the widget.', 'landtech-extras-for-elementor' ),
 			'widgets' => array(
-				landtech_extras_playground_widget( 'ee-inline-svg', array() ),
+				landtech_extras_playground_widget(
+					'ee-inline-svg',
+					landtech_extras_playground_inline_svg_settings()
+				),
 			),
 		),
+	);
+}
+
+/**
+ * Default Calendar widget settings for Playground demos.
+ *
+ * Uses compact skin so clicking an event day slides open the events panel.
+ *
+ * @return array<string,mixed>
+ */
+function landtech_extras_playground_calendar_settings() {
+	$events = array(
+		array(
+			'title' => __( 'Team standup', 'landtech-extras-for-elementor' ),
+			'start' => wp_date( 'Y-m-d 09:00' ),
+			'end'   => wp_date( 'Y-m-d 09:30' ),
+		),
+		array(
+			'title' => __( 'Client review', 'landtech-extras-for-elementor' ),
+			'start' => wp_date( 'Y-m-d 14:00', strtotime( '+3 days' ) ),
+			'end'   => wp_date( 'Y-m-d 15:00', strtotime( '+3 days' ) ),
+		),
+		array(
+			'title' => __( 'Launch day', 'landtech-extras-for-elementor' ),
+			'start' => wp_date( 'Y-m-d 10:00', strtotime( '+10 days' ) ),
+			'end'   => wp_date( 'Y-m-d 18:00', strtotime( '+10 days' ) ),
+		),
+	);
+
+	$repeater = array();
+
+	foreach ( $events as $event ) {
+		$repeater[] = array(
+			'_id'   => landtech_extras_playground_element_id(),
+			'title' => $event['title'],
+			'start' => $event['start'],
+			'end'   => $event['end'],
+			'link'  => array(
+				'url'         => '',
+				'is_external' => '',
+				'nofollow'    => '',
+			),
+		);
+	}
+
+	return array(
+		'source'             => 'manual',
+		'skin'               => 'compact',
+		'event_list_heading' => __( 'Events this month', 'landtech-extras-for-elementor' ),
+		'events'             => $repeater,
+	);
+}
+
+/**
+ * Default Timeline widget settings for Playground demos.
+ *
+ * Uses custom repeater items so the demo works without Elementor Pro.
+ *
+ * @param array<int,int> $images Attachment IDs.
+ * @return array<string,mixed>
+ */
+function landtech_extras_playground_timeline_settings( array $images = array() ) {
+	$milestones = array(
+		array(
+			'date'    => __( 'January 2020', 'landtech-extras-for-elementor' ),
+			'content' => '<h3>' . esc_html__( 'Project kickoff', 'landtech-extras-for-elementor' ) . '</h3><p>' . esc_html__( 'Define goals, wireframes, and the first Elementor layout.', 'landtech-extras-for-elementor' ) . '</p>',
+		),
+		array(
+			'date'    => __( 'June 2021', 'landtech-extras-for-elementor' ),
+			'content' => '<h3>' . esc_html__( 'First launch', 'landtech-extras-for-elementor' ) . '</h3><p>' . esc_html__( 'Ship the homepage and core content with LandTech Extras widgets.', 'landtech-extras-for-elementor' ) . '</p>',
+		),
+		array(
+			'date'    => __( 'March 2023', 'landtech-extras-for-elementor' ),
+			'content' => '<h3>' . esc_html__( 'Growth phase', 'landtech-extras-for-elementor' ) . '</h3><p>' . esc_html__( 'Add galleries, timelines, and interactive navigation patterns.', 'landtech-extras-for-elementor' ) . '</p>',
+		),
+		array(
+			'date'    => __( 'Today', 'landtech-extras-for-elementor' ),
+			'content' => '<h3>' . esc_html__( 'Live preview', 'landtech-extras-for-elementor' ) . '</h3><p>' . esc_html__( 'You are viewing this timeline in WordPress Playground.', 'landtech-extras-for-elementor' ) . '</p>',
+		),
+	);
+
+	$items = array();
+
+	foreach ( $milestones as $index => $milestone ) {
+		$item = array(
+			'_id'     => landtech_extras_playground_element_id(),
+			'date'    => $milestone['date'],
+			'content' => $milestone['content'],
+		);
+
+		if ( ! empty( $images[ $index ] ) ) {
+			$item['image'] = landtech_extras_playground_media( (int) $images[ $index ] );
+		}
+
+		$items[] = $item;
+	}
+
+	return array(
+		'source' => 'custom',
+		'items'  => $items,
 	);
 }
 
@@ -642,6 +807,176 @@ function landtech_extras_playground_posts_extra_settings() {
 }
 
 /**
+ * Default Inline SVG widget settings for Playground demos.
+ *
+ * The widget fetches an SVG by URL on the frontend; empty settings render nothing.
+ *
+ * @return array<string,mixed>
+ */
+function landtech_extras_playground_inline_svg_settings() {
+	$svg_url = trailingslashit( LANDTECH_EXTRAS_URL ) . 'assets/demo/landtech-inline-svg-demo.svg';
+
+	return array(
+		'svg_source'        => 'url',
+		'svg_custom_url'    => array(
+			'url'         => $svg_url,
+			'is_external' => '',
+			'nofollow'    => '',
+		),
+		'svg'               => array(
+			'id'  => 0,
+			'url' => $svg_url,
+		),
+		'sizing'            => 'yes',
+		'width'             => array(
+			'unit' => 'px',
+			'size' => 180,
+		),
+		'maintain_ratio'    => 'yes',
+		'remove_inline_css' => 'yes',
+		'override_colors'   => 'yes',
+		'color'             => '#2563eb',
+		'color_hover'       => '#7c3aed',
+		'align'             => 'center',
+	);
+}
+
+/**
+ * Default Button Group widget settings for Playground demos.
+ *
+ * LandTech button effects require per-button Custom style plus an effect type.
+ *
+ * @return array<string,mixed>
+ */
+function landtech_extras_playground_button_group_settings() {
+	$demo_ids = landtech_extras_playground_button_group_demo_ids();
+
+	$demos = array(
+		array(
+			'text'                      => __( 'Clone', 'landtech-extras-for-elementor' ),
+			'button_effect_type'        => 'clone',
+			'button_effect_direction'   => 'up',
+			'button_effect_entrance'    => 'cover',
+			'background_color'          => '#2563eb',
+			'button_effect_background_color' => '#1e3a8a',
+		),
+		array(
+			'text'                      => __( 'Flip', 'landtech-extras-for-elementor' ),
+			'button_effect_type'        => 'flip',
+			'button_effect_direction'   => 'down',
+			'button_effect_text'        => __( 'Flipped!', 'landtech-extras-for-elementor' ),
+			'background_color'          => '#7c3aed',
+			'button_effect_background_color' => '#5b21b6',
+		),
+		array(
+			'text'                      => __( 'Background', 'landtech-extras-for-elementor' ),
+			'button_effect_type'        => 'back',
+			'button_effect_direction'   => 'left',
+			'background_color'          => '#0f766e',
+			'button_effect_background_color' => '#134e4a',
+		),
+		array(
+			'text'                      => __( '3D', 'landtech-extras-for-elementor' ),
+			'button_effect_type'        => '3d',
+			'button_effect_direction'   => 'down',
+			'background_color'          => '#ea580c',
+			'button_effect_background_color' => '#9a3412',
+		),
+		array(
+			'text'                      => __( 'Cube', 'landtech-extras-for-elementor' ),
+			'button_effect_type'        => 'cube',
+			'button_effect_direction'   => 'right',
+			'button_effect_text'        => __( 'Rotate', 'landtech-extras-for-elementor' ),
+			'background_color'          => '#db2777',
+			'button_effect_background_color' => '#9d174d',
+		),
+	);
+
+	$buttons = array();
+
+	foreach ( $demos as $index => $demo ) {
+		$buttons[] = array_merge(
+			array(
+				'_id'                         => isset( $demo_ids[ $index ] ) ? $demo_ids[ $index ] : landtech_extras_playground_element_id(),
+				'button_custom_style'         => 'yes',
+				'size'                        => 'md',
+				'button_text_color'           => '#ffffff',
+				'button_effect_color'         => '#ffffff',
+				'button_effect_duration'      => 0.35,
+				'button_effect_easing'        => 'ease-in-out',
+			),
+			$demo
+		);
+	}
+
+	return array(
+		'buttons' => $buttons,
+		'gap'     => 'wide',
+		'align'   => 'center',
+	);
+}
+
+/**
+ * Stable repeater IDs for the Playground Button Group demo (used by fallback CSS).
+ *
+ * @return array<int,string>
+ */
+function landtech_extras_playground_button_group_demo_ids() {
+	return array( 'ltxeb01', 'ltxeb02', 'ltxeb03', 'ltxeb04', 'ltxeb05' );
+}
+
+/**
+ * Fallback Elementor page custom CSS for Button Group Playground demos.
+ *
+ * Ensures padding, colors, and effect backgrounds apply when post CSS is missing.
+ *
+ * @return string
+ */
+function landtech_extras_playground_button_group_custom_css() {
+	$styles = array(
+		'ltxeb01' => array(
+			'bg'        => '#2563eb',
+			'effect_bg' => '#1e3a8a',
+			'color'     => '#ffffff',
+		),
+		'ltxeb02' => array(
+			'bg'        => '#7c3aed',
+			'effect_bg' => '#5b21b6',
+			'color'     => '#ffffff',
+		),
+		'ltxeb03' => array(
+			'bg'        => '#0f766e',
+			'effect_bg' => '#134e4a',
+			'color'     => '#ffffff',
+		),
+		'ltxeb04' => array(
+			'bg'        => '#ea580c',
+			'effect_bg' => '#9a3412',
+			'color'     => '#ffffff',
+		),
+		'ltxeb05' => array(
+			'bg'        => '#db2777',
+			'effect_bg' => '#9d174d',
+			'color'     => '#ffffff',
+		),
+	);
+
+	$css = '';
+
+	foreach ( $styles as $id => $colors ) {
+		$selector = '.elementor-widget-button-group .elementor-repeater-item-' . $id;
+
+		$css .= $selector . ' .ee-button-content-wrapper,' . $selector . ' .ee-button:after{padding:12px 28px;}';
+		$css .= $selector . ' .ee-button{background-color:' . $colors['bg'] . ';color:' . $colors['color'] . ';}';
+		$css .= $selector . '.ee-effect--background .ee-button:before{background-color:' . $colors['effect_bg'] . ';}';
+		$css .= $selector . '.ee-effect--foreground .ee-button:after{color:' . $colors['color'] . ';}';
+		$css .= $selector . ' .ee-button:before,' . $selector . ' .ee-button:after,' . $selector . ' .ee-button,' . $selector . ' .ee-button-content-wrapper{transition-duration:.35s;transition-timing-function:ease-in-out;}';
+	}
+
+	return $css;
+}
+
+/**
  * Default Switcher widget settings for Playground demos.
  *
  * @param array<int,int> $images Attachment IDs.
@@ -653,26 +988,37 @@ function landtech_extras_playground_switcher_settings( array $images ) {
 			'label'       => __( 'Design', 'landtech-extras-for-elementor' ),
 			'title'       => __( 'Design your layout', 'landtech-extras-for-elementor' ),
 			'description' => __( 'Plan sections, typography, and imagery before you publish.', 'landtech-extras-for-elementor' ),
+			'image_seed'  => 'switcher-design',
 		),
 		array(
 			'label'       => __( 'Build', 'landtech-extras-for-elementor' ),
 			'title'       => __( 'Build with Elementor', 'landtech-extras-for-elementor' ),
 			'description' => __( 'Combine LandTech Extras widgets with Elementor controls on the canvas.', 'landtech-extras-for-elementor' ),
+			'image_seed'  => 'switcher-build',
 		),
 		array(
 			'label'       => __( 'Launch', 'landtech-extras-for-elementor' ),
 			'title'       => __( 'Launch your site', 'landtech-extras-for-elementor' ),
 			'description' => __( 'Preview interactions like this switcher before going live.', 'landtech-extras-for-elementor' ),
+			'image_seed'  => 'switcher-launch',
 		),
 	);
 
-	$items = array();
+	$panel_ids = array( 'ltxes01', 'ltxes02', 'ltxes03' );
+	$items     = array();
 
 	foreach ( $panels as $index => $panel ) {
-		$image = ! empty( $images[ $index ] ) ? landtech_extras_playground_media( (int) $images[ $index ] ) : array( 'url' => '' );
+		if ( ! empty( $images[ $index ] ) ) {
+			$image = landtech_extras_playground_media( (int) $images[ $index ] );
+		} else {
+			$image = array(
+				'id'  => 0,
+				'url' => 'https://picsum.photos/seed/' . rawurlencode( 'landtech-' . $panel['image_seed'] ) . '/900/600',
+			);
+		}
 
 		$items[] = array(
-			'_id'         => landtech_extras_playground_element_id(),
+			'_id'         => isset( $panel_ids[ $index ] ) ? $panel_ids[ $index ] : landtech_extras_playground_element_id(),
 			'title'       => $panel['title'],
 			'label'       => $panel['label'],
 			'description' => $panel['description'],
@@ -681,8 +1027,191 @@ function landtech_extras_playground_switcher_settings( array $images ) {
 	}
 
 	return array(
-		'description' => 'yes',
-		'items'       => $items,
+		'_skin'           => 'classic',
+		'description'     => 'yes',
+		'effect_entrance' => '',
+		'menu'            => 'show',
+		'menu_tablet'     => 'show',
+		'menu_mobile'     => 'show',
+		'speed'           => array(
+			'size' => 0.8,
+			'unit' => 'px',
+		),
+		'items'           => $items,
+	);
+}
+
+/**
+ * Fallback Elementor page custom CSS for Switcher Playground demos.
+ *
+ * @return string
+ */
+function landtech_extras_playground_switcher_custom_css() {
+	return '.elementor-widget-ee-switcher .ee-switcher__nav__item{color:#0f172a;}'
+		. '.elementor-widget-ee-switcher .ee-switcher__nav__item.is--active{color:#2563eb;}'
+		. '.elementor-widget-ee-switcher .ee-switcher__title{color:#0f172a;}'
+		. '.elementor-widget-ee-switcher .ee-switcher__descriptions__description{color:#475569;}'
+		. '.elementor-widget-ee-switcher .ee-switcher__wrapper{min-height:420px;}';
+}
+
+/**
+ * Default Devices widget settings for Playground demos.
+ *
+ * @param array<int,int> $images Attachment IDs.
+ * @return array<string,mixed>
+ */
+function landtech_extras_playground_devices_settings( array $images ) {
+	$screenshot_id = 0;
+
+	if ( ! empty( $images[7] ) ) {
+		$screenshot_id = (int) $images[7];
+	} elseif ( ! empty( $images[0] ) ) {
+		$screenshot_id = (int) $images[0];
+	}
+
+	$settings = array(
+		'device_type'                          => 'phone',
+		'device_media_type'                    => 'image',
+		'device_orientation_control'           => 'yes',
+		'media_portrait_screenshot_scrollable' => 'scrollable',
+		'device_width'                         => array(
+			'size' => 300,
+			'unit' => 'px',
+		),
+	);
+
+	if ( $screenshot_id > 0 ) {
+		$settings['media_portrait_screenshot'] = landtech_extras_playground_media( $screenshot_id );
+	} else {
+		$settings['media_portrait_screenshot'] = array(
+			'id'  => 0,
+			'url' => 'https://picsum.photos/seed/landtech-device/640/1136',
+		);
+	}
+
+	return $settings;
+}
+
+/**
+ * Default Scroll Indicator widget settings for Playground demos.
+ *
+ * @return array<string,mixed>
+ */
+function landtech_extras_playground_scroll_indicator_settings() {
+	return array(
+		'_skin'    => 'list',
+		'sections' => array(
+			array(
+				'_id'                 => landtech_extras_playground_element_id(),
+				'selector'            => 'ltxe-scroll-part-1',
+				'title'               => __( 'Part 1', 'landtech-extras-for-elementor' ),
+				'subtitle'            => __( 'Start of page', 'landtech-extras-for-elementor' ),
+				'progress_start'      => 'top-top',
+				'progress_end'        => 'top-bottom',
+				'progress_start_offset' => array(
+					'size' => 0,
+					'unit' => 'px',
+				),
+				'progress_end_offset' => array(
+					'size' => 0,
+					'unit' => 'px',
+				),
+			),
+			array(
+				'_id'                 => landtech_extras_playground_element_id(),
+				'selector'            => 'ltxe-scroll-part-2',
+				'title'               => __( 'Part 2', 'landtech-extras-for-elementor' ),
+				'subtitle'            => __( 'Middle section', 'landtech-extras-for-elementor' ),
+				'progress_start'      => 'top-top',
+				'progress_end'        => 'top-bottom',
+				'progress_start_offset' => array(
+					'size' => 0,
+					'unit' => 'px',
+				),
+				'progress_end_offset' => array(
+					'size' => 0,
+					'unit' => 'px',
+				),
+			),
+			array(
+				'_id'                 => landtech_extras_playground_element_id(),
+				'selector'            => 'ltxe-scroll-part-3',
+				'title'               => __( 'Part 3', 'landtech-extras-for-elementor' ),
+				'subtitle'            => __( 'End of page', 'landtech-extras-for-elementor' ),
+				'progress_start'      => 'top-top',
+				'progress_end'        => 'top-bottom',
+				'progress_start_offset' => array(
+					'size' => 0,
+					'unit' => 'px',
+				),
+				'progress_end_offset' => array(
+					'size' => 0,
+					'unit' => 'px',
+				),
+			),
+		),
+	);
+}
+
+/**
+ * Default Age Gate widget settings for Playground demos.
+ *
+ * @return array<string,mixed>
+ */
+function landtech_extras_playground_age_gate_settings() {
+	return array(
+		'_skin'           => 'classic',
+		'age'             => 18,
+		'title'           => __( 'Age verification', 'landtech-extras-for-elementor' ),
+		'description'     => __( 'Please confirm your age to continue browsing this demo site.', 'landtech-extras-for-elementor' ),
+		'button_text'     => __( 'Let me in', 'landtech-extras-for-elementor' ),
+		'popup_open_admin' => 'yes',
+	);
+}
+
+/**
+ * Default Popup widget settings for Playground demos.
+ *
+ * @return array<string,mixed>
+ */
+function landtech_extras_playground_popup_settings() {
+	return array(
+		'_skin'              => 'classic',
+		'popup_type'         => 'text',
+		'popup_trigger'      => 'click',
+		'popup_click_target' => 'text',
+		'popup_trigger_text' => __( 'Open modal', 'landtech-extras-for-elementor' ),
+		'popup_title'        => __( 'LandTech Extras Popup', 'landtech-extras-for-elementor' ),
+		'popup_content'      => '<p>' . esc_html__( 'This modal is powered by the Popup widget and GLightbox. Use it for announcements, newsletter signups, terms, or any message that should not take over the whole page.', 'landtech-extras-for-elementor' ) . '</p><p>' . esc_html__( 'Configure trigger type (click, scroll, exit intent), animation, overlay, and close behavior under the widget settings.', 'landtech-extras-for-elementor' ) . '</p>',
+		'popup_close_on_bg'  => 'yes',
+	);
+}
+
+/**
+ * Default Unfold widget settings for Playground demos.
+ *
+ * Requires non-empty WYSIWYG content and a visible percentage below 100 or the trigger is hidden.
+ *
+ * @return array<string,mixed>
+ */
+function landtech_extras_playground_unfold_settings() {
+	$content = '<p>' . esc_html__( 'LandTech Extras for Elementor adds creative widgets on top of Elementor — gallery sliders, interactive navigation, posts layouts, maps, and more.', 'landtech-extras-for-elementor' ) . '</p>';
+	$content .= '<p>' . esc_html__( 'The Unfold widget truncates long copy with a gradient fade and animates the rest into view when visitors click Read more. Use it for bios, product details, legal text, or any section where you want a cleaner first impression without losing the full story.', 'landtech-extras-for-elementor' ) . '</p>';
+	$content .= '<p>' . esc_html__( 'Adjust the visible percentage, animation speed, and button labels in the widget panel. Click the button below to preview the unfold animation on this demo page.', 'landtech-extras-for-elementor' ) . '</p>';
+
+	return array(
+		'content'              => $content,
+		'visible_percentage'   => array(
+			'size' => 35,
+		),
+		'text_closed'          => __( 'Read more', 'landtech-extras-for-elementor' ),
+		'text_open'            => __( 'Read less', 'landtech-extras-for-elementor' ),
+		'duration_unfold'      => array(
+			'size' => 0.6,
+		),
+		'duration_fold'        => array(
+			'size' => 0.5,
+		),
 	);
 }
 
@@ -711,11 +1240,12 @@ function landtech_extras_playground_toggle_settings() {
 /**
  * Persist Elementor canvas JSON using the document API when available.
  *
- * @param int   $page_id  Page ID.
- * @param array $elements Elementor element tree.
+ * @param int                $page_id        Page ID.
+ * @param array              $elements       Elementor element tree.
+ * @param array<string,mixed> $page_settings Optional document settings.
  * @return void
  */
-function landtech_extras_playground_save_elementor_data( $page_id, array $elements ) {
+function landtech_extras_playground_save_elementor_data( $page_id, array $elements, array $page_settings = array() ) {
 	$page_id = absint( $page_id );
 
 	if ( $page_id <= 0 ) {
@@ -733,21 +1263,58 @@ function landtech_extras_playground_save_elementor_data( $page_id, array $elemen
 		$document = \Elementor\Plugin::$instance->documents->get( $page_id, false );
 
 		if ( $document ) {
-			$document->save(
-				array(
-					'elements' => $elements,
-					'settings' => array(),
-				)
+			$save_payload = array(
+				'elements' => $elements,
 			);
-			return;
+
+			if ( ! empty( $page_settings ) ) {
+				$save_payload['settings'] = $page_settings;
+			}
+
+			$saved = $document->save( $save_payload );
+
+			if ( $saved ) {
+				landtech_extras_playground_regenerate_elementor_css( $page_id );
+				return;
+			}
 		}
 	}
 
 	update_post_meta( $page_id, '_elementor_data', wp_slash( wp_json_encode( $elements ) ) );
 	delete_post_meta( $page_id, '_elementor_css' );
 
+	if ( ! empty( $page_settings ) ) {
+		update_post_meta( $page_id, '_elementor_page_settings', $page_settings );
+
+		if ( ! empty( $page_settings['template'] ) ) {
+			update_post_meta( $page_id, '_wp_page_template', $page_settings['template'] );
+		}
+	}
+
 	if ( class_exists( '\Elementor\Plugin' ) ) {
 		\Elementor\Plugin::$instance->db->save_plain_text( $page_id );
+	}
+
+	landtech_extras_playground_regenerate_elementor_css( $page_id );
+}
+
+/**
+ * Regenerate Elementor post CSS so repeater control styles (e.g. button effects) apply on seeded demos.
+ *
+ * @param int $page_id Page ID.
+ * @return void
+ */
+function landtech_extras_playground_regenerate_elementor_css( $page_id ) {
+	$page_id = absint( $page_id );
+
+	if ( $page_id <= 0 || ! class_exists( '\Elementor\Core\Files\CSS\Post' ) ) {
+		return;
+	}
+
+	$css_file = \Elementor\Core\Files\CSS\Post::create( $page_id );
+
+	if ( $css_file ) {
+		$css_file->update();
 	}
 }
 
@@ -756,9 +1323,10 @@ function landtech_extras_playground_save_elementor_data( $page_id, array $elemen
  * @param string $slug    Page slug.
  * @param string $intro   Intro paragraph for the demo page.
  * @param array  $widgets Widget element trees for the demo section.
+ * @param array<string,mixed> $page_settings Optional Elementor document settings merged with defaults.
  * @return int Page ID or 0.
  */
-function landtech_extras_playground_create_elementor_page( $title, $slug, $intro, array $widgets ) {
+function landtech_extras_playground_create_elementor_page( $title, $slug, $intro, array $widgets, array $page_settings = array() ) {
 	$page_id = wp_insert_post(
 		array(
 			'post_title'   => $title,
@@ -786,55 +1354,209 @@ function landtech_extras_playground_create_elementor_page( $title, $slug, $intro
 		landtech_extras_playground_section( $widgets ),
 	);
 
-	landtech_extras_playground_save_elementor_data( $page_id, $data );
+	landtech_extras_playground_save_elementor_data(
+		$page_id,
+		$data,
+		array_merge( landtech_extras_playground_page_settings(), $page_settings )
+	);
 
 	return (int) $page_id;
 }
 
 /**
- * @param array<string,array<int,array<string,mixed>>> $groups Demo groups for the homepage grid.
- * @param array<string,int>                            $pages  Slug => page ID map.
- * @return int Homepage ID.
+ * Elementor document settings shared by Playground demo pages.
+ *
+ * Must be a PHP array — Elementor expects `_elementor_page_settings` to be serialized array data.
+ *
+ * @return array<string,string>
  */
-function landtech_extras_playground_create_homepage( array $groups, array $pages ) {
-	$sections_html = '';
+function landtech_extras_playground_page_settings() {
+	return array(
+		'hide_title' => 'yes',
+		'template'   => 'elementor_header_footer',
+	);
+}
+
+/**
+ * Assign Elementor page template meta for demo pages.
+ *
+ * @param int $page_id Page ID.
+ * @return void
+ */
+function landtech_extras_playground_set_elementor_page_template( $page_id ) {
+	$page_id = absint( $page_id );
+
+	if ( $page_id <= 0 ) {
+		return;
+	}
+
+	update_post_meta( $page_id, '_wp_page_template', 'elementor_header_footer' );
+	update_post_meta( $page_id, '_elementor_page_settings', landtech_extras_playground_page_settings() );
+}
+
+/**
+ * Build styled homepage markup (CSS + demo card grid) for the Playground landing page.
+ *
+ * @param array<string,array<int,array<string,mixed>>> $groups Demo groups.
+ * @param array<int,array<string,mixed>>             $demos  Full demo definitions (for intros).
+ * @param array<int,int>                               $images Attachment IDs for hero art.
+ * @return string HTML for Elementor HTML widget.
+ */
+function landtech_extras_playground_build_homepage_html( array $groups, array $demos, array $images = array() ) {
+	$intro_by_slug = array();
+
+	foreach ( $demos as $demo ) {
+		if ( empty( $demo['slug'] ) ) {
+			continue;
+		}
+
+		$intro_by_slug[ $demo['slug'] ] = isset( $demo['intro'] ) ? $demo['intro'] : '';
+	}
+
+	$widget_count = 0;
+
+	foreach ( $groups as $items ) {
+		$widget_count += count( $items );
+	}
+
+	$hero_style = '';
+
+	if ( ! empty( $images[0] ) ) {
+		$hero_url = wp_get_attachment_url( (int) $images[0] );
+
+		if ( $hero_url ) {
+			$hero_style = ' style="background-image:linear-gradient(135deg,rgba(15,23,42,.88),rgba(30,64,175,.72)),url(' . esc_url( $hero_url ) . ');"';
+		}
+	}
+
+	$html  = '<style>';
+	$html .= '.ltxe-playground-home{--ltxe-ph-accent:#2563eb;--ltxe-ph-accent-soft:#dbeafe;--ltxe-ph-ink:#0f172a;--ltxe-ph-muted:#475569;--ltxe-ph-border:#e2e8f0;--ltxe-ph-card:#fff;--ltxe-ph-radius:16px;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:var(--ltxe-ph-ink);line-height:1.6}';
+	$html .= '.ltxe-playground-home *,.ltxe-playground-home *::before,.ltxe-playground-home *::after{box-sizing:border-box}';
+	$html .= '.ltxe-ph-hero{padding:clamp(2.5rem,6vw,4.5rem) clamp(1.25rem,4vw,2.5rem);background:#0f172a center/cover no-repeat;color:#fff;text-align:center;border-radius:0 0 var(--ltxe-ph-radius) var(--ltxe-ph-radius);margin:0 0 2rem}';
+	$html .= '.ltxe-ph-hero__inner{max-width:760px;margin:0 auto}';
+	$html .= '.ltxe-ph-badge{display:inline-block;margin:0 0 1rem;padding:.35rem .85rem;border-radius:999px;background:rgba(255,255,255,.14);font-size:.78rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase}';
+	$html .= '.ltxe-ph-hero h1{margin:0 0 .75rem;font-size:clamp(1.85rem,4vw,2.75rem);line-height:1.15;font-weight:800}';
+	$html .= '.ltxe-ph-lead{margin:0 auto 1.5rem;max-width:640px;font-size:clamp(1rem,2vw,1.125rem);color:rgba(255,255,255,.92)}';
+	$html .= '.ltxe-ph-stats{display:flex;flex-wrap:wrap;justify-content:center;gap:.75rem}';
+	$html .= '.ltxe-ph-stat{min-width:7.5rem;padding:.75rem 1rem;border-radius:12px;background:rgba(255,255,255,.12);backdrop-filter:blur(6px)}';
+	$html .= '.ltxe-ph-stat strong{display:block;font-size:1.35rem;line-height:1.2}';
+	$html .= '.ltxe-ph-stat span{font-size:.82rem;opacity:.9}';
+	$html .= '.ltxe-ph-main{max-width:1120px;margin:0 auto;padding:0 clamp(1rem,3vw,1.5rem) 3rem}';
+	$html .= '.ltxe-ph-actions{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center;margin:0 0 2.5rem}';
+	$html .= '.ltxe-ph-btn{display:inline-flex;align-items:center;gap:.35rem;padding:.7rem 1.15rem;border-radius:999px;font-weight:600;text-decoration:none;transition:transform .15s ease,box-shadow .15s ease}';
+	$html .= '.ltxe-ph-btn:hover{transform:translateY(-1px)}';
+	$html .= '.ltxe-ph-btn--primary{background:var(--ltxe-ph-accent);color:#fff;box-shadow:0 10px 24px rgba(37,99,235,.25)}';
+	$html .= '.ltxe-ph-btn--ghost{background:#fff;color:var(--ltxe-ph-accent);border:1px solid var(--ltxe-ph-border)}';
+	$html .= '.ltxe-ph-group{margin:0 0 2.5rem}';
+	$html .= '.ltxe-ph-group__head{display:flex;align-items:center;gap:.75rem;margin:0 0 1rem;padding-bottom:.65rem;border-bottom:2px solid var(--ltxe-ph-border)}';
+	$html .= '.ltxe-ph-group__icon{width:2.5rem;height:2.5rem;border-radius:10px;display:grid;place-items:center;font-size:1.1rem;background:var(--ltxe-ph-accent-soft);color:var(--ltxe-ph-accent);flex-shrink:0}';
+	$html .= '.ltxe-ph-group h2{margin:0;font-size:1.25rem}';
+	$html .= '.ltxe-ph-group p{margin:.15rem 0 0;font-size:.92rem;color:var(--ltxe-ph-muted)}';
+	$html .= '.ltxe-ph-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem}';
+	$html .= '.ltxe-ph-card{display:flex;flex-direction:column;min-height:100%;padding:1.1rem 1.15rem;border:1px solid var(--ltxe-ph-border);border-radius:14px;background:var(--ltxe-ph-card);text-decoration:none;color:inherit;box-shadow:0 1px 2px rgba(15,23,42,.04);transition:border-color .15s ease,box-shadow .15s ease,transform .15s ease}';
+	$html .= '.ltxe-ph-card:hover{border-color:#93c5fd;box-shadow:0 14px 30px rgba(37,99,235,.12);transform:translateY(-2px)}';
+	$html .= '.ltxe-ph-card h3{margin:0 0 .45rem;font-size:1rem;line-height:1.35;color:var(--ltxe-ph-ink)}';
+	$html .= '.ltxe-ph-card p{margin:0 0 .85rem;flex:1;font-size:.88rem;color:var(--ltxe-ph-muted)}';
+	$html .= '.ltxe-ph-card__cta{margin-top:auto;font-size:.82rem;font-weight:700;color:var(--ltxe-ph-accent)}';
+	$html .= '.ltxe-ph-footer{margin-top:2rem;padding:1.25rem 1.5rem;border-radius:14px;background:#f8fafc;border:1px solid var(--ltxe-ph-border);text-align:center;font-size:.92rem;color:var(--ltxe-ph-muted)}';
+	$html .= '.ltxe-ph-footer a{color:var(--ltxe-ph-accent);font-weight:600;text-decoration:none}';
+	$html .= '@media (max-width:640px){.ltxe-ph-stats{flex-direction:column;align-items:stretch}.ltxe-ph-stat{min-width:0}}';
+	$html .= '</style>';
+
+	$html .= '<div class="ltxe-playground-home">';
+	$html .= '<header class="ltxe-ph-hero"' . $hero_style . '>';
+	$html .= '<div class="ltxe-ph-hero__inner">';
+	$html .= '<span class="ltxe-ph-badge">' . esc_html__( 'WordPress Playground', 'landtech-extras-for-elementor' ) . '</span>';
+	$html .= '<h1>' . esc_html__( 'LandTech Extras for Elementor', 'landtech-extras-for-elementor' ) . '</h1>';
+	$html .= '<p class="ltxe-ph-lead">' . esc_html__( 'Explore every free widget in this live preview. Each card opens a dedicated demo page with sample content. Log in as admin / password to edit with Elementor.', 'landtech-extras-for-elementor' ) . '</p>';
+	$html .= '<div class="ltxe-ph-stats">';
+	$html .= '<div class="ltxe-ph-stat"><strong>' . esc_html( (string) $widget_count ) . '</strong><span>' . esc_html__( 'Widget demos', 'landtech-extras-for-elementor' ) . '</span></div>';
+	$html .= '<div class="ltxe-ph-stat"><strong>' . esc_html( (string) count( $groups ) ) . '</strong><span>' . esc_html__( 'Categories', 'landtech-extras-for-elementor' ) . '</span></div>';
+	$html .= '<div class="ltxe-ph-stat"><strong>100%</strong><span>' . esc_html__( 'Free plugin', 'landtech-extras-for-elementor' ) . '</span></div>';
+	$html .= '</div></div></header>';
+
+	$html .= '<main class="ltxe-ph-main">';
+	$html .= '<div class="ltxe-ph-actions">';
+	$html .= '<a class="ltxe-ph-btn ltxe-ph-btn--primary" href="' . esc_url( admin_url( 'admin.php?page=elementor' ) ) . '">' . esc_html__( 'Open Elementor', 'landtech-extras-for-elementor' ) . '</a>';
+	$html .= '<a class="ltxe-ph-btn ltxe-ph-btn--ghost" href="' . esc_url( admin_url( 'admin.php?page=landtech-extras' ) ) . '">' . esc_html__( 'LandTech Extras settings', 'landtech-extras-for-elementor' ) . '</a>';
+	$html .= '</div>';
+
+	$group_icons = array(
+		'Media & Gallery'      => '🖼',
+		'Forms & Search'       => '🔍',
+		'Content & Posts'      => '📝',
+		'Typography & Buttons' => '✏️',
+		'Maps & Location'      => '📍',
+		'Navigation & UI'      => '🧭',
+		'Utilities'            => '⚙️',
+	);
 
 	foreach ( $groups as $group_name => $items ) {
-		$sections_html .= '<h3>' . esc_html( $group_name ) . '</h3><ul>';
+		$icon = isset( $group_icons[ $group_name ] ) ? $group_icons[ $group_name ] : '✦';
+
+		$html .= '<section class="ltxe-ph-group">';
+		$html .= '<div class="ltxe-ph-group__head">';
+		$html .= '<span class="ltxe-ph-group__icon" aria-hidden="true">' . esc_html( $icon ) . '</span>';
+		$html .= '<div><h2>' . esc_html( $group_name ) . '</h2>';
+		$html .= '<p>' . esc_html(
+			sprintf(
+				/* translators: %d: number of widget demos in this category. */
+				_n( '%d interactive demo', '%d interactive demos', count( $items ), 'landtech-extras-for-elementor' ),
+				count( $items )
+			)
+		) . '</p></div></div>';
+		$html .= '<div class="ltxe-ph-grid">';
 
 		foreach ( $items as $item ) {
 			$url = get_permalink( $item['page_id'] );
+
 			if ( ! $url ) {
 				continue;
 			}
-			$sections_html .= '<li><a href="' . esc_url( $url ) . '">' . esc_html( $item['title'] ) . '</a></li>';
+
+			$slug  = isset( $item['slug'] ) ? $item['slug'] : '';
+			$intro = isset( $intro_by_slug[ $slug ] ) ? $intro_by_slug[ $slug ] : '';
+
+			$html .= '<a class="ltxe-ph-card" href="' . esc_url( $url ) . '">';
+			$html .= '<h3>' . esc_html( $item['title'] ) . '</h3>';
+
+			if ( '' !== $intro ) {
+				$html .= '<p>' . esc_html( $intro ) . '</p>';
+			}
+
+			$html .= '<span class="ltxe-ph-card__cta">' . esc_html__( 'View demo →', 'landtech-extras-for-elementor' ) . '</span>';
+			$html .= '</a>';
 		}
 
-		$sections_html .= '</ul>';
+		$html .= '</div></section>';
 	}
 
-	$editor = landtech_extras_playground_widget(
-		'text-editor',
-		array(
-			'editor' => '<h1>' . esc_html__( 'LandTech Extras for Elementor', 'landtech-extras-for-elementor' ) . '</h1>'
-				. '<p>' . esc_html__( 'Welcome to the live Playground demo. Each link below opens a dedicated page showcasing one widget or extension from the free WordPress.org plugin. Log in as admin / password to edit any page with Elementor or manage widgets under Elementor → LandTech Extras.', 'landtech-extras-for-elementor' ) . '</p>'
-				. '<p><a href="' . esc_url( admin_url( 'admin.php?page=landtech-extras' ) ) . '">' . esc_html__( 'Open LandTech Extras settings', 'landtech-extras-for-elementor' ) . '</a></p>'
-				. $sections_html,
-		)
-	);
+	$html .= '<div class="ltxe-ph-footer">';
+	$html .= esc_html__( 'This sandbox installs Elementor and LandTech Extras from WordPress.org only — no premium add-on.', 'landtech-extras-for-elementor' );
+	$html .= ' <a href="https://wordpress.org/plugins/landtech-extras-for-elementor/" target="_blank" rel="noopener noreferrer">' . esc_html__( 'View on WordPress.org', 'landtech-extras-for-elementor' ) . '</a>';
+	$html .= '</div>';
+	$html .= '</main></div>';
 
-	$hero = landtech_extras_playground_widget(
-		'heading-extended',
+	return $html;
+}
+
+/**
+ * @param array<string,array<int,array<string,mixed>>> $groups Demo groups for the homepage grid.
+ * @param array<string,int>                            $pages  Slug => page ID map.
+ * @param array<int,array<string,mixed>>               $demos  Demo definitions (intros).
+ * @param array<int,int>                               $images Attachment IDs for hero styling.
+ * @return int Homepage ID.
+ */
+function landtech_extras_playground_create_homepage( array $groups, array $pages, array $demos = array(), array $images = array() ) {
+	$homepage_html = landtech_extras_playground_widget(
+		'html',
 		array(
-			'title'       => __( 'Explore every LandTech Extras widget', 'landtech-extras-for-elementor' ),
-			'header_size' => 'h1',
-			'size'        => 'xl',
+			'html' => landtech_extras_playground_build_homepage_html( $groups, $demos, $images ),
 		)
 	);
 
 	$data = array(
-		landtech_extras_playground_section( array( $hero ) ),
-		landtech_extras_playground_section( array( $editor ) ),
+		landtech_extras_playground_section( array( $homepage_html ) ),
 	);
 
 	$page_id = wp_insert_post(
@@ -851,7 +1573,11 @@ function landtech_extras_playground_create_homepage( array $groups, array $pages
 		return 0;
 	}
 
-	landtech_extras_playground_save_elementor_data( $page_id, $data );
+	landtech_extras_playground_save_elementor_data(
+		$page_id,
+		$data,
+		landtech_extras_playground_page_settings()
+	);
 
 	return (int) $page_id;
 }

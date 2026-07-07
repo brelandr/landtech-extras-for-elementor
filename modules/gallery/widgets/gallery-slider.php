@@ -3825,6 +3825,7 @@ class Gallery_Slider extends Extras_Widget {
 
 			$gallery_media_key = $this->get_repeater_setting_key( 'gallery-media', 'wp_gallery', $index );
 			$gallery_media_wrapper_key = $this->get_repeater_setting_key( 'gallery-media-wrapper', 'wp_gallery', $index );
+			$gallery_item_key    = $this->get_repeater_setting_key( 'gallery-item', 'wp_gallery', $index );
 
 			$this->add_render_attribute( [
 				$gallery_media_key => [
@@ -3839,6 +3840,9 @@ class Gallery_Slider extends Extras_Widget {
 						'ee-gallery__media-wrapper',
 					],
 				],
+				$gallery_item_key => [
+					'data-gallery-index' => (string) $index,
+				],
 			] );
 
 			if ( empty( $image ) )
@@ -3846,7 +3850,7 @@ class Gallery_Slider extends Extras_Widget {
 
 			?>
 
-			<div <?php $this->print_render_attribute_string( 'gallery-item' ); ?>>
+			<div <?php $this->print_render_attribute_string( 'gallery-item' ); ?> <?php $this->print_render_attribute_string( $gallery_item_key ); ?>>
 
 				<<?php echo esc_html( $this->get_gallery_media_tag_name( $media_tag ) ); ?> <?php $this->print_render_attribute_string( $gallery_media_key ); ?>>
 					<div <?php $this->print_render_attribute_string( $gallery_media_wrapper_key ); ?>>
@@ -3986,6 +3990,15 @@ class Gallery_Slider extends Extras_Widget {
 
 		foreach ( $gallery as $index => $item ) {
 			$url 		= Group_Control_Image_Size::get_attachment_image_src( $item['id'], 'preview', $settings );
+
+			if ( ! $url && ! empty( $item['url'] ) ) {
+				$url = $item['url'];
+			}
+
+			if ( ! $url ) {
+				continue;
+			}
+
 			$link 		= Module::get_link_url( $item, $settings );
 			$captions 	= $settings['caption_type'] ? ImageModule::get_image_caption( $item['id'], $settings['caption_type'] ) : false;
 
@@ -4003,6 +4016,7 @@ class Gallery_Slider extends Extras_Widget {
 						'ee-swiper__slide',
 						'swiper-slide',
 					],
+					'data-gallery-index' => (string) $index,
 				],
 				$media_key => [
 					'class' => [

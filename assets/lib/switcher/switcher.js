@@ -469,6 +469,20 @@
 				$arrowCircle 		= $arrowNext.find( '.ee-arrow__svg' );
 				$arrowTimer 		= $arrowCircle.find( '.ee-arrow__circle--loader' );
 
+				$element.find( '.ee-switcher' ).addClass( 'is--loaded' );
+
+				if ( ! $mediaItems.length ) {
+					return;
+				}
+
+				if ( ! plugin.opts.mediaEffect ) {
+					plugin.opts.mediaEffect = 'swipeLeft';
+				}
+
+				if ( ! plugin.opts.contentEffect ) {
+					plugin.opts.contentEffect = 'slideLeft';
+				}
+
 				$background 		= plugin.opts.background;
 				
 				_current    		= plugin.opts.defaultIndex;
@@ -493,10 +507,13 @@
 				plugin.setEffects( _direction );
 				plugin.setArrowsClasses();
 
+				var _mediaEffectConfig = _effects.media[ plugin.opts.mediaEffect ] || _effects.media.swipeLeft,
+					_contentEffectConfig = _effects.content[ plugin.opts.contentEffect ] || _effects.content.slideLeft;
+
 				// Prepare items
-				TweenMax.set( $mediaItems, _effects.media[ plugin.opts.mediaEffect ].prepareItems );
-				TweenMax.set( $imageItems, _effects.media[ plugin.opts.mediaEffect ].prepareImages );
-				TweenMax.set( $contentItems, _effects.content[ plugin.opts.contentEffect ].prepareItems );
+				TweenMax.set( $mediaItems, _mediaEffectConfig.prepareItems );
+				TweenMax.set( $imageItems, _mediaEffectConfig.prepareImages );
+				TweenMax.set( $contentItems, _contentEffectConfig.prepareItems );
 				TweenMax.set( $descItems, { autoAlpha: 0 } );
 
 				// Prepare background
@@ -506,15 +523,13 @@
 
 				// Prepare next items
 				if ( ! plugin.opts.entranceAnimation ) {
-					TweenMax.set( $thisMediaItem, _effects.media[ plugin.opts.mediaEffect ].prepareFirst );
-					TweenMax.set( $thisImageItem, _effects.media[ plugin.opts.mediaEffect ].prepareFirstImage );
-					TweenMax.set( $thisContentItem, _effects.content[ plugin.opts.contentEffect ].prepareFirst );
+					TweenMax.set( $thisMediaItem, _mediaEffectConfig.prepareFirst );
+					TweenMax.set( $thisImageItem, _mediaEffectConfig.prepareFirstImage );
+					TweenMax.set( $thisContentItem, _contentEffectConfig.prepareFirst );
 					TweenMax.set( $thisDescItem, { autoAlpha: 1 } );
 				} else {
-					TweenMax.set( [ $nav, $arrows ], { autoAlpha: 0 } );
+					TweenMax.set( $nav.add( $arrows ), { autoAlpha: 0 } );
 				}
-
-				$element.find('.ee-switcher').addClass( 'is--loaded' );
 
 				$contentItems.each( function( index ) {
 					var $title = $( this ).find( plugin.opts.titleSelector );
@@ -578,6 +593,8 @@
 				
 				$element.on( '_appear', plugin.onAppear );
 
+				plugin.maybeAppear();
+				plugin.scheduleAppearFallback();
 			};
 
 			plugin.onAppear = function() {
@@ -592,6 +609,48 @@
 
 					_appeared = true;
 				}
+			};
+
+			plugin.maybeAppear = function() {
+				if ( _appeared ) {
+					return;
+				}
+
+				if ( 'function' === typeof $.force_appear ) {
+					$.force_appear();
+				}
+
+				window.requestAnimationFrame( function() {
+					if ( _appeared ) {
+						return;
+					}
+
+					var isInView = $element.is( ':visible' );
+
+					if ( isInView && 'function' === typeof $.fn.visible ) {
+						isInView = $element.visible( true, false, 'vertical' );
+					}
+
+					if ( ! isInView && $element.length && $element[0].getBoundingClientRect ) {
+						var rect = $element[0].getBoundingClientRect();
+
+						if ( rect.width > 0 && rect.height > 0 && rect.top < window.innerHeight && rect.bottom > 0 ) {
+							isInView = true;
+						}
+					}
+
+					if ( isInView ) {
+						plugin.onAppear();
+					}
+				} );
+			};
+
+			plugin.scheduleAppearFallback = function() {
+				window.setTimeout( function() {
+					if ( ! _appeared ) {
+						plugin.onAppear();
+					}
+				}, 450 );
 			};
 
 			plugin.onArrowClick = function( direction ) {
@@ -943,7 +1002,7 @@
 					TweenMax.set( $lastContentItem, { autoAlpha: 0 } );
 					TweenMax.set( $lastDescItem, { autoAlpha: 0 } );
 				} else if ( plugin.opts.entranceAnimation ) {
-					TweenMax.to( [ $nav, $arrows ], 0.3, { autoAlpha: 1, ease: _easing } );
+					TweenMax.to( $nav.add( $arrows ), 0.3, { autoAlpha: 1, ease: _easing } );
 				}
 
 				_isAnimating    = false;

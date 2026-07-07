@@ -456,3 +456,16 @@ class Utils {
 function landtech_extras_get_default_excerpt_length_for_control() {
 	return (int) apply_filters( 'excerpt_length', 25 ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Core WordPress filter API.
 }
+
+/**
+ * Whether sanitized SVG uploads are enabled in plugin settings.
+ *
+ * @since 2.2.96
+ *
+ * @return bool
+ */
+function landtech_extras_svg_uploads_enabled() {
+	$options = get_option( 'landtech_extras_advanced', array() );
+
+	return is_array( $options ) && isset( $options['enable_svg_uploads'] ) && 'yes' === $options['enable_svg_uploads'];
+}

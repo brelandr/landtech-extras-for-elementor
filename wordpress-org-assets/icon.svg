@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" fill="none" role="img" aria-label="LandTech Extras for Elementor">
+	<defs>
+		<linearGradient id="ltxe-icon-bg" x1="40" y1="24" x2="216" y2="232" gradientUnits="userSpaceOnUse">
+			<stop stop-color="#1B3A63"/>
+			<stop offset="1" stop-color="#7C3AED"/>
+		</linearGradient>
+	</defs>
+	<rect width="256" height="256" rx="56" fill="url(#ltxe-icon-bg)"/>
+	<g fill="#FFFFFF">
+		<rect x="58" y="58" width="62" height="62" rx="14" opacity="0.95"/>
+		<rect x="136" y="58" width="62" height="62" rx="14" opacity="0.78"/>
+		<rect x="58" y="136" width="62" height="62" rx="14" opacity="0.78"/>
+		<rect x="136" y="136" width="62" height="62" rx="14" opacity="0.95"/>
+	</g>
+	<path d="M82 82H96V116H82V82ZM154 82H168V116H154V82ZM82 160H96V194H82V160ZM154 160H168V194H154V160Z" fill="#1B3A63"/>
+	<circle cx="198" cy="58" r="18" fill="#F97316"/>
+	<path d="M192 58H204V64H192V58Z" fill="#FFFFFF"/>
+</svg>
