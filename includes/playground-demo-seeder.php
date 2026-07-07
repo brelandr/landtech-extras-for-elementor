@@ -1061,13 +1061,21 @@ function landtech_extras_playground_switcher_custom_css() {
  * @return array<string,mixed>
  */
 function landtech_extras_playground_devices_settings( array $images ) {
-	$screenshot_id = 0;
+	$portrait_id = landtech_extras_playground_sideload_image(
+		'https://picsum.photos/seed/landtech-device-portrait/800/2400',
+		__( 'LandTech Extras device demo portrait screenshot', 'landtech-extras-for-elementor' )
+	);
 
-	if ( ! empty( $images[7] ) ) {
-		$screenshot_id = (int) $images[7];
-	} elseif ( ! empty( $images[0] ) ) {
-		$screenshot_id = (int) $images[0];
+	if ( $portrait_id <= 0 && ! empty( $images[7] ) ) {
+		$portrait_id = (int) $images[7];
+	} elseif ( $portrait_id <= 0 && ! empty( $images[0] ) ) {
+		$portrait_id = (int) $images[0];
 	}
+
+	$landscape_id = landtech_extras_playground_sideload_image(
+		'https://picsum.photos/seed/landtech-device-landscape/1200/800',
+		__( 'LandTech Extras device demo landscape screenshot', 'landtech-extras-for-elementor' )
+	);
 
 	$settings = array(
 		'device_type'                          => 'phone',
@@ -1080,12 +1088,21 @@ function landtech_extras_playground_devices_settings( array $images ) {
 		),
 	);
 
-	if ( $screenshot_id > 0 ) {
-		$settings['media_portrait_screenshot'] = landtech_extras_playground_media( $screenshot_id );
+	if ( $portrait_id > 0 ) {
+		$settings['media_portrait_screenshot'] = landtech_extras_playground_media( $portrait_id );
 	} else {
 		$settings['media_portrait_screenshot'] = array(
 			'id'  => 0,
-			'url' => 'https://picsum.photos/seed/landtech-device/640/1136',
+			'url' => 'https://picsum.photos/seed/landtech-device-portrait/800/2400',
+		);
+	}
+
+	if ( $landscape_id > 0 ) {
+		$settings['media_landscape_screenshot'] = landtech_extras_playground_media( $landscape_id );
+	} else {
+		$settings['media_landscape_screenshot'] = array(
+			'id'  => 0,
+			'url' => 'https://picsum.photos/seed/landtech-device-landscape/1200/800',
 		);
 	}
 

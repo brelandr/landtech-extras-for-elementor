@@ -4,7 +4,7 @@ Contributors: brelandr
 Tags: elementor, page-builder, widgets, addons, extensions
 Requires at least: 6.2
 Tested up to: 7.0
-Stable tag: 2.2.99
+Stable tag: 2.2.100
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -169,6 +169,12 @@ From the plugin root, after **`npm install`**, run **`npm run build:assets`** to
 Before publishing a public GitHub mirror, verify any **Repository** or **Source** URL in this readme returns HTTP 200 (WordPress.org reviewers check linked URLs).
 
 == Changelog ==
+
+= 2.2.100 =
+
+* Fix: Devices widget scrollable portrait/landscape screens — CSS targeted non-existent class names; scrolling now works when enabled.
+* Fix: Devices orientation toggle no longer shows a blank landscape screen when no landscape screenshot is set (falls back to portrait image).
+* Fix: Playground Devices demo uses tall portrait and landscape screenshots so scroll and rotate are demonstrable.
 
 = 2.2.99 =
 

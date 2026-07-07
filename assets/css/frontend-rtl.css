@@ -2173,17 +2173,31 @@
 }
 .elementor-widget-devices-extended.ee-device-portrait-scrollable .ee-device__media__screen--image {
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  align-items: flex-start;
 }
-.elementor-widget-devices-extended.ee-device-portrait-scrollable .ee-device__media__screen--image-inner {
-  margin-right: -100px;
-  padding-right: 100px;
+.elementor-widget-devices-extended.ee-device-portrait-scrollable .ee-device__media__screen--image .ee-device__media__screen__inner {
+  margin-left: -100px;
+  padding-left: 100px;
+  height: auto;
+  min-height: 100%;
+}
+.elementor-widget-devices-extended.ee-device-portrait-scrollable .ee-device__media__screen--image .ee-device__media__screen__inner figure {
+  overflow: visible;
 }
 .elementor-widget-devices-extended.ee-device-landscape-scrollable .ee-device__media__screen__landscape {
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  align-items: flex-start;
 }
-.elementor-widget-devices-extended.ee-device-landscape-scrollable .ee-device__media__screen__landscape__inner {
-  margin-right: -100px;
-  padding-right: 100px;
+.elementor-widget-devices-extended.ee-device-landscape-scrollable .ee-device__media__screen__landscape .ee-device__media__screen__inner {
+  margin-left: -100px;
+  padding-left: 100px;
+  height: auto;
+  min-height: 100%;
+}
+.elementor-widget-devices-extended.ee-device-landscape-scrollable .ee-device__media__screen__landscape .ee-device__media__screen__inner figure {
+  overflow: visible;
 }
 .elementor-widget-devices-extended .ee-device__orientation {
   position: absolute;

@@ -2015,16 +2015,27 @@ class Devices extends Extras_Widget {
 						</div><!-- .ee-device__media__screen -->
 
 					<?php
+					$portrait_shot  = isset( $settings['media_portrait_screenshot'] ) && is_array( $settings['media_portrait_screenshot'] )
+						? $settings['media_portrait_screenshot']
+						: array();
+					$portrait_url   = isset( $portrait_shot['url'] ) ? (string) $portrait_shot['url'] : '';
 					$landscape_shot = isset( $settings['media_landscape_screenshot'] ) && is_array( $settings['media_landscape_screenshot'] )
 						? $settings['media_landscape_screenshot']
 						: array();
 					$landscape_url  = isset( $landscape_shot['url'] ) ? (string) $landscape_shot['url'] : '';
-					if ( 'image' === $settings['device_media_type'] && '' !== $landscape_url ) {
+					$show_landscape = ( 'image' === $settings['device_media_type'] && '' !== $landscape_url );
+
+					if ( ! $show_landscape && 'image' === $settings['device_media_type'] && 'yes' === $settings['device_orientation_control'] && '' !== $portrait_url ) {
+						$show_landscape = true;
+					}
+
+					if ( $show_landscape ) {
+						$landscape_image_control = ( '' !== $landscape_url ) ? 'media_landscape_screenshot' : 'media_portrait_screenshot';
 						?>
 						<div <?php $this->print_render_attribute_string('device-media-screen-landscape'); ?>>
 							<div <?php $this->print_render_attribute_string('device-media-screen-inner'); ?>>
 								<figure>
-									<?php $this->render_type_image( 'media_landscape_screenshot' ); ?>
+									<?php $this->render_type_image( $landscape_image_control ); ?>
 								</figure>
 							</div><!-- .ee-device__media__screen__inner -->
 						</div><!-- .ee-device__media__screen__landscape -->
