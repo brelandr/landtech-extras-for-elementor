@@ -23,7 +23,7 @@ Configure optional API keys (Google Maps, Snazzy Maps, Instagram, and optional b
 
 Find widgets in the Elementor panel under the **LandTech Extras for Elementor** category. Widget type slugs match the upstream Elementor Extras fork for easier migration.
 
-**Widgets:** Age Gate (`ee-age-gate`), Audio Player (`ee-audio-player`), Breadcrumbs (`ee-breadcrumbs`, optional **BreadcrumbList** microdata when **Structured data** is enabled), Buttons / Button Group (`button-group`), Calendar (`ee-calendar`), Circle Progress (`circle-progress`), Devices (`devices-extended`), Gallery (`gallery-extra`), Gallery Slider (`gallery-slider`), Google Map (`ee-google-map`), Heading Extra (`heading-extended`), Hotspots (`hotspots`), HTML5 Video Player (`html5-video`), Image Comparison (`image-comparison`), Inline SVG (`ee-inline-svg`), Lottie (`ee-lottie`), Offcanvas (`ee-offcanvas`), Popup (`ee-popup`), Posts Extra / Portfolio / Carousel layouts (`posts-extra`), Random Image (`ee-random-image`), Scroll Indicator (`ee-scroll-indicator`), Search Form (`ee-search-form`), Slide Menu (`ee-slide-menu`), Switcher (`ee-switcher`), Table (`table`), Text Divider (`text-divider`), Timeline (`timeline`), Toggle Element (`ee-toggle-element`), Unfold (`unfold`).
+**Widgets:** Age Gate (`ee-age-gate`), Audio Player (`ee-audio-player`), Breadcrumbs (`ee-breadcrumbs`, optional **BreadcrumbList** microdata when **Structured data** is enabled), Buttons / Button Group (`button-group`), Calendar (`ee-calendar`), Circle Progress (`circle-progress`), Devices (`devices-extended`), FAQ Schema (`ee-faq-schema`), Gallery (`gallery-extra`), Gallery Slider (`gallery-slider`), Google Map (`ee-google-map`), Heading Extra (`heading-extended`), Hotspots (`hotspots`), HTML5 Video Player (`html5-video`), Image Comparison (`image-comparison`), Inline SVG (`ee-inline-svg`), Lottie (`ee-lottie`), Offcanvas (`ee-offcanvas`), Popup (`ee-popup`), Posts Extra / Portfolio / Carousel layouts (`posts-extra`), Random Image (`ee-random-image`), Scroll Indicator (`ee-scroll-indicator`), Search Form (`ee-search-form`), Slide Menu (`ee-slide-menu`), Switcher (`ee-switcher`), Table (`table`), Text Divider (`text-divider`), Timeline (`timeline`), Toggle Element (`ee-toggle-element`), Unfold (`unfold`).
 
 **Editor extensions** (Advanced tab on Elementor elements): Display Conditions (free: time, day, URL/query vars including UTM presets, cookie, business hours; WooCommerce purchase history and membership rules ship in the separate **LandTech Extras Premium** add-on), Parallax Background, Parallax Elements, Portfolio Parallax, Sticky Elements, Tooltips.
 
@@ -68,6 +68,10 @@ Same as OpenAI above: credentials may be stored here; outbound **Anthropic API**
 **Google Gemini API (Google LLC) — optional bring-your-own-key (add-on AI workspace)**
 
 Same as OpenAI above: credentials may be stored here; outbound **Gemini** requests (e.g. `generativelanguage.googleapis.com`) occur only when the separate add-on AI workspace invokes them with your saved **Gemini API key**, prompts, and parameters. [Google AI / Gemini API Terms](https://ai.google.dev/gemini-api/terms) · [Google Privacy Policy](https://policies.google.com/privacy)
+
+**User-provided Lottie animation URLs (LottieFiles or other hosts)**
+
+When the Lottie widget is set to load an animation from an **External URL** (or from a JSON file in your media library served from another origin), visitors’ browsers request that JSON from the URL you configure. The Playground demo may load a sample file from **LottieFiles** (`assets*.lottiefiles.com`) when you preview the bundled demo page. No animation URL is transmitted to Land Tech servers. Review your animation host’s terms and privacy policy before publishing.
 
 == Screenshots ==
 
@@ -190,6 +194,7 @@ Before publishing a public GitHub mirror, verify any **Repository** or **Source*
 * Phase 1: Toggle FAQPage JSON-LD; display conditions (cookie, UTM presets, business hours); Table pagination and CSV paste import in the editor.
 * Phase 2: Calendar migrated to Schedule-X; anime.js v4 with updated animation helpers; Heading Extra entrance animation presets; Audio Player optional WaveSurfer waveform skin; video player native playback-rate support; audio-player header typo fix.
 * Phase 3: Posts Extra list, featured-grid, and timeline layout skins; Search Form live AJAX results via public REST route; new Lottie widget.
+* Playground: demo pages for Lottie, FAQ Schema, Posts list skin, OpenStreetMap map provider, and live search.
 
 = 2.2.101 =
 

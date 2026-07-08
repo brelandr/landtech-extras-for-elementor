@@ -380,13 +380,27 @@ function landtech_extras_playground_get_demo_definitions( array $images ) {
 			'title'   => 'Search Form Demo',
 			'slug'    => 'demo-search-form',
 			'group'   => 'Forms & Search',
-			'intro'   => __( 'Advanced search form with classic skin and live results styling.', 'landtech-extras-for-elementor' ),
+			'intro'   => __( 'Advanced search form with classic skin and live AJAX results (type at least two characters).', 'landtech-extras-for-elementor' ),
 			'widgets' => array(
 				landtech_extras_playground_widget(
 					'ee-search-form',
 					array(
-						'_skin' => 'classic',
+						'_skin'              => 'classic',
+						'live_ajax_search'   => 'yes',
+						'live_ajax_post_type'=> 'post',
 					)
+				),
+			),
+		),
+		array(
+			'title'   => 'Posts List Layout Demo',
+			'slug'    => 'demo-posts-list',
+			'group'   => 'Content & Posts',
+			'intro'   => __( 'Posts Extra list skin — thumbnail beside title and excerpt.', 'landtech-extras-for-elementor' ),
+			'widgets' => array(
+				landtech_extras_playground_widget(
+					'posts-extra',
+					landtech_extras_playground_posts_extra_list_settings()
 				),
 			),
 		),
@@ -418,7 +432,7 @@ function landtech_extras_playground_get_demo_definitions( array $images ) {
 			'title'   => 'Calendar Demo',
 			'slug'    => 'demo-calendar',
 			'group'   => 'Content & Posts',
-			'intro'   => __( 'Event calendar widget with month navigation.', 'landtech-extras-for-elementor' ),
+			'intro'   => __( 'Event calendar powered by Schedule-X (month grid with compact skin event list).', 'landtech-extras-for-elementor' ),
 			'widgets' => array(
 				landtech_extras_playground_widget(
 					'ee-calendar',
@@ -484,6 +498,46 @@ function landtech_extras_playground_get_demo_definitions( array $images ) {
 							array( '_id' => landtech_extras_playground_element_id(), 'cell_text' => __( 'Description', 'landtech-extras-for-elementor' ) ),
 							array( '_id' => landtech_extras_playground_element_id(), 'cell_text' => __( 'Status', 'landtech-extras-for-elementor' ) ),
 						),
+					)
+				),
+			),
+		),
+		array(
+			'title'   => 'Lottie Demo',
+			'slug'    => 'demo-lottie',
+			'group'   => 'Utilities',
+			'intro'   => __( 'Vector animation via the bundled lottie-player web component.', 'landtech-extras-for-elementor' ),
+			'widgets' => array(
+				landtech_extras_playground_widget(
+					'ee-lottie',
+					landtech_extras_playground_lottie_settings()
+				),
+			),
+		),
+		array(
+			'title'   => 'FAQ Schema Demo',
+			'slug'    => 'demo-faq-schema',
+			'group'   => 'Utilities',
+			'intro'   => __( 'Accessible FAQ accordion with optional FAQPage JSON-LD structured data.', 'landtech-extras-for-elementor' ),
+			'widgets' => array(
+				landtech_extras_playground_widget(
+					'ee-faq-schema',
+					landtech_extras_playground_faq_schema_settings()
+				),
+			),
+		),
+		array(
+			'title'   => 'OpenStreetMap Demo',
+			'slug'    => 'demo-openstreetmap',
+			'group'   => 'Maps & Location',
+			'intro'   => __( 'Leaflet map using OpenStreetMap tiles (no Google Maps API key required).', 'landtech-extras-for-elementor' ),
+			'widgets' => array(
+				landtech_extras_playground_widget(
+					'ee-google-map',
+					array(
+						'map_provider' => 'openstreetmap',
+						'lat'          => '48.8583736',
+						'lng'          => '2.2922873',
 					)
 				),
 			),
@@ -803,6 +857,61 @@ function landtech_extras_playground_posts_extra_settings() {
 		'layout'              => 'default',
 		'post_media'          => 'yes',
 		'post_title_position' => 'body',
+	);
+}
+
+/**
+ * Posts Extra list skin settings for Playground demos.
+ *
+ * @return array<string,mixed>
+ */
+function landtech_extras_playground_posts_extra_list_settings() {
+	$settings = landtech_extras_playground_posts_extra_settings();
+	$settings['_skin'] = 'list';
+
+	return $settings;
+}
+
+/**
+ * Default Lottie widget settings for Playground demos.
+ *
+ * Uses a public sample animation URL (visitor browser fetch when the demo page loads).
+ *
+ * @return array<string,mixed>
+ */
+function landtech_extras_playground_lottie_settings() {
+	return array(
+		'source'        => 'url',
+		'animation_url' => array(
+			'url'         => 'https://assets10.lottiefiles.com/packages/lf20_kyu7ypfb.json',
+			'is_external' => 'on',
+			'nofollow'    => '',
+		),
+		'loop'          => 'yes',
+		'autoplay'      => 'yes',
+	);
+}
+
+/**
+ * Default FAQ Schema widget settings for Playground demos.
+ *
+ * @return array<string,mixed>
+ */
+function landtech_extras_playground_faq_schema_settings() {
+	return array(
+		'faq_items' => array(
+			array(
+				'_id'      => landtech_extras_playground_element_id(),
+				'question' => __( 'What is LandTech Extras for Elementor?', 'landtech-extras-for-elementor' ),
+				'answer'   => __( 'A GPL fork of Elementor Extras with creative widgets and editor extensions maintained for WordPress.org.', 'landtech-extras-for-elementor' ),
+			),
+			array(
+				'_id'      => landtech_extras_playground_element_id(),
+				'question' => __( 'Does this demo output structured data?', 'landtech-extras-for-elementor' ),
+				'answer'   => __( 'Yes — this widget can print FAQPage JSON-LD when enabled in the widget settings.', 'landtech-extras-for-elementor' ),
+			),
+		),
+		'output_json_ld' => 'yes',
 	);
 }
 

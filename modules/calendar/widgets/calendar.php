@@ -2770,6 +2770,7 @@ class Calendar extends Extras_Widget {
 
 		?>
 		<div <?php $this->print_render_attribute_string( 'calendar' ); ?>>
+			<div class="ee-calendar__mount"></div>
 			<?php foreach ( $this->_events as $index => $event ) {
 
 				if ( ! $event['start'] )
