@@ -71,6 +71,15 @@ class Inline_Svg extends Extras_Widget {
 	}
 
 	/**
+	 * Wrapper HTML (data-url shell) is static at render time; SVG fetch/injection runs via frontend.js.
+	 *
+	 * @inheritDoc
+	 */
+	protected static function ltxe_allows_element_html_cache(): bool {
+		return true;
+	}
+
+	/**
 	 * Register Widget Controls
 	 *
 	 * @since  1.7.0

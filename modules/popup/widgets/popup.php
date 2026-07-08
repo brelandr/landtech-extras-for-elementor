@@ -2310,6 +2310,9 @@ class Popup extends Extras_Widget {
 					'ee-popup__trigger--' . $settings['popup_trigger'],
 				],
 				'href'		=> $content_link,
+				'aria-haspopup' => 'dialog',
+				'aria-expanded' => 'false',
+				'aria-controls' => 'ltxe_popup__trigger-' . $this->get_id(),
 			],
 			'popup-content' => [
 				'class' 	=> [
@@ -2318,6 +2321,9 @@ class Popup extends Extras_Widget {
 					'mfp-hide glightbox-hide',
 				],
 				'id'		=> 'ltxe_popup__trigger-' . $this->get_id(),
+				'role'      => 'dialog',
+				'aria-modal' => 'true',
+				'aria-hidden' => 'true',
 			],
 		] );
 

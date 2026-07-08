@@ -74,6 +74,15 @@ class Text_Divider extends Extras_Widget {
 	}
 
 	/**
+	 * Decorative divider markup is static CSS/HTML with no request-time or user-specific output.
+	 *
+	 * @inheritDoc
+	 */
+	protected static function ltxe_allows_element_html_cache(): bool {
+		return true;
+	}
+
+	/**
 	 * Register Widget Controls
 	 *
 	 * @since  0.1.0

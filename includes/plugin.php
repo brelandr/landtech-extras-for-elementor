@@ -546,7 +546,7 @@ class LandTechExtrasPlugin {
 			'landtech-extras-anime-helpers',
 			plugins_url( '/assets/lib/landtech-extras-anime-helpers.js', LANDTECH_EXTRAS__FILE__ ),
 			[ 'landtech-extras-anime' ],
-			LANDTECH_EXTRAS_VERSION,
+			$this->anime_version . '-shim-3',
 			true
 		);
 

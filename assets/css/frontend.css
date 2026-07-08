@@ -8931,3 +8931,48 @@ body.ee-offcanvas--open [canvas] {
     grid-template-columns: 1fr;
   }
 }
+
+/* Wave 2 — Posts Extra loop grid: equal-height cards + responsive gaps (CSS only, no masonry). */
+.elementor-widget-posts-extra .ee-grid.ee-loop:not(.ee-swiper__wrapper) {
+  --ltxe-posts-grid-gap: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: var(--ltxe-posts-grid-gap);
+  margin-left: 0;
+}
+.elementor-widget-posts-extra .ee-grid.ee-loop:not(.ee-swiper__wrapper) > .ee-grid__item {
+  display: flex;
+  flex-direction: column;
+  padding-left: 0;
+}
+.elementor-widget-posts-extra .ee-grid.ee-loop:not(.ee-swiper__wrapper) > .ee-grid__item > .ee-post,
+.elementor-widget-posts-extra .ee-grid.ee-loop:not(.ee-swiper__wrapper) > .ee-grid__item > article.ee-post {
+  flex: 1 1 auto;
+  height: 100%;
+}
+.elementor-widget-posts-extra .ee-grid.ee-loop:not(.ee-swiper__wrapper) .ee-post__body {
+  flex: 1 1 auto;
+}
+@media (max-width: 1024px) {
+  .elementor-widget-posts-extra .ee-grid.ee-loop:not(.ee-swiper__wrapper) {
+    --ltxe-posts-grid-gap: 16px;
+  }
+}
+@media (max-width: 767px) {
+  .elementor-widget-posts-extra .ee-grid.ee-loop:not(.ee-swiper__wrapper) {
+    --ltxe-posts-grid-gap: 12px;
+  }
+}
+
+/* Wave 2 — prefers-reduced-motion: disable nonessential motion for interactive widgets. */
+@media (prefers-reduced-motion: reduce) {
+  .ltxe-reduced-motion .ee-offcanvas__slidebar,
+  .ltxe-reduced-motion .ee-offcanvas__overlay,
+  .ltxe-reduced-motion .glightbox-container,
+  .ltxe-reduced-motion .ee-swiper__container,
+  .ltxe-reduced-motion .ee-swiper__container .swiper-wrapper {
+    transition: none !important;
+    animation: none !important;
+  }
+}

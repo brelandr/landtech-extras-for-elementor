@@ -1804,6 +1804,8 @@ class Offcanvas extends Extras_Widget {
 	 */
 	public function render_trigger() {
 		$settings = $this->get_settings_for_display();
+		$panel_id = 'oc' . $this->get_id();
+		$trigger_label = '' !== $settings['trigger_text'] ? $settings['trigger_text'] : __( 'Menu', 'landtech-extras-for-elementor' );
 
 		$this->add_render_attribute( [
 			'button-wrapper' => [
@@ -1822,8 +1824,11 @@ class Offcanvas extends Extras_Widget {
 				],
 				'id' => 'slidebar-trigger_' . $this->get_id(),
 				'data-slidebar-id' => $this->get_id(),
-				'aria-label' => 'Menu',
-				'aria-controls' => 'navigation',
+				'role' => 'button',
+				'tabindex' => '0',
+				'aria-label' => $trigger_label,
+				'aria-controls' => $panel_id,
+				'aria-expanded' => 'false',
 			],
 			'button-content-wrapper' => [
 				'class' => [
@@ -1891,6 +1896,7 @@ class Offcanvas extends Extras_Widget {
 					'ee-offcanvas__content',
 					'ee-offcanvas__content-' . $this->get_id(),
 				],
+				'id' => 'oc' . $this->get_id(),
 			],
 			'content-header' => [
 				'class' => [
@@ -1906,6 +1912,9 @@ class Offcanvas extends Extras_Widget {
 				'class' => [
 					'ee-offcanvas__header__close',
 				],
+				'role' => 'button',
+				'tabindex' => '0',
+				'aria-label' => __( 'Close menu', 'landtech-extras-for-elementor' ),
 			],
 		] );
 

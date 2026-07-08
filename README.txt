@@ -4,7 +4,7 @@ Contributors: brelandr
 Tags: elementor, page-builder, widgets, addons, extensions
 Requires at least: 6.2
 Tested up to: 7.0
-Stable tag: 2.3.3
+Stable tag: 2.4.0
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -187,6 +187,17 @@ From the plugin root, after **`npm install`**, run **`npm run build:assets`** to
 Before publishing a public GitHub mirror, verify any **Repository** or **Source** URL in this readme returns HTTP 200 (WordPress.org reviewers check linked URLs).
 
 == Changelog ==
+
+= 2.4.0 =
+
+* Fix: **Unfold widget** — anime.js v4 timeline and height animations work again via updated GSAP shim.
+* Fix: **Heading animations** — `TweenMax.from()` presets use anime.js v4 `animate(targets, params)` API.
+* Add: **Widget preset import/export** — export/import current widget settings as JSON from the Elementor editor (nonce + capability gated).
+* Add: **Editor widget health hints** — dismissible panel notices for missing Maps API key, empty gallery, and similar local checks.
+* Add: **Admin command palette (lite)** — shortcuts to LandTech settings and documentation when WordPress `wp-commands` is available.
+* Improved: **Accessibility batch 1** — Google Map, Audio Player, Popup, Offcanvas, and Posts Extra carousel focus/ARIA/keyboard/reduced-motion support.
+* Improved: **Posts Extra grid** — equal-height cards and responsive column gaps (CSS only).
+* Improved: **Element HTML cache** — opt-in caching for Table, Inline SVG, and Text Divider static widgets.
 
 = 2.3.3 =
 

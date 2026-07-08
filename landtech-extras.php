@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Plugin Name:       LandTech Extras for Elementor
  * Plugin URI:        https://landtechwebdesigns.com/
  * Description:       Elementor widgets & extensions — fork of Elementor Extras (Extras for Elementor). Free on WordPress.org.
- * Version:           2.3.3
+ * Version:           2.4.0
  * Elementor tested up to: 3.28
  * Elementor Pro tested up to: 3.28
  *
@@ -103,7 +103,7 @@ if ( ! defined( 'LANDTECH_EXTRAS_ASSETS_URL' ) ) {
 	define( 'LANDTECH_EXTRAS_ASSETS_URL', LANDTECH_EXTRAS_URL . 'assets/' );
 }
 if ( ! defined( 'LANDTECH_EXTRAS_VERSION' ) ) {
-	define( 'LANDTECH_EXTRAS_VERSION', '2.3.3' );
+	define( 'LANDTECH_EXTRAS_VERSION', '2.4.0' );
 }
 if ( ! defined( 'LANDTECH_EXTRAS_PREVIOUS_STABLE_VERSION' ) ) {
 	define( 'LANDTECH_EXTRAS_PREVIOUS_STABLE_VERSION', '2.2.64' );
@@ -291,8 +291,14 @@ function landtech_extras_load() {
 	landtech_extras_include( 'includes/search-rest-controller.php' );
 	landtech_extras_include( 'includes/plugin.php' );
 
-	// Settings
+	// Admin-only editor tools.
 	if ( is_admin() ) {
+		landtech_extras_include( 'includes/admin/editor-widget-health.php' );
+		landtech_extras_include( 'includes/admin/widget-preset-io.php' );
+		landtech_extras_include( 'includes/admin/platform-command-palette-lite.php' );
+		add_action( 'elementor/init', array( '\LandTechExtras\Admin\Editor_Widget_Health', 'init' ) );
+		add_action( 'init', array( '\LandTechExtras\Admin\Widget_Preset_Io', 'init' ) );
+		add_action( 'init', array( '\LandTechExtras\Admin\Platform_Command_Palette_Lite', 'init' ) );
 		landtech_extras_include( 'admin/settings-page.php' );
 		landtech_extras_include( 'admin/settings.php' );
 	}

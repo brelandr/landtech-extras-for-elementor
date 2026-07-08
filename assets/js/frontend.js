@@ -8,6 +8,99 @@
 			return $('body').is('.admin-bar');
 		},
 
+		prefersReducedMotion : function() {
+			return window.matchMedia && window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches;
+		},
+
+		applyReducedMotionClass : function( $scope ) {
+			if ( ee.prefersReducedMotion() && $scope && $scope.length ) {
+				$scope.addClass( 'ltxe-reduced-motion' );
+			}
+		},
+
+		makeFocusableControl : function( $el, label ) {
+			if ( ! $el || ! $el.length ) {
+				return;
+			}
+
+			$el.attr( {
+				role: 'button',
+				tabindex: '0',
+				'aria-label': label,
+			} );
+
+			$el.off( 'keydown.ltxeA11y' ).on( 'keydown.ltxeA11y', function( e ) {
+				if ( 13 === e.which || 32 === e.which ) {
+					e.preventDefault();
+					$el.trigger( 'click' );
+				}
+			} );
+		},
+
+		setAriaExpanded : function( $trigger, expanded, controlsId ) {
+			if ( ! $trigger || ! $trigger.length ) {
+				return;
+			}
+
+			$trigger.attr( 'aria-expanded', expanded ? 'true' : 'false' );
+
+			if ( controlsId ) {
+				$trigger.attr( 'aria-controls', controlsId );
+			}
+		},
+
+		bindEscapeClose : function( namespace, closeFn ) {
+			$( document ).off( 'keydown.' + namespace ).on( 'keydown.' + namespace, function( e ) {
+				if ( 27 === e.which ) {
+					closeFn( e );
+				}
+			} );
+		},
+
+		unbindEscapeClose : function( namespace ) {
+			$( document ).off( 'keydown.' + namespace );
+		},
+
+		focusTrap : function( $container, namespace ) {
+			if ( ! $container || ! $container.length ) {
+				return;
+			}
+
+			var focusableSelector = 'a[href], button:not([disabled]), textarea, input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])',
+				$focusable = $container.find( focusableSelector ).filter( ':visible' );
+
+			if ( ! $focusable.length ) {
+				return;
+			}
+
+			var $first = $focusable.first(),
+				$last = $focusable.last();
+
+			$first.focus();
+
+			$container.off( 'keydown.' + namespace ).on( 'keydown.' + namespace, function( e ) {
+				if ( 9 !== e.which ) {
+					return;
+				}
+
+				if ( e.shiftKey ) {
+					if ( document.activeElement === $first[0] ) {
+						e.preventDefault();
+						$last.focus();
+					}
+				} else if ( document.activeElement === $last[0] ) {
+					e.preventDefault();
+					$first.focus();
+				}
+			} );
+		},
+
+		releaseFocusTrap : function( $container, namespace ) {
+			if ( $container && $container.length ) {
+				$container.off( 'keydown.' + namespace );
+			}
+		},
+
 		init : function() {
 
 			var widgets = {
@@ -746,6 +839,7 @@
 		GoogleMap : function( $scope, $ ) {
 
 			ee.GoogleMap.elementSettings = ee.getElementSettings( $scope );
+			ee.applyReducedMotionClass( $scope );
 
 			var $map 		= $scope.find( '.ee-google-map' );
 
@@ -816,6 +910,11 @@
 				}
 
 				if ( $navigationEl.length ) {
+					$navigationEl.attr( 'role', 'navigation' );
+					if ( ! $navigationEl.attr( 'aria-label' ) ) {
+						$navigationEl.attr( 'aria-label', 'Map locations' );
+					}
+
 					$navigationEl.on( 'click', '.ee-google-map__navigation__link', function( event ) {
 						event.preventDefault();
 						var pinId = $( this ).closest( '.ee-google-map__navigation__item' ).data( 'id' );
@@ -1200,6 +1299,7 @@
 		AudioPlayer : function( $scope, $ ) {
 
 			ee.AudioPlayer.elementSettings = ee.getElementSettings( $scope );
+			ee.applyReducedMotionClass( $scope );
 
 			var $player = $scope.find( '.ee-audio-player' );
 
@@ -1208,9 +1308,15 @@
 				$player.audioPlayer({
 					restartOnPause		: 'yes' === ee.AudioPlayer.elementSettings.restart_on_pause,
 					loopPlaylist 		: 'yes' === ee.AudioPlayer.elementSettings.loop_playlist,
-					autoplay 			: 'yes' === ee.AudioPlayer.elementSettings.autoplay && ! elementorFrontend.isEditMode(),
+					autoplay 			: 'yes' === ee.AudioPlayer.elementSettings.autoplay && ! elementorFrontend.isEditMode() && ! ee.prefersReducedMotion(),
 					volume				: ee.AudioPlayer.elementSettings.volume.size,
 				});
+
+				ee.makeFocusableControl( $player.find( '.ee-player__controls__play' ), 'Play' );
+				ee.makeFocusableControl( $player.find( '.ee-player__controls__previous' ), 'Previous track' );
+				ee.makeFocusableControl( $player.find( '.ee-player__controls__next' ), 'Next track' );
+				ee.makeFocusableControl( $player.find( '.ee-player__controls__rewind' ), 'Restart' );
+				ee.makeFocusableControl( $player.find( '.ee-player__controls__volume' ), 'Volume' );
 
 				if ( 'yes' === ee.AudioPlayer.elementSettings.waveform_skin && 'undefined' !== typeof window.WaveSurfer ) {
 					var $wave = $player.find( '.ee-audio-player__waveform' );
@@ -1241,12 +1347,15 @@
 		Offcanvas : function( $scope, $ ) {
 
 			ee.Offcanvas.elementSettings 	= ee.getElementSettings( $scope );
+			ee.applyReducedMotionClass( $scope );
 
 			var scopeId 		= $scope.data('id'),
 				scopeUniqueId 	= ee.getOffcanvasUniqueScopeId( $scope ),
 				slidebarPos 	= ee.Offcanvas.elementSettings.position,
 				slidebarAnim 	= ee.Offcanvas.elementSettings.animation,
 				slidebarId 		= 'oc' + scopeUniqueId,
+				a11yNamespace   = 'ltxeOffcanvas' + scopeUniqueId,
+				lastFocusedEl   = null,
 				$body 			= $('body'),
 				$window 		= ee.getWindow(),
 				scroll 			= $window.scrollTop(),
@@ -1270,6 +1379,11 @@
 				}
 
 				$trigger.attr( 'data-slidebar-id', slidebarId );
+				$trigger.each( function() {
+					var $el = $( this );
+					ee.setAriaExpanded( $el, offcanvas.controller.isActiveSlidebar( slidebarId ), slidebarId );
+					ee.makeFocusableControl( $el, $el.attr( 'aria-label' ) || 'Menu' );
+				} );
 
 				if ( 'id' === ee.Offcanvas.elementSettings.header_close_source && '' !== ee.Offcanvas.elementSettings.header_close_id ) {
 					$close = $content.find( '#' + ee.Offcanvas.elementSettings.header_close_id );
@@ -1280,6 +1394,10 @@
 					$close = $content.find( '.' + ee.Offcanvas.elementSettings.header_close_class );
 					$close.addClass( 'ee-offcanvas__close' );
 				}
+
+				$close.each( function() {
+					ee.makeFocusableControl( $( this ), 'Close menu' );
+				} );
 			};
 
 			ee.Offcanvas.prepare = function() {
@@ -1309,6 +1427,11 @@
 
 				// Add slidebar to body
 				$body.prepend( $slidebar );
+				$slidebar.attr( {
+					role: 'dialog',
+					'aria-modal': 'true',
+					'aria-hidden': 'true',
+				} );
 
 				if ( ! $body.find( '.ee-offcanvas__overlay' ).length ) {
 					$wrapper.append( $overlay );
@@ -1341,6 +1464,8 @@
 					event.stopPropagation();
 					event.preventDefault();
 
+					lastFocusedEl = document.activeElement;
+
 					// Restyle elements
 					offcanvas.controller.css();
 
@@ -1354,6 +1479,8 @@
 					// Add active class to trigger
 					$(this).addClass( 'ee--is-active' );
 				} );
+
+				$overlay.attr( 'role', 'presentation' );
 
 				$close.on( 'click', function ( event ) {
 
@@ -1375,7 +1502,17 @@
 
 				$( offcanvas.controller.events ).on( 'opening', function( event, id ) {
 
+					if ( slidebarId !== id ) {
+						return;
+					}
+
 					var $element = $body.find( '.elementor-widget-ee-offcanvas[data-slidebar-id="' + id + '"]' ).data('id');
+
+					ee.setAriaExpanded( $trigger, true, slidebarId );
+					$slidebar.attr( 'aria-hidden', 'false' );
+					ee.bindEscapeClose( a11yNamespace, function() {
+						offcanvas.controller.close( slidebarId );
+					} );
 
 					// Add widget specific body class
 					$body.addClass( 'ee-offcanvas--id-' + $element );
@@ -1395,6 +1532,10 @@
 
 				$( offcanvas.controller.events ).on( 'opened', function( event, id ) {
 
+					if ( slidebarId !== id ) {
+						return;
+					}
+
 					$html.removeClass( 'ee-offcanvas--closed ee-offcanvas--opening' );
 					$body.removeClass( 'ee-offcanvas--closed ee-offcanvas--opening' );
 					$body.addClass('ee-offcanvas--open');
@@ -1403,9 +1544,20 @@
 					if ( 'yes' === ee.Offcanvas.elementSettings.container_scroll ) {
 						$body.addClass('ee-offcanvas--scroll');
 					}
+
+					ee.focusTrap( $slidebar, a11yNamespace );
 				} );
 
 				$( offcanvas.controller.events ).on( 'closing', function( event, id ) {
+
+					if ( slidebarId !== id ) {
+						return;
+					}
+
+					ee.unbindEscapeClose( a11yNamespace );
+					ee.releaseFocusTrap( $slidebar, a11yNamespace );
+					ee.setAriaExpanded( $trigger, false, slidebarId );
+					$slidebar.attr( 'aria-hidden', 'true' );
 
 					$html.removeClass( 'ee-offcanvas--open ee-offcanvas--opening ee-offcanvas--closed' );
 					$body.removeClass( 'ee-offcanvas--open ee-offcanvas--opening ee-offcanvas--closed' );
@@ -1414,6 +1566,10 @@
 				} );
 
 				$( offcanvas.controller.events ).on( 'closed', function( event, id ) {
+
+					if ( slidebarId !== id ) {
+						return;
+					}
 
 					$body.removeClass( 'ee-offcanvas--open ee-offcanvas--closing' );
 					$html.removeClass( 'ee-offcanvas--open ee-offcanvas--closing' );
@@ -1432,6 +1588,10 @@
 					$html.addClass( 'ee-offcanvas--closed' );
 
 					$( '.ee-offcanvas__trigger' ).removeClass( 'ee--is-active' );
+
+					if ( lastFocusedEl && lastFocusedEl.focus ) {
+						lastFocusedEl.focus();
+					}
 
 					$(window).trigger('resize');
 				} );
@@ -1539,6 +1699,7 @@
 		Popup : function( $scope, $ ) {
 
 			ee.Popup.elementSettings 	= ee.getElementSettings( $scope );
+			ee.applyReducedMotionClass( $scope );
 
 			var scopeId 			= $scope.data('id'),
 				$trigger 			= $scope.find( '.ee-popup__trigger' ),
@@ -1550,6 +1711,8 @@
 				persist 			= ee.Popup.elementSettings.popup_persist,
 				isAdmin 			= 'undefined' !== typeof ee.Popup.elementSettings.popup_open_admin && 'yes' === ee.Popup.elementSettings.popup_open_admin,
 				$closeButton 		= 'default' === ee.Popup.elementSettings.popup_close_button_position ? $scope.find( '.ee-popup__footer__button' ) : $scope.find( ee.Popup.elementSettings.popup_close_button_selector ),
+				a11yNamespace       = 'ltxePopup' + scopeId,
+				lastFocusedEl       = null,
 
 				popupVAlignClass 	= 'mfp-popup--valign-' + ee.Popup.elementSettings.popup_valign,
 				closeHAlignClass 	= 'mfp-close--halign-' + ee.Popup.elementSettings.popup_close_halign,
@@ -1588,26 +1751,41 @@
 
 				elements.push( slide );
 
+				var openEffect = '' !== ee.Popup.elementSettings.popup_animation && ! ee.prefersReducedMotion() ? 'zoom' : 'fade';
+				var closeEffect = '' !== ee.Popup.elementSettings.popup_animation && ! ee.prefersReducedMotion() ? 'zoom' : 'fade';
+
 				return GLightbox( {
 					elements: elements,
 					closeButton: ee.Popup.elementSettings.popup_close_position || false,
 					touchNavigation: true,
 					loop: false,
 					autoplayVideos: false,
-					openEffect: '' !== ee.Popup.elementSettings.popup_animation ? 'zoom' : 'fade',
-					closeEffect: '' !== ee.Popup.elementSettings.popup_animation ? 'zoom' : 'fade',
+					openEffect: openEffect,
+					closeEffect: closeEffect,
 					closeOnOutsideClick: 'yes' === ee.Popup.elementSettings.popup_close_on_bg,
 					keyboardNavigation: 'yes' === ee.Popup.elementSettings.popup_close_on_escape,
 					cssClasses: {
 						container: 'glightbox-container ' + containerClass,
 					},
-					slideHTML: '<div class="gslide"><div class="gslide-inner-content"><div class="ginner-container"><div class="gslide-media"></div></div></div><button class="gclose gbtn ee-popup__close mfp-close ' + closeHAlignClass + ' ' + closeVAlignClass + ' eicon-close" title="Close"></button></div>',
+					slideHTML: '<div class="gslide"><div class="gslide-inner-content"><div class="ginner-container"><div class="gslide-media"></div></div></div><button class="gclose gbtn ee-popup__close mfp-close ' + closeHAlignClass + ' ' + closeVAlignClass + ' eicon-close" title="Close" aria-label="Close"></button></div>',
 					afterOpen: function() {
 						ee.markGlightboxPopupReady( scopeId );
 						ee.Popup.onOpen( glightboxInstance, $trigger );
+						ee.setAriaExpanded( $trigger, true, $content.attr( 'id' ) );
+						ee.bindEscapeClose( a11yNamespace, function() {
+							ee.Popup.closeLightbox();
+						} );
+						var $dialog = $( '.glightbox-container .gslide.open' );
+						ee.focusTrap( $dialog, a11yNamespace );
 					},
 					beforeClose: function() {
 						ee.unmarkGlightboxPopupReady( scopeId );
+						ee.unbindEscapeClose( a11yNamespace );
+						ee.releaseFocusTrap( $( '.glightbox-container .gslide.open' ), a11yNamespace );
+						ee.setAriaExpanded( $trigger, false, $content.attr( 'id' ) );
+						if ( lastFocusedEl && lastFocusedEl.focus ) {
+							lastFocusedEl.focus();
+						}
 						if ( 'yes' !== ee.Popup.elementSettings.popup_prevent_scroll ) {
 							$html.css( { overflow: '' } );
 						}
@@ -1634,6 +1812,7 @@
 			};
 
 			ee.Popup.openLightbox = function() {
+				lastFocusedEl = document.activeElement;
 				if ( ! glightboxInstance ) {
 					glightboxInstance = ee.Popup.buildGlightbox();
 				}
@@ -1654,6 +1833,11 @@
 
 				if ( $scope.is(':not(:visible)') )
 					return;
+
+				if ( $trigger.length ) {
+					$trigger.attr( 'aria-haspopup', 'dialog' );
+					ee.setAriaExpanded( $trigger, false, $content.attr( 'id' ) );
+				}
 
 				if ( $closeButton.length ) {
 					$closeButton.on( 'click', function( e ) {
@@ -2441,6 +2625,8 @@
 				$swiper 	= $scope.find('.ee-swiper__container'),
 				$thumbs 	= $scope.find('.ee-grid__item');
 
+			ee.applyReducedMotionClass( $scope );
+
 			if ( ! $swiper.length ) {
 				return;
 			}
@@ -2517,6 +2703,9 @@
 				};
 
 			ee.PostsCarousel.init = function() {
+				ee.makeFocusableControl( $scope.find( '.ee-swiper__button--prev' ), 'Previous slide' );
+				ee.makeFocusableControl( $scope.find( '.ee-swiper__button--next' ), 'Next slide' );
+
 				var swiperArgs = ee.Carousel( $swiper, settings );
 
 				if ( 'undefined' === typeof Swiper ) {
@@ -2700,12 +2889,13 @@
 
 			var $unfold 		= $scope.find('.ee-unfold'),
 				$unfold_text 	= $unfold.find('.ee-button-text'),
-				instance 		= $unfold.data( 'unfold' ),
 				unfoldArgs		= {};
 
 			ee.Unfold.maybeDestroy = function() {
-				if ( instance )
+				var instance = $unfold.data( 'unfold' );
+				if ( instance ) {
 					instance.destroy();
+				}
 			};
 
 			ee.Unfold.init = function() {
@@ -2748,7 +2938,7 @@
 					unfoldArgs.focusOnClose = true;
 				}
 
-				if ( 'yes' === ee.Unfold.elementSettings.focus_open ) {
+				if ( 'top' === ee.Unfold.elementSettings.focus_open || 'scroll' === ee.Unfold.elementSettings.focus_open ) {
 					unfoldArgs.focusOnOpen = ee.Unfold.elementSettings.focus_open;
 				}
 
@@ -3492,6 +3682,25 @@
 				if ( 'undefined' == typeof settings || 'undefined' == typeof swiper ) {
 					return;
 				}
+
+				if ( ee.prefersReducedMotion() ) {
+					if ( swiper.params.autoplay && swiper.autoplay ) {
+						swiper.autoplay.stop();
+					}
+					if ( swiper.params.speed ) {
+						swiper.params.speed = 0;
+					}
+				}
+
+				$swiper.on( 'keydown.ltxeCarousel', function( e ) {
+					if ( 37 === e.which ) {
+						swiper.slidePrev();
+					} else if ( 39 === e.which ) {
+						swiper.slideNext();
+					} else if ( 27 === e.which && settings.scope ) {
+						settings.scope.find( '.ee-swiper__button--prev' ).focus();
+					}
+				} );
 
 				if ( settings.element.stopOnHover ) {
 					$swiper.on( 'mouseover', function() {

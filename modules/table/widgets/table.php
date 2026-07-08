@@ -84,6 +84,15 @@ class Table extends Extras_Widget {
 	}
 
 	/**
+	 * Table markup is fully server-rendered from repeater settings; tablesorter/pagination are progressive enhancement only.
+	 *
+	 * @inheritDoc
+	 */
+	protected static function ltxe_allows_element_html_cache(): bool {
+		return true;
+	}
+
+	/**
 	 * Register Cell Controls
 	 *
 	 * @since  1.5.0

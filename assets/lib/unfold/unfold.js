@@ -206,10 +206,11 @@
 
 			plugin.destroy = function() {
 
-				plugin.clearProps();
 				cancelAnimationFrame( updateAF );
-				$window.off( 'scroll', plugin.onScroll );
-				$item.removeData( 'unfold' );
+				cancelAnimationFrame( calcAF );
+				$window.off( 'resize' ).off( 'scroll', plugin.onScroll );
+				$trigger.off( 'click' );
+				$target.removeData( 'unfold' );
 
 			};
 

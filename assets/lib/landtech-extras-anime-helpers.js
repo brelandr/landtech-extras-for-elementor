@@ -10,24 +10,64 @@
 		return;
 	}
 
-	function ltxeAnimeRun( opts ) {
-		if ( window.anime && 'function' === typeof window.anime.animate ) {
-			return window.anime.animate( opts );
+	function ltxeAnimeIsV4() {
+		return window.anime && 'function' === typeof window.anime.animate;
+	}
+
+	function ltxeAnimeV4Params( opts ) {
+		var params = Object.assign( {}, opts || {} );
+
+		delete params.targets;
+
+		if ( params.easing ) {
+			params.ease = params.easing;
+			delete params.easing;
 		}
+
+		if ( params.complete ) {
+			params.onComplete = params.complete;
+			delete params.complete;
+		}
+
+		return params;
+	}
+
+	function ltxeAnimeRun( opts ) {
+		if ( ! opts ) {
+			return null;
+		}
+
+		var targets = ltxeTargets( opts.targets );
+
+		if ( ! targets.length ) {
+			return null;
+		}
+
+		if ( ltxeAnimeIsV4() ) {
+			return window.anime.animate( targets, ltxeAnimeV4Params( opts ) );
+		}
+
 		if ( 'function' === typeof window.anime ) {
 			return window.anime( opts );
 		}
+
 		return null;
 	}
 
 	function ltxeAnimeSet( targets, props ) {
-		if ( window.anime && 'function' === typeof window.anime.set ) {
-			return window.anime.set( ltxeTargets( targets ), props );
+		var mapped = ltxeMapProps( props );
+
+		if ( ltxeAnimeIsV4() ) {
+			return window.anime.animate(
+				ltxeTargets( targets ),
+				Object.assign( { duration: 0 }, mapped )
+			);
 		}
+
 		return ltxeAnimeRun( Object.assign( {
 			targets: ltxeTargets( targets ),
 			duration: 0,
-		}, ltxeMapProps( props ) ) );
+		}, mapped ) );
 	}
 
 	function ltxeAnimeStagger( ms ) {
@@ -38,10 +78,32 @@
 	}
 
 	function ltxeAnimeTimeline( opts ) {
-		if ( window.anime && 'function' === typeof window.anime.timeline ) {
-			return window.anime.timeline( opts );
+		var params = Object.assign( {}, opts || {} );
+
+		if ( params.easing ) {
+			params.playbackEase = params.easing;
+			delete params.easing;
 		}
-		return ltxeAnimeRun( opts || {} );
+
+		if ( ltxeAnimeIsV4() && 'function' === typeof window.anime.createTimeline ) {
+			return window.anime.createTimeline( params );
+		}
+
+		if ( window.anime && 'function' === typeof window.anime.timeline ) {
+			return window.anime.timeline( params );
+		}
+
+		return {
+			add: function() {
+				return this;
+			},
+			init: function() {
+				return this;
+			},
+			pause: function() {
+				return this;
+			},
+		};
 	}
 
 	var ltxeEase = 'cubicBezier(0.446, 0, 0.034, 1)';
@@ -131,7 +193,7 @@
 				continue;
 			}
 			if ( 'width' === key || 'height' === key || 'left' === key || 'top' === key || 'scale' === key ) {
-				mapped[ key ] = props[ key ];
+				mapped[ key ] = 'number' === typeof props[ key ] ? props[ key ] + 'px' : props[ key ];
 				continue;
 			}
 			if ( 'strokeDasharray' === key || 'strokeDashoffset' === key ) {
@@ -236,6 +298,16 @@
 		return Math.max( endTime, startMs + durationMs );
 	}
 
+	function ltxeAnimeFromEndValue( key, fromValue ) {
+		if ( 'opacity' === key ) {
+			return [ fromValue, 1 ];
+		}
+		if ( 'scale' === key ) {
+			return [ fromValue, 1 ];
+		}
+		return [ fromValue, 0 ];
+	}
+
 	window.ltxeAnimate = {
 		ease: ltxeEase,
 
@@ -278,34 +350,46 @@
 
 		from: function( targets, duration, props ) {
 			var mapped = ltxeMapProps( props );
-			var opts = {
-				targets: ltxeTargets( targets ),
+			var nodes = ltxeTargets( targets );
+			var params = {
 				duration: ( duration || 0 ) * 1000,
-				easing: mapped.easing || ltxeEase,
+				ease: mapped.easing || ltxeEase,
 			};
-			delete mapped.easing;
-			if ( props && props.onComplete ) {
-				opts.complete = props.onComplete;
-				delete mapped.onComplete;
+			var clear = mapped.clearProps;
+			var key;
+
+			if ( ! nodes.length ) {
+				return null;
 			}
-			if ( mapped.clearProps ) {
-				var clear = mapped.clearProps;
-				delete mapped.clearProps;
-				opts.complete = function() {
+
+			delete mapped.easing;
+			delete mapped.clearProps;
+
+			for ( key in mapped ) {
+				if ( ! Object.prototype.hasOwnProperty.call( mapped, key ) ) {
+					continue;
+				}
+				params[ key ] = ltxeAnimeFromEndValue( key, mapped[ key ] );
+			}
+
+			if ( props && props.onComplete ) {
+				params.onComplete = props.onComplete;
+			}
+
+			if ( clear ) {
+				params.onComplete = function() {
 					ltxeApplyClear( targets, clear );
 					if ( props && props.onComplete ) {
 						props.onComplete();
 					}
 				};
 			}
-			Object.assign( opts, mapped );
-			return ltxeAnimeRun( {
-				targets: opts.targets,
-				duration: 0,
-				complete: function() {
-					ltxeAnimeRun( Object.assign( { easing: ltxeEase }, opts ) );
-				},
-			} );
+
+			if ( ltxeAnimeIsV4() ) {
+				return window.anime.animate( nodes, params );
+			}
+
+			return ltxeAnimeRun( Object.assign( { targets: nodes }, params ) );
 		},
 
 		fromTo: function( targets, duration, fromProps, toProps ) {
@@ -333,8 +417,7 @@
 			var labels = {};
 			var endTime = 0;
 			var tl = ltxeAnimeTimeline( {
-				easing: ltxeEase,
-				complete: options && options.onComplete ? options.onComplete : undefined,
+				onComplete: options && options.onComplete ? options.onComplete : undefined,
 			} );
 			var animeAdd = tl.add.bind( tl );
 
@@ -358,16 +441,22 @@
 			tl.to = function( targets, duration, props, offset ) {
 				var mapped = ltxeMapProps( props );
 				var addOpts = {
-					targets: ltxeTargets( targets ),
 					duration: ( duration || 0 ) * 1000,
-					easing: mapped.easing || ltxeEase,
+					ease: mapped.easing || ltxeEase,
 				};
 				var startMs;
+				var clear = mapped.clearProps;
 				delete mapped.easing;
+				delete mapped.clearProps;
 				Object.assign( addOpts, mapped );
+				if ( clear ) {
+					addOpts.onComplete = function() {
+						ltxeApplyClear( targets, clear );
+					};
+				}
 				startMs = ltxeResolveTimelineOffset( offset, labels, endTime );
 				endTime = ltxeTrackTimelineEnd( startMs, addOpts.duration, endTime );
-				animeAdd( addOpts, startMs );
+				animeAdd( ltxeTargets( targets ), addOpts, startMs );
 				return tl;
 			};
 
@@ -380,18 +469,16 @@
 				var from = ltxeMapProps( fromProps );
 				var to = ltxeMapProps( toProps );
 				var addOpts = {
-					targets: ltxeTargets( targets ),
 					duration: ( duration || 0 ) * 1000,
 					delay: ltxeAnimeStagger( ( stagger || 0 ) * 1000 ),
-					easing: to.easing || from.easing || ltxeEase,
+					ease: to.easing || from.easing || ltxeEase,
 				};
 				var startMs;
 				Object.assign( addOpts, from, to );
 				delete addOpts.easing;
-				addOpts.easing = to.easing || from.easing || ltxeEase;
 				startMs = ltxeResolveTimelineOffset( offset, labels, endTime );
 				endTime = ltxeTrackTimelineEnd( startMs, addOpts.duration, endTime );
-				animeAdd( addOpts, startMs );
+				animeAdd( ltxeTargets( targets ), addOpts, startMs );
 				return tl;
 			};
 
@@ -410,6 +497,8 @@
 	window.Power0 = { easeInOut: ltxeEase };
 	window.Power1 = { easeIn: ltxeEase, easeOut: ltxeEase };
 	window.Power4 = { easeInOut: ltxeEase, easeIn: ltxeEase, easeOut: ltxeEase };
+	window.Elastic = { easeInOut: ltxeEase, easeIn: ltxeEase, easeOut: ltxeEase };
+	window.Bounce = { easeInOut: ltxeEase, easeIn: ltxeEase, easeOut: ltxeEase };
 	window.Back = { easeOut: { config: function() { return ltxeEase; } } };
 	window.SlowMo = { config: function() { return ltxeEase; } };
 	window.SteppedEase = { config: function() { return ltxeEase; } };

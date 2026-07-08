@@ -1415,6 +1415,8 @@ class Audio_Player extends Extras_Widget {
 					'ee-audio-player',
 					'ee-player'
 				],
+				'role' => 'region',
+				'aria-label' => __( 'Audio player', 'landtech-extras-for-elementor' ),
 			],
 		] );
 
@@ -1440,6 +1442,8 @@ class Audio_Player extends Extras_Widget {
 					'ee-audio-player__controls',
 					'ee-player__controls',
 				],
+				'role' => 'group',
+				'aria-label' => __( 'Player controls', 'landtech-extras-for-elementor' ),
 			],
 			'bar-wrapper' => [
 				'class' => [
@@ -1460,6 +1464,9 @@ class Audio_Player extends Extras_Widget {
 					'nicon',
 					'nicon-play-previous',
 				],
+				'role' => 'button',
+				'tabindex' => '0',
+				'aria-label' => __( 'Previous track', 'landtech-extras-for-elementor' ),
 			],
 			'control-play' => [
 				'class' => [
@@ -1469,6 +1476,9 @@ class Audio_Player extends Extras_Widget {
 					'nicon',
 					'nicon-play',
 				],
+				'role' => 'button',
+				'tabindex' => '0',
+				'aria-label' => __( 'Play', 'landtech-extras-for-elementor' ),
 			],
 			'control-next' => [
 				'class' => [
@@ -1478,6 +1488,9 @@ class Audio_Player extends Extras_Widget {
 					'nicon',
 					'nicon-play-next',
 				],
+				'role' => 'button',
+				'tabindex' => '0',
+				'aria-label' => __( 'Next track', 'landtech-extras-for-elementor' ),
 			],
 		] );
 
@@ -1495,6 +1508,9 @@ class Audio_Player extends Extras_Widget {
 								'nicon',
 								'nicon-rewind',
 							],
+							'role' => 'button',
+							'tabindex' => '0',
+							'aria-label' => __( 'Restart', 'landtech-extras-for-elementor' ),
 						] );
 					?><div <?php $this->print_render_attribute_string( 'control-rewind' ); ?>></div><?php } ?>
 
@@ -1561,6 +1577,9 @@ class Audio_Player extends Extras_Widget {
 								'ee-player__control',
 								'ee-player__controls__volume',
 							],
+							'role' => 'button',
+							'tabindex' => '0',
+							'aria-label' => __( 'Volume', 'landtech-extras-for-elementor' ),
 						] );
 					?><div <?php $this->print_render_attribute_string( 'control-volume' ); ?>>
 

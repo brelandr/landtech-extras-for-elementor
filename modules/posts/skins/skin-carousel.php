@@ -1373,12 +1373,16 @@ class Skin_Carousel extends Skin_Base {
 				'class' => [
 					'ee-swiper',
 				],
+				'role' => 'region',
+				'aria-roledescription' => 'carousel',
+				'aria-label' => __( 'Posts carousel', 'landtech-extras-for-elementor' ),
 			],
 			'swiper-container' => [
 				'class' => [
 					'swiper',
 					'ee-swiper__container',
 				],
+				'tabindex' => '0',
 			],
 			'swiper-wrapper' => [
 				'class' => [
@@ -1446,6 +1450,8 @@ class Skin_Carousel extends Skin_Base {
 					'ee-swiper__navigation--' . $this->parent->get_settings( $this->get_control_id( 'arrows_position' ) ),
 					'ee-swiper__navigation--' . $this->parent->get_settings( $this->get_control_id( 'arrows_position_vertical' ) ),
 				],
+				'role' => 'group',
+				'aria-label' => __( 'Carousel controls', 'landtech-extras-for-elementor' ),
 			],
 		] );
 
@@ -1511,9 +1517,13 @@ class Skin_Carousel extends Skin_Base {
 					'ee-arrow--prev',
 					'ee-swiper__button--prev-' . $this->parent->get_id(),
 				],
+				'role' => 'button',
+				'tabindex' => '0',
+				'aria-label' => __( 'Previous slide', 'landtech-extras-for-elementor' ),
 			],
 			'button-prev-icon' => [
 				'class' => 'eicon-chevron-' . $prev,
+				'aria-hidden' => 'true',
 			],
 			'button-next' => [
 				'class' => [
@@ -1523,9 +1533,13 @@ class Skin_Carousel extends Skin_Base {
 					'ee-arrow--next',
 					'ee-swiper__button--next-' . $this->parent->get_id(),
 				],
+				'role' => 'button',
+				'tabindex' => '0',
+				'aria-label' => __( 'Next slide', 'landtech-extras-for-elementor' ),
 			],
 			'button-next-icon' => [
 				'class' => 'eicon-chevron-' . $next,
+				'aria-hidden' => 'true',
 			],
 		] );
 

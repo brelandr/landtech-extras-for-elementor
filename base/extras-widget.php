@@ -62,6 +62,10 @@ abstract class Extras_Widget extends Widget_Base {
 	/**
 	 * Whether this widget may use Elementor element HTML caching (static output only).
 	 *
+	 * Default is false (dynamic). Override in widgets whose rendered HTML is fully determined
+	 * by saved settings and does not vary by user, request, or runtime context — e.g. Table,
+	 * Inline SVG (data-url shell), Text Divider. Progressive-enhancement JS may still run after cache.
+	 *
 	 * @since 2.2.53
 	 */
 	protected static function ltxe_allows_element_html_cache(): bool {

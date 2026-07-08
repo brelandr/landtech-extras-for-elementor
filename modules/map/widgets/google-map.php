@@ -1684,6 +1684,9 @@ class Google_Map extends Extras_Widget {
 				],
 				'data-lat' => $settings['lat'],
 				'data-lng' => $settings['lng'],
+				'role' => 'region',
+				'aria-label' => __( 'Map', 'landtech-extras-for-elementor' ),
+				'tabindex' => '0',
 			],
 			'title' => [
 				'class' => 'ee-google-map__pin__title',
@@ -1769,6 +1772,8 @@ class Google_Map extends Extras_Widget {
 				'class' => [
 					'ee-google-map__navigation',
 				],
+				'role' => 'navigation',
+				'aria-label' => __( 'Map locations', 'landtech-extras-for-elementor' ),
 			],
 			'navigation' => [
 				'class' => [
