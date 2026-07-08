@@ -73,11 +73,9 @@ class Google_Map extends Extras_Widget {
 	 * @return string
 	 */
 	private function get_map_provider_for_assets() {
-		if ( function_exists( 'landtech_extras_posts_extra_widget_try_get_settings_for_display' ) ) {
-			$provider = landtech_extras_posts_extra_widget_try_get_settings_for_display( $this, 'map_provider' );
-			if ( is_string( $provider ) && '' !== $provider ) {
-				return $provider;
-			}
+		$provider = $this->ltxe_try_get_settings_for_display( 'map_provider' );
+		if ( is_string( $provider ) && '' !== $provider ) {
+			return $provider;
 		}
 
 		return 'google';

@@ -78,7 +78,7 @@ class Audio_Player extends Extras_Widget {
 			'landtech-extras-jquery-appear',
 		];
 
-		if ( 'yes' === $this->get_settings( 'waveform_skin' ) ) {
+		if ( 'yes' === $this->ltxe_try_get_settings( 'waveform_skin' ) ) {
 			$scripts[] = 'landtech-extras-wavesurfer';
 		}
 

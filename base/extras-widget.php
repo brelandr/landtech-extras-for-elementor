@@ -120,6 +120,38 @@ abstract class Extras_Widget extends Widget_Base {
 	}
 
 	/**
+	 * Safe settings read for asset registration (preview may run before settings hydrate).
+	 *
+	 * @since 2.3.3
+	 *
+	 * @param string $key Control id.
+	 * @return mixed|null
+	 */
+	protected function ltxe_try_get_settings( $key ) {
+		if ( function_exists( 'landtech_extras_posts_extra_widget_try_get_settings' ) ) {
+			return landtech_extras_posts_extra_widget_try_get_settings( $this, $key );
+		}
+
+		return null;
+	}
+
+	/**
+	 * Safe display settings read for asset registration (preview may run before settings hydrate).
+	 *
+	 * @since 2.3.3
+	 *
+	 * @param string|null $key Control id, or null for the full settings array.
+	 * @return array|mixed Full settings array, single value, or empty array / null on failure.
+	 */
+	protected function ltxe_try_get_settings_for_display( $key = null ) {
+		if ( function_exists( 'landtech_extras_posts_extra_widget_try_get_settings_for_display' ) ) {
+			return landtech_extras_posts_extra_widget_try_get_settings_for_display( $this, $key );
+		}
+
+		return null === $key ? array() : null;
+	}
+
+	/**
 	 * Method for adding editor helper attributes
 	 *
 	 * Adds attributes that enable a display of a label for a specific html element
