@@ -4,7 +4,7 @@ Contributors: brelandr
 Tags: elementor, page-builder, widgets, addons, extensions
 Requires at least: 6.2
 Tested up to: 7.0
-Stable tag: 2.3.1
+Stable tag: 2.3.3
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -187,6 +187,15 @@ From the plugin root, after **`npm install`**, run **`npm run build:assets`** to
 Before publishing a public GitHub mirror, verify any **Repository** or **Source** URL in this readme returns HTTP 200 (WordPress.org reviewers check linked URLs).
 
 == Changelog ==
+
+= 2.3.3 =
+
+* Fix: Audio Player widget no longer fatal-errors Elementor preview when reading `waveform_skin` in `get_script_depends()` before settings hydrate.
+* Add: `Extras_Widget::ltxe_try_get_settings()` helpers for safe asset dependency registration during preview bootstrap.
+
+= 2.3.2 =
+
+* Fix: Google Map widget no longer fatal-errors Elementor preview when settings are not hydrated yet (`get_style_depends` / `get_script_depends` use safe settings read).
 
 = 2.3.1 =
 
