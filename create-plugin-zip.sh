@@ -62,6 +62,10 @@ verify_pack_artifacts() {
 		"assets/blueprints/blueprint.json"
 		"modules/posts/widgets/posts.php"
 		"includes/plugin.php"
+		"includes/search-rest-controller.php"
+		"assets/js/landtech-extras-calendar-schedule-x.js"
+		"assets/js/table-csv-editor.js"
+		"schema/schema-builder.php"
 		"assets/css/frontend.css"
 		"assets/css/frontend.min.css"
 		"assets/css/frontend-rtl.css"
@@ -79,6 +83,22 @@ verify_pack_artifacts() {
 	pc="$(find "${base}/modules/posts/skins/presets" -maxdepth 1 -type f -name 'skin-posts-*.php' 2>/dev/null | wc -l | tr -d ' ')"
 	if [[ "${pc}" -lt 11 ]]; then
 		echo "Error: expected 11 preset/skin PHP files in modules/posts/skins/presets/, found ${pc}" >&2
+		exit 1
+	fi
+	local lib_dir
+	for lib_dir in \
+		anime glightbox splitting infinite-scroll tablesorter isotope packery \
+		jquery-bridget outlayer ev-emitter get-size fizzy-ui-utils matches-selector masonry-layout \
+		leaflet schedule-x preact temporal-polyfill lottie-player wavesurfer; do
+		if [[ ! -f "${base}/assets/lib/${lib_dir}/README.txt" ]]; then
+			echo "Error: missing assets/lib/${lib_dir}/README.txt (WordPress.org bundled-library provenance)." >&2
+			exit 1
+		fi
+	done
+	local pkgd_count
+	pkgd_count="$(find "${base}/assets/lib" -name '*.pkgd.js' 2>/dev/null | wc -l | tr -d ' ')"
+	if [[ "${pkgd_count}" != "0" ]]; then
+		echo "Error: .pkgd.js bundles are not permitted under assets/lib/." >&2
 		exit 1
 	fi
 	local pair src dst

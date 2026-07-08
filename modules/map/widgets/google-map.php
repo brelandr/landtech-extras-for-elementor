@@ -75,11 +75,35 @@ class Google_Map extends Extras_Widget {
 	 * @return array
 	 */
 	public function get_script_depends() {
+		$settings = $this->get_settings_for_display();
+		$provider   = isset( $settings['map_provider'] ) ? $settings['map_provider'] : 'google';
+
+		if ( 'openstreetmap' === $provider ) {
+			return [
+				'landtech-extras-leaflet',
+				'landtech-extras-jquery-resize',
+			];
+		}
+
 		return [
 			'landtech-extras-gmap3',
 			'landtech-extras-google-maps',
 			'landtech-extras-jquery-resize',
 		];
+	}
+
+	/**
+	 * @return array
+	 */
+	public function get_style_depends() {
+		$settings = $this->get_settings_for_display();
+		$provider   = isset( $settings['map_provider'] ) ? $settings['map_provider'] : 'google';
+
+		if ( 'openstreetmap' === $provider ) {
+			return [ 'landtech-extras-leaflet' ];
+		}
+
+		return [];
 	}
 
 	/**
@@ -269,6 +293,32 @@ class Google_Map extends Extras_Widget {
 				'label' => __( 'Map', 'landtech-extras-for-elementor' ),
 			]
 		);
+
+			$this->add_control(
+				'map_provider',
+				[
+					'label'   => __( 'Map provider', 'landtech-extras-for-elementor' ),
+					'type'    => Controls_Manager::SELECT,
+					'default' => 'google',
+					'options' => [
+						'google'        => __( 'Google Maps (API key required)', 'landtech-extras-for-elementor' ),
+						'openstreetmap' => __( 'OpenStreetMap (no API key)', 'landtech-extras-for-elementor' ),
+					],
+					'frontend_available' => true,
+				]
+			);
+
+			$this->add_control(
+				'map_provider_osm_notice',
+				[
+					'type'            => Controls_Manager::RAW_HTML,
+					'raw'             => __( 'OpenStreetMap mode uses Leaflet and standard map tiles. Routes, polygons, and Snazzy styling require Google Maps.', 'landtech-extras-for-elementor' ),
+					'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+					'condition'       => [
+						'map_provider' => 'openstreetmap',
+					],
+				]
+			);
 
 			$this->add_control(
 				'heading_center',
@@ -519,7 +569,10 @@ class Google_Map extends Extras_Widget {
 		$this->start_controls_section(
 			'section_polygon',
 			[
-				'label' => __( 'Polygon', 'landtech-extras-for-elementor' ),
+				'label'     => __( 'Polygon', 'landtech-extras-for-elementor' ),
+				'condition' => [
+					'map_provider' => 'google',
+				],
 			]
 		);
 
@@ -541,7 +594,10 @@ class Google_Map extends Extras_Widget {
 		$this->start_controls_section(
 			'section_route',
 			[
-				'label' => __( 'Route', 'landtech-extras-for-elementor' ),
+				'label'     => __( 'Route', 'landtech-extras-for-elementor' ),
+				'condition' => [
+					'map_provider' => 'google',
+				],
 			]
 		);
 
@@ -824,6 +880,9 @@ class Google_Map extends Extras_Widget {
 					],
 					'label_block' => true,
 					'frontend_available' => true,
+					'condition' => [
+						'map_provider' => 'google',
+					],
 				]
 			);
 
@@ -901,10 +960,11 @@ class Google_Map extends Extras_Widget {
 		$this->start_controls_section(
 			'section_style_polygon',
 			[
-				'label' => __( 'Polygon', 'landtech-extras-for-elementor' ),
-				'tab'   => Controls_Manager::TAB_STYLE,
+				'label'     => __( 'Polygon', 'landtech-extras-for-elementor' ),
+				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [
-					'polygon!' => '',
+					'polygon!'     => '',
+					'map_provider' => 'google',
 				],
 			]
 		);
@@ -1588,9 +1648,10 @@ class Google_Map extends Extras_Widget {
 	 */
 	protected function render() {
 		$settings = $this->get_settings_for_display();
-		$plugin = \LandTechExtras\LandTechExtrasPlugin::$instance;
+		$plugin   = \LandTechExtras\LandTechExtrasPlugin::$instance;
+		$provider = isset( $settings['map_provider'] ) ? $settings['map_provider'] : 'google';
 
-		if ( '' === $plugin->settings->get_option( 'google_maps_api_key', 'landtech_extras_apis', false ) ) {
+		if ( 'google' === $provider && '' === $plugin->settings->get_option( 'google_maps_api_key', 'landtech_extras_apis', false ) ) {
 			$this->render_placeholder( [
 				'body' => __( 'You have not set your Google Maps API key.', 'landtech-extras-for-elementor' ),
 			] );

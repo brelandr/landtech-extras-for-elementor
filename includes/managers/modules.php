@@ -50,6 +50,8 @@ class Modules_Manager {
 			'heading',
 			'table',
 			'breadcrumbs',
+			'schema',
+			'lottie',
 			'templates-control',
 			'query-control',
 			'display-conditions',

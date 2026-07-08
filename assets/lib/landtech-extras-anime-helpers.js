@@ -10,6 +10,40 @@
 		return;
 	}
 
+	function ltxeAnimeRun( opts ) {
+		if ( window.anime && 'function' === typeof window.anime.animate ) {
+			return window.anime.animate( opts );
+		}
+		if ( 'function' === typeof window.anime ) {
+			return window.anime( opts );
+		}
+		return null;
+	}
+
+	function ltxeAnimeSet( targets, props ) {
+		if ( window.anime && 'function' === typeof window.anime.set ) {
+			return window.anime.set( ltxeTargets( targets ), props );
+		}
+		return ltxeAnimeRun( Object.assign( {
+			targets: ltxeTargets( targets ),
+			duration: 0,
+		}, ltxeMapProps( props ) ) );
+	}
+
+	function ltxeAnimeStagger( ms ) {
+		if ( window.anime && 'function' === typeof window.anime.stagger ) {
+			return window.anime.stagger( ms );
+		}
+		return ms;
+	}
+
+	function ltxeAnimeTimeline( opts ) {
+		if ( window.anime && 'function' === typeof window.anime.timeline ) {
+			return window.anime.timeline( opts );
+		}
+		return ltxeAnimeRun( opts || {} );
+	}
+
 	var ltxeEase = 'cubicBezier(0.446, 0, 0.034, 1)';
 
 	function ltxeTargets( target ) {
@@ -212,7 +246,7 @@
 				delete mapped.clearProps;
 			}
 			if ( Object.keys( mapped ).length ) {
-				window.anime.set( ltxeTargets( targets ), mapped );
+				ltxeAnimeSet( targets, mapped );
 			}
 		},
 
@@ -239,7 +273,7 @@
 				};
 			}
 			Object.assign( opts, mapped );
-			return window.anime( opts );
+			return ltxeAnimeRun( opts );
 		},
 
 		from: function( targets, duration, props ) {
@@ -265,11 +299,11 @@
 				};
 			}
 			Object.assign( opts, mapped );
-			return window.anime( {
+			return ltxeAnimeRun( {
 				targets: opts.targets,
 				duration: 0,
 				complete: function() {
-					window.anime( Object.assign( { easing: ltxeEase }, opts ) );
+					ltxeAnimeRun( Object.assign( { easing: ltxeEase }, opts ) );
 				},
 			} );
 		},
@@ -279,7 +313,7 @@
 			var to = ltxeMapProps( toProps );
 			var complete = toProps && toProps.onComplete ? toProps.onComplete : null;
 			delete to.onComplete;
-			return window.anime( {
+			return ltxeAnimeRun( {
 				targets: ltxeTargets( targets ),
 				duration: ( duration || 0 ) * 1000,
 				easing: to.easing || from.easing || ltxeEase,
@@ -290,13 +324,15 @@
 		},
 
 		killTweensOf: function( targets ) {
-			window.anime.remove( ltxeTargets( targets ) );
+			if ( window.anime && 'function' === typeof window.anime.remove ) {
+				window.anime.remove( ltxeTargets( targets ) );
+			}
 		},
 
 		timeline: function( options ) {
 			var labels = {};
 			var endTime = 0;
-			var tl = window.anime.timeline( {
+			var tl = ltxeAnimeTimeline( {
 				easing: ltxeEase,
 				complete: options && options.onComplete ? options.onComplete : undefined,
 			} );
@@ -346,7 +382,7 @@
 				var addOpts = {
 					targets: ltxeTargets( targets ),
 					duration: ( duration || 0 ) * 1000,
-					delay: window.anime.stagger( ( stagger || 0 ) * 1000 ),
+					delay: ltxeAnimeStagger( ( stagger || 0 ) * 1000 ),
 					easing: to.easing || from.easing || ltxeEase,
 				};
 				var startMs;

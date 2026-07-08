@@ -1,5 +1,5 @@
-// -- videPlayer
-// @license videPlayer v1.0.0 | MIT | Land Tech Web Designs, Corp 2017 | https://landtechwebdesigns.com
+// -- audioPlayer
+// @license audioPlayer v1.0.0 | MIT | Land Tech Web Designs, Corp 2017 | https://landtechwebdesigns.com
 // --------------------------------
 (function($) {
 

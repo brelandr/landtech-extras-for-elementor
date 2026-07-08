@@ -591,7 +591,14 @@ class Settings extends Settings_Page {
 			],
 		];
 
-		return $fields;
+		/**
+		 * Allow Premium add-on (or other packages) to append APIs tab fields.
+		 *
+		 * @since 2.2.101
+		 *
+		 * @param array<int, array<string, mixed>> $fields API settings fields.
+		 */
+		return apply_filters( 'landtech_extras/settings/apis_fields', $fields );
 
 	}
 

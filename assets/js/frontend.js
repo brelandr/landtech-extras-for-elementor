@@ -49,6 +49,10 @@
 				widgets[ 'posts-extra.' + skinSlug ] = ee.PostsClassic;
 			});
 
+			$.each( [ 'list', 'featured-grid', 'timeline' ], function( _index, layoutSkin ) {
+				widgets[ 'posts-extra.' + layoutSkin ] = ee.PostsClassic;
+			});
+
 			var globals = {
 				'sticky': 						ee.Sticky,
 				'parallax': 					ee.ParallaxElement,
@@ -390,7 +394,46 @@
 
 					$input.on( 'click blur', function() {
 						$container.removeClass( 'ee--empty' );
-					});
+					} );
+
+					if ( 'yes' === elementSettings.live_ajax_search ) {
+						var $liveResults = $scope.find( '.ee-search-form__live-results' );
+						if ( ! $liveResults.length ) {
+							$liveResults = $( '<div class="ee-search-form__live-results" role="listbox" aria-live="polite"></div>' );
+							$container.append( $liveResults );
+						}
+						var liveTimer = null;
+						$input.on( 'input.ltxeLiveSearch', function() {
+							window.clearTimeout( liveTimer );
+							var query = $.trim( $input.val() );
+							if ( query.length < 2 ) {
+								$liveResults.empty().hide();
+								return;
+							}
+							liveTimer = window.setTimeout( function() {
+								var restUrl = ( window.landtechExtrasFrontendConfig && window.landtechExtrasFrontendConfig.restSearchUrl ) ? window.landtechExtrasFrontendConfig.restSearchUrl : '';
+								if ( ! restUrl ) {
+									return;
+								}
+								$.getJSON( restUrl, {
+									q: query,
+									post_type: elementSettings.live_ajax_post_type || 'post',
+								} ).done( function( response ) {
+									$liveResults.empty();
+									if ( response && response.results && response.results.length ) {
+										response.results.forEach( function( item ) {
+											$( '<a>', {
+												'class': 'ee-search-form__live-results__item',
+												'href': item.url,
+												'text': item.title,
+											} ).appendTo( $liveResults );
+										} );
+									}
+									$liveResults.toggle( $liveResults.children().length > 0 );
+								} );
+							}, 350 );
+						} );
+					}
 
 					// On filters change we set the query field
 					$searchFields.on( 'change', function() {
@@ -690,218 +733,10 @@
 		////////////////////////////////////////////
 
 		Calendar : function( $scope, $ ) {
-
-			ee.Calendar.elementSettings 	= ee.getElementSettings( $scope );
-
-			var $calendar 	= $scope.find( '.ee-calendar' ),
-				$template 	= $calendar.find( '#ee-calendar__template' ).html(),
-				$events 	= $calendar.find( '.ee-calendar-event' ),
-				leftArrow 	= elementorFrontend.config.is_rtl ? 'right' : 'left',
-				rightArrow 	= elementorFrontend.config.is_rtl ? 'left' : 'right',
-
-				eventDateFormat = $.trim( ee.Calendar.elementSettings.event_date_format ) || 'MMMM Do',
-				
-				eventsTemplate = 
-				"<% if ( days[d].events.length ) { %>" +
-					"<div class='ee-calendar__day__events'>" +
-						"<% _.each(days[d].events, function(event) { %>" +
-							"<div class='ee-calendar__day__event'>" +
-								"<div class='ee-calendar__day__event__name'>" +
-									"<%= event.before %>" +
-									"<a <% if ( '' !== event.link ) { %>href='<%= event.link %>' <% if ( '' !== event.target ) { %>target='<%= event.target %>'<% } %> <% if ( '' !== event.rel ) { %>rel='<%= event.rel %>'<% } %><% } %> data-title='<%= event.name %>'><%= event.name %></a>" +
-									"<%= event.after %>" +
-								"</div>" +
-							"</div>" +
-						"<% }); %>" +
-					"</div>" +
-				"<% } %>",
-				eventsMonthTemplate = 
-				"<div class='ee-calendar__events'>" +
-					"<div class='ee-calendar__events__header ee-calendar__table__head'>" +
-						"<span class='ee-calendar__events__header__title'>" + ee.Calendar.elementSettings.event_list_heading + "</span>" +
-						"<span class='ee-arrow ee-calendar__controls__button ee-calendar__events__hide'><i class='eicon-close'></i></span>" +
-					"</div>" +
-					"<div class='ee-calendar__events__list'>" +
-						"<div class='ee-calendar__events__list__box ee-nav ee-nav--stacked'>" +
-						"<% _.each(eventsThisMonth, function(event) { %>" +
-							"<div class='ee-calendar__events__event ee-calendar__cell__content ee-nav__item'>" +
-								"<%= event.before %>" +
-								"<a <% if ( '' !== event.link ) { %>href='<%= event.link %>' <% if ( '' !== event.target ) { %>target='<%= event.target %>'<% } %> <% if ( '' !== event.rel ) { %>rel='<%= event.rel %>'<% } %><% } %>>" +
-								"<%= moment(event.start).format('" + eventDateFormat + "') %>" +
-								"<% if ( event.end !== event.start ) { %>" +
-									" - <%= moment(event.end).format('" + eventDateFormat + "') %>" +
-								"<% } %>" +
-								": <%= event.name %>" +
-								"</a>" +
-								"<%= event.after %>" +
-							"</div>" +
-						"<% }); %>" +
-						"</div>" +
-					"</div>" +
-				"</div>",
-				clndrTemplate =
-				"<div class='ee-calendar__controls clndr-controls'>" +
-					"<span class='ee-calendar__controls__button ee-calendar__button--previous ee-arrow ee-arrow--" + leftArrow + " clndr-control-button clndr-previous-button'><i class='eicon-chevron-" + leftArrow + "'></i></span>" +
-					"<div class='ee-calendar__controls__month ee-calendar__controls__content month'><%= month %> <%= year %></div>" +
-					"<span class='ee-calendar__controls__button ee-calendar__button--next ee-arrow ee-arrow--" + rightArrow + " clndr-control-button clndr-next-button'><i class='eicon-chevron-" + rightArrow + "'></i></span>" +
-				"</div>" +
-				"<div class='ee-calendar__month clndr-events'>" +
-					"<table class='ee-table ee-calendar__table clndr-table' border='0' cellspacing='0' cellpadding='0'>" +
-						"<thead class='ee-table__head ee-calendar__table__head'>" +
-							"<tr class='ee-table__row ee-calendar__header header-days'>" +
-							"<% _.each(daysOfTheWeek, function (day) { %>" +
-								"<td class='ee-table__cell ee-calendar__cell ee-calendar__header__week'>" +
-									"<div class='ee-calendar__week ee-calendar__cell__content'>" +
-										"<div class='ee-calendar__cell__wrapper'>" +
-											"<%= day %>" +
-										"</div>" +
-									"</div>" +
-								"</td>" +
-							"<% }); %>" +
-							"</tr>" +
-						"</thead>" +
-						"<tbody class='ee-table__body ee-calendar__table__body'>" +
-						"<% for(var i = 0; i < numberOfRows; i++){ %>" +
-							"<tr class='ee-table__row'>" +
-							"<% for(var j = 0; j < 7; j++){ %>" +
-							"<% var d = j + i * 7; %>" +
-								"<td class='ee-table__cell ee-calendar__cell ee-calendar__day align--top <%= days[d].classes %>'>" +
-									"<div class='ee-table__cell__content ee-calendar__cell__content ee-calendar__day__content'>" +
-										"<div class='ee-calendar__day__wrapper'>" +
-											"<div class='ee-calendar__day__header day-contents'><%= days[d].day %></div>" +
-											eventsTemplate +
-										"</div>" +
-									"</div>" +
-								"</td>" +
-							"<% } %>" +
-							"</tr>" +
-						"<% } %>" +
-						"</tbody>" +
-					"</table>" +
-					eventsMonthTemplate +
-				"</div>";
-
-			moment.updateLocale('en', {
-				months : [
-					ee.Calendar.elementSettings.month_january,
-					ee.Calendar.elementSettings.month_february,
-					ee.Calendar.elementSettings.month_march,
-					ee.Calendar.elementSettings.month_april,
-					ee.Calendar.elementSettings.month_may,
-					ee.Calendar.elementSettings.month_june,
-					ee.Calendar.elementSettings.month_july,
-					ee.Calendar.elementSettings.month_august,
-					ee.Calendar.elementSettings.month_september,
-					ee.Calendar.elementSettings.month_october,
-					ee.Calendar.elementSettings.month_november,
-					ee.Calendar.elementSettings.month_december,
-				]
-			});
-
-			var thisMonth 		= moment().format('YYYY-MM'),
-				eventArray 		= [],
-				calendarArgs 	= {
-					moment: moment,
-					classes: {
-						past: "ee-calendar__day--passed",
-						today: "ee-calendar__day--today",
-						event: "ee-calendar__day--event",
-						inactive: "ee-calendar__day--inactive",
-						lastMonth: "ee-calendar__month--last",
-						nextMonth: "ee-calendar__month--next",
-						adjacentMonth: "ee-calendar__day--adjacent",
-					},
-					template 		: clndrTemplate,
-					lengthOfTime 	: {
-						months 		: null,
-						interval 	: 1,
-					},
-					events 			: eventArray,
-					multiDayEvents 	: {
-						endDate 	: 'end',
-						startDate 	: 'start'
-					},
-					startWithMonth 	: ( 'yes' === ee.Calendar.elementSettings.default_current_month ) ? moment() : ee.Calendar.elementSettings.default_month,
-					constraints: {
-						startDate: ee.Calendar.elementSettings.constrain_start,
-						endDate: ee.Calendar.elementSettings.constrain_end,
-					},
-					daysOfTheWeek 				: [
-						ee.Calendar.elementSettings.day_sunday,
-						ee.Calendar.elementSettings.day_monday,
-						ee.Calendar.elementSettings.day_tuesday,
-						ee.Calendar.elementSettings.day_wednesday,
-						ee.Calendar.elementSettings.day_thursday,
-						ee.Calendar.elementSettings.day_friday,
-						ee.Calendar.elementSettings.day_saturday,
-					],
-					weekOffset 					: parseInt( ee.Calendar.elementSettings.first_day ),
-					showAdjacentMonths 			: 'yes' === ee.Calendar.elementSettings.show_adjacent_months,
-					adjacentDaysChangeMonth 	: 'yes' === ee.Calendar.elementSettings.click_adjacent,
-					clickEvents 				: {
-						click: function ( target ) {
-							if ( target.events.length ) {
-								ee.Calendar.showEventsPanel( $calendar );
-							}
-						},
-						nextInterval: function () {
-							
-						},
-						previousInterval: function () {
-							
-						},
-						onIntervalChange: function () {
-							
-						}
-					},
-				};
-
-			ee.Calendar.showEventsPanel = function( $cal ) {
-				$cal.find( '.ee-calendar__month' ).addClass( 'show-events' );
-			};
-
-			ee.Calendar.hideEventsPanel = function( $cal ) {
-				$cal.find( '.ee-calendar__month' ).removeClass( 'show-events' );
-			};
-
-			ee.Calendar.bindEventsPanel = function( $cal ) {
-				$cal.on( 'click', '.ee-calendar__events__hide', function( event ) {
-					event.preventDefault();
-					ee.Calendar.hideEventsPanel( $cal );
-				} );
-
-				$cal.on( 'click', '.ee-calendar__day__event a:not([href]), .ee-calendar__events__event a:not([href])', function( event ) {
-					event.preventDefault();
-					ee.Calendar.showEventsPanel( $cal );
-				} );
-			};
-
-			ee.Calendar.init = function() {
-				ee.Calendar.setupEvents();
-
-				if ( $calendar.length ) {
-					ee.Calendar.bindEventsPanel( $calendar );
-					$calendar.clndr( calendarArgs );
-				}
-			};
-
-			ee.Calendar.setupEvents = function() {
-				$events.each( function() {
-					eventArray.push({
-						name 	: $(this).html(),
-						start 	: $(this).data('start'),
-						end 	: $(this).data('end'),
-						link 	: $(this).data('link'),
-						target 	: $(this).data('target'),
-						rel 	: $(this).data('rel'),
-						archive : $(this).data('archive'),
-						before 	: $(this).data('before'),
-						after 	: $(this).data('after'),
-					});
-				});
-			};
-
-			ee.Calendar.init();
+			ee.Calendar.elementSettings = ee.getElementSettings( $scope );
+			if ( 'function' === typeof window.ltxeInitScheduleXCalendar ) {
+				window.ltxeInitScheduleXCalendar( $scope, ee.Calendar.elementSettings );
+			}
 		},
 
 		////////////////////////////////////////////
@@ -919,8 +754,100 @@
 
 			var $pins 		= $map.find( '.ee-google-map__pin' ),
 				$navigation = $scope.find( '.ee-google-map__navigation' ),
-				settings 	= ee.GoogleMap.elementSettings,
-				gmapArgs 	= {
+				settings 	= ee.GoogleMap.elementSettings;
+
+			if ( ! ee.GoogleMap.initLeaflet ) {
+				ee.GoogleMap.initLeaflet = function( $mapEl, $pinsEl, $navigationEl, mapSettings ) {
+				if ( 'undefined' === typeof window.L ) {
+					return;
+				}
+
+				var iconBase = ( window.landtechExtrasFrontendConfig && window.landtechExtrasFrontendConfig.urls && window.landtechExtrasFrontendConfig.urls.leafletIcons )
+					? window.landtechExtrasFrontendConfig.urls.leafletIcons
+					: '';
+
+				if ( iconBase ) {
+					delete L.Icon.Default.prototype._getIconUrl;
+					L.Icon.Default.mergeOptions( {
+						iconRetinaUrl: iconBase + 'marker-icon-2x.png',
+						iconUrl: iconBase + 'marker-icon.png',
+						shadowUrl: iconBase + 'marker-shadow.png',
+					} );
+				}
+
+				var centerLat = parseFloat( $mapEl.data( 'lat' ) ) || 48.8583736;
+				var centerLng = parseFloat( $mapEl.data( 'lng' ) ) || 2.2922873;
+				var mapZoom = mapSettings.zoom && mapSettings.zoom.size ? parseInt( mapSettings.zoom.size, 10 ) : 10;
+				var leafletMap = L.map( $mapEl[0], {
+					scrollWheelZoom: 'yes' === mapSettings.scrollwheel,
+				} );
+
+				L.tileLayer( 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+					maxZoom: 19,
+					attribution: '&copy; OpenStreetMap contributors',
+				} ).addTo( leafletMap );
+
+				var leafletMarkers = [];
+
+				$pinsEl.each( function() {
+					var $pin = $( this );
+					var pinLat = parseFloat( $pin.data( 'lat' ) );
+					var pinLng = parseFloat( $pin.data( 'lng' ) );
+
+					if ( isNaN( pinLat ) || isNaN( pinLng ) ) {
+						return;
+					}
+
+					var marker = L.marker( [ pinLat, pinLng ] ).addTo( leafletMap );
+					leafletMarkers.push( marker );
+
+					if ( 'yes' === mapSettings.popups ) {
+						var popupHtml = $pin.html();
+						if ( popupHtml && $.trim( popupHtml ) ) {
+							marker.bindPopup( popupHtml );
+						}
+					}
+				} );
+
+				if ( 'yes' === mapSettings.fit && leafletMarkers.length ) {
+					leafletMap.fitBounds( L.featureGroup( leafletMarkers ).getBounds().pad( 0.2 ) );
+				} else {
+					leafletMap.setView( [ centerLat, centerLng ], mapZoom );
+				}
+
+				if ( $navigationEl.length ) {
+					$navigationEl.on( 'click', '.ee-google-map__navigation__link', function( event ) {
+						event.preventDefault();
+						var pinId = $( this ).closest( '.ee-google-map__navigation__item' ).data( 'id' );
+
+						if ( ! pinId ) {
+							if ( leafletMarkers.length ) {
+								leafletMap.fitBounds( L.featureGroup( leafletMarkers ).getBounds().pad( 0.2 ) );
+							}
+							return;
+						}
+
+						$pinsEl.each( function( index ) {
+							if ( $( this ).data( 'id' ) === pinId && leafletMarkers[ index ] ) {
+								leafletMap.setView( leafletMarkers[ index ].getLatLng(), mapSettings.navigation_zoom ? mapSettings.navigation_zoom.size : 16 );
+								leafletMarkers[ index ].openPopup();
+							}
+						} );
+					} );
+				}
+
+				$mapEl._resize( function() {
+					leafletMap.invalidateSize();
+				} );
+				};
+			}
+
+			if ( 'openstreetmap' === settings.map_provider ) {
+				ee.GoogleMap.initLeaflet( $map, $pins, $navigation, settings );
+				return;
+			}
+
+			var gmapArgs 	= {
 					center 					: [ 48.8583736, 2.2922873 ],
 
 					mapTypeId 				: google.maps.MapTypeId[ settings.map_type ],
@@ -1284,6 +1211,24 @@
 					autoplay 			: 'yes' === ee.AudioPlayer.elementSettings.autoplay && ! elementorFrontend.isEditMode(),
 					volume				: ee.AudioPlayer.elementSettings.volume.size,
 				});
+
+				if ( 'yes' === ee.AudioPlayer.elementSettings.waveform_skin && 'undefined' !== typeof window.WaveSurfer ) {
+					var $wave = $player.find( '.ee-audio-player__waveform' );
+					if ( ! $wave.length ) {
+						$wave = $( '<div class="ee-audio-player__waveform" aria-hidden="true"></div>' );
+						$player.prepend( $wave );
+					}
+					var audioSrc = $player.find( 'audio source' ).first().attr( 'src' );
+					if ( audioSrc && $wave.length ) {
+						window.WaveSurfer.create( {
+							container: $wave.get( 0 ),
+							waveColor: '#cbd5e1',
+							progressColor: '#0f172a',
+							height: 48,
+							url: audioSrc,
+						} );
+					}
+				}
 			};
 
 			ee.AudioPlayer.init();
@@ -1841,6 +1786,12 @@
 
 			ee.Popup.open = function() {
 				if ( ee.Popup.isOpen() ) {
+					return;
+				}
+
+				var gateEvent = $.Event( 'landtech_extras/popup_before_open' );
+				$( document ).trigger( gateEvent, [ scopeId ] );
+				if ( gateEvent.isDefaultPrevented() ) {
 					return;
 				}
 
@@ -2612,19 +2563,61 @@
 
 			ee.Table.elementSettings 	= ee.getElementSettings( $scope );
 
-			var $table 				= $scope.find('table.ee-table'),
-				sortableInstance 	= $table.data('tablesorter');
+			var $wrapper = $scope.find( '.ee-table-wrapper' ),
+				$table   = $scope.find( 'table.ee-table' ),
+				sortableInstance 	= $table.data( 'tablesorter' );
 
 			ee.Table.init = function() {
-				if ( 'yes' == ee.Table.elementSettings.sortable ) {
-					$table.tablesorter({
+				if ( 'yes' === ee.Table.elementSettings.sortable ) {
+					$table.tablesorter( {
 						cssHeader 	: 'ee-table__sort',
 						cssAsc 		: 'ee-table__sort--up',
 						cssDesc 	: 'ee-table__sort--down',
-					});
+					} );
 				} else {
-					$table.removeData('tablesorter');
+					$table.removeData( 'tablesorter' );
 				}
+
+				if ( 'yes' === ee.Table.elementSettings.pagination ) {
+					ee.Table.initPagination( $wrapper, $table );
+				}
+			};
+
+			ee.Table.initPagination = function( $wrap, $tbl ) {
+				var perPage = parseInt( $wrap.data( 'rows-per-page' ), 10 ) || 10,
+					$rows = $tbl.find( 'tbody > tr' ),
+					$nav = $wrap.find( '.ee-table-pagination' ),
+					$prev = $nav.find( '.ee-table-pagination__prev' ),
+					$next = $nav.find( '.ee-table-pagination__next' ),
+					$status = $nav.find( '.ee-table-pagination__status' ),
+					page = 0,
+					totalPages = Math.max( 1, Math.ceil( $rows.length / perPage ) );
+
+				function renderPage() {
+					$rows.hide();
+					$rows.slice( page * perPage, ( page + 1 ) * perPage ).show();
+					$prev.prop( 'disabled', 0 === page );
+					$next.prop( 'disabled', page >= totalPages - 1 );
+					if ( $status.length ) {
+						$status.text( ( page + 1 ) + ' / ' + totalPages );
+					}
+				}
+
+				$prev.off( 'click.ltxeTablePager' ).on( 'click.ltxeTablePager', function() {
+					if ( page > 0 ) {
+						page--;
+						renderPage();
+					}
+				} );
+
+				$next.off( 'click.ltxeTablePager' ).on( 'click.ltxeTablePager', function() {
+					if ( page < totalPages - 1 ) {
+						page++;
+						renderPage();
+					}
+				} );
+
+				renderPage();
 			};
 
 			ee.Table.init();
@@ -3554,33 +3547,62 @@
 
 		HeadingExtra : function( $scope, $ ) {
 
-			ee.HeadingExtra.elementSettings 	= ee.getElementSettings( $scope );
-
-			var $heading 		= $scope.find('.ee-heading'),
+			var elementSettings = ee.getElementSettings( $scope ),
+				$heading 		= $scope.find('.ee-heading'),
 				$longShadow 	= $heading.find('.ee-heading__long-shadow'),
+				$text           = $heading.find('.ee-heading__text').first(),
 				longShadowArgs 	= {};
 
-			if ( 'yes' !== ee.HeadingExtra.elementSettings.title_long_shadow_enable )
-					return;
-
-			ee.HeadingExtra.init = function() {
-
-				if ( ee.HeadingExtra.elementSettings.title_long_shadow_color ) {
-					longShadowArgs.colorShadow = ee.HeadingExtra.elementSettings.title_long_shadow_color;
+			if ( 'yes' === elementSettings.title_long_shadow_enable ) {
+				if ( elementSettings.title_long_shadow_color ) {
+					longShadowArgs.colorShadow = elementSettings.title_long_shadow_color;
 				}
 
-				if ( ee.HeadingExtra.elementSettings.title_long_shadow_size ) {
-					longShadowArgs.sizeShadow = ee.HeadingExtra.elementSettings.title_long_shadow_size.size;
+				if ( elementSettings.title_long_shadow_size ) {
+					longShadowArgs.sizeShadow = elementSettings.title_long_shadow_size.size;
 				}
 
-				if ( ee.HeadingExtra.elementSettings.title_long_shadow_direction ) {
-					longShadowArgs.directionShadow = ee.HeadingExtra.elementSettings.title_long_shadow_direction;
+				if ( elementSettings.title_long_shadow_direction ) {
+					longShadowArgs.directionShadow = elementSettings.title_long_shadow_direction;
 				}
 
 				$longShadow.longShadow( longShadowArgs );
-			};
+			}
 
-			ee.HeadingExtra.init();
+			if ( ! $text.length || ! elementSettings.title_animation_preset || 'none' === elementSettings.title_animation_preset ) {
+				return;
+			}
+
+			if ( 'undefined' === typeof window.TweenMax ) {
+				return;
+			}
+
+			var preset = elementSettings.title_animation_preset;
+
+			if ( 'fade_up' === preset ) {
+				TweenMax.from( $text, 0.8, { y: 24, opacity: 0, ease: Power4.easeOut } );
+			} else if ( 'typewriter' === preset ) {
+				var fullText = $text.text();
+				$text.text( '' );
+				var charIndex = 0;
+				var typeTimer = window.setInterval( function() {
+					charIndex++;
+					$text.text( fullText.substring( 0, charIndex ) );
+					if ( charIndex >= fullText.length ) {
+						window.clearInterval( typeTimer );
+					}
+				}, 35 );
+			} else if ( 'split_words' === preset ) {
+				var words = $.trim( $text.text() ).split( /\s+/ );
+				$text.empty();
+				$.each( words, function( _idx, word ) {
+					$text.append( $( '<span class="ee-heading__word"></span>' ).css( 'display', 'inline-block' ).text( word + ' ' ) );
+				} );
+				TweenMax.staggerFrom( $text.find( '.ee-heading__word' ), 0.5, { y: 16, opacity: 0 }, 0.08 );
+			} else if ( 'highlight_sweep' === preset ) {
+				$text.addClass( 'ee-heading__text--highlight-sweep' );
+				TweenMax.fromTo( $text, 1, { backgroundSize: '0% 100%' }, { backgroundSize: '100% 100%' } );
+			}
 		},
 
 		////////////////////////////////////////////
@@ -3731,6 +3753,17 @@
 				}
 
 				$video.videoPlayer( videoPlayerArgs );
+
+				var $nativeVideo = $video.find( 'video.ee-video-player__source' ).get( 0 );
+				if ( $nativeVideo ) {
+					var playbackRate = parseFloat( $nativeVideo.getAttribute( 'data-playback-rate' ) );
+					if ( ! isNaN( playbackRate ) && playbackRate > 0 ) {
+						$nativeVideo.playbackRate = playbackRate;
+					}
+					if ( 'undefined' !== typeof videoPlayerArgs.speed && ! isNaN( parseFloat( videoPlayerArgs.speed ) ) ) {
+						$nativeVideo.playbackRate = parseFloat( videoPlayerArgs.speed );
+					}
+				}
 			};
 
 			ee.VideoPlayer.init();

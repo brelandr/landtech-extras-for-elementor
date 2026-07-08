@@ -7,6 +7,8 @@ use LandTechExtras\Base\Extras_Widget;
 use LandTechExtras\Modules\Toggle\Skins;
 use LandTechExtras\Modules\TemplatesControl\Module as TemplatesControl;
 use LandTechExtras\Group_Control_Transition;
+use LandTechExtras\Schema\Schema_Builder;
+use LandTechExtras\Schema\Schema_Validator;
 
 // Elementor Classes
 use Elementor\Repeater;
@@ -424,6 +426,17 @@ class Toggle_Element extends Extras_Widget {
 					'type' 			=> Controls_Manager::SWITCHER,
 					'default' 		=> 'yes',
 					'frontend_available' => true,
+				]
+			);
+
+			$this->add_control(
+				'output_faq_schema',
+				[
+					'label'        => __( 'Output FAQPage JSON-LD', 'landtech-extras-for-elementor' ),
+					'type'         => Controls_Manager::SWITCHER,
+					'default'      => '',
+					'return_value' => 'yes',
+					'description'  => __( 'Outputs FAQ structured data from toggle labels (questions) and text content (answers). Template-based items are skipped.', 'landtech-extras-for-elementor' ),
 				]
 			);
 
@@ -1031,6 +1044,70 @@ class Toggle_Element extends Extras_Widget {
 		</div>
 		<?php
 
+		$this->maybe_render_faq_json_ld();
+
+	}
+
+	/**
+	 * Output FAQPage JSON-LD when enabled.
+	 *
+	 * @since 2.2.102
+	 * @return void
+	 */
+	protected function maybe_render_faq_json_ld() {
+		$settings = $this->get_settings_for_display();
+
+		if ( 'yes' !== ( $settings['output_faq_schema'] ?? '' ) ) {
+			return;
+		}
+
+		$elements = isset( $settings['elements'] ) && is_array( $settings['elements'] )
+			? $settings['elements']
+			: array();
+
+		$faq_rows = array();
+
+		foreach ( $elements as $item ) {
+			if ( ! is_array( $item ) ) {
+				continue;
+			}
+
+			if ( 'yes' === ( $settings['toggle_hide_empty'] ?? '' ) && ! $this->has_item_content( $item ) ) {
+				continue;
+			}
+
+			if ( 'text' !== ( $item['content_type'] ?? 'text' ) ) {
+				continue;
+			}
+
+			$question = isset( $item['text'] ) ? (string) $item['text'] : '';
+			$answer   = isset( $item['content'] ) ? (string) $item['content'] : '';
+
+			if ( '' === trim( $question ) || '' === trim( wp_strip_all_tags( $answer ) ) ) {
+				continue;
+			}
+
+			$faq_rows[] = array(
+				'question' => $question,
+				'answer'   => $answer,
+			);
+		}
+
+		if ( empty( $faq_rows ) ) {
+			return;
+		}
+
+		$schema = Schema_Builder::build_faq_page( $faq_rows );
+		$result = Schema_Validator::validate( 'FAQPage', $schema );
+
+		if ( empty( $result['valid'] ) ) {
+			return;
+		}
+
+		Schema_Builder::print_json_ld(
+			$schema,
+			'ee-toggle-element-jsonld-' . sanitize_html_class( (string) $this->get_id() )
+		);
 	}
 
 	/**

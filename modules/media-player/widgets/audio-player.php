@@ -73,10 +73,16 @@ class Audio_Player extends Extras_Widget {
 	 * @return array
 	 */
 	public function get_script_depends() {
-		return [
+		$scripts = [
 			'landtech-extras-audio-player',
 			'landtech-extras-jquery-appear',
 		];
+
+		if ( 'yes' === $this->get_settings( 'waveform_skin' ) ) {
+			$scripts[] = 'landtech-extras-wavesurfer';
+		}
+
+		return $scripts;
 	}
 
 	/**
@@ -415,6 +421,18 @@ class Audio_Player extends Extras_Widget {
 					'label_on' 		=> __( 'Yes', 'landtech-extras-for-elementor' ),
 					'label_off' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 					'return_value' 	=> 'yes',
+					'frontend_available' => true,
+				]
+			);
+
+			$this->add_control(
+				'waveform_skin',
+				[
+					'label'              => __( 'Waveform visualization', 'landtech-extras-for-elementor' ),
+					'type'               => Controls_Manager::SWITCHER,
+					'return_value'       => 'yes',
+					'default'            => '',
+					'description'        => __( 'Optional WaveSurfer.js skin; falls back to the standard player when disabled.', 'landtech-extras-for-elementor' ),
 					'frontend_available' => true,
 				]
 			);

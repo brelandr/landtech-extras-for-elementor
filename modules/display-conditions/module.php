@@ -124,6 +124,7 @@ class Module extends Module_Base {
 			'authentication',
 			'user',
 			'role',
+			'cookie',
 			'os',
 			'browser',
 
@@ -131,6 +132,7 @@ class Module extends Module_Base {
 			'date',
 			'date_time_before',
 			'time',
+			'business_hours',
 			'day',
 
 			// Single
@@ -162,6 +164,7 @@ class Module extends Module_Base {
 
 			// Variables
 			'var_get',
+			'var_utm',
 			'var_post',
 
 			// Misc
@@ -177,6 +180,23 @@ class Module extends Module_Base {
 			if ( class_exists( $class_name )  ) {
 				if ( $class_name::is_supported() ) {
 					$this->_conditions[ $condition_name ] = $class_name::instance();
+				}
+			}
+		}
+
+		/**
+		 * Register additional display condition drivers (Premium extensions).
+		 *
+		 * @since 2.3.0
+		 *
+		 * @param array<string, \LandTechExtras\Base\Condition> $conditions Registered conditions.
+		 */
+		$extra = apply_filters( 'landtech_extras/display_conditions/register', array() );
+
+		if ( is_array( $extra ) ) {
+			foreach ( $extra as $slug => $condition ) {
+				if ( is_object( $condition ) && $condition instanceof \LandTechExtras\Base\Condition ) {
+					$this->_conditions[ sanitize_key( (string) $slug ) ] = $condition;
 				}
 			}
 		}

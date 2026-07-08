@@ -4,6 +4,8 @@ namespace LandTechExtras\Modules\Breadcrumbs\Widgets;
 
 // LandTech Extras for Elementor Classes
 use LandTechExtras\Base\Extras_Widget;
+use LandTechExtras\Schema\Schema_Builder;
+use LandTechExtras\Schema\Schema_Validator;
 use LandTechExtras\Utils;
 
 // Elementor Classes
@@ -1045,6 +1047,47 @@ class Breadcrumbs extends Extras_Widget {
 		?><ul <?php $this->print_render_attribute_string( 'breadcrumbs' ); ?>><?php
 			$this->render_crumbs();
 		?></ul><?php
+
+		$this->maybe_render_breadcrumb_json_ld();
+	}
+
+	/**
+	 * Output BreadcrumbList JSON-LD when structured data is enabled.
+	 *
+	 * @since 2.3.0
+	 * @return void
+	 */
+	protected function maybe_render_breadcrumb_json_ld() {
+		$settings = $this->get_settings_for_display();
+
+		if ( empty( $settings['structured_data'] ) ) {
+			return;
+		}
+
+		/**
+		 * Filters breadcrumb crumbs before JSON-LD is built.
+		 *
+		 * @since 2.3.0
+		 *
+		 * @param array $crumbs Crumb list.
+		 */
+		$crumbs = apply_filters( 'landtech_extras/widgets/breadcrumbs/crumbs', $this->crumbs );
+
+		if ( empty( $crumbs ) || ! is_array( $crumbs ) ) {
+			return;
+		}
+
+		$schema = Schema_Builder::build_breadcrumb_list( array_values( $crumbs ) );
+		$result = Schema_Validator::validate( 'BreadcrumbList', $schema );
+
+		if ( empty( $result['valid'] ) ) {
+			return;
+		}
+
+		Schema_Builder::print_json_ld(
+			$schema,
+			'ee-breadcrumbs-jsonld-' . sanitize_html_class( (string) $this->get_id() )
+		);
 	}
 
 	/**

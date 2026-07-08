@@ -261,6 +261,35 @@ class Table extends Extras_Widget {
 			);
 
 			$this->add_control(
+				'pagination',
+				[
+					'label'              => __( 'Pagination', 'landtech-extras-for-elementor' ),
+					'type'               => Controls_Manager::SWITCHER,
+					'label_on'           => __( 'Yes', 'landtech-extras-for-elementor' ),
+					'label_off'          => __( 'No', 'landtech-extras-for-elementor' ),
+					'return_value'       => 'yes',
+					'description'        => __( 'Splits table body rows into pages on the frontend.', 'landtech-extras-for-elementor' ),
+					'frontend_available' => true,
+				]
+			);
+
+			$this->add_control(
+				'pagination_rows',
+				[
+					'label'              => __( 'Rows per page', 'landtech-extras-for-elementor' ),
+					'type'               => Controls_Manager::NUMBER,
+					'min'                => 1,
+					'max'                => 100,
+					'step'               => 1,
+					'default'            => 10,
+					'condition'          => [
+						'pagination' => 'yes',
+					],
+					'frontend_available' => true,
+				]
+			);
+
+			$this->add_control(
 				'responsive',
 				[
 					'label' 		=> __( 'Responsive', 'landtech-extras-for-elementor' ),
@@ -473,6 +502,36 @@ class Table extends Extras_Widget {
 					],
 					'fields' 			=> $repeater_elements->get_controls(),
 					'title_field' 		=> 'Start {{ type }}: {{{ cell_text }}}',
+				]
+			);
+
+			$this->add_control(
+				'csv_import_heading',
+				[
+					'type'      => Controls_Manager::HEADING,
+					'label'     => __( 'CSV import (editor)', 'landtech-extras-for-elementor' ),
+					'separator' => 'before',
+				]
+			);
+
+			$this->add_control(
+				'csv_import_data',
+				[
+					'label'       => __( 'Paste CSV', 'landtech-extras-for-elementor' ),
+					'type'        => Controls_Manager::TEXTAREA,
+					'description' => __( 'Paste comma- or tab-separated values. First row can be headers. Click Import CSV to replace body rows.', 'landtech-extras-for-elementor' ),
+					'rows'        => 6,
+				]
+			);
+
+			$this->add_control(
+				'csv_import_apply',
+				[
+					'label'       => __( 'Import CSV', 'landtech-extras-for-elementor' ),
+					'type'        => Controls_Manager::BUTTON,
+					'button_type' => 'success',
+					'text'        => __( 'Import into table rows', 'landtech-extras-for-elementor' ),
+					'event'       => 'landtech_extras:table:csv_import',
 				]
 			);
 
@@ -1273,8 +1332,16 @@ class Table extends Extras_Widget {
 
 		if ( $settings['rules'] ) {
 			$this->add_render_attribute( 'table', 'class', 'ee-table--rules' );
+		}
+
+		if ( 'yes' === $settings['pagination'] ) {
+			$this->add_render_attribute( 'table-wrapper', 'class', 'ee-table-wrapper ee-table-wrapper--paginated' );
+			$this->add_render_attribute( 'table-wrapper', 'data-rows-per-page', absint( $settings['pagination_rows'] ?? 10 ) );
+		} else {
+			$this->add_render_attribute( 'table-wrapper', 'class', 'ee-table-wrapper' );
 		} ?>
 		
+		<div <?php $this->print_render_attribute_string( 'table-wrapper' ); ?>>
 		<table <?php $this->print_render_attribute_string( 'table' ); ?>>
 
 			<?php
@@ -1295,6 +1362,14 @@ class Table extends Extras_Widget {
 				?></tr>
 			</tbody>
 		</table>
+		<?php if ( 'yes' === $settings['pagination'] ) : ?>
+			<nav class="ee-table-pagination" aria-label="<?php echo esc_attr__( 'Table pagination', 'landtech-extras-for-elementor' ); ?>">
+				<button type="button" class="ee-table-pagination__prev" disabled><?php echo esc_html__( 'Previous', 'landtech-extras-for-elementor' ); ?></button>
+				<span class="ee-table-pagination__status"></span>
+				<button type="button" class="ee-table-pagination__next"><?php echo esc_html__( 'Next', 'landtech-extras-for-elementor' ); ?></button>
+			</nav>
+		<?php endif; ?>
+		</div>
 
 		<?php
 	}

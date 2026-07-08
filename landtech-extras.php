@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Plugin Name:       LandTech Extras for Elementor
  * Plugin URI:        https://landtechwebdesigns.com/
  * Description:       Elementor widgets & extensions — fork of Elementor Extras (Extras for Elementor). Free on WordPress.org.
- * Version:           2.2.100
+ * Version:           2.3.0
  * Elementor tested up to: 3.28
  * Elementor Pro tested up to: 3.28
  *
@@ -51,17 +51,21 @@ if ( ! defined( 'ABSPATH' ) ) {
  * — jQuery Mobile v1.4.3, Copyright 2010, 2014 jQuery Foundation, Inc. Licenses: jquery.org/license
  * — jquery-visible, Copyright 2012, Digital Fusion, License: http://teamdf.com/jquery-plugins/license/ Source: http://teamdf.com/jquery-plugins/license/
  * — Parallax Background v1.2, by Eren Suleymanoglu Licenses: MIT Source: link https://github.com/erensuleymanoglu/parallax-background
- * — TableSorter v2.0.5b, Copyright 2007 Christian Bach Licenses: Dual licensed under the MIT and GPL licenses Source: link http://tablesorter.com
- * — Isotope PACKAGED v3.0.6, Copyright 2017 Metafizzy License: GPLv3 Source: link http://isotope.metafizzy.co
+ * — TableSorter v2.32.0 (Mottie fork), Copyright 2007 Christian Bach / Rob Garrison Licenses: Dual licensed under the MIT and GPL licenses Source: link https://github.com/Mottie/tablesorter
+ * — Isotope v3.0.6, Copyright Metafizzy License: GPLv3 Source: link https://github.com/metafizzy/isotope
  * — Infinite Scroll v4.0.1, Copyright Metafizzy License: GPLv3 Source: link https://infinite-scroll.com (vanilla DOM API; no bundled jQuery)
- * — Packery layout mode PACKAGED v2.0.0 Copyright 2017 Metafizzy License: GPLv3 Source: link http://isotope.metafizzy.co
+ * — Packery v2.1.2 Copyright Metafizzy License: GPLv3 Source: link https://github.com/metafizzy/packery
  * — javascript-detect-element-resize, 0.5.3 Copyright (c) 2013 Sebastián Décima License: MIT Source: link https://github.com/sdecima/javascript-detect-element-resize
  * — tilt.js 1.2.1, Copyright (c) 2017 Gijs Rogé License: MIT Source: link https://github.com/gijsroge/tilt.js
  * - CLNDR v1.4.7, Copyright Kyle Stetz (github.com/kylestetz) License: MIT Source: link https://github.com/kylestetz/CLNDR
  * — GMAP3 Plugin for jQuery v7.2 Copyright DEMONTE Jean-Baptiste License: GPL-3.0+ Source: link http://gmap3.net
+ * — Leaflet v1.9.4, Copyright Vladimir Agafonkin License: BSD-2-Clause Source: link https://github.com/Leaflet/Leaflet
  * — Moment.js (WordPress core script handle `moment`; MIT) Source: https://github.com/moment/moment/
  * — Slidebars v2 Copyright Adam Charles Smith License: MIT http://www.adchsm.com/slidebars/license/ Source: link http://www.adchsm.com/slidebars/
- * — anime.js v3.2.2, Copyright Julian Garnier License: MIT Source: link https://github.com/juliangarnier/anime
+ * — anime.js v4.0.2, Copyright Julian Garnier License: MIT Source: link https://github.com/juliangarnier/anime
+ * — Schedule-X Calendar v4.6.1, Copyright Schedule-X License: MIT Source: link https://github.com/schedule-x/schedule-x
+ * — @lottiefiles/lottie-player (bundled as lottie-player.js), Copyright LottieFiles License: MIT Source: link https://github.com/LottieFiles/lottie-player
+ * — WaveSurfer.js v7.9.9, Copyright katspaugh License: BSD-3-Clause Source: link https://github.com/kwavesurfer/wavesurfer.js
  * — Splitting.js v1.0.6, Copyright Shaw License: MIT Source: link https://github.com/shshaw/Splitting
  * — GLightbox v3.3.1, Copyright Biati Digital License: MIT Source: link https://github.com/biati-digital/glightbox
  */
@@ -99,7 +103,7 @@ if ( ! defined( 'LANDTECH_EXTRAS_ASSETS_URL' ) ) {
 	define( 'LANDTECH_EXTRAS_ASSETS_URL', LANDTECH_EXTRAS_URL . 'assets/' );
 }
 if ( ! defined( 'LANDTECH_EXTRAS_VERSION' ) ) {
-	define( 'LANDTECH_EXTRAS_VERSION', '2.2.100' );
+	define( 'LANDTECH_EXTRAS_VERSION', '2.3.0' );
 }
 if ( ! defined( 'LANDTECH_EXTRAS_PREVIOUS_STABLE_VERSION' ) ) {
 	define( 'LANDTECH_EXTRAS_PREVIOUS_STABLE_VERSION', '2.2.64' );
@@ -284,6 +288,7 @@ function landtech_extras_load() {
 	// Includes (extension API before main plugin singleton).
 	landtech_extras_include( 'admin/settings-api.php' );
 	landtech_extras_include( 'includes/extension-api.php' );
+	landtech_extras_include( 'includes/search-rest-controller.php' );
 	landtech_extras_include( 'includes/plugin.php' );
 
 	// Settings

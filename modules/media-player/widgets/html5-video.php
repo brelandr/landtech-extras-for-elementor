@@ -1478,6 +1478,10 @@ class HTML5_Video extends Extras_Widget {
 			$this->add_render_attribute( 'video', 'poster', $url );
 		}
 
+		if ( ! empty( $settings['video_speed']['size'] ) ) {
+			$this->add_render_attribute( 'video', 'data-playback-rate', $settings['video_speed']['size'] );
+		}
+
 		?><video <?php $this->print_render_attribute_string( 'video' ); ?>><?php
 
 			$video_url = ( 'file' === $settings['video_source'] ) ? $settings['video_file']['url'] : $settings['video_url'];

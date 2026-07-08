@@ -69,7 +69,11 @@ class Heading extends Extras_Widget {
 	 * @return array
 	 */
 	public function get_script_depends() {
-		return [ 'landtech-extras-jquery-long-shadow' ];
+		return [
+			'landtech-extras-jquery-long-shadow',
+			'landtech-extras-anime',
+			'landtech-extras-anime-helpers',
+		];
 	}
 
 	/**
@@ -189,6 +193,32 @@ class Heading extends Extras_Widget {
 					'label' 	=> __( 'View', 'landtech-extras-for-elementor' ),
 					'type' 		=> Controls_Manager::HIDDEN,
 					'default' 	=> 'traditional',
+				]
+			);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'section_title_animation',
+			[
+				'label' => __( 'Entrance animation', 'landtech-extras-for-elementor' ),
+			]
+		);
+
+			$this->add_control(
+				'title_animation_preset',
+				[
+					'label'              => __( 'Preset', 'landtech-extras-for-elementor' ),
+					'type'               => Controls_Manager::SELECT,
+					'default'            => 'none',
+					'options'            => [
+						'none'            => __( 'None', 'landtech-extras-for-elementor' ),
+						'fade_up'         => __( 'Fade up', 'landtech-extras-for-elementor' ),
+						'typewriter'      => __( 'Typewriter', 'landtech-extras-for-elementor' ),
+						'split_words'     => __( 'Split words', 'landtech-extras-for-elementor' ),
+						'highlight_sweep' => __( 'Highlight sweep', 'landtech-extras-for-elementor' ),
+					],
+					'frontend_available' => true,
 				]
 			);
 

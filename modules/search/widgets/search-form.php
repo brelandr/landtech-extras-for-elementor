@@ -483,6 +483,35 @@ class Search_Form extends Extras_Widget {
 			
 			}
 
+			$this->add_control(
+				'live_ajax_search',
+				[
+					'label'              => __( 'Live AJAX results', 'landtech-extras-for-elementor' ),
+					'type'               => Controls_Manager::SWITCHER,
+					'return_value'       => 'yes',
+					'default'            => '',
+					'frontend_available' => true,
+				]
+			);
+
+			$this->add_control(
+				'live_ajax_post_type',
+				[
+					'label'              => __( 'Live search post type', 'landtech-extras-for-elementor' ),
+					'type'               => Controls_Manager::SELECT,
+					'default'            => 'post',
+					'options'            => [
+						'post'    => __( 'Posts', 'landtech-extras-for-elementor' ),
+						'page'    => __( 'Pages', 'landtech-extras-for-elementor' ),
+						'product' => __( 'Products (WooCommerce)', 'landtech-extras-for-elementor' ),
+					],
+					'condition'          => [
+						'live_ajax_search' => 'yes',
+					],
+					'frontend_available' => true,
+				]
+			);
+
 		$this->end_controls_section();
 	}
 

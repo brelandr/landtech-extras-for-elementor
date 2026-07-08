@@ -163,6 +163,9 @@ class Posts extends Posts_Base {
 	protected function register_skins() {
 		$this->add_skin( new Skins\Skin_Classic( $this ) );
 		$this->add_skin( new Skins\Skin_Carousel( $this ) );
+		$this->add_skin( new Skins\Skin_List( $this ) );
+		$this->add_skin( new Skins\Skin_Featured_Grid( $this ) );
+		$this->add_skin( new Skins\Skin_Timeline( $this ) );
 		$this->add_skin( new Presets\Skin_Posts_Editorial( $this ) );
 		$this->add_skin( new Presets\Skin_Posts_Studio( $this ) );
 		$this->add_skin( new Presets\Skin_Posts_Brutalist( $this ) );

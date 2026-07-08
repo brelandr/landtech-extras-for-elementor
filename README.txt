@@ -4,7 +4,7 @@ Contributors: brelandr
 Tags: elementor, page-builder, widgets, addons, extensions
 Requires at least: 6.2
 Tested up to: 7.0
-Stable tag: 2.2.100
+Stable tag: 2.3.0
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -23,9 +23,9 @@ Configure optional API keys (Google Maps, Snazzy Maps, Instagram, and optional b
 
 Find widgets in the Elementor panel under the **LandTech Extras for Elementor** category. Widget type slugs match the upstream Elementor Extras fork for easier migration.
 
-**Widgets:** Age Gate (`ee-age-gate`), Audio Player (`ee-audio-player`), Breadcrumbs (`ee-breadcrumbs`), Buttons / Button Group (`button-group`), Calendar (`ee-calendar`), Circle Progress (`circle-progress`), Devices (`devices-extended`), Gallery (`gallery-extra`), Gallery Slider (`gallery-slider`), Google Map (`ee-google-map`), Heading Extra (`heading-extended`), Hotspots (`hotspots`), HTML5 Video Player (`html5-video`), Image Comparison (`image-comparison`), Inline SVG (`ee-inline-svg`), Offcanvas (`ee-offcanvas`), Popup (`ee-popup`), Posts Extra / Portfolio / Carousel layouts (`posts-extra`), Random Image (`ee-random-image`), Scroll Indicator (`ee-scroll-indicator`), Search Form (`ee-search-form`), Slide Menu (`ee-slide-menu`), Switcher (`ee-switcher`), Table (`table`), Text Divider (`text-divider`), Timeline (`timeline`), Toggle Element (`ee-toggle-element`), Unfold (`unfold`).
+**Widgets:** Age Gate (`ee-age-gate`), Audio Player (`ee-audio-player`), Breadcrumbs (`ee-breadcrumbs`, optional **BreadcrumbList** microdata when **Structured data** is enabled), Buttons / Button Group (`button-group`), Calendar (`ee-calendar`), Circle Progress (`circle-progress`), Devices (`devices-extended`), Gallery (`gallery-extra`), Gallery Slider (`gallery-slider`), Google Map (`ee-google-map`), Heading Extra (`heading-extended`), Hotspots (`hotspots`), HTML5 Video Player (`html5-video`), Image Comparison (`image-comparison`), Inline SVG (`ee-inline-svg`), Lottie (`ee-lottie`), Offcanvas (`ee-offcanvas`), Popup (`ee-popup`), Posts Extra / Portfolio / Carousel layouts (`posts-extra`), Random Image (`ee-random-image`), Scroll Indicator (`ee-scroll-indicator`), Search Form (`ee-search-form`), Slide Menu (`ee-slide-menu`), Switcher (`ee-switcher`), Table (`table`), Text Divider (`text-divider`), Timeline (`timeline`), Toggle Element (`ee-toggle-element`), Unfold (`unfold`).
 
-**Editor extensions** (Advanced tab on Elementor elements): Display Conditions, Parallax Background, Parallax Elements, Portfolio Parallax, Sticky Elements, Tooltips.
+**Editor extensions** (Advanced tab on Elementor elements): Display Conditions (free: time, day, URL/query vars including UTM presets, cookie, business hours; WooCommerce purchase history and membership rules ship in the separate **LandTech Extras Premium** add-on), Parallax Background, Parallax Elements, Portfolio Parallax, Sticky Elements, Tooltips.
 
 Disable unused widgets under **Elementor → LandTech Extras → Widgets** to speed up the editor.
 
@@ -44,6 +44,10 @@ This plugin may cause the site, the WordPress admin, or the Elementor editor to 
 **Google Maps Platform (Google LLC)**
 
 When you enable the Google Map widget or turn on **Load Google Maps API** under Elementor → LandTech Extras → APIs, visitors’ browsers may load the Maps JavaScript API from Google (`maps.googleapis.com`, including via bundled `assets/lib/gmap3/gmap3.js`). Requests can include the **Maps API key** you enter in settings, map coordinates or place queries you configure, and typical browser HTTP metadata. [Terms of Service](https://cloud.google.com/maps-platform/terms) · [Privacy Policy](https://policies.google.com/privacy)
+
+**OpenStreetMap tile servers (OpenStreetMap Foundation and community tile providers)**
+
+When you set the Google Map widget **Map provider** to **OpenStreetMap**, visitors’ browsers load bundled **Leaflet** (`assets/lib/leaflet/`) and request raster map tiles from OpenStreetMap’s tile service (`tile.openstreetmap.org`, including subdomains `a`–`c`). Requests can include map tile coordinates (zoom level and x/y indices), the visitor’s IP address, and standard browser HTTP metadata. Marker icon assets are served from your site; no API key is required for the default tile layer. [OpenStreetMap Foundation Terms](https://wiki.osmfoundation.org/wiki/Terms_of_Use) · [OpenStreetMap Foundation Privacy Policy](https://wiki.osmfoundation.org/wiki/Privacy_Policy) · [OpenStreetMap copyright](https://www.openstreetmap.org/copyright)
 
 **Snazzy Maps (snazzymaps.com; operated by Atlist Inc.)**
 
@@ -124,7 +128,7 @@ PHP functions, hooks, options, and transients use the **`landtech_extras_`** or 
 
 This plugin bundles or references third-party scripts. Licenses and upstream sources for every bundled file are noted below. Full provenance details are in the matching `README.txt` files under `assets/lib/`.
 
-**anime.js 3.2.2** (MIT) — `assets/lib/anime/anime.js` / `anime.min.js`
+**anime.js 4.0.2** (MIT) — `assets/lib/anime/anime.js` / `anime.min.js`
 Source: https://github.com/juliangarnier/anime — License notes: `assets/lib/anime/README.txt`.
 
 **Splitting.js 1.0.6** (MIT) — `assets/lib/splitting/splitting.js` / `splitting.min.js` / `splitting.css`
@@ -140,15 +144,24 @@ Source: https://github.com/biati-digital/glightbox — License notes: `assets/li
 **jQuery Mobile** (MIT/jquery.org) — https://jquerymobile.com/
 **jquery-visible** (MIT) — http://teamdf.com/jquery-plugins/license/
 **Parallax Background** (MIT) — https://github.com/erensuleymanoglu/parallax-background
-**TableSorter** (MIT/GPL dual) — http://tablesorter.com
-**Isotope v3.0.6** (GPLv3) — `assets/lib/isotope/isotope.pkgd.js` (uses WordPress core jQuery; layout library only)
+**TableSorter** v2.32.0 (MIT/GPL dual, Mottie fork) — https://github.com/Mottie/tablesorter
+**Isotope v3.0.6** (GPLv3) — `assets/lib/isotope/` standalone modules (WordPress core jQuery via jquery-bridget)
+**Metafizzy / Desandro layout dependencies** (MIT unless noted) — `assets/lib/jquery-bridget/`, `outlayer/`, `ev-emitter/`, `get-size/`, `fizzy-ui-utils/`, `matches-selector/`, `masonry-layout/` (each folder includes `README.txt`)
+**Packery v2.1.2** (GPLv3) — `assets/lib/packery/` standalone modules (WordPress core jQuery via jquery-bridget)
 **Infinite Scroll 4.0.1** (GPLv3) — `assets/lib/infinite-scroll/infinite-scroll.js` (core build; vanilla DOM API via `new InfiniteScroll()`; no jquery-bridget)
 Source: https://infinite-scroll.com — License notes: `assets/lib/infinite-scroll/README.txt`.
-**Packery v2.1.2** (GPLv3) — `assets/lib/packery/packery.pkgd.js` (uses WordPress core jQuery)
 **javascript-detect-element-resize** (MIT) — https://github.com/sdecima/javascript-detect-element-resize
 **tilt.js** (MIT) — https://github.com/gijsroge/tilt.js
-**CLNDR** (MIT) — https://github.com/kylestetz/CLNDR
+**CLNDR** (MIT) — legacy fallback in `assets/lib/clndr/` (Calendar widget now uses Schedule-X)
+**Schedule-X Calendar 4.6.1** (MIT) — `assets/lib/schedule-x/` with Preact under `assets/lib/preact/` and `@js-temporal/polyfill` under `assets/lib/temporal-polyfill/`
+Source: https://github.com/schedule-x/schedule-x — License notes: `assets/lib/schedule-x/README.txt`.
+**@lottiefiles/lottie-player** (MIT) — `assets/lib/lottie-player/lottie-player.js`
+Source: https://github.com/LottieFiles/lottie-player — License notes: `assets/lib/lottie-player/README.txt`.
+**WaveSurfer.js 7.9.9** (BSD-3-Clause) — optional Audio Player waveform skin
+Source: https://github.com/kwavesurfer/wavesurfer.js — License notes: `assets/lib/wavesurfer/README.txt`.
 **GMAP3** (GPL-3.0+) — http://gmap3.net
+**Leaflet** v1.9.4 (BSD-2-Clause) — `assets/lib/leaflet/leaflet.js` / `leaflet.css` (OpenStreetMap map provider)
+Source: https://github.com/Leaflet/Leaflet — License notes: `assets/lib/leaflet/README.txt`.
 **Slidebars** (MIT) — http://www.adchsm.com/slidebars/
 
 Date/time formatting in the Calendar widget uses **Moment.js** registered by WordPress core when available.
@@ -159,6 +172,7 @@ Human-readable source for bundled/minified assets (included in this plugin packa
 
 * `assets/css/frontend.min.css` and `assets/css/frontend-rtl.min.css` — built from `assets/css/frontend.css` and `assets/css/frontend-rtl.css`.
 * `assets/js/frontend.min.js` — built from `assets/js/frontend.js`.
+* `assets/js/landtech-extras-calendar-schedule-x.js` and `assets/js/table-csv-editor.js` — widget helpers (not minified; loaded directly when needed).
 * `assets/js/admin.min.js`, `assets/js/editor.min.js`, and `assets/js/notice.min.js` — built from their matching non-minified files in `assets/js/`.
 * `assets/css/admin.min.css`, `assets/css/editor.min.css`, and `assets/css/editor-preview.min.css` — built from matching non-minified CSS in `assets/css/`.
 * Widget/library `.min.js` / `.min.css` under `assets/lib/` — non-minified counterparts ship in the same folder where applicable; third-party-only bundles are documented under **Third-party libraries** above and in the per-library `README.txt` files under `assets/lib/`.
@@ -169,6 +183,17 @@ From the plugin root, after **`npm install`**, run **`npm run build:assets`** to
 Before publishing a public GitHub mirror, verify any **Repository** or **Source** URL in this readme returns HTTP 200 (WordPress.org reviewers check linked URLs).
 
 == Changelog ==
+
+= 2.3.0 =
+
+* Phase 0: TableSorter v2.32.0; Isotope/Packery non-pkgd builds; Leaflet OpenStreetMap map provider; library metadata alignment.
+* Phase 1: Toggle FAQPage JSON-LD; display conditions (cookie, UTM presets, business hours); Table pagination and CSV paste import in the editor.
+* Phase 2: Calendar migrated to Schedule-X; anime.js v4 with updated animation helpers; Heading Extra entrance animation presets; Audio Player optional WaveSurfer waveform skin; video player native playback-rate support; audio-player header typo fix.
+* Phase 3: Posts Extra list, featured-grid, and timeline layout skins; Search Form live AJAX results via public REST route; new Lottie widget.
+
+= 2.2.101 =
+
+* Docs: Breadcrumbs widget documents optional **BreadcrumbList** structured data (microdata) when **Structured data** is enabled in widget settings.
 
 = 2.2.100 =
 

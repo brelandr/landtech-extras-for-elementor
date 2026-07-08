@@ -24,6 +24,13 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 abstract class Skin_Base extends Elementor_Skin_Base {
 
 	/**
+	 * Zero-based index of the current item in the posts loop (reset each render).
+	 *
+	 * @var int
+	 */
+	protected $ltx_loop_item_index = 0;
+
+	/**
 	 * Register Controls Actions
 	 * 
 	 * Registers controls at specific points in the Controls Stack
@@ -267,8 +274,34 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		add_filter( 'wp_calculate_image_srcset_meta', '__return_null' );
 
 		$this->before_loop();
+		$this->ltx_render_faceted_loop_fragment();
+		$this->after_loop();
+
+		$this->render_scripts();
+
+		// Remove filters
+		remove_filter( 'excerpt_more', [ $this, 'landtech_extras_posts_excerpt_more_filter' ], 999 );
+		remove_filter( 'excerpt_length', [ $this, 'landtech_extras_posts_excerpt_length' ], 999 );
+		remove_filter( 'wp_calculate_image_srcset_meta', '__return_null' );
+	}
+
+	/**
+	 * Render loop markup only (used by Premium AJAX facet REST and full skin render).
+	 *
+	 * @since 2.2.67
+	 * @return void
+	 */
+	public function ltx_render_faceted_loop_fragment() {
+
+		$wp_query = $this->parent->get_query();
+
+		if ( ! $wp_query instanceof \WP_Query ) {
+			return;
+		}
+
 		$this->render_loop_start();
 		$this->render_sizer();
+		$this->ltx_loop_item_index = 0;
 
 		while ( $wp_query->have_posts() ) {
 
@@ -276,13 +309,12 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 
 			global $post;
 
-			$query_id = $this->parent->get_settings('posts_query_id');
+			$query_id = $this->parent->get_settings( 'posts_query_id' );
 
 			if ( $query_id ) {
 				$post->query_id = $query_id;
 			}
-			
-			$index = $wp_query->current_post + 1;
+
 			$settings = $this->parent->get_settings();
 
 			$this->render_post_start();
@@ -302,14 +334,6 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		wp_reset_postdata();
 
 		$this->render_loop_end();
-		$this->after_loop();
-
-		$this->render_scripts();
-
-		// Remove filters
-		remove_filter( 'wp_calculate_image_srcset_meta', '__return_null' );
-		remove_filter( 'excerpt_length', [ $this, 'landtech_extras_posts_excerpt_length' ], 999 );
-		remove_filter( 'excerpt_more', [ $this, 'landtech_extras_posts_excerpt_more_filter' ], 999 );
 	}
 
 	/**
@@ -487,9 +511,11 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 	 * @return void
 	 */
 	protected function render_post_start() {
-		global $post, $wp_query;
+		global $post;
 
 		$grid_item_key = 'grid-item-' . get_the_ID();
+		$loop_index    = (int) $this->ltx_loop_item_index;
+		$this->ltx_loop_item_index++;
 
 		$this->parent->add_render_attribute( $grid_item_key, 'class', [
 			'ee-grid__item',
@@ -499,8 +525,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		if (
 			function_exists( 'landtech_extras_posts_extra_widget_uses_packery_layout' )
 			&& landtech_extras_posts_extra_widget_uses_packery_layout( $this->parent )
-			&& $wp_query instanceof \WP_Query
-			&& 0 === (int) $wp_query->current_post
+			&& 0 === $loop_index
 		) {
 			$this->parent->add_render_attribute( $grid_item_key, 'class', 'ltxee-packery-featured' );
 		}
@@ -508,8 +533,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		if (
 			function_exists( 'landtech_extras_posts_extra_widget_uses_packery_layout' )
 			&& landtech_extras_posts_extra_widget_uses_packery_layout( $this->parent )
-			&& $wp_query instanceof \WP_Query
-			&& 1 === (int) $wp_query->current_post
+			&& 1 === $loop_index
 		) {
 			$this->parent->add_render_attribute( $grid_item_key, 'class', 'ltxee-packery-second' );
 		}

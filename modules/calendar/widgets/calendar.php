@@ -82,11 +82,19 @@ class Calendar extends Extras_Widget {
 	 * @return array
 	 */
 	public function get_script_depends() {
-		return [
-			'moment',
-			'landtech-extras-clndr',
-			'wp-util',
-		];
+		return array(
+			'landtech-extras-schedule-x-calendar',
+			'landtech-extras-calendar-schedule-x',
+		);
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function get_style_depends() {
+		return array(
+			'landtech-extras-schedule-x-theme',
+		);
 	}
 
 	/**
