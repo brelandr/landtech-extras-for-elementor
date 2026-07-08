@@ -67,6 +67,23 @@ class Google_Map extends Extras_Widget {
 	}
 
 	/**
+	 * Map provider for asset registration (safe during preview before settings hydrate).
+	 *
+	 * @since 2.3.2
+	 * @return string
+	 */
+	private function get_map_provider_for_assets() {
+		if ( function_exists( 'landtech_extras_posts_extra_widget_try_get_settings_for_display' ) ) {
+			$provider = landtech_extras_posts_extra_widget_try_get_settings_for_display( $this, 'map_provider' );
+			if ( is_string( $provider ) && '' !== $provider ) {
+				return $provider;
+			}
+		}
+
+		return 'google';
+	}
+
+	/**
 	 * Get Script Depends
 	 * 
 	 * A list of scripts that the widgets is depended in
@@ -75,8 +92,7 @@ class Google_Map extends Extras_Widget {
 	 * @return array
 	 */
 	public function get_script_depends() {
-		$settings = $this->get_settings_for_display();
-		$provider   = isset( $settings['map_provider'] ) ? $settings['map_provider'] : 'google';
+		$provider = $this->get_map_provider_for_assets();
 
 		if ( 'openstreetmap' === $provider ) {
 			return [
@@ -96,8 +112,7 @@ class Google_Map extends Extras_Widget {
 	 * @return array
 	 */
 	public function get_style_depends() {
-		$settings = $this->get_settings_for_display();
-		$provider   = isset( $settings['map_provider'] ) ? $settings['map_provider'] : 'google';
+		$provider = $this->get_map_provider_for_assets();
 
 		if ( 'openstreetmap' === $provider ) {
 			return [ 'landtech-extras-leaflet' ];
