@@ -4,7 +4,7 @@ Contributors: brelandr
 Tags: elementor, page-builder, widgets, addons, extensions
 Requires at least: 6.2
 Tested up to: 7.0
-Stable tag: 2.3.0
+Stable tag: 2.3.1
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -188,13 +188,20 @@ Before publishing a public GitHub mirror, verify any **Repository** or **Source*
 
 == Changelog ==
 
+= 2.3.1 =
+
+* Fix: Register `landtech-extras-frontend` styles only when `elementor-frontend` is registered (WordPress 6.9.1+ dependency notice).
+* Fix: Search Form skin null-safe `trim()` on empty button label text.
+* Add: Add-on features tab shows Premium add-on version and feature toggle count when the add-on is active.
+* Add: `landtech_extras/acf_gallery_bridge_enabled` filter hook for Premium entitlement gating of ACF gallery controls.
+
 = 2.3.0 =
 
 * Phase 0: TableSorter v2.32.0; Isotope/Packery non-pkgd builds; Leaflet OpenStreetMap map provider; library metadata alignment.
 * Phase 1: Toggle FAQPage JSON-LD; display conditions (cookie, UTM presets, business hours); Table pagination and CSV paste import in the editor.
 * Phase 2: Calendar migrated to Schedule-X; anime.js v4 with updated animation helpers; Heading Extra entrance animation presets; Audio Player optional WaveSurfer waveform skin; video player native playback-rate support; audio-player header typo fix.
 * Phase 3: Posts Extra list, featured-grid, and timeline layout skins; Search Form live AJAX results via public REST route; new Lottie widget.
-* Playground: demo pages for Lottie, FAQ Schema, Posts list skin, OpenStreetMap map provider, and live search.
+* Playground: demo pages for Lottie, FAQ Schema, Posts list/featured-grid/timeline skins, paginated Table, OpenStreetMap map provider, and live search.
 
 = 2.2.101 =
 

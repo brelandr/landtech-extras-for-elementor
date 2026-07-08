@@ -125,8 +125,12 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 	 * @return void
 	 */
 	public function has_button_label() {
-		if ( '' === $this->get_instance_value('button_label') || '' === trim( $this->get_instance_value('button_label_text') ) || empty( $this->get_instance_value('button_label_text') ) )
+		$button_label_text = $this->get_instance_value( 'button_label_text' );
+		$button_label_text = is_string( $button_label_text ) ? $button_label_text : '';
+
+		if ( '' === $this->get_instance_value( 'button_label' ) || '' === trim( $button_label_text ) || empty( $button_label_text ) ) {
 			return false;
+		}
 
 		return true;
 	}

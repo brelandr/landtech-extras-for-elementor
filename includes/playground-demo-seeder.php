@@ -405,6 +405,30 @@ function landtech_extras_playground_get_demo_definitions( array $images ) {
 			),
 		),
 		array(
+			'title'   => 'Posts Featured Grid Demo',
+			'slug'    => 'demo-posts-featured-grid',
+			'group'   => 'Content & Posts',
+			'intro'   => __( 'Posts Extra featured-grid skin — hero post with a secondary grid below.', 'landtech-extras-for-elementor' ),
+			'widgets' => array(
+				landtech_extras_playground_widget(
+					'posts-extra',
+					landtech_extras_playground_posts_extra_featured_grid_settings()
+				),
+			),
+		),
+		array(
+			'title'   => 'Posts Timeline Layout Demo',
+			'slug'    => 'demo-posts-timeline',
+			'group'   => 'Content & Posts',
+			'intro'   => __( 'Posts Extra timeline skin — vertical line with dated blog entries.', 'landtech-extras-for-elementor' ),
+			'widgets' => array(
+				landtech_extras_playground_widget(
+					'posts-extra',
+					landtech_extras_playground_posts_extra_timeline_settings()
+				),
+			),
+		),
+		array(
 			'title'   => 'Posts Extra Demo',
 			'slug'    => 'demo-posts-extra',
 			'group'   => 'Content & Posts',
@@ -488,17 +512,11 @@ function landtech_extras_playground_get_demo_definitions( array $images ) {
 			'title'   => 'Table Demo',
 			'slug'    => 'demo-table',
 			'group'   => 'Content & Posts',
-			'intro'   => __( 'Responsive data table with sortable styling options.', 'landtech-extras-for-elementor' ),
+			'intro'   => __( 'Responsive data table with frontend pagination (5 rows per page).', 'landtech-extras-for-elementor' ),
 			'widgets' => array(
 				landtech_extras_playground_widget(
 					'table',
-					array(
-						'header_cells' => array(
-							array( '_id' => landtech_extras_playground_element_id(), 'cell_text' => __( 'Feature', 'landtech-extras-for-elementor' ) ),
-							array( '_id' => landtech_extras_playground_element_id(), 'cell_text' => __( 'Description', 'landtech-extras-for-elementor' ) ),
-							array( '_id' => landtech_extras_playground_element_id(), 'cell_text' => __( 'Status', 'landtech-extras-for-elementor' ) ),
-						),
-					)
+					landtech_extras_playground_table_settings( true )
 				),
 			),
 		),
@@ -868,6 +886,92 @@ function landtech_extras_playground_posts_extra_settings() {
 function landtech_extras_playground_posts_extra_list_settings() {
 	$settings = landtech_extras_playground_posts_extra_settings();
 	$settings['_skin'] = 'list';
+
+	return $settings;
+}
+
+/**
+ * Posts Extra featured-grid skin settings for Playground demos.
+ *
+ * @return array<string,mixed>
+ */
+function landtech_extras_playground_posts_extra_featured_grid_settings() {
+	$settings = landtech_extras_playground_posts_extra_settings();
+	$settings['_skin']  = 'featured-grid';
+	$settings['columns'] = '2';
+
+	return $settings;
+}
+
+/**
+ * Posts Extra timeline skin settings for Playground demos.
+ *
+ * @return array<string,mixed>
+ */
+function landtech_extras_playground_posts_extra_timeline_settings() {
+	$settings = landtech_extras_playground_posts_extra_settings();
+	$settings['_skin']         = 'timeline';
+	$settings['posts_per_page'] = 5;
+
+	return $settings;
+}
+
+/**
+ * Table widget settings for Playground demos.
+ *
+ * @param bool $paginate Enable frontend pagination controls.
+ * @return array<string,mixed>
+ */
+function landtech_extras_playground_table_settings( $paginate = false ) {
+	$rows = array();
+
+	for ( $index = 1; $index <= 12; $index++ ) {
+		$rows[] = array(
+			'type' => 'row',
+		);
+		$rows[] = array(
+			'type'      => 'cell',
+			'cell_text' => sprintf(
+				/* translators: %d: row number */
+				__( 'Feature %d', 'landtech-extras-for-elementor' ),
+				$index
+			),
+			'cell_type' => 'td',
+		);
+		$rows[] = array(
+			'type'      => 'cell',
+			'cell_text' => __( 'Sample description for this row.', 'landtech-extras-for-elementor' ),
+			'cell_type' => 'td',
+		);
+		$rows[] = array(
+			'type'      => 'cell',
+			'cell_text' => __( 'Active', 'landtech-extras-for-elementor' ),
+			'cell_type' => 'td',
+		);
+	}
+
+	$settings = array(
+		'header_cells' => array(
+			array(
+				'_id'       => landtech_extras_playground_element_id(),
+				'cell_text' => __( 'Feature', 'landtech-extras-for-elementor' ),
+			),
+			array(
+				'_id'       => landtech_extras_playground_element_id(),
+				'cell_text' => __( 'Description', 'landtech-extras-for-elementor' ),
+			),
+			array(
+				'_id'       => landtech_extras_playground_element_id(),
+				'cell_text' => __( 'Status', 'landtech-extras-for-elementor' ),
+			),
+		),
+		'rows'         => $rows,
+	);
+
+	if ( $paginate ) {
+		$settings['pagination']      = 'yes';
+		$settings['pagination_rows'] = 5;
+	}
 
 	return $settings;
 }

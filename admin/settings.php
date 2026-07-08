@@ -149,10 +149,25 @@ class Settings extends Settings_Page {
 		$premium_howto = '<p class="description"><strong>' . esc_html__( 'How to use this tab', 'landtech-extras-for-elementor' ) . '</strong> — ' . esc_html__( 'In the tab row at the top of this screen, open the Add-on features tab (between Extensions and APIs). Each row below is one optional capability: check or uncheck Enable for that row only, then click Save Changes. A checked box means the feature is allowed on this site when the optional LandTech Extras add-on is active and other requirements are met.', 'landtech-extras-for-elementor' ) . '</p>';
 
 		if ( class_exists( '\LandTechExtras\Feature_Flags_Settings', false ) ) {
+			$addon_version = defined( 'LANDTECH_EXTRAS_PREMIUM_PACKAGE_VERSION' )
+				? (string) constant( 'LANDTECH_EXTRAS_PREMIUM_PACKAGE_VERSION' )
+				: '';
+			$registry_count = count( \LandTechExtras\Feature_Flags_Settings::get_registry() );
+			$addon_meta     = '';
+
+			if ( '' !== $addon_version ) {
+				$addon_meta = '<p class="description">' . sprintf(
+					/* translators: 1: Premium add-on semver. 2: Number of feature toggles in the registry. */
+					esc_html__( 'LandTech Extras add-on version %1$s — %2$d feature toggles loaded. If expected capabilities are missing, upload the latest Premium package from your LandTech account and confirm both plugins are active.', 'landtech-extras-for-elementor' ),
+					esc_html( $addon_version ),
+					(int) $registry_count
+				) . '</p>';
+			}
+
 			$sections[] = array(
 				'id'    => $premium_section_id,
 				'title' => __( 'Add-on features', 'landtech-extras-for-elementor' ),
-				'desc'  => $premium_howto . sprintf(
+				'desc'  => $premium_howto . $addon_meta . sprintf(
 					wp_kses(
 						/* translators: %1$s: Opening anchor tag for the bulk-enable link. %2$s: Closing anchor tag for bulk-enable. %3$s: Opening anchor tag for the bulk-disable link. %4$s: Closing anchor tag for bulk-disable. */
 						__( 'Optional capability lanes when the add-on is active (AJAX loops & faceted filtering, AI workspace, advanced loop query, WooCommerce lanes, platform toggles). Shortcuts: %1$sEnable all%2$s · %3$sDisable all%4$s.', 'landtech-extras-for-elementor' ),
@@ -169,13 +184,18 @@ class Settings extends Settings_Page {
 				),
 			);
 		} else {
+			$diag_html = '';
+			if ( function_exists( 'landtech_extras_premium_addon_bootstrap_diagnosis_html' ) ) {
+				$diag_html = landtech_extras_premium_addon_bootstrap_diagnosis_html();
+			}
+
 			$sections[] = array(
 				'id'    => $premium_section_id,
 				'title' => __( 'Add-on features', 'landtech-extras-for-elementor' ),
-				'desc'  => '<p class="description">' . wp_kses_post(
+				'desc'  => $diag_html . '<p class="description">' . wp_kses_post(
 					sprintf(
 						/* translators: %s: URL to the Plugins admin screen. */
-						__( 'The optional <strong>LandTech Extras add-on</strong> is not active, so individual feature toggles (AJAX loops, AI workspace, etc.) are not available here. Install and activate it under <a href="%s">Plugins</a>, then open this tab again.', 'landtech-extras-for-elementor' ),
+						__( 'Install and activate <strong>LandTech Extras for Elementor Premium</strong> (the add-on — not a third plugin) under <a href="%s">Plugins</a>, then reload this tab. Both plugins must stay active.', 'landtech-extras-for-elementor' ),
 						esc_url( admin_url( 'plugins.php' ) )
 					)
 				) . '</p>',

@@ -24,7 +24,16 @@ final class ACF_Gallery_Bridge {
 	 * @return bool
 	 */
 	public static function is_enabled() {
-		return function_exists( 'get_field' );
+		$acf_active = function_exists( 'get_field' );
+
+		/**
+		 * Whether ACF gallery bridge controls appear and data loads in Gallery widgets.
+		 *
+		 * @since 2.3.1
+		 *
+		 * @param bool $enabled Default: ACF `get_field()` is available.
+		 */
+		return (bool) apply_filters( 'landtech_extras/acf_gallery_bridge_enabled', $acf_active );
 	}
 
 	/**

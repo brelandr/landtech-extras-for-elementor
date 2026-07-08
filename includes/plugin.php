@@ -166,8 +166,8 @@ class LandTechExtrasPlugin {
 			// Editor Preview Styles (after other preview listeners register handles).
 			add_action( 'elementor/preview/enqueue_styles', [ $this, 'enqueue_editor_preview_styles' ], PHP_INT_MAX );
 
-			// Shared handles early (aligned with Elementor frontend style registration timing).
-			add_action( 'elementor/frontend/before_register_styles', [ $this, 'register_landtech_extras_frontend_style_handles' ] );
+			// Shared handles after Elementor registers `elementor-frontend` (WP 6.9.1+ validates deps).
+			add_action( 'elementor/frontend/before_register_styles', [ $this, 'register_landtech_extras_frontend_style_handles' ], 20 );
 
 			// Front-end Styles
 			add_action( 'elementor/frontend/after_enqueue_styles', [ $this, 'enqueue_frontend_styles' ] );
@@ -932,6 +932,20 @@ class LandTechExtrasPlugin {
 	}
 
 	/**
+	 * Dependencies for frontend stylesheet handles when Elementor has registered its bundle.
+	 *
+	 * @since 2.3.1
+	 * @return string[]
+	 */
+	private function get_landtech_extras_frontend_style_dependencies() {
+		if ( wp_style_is( 'elementor-frontend', 'registered' ) ) {
+			return array( 'elementor-frontend' );
+		}
+
+		return array();
+	}
+
+	/**
 	 * Register shared stylesheet handles (frontend + previews + widget style dependencies).
 	 *
 	 * @since 2.2.54
@@ -960,20 +974,25 @@ class LandTechExtrasPlugin {
 		$frontend_css_rel = 'assets/css/frontend' . $direction_suffix . $suffix . '.css';
 		$frontend_css_abs = LANDTECH_EXTRAS_PATH . $frontend_css_rel;
 		$frontend_css_ver = ( is_readable( $frontend_css_abs ) ? (string) filemtime( $frontend_css_abs ) : LANDTECH_EXTRAS_VERSION );
+		$frontend_css_deps = $this->get_landtech_extras_frontend_style_dependencies();
 
-		wp_register_style(
-			'landtech-extras-frontend',
-			plugins_url( '/' . $frontend_css_rel, LANDTECH_EXTRAS__FILE__ ),
-			[ 'elementor-frontend' ],
-			$frontend_css_ver
-		);
+		if ( ! wp_style_is( 'landtech-extras-frontend', 'registered' ) ) {
+			wp_register_style(
+				'landtech-extras-frontend',
+				plugins_url( '/' . $frontend_css_rel, LANDTECH_EXTRAS__FILE__ ),
+				$frontend_css_deps,
+				$frontend_css_ver
+			);
+		}
 
-		wp_register_style(
-			'landtech-extras-frontend-preview-tail',
-			plugins_url( '/' . $frontend_css_rel, LANDTECH_EXTRAS__FILE__ ),
-			[ 'elementor-frontend' ],
-			$frontend_css_ver
-		);
+		if ( ! wp_style_is( 'landtech-extras-frontend-preview-tail', 'registered' ) ) {
+			wp_register_style(
+				'landtech-extras-frontend-preview-tail',
+				plugins_url( '/' . $frontend_css_rel, LANDTECH_EXTRAS__FILE__ ),
+				$frontend_css_deps,
+				$frontend_css_ver
+			);
+		}
 
 		wp_register_style(
 			'landtech-extras-nicons',
