@@ -50,18 +50,41 @@ final class Schema_Validator {
 				break;
 
 			case 'LocalBusiness':
-			case 'Organization':
 				foreach ( array( 'name', 'address' ) as $required ) {
 					if ( empty( $data[ $required ] ) ) {
 						$errors[] = sprintf(
 							/* translators: %s: schema property name */
-							__( '%s is recommended for LocalBusiness/Organization.', 'landtech-extras-for-elementor' ),
+							__( '%s is recommended for LocalBusiness.', 'landtech-extras-for-elementor' ),
 							$required
 						);
 					}
 				}
 				if ( empty( $data['telephone'] ) && empty( $data['url'] ) ) {
 					$warnings[] = __( 'Add telephone or url for richer local results.', 'landtech-extras-for-elementor' );
+				}
+				break;
+
+			case 'Organization':
+				if ( empty( $data['name'] ) ) {
+					$errors[] = __( 'Organization requires name.', 'landtech-extras-for-elementor' );
+				}
+				if ( empty( $data['url'] ) && empty( $data['logo'] ) ) {
+					$warnings[] = __( 'Add a website URL or logo for Organization schema.', 'landtech-extras-for-elementor' );
+				}
+				break;
+
+			case 'Event':
+				if ( empty( $data['name'] ) ) {
+					$errors[] = __( 'Event requires name.', 'landtech-extras-for-elementor' );
+				}
+				if ( empty( $data['startDate'] ) ) {
+					$errors[] = __( 'Event requires startDate.', 'landtech-extras-for-elementor' );
+				}
+				if ( empty( $data['location'] ) ) {
+					$warnings[] = __( 'Event location is recommended for rich results.', 'landtech-extras-for-elementor' );
+				}
+				if ( empty( $data['endDate'] ) ) {
+					$warnings[] = __( 'Event endDate is recommended.', 'landtech-extras-for-elementor' );
 				}
 				break;
 

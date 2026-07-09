@@ -140,6 +140,217 @@ final class Schema_Builder {
 	}
 
 	/**
+	 * Build Organization graph from widget settings.
+	 *
+	 * @param array<string, mixed> $settings Widget settings.
+	 * @return array<string, mixed>
+	 */
+	public static function build_organization( $settings ) {
+		$builder = ( new self() )->start( 'Organization' );
+		$name    = isset( $settings['name'] ) ? sanitize_text_field( (string) $settings['name'] ) : '';
+
+		if ( '' !== $name ) {
+			$builder->set( 'name', $name );
+		}
+
+		if ( ! empty( $settings['description'] ) ) {
+			$builder->set( 'description', sanitize_textarea_field( (string) $settings['description'] ) );
+		}
+
+		if ( ! empty( $settings['url']['url'] ) ) {
+			$builder->set( 'url', esc_url_raw( (string) $settings['url']['url'] ) );
+		}
+
+		if ( ! empty( $settings['logo']['url'] ) ) {
+			$builder->set( 'logo', esc_url_raw( (string) $settings['logo']['url'] ) );
+		}
+
+		if ( ! empty( $settings['telephone'] ) ) {
+			$builder->set( 'telephone', sanitize_text_field( (string) $settings['telephone'] ) );
+		}
+
+		if ( ! empty( $settings['email'] ) ) {
+			$builder->set( 'email', sanitize_email( (string) $settings['email'] ) );
+		}
+
+		$same_as = array();
+		foreach ( (array) ( $settings['social_profiles'] ?? array() ) as $row ) {
+			if ( ! is_array( $row ) || empty( $row['profile_url']['url'] ) ) {
+				continue;
+			}
+			$url = esc_url_raw( (string) $row['profile_url']['url'] );
+			if ( '' !== $url ) {
+				$same_as[] = $url;
+			}
+		}
+		if ( ! empty( $same_as ) ) {
+			$builder->set( 'sameAs', $same_as );
+		}
+
+		$address = self::build_postal_address_from_settings( $settings );
+		if ( ! empty( $address ) ) {
+			$builder->set( 'address', $address );
+		}
+
+		return $builder->get_data();
+	}
+
+	/**
+	 * Build Event graph from widget settings.
+	 *
+	 * @param array<string, mixed> $settings Widget settings.
+	 * @return array<string, mixed>
+	 */
+	public static function build_event( $settings ) {
+		$builder = ( new self() )->start( 'Event' );
+		$name    = isset( $settings['name'] ) ? sanitize_text_field( (string) $settings['name'] ) : '';
+
+		if ( '' !== $name ) {
+			$builder->set( 'name', $name );
+		}
+
+		if ( ! empty( $settings['description'] ) ) {
+			$builder->set( 'description', sanitize_textarea_field( (string) $settings['description'] ) );
+		}
+
+		$start = self::format_schema_datetime( $settings['start_date'] ?? '' );
+		if ( '' !== $start ) {
+			$builder->set( 'startDate', $start );
+		}
+
+		$end = self::format_schema_datetime( $settings['end_date'] ?? '' );
+		if ( '' !== $end ) {
+			$builder->set( 'endDate', $end );
+		}
+
+		if ( ! empty( $settings['image']['url'] ) ) {
+			$builder->set( 'image', esc_url_raw( (string) $settings['image']['url'] ) );
+		}
+
+		if ( ! empty( $settings['event_url']['url'] ) ) {
+			$builder->set( 'url', esc_url_raw( (string) $settings['event_url']['url'] ) );
+		}
+
+		if ( ! empty( $settings['event_status'] ) ) {
+			$builder->set( 'eventStatus', sanitize_text_field( (string) $settings['event_status'] ) );
+		}
+
+		if ( ! empty( $settings['event_attendance_mode'] ) ) {
+			$builder->set( 'eventAttendanceMode', sanitize_text_field( (string) $settings['event_attendance_mode'] ) );
+		}
+
+		$location = self::build_event_location( $settings );
+		if ( ! empty( $location ) ) {
+			$builder->set( 'location', $location );
+		}
+
+		if ( ! empty( $settings['organizer_name'] ) ) {
+			$organizer = array(
+				'@type' => 'Organization',
+				'name'  => sanitize_text_field( (string) $settings['organizer_name'] ),
+			);
+			if ( ! empty( $settings['organizer_url']['url'] ) ) {
+				$organizer['url'] = esc_url_raw( (string) $settings['organizer_url']['url'] );
+			}
+			$builder->set( 'organizer', $organizer );
+		}
+
+		if ( '' !== (string) ( $settings['offer_price'] ?? '' ) || ! empty( $settings['offer_url']['url'] ) ) {
+			$offer = array(
+				'@type' => 'Offer',
+				'url'   => ! empty( $settings['offer_url']['url'] ) ? esc_url_raw( (string) $settings['offer_url']['url'] ) : '',
+			);
+			if ( '' !== (string) ( $settings['offer_price'] ?? '' ) ) {
+				$offer['price']         = sanitize_text_field( (string) $settings['offer_price'] );
+				$offer['priceCurrency'] = sanitize_text_field( (string) ( $settings['offer_currency'] ?? 'USD' ) );
+			}
+			$offer = array_filter( $offer );
+			if ( ! empty( $offer ) ) {
+				$builder->set( 'offers', $offer );
+			}
+		}
+
+		return $builder->get_data();
+	}
+
+	/**
+	 * @param array<string, mixed> $settings Widget settings.
+	 * @return array<string, mixed>
+	 */
+	private static function build_postal_address_from_settings( $settings ) {
+		$address = array_filter(
+			array(
+				'@type'           => 'PostalAddress',
+				'streetAddress'   => sanitize_text_field( (string) ( $settings['street'] ?? '' ) ),
+				'addressLocality' => sanitize_text_field( (string) ( $settings['city'] ?? '' ) ),
+				'addressRegion'   => sanitize_text_field( (string) ( $settings['region'] ?? '' ) ),
+				'postalCode'      => sanitize_text_field( (string) ( $settings['postal_code'] ?? '' ) ),
+				'addressCountry'  => sanitize_text_field( (string) ( $settings['country'] ?? '' ) ),
+			)
+		);
+
+		if ( count( $address ) <= 1 ) {
+			return array();
+		}
+
+		return $address;
+	}
+
+	/**
+	 * @param array<string, mixed> $settings Widget settings.
+	 * @return array<string, mixed>
+	 */
+	private static function build_event_location( $settings ) {
+		$mode = ! empty( $settings['event_attendance_mode'] ) ? (string) $settings['event_attendance_mode'] : 'OfflineEventAttendanceMode';
+
+		if ( 'OnlineEventAttendanceMode' === $mode && ! empty( $settings['location_url']['url'] ) ) {
+			return array(
+				'@type' => 'VirtualLocation',
+				'url'   => esc_url_raw( (string) $settings['location_url']['url'] ),
+			);
+		}
+
+		$location_name = sanitize_text_field( (string) ( $settings['location_name'] ?? '' ) );
+		$address       = self::build_postal_address_from_settings( $settings );
+
+		if ( '' === $location_name && empty( $address ) ) {
+			return array();
+		}
+
+		$location = array(
+			'@type' => 'Place',
+		);
+
+		if ( '' !== $location_name ) {
+			$location['name'] = $location_name;
+		}
+
+		if ( ! empty( $address ) ) {
+			$location['address'] = $address;
+		}
+
+		return $location;
+	}
+
+	/**
+	 * @param string $value Raw date/time from Elementor control.
+	 * @return string ISO 8601 datetime or empty string.
+	 */
+	private static function format_schema_datetime( $value ) {
+		$value = trim( (string) $value );
+		if ( '' === $value ) {
+			return '';
+		}
+
+		$timestamp = strtotime( $value );
+		if ( false === $timestamp ) {
+			return sanitize_text_field( $value );
+		}
+
+		return wp_date( DATE_ATOM, $timestamp );
+	}
+
+	/**
 	 * Print JSON-LD script tag (WP.org-safe structured data exception).
 	 *
 	 * @param array<string, mixed> $data Schema graph.

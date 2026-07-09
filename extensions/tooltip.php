@@ -348,7 +348,7 @@ class Extension_Tooltip extends Extension_Base {
 
 			$settings = $element->get_settings_for_display();
 
-			if ( 'yes' !== $settings[ 'tooltip_enable' ] ) {
+			if ( empty( $settings['tooltip_enable'] ) || 'yes' !== $settings['tooltip_enable'] ) {
 				return;
 			}
 
@@ -363,7 +363,7 @@ class Extension_Tooltip extends Extension_Base {
 
 			$settings = $element->get_settings_for_display();
 
-			if ( 'yes' !== $settings[ 'tooltip_enable' ] ) {
+			if ( empty( $settings['tooltip_enable'] ) || 'yes' !== $settings['tooltip_enable'] ) {
 				return $widget_content;
 			}
 

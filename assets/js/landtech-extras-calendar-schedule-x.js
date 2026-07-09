@@ -27,6 +27,21 @@
 			}
 		}
 
+		function ltxePlainDateFromMonthSetting( value ) {
+			if ( ! value ) {
+				return null;
+			}
+			return ltxePlainDateFromSetting( String( value ).substring( 0, 7 ) + '-01' );
+		}
+
+		function ltxeScheduleXFirstDayOfWeek( firstDay ) {
+			var day = parseInt( firstDay, 10 );
+			if ( isNaN( day ) || day < 0 || day > 6 ) {
+				return 1;
+			}
+			return ( ( day + 6 ) % 7 ) + 1;
+		}
+
 		var events = [];
 		$calendar.find( '.ee-calendar-event' ).each( function( index ) {
 			var $event = $( this );
@@ -59,11 +74,24 @@
 			views: views,
 			events: events,
 			defaultView: 'month-grid',
+			firstDayOfWeek: ltxeScheduleXFirstDayOfWeek( settings.first_day ),
 		};
 
-		var selectedDate = ltxePlainDateFromSetting( settings.start_with_month );
-		if ( selectedDate ) {
-			config.selectedDate = selectedDate;
+		if ( '' === settings.default_current_month && settings.default_month ) {
+			var selectedDate = ltxePlainDateFromMonthSetting( settings.default_month );
+			if ( selectedDate ) {
+				config.selectedDate = selectedDate;
+			}
+		}
+
+		var minDate = ltxePlainDateFromMonthSetting( settings.constrain_start );
+		if ( minDate ) {
+			config.minDate = minDate;
+		}
+
+		var maxDate = ltxePlainDateFromMonthSetting( settings.constrain_end );
+		if ( maxDate ) {
+			config.maxDate = maxDate;
 		}
 
 		try {
@@ -72,7 +100,7 @@
 				app.render( $mount.get( 0 ) );
 			}
 		} catch ( error ) {
-			// Fail silently — legacy markup remains visible if Schedule-X cannot mount.
+			// Schedule-X could not mount; event source nodes remain hidden.
 		}
 	};
 }( jQuery ) );

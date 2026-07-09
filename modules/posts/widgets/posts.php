@@ -31,6 +31,8 @@ use ElementorPro\Modules\QueryControl\Module as Query_Module;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
+require_once __DIR__ . '/posts-base.php';
+
 /**
  * Posts
  *

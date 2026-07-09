@@ -17,7 +17,6 @@ const HANDLE_MAP = {
 	'image-comparison': 'landtech-extras-image-comparison',
 	'hotips': 'landtech-extras-hotips',
 	'unfold': 'landtech-extras-unfold',
-	'clndr': 'landtech-extras-clndr',
 	'circle-progress': 'landtech-extras-circle-progress',
 	'ee-scroll-indicator': 'landtech-extras-scroll-indicator',
 	'gmap3': 'landtech-extras-gmap3',

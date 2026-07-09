@@ -99,7 +99,11 @@ abstract class Module_Base {
 
 		foreach ( $this->get_widgets() as $widget ) {
 
-			$class_name = $this->reflection->getNamespaceName() . '\Widgets\\' . $widget;
+			$class_name = $this->resolve_widget_class_name( $widget );
+
+			if ( null === $class_name ) {
+				continue;
+			}
 
 			if ( $class_name::requires_elementor_pro() && ! landtech_extras_is_elementor_pro_active() ) {
 				continue;
@@ -114,6 +118,41 @@ abstract class Module_Base {
 
 			$widget_manager->register( new $class_name() );
 		}
+	}
+
+	/**
+	 * Resolve and load a widget FQCN from the module widgets list.
+	 *
+	 * @since 3.0.1
+	 *
+	 * @param string $widget Widget class short name (e.g. Posts, Faq_Schema).
+	 * @return string|null Fully qualified class name when loadable.
+	 */
+	protected function resolve_widget_class_name( $widget ) {
+
+		$class_name = $this->reflection->getNamespaceName() . '\Widgets\\' . $widget;
+
+		if ( class_exists( $class_name, false ) ) {
+			return $class_name;
+		}
+
+		if ( defined( 'LANDTECH_EXTRAS_PATH' ) ) {
+			$relative = strtolower(
+				preg_replace(
+					[ '/^LandTechExtras\\\/', '/([a-z])([A-Z])/', '/_/', '/\\\/' ],
+					[ '', '$1-$2', '-', DIRECTORY_SEPARATOR ],
+					$class_name
+				)
+			);
+
+			$file = LANDTECH_EXTRAS_PATH . $relative . '.php';
+
+			if ( is_readable( $file ) ) {
+				require_once $file;
+			}
+		}
+
+		return class_exists( $class_name, false ) ? $class_name : null;
 	}
 
 	/**

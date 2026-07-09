@@ -58,6 +58,22 @@ class Module extends Module_Base {
 	 */
 	protected $_conditions_repeater;
 
+	/**
+	 * Whether Elementor hooks were already registered for this module instance.
+	 *
+	 * @since 2.4.1
+	 * @var bool
+	 */
+	private static $actions_registered = false;
+
+	/**
+	 * Element stacks that already received display condition controls.
+	 *
+	 * @since 2.4.1
+	 * @var array<string, bool>
+	 */
+	private static $controls_registered = array();
+
 	const VISITOR_GROUP 	= 'visitor';
 	const DATE_TIME_GROUP 	= 'date_time';
 	const SINGLE_GROUP 		= 'single';
@@ -111,6 +127,8 @@ class Module extends Module_Base {
 	public function __construct() {
 		parent::__construct();
 
+		require_once __DIR__ . '/viewport-breakpoints.php';
+
 		$this->register_conditions();
 	}
 
@@ -127,6 +145,7 @@ class Module extends Module_Base {
 			'cookie',
 			'os',
 			'browser',
+			'viewport',
 
 			// Date Time
 			'date',
@@ -257,6 +276,20 @@ class Module extends Module_Base {
 
 			$check = $_condition->check( $operator, $value, $name );
 
+			/**
+			 * Filter individual display condition evaluation (Premium membership + viewport stacking).
+			 *
+			 * @since 2.4.4
+			 *
+			 * @param bool   $check    Whether the condition passed.
+			 * @param string $key      Condition slug.
+			 * @param string $operator Comparison operator.
+			 * @param mixed  $value    Condition value.
+			 * @param mixed  $name     Optional condition name control.
+			 * @param string $id       Elementor element id.
+			 */
+			$check = apply_filters( 'landtech_extras/display_conditions/evaluate', $check, $key, $operator, $value, $name, $id );
+
 			$this->conditions[ $id ][ $key . '_' . $condition['_id'] ] = $check;
 		}
 	}
@@ -281,6 +314,12 @@ class Module extends Module_Base {
 	 * @access protected
 	 */
 	public function add_actions() {
+		if ( self::$actions_registered ) {
+			return;
+		}
+
+		self::$actions_registered = true;
+
 		// Activate controls for widgets
 		add_action( 'elementor/element/common/section_landtech_extras_advanced/before_section_end', function( $element, $args ) {
 			$this->add_controls( $element, $args );
@@ -368,6 +407,20 @@ class Module extends Module_Base {
 	 * @access private
 	 */
 	public function add_controls( $element, $args ) {
+		unset( $args );
+
+		$stack_id = $element->get_unique_name();
+
+		if ( ! empty( self::$controls_registered[ $stack_id ] ) ) {
+			return;
+		}
+
+		$existing = \Elementor\Plugin::instance()->controls_manager->get_control_from_stack( $stack_id, 'ltxe_display_conditions_enable' );
+
+		if ( ! is_wp_error( $existing ) ) {
+			self::$controls_registered[ $stack_id ] = true;
+			return;
+		}
 
 		$this->_conditions_repeater = new Repeater();
 
@@ -471,6 +524,8 @@ class Module extends Module_Base {
 				'title_field' 	=> __( 'Display If', 'landtech-extras-for-elementor'),
 			]
 		);
+
+		self::$controls_registered[ $stack_id ] = true;
 	}
 
 	/**

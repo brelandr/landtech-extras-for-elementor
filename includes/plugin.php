@@ -396,13 +396,6 @@ class LandTechExtrasPlugin {
 			true );
 
 		wp_register_script(
-			'landtech-extras-clndr',
-			plugins_url( '/assets/lib/clndr/clndr' . $suffix . '.js', LANDTECH_EXTRAS__FILE__ ),
-			[ 'jquery', 'moment' ],
-			'1.5.1',
-			true );
-
-		wp_register_script(
 			'landtech-extras-temporal-polyfill',
 			plugins_url( '/assets/lib/temporal-polyfill/temporal-polyfill.min.js', LANDTECH_EXTRAS__FILE__ ),
 			[],
@@ -1236,7 +1229,7 @@ class LandTechExtrasPlugin {
 			$class_to_load = $class;
 		}
 
-		if ( ! class_exists( $class_to_load ) ) {
+		if ( ! class_exists( $class_to_load, false ) ) {
 
 			$filename = strtolower(
 				preg_replace(
@@ -1249,7 +1242,7 @@ class LandTechExtrasPlugin {
 			$filename = LANDTECH_EXTRAS_PATH . $filename . '.php';
 
 			if ( is_readable( $filename ) ) {
-				include( $filename );
+				require_once $filename;
 			}
 		}
 
@@ -1309,6 +1302,11 @@ class LandTechExtrasPlugin {
 	 * @access public
 	 */
 	public function set_current_version() {
+		if ( function_exists( 'landtech_extras_update_option_no_autoload' ) ) {
+			landtech_extras_update_option_no_autoload( 'landtech_extras_version', LANDTECH_EXTRAS_VERSION );
+			return;
+		}
+
 		update_option( 'landtech_extras_version', LANDTECH_EXTRAS_VERSION );
 	}
 }

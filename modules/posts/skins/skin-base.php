@@ -1769,6 +1769,8 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 	public function before_loop() {
 		global $post;
 
+		$post_id = ( $post instanceof \WP_Post ) ? (int) $post->ID : 0;
+
 		/**
 		 * Before Loop
 		 *
@@ -1778,7 +1780,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param array 	$settings 	The current widget settings
 		 * @param int 		$post_id 	The post ID
 		 */
-		do_action( 'landtech_extras/widgets/posts/before_loop', $this->parent->get_settings(), $post->ID );
+		do_action( 'landtech_extras/widgets/posts/before_loop', $this->parent->get_settings(), $post_id );
 	}
 
 	/**
@@ -1887,6 +1889,8 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 	protected function after_loop() {
 		global $post;
 
+		$post_id = ( $post instanceof \WP_Post ) ? (int) $post->ID : 0;
+
 		/**
 		 * After Loop
 		 *
@@ -1896,7 +1900,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param array 	$settings 	The current widget settings
 		 * @param int 		$post_id 	The post ID
 		 */
-		do_action( 'landtech_extras/widgets/posts/after_loop', $this->parent->get_settings(), $post->ID );
+		do_action( 'landtech_extras/widgets/posts/after_loop', $this->parent->get_settings(), $post_id );
 	}
 
 	/**

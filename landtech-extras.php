@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Plugin Name:       LandTech Extras for Elementor
  * Plugin URI:        https://landtechwebdesigns.com/
  * Description:       Elementor widgets & extensions — fork of Elementor Extras (Extras for Elementor). Free on WordPress.org.
- * Version:           2.4.0
+ * Version:           2.4.4
  * Elementor tested up to: 3.28
  * Elementor Pro tested up to: 3.28
  *
@@ -57,7 +57,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * — Packery v2.1.2 Copyright Metafizzy License: GPLv3 Source: link https://github.com/metafizzy/packery
  * — javascript-detect-element-resize, 0.5.3 Copyright (c) 2013 Sebastián Décima License: MIT Source: link https://github.com/sdecima/javascript-detect-element-resize
  * — tilt.js 1.2.1, Copyright (c) 2017 Gijs Rogé License: MIT Source: link https://github.com/gijsroge/tilt.js
- * - CLNDR v1.4.7, Copyright Kyle Stetz (github.com/kylestetz) License: MIT Source: link https://github.com/kylestetz/CLNDR
  * — GMAP3 Plugin for jQuery v7.2 Copyright DEMONTE Jean-Baptiste License: GPL-3.0+ Source: link http://gmap3.net
  * — Leaflet v1.9.4, Copyright Vladimir Agafonkin License: BSD-2-Clause Source: link https://github.com/Leaflet/Leaflet
  * — Moment.js (WordPress core script handle `moment`; MIT) Source: https://github.com/moment/moment/
@@ -103,7 +102,7 @@ if ( ! defined( 'LANDTECH_EXTRAS_ASSETS_URL' ) ) {
 	define( 'LANDTECH_EXTRAS_ASSETS_URL', LANDTECH_EXTRAS_URL . 'assets/' );
 }
 if ( ! defined( 'LANDTECH_EXTRAS_VERSION' ) ) {
-	define( 'LANDTECH_EXTRAS_VERSION', '2.4.0' );
+	define( 'LANDTECH_EXTRAS_VERSION', '2.4.4' );
 }
 if ( ! defined( 'LANDTECH_EXTRAS_PREVIOUS_STABLE_VERSION' ) ) {
 	define( 'LANDTECH_EXTRAS_PREVIOUS_STABLE_VERSION', '2.2.64' );
@@ -289,6 +288,7 @@ function landtech_extras_load() {
 	landtech_extras_include( 'admin/settings-api.php' );
 	landtech_extras_include( 'includes/extension-api.php' );
 	landtech_extras_include( 'includes/search-rest-controller.php' );
+	landtech_extras_include( 'includes/display-conditions/viewport-visibility-bootstrap.php' );
 	landtech_extras_include( 'includes/plugin.php' );
 
 	// Admin-only editor tools.
@@ -312,13 +312,39 @@ add_filter( 'plugin_row_meta', 'landtech_extras_plugin_row_meta', 10, 2 );
 
 register_activation_hook( LANDTECH_EXTRAS__FILE__, 'landtech_extras_activate' );
 
+
+/**
+ * Persist an option without autoload (WP 6.4+ API with 6.2–6.3 fallback).
+ *
+ * @since 2.4.2
+ *
+ * @param string $option Option name.
+ * @param mixed  $value  Option value.
+ * @return bool
+ */
+function landtech_extras_update_option_no_autoload( $option, $value ) {
+	if ( version_compare( get_bloginfo( 'version' ), '6.4', '>=' ) ) {
+		return update_option( $option, $value, false );
+	}
+
+	$updated = update_option( $option, $value );
+	global $wpdb;
+	$wpdb->update(
+		$wpdb->options,
+		array( 'autoload' => 'no' ),
+		array( 'option_name' => $option )
+	);
+
+	return $updated;
+}
+
 /**
  * Runs code upon activation
  *
  * @since 1.1.3
  */
 function landtech_extras_activate() {
-	add_option( 'landtech_extras_do_activation_redirect', true );
+	add_option( 'landtech_extras_do_activation_redirect', true, '', 'no' );
 }
 
 /**
@@ -344,7 +370,7 @@ function landtech_extras_info_redirect(  ) {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only branching on core plugins.php query args.
 		if ( ! isset( $_GET['activate-multi'] ) && version_compare( LANDTECH_EXTRAS_VERSION, get_option( '_landtech_extras_was_activated_version' ), '>' ) ) {
 			
-			update_option( '_landtech_extras_was_activated_version', LANDTECH_EXTRAS_VERSION );
+			landtech_extras_update_option_no_autoload( '_landtech_extras_was_activated_version', LANDTECH_EXTRAS_VERSION );
 
 			wp_safe_redirect( admin_url( 'admin.php?page=landtech-extras' ) );
 			exit;

@@ -4,7 +4,7 @@ Contributors: brelandr
 Tags: elementor, page-builder, widgets, addons, extensions
 Requires at least: 6.2
 Tested up to: 7.0
-Stable tag: 2.4.0
+Stable tag: 2.4.4
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -23,7 +23,7 @@ Configure optional API keys (Google Maps, Snazzy Maps, Instagram, and optional b
 
 Find widgets in the Elementor panel under the **LandTech Extras for Elementor** category. Widget type slugs match the upstream Elementor Extras fork for easier migration.
 
-**Widgets:** Age Gate (`ee-age-gate`), Audio Player (`ee-audio-player`), Breadcrumbs (`ee-breadcrumbs`, optional **BreadcrumbList** microdata when **Structured data** is enabled), Buttons / Button Group (`button-group`), Calendar (`ee-calendar`), Circle Progress (`circle-progress`), Devices (`devices-extended`), FAQ Schema (`ee-faq-schema`), Gallery (`gallery-extra`), Gallery Slider (`gallery-slider`), Google Map (`ee-google-map`), Heading Extra (`heading-extended`), Hotspots (`hotspots`), HTML5 Video Player (`html5-video`), Image Comparison (`image-comparison`), Inline SVG (`ee-inline-svg`), Lottie (`ee-lottie`), Offcanvas (`ee-offcanvas`), Popup (`ee-popup`), Posts Extra / Portfolio / Carousel layouts (`posts-extra`), Random Image (`ee-random-image`), Scroll Indicator (`ee-scroll-indicator`), Search Form (`ee-search-form`), Slide Menu (`ee-slide-menu`), Switcher (`ee-switcher`), Table (`table`), Text Divider (`text-divider`), Timeline (`timeline`), Toggle Element (`ee-toggle-element`), Unfold (`unfold`).
+**Widgets:** Age Gate (`ee-age-gate`), Audio Player (`ee-audio-player`), Breadcrumbs (`ee-breadcrumbs`, optional **BreadcrumbList** JSON-LD when **Structured data** is enabled), Buttons / Button Group (`button-group`), Calendar (`ee-calendar`), Circle Progress (`circle-progress`), Devices (`devices-extended`), FAQ Schema (`ee-faq-schema`), Gallery (`gallery-extra`), Gallery Slider (`gallery-slider`), Google Map (`ee-google-map`), Heading Extra (`heading-extended`), Hotspots (`hotspots`), HTML5 Video Player (`html5-video`), Image Comparison (`image-comparison`), Inline SVG (`ee-inline-svg`), Lottie (`ee-lottie`), Offcanvas (`ee-offcanvas`), Popup (`ee-popup`), Posts Extra / Portfolio / Carousel layouts (`posts-extra`), Random Image (`ee-random-image`), Scroll Indicator (`ee-scroll-indicator`), Search Form (`ee-search-form`), Slide Menu (`ee-slide-menu`), Switcher (`ee-switcher`), Table (`table`), Text Divider (`text-divider`), Timeline (`timeline`), Toggle Element (`ee-toggle-element`), Unfold (`unfold`).
 
 **Editor extensions** (Advanced tab on Elementor elements): Display Conditions (free: time, day, URL/query vars including UTM presets, cookie, business hours; WooCommerce purchase history and membership rules ship in the separate **LandTech Extras Premium** add-on), Parallax Background, Parallax Elements, Portfolio Parallax, Sticky Elements, Tooltips.
 
@@ -156,7 +156,6 @@ Source: https://github.com/biati-digital/glightbox — License notes: `assets/li
 Source: https://infinite-scroll.com — License notes: `assets/lib/infinite-scroll/README.txt`.
 **javascript-detect-element-resize** (MIT) — https://github.com/sdecima/javascript-detect-element-resize
 **tilt.js** (MIT) — https://github.com/gijsroge/tilt.js
-**CLNDR** (MIT) — legacy fallback in `assets/lib/clndr/` (Calendar widget now uses Schedule-X)
 **Schedule-X Calendar 4.6.1** (MIT) — `assets/lib/schedule-x/` with Preact under `assets/lib/preact/` and `@js-temporal/polyfill` under `assets/lib/temporal-polyfill/`
 Source: https://github.com/schedule-x/schedule-x — License notes: `assets/lib/schedule-x/README.txt`.
 **@lottiefiles/lottie-player** (MIT) — `assets/lib/lottie-player/lottie-player.js`
@@ -187,6 +186,31 @@ From the plugin root, after **`npm install`**, run **`npm run build:assets`** to
 Before publishing a public GitHub mirror, verify any **Repository** or **Source** URL in this readme returns HTTP 200 (WordPress.org reviewers check linked URLs).
 
 == Changelog ==
+
+= 2.4.4 =
+
+* Fix: Ship `assets/js/viewport-bridge.js` with the free plugin so Premium viewport display conditions no longer 404 the script on frontend.
+* Add: Viewport display condition (mobile/tablet/desktop) and breakpoint helpers for WordPress 7.0+ visibility bridge.
+
+= 2.4.3 =
+
+* Fix: Tooltip extension no longer triggers PHP warnings when `tooltip_enable` is unset on a widget.
+* Fix: Posts and Timeline widgets load `Posts_Base` before class declaration to prevent fatal errors on frontend.
+* Fix: Widget registration loads class files before calling static methods, preventing fatals for FAQ Schema and other widgets.
+* Fix: Autoloader uses `require_once` for reliable class loading.
+* Improved: Zip build verifies `posts-base.php`, `faq-schema.php`, and `schema-validator.php` are included in releases.
+
+= 2.4.2 =
+
+* Fix: Activation redirect and version-tracking options use `autoload = no` to avoid loading one-shot flags on every request.
+
+= 2.4.1 =
+
+* Remove: **CLNDR** library and legacy calendar markup/CSS after Schedule-X migration.
+* Fix: Calendar widget wires **First Day**, **Earliest/Latest Month**, and **Default Month** settings to Schedule-X.
+* Remove: Dead Elementor style controls for CLNDR-era navigation, header, days, and compact event list UI.
+* Improved: **Organization** schema validation (dedicated rules when @type is Organization).
+* Add: Shared `Schema_Builder` helpers for **Organization** and **Event** JSON-LD (consumed by Premium Schema Suite).
 
 = 2.4.0 =
 
