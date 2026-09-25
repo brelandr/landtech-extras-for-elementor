@@ -4,7 +4,7 @@ Contributors: brelandr
 Tags: elementor, page-builder, widgets, addons, extensions
 Requires at least: 6.2
 Tested up to: 7.1
-Stable tag: 2.5.4
+Stable tag: 2.5.5
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -188,6 +188,9 @@ Before publishing a public GitHub mirror, verify any **Repository** or **Source*
 
 == Upgrade Notice ==
 
+= 2.5.5 =
+Playground Live Preview: new Tabs and Table of Contents demo pages; Search Form demo copy updated. No changes required on existing sites.
+
 = 2.5.4 =
 Readme only: short description trimmed for WordPress.org (150 character limit). No code changes.
 
@@ -198,6 +201,10 @@ Maintenance release: Elementor 4.3.x compatibility headers and Plugin Check fixe
 Recommended update: new Tabs and Table of Contents widgets, plus Search Form **Include only** category restrictions and shorter custom search result URLs. Re-save Search Form widgets after updating if you use hidden category filters.
 
 == Changelog ==
+
+= 2.5.5 =
+* Add: WordPress Playground demo pages for EE Tabs (`demo-tabs`) and Table of Contents (`demo-table-of-contents`).
+* Improved: Playground Search Form demo description mentions include/exclude restriction modes.
 
 = 2.5.4 =
 * Fix: Short description in readme.txt shortened to WordPress.org 150-character limit (directory listing was truncated on import).

@@ -380,7 +380,7 @@ function landtech_extras_playground_get_demo_definitions( array $images ) {
 			'title'   => 'Search Form Demo',
 			'slug'    => 'demo-search-form',
 			'group'   => 'Forms & Search',
-			'intro'   => __( 'Advanced search form with classic skin and live AJAX results (type at least two characters).', 'landtech-extras-for-elementor' ),
+			'intro'   => __( 'Advanced search form with classic skin, live AJAX results (type at least two characters), and include/exclude restriction modes in the editor.', 'landtech-extras-for-elementor' ),
 			'widgets' => array(
 				landtech_extras_playground_widget(
 					'ee-search-form',
@@ -599,6 +599,38 @@ function landtech_extras_playground_get_demo_definitions( array $images ) {
 			),
 		),
 		array(
+			'title'   => 'Tabs Demo',
+			'slug'    => 'demo-tabs',
+			'group'   => 'Navigation & UI',
+			'intro'   => __( 'Horizontal EE Tabs with repeater panels — click each tab to switch content.', 'landtech-extras-for-elementor' ),
+			'widgets' => array(
+				landtech_extras_playground_widget(
+					'ee-tabs',
+					landtech_extras_playground_tabs_settings()
+				),
+			),
+		),
+		array(
+			'title'   => 'Table of Contents Demo',
+			'slug'    => 'demo-table-of-contents',
+			'group'   => 'Navigation & UI',
+			'intro'   => __( 'Auto-generated table of contents from headings on this page (page scope).', 'landtech-extras-for-elementor' ),
+			'widgets' => array(
+				landtech_extras_playground_widget(
+					'ee-table-of-contents',
+					array(
+						'scope' => 'page',
+					)
+				),
+				landtech_extras_playground_widget(
+					'text-editor',
+					array(
+						'editor' => landtech_extras_playground_toc_sample_content(),
+					)
+				),
+			),
+		),
+		array(
 			'title'   => 'Switcher Demo',
 			'slug'    => 'demo-switcher',
 			'group'   => 'Navigation & UI',
@@ -805,6 +837,55 @@ function landtech_extras_playground_calendar_settings() {
 		'event_list_heading' => __( 'Events this month', 'landtech-extras-for-elementor' ),
 		'events'             => $repeater,
 	);
+}
+
+/**
+ * Default EE Tabs widget settings for Playground demos.
+ *
+ * @return array<string,mixed>
+ */
+function landtech_extras_playground_tabs_settings() {
+	return array(
+		'tabs' => array(
+			array(
+				'_id'         => landtech_extras_playground_element_id(),
+				'tab_title'   => __( 'Features', 'landtech-extras-for-elementor' ),
+				'tab_content' => '<p>' . esc_html__( 'Horizontal tabs with repeater content — switch tabs to compare panels.', 'landtech-extras-for-elementor' ) . '</p>',
+			),
+			array(
+				'_id'         => landtech_extras_playground_element_id(),
+				'tab_title'   => __( 'Elementor', 'landtech-extras-for-elementor' ),
+				'tab_content' => '<p>' . esc_html__( 'Built for Elementor Free; optional template slots appear when the Templates module is enabled.', 'landtech-extras-for-elementor' ) . '</p>',
+			),
+			array(
+				'_id'         => landtech_extras_playground_element_id(),
+				'tab_title'   => __( 'Playground', 'landtech-extras-for-elementor' ),
+				'tab_content' => '<p>' . esc_html__( 'This demo page is seeded automatically when you open the WordPress Playground blueprint.', 'landtech-extras-for-elementor' ) . '</p>',
+			),
+		),
+	);
+}
+
+/**
+ * Sample heading markup for the Table of Contents Playground demo.
+ *
+ * @return string HTML for an Elementor text-editor widget.
+ */
+function landtech_extras_playground_toc_sample_content() {
+	$headings = array(
+		__( 'Getting started', 'landtech-extras-for-elementor' ),
+		__( 'Widget highlights', 'landtech-extras-for-elementor' ),
+		__( 'Next steps', 'landtech-extras-for-elementor' ),
+	);
+
+	$html = '';
+
+	foreach ( $headings as $heading ) {
+		$html .= '<h2 id="' . esc_attr( sanitize_title( $heading ) ) . '">' . esc_html( $heading ) . '</h2>';
+		$html .= '<p>' . esc_html__( 'Sample body copy so the Table of Contents widget can link to this heading on the page.', 'landtech-extras-for-elementor' ) . '</p>';
+	}
+
+	return $html;
 }
 
 /**
