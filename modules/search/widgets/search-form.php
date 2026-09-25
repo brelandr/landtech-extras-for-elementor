@@ -742,7 +742,7 @@ class Search_Form extends Extras_Widget {
 					'options'     => [
 						''        => __( 'All post types', 'landtech-extras-for-elementor' ),
 						'include' => __( 'Include only', 'landtech-extras-for-elementor' ),
-						'exclude' => __( 'Exclude selected', 'landtech-extras-for-elementor' ),
+						'exclude' => __( 'Exclude selected', 'landtech-extras-for-elementor' ), // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor control option key, not WP_Query.
 					],
 					'condition'   => [
 						'filter_types' => 'post_type',
@@ -992,7 +992,7 @@ class Search_Form extends Extras_Widget {
 						'options'     => [
 							''        => __( 'All terms', 'landtech-extras-for-elementor' ),
 							'include' => __( 'Include only', 'landtech-extras-for-elementor' ),
-							'exclude' => __( 'Exclude selected', 'landtech-extras-for-elementor' ),
+							'exclude' => __( 'Exclude selected', 'landtech-extras-for-elementor' ), // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor control option key, not WP_Query.
 						],
 						'condition'   => [
 							'filter_types' => $name,

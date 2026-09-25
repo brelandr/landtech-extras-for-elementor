@@ -415,7 +415,7 @@ class LandTechExtrasPlugin {
 
 		wp_register_script(
 			'landtech-extras-temporal-polyfill',
-			plugins_url( '/assets/lib/temporal-polyfill/temporal-polyfill.min.js', LANDTECH_EXTRAS__FILE__ ),
+			plugins_url( '/assets/lib/temporal-polyfill/js-temporal-schedule-x.min.js', LANDTECH_EXTRAS__FILE__ ),
 			[],
 			'0.3.0',
 			true

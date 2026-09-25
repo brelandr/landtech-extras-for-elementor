@@ -12,9 +12,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Plugin Name:       LandTech Extras for Elementor
  * Plugin URI:        https://landtechwebdesigns.com/
  * Description:       Elementor widgets & extensions — fork of Elementor Extras (Extras for Elementor). Free on WordPress.org.
- * Version:           2.5.2
- * Elementor tested up to: 3.28
- * Elementor Pro tested up to: 3.28
+ * Version:           2.5.3
+ * Elementor tested up to: 4.3.2
+ * Elementor Pro tested up to: 4.3.2
  *
  * Original plugin: Elementor Extras (copyright Namogo, https://extrasforelementor.com/).
  * Author:            brelandr
@@ -102,7 +102,7 @@ if ( ! defined( 'LANDTECH_EXTRAS_ASSETS_URL' ) ) {
 	define( 'LANDTECH_EXTRAS_ASSETS_URL', LANDTECH_EXTRAS_URL . 'assets/' );
 }
 if ( ! defined( 'LANDTECH_EXTRAS_VERSION' ) ) {
-	define( 'LANDTECH_EXTRAS_VERSION', '2.5.2' );
+	define( 'LANDTECH_EXTRAS_VERSION', '2.5.3' );
 }
 if ( ! defined( 'LANDTECH_EXTRAS_PREVIOUS_STABLE_VERSION' ) ) {
 	define( 'LANDTECH_EXTRAS_PREVIOUS_STABLE_VERSION', '2.2.64' );
@@ -330,6 +330,7 @@ function landtech_extras_update_option_no_autoload( $option, $value ) {
 
 	$updated = update_option( $option, $value );
 	global $wpdb;
+	// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Pre-6.4 fallback: set autoload=no on options table after update_option().
 	$wpdb->update(
 		$wpdb->options,
 		array( 'autoload' => 'no' ),

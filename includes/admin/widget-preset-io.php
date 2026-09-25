@@ -88,7 +88,8 @@ final class Widget_Preset_Io {
 
 		$widget_id   = isset( $_POST['widget_id'] ) ? sanitize_text_field( wp_unslash( $_POST['widget_id'] ) ) : '';
 		$widget_type = isset( $_POST['widget_type'] ) ? sanitize_key( wp_unslash( $_POST['widget_type'] ) ) : '';
-		$settings    = isset( $_POST['settings'] ) ? wp_unslash( $_POST['settings'] ) : '';
+		$settings_raw = isset( $_POST['settings'] ) ? wp_unslash( $_POST['settings'] ) : '';
+		$settings     = is_string( $settings_raw ) ? wp_check_invalid_utf8( $settings_raw ) : '';
 
 		if ( '' === $widget_id || '' === $widget_type ) {
 			wp_send_json_error( __( 'Missing widget metadata.', 'landtech-extras-for-elementor' ), 400 );
@@ -131,7 +132,8 @@ final class Widget_Preset_Io {
 		}
 
 		$widget_type = isset( $_POST['widget_type'] ) ? sanitize_key( wp_unslash( $_POST['widget_type'] ) ) : '';
-		$raw         = isset( $_POST['preset_json'] ) ? wp_unslash( $_POST['preset_json'] ) : '';
+		$raw_raw = isset( $_POST['preset_json'] ) ? wp_unslash( $_POST['preset_json'] ) : '';
+		$raw     = is_string( $raw_raw ) ? wp_check_invalid_utf8( $raw_raw ) : '';
 
 		$decoded = json_decode( (string) $raw, true );
 		if ( ! is_array( $decoded ) ) {

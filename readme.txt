@@ -4,7 +4,7 @@ Contributors: brelandr
 Tags: elementor, page-builder, widgets, addons, extensions
 Requires at least: 6.2
 Tested up to: 7.1
-Stable tag: 2.5.2
+Stable tag: 2.5.3
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -156,7 +156,7 @@ Source: https://github.com/biati-digital/glightbox — License notes: `assets/li
 Source: https://infinite-scroll.com — License notes: `assets/lib/infinite-scroll/README.txt`.
 **javascript-detect-element-resize** (MIT) — https://github.com/sdecima/javascript-detect-element-resize
 **tilt.js** (MIT) — https://github.com/gijsroge/tilt.js
-**Schedule-X Calendar 4.6.1** (MIT) — `assets/lib/schedule-x/` with Preact under `assets/lib/preact/` and `@js-temporal/polyfill` under `assets/lib/temporal-polyfill/`
+**Schedule-X Calendar 4.6.1** (MIT) — `assets/lib/schedule-x/` with Preact under `assets/lib/preact/` and `@js-temporal/polyfill` as `assets/lib/temporal-polyfill/js-temporal-schedule-x.min.js`
 Source: https://github.com/schedule-x/schedule-x — License notes: `assets/lib/schedule-x/README.txt`.
 **@lottiefiles/lottie-player** (MIT) — `assets/lib/lottie-player/lottie-player.js`
 Source: https://github.com/LottieFiles/lottie-player — License notes: `assets/lib/lottie-player/README.txt`.
@@ -188,10 +188,18 @@ Before publishing a public GitHub mirror, verify any **Repository** or **Source*
 
 == Upgrade Notice ==
 
+= 2.5.3 =
+Maintenance release: Elementor 4.3.x compatibility headers and Plugin Check fixes (readme casing, bundled Temporal script filename). No feature changes.
+
 = 2.5.2 =
 Recommended update: new Tabs and Table of Contents widgets, plus Search Form **Include only** category restrictions and shorter custom search result URLs. Re-save Search Form widgets after updating if you use hidden category filters.
 
 == Changelog ==
+
+= 2.5.3 =
+* Fix: WordPress.org Plugin Check — canonical `readme.txt` filename; rename bundled `@js-temporal/polyfill` file so it is not flagged as core `polyfill.min.js`.
+* Fix: Sanitize widget preset AJAX JSON payloads; PHPCS for Search Form restriction mode controls and pre-6.4 autoload option fallback.
+* Improved: Plugin header **Elementor tested up to** and **Elementor Pro tested up to** 4.3.2.
 
 = 2.5.2 =
 * Add: EE Tabs widget (`ee-tabs`) with horizontal tabs, repeater content, and template slots.
