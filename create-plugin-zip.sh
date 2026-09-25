@@ -185,6 +185,47 @@ verify_zip_output() {
 	fi
 }
 
+# Fail if distribution zip contains dev-only trees (SVN deploy uses rsync, not this zip — still guard manual uploads).
+verify_zip_forbidden_paths() {
+	local z="${OUT_ZIP}"
+	local zip_prefix="${ZIP_PREFIX}"
+	local -a forbidden_patterns=(
+		"/${zip_prefix}/node_modules/"
+		"/${zip_prefix}/vendor/"
+		"/${zip_prefix}/scripts/"
+		"/${zip_prefix}/tests/"
+		"/${zip_prefix}/assets/src/"
+		"/${zip_prefix}/assets/blog/"
+		"/${zip_prefix}/wordpress-org-assets/"
+		"/${zip_prefix}/.plugin-check/"
+		"/${zip_prefix}/.git/"
+		"/${zip_prefix}/.cursor/"
+		"/${zip_prefix}/.github/"
+		"/${zip_prefix}/DIST/"
+	)
+	local listing pattern hit
+	listing="$(unzip -Z1 "${z}" 2>/dev/null || true)"
+	for pattern in "${forbidden_patterns[@]}"; do
+		hit="$(grep -F "${pattern}" <<< "${listing}" | head -n 3 || true)"
+		if [[ -n "${hit}" ]]; then
+			echo "Error: distribution zip must not contain dev-only path ${pattern}" >&2
+			echo "${hit}" >&2
+			exit 1
+		fi
+	done
+}
+
+verify_zip_readme_txt() {
+	local z="${OUT_ZIP}"
+	local readme_relpath="${ZIP_PREFIX}/readme.txt"
+	local found_count
+	found_count="$(unzip -Z1 "${z}" 2>/dev/null | grep -Fxc "${readme_relpath}" || true)"
+	if [[ "${found_count}" -ne 1 ]]; then
+		echo "Error: ${readme_relpath} must appear exactly once in the zip (WordPress.org requires lowercase readme.txt)." >&2
+		exit 1
+	fi
+}
+
 VERSION="$(read_version)"
 DEFAULT_OUT="${DIST_DIR}/${ZIP_FILE_BASE}-${VERSION}.zip"
 OUT_ZIP="${DEFAULT_OUT}"
@@ -240,21 +281,40 @@ rsync -a \
 	--exclude='.git/' \
 	--exclude='.github/' \
 	--exclude='.gitattributes' \
+	--exclude='.gitignore' \
 	--exclude='.cursorrules' \
 	--exclude='.cursor/' \
 	--exclude='.idea/' \
 	--exclude='.vscode/' \
+	--exclude='.wp-env.json' \
+	--exclude='.plugin-check/' \
+	--exclude='.distignore' \
+	--exclude='.release' \
+	--exclude='e2e/' \
 	--exclude='node_modules/' \
 	--exclude='vendor/' \
 	--exclude='assets/src/' \
+	--exclude='assets/blog/' \
 	--exclude='tests/' \
 	--exclude='*.zip' \
+	--exclude='*.sh' \
+	--exclude='phpcs.xml' \
+	--exclude='phpcs.xml.dist' \
+	--exclude='phpcs.security.xml' \
+	--exclude='phpunit.xml' \
+	--exclude='phpunit.xml.dist' \
+	--exclude='.phpunit.result.cache' \
+	--exclude='composer.json' \
+	--exclude='composer.lock' \
+	--exclude='package.json' \
+	--exclude='package-lock.json' \
+	--exclude='yarn.lock' \
+	--exclude='pnpm-lock.yaml' \
 	--exclude='.lmfwc-credentials.local' \
-	--exclude='.distignore' \
-	--exclude='.release' \
+	--exclude='.landtech-shared-secret.local' \
+	--exclude='lmfwc-credentials.local.example' \
 	--exclude='scripts/' \
 	--exclude='wordpress-org-assets/' \
-	--exclude='.plugin-check/' \
 	"${SCRIPT_DIR}/" "${TEMP_PLUGIN}/"
 
 verify_pack_artifacts
@@ -328,19 +388,35 @@ fi
 # zip -r updates existing archives without removing deleted paths; always start fresh.
 rm -f "${OUT_ZIP}"
 
-( cd "${TEMP_DIR}" && zip -r "${OUT_ZIP}" "${ZIP_PREFIX}" \
+ZIP_QUIET_FLAG=()
+if [[ "${LANDTECH_EXTRAS_ZIP_QUIET:-1}" != "0" ]]; then
+	ZIP_QUIET_FLAG=( -q )
+fi
+
+( cd "${TEMP_DIR}" && zip "${ZIP_QUIET_FLAG[@]}" -r "${OUT_ZIP}" "${ZIP_PREFIX}" \
 	"${JUNK_EXCLUDES[@]}" \
 	-x "${ZIP_PREFIX}/.cursorrules" \
 	-x "${ZIP_PREFIX}/.cursor/*" \
 	-x "${ZIP_PREFIX}/.git/*" \
 	-x "${ZIP_PREFIX}/.git" \
 	-x "${ZIP_PREFIX}/.github/*" \
+	-x "${ZIP_PREFIX}/.wp-env.json" \
+	-x "${ZIP_PREFIX}/e2e/*" \
+	-x "${ZIP_PREFIX}/DIST/*" \
+	-x "${ZIP_PREFIX}/DIST" \
+	-x "${ZIP_PREFIX}/assets/blog/*" \
+	-x "${ZIP_PREFIX}/assets/blog" \
+	-x "${ZIP_PREFIX}/wordpress-org-assets/*" \
+	-x "${ZIP_PREFIX}/wordpress-org-assets" \
+	-x "${ZIP_PREFIX}/.plugin-check/*" \
+	-x "${ZIP_PREFIX}/.plugin-check" \
 	-x "${ZIP_PREFIX}/node_modules/*" \
 	-x "${ZIP_PREFIX}/vendor/*" \
 	-x "${ZIP_PREFIX}/assets/src/*" \
 	-x "${ZIP_PREFIX}/tests/*" \
 	-x "${ZIP_PREFIX}/phpunit.xml" \
 	-x "${ZIP_PREFIX}/phpunit.xml.dist" \
+	-x "${ZIP_PREFIX}/.phpunit.result.cache" \
 	-x "${ZIP_PREFIX}/phpcs.xml" \
 	-x "${ZIP_PREFIX}/phpcs.xml.dist" \
 	-x "${ZIP_PREFIX}/phpcs.security.xml" \
@@ -361,13 +437,14 @@ rm -f "${OUT_ZIP}"
 	-x "${ZIP_PREFIX}/.gitignore" \
 	-x "${ZIP_PREFIX}/.distignore" \
 	-x "${ZIP_PREFIX}/.release" \
-	-x "${ZIP_PREFIX}/README.txt" \
 	-x "${ZIP_PREFIX}/create-plugin-zip.sh" \
 	-x "${ZIP_PREFIX}/scripts/rebrand-to-landtech.py" \
 	-x "${ZIP_PREFIX}/*.sh" \
 )
 
 verify_zip_output
+verify_zip_forbidden_paths
+verify_zip_readme_txt
 
 echo "Done. Upload via Plugins → Add New → Upload Plugin:"
 ls -lh "${OUT_ZIP}"
