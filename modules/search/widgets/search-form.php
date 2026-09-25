@@ -81,6 +81,14 @@ class Search_Form extends Extras_Widget {
 	public $_query_filters = [];
 
 	/**
+	 * Static restrictions merged into ltxe_search_query (compact include/exclude payloads).
+	 *
+	 * @since  2.5.1
+	 * @var    array<string, array{mode: string, terms: string[]}>
+	 */
+	public $_static_query_restrictions = array();
+
+	/**
 	 * Search Fields
 	 *
 	 * @since  2.1.0
@@ -275,27 +283,46 @@ class Search_Form extends Extras_Widget {
 		// Post type
 		$post_types = Utils::get_public_post_types_options( true, false );
 
-		if ( $post_types && in_array( 'post_type', $filter_types ) ) {
+		if ( $post_types && in_array( 'post_type', $filter_types, true ) ) {
 			$this->_filters['post_type'] = [
 				'label' => __( 'Post Types', 'landtech-extras-for-elementor' ),
 				'inline' => '' !== $settings['filter_post_type_inline'],
 			];
-			
+
 			$this->maybe_add_filter_all_option( 'post_type' );
+
+			$restrict_mode = isset( $settings['filter_post_type_restrict_mode'] ) ? (string) $settings['filter_post_type_restrict_mode'] : '';
+			$include       = isset( $settings['filter_post_type_include'] ) ? (array) $settings['filter_post_type_include'] : array();
+			$exclude       = isset( $settings['filter_post_type_exclude'] ) ? (array) $settings['filter_post_type_exclude'] : array();
+
+			if ( '' === $settings['filter_post_type_fields'] ) {
+				if ( 'include' === $restrict_mode && ! empty( $include ) ) {
+					$this->set_static_query_restriction( 'post_type', 'include', $include );
+				} elseif ( ( 'exclude' === $restrict_mode || ( '' === $restrict_mode && ! empty( $exclude ) ) ) && ! empty( $exclude ) ) {
+					$this->set_static_query_restriction( 'post_type', 'exclude', $exclude );
+				} else {
+					$this->set_static_query_restriction( 'post_type', 'all', array() );
+				}
+			}
 
 			foreach ( $post_types as $post_type => $name ) {
 
-				if ( $settings['filter_post_type_exclude'] && in_array( $post_type , $settings['filter_post_type_exclude'] ) )
+				if ( 'include' === $restrict_mode && ! empty( $include ) && ! in_array( $post_type, $include, true ) ) {
 					continue;
+				}
+
+				if ( $exclude && in_array( $post_type, $exclude, true ) ) {
+					continue;
+				}
 
 				$post_type_object = get_post_type_object( $post_type );
-				
+
 				$this->_filters['post_type']['values'][] = [
 					'name' 	=> $post_type,
 					'title' => $post_type_object->labels->singular_name,
 				];
 
-				if ( '' === $settings['filter_post_type_fields'] ) {
+				if ( '' === $settings['filter_post_type_fields'] && empty( $this->_static_query_restrictions['post_type'] ) ) {
 					$this->_query_filters['post_type'][] = $post_type;
 				}
 			}
@@ -370,53 +397,124 @@ class Search_Form extends Extras_Widget {
 
 		foreach ( $taxonomies as $name => $label ) {
 
-			$terms 		= Utils::get_terms_options( $name, 'slug', false );
-			$prefix 	= 'filter_' . str_replace( '-', '_', $name );
-			$exclude 	= $settings[ $prefix . '_exclude' ];
+			$terms  = Utils::get_terms_options( $name, 'slug', false );
+			$prefix = 'filter_' . str_replace( '-', '_', $name );
+			$exclude = isset( $settings[ $prefix . '_exclude' ] ) ? (array) $settings[ $prefix . '_exclude' ] : array();
+			$include = isset( $settings[ $prefix . '_include' ] ) ? (array) $settings[ $prefix . '_include' ] : array();
+			$restrict_mode = isset( $settings[ $prefix . '_restrict_mode' ] ) ? (string) $settings[ $prefix . '_restrict_mode' ] : '';
 
-			if ( ! in_array( $name, $filter_types ) ) {
-
+			if ( ! in_array( $name, $filter_types, true ) ) {
 				continue;
+			}
 
-			} else {
+			if ( ! $terms ) {
+				continue;
+			}
 
-				if ( $terms ) {
+			$fields_hidden = ( '' === $settings[ $prefix . '_fields' ] );
 
-					$this->_query_filters[ $name ] = [];
-
-					$this->_filters[ $name ] = [
-						'label' => $label,
-						'inline' => '' !== $settings['filter_' . $name . '_inline'],
-					];
-
-					$this->maybe_add_filter_all_option( $name );
-
-					if ( ! $exclude && '' === $settings[ $prefix . '_fields' ] ) {
-						$this->_query_filters[ $name ][] = 'all';
-					}
-
-					foreach ( $terms as $term_name => $term ) {
-
-						if ( $exclude && in_array( $term_name, $exclude ) ) {
-							continue;
-						}
-
-						$this->_filters[ $name ]['values'][] = [
-							'name' 	=> $term_name,
-							'title' => $term,
-						];
-
-						if ( $exclude && '' === $settings[ $prefix . '_fields' ] ) {
-							$this->_query_filters[ $name ][] = $term_name;
-						}
-					}
-
-					// Add to list of available fields for user
-					if ( $settings[ $prefix . '_fields'] )
-						$this->_fields[ $name ] = $this->_filters[ $name ];
+			if ( $fields_hidden ) {
+				if ( 'include' === $restrict_mode && ! empty( $include ) ) {
+					$this->set_static_query_restriction( $name, 'include', $include );
+				} elseif ( ( 'exclude' === $restrict_mode || ( '' === $restrict_mode && ! empty( $exclude ) ) ) && ! empty( $exclude ) ) {
+					$this->set_static_query_restriction( $name, 'exclude', $exclude );
+				} else {
+					$this->set_static_query_restriction( $name, 'all', array() );
 				}
 			}
+
+			$this->_filters[ $name ] = [
+				'label'  => $label,
+				'inline' => '' !== $settings[ $prefix . '_inline' ],
+			];
+
+			$this->maybe_add_filter_all_option( $name );
+
+			if ( $fields_hidden && isset( $this->_static_query_restrictions[ $name ] ) ) {
+				$this->_query_filters[ $name ] = array();
+
+				if ( $settings[ $prefix . '_fields'] ) {
+					$this->_fields[ $name ] = $this->_filters[ $name ];
+				}
+				continue;
+			}
+
+			$this->_query_filters[ $name ] = array();
+
+			if ( ! $exclude && 'include' !== $restrict_mode && '' === $settings[ $prefix . '_fields' ] ) {
+				$this->_query_filters[ $name ][] = 'all';
+			}
+
+			foreach ( $terms as $term_name => $term ) {
+
+				if ( 'include' === $restrict_mode && ! empty( $include ) && ! in_array( $term_name, $include, true ) ) {
+					continue;
+				}
+
+				if ( $exclude && in_array( $term_name, $exclude, true ) ) {
+					continue;
+				}
+
+				$this->_filters[ $name ]['values'][] = [
+					'name' 	=> $term_name,
+					'title' => $term,
+				];
+
+				if ( $exclude && '' === $settings[ $prefix . '_fields' ] ) {
+					$this->_query_filters[ $name ][] = $term_name;
+				}
+			}
+
+			if ( $settings[ $prefix . '_fields'] ) {
+				$this->_fields[ $name ] = $this->_filters[ $name ];
+			}
 		}
+	}
+
+	/**
+	 * Store a compact restriction payload for the search query JSON.
+	 *
+	 * @since 2.5.1
+	 *
+	 * @param string       $key   Taxonomy or post_type key.
+	 * @param string       $mode  include|exclude|all.
+	 * @param array|string $terms Term slugs or post type names.
+	 * @return void
+	 */
+	public function set_static_query_restriction( $key, $mode, $terms ) {
+		$sanitized_terms = array_values(
+			array_filter(
+				array_map(
+					static function ( $term ) {
+						return sanitize_title( (string) $term );
+					},
+					(array) $terms
+				)
+			)
+		);
+
+		$this->_static_query_restrictions[ $key ] = array(
+			'mode'  => sanitize_key( $mode ),
+			'terms' => $sanitized_terms,
+		);
+	}
+
+	/**
+	 * Attach compact static restrictions to the search form element.
+	 *
+	 * @since 2.5.1
+	 * @return void
+	 */
+	public function apply_static_restrictions_to_form() {
+		if ( empty( $this->_static_query_restrictions ) ) {
+			return;
+		}
+
+		$this->add_render_attribute(
+			'form',
+			'data-ltxe-static-restrictions',
+			esc_attr( wp_json_encode( $this->_static_query_restrictions ) )
+		);
 	}
 
 	/**
@@ -635,6 +733,40 @@ class Search_Form extends Extras_Widget {
 			);
 
 			$this->add_control(
+				'filter_post_type_restrict_mode',
+				[
+					'label'       => __( 'Restriction mode', 'landtech-extras-for-elementor' ),
+					'type'        => Controls_Manager::SELECT,
+					'default'     => '',
+					'label_block' => true,
+					'options'     => [
+						''        => __( 'All post types', 'landtech-extras-for-elementor' ),
+						'include' => __( 'Include only', 'landtech-extras-for-elementor' ),
+						'exclude' => __( 'Exclude selected', 'landtech-extras-for-elementor' ),
+					],
+					'condition'   => [
+						'filter_types' => 'post_type',
+					],
+				]
+			);
+
+			$this->add_control(
+				'filter_post_type_include',
+				[
+					'label'       => __( 'Include', 'landtech-extras-for-elementor' ),
+					'type'        => Controls_Manager::SELECT2,
+					'label_block' => true,
+					'default'     => '',
+					'options'     => Utils::get_public_post_types_options( true, false ),
+					'multiple'    => true,
+					'condition'   => [
+						'filter_types'               => 'post_type',
+						'filter_post_type_restrict_mode' => 'include',
+					],
+				]
+			);
+
+			$this->add_control(
 				'filter_post_type_exclude',
 				[	
 					'label'			=> __( 'Exclude', 'landtech-extras-for-elementor' ),
@@ -645,6 +777,7 @@ class Search_Form extends Extras_Widget {
 					'multiple' 		=> true,
 					'condition'		=> [
 						'filter_types' => 'post_type',
+						'filter_post_type_restrict_mode!' => 'include',
 					],
 				]
 			);
@@ -771,9 +904,18 @@ class Search_Form extends Extras_Widget {
 
 			foreach ( $taxonomies as $name => $label ) {
 
-				$terms 			= Utils::get_terms_options( $name, 'slug', false );
-				$labels 		= Utils::get_taxonomy_labels( $name );
+				$labels         = Utils::get_taxonomy_labels( $name );
 				$control_prefix = 'filter_' . str_replace( '-', '_', $name );
+				$term_options   = Utils::get_terms_options(
+					$name,
+					'slug',
+					false,
+					array(
+						'number'  => 500,
+						'orderby' => 'name',
+						'order'   => 'ASC',
+					)
+				);
 
 				$this->add_control(
 					$control_prefix . '_heading',
@@ -841,16 +983,51 @@ class Search_Form extends Extras_Widget {
 				);
 
 				$this->add_control(
+					$control_prefix . '_restrict_mode',
+					[
+						'label'       => __( 'Restriction mode', 'landtech-extras-for-elementor' ),
+						'type'        => Controls_Manager::SELECT,
+						'default'     => '',
+						'label_block' => true,
+						'options'     => [
+							''        => __( 'All terms', 'landtech-extras-for-elementor' ),
+							'include' => __( 'Include only', 'landtech-extras-for-elementor' ),
+							'exclude' => __( 'Exclude selected', 'landtech-extras-for-elementor' ),
+						],
+						'condition'   => [
+							'filter_types' => $name,
+						],
+					]
+				);
+
+				$this->add_control(
+					$control_prefix . '_include',
+					[
+						'label'       => __( 'Include', 'landtech-extras-for-elementor' ),
+						'type'        => Controls_Manager::SELECT2,
+						'label_block' => true,
+						'multiple'    => true,
+						'default'     => '',
+						'options'     => $term_options,
+						'condition'   => [
+							'filter_types' => $name,
+							$control_prefix . '_restrict_mode' => 'include',
+						],
+					]
+				);
+
+				$this->add_control(
 					$control_prefix . '_exclude',
 					[
-						'label'			=> __( 'Exclude', 'landtech-extras-for-elementor' ),
-						'type' 			=> Controls_Manager::SELECT2,
-						'label_block' 	=> true,
-						'multiple'		=> true,
-						'default'		=> '',
-						'options' 		=> $terms,
-						'condition'		=> [
+						'label'       => __( 'Exclude', 'landtech-extras-for-elementor' ),
+						'type'        => Controls_Manager::SELECT2,
+						'label_block' => true,
+						'multiple'    => true,
+						'default'     => '',
+						'options'     => $term_options,
+						'condition'   => [
 							'filter_types' => $name,
+							$control_prefix . '_restrict_mode!' => 'include',
 						],
 					]
 				);

@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Plugin Name:       LandTech Extras for Elementor
  * Plugin URI:        https://landtechwebdesigns.com/
  * Description:       Elementor widgets & extensions — fork of Elementor Extras (Extras for Elementor). Free on WordPress.org.
- * Version:           2.4.4
+ * Version:           2.5.2
  * Elementor tested up to: 3.28
  * Elementor Pro tested up to: 3.28
  *
@@ -102,7 +102,7 @@ if ( ! defined( 'LANDTECH_EXTRAS_ASSETS_URL' ) ) {
 	define( 'LANDTECH_EXTRAS_ASSETS_URL', LANDTECH_EXTRAS_URL . 'assets/' );
 }
 if ( ! defined( 'LANDTECH_EXTRAS_VERSION' ) ) {
-	define( 'LANDTECH_EXTRAS_VERSION', '2.4.4' );
+	define( 'LANDTECH_EXTRAS_VERSION', '2.5.2' );
 }
 if ( ! defined( 'LANDTECH_EXTRAS_PREVIOUS_STABLE_VERSION' ) ) {
 	define( 'LANDTECH_EXTRAS_PREVIOUS_STABLE_VERSION', '2.2.64' );
@@ -288,6 +288,7 @@ function landtech_extras_load() {
 	landtech_extras_include( 'admin/settings-api.php' );
 	landtech_extras_include( 'includes/extension-api.php' );
 	landtech_extras_include( 'includes/search-rest-controller.php' );
+	landtech_extras_include( 'includes/search-term-options-rest.php' );
 	landtech_extras_include( 'includes/display-conditions/viewport-visibility-bootstrap.php' );
 	landtech_extras_include( 'includes/plugin.php' );
 

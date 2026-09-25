@@ -3,13 +3,13 @@
 Contributors: brelandr
 Tags: elementor, page-builder, widgets, addons, extensions
 Requires at least: 6.2
-Tested up to: 7.0
-Stable tag: 2.4.4
+Tested up to: 7.1
+Stable tag: 2.5.2
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Elementor widgets and extensions — GPL fork of Elementor Extras. Gallery, calendar, maps, posts, navigation, and editor tools.
+Elementor widgets and extensions — GPL fork of Elementor Extras. Gallery, calendar, maps, posts, navigation, Search Form with category include/exclude, tabs, table of contents, and editor tools.
 
 == Description ==
 
@@ -23,7 +23,7 @@ Configure optional API keys (Google Maps, Snazzy Maps, Instagram, and optional b
 
 Find widgets in the Elementor panel under the **LandTech Extras for Elementor** category. Widget type slugs match the upstream Elementor Extras fork for easier migration.
 
-**Widgets:** Age Gate (`ee-age-gate`), Audio Player (`ee-audio-player`), Breadcrumbs (`ee-breadcrumbs`, optional **BreadcrumbList** JSON-LD when **Structured data** is enabled), Buttons / Button Group (`button-group`), Calendar (`ee-calendar`), Circle Progress (`circle-progress`), Devices (`devices-extended`), FAQ Schema (`ee-faq-schema`), Gallery (`gallery-extra`), Gallery Slider (`gallery-slider`), Google Map (`ee-google-map`), Heading Extra (`heading-extended`), Hotspots (`hotspots`), HTML5 Video Player (`html5-video`), Image Comparison (`image-comparison`), Inline SVG (`ee-inline-svg`), Lottie (`ee-lottie`), Offcanvas (`ee-offcanvas`), Popup (`ee-popup`), Posts Extra / Portfolio / Carousel layouts (`posts-extra`), Random Image (`ee-random-image`), Scroll Indicator (`ee-scroll-indicator`), Search Form (`ee-search-form`), Slide Menu (`ee-slide-menu`), Switcher (`ee-switcher`), Table (`table`), Text Divider (`text-divider`), Timeline (`timeline`), Toggle Element (`ee-toggle-element`), Unfold (`unfold`).
+**Widgets:** Age Gate (`ee-age-gate`), Audio Player (`ee-audio-player`), Breadcrumbs (`ee-breadcrumbs`, optional **BreadcrumbList** JSON-LD when **Structured data** is enabled), Buttons / Button Group (`button-group`), Calendar (`ee-calendar`), Circle Progress (`circle-progress`), Devices (`devices-extended`), FAQ Schema (`ee-faq-schema`), Gallery (`gallery-extra`), Gallery Slider (`gallery-slider`), Google Map (`ee-google-map`), Heading Extra (`heading-extended`), Hotspots (`hotspots`), HTML5 Video Player (`html5-video`), Image Comparison (`image-comparison`), Inline SVG (`ee-inline-svg`), Lottie (`ee-lottie`), Offcanvas (`ee-offcanvas`), Popup (`ee-popup`), Posts Extra / Portfolio / Carousel layouts (`posts-extra`), Random Image (`ee-random-image`), Scroll Indicator (`ee-scroll-indicator`), Search Form (`ee-search-form`), Slide Menu (`ee-slide-menu`), Switcher (`ee-switcher`), Table (`table`), Table of Contents (`ee-table-of-contents`), Tabs (`ee-tabs`), Text Divider (`text-divider`), Timeline (`timeline`), Toggle Element (`ee-toggle-element`), Unfold (`unfold`).
 
 **Editor extensions** (Advanced tab on Elementor elements): Display Conditions (free: time, day, URL/query vars including UTM presets, cookie, business hours; WooCommerce purchase history and membership rules ship in the separate **LandTech Extras Premium** add-on), Parallax Background, Parallax Elements, Portfolio Parallax, Sticky Elements, Tooltips.
 
@@ -175,6 +175,7 @@ Human-readable source for bundled/minified assets (included in this plugin packa
 
 * `assets/css/frontend.min.css` and `assets/css/frontend-rtl.min.css` — built from `assets/css/frontend.css` and `assets/css/frontend-rtl.css`.
 * `assets/js/frontend.min.js` — built from `assets/js/frontend.js`.
+* `assets/js/search-form-editor.js` — Elementor editor helper for Search Form restriction controls (loaded in the editor only).
 * `assets/js/landtech-extras-calendar-schedule-x.js` and `assets/js/table-csv-editor.js` — widget helpers (not minified; loaded directly when needed).
 * `assets/js/admin.min.js`, `assets/js/editor.min.js`, and `assets/js/notice.min.js` — built from their matching non-minified files in `assets/js/`.
 * `assets/css/admin.min.css`, `assets/css/editor.min.css`, and `assets/css/editor-preview.min.css` — built from matching non-minified CSS in `assets/css/`.
@@ -185,7 +186,21 @@ From the plugin root, after **`npm install`**, run **`npm run build:assets`** to
 
 Before publishing a public GitHub mirror, verify any **Repository** or **Source** URL in this readme returns HTTP 200 (WordPress.org reviewers check linked URLs).
 
+== Upgrade Notice ==
+
+= 2.5.2 =
+Recommended update: new Tabs and Table of Contents widgets, plus Search Form **Include only** category restrictions and shorter custom search result URLs. Re-save Search Form widgets after updating if you use hidden category filters.
+
 == Changelog ==
+
+= 2.5.2 =
+* Add: EE Tabs widget (`ee-tabs`) with horizontal tabs, repeater content, and template slots.
+* Add: EE Table of Contents widget (`ee-table-of-contents`) with page-scope heading scan.
+* Add: Search Form **Include only** restriction mode for categories and other taxonomies (whitelist terms instead of excluding many categories site-wide).
+* Add: Search Form **Restriction mode** for post types (include or exclude lists).
+* Fix: Hidden Search Form restrictions send compact include/exclude payloads in `ltxe_search_query` (shorter search result URLs; exclude mode uses NOT IN instead of listing every allowed term).
+* Fix: Search Form Include/Exclude term pickers list categories again in the Elementor editor (Select2 options restored; editor REST helper for saved slugs).
+* Improved: Search Form **Restrictions & Filters** loads up to 500 terms per taxonomy in control options (sorted by name) for sites with large category lists.
 
 = 2.4.4 =
 

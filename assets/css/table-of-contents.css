@@ -1,0 +1,53 @@
+.ltxe-toc__list {
+	margin: 0;
+	padding-left: 1.25rem;
+}
+
+.ltxe-toc__list a.is-active {
+	font-weight: 600;
+	text-decoration: underline;
+}
+
+.ltxe-toc--sticky-left,
+.ltxe-toc--sticky-right {
+	position: sticky;
+	top: 1.5rem;
+	max-height: calc( 100vh - 3rem );
+	overflow: auto;
+}
+
+.ltxe-toc--sticky-left {
+	float: left;
+	margin-right: 1.5rem;
+	max-width: 240px;
+}
+
+.ltxe-toc--sticky-right {
+	float: right;
+	margin-left: 1.5rem;
+	max-width: 240px;
+}
+
+.ltxe-toc__progress {
+	height: 4px;
+	background: rgba( 0, 0, 0, 0.08 );
+	margin-bottom: 0.75rem;
+	border-radius: 2px;
+	overflow: hidden;
+}
+
+.ltxe-toc__progress-bar {
+	display: block;
+	height: 100%;
+	width: 0;
+	background: #2271b1;
+	transition: width 0.15s linear;
+}
+
+.ltxe-toc__item--depth-1 {
+	margin-left: 0.75rem;
+}
+
+.ltxe-toc__item--depth-2 {
+	margin-left: 1.5rem;
+}

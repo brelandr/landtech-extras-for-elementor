@@ -158,6 +158,8 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			]
 		);
 
+		$this->parent->apply_static_restrictions_to_form();
+
 		?><form <?php $this->parent->print_render_attribute_string( 'form' ); ?>>
 			<?php
 

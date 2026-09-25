@@ -55,6 +55,8 @@ class Modules_Manager {
 			'templates-control',
 			'query-control',
 			'display-conditions',
+			'tabs',
+			'table-of-contents',
 		];
 	}
 

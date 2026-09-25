@@ -567,8 +567,23 @@
 			};
 
 			var setHiddenField = function() {
-				var data = JSON.stringify( LandTechExtrasUtils.serializeObject( $searchFields ) );
-				$query.val( data.replace(/\\/g, "") );
+				var data = LandTechExtrasUtils.serializeObject( $searchFields );
+				var staticRaw = $form.attr( 'data-ltxe-static-restrictions' );
+
+				if ( staticRaw ) {
+					try {
+						var staticRestrictions = JSON.parse( staticRaw );
+						if ( staticRestrictions && typeof staticRestrictions === 'object' ) {
+							Object.keys( staticRestrictions ).forEach( function( key ) {
+								data[ key ] = staticRestrictions[ key ];
+							} );
+						}
+					} catch ( e ) {
+						// Ignore malformed static restriction payloads.
+					}
+				}
+
+				$query.val( JSON.stringify( data ).replace( /\\/g, '' ) );
 			};
 
 			ee.SearchFormFilters.destroy = function() {};

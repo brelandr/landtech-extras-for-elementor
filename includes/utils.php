@@ -108,28 +108,47 @@ class Utils {
 	 * @param  all|bool  	The string to use for the first option. Can be false to disable. Default: true
 	 * @return array
 	 */
-	public static function get_terms_options( $taxonomy, $key = 'slug', $all = true ) {
+	public static function get_terms_options( $taxonomy, $key = 'slug', $all = true, $extra_args = array() ) {
+
+		static $cache = array();
 
 		if ( false !== $all ) {
 			$all = ( true === $all ) ? __( 'All', 'landtech-extras-for-elementor' ) : $all;
 			$options = [ '' => $all ];
+		} else {
+			$options = array();
 		}
 
-		$terms = get_terms( array(
-			'taxonomy' => $taxonomy
-		));
+		$cache_key = $taxonomy . '|' . $key . '|' . wp_json_encode( $extra_args );
+		if ( isset( $cache[ $cache_key ] ) ) {
+			return array_merge( $options, $cache[ $cache_key ] );
+		}
 
-		if ( empty( $terms ) ) {
+		$term_args = array_merge(
+			array(
+				'taxonomy'               => $taxonomy,
+				'hide_empty'             => false,
+				'update_term_meta_cache' => false,
+			),
+			$extra_args
+		);
+
+		$terms = get_terms( $term_args );
+
+		if ( is_wp_error( $terms ) || empty( $terms ) ) {
 			$options[ '' ] = sprintf( __( 'No terms found', 'landtech-extras-for-elementor' ), $taxonomy );
 			return $options;
 		}
 
+		$term_options = array();
 		foreach ( $terms as $term ) {
 			$term_key = ( 'id' === $key ) ? $term->term_id : $term->slug;
-			$options[ $term_key ] = $term->name;
+			$term_options[ $term_key ] = $term->name;
 		}
 
-		return $options;
+		$cache[ $cache_key ] = $term_options;
+
+		return array_merge( $options, $term_options );
 	}
 
 	/**

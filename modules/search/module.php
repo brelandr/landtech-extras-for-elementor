@@ -128,8 +128,7 @@ class Module extends Module_Base {
 
 			// Set post types
 			if ( isset( $search_query['post_type'] ) ) {
-				// Set the query var
-				$query->set( 'post_type', $search_query['post_type'] );
+				$this->apply_post_type_restriction( $query, $search_query['post_type'] );
 			}
 
 			// Set post authors
@@ -154,35 +153,120 @@ class Module extends Module_Base {
 					continue;
 				}
 
-				$terms = $search_query[ $taxonomy ];
-				$operator = 'IN';
-
-				if ( is_array( $search_query[ $taxonomy ] ) && in_array( 'all', $search_query[ $taxonomy ] ) ) {
-					array_splice( $terms, array_search( 'all', $terms ), 1 );
-				} else if ( 'all' === $terms ) {
-					$terms = array_keys( Utils::get_terms_options( $taxonomy, 'slug', false ) );
-				} else if ( 'any' === $terms ) {
-					continue;
+				$tax_clause = $this->build_tax_query_clause( $taxonomy, $search_query[ $taxonomy ] );
+				if ( $tax_clause ) {
+					$tax_queries[] = $tax_clause;
 				}
-
-				// Add to tax query array
-				$tax_queries[] = array(
-					'taxonomy' 	=> $taxonomy,
-					'field' 	=> 'slug',
-					'operator'	=> $operator,
-					'terms' 	=> $terms,
-				);
 			}
 
 			if ( count( $tax_queries ) > 1 ) {
 				$tax_queries['relation'] = 'AND';
 			}
 
-			// Set the query var
-			$query->set( 'tax_query', $tax_queries );
+			if ( ! empty( $tax_queries ) ) {
+				// Set the query var
+				$query->set( 'tax_query', $tax_queries );
+			}
 		}
 
 		return $query;
+	}
+
+	/**
+	 * Apply post type restriction from search query JSON.
+	 *
+	 * @since 2.5.1
+	 *
+	 * @param \WP_Query $query WP_Query instance.
+	 * @param mixed     $payload Raw post_type payload.
+	 * @return void
+	 */
+	protected function apply_post_type_restriction( $query, $payload ) {
+		if ( is_array( $payload ) && isset( $payload['mode'] ) ) {
+			$mode  = sanitize_key( (string) $payload['mode'] );
+			$terms = isset( $payload['terms'] ) ? (array) $payload['terms'] : array();
+			$terms = array_values( array_filter( array_map( 'sanitize_key', $terms ) ) );
+
+			if ( 'include' === $mode && ! empty( $terms ) ) {
+				$query->set( 'post_type', $terms );
+				return;
+			}
+
+			if ( 'exclude' === $mode && ! empty( $terms ) ) {
+				$all_types = array_keys( Utils::get_public_post_types_options( true, false ) );
+				$query->set( 'post_type', array_values( array_diff( $all_types, $terms ) ) );
+				return;
+			}
+
+			if ( 'all' === $mode ) {
+				return;
+			}
+		}
+
+		$query->set( 'post_type', $payload );
+	}
+
+	/**
+	 * Build a tax_query clause from legacy or structured payloads.
+	 *
+	 * @since 2.5.1
+	 *
+	 * @param string $taxonomy Taxonomy slug.
+	 * @param mixed  $payload  Term payload.
+	 * @return array|null
+	 */
+	protected function build_tax_query_clause( $taxonomy, $payload ) {
+		if ( is_array( $payload ) && isset( $payload['mode'] ) ) {
+			$mode  = sanitize_key( (string) $payload['mode'] );
+			$terms = isset( $payload['terms'] ) ? (array) $payload['terms'] : array();
+			$terms = array_values( array_filter( array_map( 'sanitize_title', $terms ) ) );
+
+			if ( 'include' === $mode && ! empty( $terms ) ) {
+				return array(
+					'taxonomy' => $taxonomy,
+					'field'    => 'slug',
+					'operator' => 'IN',
+					'terms'    => $terms,
+				);
+			}
+
+			if ( 'exclude' === $mode && ! empty( $terms ) ) {
+				return array(
+					'taxonomy' => $taxonomy,
+					'field'    => 'slug',
+					'operator' => 'NOT IN',
+					'terms'    => $terms,
+				);
+			}
+
+			if ( 'all' === $mode ) {
+				return null;
+			}
+
+			return null;
+		}
+
+		$terms    = $payload;
+		$operator = 'IN';
+
+		if ( is_array( $terms ) && in_array( 'all', $terms, true ) ) {
+			array_splice( $terms, array_search( 'all', $terms, true ), 1 );
+		} elseif ( 'all' === $terms ) {
+			$terms = array_keys( Utils::get_terms_options( $taxonomy, 'slug', false ) );
+		} elseif ( 'any' === $terms ) {
+			return null;
+		}
+
+		if ( empty( $terms ) ) {
+			return null;
+		}
+
+		return array(
+			'taxonomy' => $taxonomy,
+			'field'    => 'slug',
+			'operator' => $operator,
+			'terms'    => $terms,
+		);
 	}
 
 	/**
