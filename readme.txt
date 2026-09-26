@@ -4,7 +4,7 @@ Contributors: brelandr
 Tags: elementor, page-builder, widgets, addons, extensions
 Requires at least: 6.2
 Tested up to: 7.1
-Stable tag: 2.5.5
+Stable tag: 2.5.6
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -201,6 +201,9 @@ Maintenance release: Elementor 4.3.x compatibility headers and Plugin Check fixe
 Recommended update: new Tabs and Table of Contents widgets, plus Search Form **Include only** category restrictions and shorter custom search result URLs. Re-save Search Form widgets after updating if you use hidden category filters.
 
 == Changelog ==
+
+= 2.5.6 =
+* Add: **Elementor Extras** top-level admin menu item in the WordPress sidebar, positioned immediately after Elementor (position 26). LandTech Extras settings now appear under their own dedicated parent instead of being nested inside the Elementor submenu. When the Premium add-on is also active, all premium lanes (license, Premium Lanes, Performance, Social Proof, Cross-Site Clipboard, etc.) appear as additional children under the same top-level item.
 
 = 2.5.5 =
 * Add: WordPress Playground demo pages for EE Tabs (`demo-tabs`) and Table of Contents (`demo-table-of-contents`).

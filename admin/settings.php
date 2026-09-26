@@ -38,13 +38,37 @@ class Settings extends Settings_Page {
 	*/
 
 	public function menu() {
-		$slug = 'landtech-extras';
+		$slug       = 'landtech-extras';
 		$capability = 'manage_options';
 
-		add_submenu_page(
-			\Elementor\Settings::PAGE_ID,
+		// SVG icon: "LE" monogram. WordPress masks it with the correct theme colour.
+		$icon_svg = 'data:image/svg+xml;base64,' . base64_encode(
+			'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">'
+			. '<rect x="2" y="2" width="16" height="16" rx="2" fill="none" stroke="black" stroke-width="1.5"/>'
+			. '<text x="4" y="14" font-family="Arial,sans-serif" font-size="9" font-weight="bold" fill="black">LE</text>'
+			. '</svg>'
+		);
+
+		// Register "Elementor Extras" as a top-level sidebar item at position 26
+		// (immediately after Elementor). This means the menu appears even when the
+		// premium add-on is not active — the premium plugin adds its own submenus
+		// under the same 'landtech-extras' parent slug.
+		add_menu_page(
 			$this->get_page_title(),
-			__( 'LandTech Extras', 'landtech-extras-for-elementor' ),
+			__( 'Elementor Extras', 'landtech-extras-for-elementor' ),
+			$capability,
+			$slug,
+			[ $this, 'render_page' ],
+			$icon_svg,
+			26
+		);
+
+		// Explicit first submenu entry labelled "Settings" so the sidebar shows
+		// a meaningful child label rather than the parent title repeated.
+		add_submenu_page(
+			$slug,
+			$this->get_page_title(),
+			__( 'Settings', 'landtech-extras-for-elementor' ),
 			$capability,
 			$slug,
 			[ $this, 'render_page' ]
