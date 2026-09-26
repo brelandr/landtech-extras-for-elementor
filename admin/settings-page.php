@@ -34,7 +34,7 @@ abstract class Settings_Page {
 		$this->settings_prefix 	= 'landtech_extras_';
 	
 		// actions
-		add_action( 'admin_menu', 				[ $this, 'menu' ], 200 );
+		add_action( 'admin_menu', 				[ $this, 'menu' ], 5 );   // Priority 5: must run before premium submenus (30-60) so 'landtech-extras' is in $menu when they attach.
 		add_action( 'admin_init', 				[ $this, 'init' ] );
 		add_action( 'admin_enqueue_scripts',	[ $this, 'enqueue_scripts' ], 0 );
 		add_action( 'admin_notices', 			[ $this, 'render_notices' ] );

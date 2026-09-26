@@ -1310,3 +1310,142 @@ Add these items to every @PreSubmit run:
 19. No `.pkgd.js` or `.bundled.js` files exist in assets/lib/.
 20. All libraries in assets/lib/ are at their current stable version (check GitHub before submission).
 21. PHP lint passes with zero errors: `find . -name "*.php" -not -path "*/vendor/*" | xargs php -l`
+
+# 🔐 SECTION 28: CALLBACK OUTPUT ESCAPING & PREFIX LENGTH REQUIREMENTS
+# Derived from real WordPress.org audit rejections (July 2026 review of Hidden Word Bible Lessons
+# plugin, Review ID: R hidden-word-bible-lessons/brelandr/14Jul26/T2 17Jul26/4.1). These rules
+# apply to ALL plugins in this workspace.
+
+## A. Shortcode / Filter Callback Return Values Must Be Escaped — Not Just Returned Instead of Echoed
+(Audit Rejection: "Callback calls to a function/method whose return values are output must be properly escaped")
+
+* Section 10.D ("Shortcodes Must Return, Never Echo") is necessary but **not sufficient**. WordPress
+  itself echoes the return value of shortcode callbacks (`add_shortcode()`) and filter callbacks like
+  `the_content`, `the_title`, widget `widget()` output, and block `render_callback`. Returning instead
+  of echoing only relocates the output point — it does not make the string safe.
+* ❌ **Actual violation found:**
+    ```php
+    add_shortcode( 'hwbl_verse_of_week', array( $this, 'render_verse_of_week' ) );
+
+    public function render_verse_of_week( $atts ) {
+        $html  = '<div class="hwbl-verse-of-week">';
+        $html .= '<blockquote>' . esc_html( $verse_text ) . '</blockquote>';
+        $html .= $trans_svc->render_copyright( $translation ); // ❌ concatenated raw, unescaped
+        $html .= '</div>';
+        return $html;
+    }
+    ```
+* ✅ **Fix:**
+    ```php
+    $html .= wp_kses_post( $trans_svc->render_copyright( $translation ) );
+    ```
+* **Rule:** Every piece concatenated or interpolated into a shortcode/filter callback's return string must
+  be individually escaped with the correct `esc_*()`/`wp_kses_post()`/`wp_kses()` function *before* it is
+  added to the string being returned. A "trusted" internal helper method is not exempt — if it returns
+  content that passes through `apply_filters()` anywhere in its implementation, treat its return value as
+  untrusted at every call site, not just the first one you happen to notice.
+
+## B. Escape Late — Including Method and Filter Return Values, Not Just Raw Request Data
+(Audit Rejection: "Variables and options must be escaped when echo'd")
+
+* Escape **at the point of output**, every time — regardless of what happened upstream (sanitized on
+  save, escaped inside the method that produced it, previously validated elsewhere). Sanitizing and
+  escaping are different jobs; doing one is never a substitute for the other, and doing either once
+  upstream does not exempt the final `echo`.
+* ❌ **Actual violation found:**
+    ```php
+    <?php echo $trans_svc->render_copyright( $translation ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+    ```
+* ✅ **Fix:**
+    ```php
+    <?php echo wp_kses_post( $trans_svc->render_copyright( $translation ) ); ?>
+    ```
+* **`// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped` is a red flag, not a fix.** Cursor
+  must never add this comment to silence the escaping linter rule instead of actually escaping the output.
+  The only legitimate use is when a human has confirmed the full assembled string is already composed
+  entirely of pre-escaped fragments (e.g. the whole thing is wrapped in `wp_kses_post()` one level up) and
+  documents *why* in the comment.
+* **Filterable values are permanently untrusted.** If a method's return value passes through
+  `apply_filters( 'your_plugin_some_filter', $value )`, any other active plugin or theme can inject
+  arbitrary HTML/JS into that value going forward — even if nothing in your own codebase ever puts unsafe
+  data into it today. Escape every call site, not just the ones handling obviously "risky" data.
+* **`esc_html()` is not an HTML escaper — it strips HTML.** Use it only for content that must render as
+  plain text. For content that legitimately contains HTML markup (links, formatting, rich text), use
+  `wp_kses_post()` (allows standard post-content HTML) or `wp_kses( $html, $allowed_tags )` (custom
+  allow-list). Reaching for `esc_html()` on HTML-bearing content is a common mistake that breaks markup
+  and is not actually the correct escaping function for that context.
+* **Checklist for every `echo` / `printf` / `print` / template partial `<?php echo $x; ?>`:** is `$x`
+  guaranteed to be plain text (`esc_html`), an HTML attribute value (`esc_attr`), a URL (`esc_url`), a
+  `<textarea>` value (`esc_textarea`), or genuinely trusted/allow-listed HTML (`wp_kses_post` / `wp_kses`)?
+  Never leave a variable, option, or method return value unescaped because "it's already safe" — prove it
+  with an escaping function at the print site.
+
+## C. Function / Class / Constant / Namespace / Option Prefix Length & Reserved Prefixes
+(Audit Rejection: "Generic function/class/define/namespace/option names")
+
+* Every plugin-owned identifier needs a prefix that is **at least 4 characters long** and distinctive to
+  the plugin (not a generic word).
+* ❌ **Actual violation found** — a 3-character prefix used alongside the plugin's real prefix:
+    ```php
+    add_shortcode( 'thw_lesson', array( $this, 'render_lesson' ) );
+    define( 'THW_VERSION', HWBL_VERSION );
+    define( 'THW_PLUGIN_DIR', HWBL_PLUGIN_DIR );
+    ```
+* ✅ **Fix** — consolidate on the registered 4+ character prefix (`hwbl_` / `HWBL_`); do not introduce a
+  second, shorter prefix for "convenience" aliases, legacy shortcodes, or quick helpers.
+* **Applies to:** function names, class names, defines/constants, namespaces, global variable names,
+  option/transient/post-meta keys, shortcode tags, hook names (actions & filters), AJAX action suffixes
+  (`wp_ajax_{prefix}_...`), REST namespaces, script/style handles, nonce action names, and CPT/taxonomy
+  slugs.
+* **Reserved — never use as your plugin's own standalone prefix:** `wp_`, a single leading underscore
+  (`_`), or a bare double underscore (`__`). These are reserved for WordPress core. (It's fine to use an
+  underscore internally as a private-method or internal-array-key convention *inside* an already-prefixed
+  class — the restriction is on standalone global-scope identifiers.)
+* **Before adding ANY new function, class, define, hook, shortcode, or option key, confirm it starts with
+  the plugin's registered prefix** — including ones added later as "quick helpers," debug code, or legacy
+  compatibility shims. A second short prefix creeping in during a rename/rebrand (as happened here) is the
+  most common way this rule gets violated.
+* **Legacy/back-compat exception:** when renaming a prefix, it is fine — expected, even — for the *old*
+  short prefix to still appear in one-time migration code (reading old option/transient keys on upgrade,
+  `uninstall.php` cleanup of legacy data, a legacy CPT slug included in a delete array for cleanup). Do
+  not delete this migration logic to "fully remove" the old prefix; the goal is that no *new* declarations
+  use the old prefix, not that historical strings disappear from migration paths.
+* ❌ **Anti-pattern — wrapping the plugin's own declarations:**
+    ```php
+    if ( ! function_exists( 'myplugin_save_post' ) ) {
+        function myplugin_save_post() { /* ... */ }
+    }
+    if ( ! class_exists( 'MyPlugin_Admin' ) ) {
+        class MyPlugin_Admin { /* ... */ }
+    }
+    ```
+* **Why this is dangerous:** reserve `function_exists()` / `class_exists()` guards for genuinely shared
+  libraries (a vendored SDK meant to be `require`'d by multiple plugins) — never for a plugin's own
+  original declarations. If another codebase on the same site happens to declare a same-named
+  function/class first and loads earlier, this plugin's version silently never loads: no error, no
+  warning, just missing functionality. A unique 4+ character prefix makes that collision astronomically
+  unlikely, which is exactly why the guard is unnecessary (and actively harmful) once you have one.
+* ✅ **Correct uses of `function_exists()` / `class_exists()`:** checking for a WordPress core function
+  that may not be loaded yet in the current context (`get_current_screen`, `is_plugin_active`), or checking
+  whether a genuinely separate, optional dependency plugin is active (`class_exists( 'WooCommerce' )`,
+  `class_exists( 'THW_Premium_License' )` from a companion premium plugin).
+
+## D. @PreSubmit Additional Checks (Supplement to Sections 23.F / 27.F)
+Add these items to every `@PreSubmit` run:
+
+22. Every shortcode callback's return value, and every value returned from a `the_content` / `the_title` /
+    widget / block `render_callback`, is escaped (`esc_html` / `esc_attr` / `esc_url` / `wp_kses_post` /
+    `wp_kses`) at the point it is composed into the return string — not just "returned instead of echoed."
+23. No `echo` / `printf` / `print` of a method or function return value without an escaping function
+    wrapped around it at the print site, including values from internal helper methods whose
+    implementation passes through `apply_filters()`.
+24. No `// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped` comments added to suppress an
+    escaping warning instead of fixing it.
+25. Every function, class, define/constant, namespace, global, option/transient/meta key, shortcode,
+    hook, AJAX action, REST namespace, script/style handle, and nonce action name uses the plugin's
+    registered 4+ character prefix — including newly added "quick helper" or legacy-alias code.
+26. No new code introduces `wp_`, a bare `_`, or `__` as a plugin's own standalone function/hook/option
+    prefix.
+27. No `if ( ! function_exists( 'plugin_own_function' ) )` / `if ( ! class_exists( 'Plugin_Own_Class' ) )`
+    wrapping around the plugin's OWN declarations — reserved for genuine third-party dependency checks and
+    shared libraries only.
