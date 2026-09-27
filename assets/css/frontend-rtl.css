@@ -8846,3 +8846,75 @@ body.ee-offcanvas--open [canvas] {
     width: 100%;
   }
 }
+
+/*
+ * Wave 4 — mobile responsiveness fixes for widgets covered by the September 2026
+ * sweep. See frontend.css for the LTR twin of this block; every rule below is
+ * direction-neutral (widths, heights, tap-target boxes, safe-area insets,
+ * min-height on flex-centred boxes) so no additional RTL mirroring is required.
+ */
+
+.elementor-widget-lottie lottie-player {
+  width: 100%;
+  max-width: 480px;
+}
+
+.ee-menu__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 24px;
+  min-width: 24px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 767px) {
+  .ee-calendar {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .ee-calendar .sx__date-picker-popover,
+  .ee-calendar .sx__event-modal {
+    max-width: min(20.75rem, calc(100vw - 32px));
+  }
+
+  .ee-swiper__container.swiper-vertical {
+    height: auto;
+    max-height: 50dvh;
+    min-height: 240px;
+  }
+
+  .ee-image-comparison__image img {
+    width: 100% !important;
+    max-width: 100% !important;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .ee-mfp-popup .mfp-inline-holder .mfp-content,
+  .ee-mfp-popup--no-overlay.mfp-wrap {
+    max-width: min(500px, calc(100vw - 32px));
+  }
+
+  .ee-mfp-popup .mfp-bottom-bar {
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+  }
+  .ee-mfp-popup .mfp-close--valign-bottom {
+    bottom: env(safe-area-inset-bottom);
+  }
+
+  .ee-hotspot__wrapper {
+    min-width: 24px;
+    min-height: 24px;
+    box-sizing: border-box;
+  }
+
+  .ee-google-map-navigation-mobile--bottom-right .ee-google-map__navigation,
+  .ee-google-map-navigation-mobile--bottom-left .ee-google-map__navigation {
+    bottom: env(safe-area-inset-bottom);
+    max-width: calc(100% - 48px);
+  }
+}

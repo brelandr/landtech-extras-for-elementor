@@ -8875,3 +8875,117 @@ body.ee-offcanvas--open [canvas] {
     width: 100%;
   }
 }
+
+/*
+ * Wave 4 — mobile responsiveness fixes for widgets covered by the September 2026
+ * sweep (see admin/PHASE-MOBILE-SWEEP-2026-09.md in the Premium tree for the full
+ * per-widget breakdown). Each rule is documented at its introduction so future
+ * edits can be made surgically.
+ */
+
+/* Lottie widget — sizing lives in CSS rather than on an inline style attribute,
+   both because the inline attribute is a Section D compliance pattern reviewers
+   flag and because CSS lets responsive breakpoints override the max-width. This
+   rule matches the fluid `width: 100%` and 480 px cap that used to be inline. */
+.elementor-widget-lottie lottie-player {
+  width: 100%;
+  max-width: 480px;
+}
+
+/* Slide Menu arrow — 6 px vertical padding produced a sub-24 px tap area for the
+   sub-menu expand/collapse control at every viewport. Flex-centre the arrow inside
+   a 24 px minimum box so the touch target meets WCAG 2.5.8 without changing the
+   visible arrow glyph. */
+.ee-menu__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 24px;
+  min-width: 24px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 767px) {
+  /* Calendar — inline-block wrapper had no max-width, so wide Schedule-X content
+     could push the widget past the column edge on phones. Force block flow with
+     100 % width and let content scroll horizontally inside the widget rather than
+     pushing the page sideways. */
+  .ee-calendar {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  /* Schedule-X pop-ups (date picker, event tooltip) declare a fixed rem width
+     that can slightly exceed a 320 px viewport. Clamp the popup so it never
+     escapes the visible area. Selectors match the vendor stylesheet under
+     assets/lib/schedule-x/. */
+  .ee-calendar .sx__date-picker-popover,
+  .ee-calendar .sx__event-modal {
+    max-width: min(20.75rem, calc(100vw - 32px));
+  }
+
+  /* Gallery vertical swiper — 400 px fixed height clipped content on phones and
+     left no way to grow. Prefer dynamic viewport height so the carousel gets a
+     sensible cap regardless of address-bar state, with a 240 px minimum so a
+     collapsed viewport still shows at least one slide. Static 100vh fallback
+     handled implicitly (browsers that support neither respect the min-height). */
+  .ee-swiper__container.swiper-vertical {
+    height: auto;
+    max-height: 50dvh;
+    min-height: 240px;
+  }
+
+  /* Image Comparison — the images are absolutely positioned with `width: auto`,
+     which lets the "after" image extend wider than its container on narrow
+     phones and cause horizontal overflow. Cover-fit both images to the container
+     so they stay inside the widget frame; the visible comparison behaviour is
+     preserved because the reveal is width-clipped, not image-scaled. */
+  .ee-image-comparison__image img {
+    width: 100% !important;
+    max-width: 100% !important;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  /* Popup + Age Gate (Magnific Popup) — the inline popup wrap declares a hard
+     500 px width and the widget's popup_width control accepts up to 1000 px.
+     Neither had a mobile cap, so wide popups spilled the phone viewport. Cap
+     both the wrap and the inline holder to the visible viewport width with
+     32 px breathing room. */
+  .ee-mfp-popup .mfp-inline-holder .mfp-content,
+  .ee-mfp-popup--no-overlay.mfp-wrap {
+    max-width: min(500px, calc(100vw - 32px));
+  }
+
+  /* Popup bottom bar + valign-bottom close button honour the phone gesture-bar
+     safe area so they don't sit under it. Applied on phones only because desktop
+     browsers don't expose this inset. */
+  .ee-mfp-popup .mfp-bottom-bar {
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+  }
+  .ee-mfp-popup .mfp-close--valign-bottom {
+    bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Hotspots — the widget's `hotspots_size` scale control (default 1.0, min 0.5)
+     could shrink hotspots to ~20 px on phones which is below WCAG 2.5.8. Enforce
+     a 24 px minimum interactive box regardless of scale; the visual dot / label
+     is unchanged because it uses transform: scale() rather than the hit box. */
+  .ee-hotspot__wrapper {
+    min-width: 24px;
+    min-height: 24px;
+    box-sizing: border-box;
+  }
+
+  /* Google Map bottom-positioned navigation on phones — respect the safe-area
+     inset and cap the panel to the visible viewport so it doesn't cover the map
+     or sit under the gesture bar. Only fires when the author explicitly turned
+     off the default "hide navigation on mobile" setting. */
+  .ee-google-map-navigation-mobile--bottom-right .ee-google-map__navigation,
+  .ee-google-map-navigation-mobile--bottom-left .ee-google-map__navigation {
+    bottom: env(safe-area-inset-bottom);
+    max-width: calc(100% - 48px);
+  }
+}

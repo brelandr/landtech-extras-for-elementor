@@ -134,11 +134,13 @@ class Lottie extends Extras_Widget {
 		$loop     = ( 'yes' === ( $settings['loop'] ?? '' ) ) ? 'true' : 'false';
 		$autoplay = ( 'yes' === ( $settings['autoplay'] ?? '' ) ) ? 'true' : 'false';
 
+		// Sizing lives in assets/css/frontend.css under the Wave 4 block; keeping the
+		// declaration off the render output avoids Section D inline-style rejections
+		// and lets responsive breakpoints override the max-width when needed.
 		echo '<lottie-player';
 		echo ' src="' . esc_url( $src ) . '"';
 		echo ' background="transparent"';
 		echo ' speed="1"';
-		echo ' style="width:100%;max-width:480px;"';
 		echo ' loop="' . esc_attr( $loop ) . '"';
 		echo ' autoplay="' . esc_attr( $autoplay ) . '"';
 		echo '></lottie-player>';

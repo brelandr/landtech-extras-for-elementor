@@ -4,7 +4,7 @@ Contributors: brelandr
 Tags: elementor, page-builder, widgets, addons, extensions
 Requires at least: 6.2
 Tested up to: 7.1
-Stable tag: 2.5.10
+Stable tag: 2.5.11
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -201,6 +201,16 @@ Maintenance release: Elementor 4.3.x compatibility headers and Plugin Check fixe
 Recommended update: new Tabs and Table of Contents widgets, plus Search Form **Include only** category restrictions and shorter custom search result URLs. Re-save Search Form widgets after updating if you use hidden category filters.
 
 == Changelog ==
+
+= 2.5.11 =
+* Fix: `EE Calendar` grid renders as a `<table>` at desktop widths and did not force any responsive layout. On viewports 767 px and under, the calendar container now becomes a horizontally scrollable block so a full month grid does not push the page sideways on phones, while the day cells retain their existing typography and styling.
+* Fix: `EE Gallery` with `Layout: Slider` set to the vertical direction used a 400 px fixed inline height. On viewports 767 px and under, the vertical slider height now falls back to `50dvh` (with a `50vh` fallback for older browsers) so the slider never claims more than half of a phone's visible height, and the aspect ratio can be reset with a normal Elementor `height` control override.
+* Fix: `EE Image Comparison` output stretched to the widget's rendered width without constraining the underlying `<img>` elements, so a landscape image inside a narrow phone column could grow past the widget frame. On viewports 767 px and under, both images are now clamped to `width: 100%` with `object-fit: cover` so the comparison stays inside the widget column regardless of the source image dimensions.
+* Fix: `EE Popup` and `EE Age Gate` opened via Magnific Popup used the library's default max-width and no safe-area handling, which on phones ran the close button under the browser chrome / notch and cropped tall popups. On viewports 767 px and under, popup content is now clamped to `calc(100vw - 32px)` and its bottom padding respects `env(safe-area-inset-bottom)` so the popup fits inside the visible viewport and the close button stays reachable.
+* Fix: `EE Hotspots` positioning is set with `transform: translate(-50%, -50%) scale(N)` from the widget's controls, and at very small `N` values (< 0.5) the resulting interactive footprint dropped below WCAG 2.5.8's 24×24 px minimum. Each hotspot now enforces a 24 px minimum click target (with the scaled visual centred inside it) on viewports 767 px and under, without changing the visible dot / icon size the editor configured.
+* Fix: `EE Slide Menu` submenu triggers (`.ee-menu__arrow`) had a 20 px tap target — below WCAG 2.5.8. The arrow now enforces a 24 px minimum interactive box at every viewport (with `box-sizing: border-box`), while the arrow glyph itself is unchanged.
+* Fix: `EE Google Map` navigation UI positioned at `bottom` sat under the browser chrome and phone-notch inset. The bottom-positioned UI now respects `env(safe-area-inset-bottom)` and is clamped to `calc(100vw - 32px)` so it stays fully on-screen on phones.
+* Fix: `EE Lottie` output previously carried an inline `style="width:100%;max-width:480px;"` attribute on `<lottie-player>`, which conflicted with responsive Elementor `width`/`max-width` controls. The inline attribute has been removed and the same defaults are now provided by the bundled Wave 4 CSS, so Elementor's own size controls take precedence when set.
 
 = 2.5.10 =
 * Fix: `EE Devices Extended` widget's laptop, desktop, and window frames are 645, 895 and 1000 px wide respectively, which was pushing the page sideways on phones because the widget carries no responsive rule. On viewports 767 px and under, each device frame is now capped to the column width while its aspect ratio (set via `padding-bottom` percentages on `.ee-device__media__inner`) is preserved, so the frame scales down instead of overflowing.
