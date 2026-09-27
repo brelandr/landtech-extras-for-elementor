@@ -8786,3 +8786,63 @@ body.ee-offcanvas--open [canvas] {
     animation: none !important;
   }
 }
+
+/*
+ * Wave 3 — mobile responsiveness fixes for previously-audited widgets. See
+ * frontend.css for the LTR twin of this block; only the Swiper `--outside` prev/next
+ * offsets are direction-sensitive and swapped here for RTL layouts.
+ */
+
+/* WCAG 2.5.8 minimum tap-target size on Live Data Table pagination buttons. */
+.ee-table-pagination__prev,
+.ee-table-pagination__next {
+  min-width: 24px;
+  min-height: 24px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 767px) {
+  /* Devices widget — cap oversized device frames to the column width on phones. */
+  .elementor-widget-devices-extended .ee-device-type-tablet,
+  .elementor-widget-devices-extended .ee-device-type-tablet .ee-device,
+  .elementor-widget-devices-extended .ee-device-type-laptop,
+  .elementor-widget-devices-extended .ee-device-type-laptop .ee-device,
+  .elementor-widget-devices-extended .ee-device-type-desktop,
+  .elementor-widget-devices-extended .ee-device-type-desktop .ee-device,
+  .elementor-widget-devices-extended .ee-device-type-window,
+  .elementor-widget-devices-extended .ee-device-type-window .ee-device {
+    max-width: 100%;
+  }
+
+  /* Swiper `--outside` nav — RTL-mirrored: prev sits on the right, next on the left. */
+  .ee-swiper__navigation--outside .ee-swiper__button--prev {
+    right: 8px;
+  }
+  .ee-swiper__navigation--outside .ee-swiper__button--next {
+    left: 8px;
+  }
+
+  /* Scroll Indicator bar skin — expand the click surface without changing bar height. */
+  .ee-scroll-indicator--skin-bar .ee-scroll-indicator__element__link {
+    display: flex;
+    align-items: center;
+    min-height: 24px;
+  }
+
+  /* Search Form `--expand` skin — clamp expanded width to the viewport on phones. */
+  .ee-search-form-skin--expand.ee--active .ee-search-form__container {
+    max-width: calc(100vw - 32px);
+  }
+
+  /* Switcher `--overlay` skin — cut 48 px padding down to 24 px on phones. */
+  .ee-switcher-skin--overlay .ee-switcher__content {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Offcanvas slidebar takes the full viewport on very narrow phones only. */
+  .ee-offcanvas__slidebar {
+    width: 100%;
+  }
+}

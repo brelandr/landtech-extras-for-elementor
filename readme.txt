@@ -4,7 +4,7 @@ Contributors: brelandr
 Tags: elementor, page-builder, widgets, addons, extensions
 Requires at least: 6.2
 Tested up to: 7.1
-Stable tag: 2.5.9
+Stable tag: 2.5.10
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -201,6 +201,15 @@ Maintenance release: Elementor 4.3.x compatibility headers and Plugin Check fixe
 Recommended update: new Tabs and Table of Contents widgets, plus Search Form **Include only** category restrictions and shorter custom search result URLs. Re-save Search Form widgets after updating if you use hidden category filters.
 
 == Changelog ==
+
+= 2.5.10 =
+* Fix: `EE Devices Extended` widget's laptop, desktop, and window frames are 645, 895 and 1000 px wide respectively, which was pushing the page sideways on phones because the widget carries no responsive rule. On viewports 767 px and under, each device frame is now capped to the column width while its aspect ratio (set via `padding-bottom` percentages on `.ee-device__media__inner`) is preserved, so the frame scales down instead of overflowing.
+* Fix: `EE Swiper`-based sliders using the `--outside` navigation-position skin had their prev/next arrows placed at `left: -100px` and `right: -100px`, which put them off the phone viewport with no other way to advance the slide. On viewports 767 px and under, both arrows now sit 8 px inside the container. Larger breakpoints are unchanged.
+* Fix: `EE Scroll Indicator` bar-skin markers had a 6 px tap target — below the 24 px minimum in WCAG 2.5.8. On viewports 767 px and under, the surrounding `<a>` element now expands to a 24 px minimum height with the 6 px bar centred vertically inside it. The visible bar height is unchanged.
+* Fix: `EE Search Form` `--expand` skin animates open to a fixed 300 px, which overflowed narrow phone viewports and clipped the input. On viewports 767 px and under, the expanded width is now clamped to `calc(100vw - 32px)` so it stays inside the visible area. Above 767 px the 300 px width still applies.
+* Fix: `EE Switcher` `--overlay` skin has 48 px of inner padding on its content pane, which wasted horizontal space on phones. On viewports 767 px and under, the padding is reduced to 24 px.
+* Fix: `EE Offcanvas` slidebar defaults to 50% of the viewport width, which is roughly 240 px on a 480 px phone — too narrow to be usable for menu or content layouts. On viewports 480 px and under, the slidebar now takes the full viewport width. Above 480 px the 50% width is unchanged, and any user-set width still overrides it.
+* Fix: `EE Live Data Table` pagination Prev/Next buttons had a 6 px vertical padding that made them ~12 px tall, below the WCAG 2.5.8 24×24 px minimum. The buttons now enforce a 24×24 minimum interactive box (with `box-sizing: border-box`) at every viewport; the visual button size does not change on desktop.
 
 = 2.5.9 =
 * Change: The Tabs and Table of Contents widgets no longer carry controls that were registered in a disabled state. The options that were only offered when a paid add-on was installed have been removed from this plugin entirely and are now supplied by that add-on instead, so nothing here ships switched off waiting to be unlocked.
