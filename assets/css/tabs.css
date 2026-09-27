@@ -7,11 +7,6 @@
 	list-style: none;
 }
 
-.ltxe-tabs--vertical .ltxe-tabs__list {
-	flex-direction: column;
-	max-width: 220px;
-}
-
 .ltxe-tabs__tab {
 	cursor: pointer;
 	border: 1px solid #ccc;
@@ -27,18 +22,6 @@
 	border-color: #2271b1;
 }
 
-.ltxe-tabs__badge {
-	margin-left: 0.35rem;
-	font-size: 0.75em;
-	opacity: 0.85;
-}
-
 .ltxe-tabs__panel[hidden] {
 	display: none !important;
-}
-
-@media (max-width: 767px) {
-	.ltxe-tabs[data-accordion-mobile="1"] .ltxe-tabs__list {
-		flex-direction: column;
-	}
 }

@@ -6,7 +6,6 @@ use LandTechExtras\Base\Extras_Widget;
 use LandTechExtras\Modules\TemplatesControl\Module as TemplatesControl;
 
 use Elementor\Controls_Manager;
-use Elementor\Icons_Manager;
 use Elementor\Repeater;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Border;
@@ -47,11 +46,7 @@ class Tabs extends Extras_Widget {
 	 * @return string[]
 	 */
 	public function get_script_depends() {
-		$deps = array( 'landtech-extras-tabs' );
-		if ( function_exists( 'landtech_extras_feature_enabled' ) && landtech_extras_feature_enabled( 'premium_tabs_widget', false ) ) {
-			$deps[] = 'landtech-extras-anime-helpers';
-		}
-		return $deps;
+		return array( 'landtech-extras-tabs' );
 	}
 
 	/**
@@ -90,28 +85,10 @@ class Tabs extends Extras_Widget {
 			array(
 				'label'       => __( 'Slug (deep link)', 'landtech-extras-for-elementor' ),
 				'type'        => Controls_Manager::TEXT,
-				'description' => __( 'Optional anchor id (#tab-slug). Premium deep links also honor ?tab=slug.', 'landtech-extras-for-elementor' ),
+				'description' => __( 'Optional anchor id (#tab-slug). Also honored as ?tab=slug.', 'landtech-extras-for-elementor' ),
 				'dynamic'     => array( 'active' => true ),
 			)
 		);
-
-		if ( function_exists( 'landtech_extras_feature_enabled' ) && landtech_extras_feature_enabled( 'premium_tabs_widget', false ) ) {
-			$repeater->add_control(
-				'tab_icon',
-				array(
-					'label' => __( 'Icon', 'landtech-extras-for-elementor' ),
-					'type'  => Controls_Manager::ICONS,
-				)
-			);
-
-			$repeater->add_control(
-				'tab_badge',
-				array(
-					'label' => __( 'Badge', 'landtech-extras-for-elementor' ),
-					'type'  => Controls_Manager::TEXT,
-				)
-			);
-		}
 
 		$repeater->add_control(
 			'tab_content',
@@ -131,6 +108,20 @@ class Tabs extends Extras_Widget {
 				)
 			);
 		}
+
+		/**
+		 * Fires while the per-tab repeater is still open for new controls.
+		 *
+		 * This has to be an action on the repeater itself: `get_controls()` below freezes the
+		 * field list, and Elementor offers no hook that can reach into another plugin's repeater
+		 * after the fact.
+		 *
+		 * @since 2.5.9
+		 *
+		 * @param Repeater $repeater Repeater still accepting `add_control()` calls.
+		 * @param Tabs     $widget   Widget instance registering the repeater.
+		 */
+		do_action( 'landtech_extras/tabs/register_repeater_controls', $repeater, $this );
 
 		$this->add_control(
 			'tabs',
@@ -163,9 +154,6 @@ class Tabs extends Extras_Widget {
 		$orient_options = array(
 			'horizontal' => __( 'Horizontal', 'landtech-extras-for-elementor' ),
 		);
-		if ( function_exists( 'landtech_extras_feature_enabled' ) && landtech_extras_feature_enabled( 'premium_tabs_widget', false ) ) {
-			$orient_options['vertical'] = __( 'Vertical', 'landtech-extras-for-elementor' );
-		}
 
 		$this->add_control(
 			'orientation',
@@ -176,27 +164,6 @@ class Tabs extends Extras_Widget {
 				'options' => $orient_options,
 			)
 		);
-
-		if ( function_exists( 'landtech_extras_feature_enabled' ) && landtech_extras_feature_enabled( 'premium_tabs_widget', false ) ) {
-			$this->add_control(
-				'accordion_mobile',
-				array(
-					'label'        => __( 'Accordion on mobile', 'landtech-extras-for-elementor' ),
-					'type'         => Controls_Manager::SWITCHER,
-					'return_value' => 'yes',
-				)
-			);
-
-			$this->add_control(
-				'animate_transitions',
-				array(
-					'label'        => __( 'Animated transitions', 'landtech-extras-for-elementor' ),
-					'type'         => Controls_Manager::SWITCHER,
-					'return_value' => 'yes',
-					'default'      => 'yes',
-				)
-			);
-		}
 
 		$this->end_controls_section();
 
@@ -228,6 +195,59 @@ class Tabs extends Extras_Widget {
 	}
 
 	/**
+	 * Tags permitted in a tab label.
+	 *
+	 * Post tags cover the markup an add-on needs for a badge or a font icon. Inline SVG is
+	 * added on top because `wp_kses_post()` drops `<svg>` outright, and Elementor renders an
+	 * uploaded SVG icon inline rather than as an `<img>`.
+	 *
+	 * @since 2.5.9
+	 *
+	 * @access protected
+	 * @return array<string,array<string,bool>>
+	 */
+	protected function get_allowed_label_html() {
+
+		$svg_globals = array(
+			'class'           => true,
+			'style'           => true,
+			'fill'            => true,
+			'stroke'          => true,
+			'stroke-width'    => true,
+			'stroke-linecap'  => true,
+			'stroke-linejoin' => true,
+			'aria-hidden'     => true,
+			'role'            => true,
+			'focusable'       => true,
+		);
+
+		$svg = array(
+			'svg'      => array_merge(
+				$svg_globals,
+				array(
+					'xmlns'   => true,
+					'viewbox' => true,
+					'width'   => true,
+					'height'  => true,
+				)
+			),
+			'g'        => $svg_globals,
+			'defs'     => $svg_globals,
+			'title'    => $svg_globals,
+			'path'     => array_merge( $svg_globals, array( 'd' => true ) ),
+			'circle'   => array_merge( $svg_globals, array( 'cx' => true, 'cy' => true, 'r' => true ) ),
+			'ellipse'  => array_merge( $svg_globals, array( 'cx' => true, 'cy' => true, 'rx' => true, 'ry' => true ) ),
+			'rect'     => array_merge( $svg_globals, array( 'x' => true, 'y' => true, 'width' => true, 'height' => true, 'rx' => true, 'ry' => true ) ),
+			'line'     => array_merge( $svg_globals, array( 'x1' => true, 'y1' => true, 'x2' => true, 'y2' => true ) ),
+			'polygon'  => array_merge( $svg_globals, array( 'points' => true ) ),
+			'polyline' => array_merge( $svg_globals, array( 'points' => true ) ),
+			'use'      => array_merge( $svg_globals, array( 'href' => true, 'xlink:href' => true ) ),
+		);
+
+		return array_merge( wp_kses_allowed_html( 'post' ), $svg );
+	}
+
+	/**
 	 * @return void
 	 */
 	protected function render() {
@@ -239,22 +259,33 @@ class Tabs extends Extras_Widget {
 			return;
 		}
 
-		$premium   = function_exists( 'landtech_extras_feature_enabled' ) && landtech_extras_feature_enabled( 'premium_tabs_widget', false );
-		$orient    = ( $premium && 'vertical' === ( $settings['orientation'] ?? '' ) ) ? 'vertical' : 'horizontal';
-		$accordion = $premium && ! empty( $settings['accordion_mobile'] ) && 'yes' === $settings['accordion_mobile'];
-		$animate   = $premium && ! empty( $settings['animate_transitions'] ) && 'yes' === $settings['animate_transitions'];
-
-		$this->add_render_attribute(
-			'wrapper',
-			array(
-				'class' => array(
-					'ltxe-tabs',
-					'ltxe-tabs--' . $orient,
-				),
-				'data-accordion-mobile' => $accordion ? '1' : '0',
-				'data-animate'            => $animate ? '1' : '0',
-			)
+		$wrapper_atts = array(
+			'class' => array(
+				'ltxe-tabs',
+				'ltxe-tabs--horizontal',
+			),
 		);
+
+		/**
+		 * Filters the outer wrapper attributes before they are rendered.
+		 *
+		 * Add-ons use this to swap the orientation class or add their own data attributes. The
+		 * horizontal class above is the fallback, so a layout an add-on is no longer around to
+		 * style degrades to the built-in one rather than a class with no stylesheet behind it.
+		 *
+		 * @since 2.5.9
+		 *
+		 * @param array<string,mixed> $wrapper_atts Render attributes keyed as Elementor expects.
+		 * @param array<string,mixed> $settings     Resolved widget settings.
+		 * @param Tabs                $widget       Widget instance being rendered.
+		 */
+		$wrapper_atts = apply_filters( 'landtech_extras/tabs/wrapper_attributes', $wrapper_atts, $settings, $this );
+
+		if ( ! is_array( $wrapper_atts ) ) {
+			$wrapper_atts = array( 'class' => array( 'ltxe-tabs', 'ltxe-tabs--horizontal' ) );
+		}
+
+		$this->add_render_attribute( 'wrapper', $wrapper_atts );
 
 		?>
 		<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
@@ -278,13 +309,30 @@ class Tabs extends Extras_Widget {
 						data-tab-slug="<?php echo esc_attr( sanitize_title( (string) ( $item['tab_slug'] ?? $tab_id ) ) ); ?>"
 					>
 						<?php
-						if ( $premium && ! empty( $item['tab_icon']['value'] ) ) {
-							Icons_Manager::render_icon( $item['tab_icon'], array( 'aria-hidden' => 'true' ) );
-						}
-						echo esc_html( (string) ( $item['tab_title'] ?? '' ) );
-						if ( $premium && ! empty( $item['tab_badge'] ) ) {
-							echo '<span class="ltxe-tabs__badge">' . esc_html( (string) $item['tab_badge'] ) . '</span>';
-						}
+						/**
+						 * Filters the inner HTML of a single tab button.
+						 *
+						 * Add-ons use this to wrap the title with an icon or trailing badge. The
+						 * default is already escaped; the result is run through `wp_kses()` at
+						 * the print site below because anything a filter returns is untrusted no
+						 * matter what it started as.
+						 *
+						 * @since 2.5.9
+						 *
+						 * @param string              $label_html Escaped tab title.
+						 * @param array<string,mixed> $item       Repeater row for this tab.
+						 * @param int                 $index      Zero-based tab index.
+						 * @param Tabs                $widget     Widget instance being rendered.
+						 */
+						$label_html = apply_filters(
+							'landtech_extras/tabs/tab_label_html',
+							esc_html( (string) ( $item['tab_title'] ?? '' ) ),
+							$item,
+							(int) $index,
+							$this
+						);
+
+						echo wp_kses( $label_html, $this->get_allowed_label_html() );
 						?>
 					</button>
 					<?php

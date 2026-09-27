@@ -637,7 +637,7 @@ class LandTechExtrasPlugin {
 		wp_register_script(
 			'landtech-extras-tabs',
 			plugins_url( '/assets/js/tabs.js', LANDTECH_EXTRAS__FILE__ ),
-			[ 'jquery', 'landtech-extras-anime-helpers' ],
+			[ 'jquery' ],
 			LANDTECH_EXTRAS_VERSION,
 			true
 		);

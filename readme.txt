@@ -4,7 +4,7 @@ Contributors: brelandr
 Tags: elementor, page-builder, widgets, addons, extensions
 Requires at least: 6.2
 Tested up to: 7.1
-Stable tag: 2.5.8
+Stable tag: 2.5.9
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -201,6 +201,12 @@ Maintenance release: Elementor 4.3.x compatibility headers and Plugin Check fixe
 Recommended update: new Tabs and Table of Contents widgets, plus Search Form **Include only** category restrictions and shorter custom search result URLs. Re-save Search Form widgets after updating if you use hidden category filters.
 
 == Changelog ==
+
+= 2.5.9 =
+* Change: The Tabs and Table of Contents widgets no longer carry controls that were registered in a disabled state. The options that were only offered when a paid add-on was installed have been removed from this plugin entirely and are now supplied by that add-on instead, so nothing here ships switched off waiting to be unlocked.
+* Add: Extension points so an add-on can restore those options without this plugin needing to know about it — the `landtech_extras/tabs/register_repeater_controls` action, the `landtech_extras/tabs/wrapper_attributes` and `landtech_extras/tabs/tab_label_html` filters, the `landtech_extras/toc/wrapper_attributes` filter, and the `landtech_extras/toc/before_list` action. The Tabs and Table of Contents scripts now also fire `ltxe:tabs:activated` and `ltxe:toc:built`.
+* Fix: The Tabs widget no longer loads the anime.js library. It was declared as a hard script dependency but nothing in this plugin used it.
+* Fix: The Tabs slug field no longer describes `?tab=slug` deep links as a paid feature. They have always worked here.
 
 = 2.5.8 =
 * Fix: Table of Contents "Sticky left" and "Sticky right" layouts now run full width and in normal flow on phones. The 240px float previously left body text about fifteen characters wide, and the widget has no responsive controls to work around it.

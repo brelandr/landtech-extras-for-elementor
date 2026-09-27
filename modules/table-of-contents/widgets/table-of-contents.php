@@ -105,53 +105,6 @@ class Table_Of_Contents extends Extras_Widget {
 			)
 		);
 
-		$premium = function_exists( 'landtech_extras_feature_enabled' ) && landtech_extras_feature_enabled( 'premium_toc_widget', false );
-
-		if ( $premium ) {
-			$this->add_control(
-				'layout_mode',
-				array(
-					'label'   => __( 'Layout', 'landtech-extras-for-elementor' ),
-					'type'    => Controls_Manager::SELECT,
-					'default' => 'inline',
-					'options' => array(
-						'inline'       => __( 'Inline', 'landtech-extras-for-elementor' ),
-						'sticky-left'  => __( 'Sticky left', 'landtech-extras-for-elementor' ),
-						'sticky-right' => __( 'Sticky right', 'landtech-extras-for-elementor' ),
-					),
-				)
-			);
-
-			$this->add_control(
-				'show_progress',
-				array(
-					'label'        => __( 'Scroll progress bar', 'landtech-extras-for-elementor' ),
-					'type'         => Controls_Manager::SWITCHER,
-					'return_value' => 'yes',
-				)
-			);
-
-			$this->add_control(
-				'collapsible',
-				array(
-					'label'        => __( 'Collapsible nested sections', 'landtech-extras-for-elementor' ),
-					'type'         => Controls_Manager::SWITCHER,
-					'return_value' => 'yes',
-					'default'      => 'yes',
-				)
-			);
-
-			$this->add_control(
-				'highlight_active',
-				array(
-					'label'        => __( 'Highlight active heading', 'landtech-extras-for-elementor' ),
-					'type'         => Controls_Manager::SWITCHER,
-					'return_value' => 'yes',
-					'default'      => 'yes',
-				)
-			);
-		}
-
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -179,32 +132,57 @@ class Table_Of_Contents extends Extras_Widget {
 	protected function render() {
 
 		$settings = $this->get_settings_for_display();
-		$premium  = function_exists( 'landtech_extras_feature_enabled' ) && landtech_extras_feature_enabled( 'premium_toc_widget', false );
 
 		$levels = isset( $settings['heading_levels'] ) && is_array( $settings['heading_levels'] )
 			? array_map( 'sanitize_key', $settings['heading_levels'] )
 			: array( 'h2', 'h3', 'h4' );
 
-		$this->add_render_attribute(
-			'wrapper',
-			array(
-				'class' => array(
-					'ltxe-toc',
-					$premium && ! empty( $settings['layout_mode'] ) ? 'ltxe-toc--' . sanitize_html_class( (string) $settings['layout_mode'] ) : 'ltxe-toc--inline',
-				),
-				'data-scope'            => esc_attr( sanitize_key( (string) ( $settings['scope'] ?? 'page' ) ) ),
-				'data-levels'           => esc_attr( wp_json_encode( array_values( $levels ) ) ),
-				'data-exclude'          => esc_attr( (string) ( $settings['exclude_selector'] ?? '' ) ),
-				'data-progress'         => ( $premium && ! empty( $settings['show_progress'] ) && 'yes' === $settings['show_progress'] ) ? '1' : '0',
-				'data-collapsible'      => ( $premium && ! empty( $settings['collapsible'] ) && 'yes' === $settings['collapsible'] ) ? '1' : '0',
-				'data-highlight-active' => ( $premium && ! empty( $settings['highlight_active'] ) && 'yes' === $settings['highlight_active'] ) ? '1' : '0',
-			)
+		$wrapper_atts = array(
+			'class'        => array(
+				'ltxe-toc',
+				'ltxe-toc--inline',
+			),
+			'data-scope'   => esc_attr( sanitize_key( (string) ( $settings['scope'] ?? 'page' ) ) ),
+			'data-levels'  => esc_attr( wp_json_encode( array_values( $levels ) ) ),
+			'data-exclude' => esc_attr( (string) ( $settings['exclude_selector'] ?? '' ) ),
 		);
+
+		/**
+		 * Filters the `<nav>` attributes before they are rendered.
+		 *
+		 * Add-ons use this to swap the layout class or add their own data attributes. The inline
+		 * class above is the fallback, so a layout an add-on is no longer around to style degrades
+		 * to the built-in one rather than a class with no stylesheet behind it.
+		 *
+		 * @since 2.5.9
+		 *
+		 * @param array<string,mixed> $wrapper_atts Render attributes keyed as Elementor expects.
+		 * @param array<string,mixed> $settings     Resolved widget settings.
+		 * @param Table_Of_Contents   $widget       Widget instance being rendered.
+		 */
+		$wrapper_atts = apply_filters( 'landtech_extras/toc/wrapper_attributes', $wrapper_atts, $settings, $this );
+
+		if ( ! is_array( $wrapper_atts ) ) {
+			$wrapper_atts = array( 'class' => array( 'ltxe-toc', 'ltxe-toc--inline' ) );
+		}
+
+		$this->add_render_attribute( 'wrapper', $wrapper_atts );
 		?>
 		<nav <?php $this->print_render_attribute_string( 'wrapper' ); ?> aria-label="<?php esc_attr_e( 'Table of contents', 'landtech-extras-for-elementor' ); ?>">
-			<?php if ( $premium && ! empty( $settings['show_progress'] ) && 'yes' === $settings['show_progress'] ) : ?>
-				<div class="ltxe-toc__progress" aria-hidden="true"><span class="ltxe-toc__progress-bar"></span></div>
-			<?php endif; ?>
+			<?php
+			/**
+			 * Fires inside the nav, immediately before the (empty) list the script fills in.
+			 *
+			 * Add-ons print their own chrome here — a scroll progress bar, for instance. Anything
+			 * echoed by a callback is that callback's responsibility to escape.
+			 *
+			 * @since 2.5.9
+			 *
+			 * @param array<string,mixed> $settings Resolved widget settings.
+			 * @param Table_Of_Contents   $widget   Widget instance being rendered.
+			 */
+			do_action( 'landtech_extras/toc/before_list', $settings, $this );
+			?>
 			<ol class="ltxe-toc__list"></ol>
 		</nav>
 		<?php

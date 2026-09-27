@@ -14,9 +14,9 @@
 		$tab.attr( 'aria-selected', 'true' ).addClass( 'is-active' );
 		$panel.removeAttr( 'hidden' ).addClass( 'is-active' );
 
-		if ( '1' === $root.attr( 'data-animate' ) && window.TweenMax ) {
-			window.TweenMax.fromTo( $panel.get( 0 ), 0.35, { opacity: 0 }, { opacity: 1 } );
-		}
+		// Add-ons hook the change here rather than patching this function — by now the panel is
+		// visible and measurable, which is what anything animating it needs.
+		$root.trigger( 'ltxe:tabs:activated', [ index, $panel, $tab ] );
 	}
 
 	function resolveDeepLink( $root ) {

@@ -81,60 +81,6 @@
 		} );
 	}
 
-	function bindScroll( $nav ) {
-		if ( '1' !== $nav.attr( 'data-highlight-active' ) ) {
-			return;
-		}
-		if ( ! window.IntersectionObserver ) {
-			return;
-		}
-
-		var $links = $nav.find( '.ltxe-toc__list a' );
-		var map = {};
-		$links.each( function () {
-			var id = ( this.getAttribute( 'href' ) || '' ).replace( '#', '' );
-			if ( id ) {
-				map[ id ] = this;
-			}
-		} );
-
-		var observer = new IntersectionObserver(
-			function ( entries ) {
-				entries.forEach( function ( entry ) {
-					if ( entry.isIntersecting ) {
-						var id = entry.target.id;
-						$links.removeClass( 'is-active' );
-						if ( map[ id ] ) {
-							$( map[ id ] ).addClass( 'is-active' );
-						}
-					}
-				} );
-			},
-			{ rootMargin: '0px 0px -70% 0px', threshold: 0 }
-		);
-
-		Object.keys( map ).forEach( function ( id ) {
-			var el = document.getElementById( id );
-			if ( el ) {
-				observer.observe( el );
-			}
-		} );
-	}
-
-	function bindProgress( $nav ) {
-		if ( '1' !== $nav.attr( 'data-progress' ) ) {
-			return;
-		}
-		var $bar = $nav.find( '.ltxe-toc__progress-bar' );
-		$( window ).on( 'scroll.ltxeTocProgress', function () {
-			var doc = document.documentElement;
-			var scrollTop = doc.scrollTop || document.body.scrollTop;
-			var height = doc.scrollHeight - doc.clientHeight;
-			var pct = height > 0 ? Math.min( 100, ( scrollTop / height ) * 100 ) : 0;
-			$bar.css( 'width', pct + '%' );
-		} );
-	}
-
 	function bindSmoothScroll( $nav ) {
 		$nav.on( 'click', '.ltxe-toc__list a', function ( e ) {
 			var id = ( this.getAttribute( 'href' ) || '' ).replace( '#', '' );
@@ -159,8 +105,10 @@
 			$nav.data( 'ltxeTocInit', true );
 			buildToc( $nav );
 			bindSmoothScroll( $nav );
-			bindScroll( $nav );
-			bindProgress( $nav );
+
+			// The list is built from the page's headings at runtime, so add-ons that need to
+			// observe the links or the headings have nothing to bind to until this point.
+			$nav.trigger( 'ltxe:toc:built' );
 		} );
 	}
 
