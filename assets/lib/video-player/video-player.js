@@ -201,25 +201,43 @@
 			$( window ).trigger('resize');
 		};
 
+		/**
+		 * Horizontal page coordinate of a mouse or touch event.
+		 *
+		 * Touch events carry no pageX of their own, so it comes from the first touch point.
+		 * On touchend that list is already empty and changedTouches holds the point that was
+		 * lifted. The bars set touch-action: none, so the browser does not scroll from a drag
+		 * that starts on them and there is nothing to preventDefault — which matters because
+		 * document-level touchmove listeners are passive by default in Chrome.
+		 */
+		plugin.eventPageX = function(e) {
+			var _event = e.originalEvent || e,
+				_touches = ( _event.touches && _event.touches.length ) ? _event.touches : _event.changedTouches;
+
+			if ( _touches && _touches.length ) return _touches[0].pageX;
+
+			return e.pageX;
+		};
+
 		plugin.initProgressBar = function() {
 			if ( $controlProgressBar.length ) {
 
-				$controlProgressBar.on( 'mousedown', function(e) {
+				$controlProgressBar.on( 'mousedown touchstart', function(e) {
 					_is_dragging_time = true;
 					// plugin.stop( true );
-					plugin.updateProgress( e.pageX );
+					plugin.updateProgress( plugin.eventPageX( e ) );
 				});
 
-				$document.on( 'mouseup', function(e) {
+				$document.on( 'mouseup touchend touchcancel', function(e) {
 					if( _is_dragging_time ) {
 						_is_dragging_time = false;
-						plugin.updateProgress( e.pageX );
+						plugin.updateProgress( plugin.eventPageX( e ) );
 					}
 				});
 
-				$document.on('mousemove', function(e) {
+				$document.on('mousemove touchmove', function(e) {
 					if( _is_dragging_time ) {
-						plugin.updateProgress( e.pageX );
+						plugin.updateProgress( plugin.eventPageX( e ) );
 					}
 				});
 			}
@@ -259,7 +277,7 @@
 
 			if ( $controlVolumeBar.length ) {
 
-				$controlVolumeBar.on( 'mousedown', function(e) {
+				$controlVolumeBar.on( 'mousedown touchstart', function(e) {
 					_is_dragging_volume = true;
 
 					// Make sure it's no longer muted
@@ -268,23 +286,23 @@
 					plugin.updateVolumeIcon( 1 );
 
 					// Update volume
-					plugin.updateVolume( e.pageX );
+					plugin.updateVolume( plugin.eventPageX( e ) );
 				});
 
-				$document.on( 'mouseup', function(e) {
+				$document.on( 'mouseup touchend touchcancel', function(e) {
 					if( _is_dragging_volume ) {
 						_is_dragging_volume = false;
 
 						// Update volume
-						plugin.updateVolume( e.pageX );
+						plugin.updateVolume( plugin.eventPageX( e ) );
 					}
 				});
 
-				$document.on( 'mousemove', function(e) {
+				$document.on( 'mousemove touchmove', function(e) {
 					if( _is_dragging_volume ) {
 
 						// Update volume
-						plugin.updateVolume( e.pageX );
+						plugin.updateVolume( plugin.eventPageX( e ) );
 					}
 				});
 

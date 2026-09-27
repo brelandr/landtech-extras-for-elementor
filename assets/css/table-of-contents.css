@@ -13,6 +13,10 @@
 	position: sticky;
 	top: 1.5rem;
 	max-height: calc( 100vh - 3rem );
+	/* Mobile browsers resolve vh against the largest viewport, with the address bar hidden, so
+	   the vh line above can size this taller than what is actually on screen. dvh tracks the
+	   visible viewport; the vh line remains the fallback where dvh is unsupported. */
+	max-height: calc( 100dvh - 3rem );
 	overflow: auto;
 }
 
@@ -26,6 +30,23 @@
 	float: right;
 	margin-left: 1.5rem;
 	max-width: 240px;
+}
+
+/* A 240px float leaves a phone barely fifteen characters of body text beside it, so the
+   sticky layouts run full width and in flow on small screens. Both classes are on the same
+   element, so naming the pair here keeps this ahead of the single-class rules above no matter
+   where they end up in the file. */
+@media (max-width: 767px) {
+	.ltxe-toc.ltxe-toc--sticky-left,
+	.ltxe-toc.ltxe-toc--sticky-right {
+		position: static;
+		float: none;
+		max-width: none;
+		max-height: none;
+		margin-right: 0;
+		margin-left: 0;
+		overflow: visible;
+	}
 }
 
 .ltxe-toc__progress {

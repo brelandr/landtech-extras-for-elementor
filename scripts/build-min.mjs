@@ -13,6 +13,11 @@ const pairs = [
 	[ 'assets/css/frontend-rtl.css', 'assets/css/frontend-rtl.min.css' ],
 	[ 'assets/js/frontend.js', 'assets/js/frontend.min.js' ],
 	[ 'assets/js/notice.js', 'assets/js/notice.min.js' ],
+	// First-party players that happen to live under assets/lib. They are enqueued through the
+	// same .min suffix as everything else, so leaving them out of this list is how their
+	// minified copies drift away from the sources they are built from.
+	[ 'assets/lib/audio-player/audio-player.js', 'assets/lib/audio-player/audio-player.min.js' ],
+	[ 'assets/lib/video-player/video-player.js', 'assets/lib/video-player/video-player.min.js' ],
 ];
 
 async function minifyFile( relIn, relOut ) {

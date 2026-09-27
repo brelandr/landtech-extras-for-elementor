@@ -4,7 +4,7 @@ Contributors: brelandr
 Tags: elementor, page-builder, widgets, addons, extensions
 Requires at least: 6.2
 Tested up to: 7.1
-Stable tag: 2.5.7
+Stable tag: 2.5.8
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -201,6 +201,14 @@ Maintenance release: Elementor 4.3.x compatibility headers and Plugin Check fixe
 Recommended update: new Tabs and Table of Contents widgets, plus Search Form **Include only** category restrictions and shorter custom search result URLs. Re-save Search Form widgets after updating if you use hidden category filters.
 
 == Changelog ==
+
+= 2.5.8 =
+* Fix: Table of Contents "Sticky left" and "Sticky right" layouts now run full width and in normal flow on phones. The 240px float previously left body text about fifteen characters wide, and the widget has no responsive controls to work around it.
+* Fix: Table of Contents sticky height now uses `dvh` so it cannot exceed the visible area on mobile browsers, where `vh` resolves against the larger address-bar-hidden viewport.
+* Fix: Audio and video player seek bars can now be dragged to scrub on touch devices. Only mouse events were bound, so tapping worked but dragging did nothing. Volume sliders gained the same handling for tablets.
+* Fix: Audio and video player seek bars and their play, previous, next and rewind buttons now meet the 24px minimum touch target in WCAG 2.5.8. The controls row centres its items, so each was only as tall as its glyph.
+* Fix: Off-canvas floating trigger placed along the bottom edge now respects `env(safe-area-inset-bottom)`, so it no longer sits under the gesture bar on phones that reserve space there.
+* Fix: The audio and video player scripts are now minified by the documented build pipeline, so their `.min.js` files can no longer drift away from the sources they are built from.
 
 = 2.5.7 =
 * Fix: Admin menu priority changed from 200 to 5 so the "Elementor Extras" top-level menu item is registered in `$menu` before premium submenus (priority 30–60) attach to it. Fixes 404/wrong-URL errors for all premium lane menu items when the premium add-on is also active.

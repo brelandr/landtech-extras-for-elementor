@@ -1554,6 +1554,16 @@
 .ee-player__control--icon {
   font-size: 1em;
   padding: 0 6px;
+  /* These are the play, previous, next and rewind buttons. The controls row centres its items
+     instead of stretching them, so each one is only as tall as its glyph — under the 24px
+     minimum in WCAG 2.5.8 at the default 1em. A min-height floor is used rather than vertical
+     padding because the icon spacing control writes `padding: 0 Xpx` to this same selector and
+     would drop anything set here. */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  min-height: 24px;
 }
 .ee-player__control--icon:before {
   display: block;
@@ -1601,6 +1611,25 @@
   flex-basis: 80%;
   -ms-flex-positive: 1;
   flex-grow: 1;
+  /* Seeking is bound to this element, and it is also the painted bar — the widget puts both
+     classes on the same div. Its 12px height left the hit area well under the 24px minimum in
+     WCAG 2.5.8, and under the inherited border-box any padding would have been absorbed into
+     that 12px instead of adding to it. content-box puts the padding outside the height, so the
+     target measures 24px while the bar still paints at 12px. The widget's controls write
+     flex-basis to this selector and margin to the bar, never padding, so this is free to use. */
+  box-sizing: content-box;
+  padding: 6px 0;
+  /* Scrubbing by touch would otherwise scroll the page instead of moving the playhead. This
+     also means the drag handlers have nothing to preventDefault, which they could not do
+     anyway: document-level touchmove listeners are passive by default in Chrome. */
+  touch-action: none;
+}
+/* The fill and the track are absolutely positioned against the padding box, so without this
+   they would stretch across the new padding and the bar would paint twice as tall as before.
+   Pulling them back to the 12px content band keeps the bar looking exactly as it did. */
+.ee-player__controls__progress > .ee-player__control--progress__inner {
+  top: 6px;
+  bottom: 6px;
 }
 .ee-player__controls__browse {
   cursor: pointer;
@@ -1619,6 +1648,9 @@
 .ee-player__controls__volume-bar {
   -ms-flex-positive: 1;
   flex-grow: 1;
+  /* Same as the seek bar: a touch drag here sets the volume rather than scrolling the page.
+     The volume control is hidden below 767px but still reachable by touch on a tablet. */
+  touch-action: none;
 }
 .ee-player__controls__bar {
   display: -ms-flexbox;
@@ -3200,6 +3232,15 @@ body .ee-offcanvas__container {
   left: 0;
   transform: translateY(-50%);
   top: 50%;
+}
+/* Phones with a gesture bar reserve space along the bottom edge, so a trigger pinned to 0 sits
+   inside it and competes with the system swipe-up gesture. The floating class is required here
+   because that is the only position that makes the trigger viewport-fixed; on an inline trigger
+   a bottom offset would move the button for no reason. */
+.ee-offcanvas-placement--bottom-right .ee-offcanvas-position--floating .ee-offcanvas__trigger,
+.ee-offcanvas-placement--bottom-center .ee-offcanvas-position--floating .ee-offcanvas__trigger,
+.ee-offcanvas-placement--bottom-left .ee-offcanvas-position--floating .ee-offcanvas__trigger {
+  bottom: env(safe-area-inset-bottom, 0px);
 }
 .ee-menu {
   display: inline-block;
