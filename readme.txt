@@ -4,7 +4,7 @@ Contributors: brelandr
 Tags: elementor, page-builder, widgets, addons, extensions
 Requires at least: 6.2
 Tested up to: 7.1
-Stable tag: 2.5.11
+Stable tag: 2.5.12
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -132,7 +132,7 @@ PHP functions, hooks, options, and transients use the **`landtech_extras_`** or 
 
 This plugin bundles or references third-party scripts. Licenses and upstream sources for every bundled file are noted below. Full provenance details are in the matching `README.txt` files under `assets/lib/`.
 
-**anime.js 4.0.2** (MIT) — `assets/lib/anime/anime.js` / `anime.min.js`
+**anime.js 4.5.0** (MIT) — `assets/lib/anime/anime.js` / `anime.min.js`
 Source: https://github.com/juliangarnier/anime — License notes: `assets/lib/anime/README.txt`.
 
 **Splitting.js 1.0.6** (MIT) — `assets/lib/splitting/splitting.js` / `splitting.min.js` / `splitting.css`
@@ -201,6 +201,10 @@ Maintenance release: Elementor 4.3.x compatibility headers and Plugin Check fixe
 Recommended update: new Tabs and Table of Contents widgets, plus Search Form **Include only** category restrictions and shorter custom search result URLs. Re-save Search Form widgets after updating if you use hidden category filters.
 
 == Changelog ==
+
+= 2.5.12 =
+* Update: Bundled anime.js upgraded from 4.0.2 to 4.5.0 (MIT), using the upstream UMD bundles. Every function the plugin's animation helpers call is unchanged, so existing widget animations keep working.
+* Fix: `TweenMax.killTweensOf()` in the animation shim now actually stops running animations (anime.js 4.5.0 exposes `remove`, which 4.0.2 did not). Hotspot tooltips that are hovered in and out quickly no longer let the previous show/hide animation keep running.
 
 = 2.5.11 =
 * Fix: `EE Calendar` grid renders as a `<table>` at desktop widths and did not force any responsive layout. On viewports 767 px and under, the calendar container now becomes a horizontally scrollable block so a full month grid does not push the page sideways on phones, while the day cells retain their existing typography and styling.

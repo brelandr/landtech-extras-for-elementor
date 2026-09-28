@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Plugin Name:       LandTech Extras for Elementor
  * Plugin URI:        https://landtechwebdesigns.com/
  * Description:       Elementor widgets & extensions — fork of Elementor Extras (Extras for Elementor). Free on WordPress.org.
- * Version:           2.5.11
+ * Version:           2.5.12
  * Elementor tested up to: 4.3.2
  * Elementor Pro tested up to: 4.3.2
  *
@@ -61,7 +61,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * — Leaflet v1.9.4, Copyright Vladimir Agafonkin License: BSD-2-Clause Source: link https://github.com/Leaflet/Leaflet
  * — Moment.js (WordPress core script handle `moment`; MIT) Source: https://github.com/moment/moment/
  * — Slidebars v2 Copyright Adam Charles Smith License: MIT http://www.adchsm.com/slidebars/license/ Source: link http://www.adchsm.com/slidebars/
- * — anime.js v4.0.2, Copyright Julian Garnier License: MIT Source: link https://github.com/juliangarnier/anime
+ * — anime.js v4.5.0, Copyright Julian Garnier License: MIT Source: link https://github.com/juliangarnier/anime
  * — Schedule-X Calendar v4.6.1, Copyright Schedule-X License: MIT Source: link https://github.com/schedule-x/schedule-x
  * — @lottiefiles/lottie-player (bundled as lottie-player.js), Copyright LottieFiles License: MIT Source: link https://github.com/LottieFiles/lottie-player
  * — WaveSurfer.js v7.9.9, Copyright katspaugh License: BSD-3-Clause Source: link https://github.com/kwavesurfer/wavesurfer.js
@@ -102,7 +102,7 @@ if ( ! defined( 'LANDTECH_EXTRAS_ASSETS_URL' ) ) {
 	define( 'LANDTECH_EXTRAS_ASSETS_URL', LANDTECH_EXTRAS_URL . 'assets/' );
 }
 if ( ! defined( 'LANDTECH_EXTRAS_VERSION' ) ) {
-	define( 'LANDTECH_EXTRAS_VERSION', '2.5.11' );
+	define( 'LANDTECH_EXTRAS_VERSION', '2.5.12' );
 }
 if ( ! defined( 'LANDTECH_EXTRAS_PREVIOUS_STABLE_VERSION' ) ) {
 	define( 'LANDTECH_EXTRAS_PREVIOUS_STABLE_VERSION', '2.2.64' );
