@@ -41,7 +41,7 @@ class LandTechExtrasPlugin {
 	/**
 	 * @var string Anime.js version bundled for animations.
 	 */
-	public $anime_version = '4.0.2';
+	public $anime_version = '4.5.0';
 
 	/**
 	 * @var Links
