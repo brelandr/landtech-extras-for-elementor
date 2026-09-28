@@ -44,11 +44,14 @@ final class Schema_Builder {
 	 * @return self
 	 */
 	public function set( $key, $value ) {
+		// Schema.org property names are camelCase (mainEntity, itemListElement), so sanitize_key() would lowercase them into invalid properties.
+		$key = preg_replace( '/[^A-Za-z0-9_@\-]/', '', (string) $key );
+
 		if ( '' === $key || null === $value ) {
 			return $this;
 		}
 
-		$this->data[ sanitize_key( $key ) ] = $value;
+		$this->data[ $key ] = $value;
 
 		return $this;
 	}

@@ -4,7 +4,7 @@ Contributors: brelandr
 Tags: elementor, page-builder, widgets, addons, extensions
 Requires at least: 6.2
 Tested up to: 7.1
-Stable tag: 2.5.12
+Stable tag: 2.5.13
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -201,6 +201,9 @@ Maintenance release: Elementor 4.3.x compatibility headers and Plugin Check fixe
 Recommended update: new Tabs and Table of Contents widgets, plus Search Form **Include only** category restrictions and shorter custom search result URLs. Re-save Search Form widgets after updating if you use hidden category filters.
 
 == Changelog ==
+
+= 2.5.13 =
+* Fix: Schema output kept camelCase schema.org property names intact. Property keys were passed through `sanitize_key()`, which lowercased them (`mainEntity` became `mainentity`), so the `EE FAQ Schema` widget never printed its FAQPage JSON-LD, and breadcrumb `itemListElement`, organization `sameAs` and event `startDate` / `endDate` / `eventStatus` / `eventAttendanceMode` properties were emitted with invalid names. Keys are now stripped to letters, digits, `_`, `-` and `@` without changing case.
 
 = 2.5.12 =
 * Update: Bundled anime.js upgraded from 4.0.2 to 4.5.0 (MIT), using the upstream UMD bundles. Every function the plugin's animation helpers call is unchanged, so existing widget animations keep working.
