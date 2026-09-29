@@ -86,6 +86,7 @@ class Toggle_Element extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
+			'landtech-extras-frontend',
 			'landtech-extras-toggle-element',
 			'landtech-extras-jquery-resize',
 		];

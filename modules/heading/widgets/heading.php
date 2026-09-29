@@ -70,6 +70,7 @@ class Heading extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
+			'landtech-extras-frontend',
 			'landtech-extras-jquery-long-shadow',
 			'landtech-extras-anime',
 			'landtech-extras-anime-helpers',

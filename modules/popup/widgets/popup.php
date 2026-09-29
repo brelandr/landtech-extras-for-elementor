@@ -84,7 +84,9 @@ class Popup extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
+			'landtech-extras-frontend',
 			'landtech-extras-glightbox',
+			'landtech-extras-popup',
 		];
 	}
 
@@ -328,8 +330,11 @@ class Popup extends Extras_Widget {
 					'options' 	=> [
 						'click' 	=> __( 'Click', 'landtech-extras-for-elementor' ),
 						'instant' 	=> __( 'Instant', 'landtech-extras-for-elementor' ),
+						'delay'     => __( 'Time Delay', 'landtech-extras-for-elementor' ),
 						'scroll' 	=> __( 'Scroll', 'landtech-extras-for-elementor' ),
+						'scroll_pct'=> __( 'Scroll Percentage', 'landtech-extras-for-elementor' ),
 						'intent' 	=> __( 'Exit Intent', 'landtech-extras-for-elementor' ),
+						'inactivity'=> __( 'User Inactivity', 'landtech-extras-for-elementor' ),
 					],
 					'frontend_available' => true,
 				]
@@ -450,8 +455,50 @@ class Popup extends Extras_Widget {
 					'step'			=> 1000,
 					'frontend_available' => true,
 					'condition'	=> [
-						'popup_trigger' => 'instant',
+						'popup_trigger' => [ 'instant', 'delay' ],
 					]
+				]
+			);
+
+			$this->add_control(
+				'trigger_delay',
+				[
+					'label'     => __( 'Delay (seconds)', 'landtech-extras-for-elementor' ),
+					'type'      => Controls_Manager::NUMBER,
+					'default'   => 5,
+					'min'       => 0,
+					'max'       => 120,
+					'frontend_available' => true,
+					'condition' => [
+						'popup_trigger' => 'delay',
+					],
+				]
+			);
+
+			$this->add_control(
+				'trigger_scroll_pct',
+				[
+					'label'       => __( 'Show When Scrolled (%)', 'landtech-extras-for-elementor' ),
+					'type'        => Controls_Manager::SLIDER,
+					'default'     => [ 'size' => 50 ],
+					'range'       => [ 'px' => [ 'min' => 1, 'max' => 100 ] ],
+					'frontend_available' => true,
+					'condition'   => [
+						'popup_trigger' => 'scroll_pct',
+					],
+				]
+			);
+
+			$this->add_control(
+				'trigger_inactivity',
+				[
+					'label'       => __( 'Inactivity Timeout (seconds)', 'landtech-extras-for-elementor' ),
+					'type'        => Controls_Manager::NUMBER,
+					'default'     => 30,
+					'frontend_available' => true,
+					'condition'   => [
+						'popup_trigger' => 'inactivity',
+					],
 				]
 			);
 
@@ -518,6 +565,52 @@ class Popup extends Extras_Widget {
 						'popup_trigger!' => 'click',
 						'popup_persist' => '',
 					]
+				]
+			);
+
+			$this->add_control(
+				'suppress_cookie',
+				[
+					'label'              => __( 'Don\'t Show Again', 'landtech-extras-for-elementor' ),
+					'type'               => Controls_Manager::SWITCHER,
+					'frontend_available' => true,
+				]
+			);
+
+			$this->add_control(
+				'suppress_cookie_days',
+				[
+					'label'              => __( 'Suppress For (days)', 'landtech-extras-for-elementor' ),
+					'type'               => Controls_Manager::NUMBER,
+					'default'            => 30,
+					'min'                => 1,
+					'max'                => 365,
+					'frontend_available' => true,
+					'condition'          => [
+						'suppress_cookie' => 'yes',
+					],
+				]
+			);
+
+			$this->add_control(
+				'suppress_session',
+				[
+					'label'              => __( 'Once Per Session', 'landtech-extras-for-elementor' ),
+					'type'               => Controls_Manager::SWITCHER,
+					'frontend_available' => true,
+					'condition'          => [
+						'suppress_cookie!' => 'yes',
+					],
+				]
+			);
+
+			$this->add_control(
+				'show_max_times',
+				[
+					'label'              => __( 'Maximum Displays Per Session', 'landtech-extras-for-elementor' ),
+					'type'               => Controls_Manager::NUMBER,
+					'default'            => 0,
+					'frontend_available' => true,
 				]
 			);
 
@@ -974,7 +1067,8 @@ class Popup extends Extras_Widget {
 					],
 					'selectors' 	=> [
 						'.ee-mfp-popup--overlay.mfp-wrap.ee-mfp-popup-{{ID}} .mfp-content,
-						 .ee-mfp-popup--no-overlay.mfp-wrap.ee-mfp-popup-{{ID}}' => 'max-width: {{SIZE}}{{UNIT}};',
+						 .ee-mfp-popup--no-overlay.mfp-wrap.ee-mfp-popup-{{ID}},
+						 .glightbox-container.ee-mfp-popup-{{ID}} .ee-popup__content' => 'max-width: {{SIZE}}{{UNIT}};',
 					],
 				]
 			);
@@ -993,7 +1087,8 @@ class Popup extends Extras_Widget {
 					'selectors' 	=> [
 						'.mfp-wrap.ee-mfp-popup-{{ID}} .ee-popup__content,
 						 .mfp-wrap.ee-mfp-popup-{{ID}} .mfp-figure,
-						 .mfp-wrap.ee-mfp-popup-{{ID}} .mfp-iframe' => 'border-radius: {{SIZE}}{{UNIT}};',
+						 .mfp-wrap.ee-mfp-popup-{{ID}} .mfp-iframe,
+						 .glightbox-container.ee-mfp-popup-{{ID}} .ee-popup__content' => 'border-radius: {{SIZE}}{{UNIT}};',
 					],
 				]
 			);
@@ -1064,7 +1159,8 @@ class Popup extends Extras_Widget {
 					'type' 		=> Controls_Manager::COLOR,
 					'default'	=> '',
 					'selectors' => [
-						'.mfp-bg.ee-mfp-popup-{{ID}}' => 'background-color: {{VALUE}};',
+						'.mfp-bg.ee-mfp-popup-{{ID}},
+						 .glightbox-container.ee-mfp-popup-{{ID}} .goverlay' => 'background-color: {{VALUE}};',
 					],
 					'condition' => [
 						'popup_no_overlay' => ''
@@ -1088,7 +1184,8 @@ class Popup extends Extras_Widget {
 						],
 					],
 					'selectors' => [
-						'.mfp-bg.ee-mfp-popup.mfp-ready:not(.mfp-removing).ee-mfp-popup-{{ID}}' => 'opacity: {{SIZE}}',
+						'.mfp-bg.ee-mfp-popup.mfp-ready:not(.mfp-removing).ee-mfp-popup-{{ID}},
+						 .glightbox-container.ee-mfp-popup-{{ID}} .goverlay' => 'opacity: {{SIZE}}',
 					],
 					'condition' => [
 						'popup_no_overlay' => ''

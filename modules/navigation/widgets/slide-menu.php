@@ -92,6 +92,7 @@ class Slide_Menu extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
+			'landtech-extras-frontend',
 			'landtech-extras-slide-menu',
 		];
 	}

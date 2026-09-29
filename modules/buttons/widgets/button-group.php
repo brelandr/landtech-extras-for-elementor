@@ -72,6 +72,7 @@ class Button_Group extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
+			'landtech-extras-frontend',
 			'landtech-extras-hotips',
 			'resize',
 		];

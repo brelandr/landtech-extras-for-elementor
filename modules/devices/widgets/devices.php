@@ -71,6 +71,7 @@ class Devices extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
+			'landtech-extras-frontend',
 			'landtech-extras-video-player',
 			'landtech-extras-iphone-inline-video',
 			'landtech-extras-jquery-appear'

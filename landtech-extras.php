@@ -10,9 +10,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Modified and maintained by Land Tech Web Designs (2026) under the GPLv3 license.
  *
  * Plugin Name:       LandTech Extras for Elementor
- * Plugin URI:        https://landtechwebdesigns.com/
- * Description:       Elementor widgets & extensions — fork of Elementor Extras (Extras for Elementor). Free on WordPress.org.
- * Version:           2.5.13
+ * Plugin URI:        https://extrasforelementor.com/
+ * Description:       50+ free Elementor widgets and extensions — fork of Elementor Extras. Testimonials, FAQ, pricing, gallery, calendar, maps, and editor tools.
+ * Version:           2.9.0
  * Elementor tested up to: 4.3.2
  * Elementor Pro tested up to: 4.3.2
  *
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Author URI:        https://profiles.wordpress.org/brelandr/
  *
  * Maintainer:        Land Tech Web Designs
- * Maintainer URI:    https://landtechwebdesigns.com/
+ * Maintainer URI:    https://extrasforelementor.com/
  *
  * Text Domain:        landtech-extras-for-elementor
  * Domain Path:        /languages
@@ -64,6 +64,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * — anime.js v4.5.0, Copyright Julian Garnier License: MIT Source: link https://github.com/juliangarnier/anime
  * — Schedule-X Calendar v4.6.1, Copyright Schedule-X License: MIT Source: link https://github.com/schedule-x/schedule-x
  * — @lottiefiles/lottie-player (bundled as lottie-player.js), Copyright LottieFiles License: MIT Source: link https://github.com/LottieFiles/lottie-player
+ * — lottie-web v5.13.0, Copyright Airbnb License: MIT Source: link https://github.com/airbnb/lottie-web
  * — WaveSurfer.js v7.9.9, Copyright katspaugh License: BSD-3-Clause Source: link https://github.com/kwavesurfer/wavesurfer.js
  * — Splitting.js v1.0.6, Copyright Shaw License: MIT Source: link https://github.com/shshaw/Splitting
  * — GLightbox v3.3.1, Copyright Biati Digital License: MIT Source: link https://github.com/biati-digital/glightbox
@@ -102,7 +103,10 @@ if ( ! defined( 'LANDTECH_EXTRAS_ASSETS_URL' ) ) {
 	define( 'LANDTECH_EXTRAS_ASSETS_URL', LANDTECH_EXTRAS_URL . 'assets/' );
 }
 if ( ! defined( 'LANDTECH_EXTRAS_VERSION' ) ) {
-	define( 'LANDTECH_EXTRAS_VERSION', '2.5.13' );
+	define( 'LANDTECH_EXTRAS_VERSION', '2.9.0' );
+}
+if ( ! defined( 'LTXE_FRONTEND_SPLIT' ) ) {
+	define( 'LTXE_FRONTEND_SPLIT', true );
 }
 if ( ! defined( 'LANDTECH_EXTRAS_PREVIOUS_STABLE_VERSION' ) ) {
 	define( 'LANDTECH_EXTRAS_PREVIOUS_STABLE_VERSION', '2.2.64' );
@@ -289,6 +293,9 @@ function landtech_extras_load() {
 	landtech_extras_include( 'includes/extension-api.php' );
 	landtech_extras_include( 'includes/search-rest-controller.php' );
 	landtech_extras_include( 'includes/search-term-options-rest.php' );
+	landtech_extras_include( 'includes/rest/class-ai-alt-text-rest.php' );
+	landtech_extras_include( 'includes/block-patterns.php' );
+	landtech_extras_include( 'includes/editor/seo-hints.php' );
 	landtech_extras_include( 'includes/display-conditions/viewport-visibility-bootstrap.php' );
 	landtech_extras_include( 'includes/plugin.php' );
 
@@ -370,7 +377,8 @@ function landtech_extras_info_redirect(  ) {
 
 		// Bulk activation skips single-plugin redirect UX.
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only branching on core plugins.php query args.
-		if ( ! isset( $_GET['activate-multi'] ) && version_compare( LANDTECH_EXTRAS_VERSION, get_option( '_landtech_extras_was_activated_version' ), '>' ) ) {
+		$activate_multi = isset( $_GET['activate-multi'] ) ? sanitize_text_field( wp_unslash( $_GET['activate-multi'] ) ) : '';
+		if ( '' === $activate_multi && version_compare( LANDTECH_EXTRAS_VERSION, get_option( '_landtech_extras_was_activated_version' ), '>' ) ) {
 			
 			landtech_extras_update_option_no_autoload( '_landtech_extras_was_activated_version', LANDTECH_EXTRAS_VERSION );
 

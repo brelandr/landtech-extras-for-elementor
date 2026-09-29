@@ -74,7 +74,9 @@ class Image_Comparison extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
+			'landtech-extras-frontend',
 			'landtech-extras-image-comparison',
+			'landtech-extras-image-comparison-widget',
 			'landtech-extras-jquery-mobile',
 		];
 	}
@@ -233,6 +235,39 @@ class Image_Comparison extends Extras_Widget {
 						'click_to_move!' => ''
 					],
 					'frontend_available' => true
+				]
+			);
+
+			$this->add_control(
+				'orientation',
+				[
+					'label'        => __( 'Drag Direction', 'landtech-extras-for-elementor' ),
+					'type'         => Controls_Manager::SELECT,
+					'default'      => 'horizontal',
+					'options'      => [
+						'horizontal' => __( 'Horizontal (left/right)', 'landtech-extras-for-elementor' ),
+						'vertical'   => __( 'Vertical (up/down)', 'landtech-extras-for-elementor' ),
+					],
+					'prefix_class' => 'ltxe-img-comparison--',
+					'frontend_available' => true,
+				]
+			);
+
+			$this->add_control(
+				'start_position',
+				[
+					'label'   => __( 'Start Position (%)', 'landtech-extras-for-elementor' ),
+					'type'    => Controls_Manager::SLIDER,
+					'default' => [
+						'size' => 50,
+					],
+					'range'   => [
+						'px' => [
+							'min' => 10,
+							'max' => 90,
+						],
+					],
+					'frontend_available' => true,
 				]
 			);
 
@@ -722,9 +757,26 @@ class Image_Comparison extends Extras_Widget {
 	protected function render() {
 		$settings = $this->get_settings_for_display();
 
+		$orientation = isset( $settings['orientation'] ) ? sanitize_key( $settings['orientation'] ) : 'horizontal';
+		if ( 'vertical' !== $orientation ) {
+			$orientation = 'horizontal';
+		}
+		$start = isset( $settings['start_position']['size'] ) ? (float) $settings['start_position']['size'] : 50;
+		if ( $start < 10 ) {
+			$start = 10;
+		}
+		if ( $start > 90 ) {
+			$start = 90;
+		}
+
 		$this->add_render_attribute( [
 			'wrapper' => [
-				'class' => 'ee-image-comparison',
+				'class' => [
+					'ee-image-comparison',
+					'ltxe-img-comparison--' . $orientation,
+				],
+				'data-orientation' => $orientation,
+				'data-start'       => (string) $start,
 			],
 			'modified-image-wrapper' => [
 				'class' => 'ee-image-comparison__image',
@@ -755,6 +807,12 @@ class Image_Comparison extends Extras_Widget {
 					'nicon',
 					'nicon-resize-horizontal-filled',
 				],
+				'role'           => 'slider',
+				'tabindex'       => '0',
+				'aria-label'     => __( 'Image comparison slider', 'landtech-extras-for-elementor' ),
+				'aria-valuemin'  => '0',
+				'aria-valuemax'  => '100',
+				'aria-valuenow'  => (string) (int) $start,
 			],
 		] );
 

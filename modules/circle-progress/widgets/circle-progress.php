@@ -74,6 +74,7 @@ class Circle_Progress extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
+			'landtech-extras-frontend',
 			'landtech-extras-circle-progress',
 			'landtech-extras-jquery-appear',
 			'landtech-extras-jquery-easing',

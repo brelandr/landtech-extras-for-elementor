@@ -82,6 +82,7 @@ class Age_Gate extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
+			'landtech-extras-frontend',
 			'landtech-extras-glightbox',
 		];
 	}

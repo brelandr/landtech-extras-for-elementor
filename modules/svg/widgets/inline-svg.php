@@ -9,6 +9,7 @@ use LandTechExtras\Group_Control_Transition;
 // Elementor Classes
 use Elementor\Utils;
 use Elementor\Widget_Base;
+use Elementor\Repeater;
 use Elementor\Controls_Manager;
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
@@ -67,7 +68,7 @@ class Inline_Svg extends Extras_Widget {
 	 * @return array
 	 */
 	public function get_script_depends() {
-		return [ 'landtech-extras' ];
+		return [ 'landtech-extras-frontend', 'landtech-extras-inline-svg', 'landtech-extras-anime-helpers' ];
 	}
 
 	/**
@@ -351,6 +352,97 @@ class Inline_Svg extends Extras_Widget {
 				]
 			);
 
+			$path_repeater = new Repeater();
+
+			$path_repeater->add_control(
+				'css_selector',
+				[
+					'label'       => __( 'CSS Selector', 'landtech-extras-for-elementor' ),
+					'type'        => Controls_Manager::TEXT,
+					'placeholder' => '#path1, .cls-2',
+					'description' => __( 'Target specific SVG paths, groups, or classes.', 'landtech-extras-for-elementor' ),
+				]
+			);
+
+			$path_repeater->add_control(
+				'fill_color',
+				[
+					'label' => __( 'Fill Color', 'landtech-extras-for-elementor' ),
+					'type'  => Controls_Manager::COLOR,
+				]
+			);
+
+			$path_repeater->add_control(
+				'stroke_color',
+				[
+					'label' => __( 'Stroke Color', 'landtech-extras-for-elementor' ),
+					'type'  => Controls_Manager::COLOR,
+				]
+			);
+
+			$path_repeater->add_control(
+				'hover_fill',
+				[
+					'label' => __( 'Hover Fill', 'landtech-extras-for-elementor' ),
+					'type'  => Controls_Manager::COLOR,
+				]
+			);
+
+			$this->add_control(
+				'path_colors',
+				[
+					'label'       => __( 'Per-Path Colors', 'landtech-extras-for-elementor' ),
+					'type'        => Controls_Manager::REPEATER,
+					'fields'      => $path_repeater->get_controls(),
+					'title_field' => '{{{ css_selector }}}',
+				]
+			);
+
+			$this->add_control(
+				'svg_animation',
+				[
+					'label'   => __( 'Animation', 'landtech-extras-for-elementor' ),
+					'type'    => Controls_Manager::SELECT,
+					'default' => 'none',
+					'options' => [
+						'none'    => __( 'None', 'landtech-extras-for-elementor' ),
+						'draw'    => __( 'Draw (stroke path reveal)', 'landtech-extras-for-elementor' ),
+						'fade_in' => __( 'Fade In', 'landtech-extras-for-elementor' ),
+						'scale_up'=> __( 'Scale Up', 'landtech-extras-for-elementor' ),
+						'rotate'  => __( 'Rotate', 'landtech-extras-for-elementor' ),
+					],
+				]
+			);
+
+			$this->add_control(
+				'svg_anim_trigger',
+				[
+					'label'     => __( 'Trigger', 'landtech-extras-for-elementor' ),
+					'type'      => Controls_Manager::SELECT,
+					'default'   => 'scroll',
+					'options'   => [
+						'scroll' => __( 'On scroll into view', 'landtech-extras-for-elementor' ),
+						'hover'  => __( 'On hover', 'landtech-extras-for-elementor' ),
+						'load'   => __( 'On page load', 'landtech-extras-for-elementor' ),
+					],
+					'condition' => [
+						'svg_animation!' => 'none',
+					],
+				]
+			);
+
+			$this->add_control(
+				'svg_anim_duration',
+				[
+					'label'     => __( 'Duration (ms)', 'landtech-extras-for-elementor' ),
+					'type'      => Controls_Manager::NUMBER,
+					'default'   => 1200,
+					'condition' => [
+						'svg_animation!' => 'none',
+					],
+				]
+			);
+
 		$this->end_controls_section();
 	}
 
@@ -380,8 +472,13 @@ class Inline_Svg extends Extras_Widget {
 			'svg' => [
 				'class' 	=> 'ee-inline-svg',
 				'data-url' 	=> $svg_url,
+				'data-svg-animation' => isset( $settings['svg_animation'] ) ? sanitize_key( $settings['svg_animation'] ) : 'none',
+				'data-svg-trigger'   => isset( $settings['svg_anim_trigger'] ) ? sanitize_key( $settings['svg_anim_trigger'] ) : 'scroll',
+				'data-svg-duration'  => isset( $settings['svg_anim_duration'] ) ? (string) absint( $settings['svg_anim_duration'] ) : '1200',
 			],
 		] );
+
+		$this->print_path_color_styles( $settings );
 
 		if ( ! empty( $settings['link']['url'] ) ) {
 
@@ -401,6 +498,69 @@ class Inline_Svg extends Extras_Widget {
 		?><div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
 			<<?php echo esc_html( $tag ); ?> <?php $this->print_render_attribute_string( 'svg' ); ?>></<?php echo esc_html( $tag ); ?>>
 		</div><?php
+	}
+
+	/**
+	 * Scoped per-path fill/stroke CSS for this widget instance.
+	 *
+	 * @since 2.7.0
+	 *
+	 * @param array<string,mixed> $settings Widget settings.
+	 * @return void
+	 */
+	protected function print_path_color_styles( $settings ) {
+		$rows = isset( $settings['path_colors'] ) && is_array( $settings['path_colors'] ) ? $settings['path_colors'] : array();
+		if ( empty( $rows ) ) {
+			return;
+		}
+
+		$uid = $this->get_id();
+		$css = '';
+		foreach ( $rows as $row ) {
+			$selector = isset( $row['css_selector'] ) ? trim( (string) $row['css_selector'] ) : '';
+			if ( '' === $selector ) {
+				continue;
+			}
+			$parts = array_filter( array_map( 'trim', explode( ',', $selector ) ) );
+			$scoped = array();
+			foreach ( $parts as $part ) {
+				if ( '' === $part || false !== strpos( $part, '{' ) || false !== strpos( $part, '}' ) ) {
+					continue;
+				}
+				$scoped[] = '.elementor-element-' . $uid . ' .ee-inline-svg ' . $part;
+			}
+			if ( empty( $scoped ) ) {
+				continue;
+			}
+			$joined = implode( ',', $scoped );
+			$decls  = '';
+			if ( ! empty( $row['fill_color'] ) ) {
+				$decls .= 'fill:' . sanitize_hex_color( $row['fill_color'] ) . ';';
+			}
+			if ( ! empty( $row['stroke_color'] ) ) {
+				$decls .= 'stroke:' . sanitize_hex_color( $row['stroke_color'] ) . ';';
+			}
+			if ( '' !== $decls ) {
+				$css .= $joined . '{' . $decls . '}';
+			}
+			if ( ! empty( $row['hover_fill'] ) ) {
+				$hover_sel = implode( ',', array_map(
+					static function( $s ) {
+						return $s . ':hover';
+					},
+					$scoped
+				) );
+				$css .= $hover_sel . '{fill:' . sanitize_hex_color( $row['hover_fill'] ) . ';}';
+			}
+		}
+
+		if ( '' === $css ) {
+			return;
+		}
+
+		wp_register_style( 'landtech-extras-inline-svg-path-' . $uid, false, array(), LANDTECH_EXTRAS_VERSION );
+		wp_enqueue_style( 'landtech-extras-inline-svg-path-' . $uid );
+		wp_add_inline_style( 'landtech-extras-inline-svg-path-' . $uid, $css );
 	}
 
 	/**

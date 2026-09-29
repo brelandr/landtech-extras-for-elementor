@@ -103,6 +103,9 @@ class Gallery extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
+			'landtech-extras-frontend',
+			'landtech-extras-gallery',
+			'landtech-extras-glightbox',
 			'landtech-extras-tilt',
 			'landtech-extras-parallax-gallery',
 			'landtech-extras-jquery-resize',
@@ -226,6 +229,19 @@ class Gallery extends Extras_Widget {
 			$gallery_items = new Repeater();
 
 			$gallery_items->add_control(
+				'media_type',
+				[
+					'label'   => __( 'Media Type', 'landtech-extras-for-elementor' ),
+					'type'    => Controls_Manager::SELECT,
+					'default' => 'image',
+					'options' => [
+						'image' => __( 'Image', 'landtech-extras-for-elementor' ),
+						'video' => __( 'Video URL (YouTube / Vimeo / MP4)', 'landtech-extras-for-elementor' ),
+					],
+				]
+			);
+
+			$gallery_items->add_control(
 				'image',
 				[
 					'label' 	=> __( 'Choose Image', 'landtech-extras-for-elementor' ),
@@ -233,6 +249,32 @@ class Gallery extends Extras_Widget {
 					'default' 	=> [
 						'url' 	=> Utils::get_placeholder_image_src(),
 					],
+					'condition' => [
+						'media_type' => 'image',
+					],
+				]
+			);
+
+			$gallery_items->add_control(
+				'video_url',
+				[
+					'label'     => __( 'Video URL', 'landtech-extras-for-elementor' ),
+					'type'      => Controls_Manager::URL,
+					'condition' => [
+						'media_type' => 'video',
+					],
+				]
+			);
+
+			$gallery_items->add_control(
+				'video_thumbnail',
+				[
+					'label'       => __( 'Video Thumbnail', 'landtech-extras-for-elementor' ),
+					'type'        => Controls_Manager::MEDIA,
+					'condition'   => [
+						'media_type' => 'video',
+					],
+					'description' => __( 'If empty, a play overlay is shown on a placeholder. YouTube/Vimeo thumbnails are not fetched server-side.', 'landtech-extras-for-elementor' ),
 				]
 			);
 
@@ -658,6 +700,52 @@ class Gallery extends Extras_Widget {
 					],
 					'condition'	=> [
 						'gallery_type'	=> [ 'wordpress', 'instagram', 'acf_gallery' ],
+					],
+				]
+			);
+
+			$this->add_control(
+				'pagination_type',
+				[
+					'label'   => __( 'Pagination', 'landtech-extras-for-elementor' ),
+					'type'    => Controls_Manager::SELECT,
+					'default' => 'none',
+					'options' => [
+						'none'            => __( 'None', 'landtech-extras-for-elementor' ),
+						'load_more'       => __( 'Load More Button', 'landtech-extras-for-elementor' ),
+						'infinite_scroll' => __( 'Infinite Scroll', 'landtech-extras-for-elementor' ),
+						'numbers'         => __( 'Page Numbers', 'landtech-extras-for-elementor' ),
+					],
+					'condition' => [
+						'gallery_type' => 'manual',
+					],
+				]
+			);
+
+			$this->add_control(
+				'items_per_page',
+				[
+					'label'     => __( 'Items Per Page', 'landtech-extras-for-elementor' ),
+					'type'      => Controls_Manager::NUMBER,
+					'default'   => 12,
+					'min'       => 1,
+					'max'       => 100,
+					'condition' => [
+						'gallery_type'      => 'manual',
+						'pagination_type!'  => 'none',
+					],
+				]
+			);
+
+			$this->add_control(
+				'load_more_text',
+				[
+					'label'     => __( 'Load More Button Text', 'landtech-extras-for-elementor' ),
+					'type'      => Controls_Manager::TEXT,
+					'default'   => __( 'Load More', 'landtech-extras-for-elementor' ),
+					'condition' => [
+						'gallery_type'    => 'manual',
+						'pagination_type' => 'load_more',
 					],
 				]
 			);
@@ -2377,9 +2465,17 @@ class Gallery extends Extras_Widget {
 			$caption_type_key = 'wordpress';
 		}
 
+		$pagination = isset( $settings['pagination_type'] ) ? sanitize_key( $settings['pagination_type'] ) : 'none';
+		$per_page   = isset( $settings['items_per_page'] ) ? absint( $settings['items_per_page'] ) : 12;
+		if ( $per_page < 1 ) {
+			$per_page = 12;
+		}
+
 		$this->add_render_attribute( [
 			'wrapper' => [
 				'class' => 'ee-gallery-wrapper',
+				'data-pagination' => $pagination,
+				'data-per-page'   => (string) $per_page,
 			],
 			'gallery' => [
 				'class' => [
@@ -2485,7 +2581,42 @@ class Gallery extends Extras_Widget {
 	 */
 	protected function render_gallery_end() {
 			?></div>
+			<?php $this->render_gallery_pagination(); ?>
 		</div><?php
+	}
+
+	/**
+	 * Client-side pagination chrome for manual galleries.
+	 *
+	 * @since 2.7.0
+	 * @return void
+	 */
+	protected function render_gallery_pagination() {
+		$settings = $this->get_settings_for_display();
+		if ( 'manual' !== ( $settings['gallery_type'] ?? '' ) ) {
+			return;
+		}
+		$type = isset( $settings['pagination_type'] ) ? sanitize_key( $settings['pagination_type'] ) : 'none';
+		if ( 'none' === $type || '' === $type ) {
+			return;
+		}
+
+		if ( 'load_more' === $type ) {
+			$label = isset( $settings['load_more_text'] ) ? (string) $settings['load_more_text'] : __( 'Load More', 'landtech-extras-for-elementor' );
+			echo '<div class="ee-gallery__pagination ee-gallery__pagination--load-more">';
+			echo '<button type="button" class="ee-gallery__load-more">' . esc_html( $label ) . '</button>';
+			echo '</div>';
+			return;
+		}
+
+		if ( 'numbers' === $type ) {
+			echo '<nav class="ee-gallery__pagination ee-gallery__pagination--numbers" aria-label="' . esc_attr__( 'Gallery pages', 'landtech-extras-for-elementor' ) . '"></nav>';
+			return;
+		}
+
+		if ( 'infinite_scroll' === $type ) {
+			echo '<div class="ee-gallery__pagination ee-gallery__pagination--infinite" aria-hidden="true"></div>';
+		}
 	}
 
 	/**
@@ -2547,7 +2678,16 @@ class Gallery extends Extras_Widget {
 				] );
 			}
 
-			if ( '' !== $item['link'] ) {
+			$is_video = isset( $item['media_type'] ) && 'video' === $item['media_type'];
+
+			if ( $is_video && ! empty( $item['video_url']['url'] ) ) {
+				$media_tag = 'a';
+				$item_link = esc_url_raw( $item['video_url']['url'] );
+				$this->add_render_attribute( $media_key, 'href', $item_link );
+				$this->add_render_attribute( $media_key, 'class', 'ee-gallery__media--video glightbox' );
+				$this->add_render_attribute( $media_key, 'data-type', 'video' );
+				$this->add_render_attribute( $item_key, 'class', 'ee-gallery__item--video' );
+			} elseif ( '' !== $item['link'] ) {
 				$media_tag = 'a';
 
 				if ( 'file' === $item['link'] ) {
@@ -2928,6 +3068,9 @@ class Gallery extends Extras_Widget {
 
 		$settings 			= $this->get_settings();
 		$thumbnail_url 		= $this->get_thumbnail_image_url( $item, $settings );
+		if ( isset( $item['media_type'] ) && 'video' === $item['media_type'] && ! empty( $item['video_thumbnail']['url'] ) ) {
+			$thumbnail_url = esc_url( $item['video_thumbnail']['url'] );
+		}
 		$thumbnail_alt 		= $this->get_thumbnail_image_alt( $item );
 		$thumbnail_title 	= $this->get_thumbnail_image_title( $item );
 		$image_key 			= $this->get_repeater_setting_key( 'image', 'gallery', $index );
@@ -2944,6 +3087,9 @@ class Gallery extends Extras_Widget {
 
 		?><div <?php $this->print_render_attribute_string( 'gallery-thumbnail' ); ?>>
 			<img <?php $this->print_render_attribute_string( $image_key ); ?> />
+			<?php if ( isset( $item['media_type'] ) && 'video' === $item['media_type'] ) : ?>
+				<span class="ee-gallery__play" aria-hidden="true"></span>
+			<?php endif; ?>
 		</div><?php
 	}
 
@@ -3259,17 +3405,40 @@ class Gallery extends Extras_Widget {
 		return $result;
 	}
 
+	/**
+	 * Fetch the Instagram user profile payload for the stored access token.
+	 *
+	 * @since 2.1.0
+	 *
+	 * @return array<mixed>|\WP_Error Decoded Graph response or transport error.
+	 */
 	public function get_insta_user_id() {
 		$result = $this->get_insta_remote( $this->get_user_url() );
 		return $result;
 	}
 
+	/**
+	 * Fetch media for an Instagram user id.
+	 *
+	 * @since 2.1.0
+	 *
+	 * @param string $user_id Instagram user id.
+	 * @return array<mixed>|\WP_Error Decoded Graph response or transport error.
+	 */
 	public function get_insta_user_media( $user_id ) {
 		$result = $this->get_insta_remote( $this->get_user_media_url( $user_id ) );
 
 		return $result;
 	}
 
+	/**
+	 * Fetch a single Instagram media object.
+	 *
+	 * @since 2.1.0
+	 *
+	 * @param string $media_id Instagram media id.
+	 * @return array<mixed>|\WP_Error Decoded Graph response or transport error.
+	 */
 	public function get_insta_media( $media_id ) {
 		$result = $this->get_insta_remote( $this->get_media_url( $media_id ) );
 

@@ -152,16 +152,66 @@ class Tabs extends Extras_Widget {
 		);
 
 		$orient_options = array(
-			'horizontal' => __( 'Horizontal', 'landtech-extras-for-elementor' ),
+			'horizontal'      => __( 'Horizontal', 'landtech-extras-for-elementor' ),
+			'vertical'        => __( 'Vertical (tabs on left)', 'landtech-extras-for-elementor' ),
+			'vertical-right'  => __( 'Vertical (tabs on right)', 'landtech-extras-for-elementor' ),
+		);
+
+		$this->add_responsive_control(
+			'tabs_orientation',
+			array(
+				'label'        => __( 'Orientation', 'landtech-extras-for-elementor' ),
+				'type'         => Controls_Manager::SELECT,
+				'default'      => 'horizontal',
+				'options'      => $orient_options,
+				'prefix_class' => 'ltxe-tabs--orientation-',
+			)
 		);
 
 		$this->add_control(
 			'orientation',
 			array(
-				'label'   => __( 'Orientation', 'landtech-extras-for-elementor' ),
-				'type'    => Controls_Manager::SELECT,
-				'default' => 'horizontal',
-				'options' => $orient_options,
+				'label'       => __( 'Orientation (legacy)', 'landtech-extras-for-elementor' ),
+				'type'        => Controls_Manager::HIDDEN,
+				'default'     => 'horizontal',
+			)
+		);
+
+		$this->add_control(
+			'mobile_accordion',
+			array(
+				'label'        => __( 'Accordion on Mobile', 'landtech-extras-for-elementor' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'default'      => 'yes',
+				'description'  => __( 'Below the accordion breakpoint, tabs collapse into a vertical accordion.', 'landtech-extras-for-elementor' ),
+			)
+		);
+
+		$this->add_control(
+			'accordion_breakpoint',
+			array(
+				'label'     => __( 'Accordion Breakpoint', 'landtech-extras-for-elementor' ),
+				'type'      => Controls_Manager::SELECT,
+				'default'   => 'mobile',
+				'options'   => array(
+					'mobile' => __( 'Mobile (< 767px)', 'landtech-extras-for-elementor' ),
+					'tablet' => __( 'Tablet (< 1024px)', 'landtech-extras-for-elementor' ),
+				),
+				'condition' => array(
+					'mobile_accordion' => 'yes',
+				),
+			)
+		);
+
+		$this->add_control(
+			'deep_link',
+			array(
+				'label'        => __( 'URL Deep Linking', 'landtech-extras-for-elementor' ),
+				'type'         => Controls_Manager::SWITCHER,
+				'return_value' => 'yes',
+				'default'      => 'yes',
+				'description'  => __( 'Updates the URL hash when a tab is clicked. Share a link that opens a specific tab directly.', 'landtech-extras-for-elementor' ),
 			)
 		);
 
@@ -259,12 +309,28 @@ class Tabs extends Extras_Widget {
 			return;
 		}
 
+		$orientation = isset( $settings['tabs_orientation'] ) ? (string) $settings['tabs_orientation'] : 'horizontal';
+		if ( '' === $orientation && ! empty( $settings['orientation'] ) ) {
+			$orientation = (string) $settings['orientation'];
+		}
+		if ( ! in_array( $orientation, array( 'horizontal', 'vertical', 'vertical-right' ), true ) ) {
+			$orientation = 'horizontal';
+		}
+
 		$wrapper_atts = array(
 			'class' => array(
 				'ltxe-tabs',
-				'ltxe-tabs--horizontal',
+				'ltxe-tabs--' . $orientation,
 			),
+			'data-deep-link' => ( isset( $settings['deep_link'] ) && 'yes' === $settings['deep_link'] ) ? 'yes' : 'no',
+			'data-mobile-accordion' => ( isset( $settings['mobile_accordion'] ) && 'yes' === $settings['mobile_accordion'] ) ? 'yes' : 'no',
+			'data-accordion-breakpoint' => isset( $settings['accordion_breakpoint'] ) ? sanitize_key( $settings['accordion_breakpoint'] ) : 'mobile',
 		);
+
+		if ( isset( $settings['mobile_accordion'] ) && 'yes' === $settings['mobile_accordion'] ) {
+			$bp = isset( $settings['accordion_breakpoint'] ) ? sanitize_key( $settings['accordion_breakpoint'] ) : 'mobile';
+			$wrapper_atts['class'][] = 'ltxe-tabs--accordion-' . $bp;
+		}
 
 		/**
 		 * Filters the outer wrapper attributes before they are rendered.
@@ -346,14 +412,23 @@ class Tabs extends Extras_Widget {
 					if ( ! empty( $item['tab_slug'] ) ) {
 						$tab_id = sanitize_title( (string) $item['tab_slug'] );
 					}
-					$hidden   = 0 === (int) $index ? 'false' : 'true';
 					?>
+					<button
+						type="button"
+						class="ltxe-tabs__accordion-title"
+						id="<?php echo esc_attr( $tab_id ); ?>-accordion"
+						aria-expanded="<?php echo esc_attr( 0 === (int) $index ? 'true' : 'false' ); ?>"
+						aria-controls="<?php echo esc_attr( $tab_id ); ?>-panel"
+						data-tab-index="<?php echo esc_attr( (string) $index ); ?>"
+					>
+						<?php echo esc_html( (string) ( $item['tab_title'] ?? '' ) ); ?>
+					</button>
 					<div
 						class="ltxe-tabs__panel"
 						id="<?php echo esc_attr( $tab_id ); ?>-panel"
 						role="tabpanel"
 						aria-labelledby="<?php echo esc_attr( $tab_id ); ?>-label"
-						hidden="<?php echo esc_attr( $hidden ); ?>"
+						<?php echo 0 === (int) $index ? '' : 'hidden'; ?>
 						data-tab-index="<?php echo esc_attr( (string) $index ); ?>"
 					>
 						<?php

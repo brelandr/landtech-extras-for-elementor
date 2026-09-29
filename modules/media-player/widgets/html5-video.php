@@ -75,6 +75,7 @@ class HTML5_Video extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
+			'landtech-extras-frontend',
 			'landtech-extras-video-player',
 			'landtech-extras-jquery-appear',
 			'landtech-extras-iphone-inline-video',

@@ -1,0 +1,62 @@
+.ltxe-reading-progress {
+	position: fixed;
+	z-index: 9999;
+	pointer-events: none;
+}
+
+.ltxe-reading-progress--top {
+	top: 0;
+	left: 0;
+	right: 0;
+}
+
+.ltxe-reading-progress--bottom {
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.ltxe-reading-progress--left {
+	top: 0;
+	bottom: 0;
+	left: 0;
+}
+
+.ltxe-reading-progress--right {
+	top: 0;
+	bottom: 0;
+	right: 0;
+}
+
+.ltxe-reading-progress__track {
+	width: 100%;
+	height: 100%;
+	background: transparent;
+}
+
+.ltxe-reading-progress--top .ltxe-reading-progress__track,
+.ltxe-reading-progress--bottom .ltxe-reading-progress__track {
+	height: 4px;
+}
+
+.ltxe-reading-progress--left .ltxe-reading-progress__track,
+.ltxe-reading-progress--right .ltxe-reading-progress__track {
+	width: 4px;
+	height: 100%;
+}
+
+.ltxe-reading-progress__bar {
+	background: #2271b1;
+	width: 0;
+	height: 100%;
+}
+
+.ltxe-reading-progress--smooth .ltxe-reading-progress__bar {
+	transition: width 0.1s linear, height 0.1s linear;
+}
+
+@media (max-width: 767px) {
+	.ltxe-reading-progress--hide-mobile {
+		display: none;
+	}
+}

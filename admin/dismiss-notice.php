@@ -7,13 +7,20 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 class Dismiss_Notice {
 
 	/**
+	 * Nonce action for notice dismissal AJAX (must match wp_create_nonce call sites).
+	 *
+	 * @since 2.9.0
+	 */
+	const NONCE_ACTION = 'landtech_extras_dismiss_notice';
+
+	/**
 	 * Init hooks.
 	 *
 	 * @since 1.8.4
 	 */
 	public static function init() {
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue_script' ) );
-		// AJAX: wp_ajax_landtech_extras_dismiss_notice + check_ajax_referer( 'dismissible-notice', 'nonce' ).
+		// AJAX: wp_ajax_landtech_extras_dismiss_notice + check_ajax_referer( self::NONCE_ACTION, 'nonce' ).
 		add_action( 'wp_ajax_landtech_extras_dismiss_notice', array( __CLASS__, 'dismiss_admin_notice' ) );
 	}
 
@@ -46,8 +53,8 @@ class Dismiss_Notice {
 			'landtech-extras-notices',
 			'landtechExtrasDismissibleNotice',
 			array(
-				/** Nonce action matches {@see dismiss_admin_notice()} `check_ajax_referer( 'dismissible-notice', … )`. */
-				'nonce' => wp_create_nonce( 'dismissible-notice' ),
+				/** Nonce action matches {@see dismiss_admin_notice()} `check_ajax_referer( self::NONCE_ACTION, … )`. */
+				'nonce' => wp_create_nonce( self::NONCE_ACTION ),
 			)
 		);
 	}
@@ -97,7 +104,7 @@ class Dismiss_Notice {
 	/**
 	 * AJAX callback: persist dismissal of an administrator notice keyed by `$option_name` transient key.
 	 *
-	 * Security: {@see check_ajax_referer()} for action `dismissible-notice` and request field `nonce`,
+	 * Security: {@see check_ajax_referer()} for action {@see self::NONCE_ACTION} and request field `nonce`,
 	 * then requires `manage_options`. POST fields are sanitized after checks.
 	 *
 	 * @since 1.8.4
@@ -106,7 +113,7 @@ class Dismiss_Notice {
 	public static function dismiss_admin_notice() {
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Verified via check_ajax_referer; no other POST use before this.
-		if ( ! check_ajax_referer( 'dismissible-notice', 'nonce', false ) ) {
+		if ( ! check_ajax_referer( self::NONCE_ACTION, 'nonce', false ) ) {
 			wp_send_json_error( array( 'message' => esc_html__( 'Invalid nonce.', 'landtech-extras-for-elementor' ) ), 403 );
 		}
 

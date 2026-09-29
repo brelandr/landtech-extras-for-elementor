@@ -32,6 +32,10 @@ function landtech_extras_register_search_term_options_route() {
 					'default'           => '',
 					'sanitize_callback' => 'sanitize_text_field',
 				),
+				'term'     => array(
+					'default'           => '',
+					'sanitize_callback' => 'sanitize_text_field',
+				),
 				'slugs'    => array(
 					'default'           => '',
 					'sanitize_callback' => 'sanitize_text_field',
@@ -43,6 +47,12 @@ function landtech_extras_register_search_term_options_route() {
 add_action( 'rest_api_init', 'landtech_extras_register_search_term_options_route' );
 
 /**
+ * Editors only — taxonomy term lookup for Search Form controls.
+ *
+ * Cookie REST nonce is required by WordPress for cookie-authenticated GETs from the editor.
+ *
+ * @since 2.4.0
+ *
  * @return bool
  */
 function landtech_extras_search_term_options_rest_permission() {

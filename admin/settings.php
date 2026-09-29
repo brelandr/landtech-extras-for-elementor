@@ -98,7 +98,11 @@ class Settings extends Settings_Page {
 	public function init() {
 		parent::init();
 
-		// Refresh Instagram Access Token
+		$page = isset( $_GET['page'] ) ? sanitize_key( wp_unslash( $_GET['page'] ) ) : '';
+		if ( self::PAGE_ID !== $page || ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
 		$this->refresh_instagram_access_token();
 	}
 
@@ -213,16 +217,23 @@ class Settings extends Settings_Page {
 				$diag_html = landtech_extras_premium_addon_bootstrap_diagnosis_html();
 			}
 
+			$install_note = '';
+			$catalog_html = '';
+			if ( ! \LandTechExtras\Admin\Addon_Catalog::add_on_is_active() ) {
+				$install_note = '<p class="description">' . wp_kses_post(
+					sprintf(
+						/* translators: %s: URL to the Plugins admin screen. */
+						__( 'This plugin on WordPress.org does not include the add-on. To use the capabilities listed below, install and activate <strong>LandTech Extras for Elementor Premium</strong> (a separate plugin) under <a href="%s">Plugins</a>. Both plugins must stay active. The list is informational — it does not disable anything in this plugin.', 'landtech-extras-for-elementor' ),
+						esc_url( admin_url( 'plugins.php' ) )
+					)
+				) . '</p>';
+				$catalog_html = \LandTechExtras\Admin\Addon_Catalog::render();
+			}
+
 			$sections[] = array(
 				'id'    => $premium_section_id,
 				'title' => __( 'Add-on features', 'landtech-extras-for-elementor' ),
-				'desc'  => $diag_html . '<p class="description">' . wp_kses_post(
-					sprintf(
-						/* translators: %s: URL to the Plugins admin screen. */
-						__( 'Install and activate <strong>LandTech Extras for Elementor Premium</strong> (the add-on — not a third plugin) under <a href="%s">Plugins</a>, then reload this tab. Both plugins must stay active.', 'landtech-extras-for-elementor' ),
-						esc_url( admin_url( 'plugins.php' ) )
-					)
-				) . '</p>',
+				'desc'  => $diag_html . $install_note . $catalog_html,
 			);
 		}
 
@@ -647,10 +658,11 @@ class Settings extends Settings_Page {
 	}
 
 	/**
-	 * Refresh long-lived Instagram access token via the Graph token endpoint.
+	 * Refresh a long-lived Instagram access token via the Graph token endpoint.
 	 *
-	 * Performs at most one successful refresh per throttle window (stored in transient
-	 * `UPDATED_INSTA_ACCESS_TOKEN`). Failures cache a short backoff to reduce repeated calls.
+	 * Runs only from the plugin settings screen. On HTTP 200 the new token is sanitized
+	 * and written back to `landtech_extras_apis`. Success is throttled for 30 days;
+	 * failures cache a short backoff.
 	 *
 	 * Documented under readme.txt **External Services → Instagram** (`graph.instagram.com`).
 	 *
@@ -725,6 +737,19 @@ class Settings extends Settings_Page {
 			set_transient( $update_token_key, 'error', DAY_IN_SECONDS );
 			return;
 		}
+
+		$token = self::sanitize_api_secret_setting( $decoded['access_token'] );
+		if ( '' === $token ) {
+			set_transient( $update_token_key, 'error', HOUR_IN_SECONDS );
+			return;
+		}
+
+		$stored = get_option( 'landtech_extras_apis', array() );
+		if ( ! is_array( $stored ) ) {
+			$stored = array();
+		}
+		$stored['instagram_access_token'] = $token;
+		update_option( 'landtech_extras_apis', $stored );
 
 		set_transient( $update_token_key, 'updated', 30 * DAY_IN_SECONDS );
 	}

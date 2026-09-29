@@ -89,6 +89,7 @@ class Scroll_Indicator extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
+			'landtech-extras-frontend',
 			'landtech-extras-scroll-indicator',
 			'landtech-extras-hotips',
 		];

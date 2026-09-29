@@ -264,17 +264,15 @@ class Settings_API {
 		$value       = $this->get_option( $args['id'], $args['section'], $args['std'] );
 		$size        = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
 		$type        = isset( $args['type'] ) ? $args['type'] : 'text';
-		$placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . esc_attr( $args['placeholder'] ) . '"';
 		$id_name     = $args['section'] . '[' . $args['id'] . ']';
 
 		printf(
-			'<input type="%1$s" class="%2$s-text" id="%3$s" name="%3$s" value="%4$s"%5$s/>',
+			'<input type="%1$s" class="%2$s-text" id="%3$s" name="%3$s" value="%4$s" placeholder="%5$s"/>',
 			esc_attr( (string) $type ),
 			esc_attr( (string) $size ),
 			esc_attr( $id_name ),
 			esc_attr( (string) $value ),
-			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- attribute fragment built only from esc_attr( placeholder ).
-			$placeholder
+			esc_attr( isset( $args['placeholder'] ) ? (string) $args['placeholder'] : '' )
 		);
 		echo wp_kses_post( $this->get_field_description( $args ) );
 		echo wp_kses_post( $this->get_field_note( $args ) );
@@ -297,27 +295,21 @@ class Settings_API {
 	 * @param array   $args settings field args
 	 */
 	function callback_number( $args ) {
-		$value       = $this->get_option( $args['id'], $args['section'], $args['std'] );
-		$size        = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
-		$type        = isset( $args['type'] ) ? $args['type'] : 'number';
-		$placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . esc_attr( $args['placeholder'] ) . '"';
-		$min         = empty( $args['min'] ) ? '' : ' min="' . esc_attr( (string) $args['min'] ) . '"';
-		$max         = empty( $args['max'] ) ? '' : ' max="' . esc_attr( (string) $args['max'] ) . '"';
-		$step        = empty( $args['step'] ) ? '' : ' step="' . esc_attr( (string) $args['step'] ) . '"';
-		$id_name     = $args['section'] . '[' . $args['id'] . ']';
+		$value   = $this->get_option( $args['id'], $args['section'], $args['std'] );
+		$size    = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
+		$type    = isset( $args['type'] ) ? $args['type'] : 'number';
+		$id_name = $args['section'] . '[' . $args['id'] . ']';
 
 		printf(
-			'<input type="%1$s" class="%2$s-number" id="%3$s" name="%3$s" value="%4$s"%5$s%6$s%7$s%8$s/>',
+			'<input type="%1$s" class="%2$s-number" id="%3$s" name="%3$s" value="%4$s" placeholder="%5$s" min="%6$s" max="%7$s" step="%8$s"/>',
 			esc_attr( (string) $type ),
 			esc_attr( (string) $size ),
 			esc_attr( $id_name ),
 			esc_attr( (string) $value ),
-			// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- Attribute fragments (placeholder, min, max, step) built with esc_attr above.
-			$placeholder,
-			$min,
-			$max,
-			$step
-			// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
+			esc_attr( isset( $args['placeholder'] ) ? (string) $args['placeholder'] : '' ),
+			esc_attr( isset( $args['min'] ) ? (string) $args['min'] : '' ),
+			esc_attr( isset( $args['max'] ) ? (string) $args['max'] : '' ),
+			esc_attr( isset( $args['step'] ) ? (string) $args['step'] : '' )
 		);
 		echo wp_kses_post( $this->get_field_description( $args ) );
 		echo wp_kses_post( $this->get_field_note( $args ) );
@@ -454,17 +446,15 @@ class Settings_API {
 	 */
 	function callback_textarea( $args ) {
 
-		$value       = $this->get_option( $args['id'], $args['section'], $args['std'] );
-		$size        = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
-		$placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . esc_attr( $args['placeholder'] ) . '"';
-		$id_name     = $args['section'] . '[' . $args['id'] . ']';
+		$value   = $this->get_option( $args['id'], $args['section'], $args['std'] );
+		$size    = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
+		$id_name = $args['section'] . '[' . $args['id'] . ']';
 
 		printf(
-			'<textarea rows="5" cols="55" class="%1$s-text" id="%2$s" name="%2$s"%3$s>%4$s</textarea>',
+			'<textarea rows="5" cols="55" class="%1$s-text" id="%2$s" name="%2$s" placeholder="%3$s">%4$s</textarea>',
 			esc_attr( (string) $size ),
 			esc_attr( $id_name ),
-			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- attribute fragment built with esc_attr( placeholder ).
-			$placeholder,
+			esc_attr( isset( $args['placeholder'] ) ? (string) $args['placeholder'] : '' ),
 			esc_textarea( (string) $value )
 		);
 		echo wp_kses_post( $this->get_field_description( $args ) );

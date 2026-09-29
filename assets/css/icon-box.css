@@ -1,0 +1,128 @@
+.ltxe-icon-box {
+	container-type: inline-size;
+	display: flex;
+	gap: 16px;
+	padding: 20px;
+	background: #f6f7fb;
+	border-radius: 16px;
+	color: #1b2433;
+	text-decoration: none;
+	box-sizing: border-box;
+	transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.ltxe-icon-box--top {
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.ltxe-icon-box--left {
+	flex-direction: row;
+	align-items: flex-start;
+}
+
+.ltxe-icon-box--right {
+	flex-direction: row-reverse;
+	align-items: flex-start;
+}
+
+.ltxe-icon-box__mark {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex: 0 0 auto;
+	background: #fff;
+	transition: transform 0.45s ease;
+}
+
+.ltxe-icon-box__mark img {
+	width: 60%;
+	height: 60%;
+	object-fit: contain;
+}
+
+.ltxe-icon-box--shape-none .ltxe-icon-box__mark {
+	background: transparent;
+	width: auto;
+	height: auto;
+}
+
+.ltxe-icon-box--shape-circle .ltxe-icon-box__mark {
+	border-radius: 50%;
+}
+
+.ltxe-icon-box--shape-square .ltxe-icon-box__mark {
+	border-radius: 0;
+}
+
+.ltxe-icon-box--shape-rounded .ltxe-icon-box__mark {
+	border-radius: 14px;
+}
+
+.ltxe-icon-box__title {
+	margin: 0 0 8px;
+	font-size: 1.15rem;
+}
+
+.ltxe-icon-box__desc {
+	margin: 0 0 12px;
+}
+
+.ltxe-icon-box__btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 44px;
+	padding: 0 16px;
+	border-radius: 999px;
+	background: #1b2433;
+	color: #fff;
+}
+
+.ltxe-icon-box--float:hover {
+	transform: translateY(-6px);
+}
+
+.ltxe-icon-box--grow:hover {
+	transform: scale(1.03);
+}
+
+.ltxe-icon-box--spin:hover .ltxe-icon-box__mark {
+	transform: rotate(360deg);
+}
+
+.ltxe-icon-box--bounce:hover .ltxe-icon-box__mark {
+	animation: ltxe-ib-bounce 0.55s ease;
+}
+
+.ltxe-icon-box--glow:hover {
+	box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.25);
+}
+
+@keyframes ltxe-ib-bounce {
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-8px);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.ltxe-icon-box,
+	.ltxe-icon-box__mark {
+		transition: none;
+	}
+
+	.ltxe-icon-box--float:hover,
+	.ltxe-icon-box--grow:hover {
+		transform: none;
+	}
+
+	.ltxe-icon-box--spin:hover .ltxe-icon-box__mark,
+	.ltxe-icon-box--bounce:hover .ltxe-icon-box__mark {
+		transform: none;
+		animation: none;
+	}
+}

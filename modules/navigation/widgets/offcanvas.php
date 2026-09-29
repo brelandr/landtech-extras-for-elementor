@@ -123,6 +123,7 @@ class Offcanvas extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
+			'landtech-extras-frontend',
 			'landtech-extras-slidebars',
 			'landtech-extras-jquery-resize',
 		];
@@ -320,7 +321,7 @@ class Offcanvas extends Extras_Widget {
 					'description' => sprintf(
 						/* translators: 1–2: opening and closing link markup for documentation. */
 						__( 'Read more about this issue %1$shere%2$s', 'landtech-extras-for-elementor' ),
-						'<a href="https://landtechwebdesigns.com/">',
+						'<a href="https://extrasforelementor.com/docs/widgets/offcanvas/#page-jump-fix">',
 						'</a>'
 					),
 					'type' 		=> Controls_Manager::SELECT,

@@ -1,0 +1,103 @@
+.ltxe-addon-catalog {
+	max-width: 68rem;
+	margin: 0.5rem 0 1.5rem;
+}
+
+.ltxe-addon-catalog__hero {
+	padding: 1.35rem 1.5rem 1.4rem;
+	border-radius: 12px;
+	border: 1px solid #c3d4ff;
+	background: linear-gradient(160deg, #f4f7ff 0%, #fff 55%);
+}
+
+.ltxe-addon-catalog__badge {
+	display: inline-block;
+	margin: 0 0 0.45rem;
+	padding: 0.15rem 0.55rem;
+	border-radius: 999px;
+	background: #1a5cff;
+	color: #fff;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+.ltxe-addon-catalog__hero h2 {
+	margin: 0 0 0.5rem;
+	font-size: 1.45rem;
+}
+
+.ltxe-addon-catalog__lead {
+	margin: 0 0 1rem;
+	max-width: 46rem;
+	font-size: 14px;
+	line-height: 1.55;
+	color: #1d2327;
+}
+
+.ltxe-addon-catalog__actions {
+	margin: 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+}
+
+.ltxe-addon-catalog__group {
+	margin: 1.5rem 0 0;
+}
+
+.ltxe-addon-catalog__group h3 {
+	margin: 0 0 0.65rem;
+	font-size: 1.05rem;
+}
+
+.ltxe-addon-catalog__grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(16.5rem, 1fr));
+	gap: 0.65rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.ltxe-addon-catalog__card {
+	margin: 0;
+}
+
+.ltxe-addon-catalog__card a {
+	display: flex;
+	flex-direction: column;
+	gap: 0.3rem;
+	height: 100%;
+	padding: 0.85rem 0.95rem;
+	border: 1px solid #dcdcde;
+	border-radius: 10px;
+	background: #fff;
+	text-decoration: none;
+	box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+}
+
+.ltxe-addon-catalog__card a:hover,
+.ltxe-addon-catalog__card a:focus {
+	border-color: #1a5cff;
+	box-shadow: 0 0 0 1px #1a5cff;
+}
+
+.ltxe-addon-catalog__card strong {
+	color: #1d2327;
+	font-size: 13px;
+}
+
+.ltxe-addon-catalog__card span {
+	color: #50575e;
+	font-size: 12px;
+	line-height: 1.45;
+}
+
+.ltxe-addon-catalog__foot {
+	margin: 1.5rem 0 0;
+	color: #50575e;
+	font-size: 13px;
+	max-width: 46rem;
+}

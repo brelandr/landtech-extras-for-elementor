@@ -80,7 +80,7 @@ class Table extends Extras_Widget {
 	 * @return array
 	 */
 	public function get_script_depends() {
-		return [ 'landtech-extras-tablesorter' ];
+		return [ 'landtech-extras-frontend', 'landtech-extras-tablesorter' ];
 	}
 
 	/**

@@ -1,0 +1,59 @@
+.ltxe-share {
+	container-type: inline-size;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+}
+
+.ltxe-share__btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.4rem;
+	min-width: 44px;
+	min-height: 44px;
+	padding: 0.5rem 0.75rem;
+	border: 0;
+	text-decoration: none;
+	font: inherit;
+	cursor: pointer;
+	color: #fff;
+	background: #444;
+}
+
+.ltxe-share--square .ltxe-share__btn { border-radius: 0; }
+.ltxe-share--rounded .ltxe-share__btn { border-radius: 8px; }
+.ltxe-share--circle .ltxe-share__btn { border-radius: 999px; }
+
+.ltxe-share--brand .ltxe-share__btn--facebook { background: #1877f2; }
+.ltxe-share--brand .ltxe-share__btn--x { background: #111; }
+.ltxe-share--brand .ltxe-share__btn--linkedin { background: #0a66c2; }
+.ltxe-share--brand .ltxe-share__btn--whatsapp { background: #25d366; }
+.ltxe-share--brand .ltxe-share__btn--telegram { background: #229ed9; }
+.ltxe-share--brand .ltxe-share__btn--pinterest { background: #e60023; }
+.ltxe-share--brand .ltxe-share__btn--reddit { background: #ff4500; }
+.ltxe-share--brand .ltxe-share__btn--email,
+.ltxe-share--brand .ltxe-share__btn--copy,
+.ltxe-share--brand .ltxe-share__btn--print { background: #333; }
+
+.ltxe-share--minimal .ltxe-share__btn {
+	background: transparent;
+	color: inherit;
+	border: 1px solid currentColor;
+}
+
+.ltxe-share__icon { font-weight: 700; }
+
+.ltxe-share__copied {
+	position: absolute;
+	margin-top: -2rem;
+	font-size: 0.8rem;
+}
+
+.screen-reader-text {
+	clip: rect(1px, 1px, 1px, 1px);
+	position: absolute !important;
+	height: 1px;
+	width: 1px;
+	overflow: hidden;
+}

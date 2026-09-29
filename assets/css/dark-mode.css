@@ -1,0 +1,137 @@
+.ltxe-dark-toggle {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	min-width: 44px;
+	min-height: 44px;
+	padding: 0.4rem 0.7rem;
+	border: 1px solid currentColor;
+	background: transparent;
+	color: inherit;
+	cursor: pointer;
+	font: inherit;
+	border-radius: 999px;
+}
+
+.ltxe-dark-toggle--icon .ltxe-dark-toggle__text { display: none; }
+
+.ltxe-dark-toggle__dark { display: none; }
+
+[data-ltxe-theme="dark"] .ltxe-dark-toggle__light { display: none; }
+[data-ltxe-theme="dark"] .ltxe-dark-toggle__dark { display: inline-flex; }
+
+.ltxe-dark-toggle--switch {
+	width: 3.25rem;
+	justify-content: space-between;
+}
+
+/* Default tokens so pages can theme cards without custom CSS. */
+:root {
+	--ltxe-dark-bg: #121212;
+	--ltxe-dark-text: #f5f5f5;
+	--ltxe-dark-accent: #6ea8fe;
+	--ltxe-surface: #f4f1ea;
+	--ltxe-ink: #1b1913;
+}
+
+html[data-ltxe-theme="dark"] {
+	--ltxe-surface: #1e1e1e;
+	--ltxe-ink: var(--ltxe-dark-text);
+	color-scheme: dark;
+	background-color: var(--ltxe-dark-bg);
+	color: var(--ltxe-dark-text);
+}
+
+html[data-ltxe-theme="dark"] body {
+	background-color: var(--ltxe-dark-bg);
+	color: var(--ltxe-dark-text);
+}
+
+html[data-ltxe-theme="dark"] body .elementor-element.elementor-top-section,
+html[data-ltxe-theme="dark"] body .elementor-element.elementor-inner-section,
+html[data-ltxe-theme="dark"] body .elementor-element.e-con {
+	background-color: var(--ltxe-dark-bg);
+}
+
+html[data-ltxe-theme="dark"] body h1,
+html[data-ltxe-theme="dark"] body h2,
+html[data-ltxe-theme="dark"] body h3,
+html[data-ltxe-theme="dark"] body h4,
+html[data-ltxe-theme="dark"] body h5,
+html[data-ltxe-theme="dark"] body h6,
+html[data-ltxe-theme="dark"] body p,
+html[data-ltxe-theme="dark"] body .elementor-heading-title,
+html[data-ltxe-theme="dark"] body .elementor-widget-heading .elementor-heading-title,
+html[data-ltxe-theme="dark"] body .elementor-widget-text-editor,
+html[data-ltxe-theme="dark"] body .elementor-widget-text-editor p,
+html[data-ltxe-theme="dark"] body .elementor-widget-text-editor li,
+html[data-ltxe-theme="dark"] body .ltxdh-prose li,
+html[data-ltxe-theme="dark"] body .ltxdh-steps li {
+	color: var(--ltxe-dark-text);
+}
+
+html[data-ltxe-theme="dark"] body a:not(.elementor-button):not(.ltxdh-btn) {
+	color: var(--ltxe-dark-accent);
+}
+
+html[data-ltxe-theme="dark"] .ltxe-dm-demo {
+	background: var(--ltxe-surface);
+	color: var(--ltxe-ink);
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+html[data-ltxe-theme="dark"] #wpadminbar,
+html[data-ltxe-theme="dark"] #wpadminbar a,
+html[data-ltxe-theme="dark"] #wpadminbar .ab-item {
+	color: #f0f0f1;
+}
+
+/* Demo Hub layout cards (no-op on sites without those classes). */
+html[data-ltxe-theme="dark"] body .elementor-top-section.ltxdh-section-live {
+	background: var(--ltxe-dark-bg);
+}
+
+html[data-ltxe-theme="dark"] body .ltxdh-section-live > .elementor-container > .elementor-column > .elementor-widget-wrap {
+	background: var(--ltxe-surface);
+	border-color: rgba(255, 255, 255, 0.12);
+	box-shadow: none;
+}
+
+html[data-ltxe-theme="dark"] body .ltxdh-section h2,
+html[data-ltxe-theme="dark"] body .ltxdh-section-live .elementor-widget-heading .elementor-heading-title {
+	color: var(--ltxe-dark-text);
+}
+
+html[data-ltxe-theme="dark"] body .ltxdh-prose p,
+html[data-ltxe-theme="dark"] body .ltxdh-section .ltxdh-prose {
+	color: var(--ltxe-dark-text);
+}
+
+/* Numbered how-to cards stay white in hub CSS — invert fill so body copy is readable. */
+html[data-ltxe-theme="dark"] body .ltxdh-steps li {
+	background: #2a2740;
+	border-color: rgba(255, 255, 255, 0.16);
+	box-shadow: none;
+	color: var(--ltxe-dark-text);
+}
+
+/* Light hub chips / pills: invert fill so labels stay readable. */
+html[data-ltxe-theme="dark"] body .ltxdh-feature-chips li {
+	background: #2a2740;
+	border-color: rgba(255, 255, 255, 0.16);
+	color: var(--ltxe-dark-text);
+}
+
+/* White ghost header/CTA chips — invert so labels stay readable. */
+html[data-ltxe-theme="dark"] body .ef-btn--ghost .elementor-button,
+html[data-ltxe-theme="dark"] body .ef-btn--ghost .elementor-button:visited,
+html[data-ltxe-theme="dark"] body .ef-btn--ghost .elementor-button:hover,
+html[data-ltxe-theme="dark"] body .ef-btn--ghost .elementor-button:focus {
+	background-color: #2a2740;
+	border-color: rgba(255, 255, 255, 0.2);
+	color: var(--ltxe-dark-text);
+}
+
+html[data-ltxe-theme="dark"] body .ef-btn--ghost .elementor-button .elementor-button-text {
+	color: inherit;
+}

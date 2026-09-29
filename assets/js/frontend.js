@@ -101,7 +101,15 @@
 			}
 		},
 
-		init : function() {
+		init : function( replayExisting ) {
+
+			if ( ee._ltxeHooksRegistered ) {
+				if ( replayExisting ) {
+					ee.replayReadyWidgets();
+				}
+				return;
+			}
+			ee._ltxeHooksRegistered = true;
 
 			var widgets = {
 				'ee-calendar.default':			ee.Calendar,
@@ -146,6 +154,20 @@
 				widgets[ 'posts-extra.' + layoutSkin ] = ee.PostsClassic;
 			});
 
+			ee._ltxeWidgetHandlers = {};
+
+			$.each( widgets, function( widget, callback ) {
+				if ( 'object' === typeof callback && ! $.isFunction( callback ) ) {
+					var wrappedList = [];
+					$.each( callback, function( index, cb ) {
+						wrappedList.push( ee.oncePerScope( widget + '_' + index, cb ) );
+					} );
+					ee._ltxeWidgetHandlers[ widget ] = wrappedList;
+				} else {
+					ee._ltxeWidgetHandlers[ widget ] = ee.oncePerScope( widget, callback );
+				}
+			} );
+
 			var globals = {
 				'sticky': 						ee.Sticky,
 				'parallax': 					ee.ParallaxElement,
@@ -156,8 +178,8 @@
 				'parallax-background': 			ee.ParallaxBackground,
 			};
 
-			$.each( widgets, function( widget, callback ) {
-				if ( 'object' ===  typeof callback ) {
+			$.each( ee._ltxeWidgetHandlers, function( widget, callback ) {
+				if ( 'object' === typeof callback && ! $.isFunction( callback ) ) {
 					$.each( callback, function( index, cb ) {
 						elementorFrontend.hooks.addAction( 'frontend/element_ready/' + widget, cb );
 					});
@@ -176,6 +198,44 @@
 
 			$( document ).on( 'click', '.ee-button-wrapper--no-link', function( event ) {
 				event.preventDefault();
+			} );
+
+			if ( replayExisting ) {
+				ee.replayReadyWidgets();
+			}
+		},
+
+		oncePerScope : function( key, callback ) {
+			return function( $scope, $ ) {
+				var flag = 'ltxeOnce_' + key;
+				if ( ! $scope || ! $scope.length || $scope.data( flag ) ) {
+					return;
+				}
+				$scope.data( flag, true );
+				if ( $.isFunction( callback ) ) {
+					return callback( $scope, $ );
+				}
+			};
+		},
+
+		replayReadyWidgets : function() {
+			if ( ! ee._ltxeWidgetHandlers ) {
+				return;
+			}
+
+			$.each( ee._ltxeWidgetHandlers, function( widget, callback ) {
+				$( '.elementor-element[data-widget_type="' + widget + '"]' ).each( function() {
+					var $scope = $( this );
+					if ( 'object' === typeof callback && ! $.isFunction( callback ) ) {
+						$.each( callback, function( index, cb ) {
+							if ( $.isFunction( cb ) ) {
+								cb( $scope, $ );
+							}
+						} );
+					} else if ( $.isFunction( callback ) ) {
+						callback( $scope, $ );
+					}
+				} );
 			} );
 		},
 
@@ -1713,34 +1773,52 @@
 
 		Popup : function( $scope, $ ) {
 
-			ee.Popup.elementSettings 	= ee.getElementSettings( $scope );
+			if ( $scope.data( 'ltxePopupInit' ) ) {
+				return;
+			}
+			$scope.data( 'ltxePopupInit', true );
+
+			var elementSettings 	= ee.getElementSettings( $scope );
+			ee.Popup.elementSettings = elementSettings;
 			ee.applyReducedMotionClass( $scope );
 
 			var scopeId 			= $scope.data('id'),
 				$trigger 			= $scope.find( '.ee-popup__trigger' ),
 				$content 			= $scope.find( '.ee-popup__content' ),
 				storageID 			= 'ltxe_PopupShown_' + scopeId,
-				timesShow 			= ee.Popup.elementSettings.popup_times,
+				timesShow 			= elementSettings.popup_times,
 				$window 			= ee.getWindow(),
 				$html 				= elementorFrontend.isEditMode() ? $window.find('html') : $('html'),
-				persist 			= ee.Popup.elementSettings.popup_persist,
-				isAdmin 			= 'undefined' !== typeof ee.Popup.elementSettings.popup_open_admin && 'yes' === ee.Popup.elementSettings.popup_open_admin,
-				$closeButton 		= 'default' === ee.Popup.elementSettings.popup_close_button_position ? $scope.find( '.ee-popup__footer__button' ) : $scope.find( ee.Popup.elementSettings.popup_close_button_selector ),
+				persist 			= elementSettings.popup_persist,
+				isAdmin 			= 'undefined' !== typeof elementSettings.popup_open_admin && 'yes' === elementSettings.popup_open_admin,
+				$closeButton 		= 'default' === elementSettings.popup_close_button_position ? $scope.find( '.ee-popup__footer__button' ) : $scope.find( elementSettings.popup_close_button_selector ),
 				a11yNamespace       = 'ltxePopup' + scopeId,
 				lastFocusedEl       = null,
 
-				popupVAlignClass 	= 'mfp-popup--valign-' + ee.Popup.elementSettings.popup_valign,
-				closeHAlignClass 	= 'mfp-close--halign-' + ee.Popup.elementSettings.popup_close_halign,
-				closeVAlignClass 	= 'mfp-close--valign-' + ee.Popup.elementSettings.popup_close_valign,
-				noOverlayClass 	 	= 'yes' === ee.Popup.elementSettings.popup_no_overlay ? 'ee-mfp-popup--no-overlay' : 'ee-mfp-popup--overlay',
+				popupVAlignClass 	= 'mfp-popup--valign-' + elementSettings.popup_valign,
+				closeHAlignClass 	= 'mfp-close--halign-' + elementSettings.popup_close_halign,
+				closeVAlignClass 	= 'mfp-close--valign-' + elementSettings.popup_close_valign,
+				noOverlayClass 	 	= 'yes' === elementSettings.popup_no_overlay ? 'ee-mfp-popup--no-overlay' : 'ee-mfp-popup--overlay',
 
 				glightboxInstance 	= null;
 
-			ee.Popup.buildGlightbox = function() {
-				var popupType 	= ee.Popup.elementSettings.popup_type,
+			function closeForeignLightbox() {
+				var foreign = document.querySelector( '.glightbox-container:not(.ee-mfp-popup-' + scopeId + ')' );
+				if ( foreign ) {
+					var closeBtn = foreign.querySelector( '.gclose, .gbtn.gclose' );
+					if ( closeBtn ) {
+						closeBtn.click();
+					}
+					document.body.classList.remove( 'glightbox-open' );
+					document.documentElement.classList.remove( 'glightbox-open' );
+				}
+			}
+
+			function buildGlightbox() {
+				var popupType 	= elementSettings.popup_type,
 					elements 	= [],
 					slide 		= {},
-					containerClass = 'ee-mfp-popup ee-mfp-popup-' + scopeId + ' ' + noOverlayClass + ' ' + popupVAlignClass + ' ' + ee.Popup.elementSettings.popup_animation;
+					containerClass = 'ee-mfp-popup ee-mfp-popup-' + scopeId + ' ' + noOverlayClass + ' ' + popupVAlignClass + ' ' + elementSettings.popup_animation;
 
 				if ( 'iframe' === popupType ) {
 					slide = {
@@ -1766,42 +1844,47 @@
 
 				elements.push( slide );
 
-				var openEffect = '' !== ee.Popup.elementSettings.popup_animation && ! ee.prefersReducedMotion() ? 'zoom' : 'fade';
-				var closeEffect = '' !== ee.Popup.elementSettings.popup_animation && ! ee.prefersReducedMotion() ? 'zoom' : 'fade';
+				var openEffect = '' !== elementSettings.popup_animation && ! ee.prefersReducedMotion() ? 'zoom' : 'fade';
+				var closeEffect = '' !== elementSettings.popup_animation && ! ee.prefersReducedMotion() ? 'zoom' : 'fade';
 
 				return GLightbox( {
 					elements: elements,
-					closeButton: ee.Popup.elementSettings.popup_close_position || false,
+					closeButton: elementSettings.popup_close_position || false,
 					touchNavigation: true,
 					loop: false,
 					autoplayVideos: false,
 					openEffect: openEffect,
 					closeEffect: closeEffect,
-					closeOnOutsideClick: 'yes' === ee.Popup.elementSettings.popup_close_on_bg,
-					keyboardNavigation: 'yes' === ee.Popup.elementSettings.popup_close_on_escape,
+					closeOnOutsideClick: 'yes' === elementSettings.popup_close_on_bg,
+					keyboardNavigation: 'yes' === elementSettings.popup_close_on_escape,
 					cssClasses: {
 						container: 'glightbox-container ' + containerClass,
 					},
 					slideHTML: '<div class="gslide"><div class="gslide-inner-content"><div class="ginner-container"><div class="gslide-media"></div></div></div><button class="gclose gbtn ee-popup__close mfp-close ' + closeHAlignClass + ' ' + closeVAlignClass + ' eicon-close" title="Close" aria-label="Close"></button></div>',
 					afterOpen: function() {
+						var wrap = document.querySelector( '.glightbox-container' );
+						if ( wrap ) {
+							wrap.classList.add( 'ee-mfp-popup', 'ee-mfp-popup-' + scopeId, noOverlayClass, popupVAlignClass );
+						}
 						ee.markGlightboxPopupReady( scopeId );
-						ee.Popup.onOpen( glightboxInstance, $trigger );
+						onOpen( glightboxInstance, $trigger );
 						ee.setAriaExpanded( $trigger, true, $content.attr( 'id' ) );
 						ee.bindEscapeClose( a11yNamespace, function() {
-							ee.Popup.closeLightbox();
+							closeLightbox();
 						} );
 						var $dialog = $( '.glightbox-container .gslide.open' );
 						ee.focusTrap( $dialog, a11yNamespace );
 					},
 					beforeClose: function() {
 						ee.unmarkGlightboxPopupReady( scopeId );
+						$scope.trigger( 'ltxe:popup:closed' );
 						ee.unbindEscapeClose( a11yNamespace );
 						ee.releaseFocusTrap( $( '.glightbox-container .gslide.open' ), a11yNamespace );
 						ee.setAriaExpanded( $trigger, false, $content.attr( 'id' ) );
 						if ( lastFocusedEl && lastFocusedEl.focus ) {
 							lastFocusedEl.focus();
 						}
-						if ( 'yes' !== ee.Popup.elementSettings.popup_prevent_scroll ) {
+						if ( 'yes' !== elementSettings.popup_prevent_scroll ) {
 							$html.css( { overflow: '' } );
 						}
 					},
@@ -1817,34 +1900,35 @@
 						}
 
 						var $clone = $content.clone(),
-							container = ( '' !== ee.Popup.elementSettings.popup_url_container ) ? ee.Popup.elementSettings.popup_url_container : false,
+							container = ( '' !== elementSettings.popup_url_container ) ? elementSettings.popup_url_container : false,
 							$appendedContent = LandTechExtrasUtils.parseAjaxResponse( xhr.responseText, container );
 
 						$clone.removeClass( 'mfp-hide glightbox-hide' ).find( '.ee-popup__content__body' ).append( $appendedContent );
 						data.slideNode.querySelector( '.gslide-media' ).appendChild( $clone.get( 0 ) );
 					},
 				} );
-			};
+			}
 
-			ee.Popup.openLightbox = function() {
+			function isThisOpen() {
+				return !!( document.querySelector( '.glightbox-container.ee-mfp-popup-' + scopeId ) );
+			}
+
+			function openLightbox() {
 				lastFocusedEl = document.activeElement;
+				closeForeignLightbox();
 				if ( ! glightboxInstance ) {
-					glightboxInstance = ee.Popup.buildGlightbox();
+					glightboxInstance = buildGlightbox();
 				}
 				glightboxInstance.open();
-			};
+			}
 
-			ee.Popup.closeLightbox = function() {
+			function closeLightbox() {
 				if ( glightboxInstance ) {
 					glightboxInstance.close();
 				}
-			};
+			}
 
-			ee.Popup.isOpen = function() {
-				return document.body.classList.contains( 'glightbox-open' );
-			};
-
-			ee.Popup.init = function() {
+			function initPopup() {
 
 				if ( $scope.is(':not(:visible)') )
 					return;
@@ -1858,57 +1942,72 @@
 					$closeButton.on( 'click', function( e ) {
 						e.preventDefault();
 						e.stopPropagation();
-						ee.Popup.closeLightbox();
+						closeLightbox();
 					});
 				}
 
 				if ( elementorFrontend.isEditMode() ) {
-					ee.Popup.closeLightbox();
-					glightboxInstance = ee.Popup.buildGlightbox();
+					closeLightbox();
+					glightboxInstance = buildGlightbox();
 
-					if ( 'yes' === ee.Popup.elementSettings.popup_open )
-						ee.Popup.openLightbox();
+					if ( 'yes' === elementSettings.popup_open )
+						openLightbox();
 				} else {
-					ee.Popup.behaviour();
+					bindBehaviour();
 				}
-			};
+			}
 
-			ee.Popup.behaviour = function() {
+			function bindBehaviour() {
 
-				switch ( ee.Popup.elementSettings.popup_trigger ) {
+				switch ( elementSettings.popup_trigger ) {
 
 					case 'click':
-						ee.Popup.behaviourClick();
+						bindClick();
 						break;
 
 					case 'instant':
-						ee.Popup.behaviourInstant();
+						bindInstant();
 						break;
 
 					case 'scroll':
-						ee.Popup.behaviourScroll();
+						bindScroll();
 						break;
 
 					case 'intent':
-						ee.Popup.behaviourIntent();
+						bindIntent();
+						break;
+
+					case 'delay':
+						var delayMs = elementSettings.trigger_delay ? ( parseFloat( elementSettings.trigger_delay ) * 1000 ) : elementSettings.popup_delay;
+						setTimeout( openPopup, delayMs );
+						break;
+
+					case 'scroll_pct':
+					case 'inactivity':
 						break;
 
 					default:
-						console.log( 'No popup trigger selected' );
+						break;
 				}
-			};
 
-			ee.Popup.behaviourClick = function() {
+				$( document ).on( 'landtech_extras/popup_advanced_open', function( _e, openedId ) {
+					if ( String( openedId ) === String( $scope.data( 'id' ) ) ) {
+						openPopup();
+					}
+				} );
+			}
 
-				if ( 'text' !== ee.Popup.elementSettings.popup_click_target ) {
+			function bindClick() {
+
+				if ( 'text' !== elementSettings.popup_click_target ) {
 					var $custom_trigger = null,
 						_selector 		= null,
 						$selector 		= null,
 						$template 		= $scope.closest( '.elementor-template' );
 
-					if ( 'id' === ee.Popup.elementSettings.popup_click_target ) {
+					if ( 'id' === elementSettings.popup_click_target ) {
 						_selector = '#' + $trigger.data('trigger-id');
-					} else if ( 'class' === ee.Popup.elementSettings.popup_click_target ) {
+					} else if ( 'class' === elementSettings.popup_click_target ) {
 						_selector = '.' + $trigger.data('trigger-class');
 					}
 
@@ -1924,29 +2023,29 @@
 						$custom_trigger.on( 'click', function( e ) {
 							e.preventDefault();
 							e.stopPropagation();
-							ee.Popup.openLightbox();
+							openLightbox();
 						});
 					}
 				} else {
 					$trigger.on( 'click', function( e ) {
 						e.preventDefault();
-						ee.Popup.openLightbox();
+						openLightbox();
 					} );
 				}
-			};
+			}
 
-			ee.Popup.behaviourInstant = function() {
-				setTimeout( ee.Popup.open, ee.Popup.elementSettings.popup_delay );
-			};
+			function bindInstant() {
+				setTimeout( openPopup, elementSettings.popup_delay );
+			}
 
-			ee.Popup.behaviourScroll = function() {
+			function bindScroll() {
 				var doc = document.documentElement,
 					limit;
 
-				if ( 'amount' === ee.Popup.elementSettings.popup_scroll_type ) {
-					limit = ee.Popup.elementSettings.popup_scroll_amount;
-				} else if ( 'element' === ee.Popup.elementSettings.popup_scroll_type ) {
-					var scrollElement = $( '#' + ee.Popup.elementSettings.popup_scroll_element );
+				if ( 'amount' === elementSettings.popup_scroll_type ) {
+					limit = elementSettings.popup_scroll_amount;
+				} else if ( 'element' === elementSettings.popup_scroll_type ) {
+					var scrollElement = $( '#' + elementSettings.popup_scroll_element );
 
 					if ( scrollElement.length ) {
 						limit = scrollElement.offset().top;
@@ -1955,36 +2054,36 @@
 
 				$window.on( 'scroll', function() {
 					var scrollTop = ( window.pageYOffset || doc.scrollTop )  - ( doc.clientTop || 0 );
-					if ( scrollTop >= limit ) ee.Popup.open();
+					if ( scrollTop >= limit ) openPopup();
 				});
-			};
+			}
 
-			ee.Popup.behaviourIntent = function() {
+			function bindIntent() {
 				var exitIntentArgs = {};
 
-				if ( ee.Popup.elementSettings.popup_intent_sensitivity ) {
-					exitIntentArgs.sensitivity = ee.Popup.elementSettings.popup_intent_sensitivity.size;
+				if ( elementSettings.popup_intent_sensitivity ) {
+					exitIntentArgs.sensitivity = elementSettings.popup_intent_sensitivity.size;
 				}
 				
 				$.exitIntent( 'enable', exitIntentArgs );
 
-				$(document).bind( 'exitintent', ee.Popup.open );
-			};
+				$(document).bind( 'exitintent', openPopup );
+			}
 
-			ee.Popup.onOpen = function( instance, element ) {
+			function onOpen( instance ) {
 
-				if ( 'yes' === ee.Popup.elementSettings.refresh_widgets && instance && instance.activeSlide ) {
+				if ( 'yes' === elementSettings.refresh_widgets && instance && instance.activeSlide ) {
 					var slideNode = instance.activeSlide.slideNode || instance.activeSlide;
 					ee.refreshElements( $( slideNode ), true );
 				}
 
-				if ( 'yes' !== ee.Popup.elementSettings.popup_prevent_scroll ) {
+				if ( 'yes' !== elementSettings.popup_prevent_scroll ) {
 					$html.css({ 'overflow' : '' });
 				}
-			};
+			}
 
-			ee.Popup.open = function() {
-				if ( ee.Popup.isOpen() ) {
+			function openPopup() {
+				if ( isThisOpen() ) {
 					return;
 				}
 
@@ -2014,22 +2113,22 @@
 					}
 
 					timesPassed = timesShown >= timesShow;
-					datePassed 	= ( now - dateShown ) >= ( ee.Popup.elementSettings.popup_days * 86400000 );
+					datePassed 	= ( now - dateShown ) >= ( elementSettings.popup_days * 86400000 );
 					canShow 	= ! dateShown || ! timesPassed || ( timesPassed && datePassed );
 
 					if ( canShow ) {
-						ee.Popup.openLightbox();
+						openLightbox();
 						storageData.times = timesShown + 1;
 						storageData.date = now;
 						localStorage.setItem( storageID, JSON.stringify( storageData ) );
 					}
 				} else {
 					localStorage.removeItem( storageID );
-					ee.Popup.openLightbox();
+					openLightbox();
 				}
-			};
+			}
 
-			ee.Popup.init();
+			initPopup();
 		},
 
 		////////////////////////////////////////////
@@ -2337,8 +2436,28 @@
 			};
 
 			ee.InlineSvg.callback = function( data ) {
-				// And append the the first node to our wrapper
-				$wrapper.html( $( data ).find('svg') );
+				if ( $wrapper.attr( 'data-ltxe-svg-loaded' ) && $wrapper.find( 'svg' ).length ) {
+					return;
+				}
+
+				var $parsed = $( data );
+				var $svgNode = $parsed.is( 'svg' ) ? $parsed : $parsed.find( 'svg' );
+				if ( ! $svgNode.length && data && data.documentElement ) {
+					$svgNode = $( data.documentElement ).is( 'svg' ) ? $( data.documentElement ) : $( data ).find( 'svg' );
+				}
+				if ( ! $svgNode.length && 'string' === typeof data ) {
+					var parsedDoc = new DOMParser().parseFromString( data, 'image/svg+xml' );
+					var rawSvg = parsedDoc.querySelector( 'svg' );
+					if ( rawSvg ) {
+						$svgNode = $( rawSvg );
+					}
+				}
+				if ( ! $svgNode.length ) {
+					return;
+				}
+
+				$wrapper.attr( 'data-ltxe-svg-loaded', '1' );
+				$wrapper.empty().append( $svgNode.clone() );
 
 				var $svg = $wrapper.find( 'svg' ),
 				
@@ -3837,6 +3956,10 @@
 
 			ee.ImageComparison.elementSettings = ee.getElementSettings( $scope );
 
+			if ( $scope.hasClass( 'ltxe-img-comparison--vertical' ) || $scope.find( '.ltxe-img-comparison--vertical' ).length ) {
+				return;
+			}
+
 			var $images = $scope.find('.ee-image-comparison'),
 				imageComparisonArgs = {
 					animation 		: 'yes' === ee.ImageComparison.elementSettings.entrance_animation,
@@ -3890,11 +4013,15 @@
 					},
 					responsive 		: {
 						disable 	: ee.Tooltips.elementSettings[ skin + 'disable' ] || ee.Tooltips.globalSettings.ltxe_tooltips_disable,
-						breakpoints		: {
-							'mobile' 	: elementorFrontend.config.breakpoints.xs,
-							'tablet'	: elementorFrontend.config.breakpoints.md,
-							'desktop' 	: elementorFrontend.config.breakpoints.lg,
-						},
+						breakpoints		: ( function() {
+							var bp = ( elementorFrontend.config && elementorFrontend.config.breakpoints ) || {};
+							var rbp = ( elementorFrontend.config && elementorFrontend.config.responsive && elementorFrontend.config.responsive.breakpoints ) || {};
+							return {
+								'mobile' 	: bp.xs || ( rbp.mobile && rbp.mobile.value ) || 767,
+								'tablet'	: bp.md || ( rbp.tablet && rbp.tablet.value ) || 1024,
+								'desktop' 	: bp.lg || ( rbp.laptop && rbp.laptop.value ) || 1440,
+							};
+						}() ),
 					},
 				};
 
@@ -4652,6 +4779,30 @@
 		'sensitivity': 300
 	};
 
-	$(window).on( 'elementor/frontend/init', ee.init );
+	var ltxeHeardFrontendInit = false;
+
+	$( window ).on( 'elementor/frontend/init', function() {
+		ltxeHeardFrontendInit = true;
+		ee.init( false );
+		window.setTimeout( function() {
+			ee.replayReadyWidgets();
+		}, 0 );
+	} );
+
+	$( function() {
+		window.setTimeout( function() {
+			if ( window.elementorFrontend && elementorFrontend.hooks ) {
+				ee.init( true );
+			}
+		}, 0 );
+	} );
+
+	$( window ).on( 'load', function() {
+		window.setTimeout( function() {
+			if ( window.elementorFrontend && elementorFrontend.hooks ) {
+				ee.init( true );
+			}
+		}, 0 );
+	} );
 
 }( jQuery, window ) );

@@ -94,12 +94,14 @@ class Google_Map extends Extras_Widget {
 
 		if ( 'openstreetmap' === $provider ) {
 			return [
+				'landtech-extras-frontend',
 				'landtech-extras-leaflet',
 				'landtech-extras-jquery-resize',
 			];
 		}
 
 		return [
+			'landtech-extras-frontend',
 			'landtech-extras-gmap3',
 			'landtech-extras-google-maps',
 			'landtech-extras-jquery-resize',

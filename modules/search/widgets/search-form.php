@@ -145,7 +145,7 @@ class Search_Form extends Extras_Widget {
 	 * @return array
 	 */
 	public function get_script_depends() {
-		return [ 'landtech-extras-elementor-select2' ];
+		return [ 'landtech-extras-frontend', 'landtech-extras-elementor-select2' ];
 	}
 
 	/**

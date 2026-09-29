@@ -7,6 +7,9 @@ use LandTechExtras\Utils;
 use LandTechExtras\Group_Control_Transition;
 use LandTechExtras\Base\Extras_Widget;
 use LandTechExtras\Modules\Calendar\Module as Module;
+use LandTechExtras\Modules\Calendar\Ical_Fetcher;
+use LandTechExtras\Modules\Calendar\Tec_Source;
+use LandTechExtras\Modules\Calendar\Woo_Bookings_Source;
 use LandTechExtras\Modules\CustomFields\Module as CustomFieldsModule;
 
 // Elementor Classes
@@ -121,6 +124,107 @@ class Calendar extends Extras_Widget {
 					'options'		=> [
 						'manual' 	=> __( 'Manual', 'landtech-extras-for-elementor' ),
 						'posts' 	=> __( 'Posts', 'landtech-extras-for-elementor' ),
+						'ical'      => __( 'iCal / Google Calendar URL', 'landtech-extras-for-elementor' ),
+						'tec'       => __( 'The Events Calendar Plugin', 'landtech-extras-for-elementor' ),
+						'woo_book'  => __( 'WooCommerce Bookings', 'landtech-extras-for-elementor' ),
+					],
+				]
+			);
+
+			$this->add_control(
+				'ical_url',
+				[
+					'label'       => __( 'iCal / .ics URL', 'landtech-extras-for-elementor' ),
+					'type'        => Controls_Manager::URL,
+					'description' => __( 'Paste a Google Calendar, Outlook, or any .ics feed URL.', 'landtech-extras-for-elementor' ),
+					'condition'   => [
+						'source' => 'ical',
+					],
+				]
+			);
+
+			$this->add_control(
+				'ical_cache_ttl',
+				[
+					'label'     => __( 'Refresh Frequency', 'landtech-extras-for-elementor' ),
+					'type'      => Controls_Manager::SELECT,
+					'default'   => '3600',
+					'options'   => [
+						'900'   => __( 'Every 15 minutes', 'landtech-extras-for-elementor' ),
+						'3600'  => __( 'Every hour', 'landtech-extras-for-elementor' ),
+						'21600' => __( 'Every 6 hours', 'landtech-extras-for-elementor' ),
+						'86400' => __( 'Daily', 'landtech-extras-for-elementor' ),
+					],
+					'condition' => [
+						'source' => 'ical',
+					],
+				]
+			);
+
+			$this->add_control(
+				'ical_color',
+				[
+					'label'     => __( 'Calendar Color', 'landtech-extras-for-elementor' ),
+					'type'      => Controls_Manager::COLOR,
+					'default'   => '#4285F4',
+					'condition' => [
+						'source' => 'ical',
+					],
+				]
+			);
+
+			$ical_repeater = new Repeater();
+			$ical_repeater->add_control(
+				'ical_url',
+				[
+					'label' => __( 'iCal URL', 'landtech-extras-for-elementor' ),
+					'type'  => Controls_Manager::URL,
+				]
+			);
+			$ical_repeater->add_control(
+				'ical_label',
+				[
+					'label' => __( 'Calendar Label', 'landtech-extras-for-elementor' ),
+					'type'  => Controls_Manager::TEXT,
+				]
+			);
+			$ical_repeater->add_control(
+				'ical_color',
+				[
+					'label' => __( 'Color', 'landtech-extras-for-elementor' ),
+					'type'  => Controls_Manager::COLOR,
+				]
+			);
+			$this->add_control(
+				'ical_sources',
+				[
+					'label'     => __( 'Additional iCal Calendars', 'landtech-extras-for-elementor' ),
+					'type'      => Controls_Manager::REPEATER,
+					'fields'    => $ical_repeater->get_controls(),
+					'condition' => [
+						'source' => 'ical',
+					],
+				]
+			);
+
+			$this->add_control(
+				'tec_notice',
+				[
+					'type'      => Controls_Manager::RAW_HTML,
+					'raw'       => '<p>' . esc_html__( 'This source requires The Events Calendar plugin.', 'landtech-extras-for-elementor' ) . '</p>',
+					'condition' => [
+						'source' => 'tec',
+					],
+				]
+			);
+
+			$this->add_control(
+				'woo_book_notice',
+				[
+					'type'      => Controls_Manager::RAW_HTML,
+					'raw'       => '<p>' . esc_html__( 'This source requires WooCommerce Bookings.', 'landtech-extras-for-elementor' ) . '</p>',
+					'condition' => [
+						'source' => 'woo_book',
 					],
 				]
 			);
@@ -702,6 +806,18 @@ class Calendar extends Extras_Widget {
 				$this->get_posts_data();
 				break;
 
+			case 'ical' :
+				$this->setup_ical();
+				break;
+
+			case 'tec' :
+				$this->setup_tec();
+				break;
+
+			case 'woo_book' :
+				$this->setup_woo_bookings();
+				break;
+
 			default :
 				$this->setup_manual();
 		}
@@ -899,6 +1015,91 @@ class Calendar extends Extras_Widget {
 	 * @since  2.0.0
 	 * @return void
 	 */
+	/**
+	 * Map a source event to the calendar row shape.
+	 *
+	 * @param array<string,mixed> $event Normalised event.
+	 * @return array<string,mixed>
+	 */
+	protected function map_source_event( $event ) {
+		$link = '';
+		if ( ! empty( $event['link'] ) ) {
+			$link = esc_url( $event['link'] );
+		} elseif ( ! empty( $event['url'] ) ) {
+			$link = esc_url( $event['url'] );
+		}
+		return array(
+			'title'   => isset( $event['title'] ) ? $event['title'] : '',
+			'start'   => isset( $event['start'] ) ? $event['start'] : '',
+			'end'     => isset( $event['end'] ) ? $event['end'] : '',
+			'link'    => $link,
+			'target'  => isset( $event['target'] ) ? $event['target'] : '_self',
+			'rel'     => isset( $event['rel'] ) ? $event['rel'] : '',
+			'archive' => isset( $event['archive'] ) ? $event['archive'] : false,
+		);
+	}
+
+	/**
+	 * Load events from iCal URLs.
+	 *
+	 * @return void
+	 */
+	protected function setup_ical() {
+		$settings = $this->get_settings_for_display();
+		$fetcher  = new Ical_Fetcher();
+		$ttl      = isset( $settings['ical_cache_ttl'] ) ? absint( $settings['ical_cache_ttl'] ) : 3600;
+		$events   = array();
+
+		$primary = '';
+		if ( ! empty( $settings['ical_url']['url'] ) ) {
+			$primary = $settings['ical_url']['url'];
+		}
+		if ( $primary ) {
+			foreach ( $fetcher->get_events( $primary, $ttl ) as $event ) {
+				$events[] = $this->map_source_event( $event );
+			}
+		}
+
+		if ( ! empty( $settings['ical_sources'] ) && is_array( $settings['ical_sources'] ) ) {
+			foreach ( $settings['ical_sources'] as $row ) {
+				$url = '';
+				if ( ! empty( $row['ical_url']['url'] ) ) {
+					$url = $row['ical_url']['url'];
+				}
+				if ( ! $url ) {
+					continue;
+				}
+				foreach ( $fetcher->get_events( $url, $ttl ) as $event ) {
+					$events[] = $this->map_source_event( $event );
+				}
+			}
+		}
+
+		$this->_events = apply_filters( 'landtech_extras/widgets/calendar/events/ical', $events, $settings );
+	}
+
+	/**
+	 * Load The Events Calendar posts.
+	 *
+	 * @return void
+	 */
+	protected function setup_tec() {
+		$settings      = $this->get_settings_for_display();
+		$source        = new Tec_Source();
+		$this->_events = array_map( array( $this, 'map_source_event' ), $source->get_events( $settings ) );
+	}
+
+	/**
+	 * Load WooCommerce Bookings.
+	 *
+	 * @return void
+	 */
+	protected function setup_woo_bookings() {
+		$settings      = $this->get_settings_for_display();
+		$source        = new Woo_Bookings_Source();
+		$this->_events = array_map( array( $this, 'map_source_event' ), $source->get_events( $settings ) );
+	}
+
 	protected function setup_manual() {
 		$settings = $this->get_settings_for_display();
 		$events = [];

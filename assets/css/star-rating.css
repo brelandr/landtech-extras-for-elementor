@@ -1,0 +1,46 @@
+.ltxe-star-rating {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.ltxe-star-rating--stacked {
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.ltxe-star-rating__stars {
+	display: flex;
+	gap: 0.15rem;
+}
+
+.ltxe-star {
+	position: relative;
+	display: inline-block;
+	line-height: 1;
+	color: #ccc;
+}
+
+.ltxe-star--full {
+	color: #f5a623;
+}
+
+.ltxe-star--half {
+	color: #ccc;
+}
+
+.ltxe-star--half .ltxe-star__fill {
+	position: absolute;
+	inset: 0;
+	overflow: hidden;
+	clip-path: inset(0 50% 0 0);
+	color: #f5a623;
+}
+
+.ltxe-star-rating__schema {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+}

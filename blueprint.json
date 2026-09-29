@@ -1,9 +1,18 @@
 {
 	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"meta": {
+		"title": "LandTech Extras for Elementor 2.9",
+		"description": "Live preview with Elementor plus demo pages for every free widget, including testimonials, FAQ, team, pricing, countdown, and video playlist.",
+		"author": "brelandr",
+		"categories": ["elementor", "widgets"]
+	},
 	"landingPage": "/",
 	"preferredVersions": {
 		"php": "8.2",
 		"wp": "latest"
+	},
+	"features": {
+		"networking": true
 	},
 	"steps": [
 		{

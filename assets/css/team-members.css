@@ -1,0 +1,239 @@
+.ltxe-team {
+	--ltxe-team-cols: 1;
+	--ltxe-team-gap: 20px;
+	container-type: inline-size;
+	container-name: ltxe-team;
+	display: grid;
+	grid-template-columns: repeat(var(--ltxe-team-cols), minmax(0, 1fr));
+	gap: var(--ltxe-team-gap);
+}
+
+.ltxe-team-card {
+	position: relative;
+	background: #f6f7fb;
+	border-radius: 16px;
+	color: #1b2433;
+	overflow: hidden;
+}
+
+.ltxe-team-card__photo img,
+.ltxe-team-card__photo--placeholder {
+	display: block;
+	width: 100%;
+	aspect-ratio: 1;
+	object-fit: cover;
+}
+
+.ltxe-team-card__photo--placeholder {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #dbe3f4;
+	font-size: 2rem;
+	font-weight: 700;
+}
+
+.ltxe-team--shape-rounded .ltxe-team-card__photo img,
+.ltxe-team--shape-rounded .ltxe-team-card__photo--placeholder {
+	border-radius: 12px;
+}
+
+.ltxe-team--shape-circle .ltxe-team-card__photo img,
+.ltxe-team--shape-circle .ltxe-team-card__photo--placeholder {
+	border-radius: 50%;
+}
+
+.ltxe-team--shape-hexagon .ltxe-team-card__photo img,
+.ltxe-team--shape-hexagon .ltxe-team-card__photo--placeholder {
+	clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.ltxe-team--classic .ltxe-team-card__body,
+.ltxe-team--horizontal .ltxe-team-card__body {
+	padding: 16px 18px 20px;
+}
+
+.ltxe-team-card__name {
+	display: block;
+	margin: 0 0 4px;
+	font-size: 1.1rem;
+	font-weight: 700;
+	color: inherit;
+	text-decoration: none;
+}
+
+.ltxe-team-card__role,
+.ltxe-team-card__bio {
+	margin: 0 0 8px;
+}
+
+.ltxe-team-card__role {
+	opacity: 0.75;
+	font-size: 0.9rem;
+}
+
+.ltxe-team-card__social {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin: 12px 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.ltxe-team-card__social-link {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 44px;
+	min-height: 44px;
+	border-radius: 999px;
+	background: #fff;
+	color: inherit;
+	text-decoration: none;
+}
+
+.screen-reader-text {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
+}
+
+.ltxe-team--horizontal .ltxe-team-card {
+	display: grid;
+	grid-template-columns: 1fr;
+}
+
+@container ltxe-team (min-width: 520px) {
+	.ltxe-team--horizontal .ltxe-team-card {
+		grid-template-columns: minmax(0, 140px) minmax(0, 1fr);
+		align-items: center;
+	}
+}
+
+.ltxe-team--overlay .ltxe-team-card__body {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	padding: 16px;
+	background: linear-gradient(180deg, transparent 20%, rgba(15, 23, 42, 0.82));
+	color: #fff;
+	opacity: 0;
+	transition: opacity 0.25s ease;
+}
+
+.ltxe-team--overlay .ltxe-team-card:hover .ltxe-team-card__body,
+.ltxe-team--overlay .ltxe-team-card:focus-within .ltxe-team-card__body,
+.ltxe-team--overlay .ltxe-team-card.is-open .ltxe-team-card__body {
+	opacity: 1;
+}
+
+.ltxe-team--flip .ltxe-team-card {
+	background: transparent;
+	perspective: 1000px;
+}
+
+.ltxe-team--flip .ltxe-team-card__inner {
+	position: relative;
+	transform-style: preserve-3d;
+	transition: transform 0.5s ease;
+	min-height: 280px;
+}
+
+.ltxe-team--flip .ltxe-team-card:hover .ltxe-team-card__inner,
+.ltxe-team--flip .ltxe-team-card.is-flipped .ltxe-team-card__inner {
+	transform: rotateY(180deg);
+}
+
+.ltxe-team--flip .ltxe-team-card__face {
+	backface-visibility: hidden;
+	-webkit-backface-visibility: hidden;
+	border-radius: 16px;
+	background: #f6f7fb;
+	padding: 16px;
+}
+
+.ltxe-team--flip .ltxe-team-card__front {
+	position: relative;
+}
+
+.ltxe-team--flip .ltxe-team-card__back {
+	position: absolute;
+	inset: 0;
+	transform: rotateY(180deg);
+	overflow: auto;
+}
+
+.ltxe-team-card__flip-btn {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+}
+
+.ltxe-team-card:focus-within .ltxe-team-card__flip-btn {
+	position: static;
+	width: auto;
+	height: auto;
+	clip: auto;
+	overflow: visible;
+	min-height: 44px;
+	margin: 8px 16px 16px;
+	padding: 8px 14px;
+	border: 1px solid currentColor;
+	border-radius: 999px;
+	background: #fff;
+	cursor: pointer;
+}
+
+@media (hover: none) {
+	.ltxe-team-card__flip-btn {
+		position: static;
+		width: auto;
+		height: auto;
+		clip: auto;
+		overflow: visible;
+		min-height: 44px;
+		margin: 8px 16px 16px;
+		padding: 8px 14px;
+		border: 1px solid currentColor;
+		border-radius: 999px;
+		background: #fff;
+		cursor: pointer;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.ltxe-team--overlay .ltxe-team-card__body,
+	.ltxe-team--flip .ltxe-team-card__inner {
+		transition: none;
+	}
+
+	.ltxe-team--flip .ltxe-team-card:hover .ltxe-team-card__inner,
+	.ltxe-team--flip .ltxe-team-card.is-flipped .ltxe-team-card__inner {
+		transform: none;
+	}
+
+	.ltxe-team--flip .ltxe-team-card__back {
+		transform: none;
+		opacity: 0;
+	}
+
+	.ltxe-team--flip .ltxe-team-card:hover .ltxe-team-card__back,
+	.ltxe-team--flip .ltxe-team-card.is-flipped .ltxe-team-card__back {
+		opacity: 1;
+	}
+
+	.ltxe-team--flip .ltxe-team-card:hover .ltxe-team-card__front,
+	.ltxe-team--flip .ltxe-team-card.is-flipped .ltxe-team-card__front {
+		opacity: 0;
+	}
+}

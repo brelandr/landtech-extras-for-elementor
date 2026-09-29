@@ -57,6 +57,22 @@ class Modules_Manager {
 			'display-conditions',
 			'tabs',
 			'table-of-contents',
+			'progress-bar',
+			'countdown',
+			'reading-progress',
+			'pricing-table',
+			'star-rating',
+			'testimonials',
+			'faq',
+			'team-members',
+			'icon-box',
+			'cta',
+			'social-share',
+			'back-to-top',
+			'cookie-consent',
+			'sticky',
+			'dark-mode',
+			'dynamic-tags',
 		];
 	}
 

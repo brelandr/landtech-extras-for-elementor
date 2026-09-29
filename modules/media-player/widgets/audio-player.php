@@ -74,6 +74,7 @@ class Audio_Player extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		$scripts = [
+			'landtech-extras-frontend',
 			'landtech-extras-audio-player',
 			'landtech-extras-jquery-appear',
 		];

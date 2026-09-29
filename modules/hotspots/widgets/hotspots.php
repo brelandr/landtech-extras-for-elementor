@@ -75,7 +75,9 @@ class Hotspots extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
+			'landtech-extras-frontend',
 			'landtech-extras-hotips',
+			'landtech-extras-hotspots',
 			'resize',
 		];
 	}
@@ -228,6 +230,20 @@ class Hotspots extends Extras_Widget {
 				);
 
 				$repeater->add_control(
+					'content_type',
+					[
+						'label'   => __( 'Content Type', 'landtech-extras-for-elementor' ),
+						'type'    => Controls_Manager::SELECT,
+						'default' => 'text',
+						'options' => [
+							'text'     => __( 'Text / HTML', 'landtech-extras-for-elementor' ),
+							'template' => __( 'Elementor Template', 'landtech-extras-for-elementor' ),
+							'image'    => __( 'Image', 'landtech-extras-for-elementor' ),
+						],
+					]
+				);
+
+				$repeater->add_control(
 					'content',
 					[
 						'label' 	=> __( 'Tooltip Content', 'landtech-extras-for-elementor' ),
@@ -236,6 +252,47 @@ class Hotspots extends Extras_Widget {
 							'active' => true,
 						],
 						'default' 	=> __( 'I am a tooltip for a hotspot', 'landtech-extras-for-elementor' ),
+						'condition' => [
+							'content_type' => 'text',
+						],
+					]
+				);
+
+				$repeater->add_control(
+					'template_id',
+					[
+						'label'       => __( 'Choose Template', 'landtech-extras-for-elementor' ),
+						'type'        => Controls_Manager::SELECT2,
+						'label_block' => true,
+						'options'     => $this->get_available_templates(),
+						'condition'   => [
+							'content_type' => 'template',
+						],
+					]
+				);
+
+				$repeater->add_control(
+					'hotspot_image',
+					[
+						'label'     => __( 'Image', 'landtech-extras-for-elementor' ),
+						'type'      => Controls_Manager::MEDIA,
+						'condition' => [
+							'content_type' => 'image',
+						],
+					]
+				);
+
+				$repeater->add_control(
+					'image_caption',
+					[
+						'label'     => __( 'Caption', 'landtech-extras-for-elementor' ),
+						'type'      => Controls_Manager::TEXT,
+						'dynamic'   => [
+							'active' => true,
+						],
+						'condition' => [
+							'content_type' => 'image',
+						],
 					]
 				);
 
@@ -1394,7 +1451,7 @@ class Hotspots extends Extras_Widget {
 					</<?php echo esc_html( $hotspot_tag ); ?>>
 
 					<div <?php $this->print_render_attribute_string( $tooltip_key ); ?>>
-						<?php echo wp_kses_post( $this->parse_text_editor( $item['content'] ) ); ?>
+						<?php $this->render_hotspot_tooltip_content( $item ); ?>
 					</div>
 
 				<?php } ?>
@@ -1403,6 +1460,84 @@ class Hotspots extends Extras_Widget {
 		
 		</div>
 		<?php
+	}
+
+	/**
+	 * Published Elementor templates available as hotspot tooltip content.
+	 *
+	 * @since 2.7.0
+	 *
+	 * @return array<int,string>
+	 */
+	protected function get_available_templates() {
+		$posts = get_posts(
+			array(
+				'post_type'              => 'elementor_library',
+				'posts_per_page'         => 100,
+				'post_status'            => 'publish',
+				'no_found_rows'          => true,
+				'update_post_meta_cache' => false,
+				'update_post_term_cache' => false,
+				'meta_query'             => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- editor-only template picker, capped at 100.
+					array(
+						'key'     => '_elementor_template_type',
+						'value'   => array( 'section', 'page', 'container' ),
+						'compare' => 'IN',
+					),
+				),
+			)
+		);
+
+		$options = array();
+		if ( empty( $posts ) || ! is_array( $posts ) ) {
+			return $options;
+		}
+
+		foreach ( $posts as $post ) {
+			if ( ! $post instanceof \WP_Post ) {
+				continue;
+			}
+			$options[ (int) $post->ID ] = get_the_title( $post );
+		}
+
+		return $options;
+	}
+
+	/**
+	 * Render tooltip inner content for one hotspot.
+	 *
+	 * @since 2.7.0
+	 *
+	 * @param array<string,mixed> $item Repeater row.
+	 * @return void
+	 */
+	protected function render_hotspot_tooltip_content( $item ) {
+		$content_type = isset( $item['content_type'] ) ? (string) $item['content_type'] : 'text';
+
+		if ( 'template' === $content_type && ! empty( $item['template_id'] ) ) {
+			$template_id = absint( $item['template_id'] );
+			if ( $template_id && class_exists( '\Elementor\Plugin' ) ) {
+				echo '<div class="ee-hotspot__template">';
+				echo \Elementor\Plugin::$instance->frontend->get_builder_content_for_display( $template_id, true ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor builder HTML; already sanitized by Elementor at save.
+				echo '</div>';
+			}
+			return;
+		}
+
+		if ( 'image' === $content_type && ! empty( $item['hotspot_image']['url'] ) ) {
+			$caption = isset( $item['image_caption'] ) ? (string) $item['image_caption'] : '';
+			echo '<figure class="ee-hotspot__image">';
+			echo '<img src="' . esc_url( $item['hotspot_image']['url'] ) . '" alt="' . esc_attr( $caption ) . '">';
+			if ( '' !== $caption ) {
+				echo '<figcaption>' . esc_html( $caption ) . '</figcaption>';
+			}
+			echo '</figure>';
+			return;
+		}
+
+		if ( ! empty( $item['content'] ) ) {
+			echo wp_kses_post( $this->parse_text_editor( $item['content'] ) );
+		}
 	}
 
 	/**

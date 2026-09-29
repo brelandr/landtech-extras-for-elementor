@@ -2539,7 +2539,9 @@ class Skin_Classic extends Skin_Base {
 	 * @return string
 	 */
 	public function remove_unique_pagination_query_arg( $link ) {
-		return filter_input( INPUT_GET, 'posts' ) ? remove_query_arg( 'posts', $link ) : $link;
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public pagination query arg; compared only to decide whether to strip it from links.
+		$posts_arg = isset( $_GET['posts'] ) ? sanitize_text_field( wp_unslash( $_GET['posts'] ) ) : '';
+		return ( '' !== $posts_arg ) ? remove_query_arg( 'posts', $link ) : $link;
 	}
 
 	/**

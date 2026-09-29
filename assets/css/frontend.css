@@ -2992,7 +2992,39 @@
 }
 .ee-calendar__mount {
   min-height: 420px;
+  height: 560px;
   overflow: hidden;
+}
+.ltxe-cal-fallback {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 1px;
+  height: 100%;
+  min-height: 420px;
+  background: #e5e7eb;
+  border: 1px solid #e5e7eb;
+  color: #111827;
+}
+.ltxe-cal-fallback__dow,
+.ltxe-cal-fallback__day {
+  background: #fff;
+  padding: 8px;
+  min-height: 56px;
+}
+.ltxe-cal-fallback__dow {
+  font-size: 12px;
+  font-weight: 600;
+  min-height: 0;
+  text-align: center;
+}
+.ltxe-cal-fallback__day.is-pad {
+  background: #f8fafc;
+}
+.ltxe-cal-fallback__day.is-today {
+  box-shadow: inset 0 0 0 2px #2563eb;
+}
+.ltxe-cal-fallback__day.has-events {
+  font-weight: 700;
 }
 .elementor-widget-table {
   text-align: center;
@@ -3671,11 +3703,78 @@ li:last-child .ee-post__terms__separator {
 .mfp-hide {
   display: none !important;
 }
-.glightbox-container.ee-mfp-popup .gslide-inline {
+.glightbox-container.ee-mfp-popup .gslide-inline,
+.glightbox-container.ee-mfp-popup .ginlined-content,
+.glightbox-container:has(.ee-popup__content) .gslide-inline,
+.glightbox-container:has(.ee-popup__content) .ginlined-content {
   background: transparent;
+  width: auto !important;
+  max-width: 520px !important;
+  height: auto !important;
+  padding: 0;
 }
-.glightbox-container.ee-mfp-popup .goverlay {
-  background: rgba(0, 0, 0, 0.8);
+.glightbox-container.ee-mfp-popup .goverlay,
+.glightbox-container:has(.ee-popup__content) .goverlay {
+  background: rgba(11, 16, 32, 0.62);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+.glightbox-container.ee-mfp-popup .ee-popup__content,
+.glightbox-container .ee-popup__content {
+  width: min(520px, calc(100vw - 2rem));
+  max-width: 520px;
+  margin: 0 auto;
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: 0 28px 80px rgba(15, 18, 32, 0.32);
+}
+.glightbox-container.ee-mfp-popup .ee-popup__header {
+  padding: 2rem 2rem 0.5rem;
+  background: linear-gradient(180deg, #f4f1ff 0%, #ffffff 72%);
+}
+.glightbox-container.ee-mfp-popup .ee-popup__header__title {
+  margin: 0;
+  color: #111318;
+  font-size: 1.7rem;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+.glightbox-container.ee-mfp-popup .ee-popup__content__body {
+  padding: 0.75rem 2rem 0.35rem;
+  color: #5b6170;
+  font-size: 1.02rem;
+  line-height: 1.65;
+}
+.glightbox-container.ee-mfp-popup .ee-popup__footer {
+  padding: 1rem 2rem 2rem;
+}
+.glightbox-container.ee-mfp-popup .ee-popup__footer__button .ee-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.7rem 1.25rem;
+  border-radius: 999px;
+  background: #111318;
+  color: #fff;
+  font-weight: 650;
+  text-decoration: none;
+}
+.glightbox-container.ee-mfp-popup .gclose.ee-popup__close,
+.glightbox-container:has(.ee-popup__content) .gclose {
+  top: 18px;
+  right: 18px;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: #fff;
+  color: #111318;
+  opacity: 1;
+  box-shadow: 0 8px 24px rgba(17, 19, 24, 0.16);
+}
+.glightbox-container:has(.ee-popup__content) .gprev,
+.glightbox-container:has(.ee-popup__content) .gnext {
+  display: none !important;
 }
 .glightbox-container.ee-mfp-popup--no-overlay .goverlay {
   background: transparent;
@@ -8887,9 +8986,25 @@ body.ee-offcanvas--open [canvas] {
    both because the inline attribute is a Section D compliance pattern reviewers
    flag and because CSS lets responsive breakpoints override the max-width. This
    rule matches the fluid `width: 100%` and 480 px cap that used to be inline. */
-.elementor-widget-lottie lottie-player {
+.elementor-widget-lottie lottie-player,
+.elementor-widget-ee-lottie lottie-player,
+.elementor-widget-ee-lottie .ee-lottie,
+.elementor-widget-ee-lottie .ee-lottie__canvas {
   width: 100%;
   max-width: 480px;
+}
+
+.elementor-widget-ee-lottie .ee-lottie {
+  min-height: 220px;
+  min-width: 44px;
+}
+
+.elementor-widget-ee-lottie .ee-lottie__canvas {
+  min-height: 220px;
+}
+
+.elementor-widget-ee-lottie .ee-lottie[role="button"] {
+  cursor: pointer;
 }
 
 /* Slide Menu arrow — 6 px vertical padding produced a sub-24 px tap area for the
@@ -8988,4 +9103,59 @@ body.ee-offcanvas--open [canvas] {
     bottom: env(safe-area-inset-bottom);
     max-width: calc(100% - 48px);
   }
+}
+
+.ee-hotspot__template,
+.ee-hotspot__image {
+  max-width: 320px;
+  min-width: 200px;
+}
+
+.ee-hotspot__image img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ee-gallery__play {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.ee-gallery__play:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 54%;
+  transform: translate(-50%, -50%);
+  border-style: solid;
+  border-width: 8px 0 8px 14px;
+  border-color: transparent transparent transparent #fff;
+}
+
+.ee-gallery__media-wrapper,
+.ee-gallery__media__thumbnail {
+  position: relative;
+}
+
+.ee-gallery__load-more,
+.ee-gallery__page {
+  min-height: 44px;
+  min-width: 44px;
+  margin: 0.25rem;
+}
+
+.ltxe-img-comparison--vertical {
+  position: relative;
+  overflow: hidden;
+}
+
+.ltxe-img-comparison--vertical .ee-image-comparison__handle {
+  min-width: 44px;
+  min-height: 44px;
 }

@@ -380,4 +380,45 @@ abstract class Extras_Widget extends Widget_Base {
 	protected function get_gallery_media_tag_name( $tag ) {
 		return in_array( $tag, array( 'figure', 'a' ), true ) ? $tag : 'figure';
 	}
+
+	/**
+	 * Opt-in container query name for U16+ widgets (empty = viewport CSS only).
+	 *
+	 * @since 2.9.0
+	 *
+	 * @return string
+	 */
+	protected function ltxe_container_query_name() {
+		return '';
+	}
+
+	/**
+	 * Open a container-query wrapper when {@see ltxe_container_query_name()} is set.
+	 *
+	 * @since 2.9.0
+	 *
+	 * @return void
+	 */
+	protected function ltxe_open_container_query() {
+		$name = sanitize_key( (string) $this->ltxe_container_query_name() );
+		if ( '' === $name ) {
+			return;
+		}
+		$cq = $name . '-' . sanitize_key( (string) $this->get_id() );
+		echo '<div class="ltxe-cq-wrapper" style="container-type:inline-size;container-name:' . esc_attr( $cq ) . ';">';
+	}
+
+	/**
+	 * Close the container-query wrapper.
+	 *
+	 * @since 2.9.0
+	 *
+	 * @return void
+	 */
+	protected function ltxe_close_container_query() {
+		if ( '' === sanitize_key( (string) $this->ltxe_container_query_name() ) ) {
+			return;
+		}
+		echo '</div>';
+	}
 }

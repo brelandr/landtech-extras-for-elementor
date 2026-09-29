@@ -4,6 +4,7 @@ namespace LandTechExtras\Modules\Calendar;
 
 // LandTech Extras for Elementor Classes
 use LandTechExtras\Base\Module_Base;
+use LandTechExtras\Modules\Calendar\Calendar_Rest;
 use LandTechExtras\Modules\CustomFields\Module as CustomFieldsModule;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -39,6 +40,19 @@ class Module extends Module_Base {
 		return [
 			'Calendar',
 		];
+	}
+
+	/**
+	 * Constructor.
+	 */
+	public function __construct() {
+		parent::__construct();
+		require_once __DIR__ . '/class-ical-parser.php';
+		require_once __DIR__ . '/class-ical-fetcher.php';
+		require_once __DIR__ . '/class-tec-source.php';
+		require_once __DIR__ . '/class-woo-bookings-source.php';
+		require_once __DIR__ . '/class-calendar-rest.php';
+		add_action( 'rest_api_init', array( Calendar_Rest::class, 'register' ) );
 	}
 
 	/**

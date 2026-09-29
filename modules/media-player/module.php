@@ -38,6 +38,7 @@ class Module extends Module_Base {
 		return [
 			'HTML5_Video',
 			'Audio_Player',
+			'Video_Playlist',
 		];
 	}
 }

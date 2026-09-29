@@ -335,7 +335,13 @@ function landtech_extras_playground_get_demo_definitions( array $images ) {
 				landtech_extras_playground_widget(
 					'hotspots',
 					array(
-						'image' => $hotspot_img,
+						'image'            => $hotspot_img,
+						'trigger'          => 'click_target',
+						'trigger_tablet'   => 'click_target',
+						'trigger_mobile'   => 'click_target',
+						'_hide'            => 'click_out',
+						'_hide_tablet'     => 'click_out',
+						'_hide_mobile'     => 'click_out',
 					)
 				),
 			),
@@ -524,7 +530,7 @@ function landtech_extras_playground_get_demo_definitions( array $images ) {
 			'title'   => 'Lottie Demo',
 			'slug'    => 'demo-lottie',
 			'group'   => 'Utilities',
-			'intro'   => __( 'Vector animation via the bundled lottie-player web component.', 'landtech-extras-for-elementor' ),
+			'intro'   => __( 'Vector animation with autoplay, scroll, hover, click, and scroll-scrub playback.', 'landtech-extras-for-elementor' ),
 			'widgets' => array(
 				landtech_extras_playground_widget(
 					'ee-lottie',
@@ -602,7 +608,7 @@ function landtech_extras_playground_get_demo_definitions( array $images ) {
 			'title'   => 'Tabs Demo',
 			'slug'    => 'demo-tabs',
 			'group'   => 'Navigation & UI',
-			'intro'   => __( 'Horizontal EE Tabs with repeater panels — click each tab to switch content.', 'landtech-extras-for-elementor' ),
+			'intro'   => __( 'Tabs with optional vertical layout, mobile accordion, and URL deep linking.', 'landtech-extras-for-elementor' ),
 			'widgets' => array(
 				landtech_extras_playground_widget(
 					'ee-tabs',
@@ -783,6 +789,297 @@ function landtech_extras_playground_get_demo_definitions( array $images ) {
 				landtech_extras_playground_widget(
 					'ee-inline-svg',
 					landtech_extras_playground_inline_svg_settings()
+				),
+			),
+		),
+		array(
+			'title'   => 'Progress Bar Demo',
+			'slug'    => 'demo-progress-bar',
+			'group'   => 'Utilities',
+			'intro'   => __( 'Linear progress bar with scroll animation.', 'landtech-extras-for-elementor' ),
+			'widgets' => array(
+				landtech_extras_playground_widget(
+					'ltxe-progress-bar',
+					array(
+						'label' => __( 'Project complete', 'landtech-extras-for-elementor' ),
+						'value' => 72,
+					)
+				),
+			),
+		),
+		array(
+			'title'   => 'Countdown Demo',
+			'slug'    => 'demo-countdown',
+			'group'   => 'Utilities',
+			'intro'   => __( 'Fixed-datetime countdown timer.', 'landtech-extras-for-elementor' ),
+			'widgets' => array(
+				landtech_extras_playground_widget(
+					'ltxe-countdown',
+					array(
+						'end_datetime' => gmdate( 'Y-m-d H:i', time() + WEEK_IN_SECONDS ),
+					)
+				),
+			),
+		),
+		array(
+			'title'   => 'Reading Progress Demo',
+			'slug'    => 'demo-reading-progress',
+			'group'   => 'Utilities',
+			'intro'   => __( 'Fixed reading progress bar. Scroll this page to see it fill.', 'landtech-extras-for-elementor' ),
+			'widgets' => array(
+				landtech_extras_playground_widget( 'ltxe-reading-progress', array() ),
+				landtech_extras_playground_widget(
+					'text-editor',
+					array(
+						'editor' => landtech_extras_playground_toc_sample_content(),
+					)
+				),
+			),
+		),
+		array(
+			'title'   => 'Pricing Table Demo',
+			'slug'    => 'demo-pricing-table',
+			'group'   => 'Content & Posts',
+			'intro'   => __( 'Pricing cards with a monthly/annual toggle.', 'landtech-extras-for-elementor' ),
+			'widgets' => array(
+				landtech_extras_playground_widget(
+					'ltxe-pricing-toggle',
+					array()
+				),
+				landtech_extras_playground_widget(
+					'ltxe-pricing-table',
+					array(
+						'plan_name'    => __( 'Starter', 'landtech-extras-for-elementor' ),
+						'price'        => '29',
+						'annual_price' => '290',
+						'show_badge'   => 'yes',
+					)
+				),
+			),
+		),
+		array(
+			'title'   => 'Star Rating Demo',
+			'slug'    => 'demo-star-rating',
+			'group'   => 'Utilities',
+			'intro'   => __( 'Star rating display with half-star support.', 'landtech-extras-for-elementor' ),
+			'widgets' => array(
+				landtech_extras_playground_widget(
+					'ltxe-star-rating',
+					array(
+						'rating' => array(
+							'size' => 4.5,
+						),
+						'review_count' => '128',
+						'add_schema'   => 'yes',
+					)
+				),
+			),
+		),
+		array(
+			'title'   => 'Testimonials Demo',
+			'slug'    => 'demo-testimonials',
+			'group'   => 'Content & Posts',
+			'intro'   => __( 'Review carousel with star ratings. Drag or use the arrows; WooCommerce and comments can replace the manual list.', 'landtech-extras-for-elementor' ),
+			'widgets' => array(
+				landtech_extras_playground_widget(
+					'ltxe-testimonials',
+					array(
+						'source'     => 'manual',
+						'display'    => 'carousel',
+						'skin'       => 'cards',
+						'show_dots'  => 'yes',
+						'show_arrows'=> 'yes',
+						'add_schema' => 'yes',
+					)
+				),
+			),
+		),
+		array(
+			'title'   => 'FAQ Accordion Demo',
+			'slug'    => 'demo-faq',
+			'group'   => 'Content & Posts',
+			'intro'   => __( 'Accessible FAQ accordion with FAQPage schema. The existing FAQ Schema widget is still available separately.', 'landtech-extras-for-elementor' ),
+			'widgets' => array(
+				landtech_extras_playground_widget(
+					'ltxe-faq',
+					array(
+						'accordion_mode' => 'yes',
+						'faq_schema'     => 'yes',
+					)
+				),
+			),
+		),
+		array(
+			'title'   => 'Team Members Demo',
+			'slug'    => 'demo-team-members',
+			'group'   => 'Content & Posts',
+			'intro'   => __( 'Staff grid with names, roles, and bios. Switch the card style to overlay, flip, or horizontal in the editor.', 'landtech-extras-for-elementor' ),
+			'widgets' => array(
+				landtech_extras_playground_widget(
+					'ltxe-team-members',
+					array(
+						'card_style'  => 'classic',
+						'image_shape' => 'rounded',
+						'columns'     => '3',
+					)
+				),
+			),
+		),
+		array(
+			'title'   => 'Icon Box Demo',
+			'slug'    => 'demo-icon-box',
+			'group'   => 'Typography & Buttons',
+			'intro'   => __( 'Feature cards with an icon, title, and optional button. Hover animations turn off when reduced motion is requested.', 'landtech-extras-for-elementor' ),
+			'widgets' => array(
+				landtech_extras_playground_widget(
+					'ltxe-icon-box',
+					array(
+						'title'       => __( 'Clear layout', 'landtech-extras-for-elementor' ),
+						'description' => __( 'Icon, heading, and a short description in one card.', 'landtech-extras-for-elementor' ),
+						'button_text' => __( 'Learn more', 'landtech-extras-for-elementor' ),
+						'hover_anim'  => 'float',
+					)
+				),
+			),
+		),
+		array(
+			'title'   => 'Call to Action Demo',
+			'slug'    => 'demo-cta-block',
+			'group'   => 'Typography & Buttons',
+			'intro'   => __( 'Full-width CTA with heading, subtext, and two buttons.', 'landtech-extras-for-elementor' ),
+			'widgets' => array(
+				landtech_extras_playground_widget(
+					'ltxe-cta',
+					array(
+						'bg_type'  => 'particles',
+						'heading'  => __( 'Build the next page faster.', 'landtech-extras-for-elementor' ),
+						'btn1_url' => array(
+							'url' => '#',
+						),
+						'btn2_url' => array(
+							'url' => '#',
+						),
+					)
+				),
+			),
+		),
+		array(
+			'title'   => 'Social Share Demo',
+			'slug'    => 'demo-social-share',
+			'group'   => 'Typography & Buttons',
+			'intro'   => __( 'Share the current page with URL-only buttons. Copy Link and Print stay on this site — no third-party SDKs.', 'landtech-extras-for-elementor' ),
+			'widgets' => array(
+				landtech_extras_playground_widget(
+					'ltxe-social-share',
+					array(
+						'platforms'    => array( 'facebook', 'x', 'linkedin', 'copy' ),
+						'button_style' => 'icon_label',
+					)
+				),
+			),
+		),
+		array(
+			'title'   => 'Back to Top Demo',
+			'slug'    => 'demo-back-to-top',
+			'group'   => 'Typography & Buttons',
+			'intro'   => __( 'Scroll this long page. The back-to-top button appears after 300px.', 'landtech-extras-for-elementor' ),
+			'widgets' => array(
+				landtech_extras_playground_widget(
+					'heading-extended',
+					array(
+						'title' => __( 'Keep scrolling to reveal the back-to-top control.', 'landtech-extras-for-elementor' ),
+					)
+				),
+				landtech_extras_playground_widget(
+					'heading-extended',
+					array(
+						'title' => __( 'More page height so the button can appear after the scroll threshold.', 'landtech-extras-for-elementor' ),
+					)
+				),
+				landtech_extras_playground_widget(
+					'ltxe-back-to-top',
+					array(
+						'show_after'    => 300,
+						'progress_ring' => 'yes',
+					)
+				),
+			),
+		),
+		array(
+			'title'   => 'Cookie Consent Demo',
+			'slug'    => 'demo-cookie-consent',
+			'group'   => 'Typography & Buttons',
+			'intro'   => __( 'Consent banner stores the choice in localStorage only. This widget does not block cookies for you.', 'landtech-extras-for-elementor' ),
+			'widgets' => array(
+				landtech_extras_playground_widget(
+					'ltxe-cookie-consent',
+					array(
+						'position' => 'bottom',
+					)
+				),
+			),
+		),
+		array(
+			'title'   => 'Sticky Wrapper Demo',
+			'slug'    => 'demo-sticky-wrapper',
+			'group'   => 'Typography & Buttons',
+			'intro'   => __( 'Pick an Elementor template in the Sticky Wrapper widget so a sidebar stays visible while long content scrolls.', 'landtech-extras-for-elementor' ),
+			'widgets' => array(
+				landtech_extras_playground_widget(
+					'ltxe-sticky-wrapper',
+					array(
+						'sticky_on' => array( 'desktop', 'tablet' ),
+					)
+				),
+			),
+		),
+		array(
+			'title'   => 'Dark Mode Demo',
+			'slug'    => 'demo-dark-mode',
+			'group'   => 'Typography & Buttons',
+			'intro'   => __( 'Toggle dark mode. The choice persists in localStorage and can follow the system preference.', 'landtech-extras-for-elementor' ),
+			'widgets' => array(
+				landtech_extras_playground_widget(
+					'ltxe-dark-mode',
+					array(
+						'default_mode' => 'system',
+					)
+				),
+			),
+		),
+		array(
+			'title'   => 'Video Playlist Demo',
+			'slug'    => 'demo-video-playlist',
+			'group'   => 'Media',
+			'intro'   => __( 'Playlist player for YouTube, Vimeo, and self-hosted MP4.', 'landtech-extras-for-elementor' ),
+			'widgets' => array(
+				landtech_extras_playground_widget(
+					'ltxe-video-playlist',
+					array(
+						'videos' => array(
+							array(
+								'title'  => __( 'Big Buck Bunny (sample)', 'landtech-extras-for-elementor' ),
+								'source' => 'youtube',
+								'url'    => array(
+									'url' => 'https://www.youtube.com/watch?v=aqz-KE-bpKQ',
+								),
+							),
+							array(
+								'title'  => __( 'Sintel (sample)', 'landtech-extras-for-elementor' ),
+								'source' => 'youtube',
+								'url'    => array(
+									'url' => 'https://www.youtube.com/watch?v=eRsGyueVLvQ',
+								),
+							),
+							array(
+								'title'  => __( 'Elephants Dream (sample)', 'landtech-extras-for-elementor' ),
+								'source' => 'youtube',
+								'url'    => array(
+									'url' => 'https://www.youtube.com/watch?v=TLkA0RELQ1g',
+								),
+							),
+						),
+					)
 				),
 			),
 		),
@@ -1060,7 +1357,7 @@ function landtech_extras_playground_table_settings( $paginate = false ) {
 /**
  * Default Lottie widget settings for Playground demos.
  *
- * Uses a public sample animation URL (visitor browser fetch when the demo page loads).
+ * Uses the bundled pulse animation (no third-party CDN).
  *
  * @return array<string,mixed>
  */
@@ -1068,8 +1365,8 @@ function landtech_extras_playground_lottie_settings() {
 	return array(
 		'source'        => 'url',
 		'animation_url' => array(
-			'url'         => 'https://assets10.lottiefiles.com/packages/lf20_kyu7ypfb.json',
-			'is_external' => 'on',
+			'url'         => trailingslashit( LANDTECH_EXTRAS_URL ) . 'assets/demo/landtech-lottie-demo.json',
+			'is_external' => '',
 			'nofollow'    => '',
 		),
 		'loop'          => 'yes',
@@ -1486,15 +1783,25 @@ function landtech_extras_playground_age_gate_settings() {
  * @return array<string,mixed>
  */
 function landtech_extras_playground_popup_settings() {
+	$content  = '<p class="ltxdh-popup-kicker">' . esc_html__( 'LandTech Extras', 'landtech-extras-for-elementor' ) . '</p>';
+	$content .= '<p>' . esc_html__( 'Use this modal for announcements, newsletter signups, terms, or any message that should stay on the page.', 'landtech-extras-for-elementor' ) . '</p>';
+	$content .= '<ul class="ltxdh-popup-points">';
+	$content .= '<li>' . esc_html__( 'Click, scroll, delay, or exit-intent triggers', 'landtech-extras-for-elementor' ) . '</li>';
+	$content .= '<li>' . esc_html__( 'Overlay, animation, and close behavior you control', 'landtech-extras-for-elementor' ) . '</li>';
+	$content .= '<li>' . esc_html__( 'Works with free Elementor — no Pro popup required', 'landtech-extras-for-elementor' ) . '</li>';
+	$content .= '</ul>';
+
 	return array(
-		'_skin'              => 'classic',
-		'popup_type'         => 'text',
-		'popup_trigger'      => 'click',
-		'popup_click_target' => 'text',
-		'popup_trigger_text' => __( 'Open modal', 'landtech-extras-for-elementor' ),
-		'popup_title'        => __( 'LandTech Extras Popup', 'landtech-extras-for-elementor' ),
-		'popup_content'      => '<p>' . esc_html__( 'This modal is powered by the Popup widget and GLightbox. Use it for announcements, newsletter signups, terms, or any message that should not take over the whole page.', 'landtech-extras-for-elementor' ) . '</p><p>' . esc_html__( 'Configure trigger type (click, scroll, exit intent), animation, overlay, and close behavior under the widget settings.', 'landtech-extras-for-elementor' ) . '</p>',
-		'popup_close_on_bg'  => 'yes',
+		'_skin'                       => 'classic',
+		'popup_type'                  => 'text',
+		'popup_trigger'               => 'click',
+		'popup_click_target'          => 'text',
+		'popup_trigger_text'          => __( 'Open modal', 'landtech-extras-for-elementor' ),
+		'popup_title'                 => __( 'A modal worth opening', 'landtech-extras-for-elementor' ),
+		'popup_content'               => $content,
+		'popup_close_on_bg'           => 'yes',
+		'popup_close_button_position' => 'default',
+		'popup_close_button_text'     => __( 'Continue', 'landtech-extras-for-elementor' ),
 	);
 }
 

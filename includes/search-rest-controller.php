@@ -10,7 +10,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Register landtech-extras/v1/search.
+ * Register landtech-extras/v1/search (public live search for the Search Form widget).
+ *
+ * @since 2.6.0
  *
  * @return void
  */
@@ -57,7 +59,13 @@ function landtech_extras_search_rest_permission() {
 }
 
 /**
- * @param WP_REST_Request $request Request.
+ * Run a public catalog search and return sanitized titles and permalinks.
+ *
+ * Rate-limited per client IP. Does not expose private or draft posts.
+ *
+ * @since 2.6.0
+ *
+ * @param WP_REST_Request $request Request with `q`, `post_type`, and `per_page`.
  * @return WP_REST_Response|WP_Error
  */
 function landtech_extras_search_rest_callback( WP_REST_Request $request ) {
@@ -100,10 +108,10 @@ function landtech_extras_search_rest_callback( WP_REST_Request $request ) {
 			continue;
 		}
 		$results[] = array(
-			'id'    => $post->ID,
-			'title' => get_the_title( $post ),
-			'url'   => get_permalink( $post ),
-			'type'  => $post->post_type,
+			'id'    => (int) $post->ID,
+			'title' => sanitize_text_field( wp_strip_all_tags( get_the_title( $post ) ) ),
+			'url'   => esc_url_raw( (string) get_permalink( $post ) ),
+			'type'  => sanitize_key( $post->post_type ),
 		);
 	}
 
@@ -115,7 +123,11 @@ function landtech_extras_search_rest_callback( WP_REST_Request $request ) {
 }
 
 /**
- * @return string
+ * Client IP for search rate-limiting (REMOTE_ADDR only).
+ *
+ * @since 2.6.0
+ *
+ * @return string Sanitized IPv4/IPv6 string, or 0.0.0.0 when missing.
  */
 function landtech_extras_search_rest_client_ip() {
 	$ip = '';

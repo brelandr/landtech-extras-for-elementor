@@ -75,7 +75,7 @@ class Editor_Widget_Health {
 
 		return array(
 			'ajaxUrl'             => admin_url( 'admin-ajax.php' ),
-			'dismissNonce'        => wp_create_nonce( 'dismissible-notice' ),
+			'dismissNonce'        => wp_create_nonce( Dismiss_Notice::NONCE_ACTION ),
 			'googleMapsApiKeySet' => '' !== trim( $google_maps_api_key ),
 			'dismissed'           => self::get_dismissed_notice_keys(),
 			'strings'             => array(

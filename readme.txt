@@ -4,26 +4,57 @@ Contributors: brelandr
 Tags: elementor, page-builder, widgets, addons, extensions
 Requires at least: 6.2
 Tested up to: 7.1
-Stable tag: 2.5.13
+Stable tag: 2.9.0
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Elementor widgets and extensions — GPL fork of Elementor Extras. Gallery, calendar, maps, posts, search, tabs, TOC, and editor tools.
+50+ free Elementor widgets: gallery, testimonials, FAQ, pricing, calendar, maps, posts, plus display conditions and editor tools.
 
 == Description ==
 
 **Disclaimer:** Independent fork of the original **Elementor Extras** plugin (also known as **Extras for Elementor**, by Namogo). Not affiliated with or endorsed by Namogo or Elementor Ltd. Original credits: Namogo (Elementor Extras). Maintained by Land Tech Web Designs.
 
-**LandTech Extras for Elementor** is a free, actively maintained replacement for sites that relied on Elementor Extras / Extras for Elementor. It adds creative **Elementor widgets** (gallery, calendar, Google Map, posts grids, navigation, popups, and more) and **editor extensions** (display conditions, parallax, sticky elements, tooltips) on top of Elementor. Existing Elementor templates that used Elementor Extras widget slugs (for example `ee-calendar`, `posts-extra`, `ee-gallery`) continue to work after you switch to this plugin.
+**LandTech Extras for Elementor** is a free, complete Elementor addon. It is an actively maintained replacement for sites that relied on Elementor Extras / Extras for Elementor. Existing Elementor templates that used those widget slugs (for example `ee-calendar`, `posts-extra`, `ee-gallery`) continue to work after you switch to this plugin.
 
-Configure optional API keys (Google Maps, Snazzy Maps, Instagram, and optional bring-your-own-key LLM credentials when using the separate **LandTech Extras add-on** AI workspace) under **Elementor → LandTech Extras → APIs** when needed.
+You do not need a paid product to use anything listed under **Widgets and extensions**. Optional API keys (Google Maps, Snazzy Maps, Instagram) live under **Elementor Extras → APIs**. Full documentation: [extrasforelementor.com/docs](https://extrasforelementor.com/docs/).
+
+= What’s new in 2.9 =
+
+This release is a large free-plugin update (work from 2.6 through 2.9, shipped together):
+
+* **Social proof & people:** Testimonials (manual, WooCommerce reviews, or comments), FAQ Accordion with optional FAQPage schema, Team Members (classic, overlay, flip, horizontal), Icon Box, Call to Action, Star Rating.
+* **Commerce-ready layouts:** Pricing Table and Pricing Toggle (monthly/annual, optional WooCommerce add-to-cart when WooCommerce is active).
+* **Motion & media:** Lottie scroll / hover / click / scrub playback via bundled lottie-web; Video Playlist (YouTube, Vimeo, self-hosted); Progress Bar; Countdown; Reading Progress; Social Share; Back to Top; Cookie Consent; Sticky Wrapper; Dark Mode Toggle.
+* **Calendar & popups:** iCal / Google Calendar URL, The Events Calendar, and WooCommerce Bookings sources; popup delay, scroll, inactivity, and cookie/session suppression.
+* **Editor tools:** ACF Free dynamic tags, block patterns, SEO hints in the editor, Generate alt text via the WordPress AI Client (Settings → Connectors), Loop Builder / WCAG / CSP notes.
+* **Gallery, tabs, SVG, comparison:** Gallery video tiles and pagination; Tabs vertical + mobile accordion + deep links; Inline SVG path colors and reduced-motion-safe animations; Image Comparison vertical drag.
+* **Add-on features tab:** When the optional Premium plugin is not installed, this tab shows a read-only catalog of what that **separate** plugin adds. When Premium is active, the catalog is hidden and the live Enable checkboxes appear instead.
+
+= Optional Premium add-on (separate plugin) =
+
+This WordPress.org plugin is complete on its own. Nothing below is included here as a disabled or locked feature.
+
+**LandTech Extras for Elementor Premium** is a **separate** paid plugin you may install beside this one. It adds extra capabilities. It does not unlock features that already ship here.
+
+When Premium is not installed, **Elementor Extras → Add-on features** lists the add-on catalog (informational). After you activate Premium, that catalog is hidden.
+
+The add-on currently includes:
+
+* **WooCommerce & conversion:** shop extras, product page builder, product carousel, wishlist, 360 viewer, 3D viewer, smart countdown.
+* **Forms, popups & menus:** multi-step forms, smart popup triggers, popup A/B tests, mega menu, Gravity Forms styler, booking calendar, login/register, marketing button, business hours, calculator, experience builder.
+* **Dynamic data & loops:** remote content, AJAX facets, advanced loop query, masonry/metro, live data table, social feeds (Instagram / X / TikTok), external grid.
+* **Site chrome & motion:** header/footer builder, one-page dot nav, text animation, scroll story, evolutionary layouts.
+* **AI & accessibility:** Genius assistant, AI workspace (bring-your-own-key), alt-text batch, semantic search, voice search, WCAG scanner.
+* **Agency tools:** export/import package, CPT builder, content protection, white label, template marketplace, time machine, asset compiler, PWA builder, client feedback, conditional CSS classes.
+
+Add-on documentation: [extrasforelementor.com/docs/premium](https://extrasforelementor.com/docs/premium/). Purchase and license support stay on [landtechwebdesigns.com](https://landtechwebdesigns.com/product/extras-for-elementor/).
 
 == Widgets and extensions ==
 
 Find widgets in the Elementor panel under the **LandTech Extras for Elementor** category. Widget type slugs match the upstream Elementor Extras fork for easier migration.
 
-**Widgets:** Age Gate (`ee-age-gate`), Audio Player (`ee-audio-player`), Breadcrumbs (`ee-breadcrumbs`, optional **BreadcrumbList** JSON-LD when **Structured data** is enabled), Buttons / Button Group (`button-group`), Calendar (`ee-calendar`), Circle Progress (`circle-progress`), Devices (`devices-extended`), FAQ Schema (`ee-faq-schema`), Gallery (`gallery-extra`), Gallery Slider (`gallery-slider`), Google Map (`ee-google-map`), Heading Extra (`heading-extended`), Hotspots (`hotspots`), HTML5 Video Player (`html5-video`), Image Comparison (`image-comparison`), Inline SVG (`ee-inline-svg`), Lottie (`ee-lottie`), Offcanvas (`ee-offcanvas`), Popup (`ee-popup`), Posts Extra / Portfolio / Carousel layouts (`posts-extra`), Random Image (`ee-random-image`), Scroll Indicator (`ee-scroll-indicator`), Search Form (`ee-search-form`), Slide Menu (`ee-slide-menu`), Switcher (`ee-switcher`), Table (`table`), Table of Contents (`ee-table-of-contents`), Tabs (`ee-tabs`), Text Divider (`text-divider`), Timeline (`timeline`), Toggle Element (`ee-toggle-element`), Unfold (`unfold`).
+**Widgets:** Age Gate (`ee-age-gate`), Audio Player (`ee-audio-player`), Back to Top (`ltxe-back-to-top`), Breadcrumbs (`ee-breadcrumbs`, optional **BreadcrumbList** JSON-LD when **Structured data** is enabled), Buttons / Button Group (`button-group`), Calendar (`ee-calendar`), Circle Progress (`circle-progress`), Cookie Consent (`ltxe-cookie-consent`), Countdown (`ltxe-countdown`), Dark Mode Toggle (`ltxe-dark-mode`), Devices (`devices-extended`), FAQ Accordion (`ltxe-faq`), FAQ Schema (`ee-faq-schema`), Gallery (`gallery-extra`), Gallery Slider (`gallery-slider`), Google Map (`ee-google-map`), Heading Extra (`heading-extended`), Hotspots (`hotspots`), HTML5 Video Player (`html5-video`), Icon Box (`ltxe-icon-box`), Image Comparison (`image-comparison`), Inline SVG (`ee-inline-svg`), Lottie (`ee-lottie`), Call to Action (`ltxe-cta`), Offcanvas (`ee-offcanvas`), Popup (`ee-popup`), Posts Extra / Portfolio / Carousel layouts (`posts-extra`), Pricing Table (`ltxe-pricing-table`), Pricing Toggle (`ltxe-pricing-toggle`), Progress Bar (`ltxe-progress-bar`), Random Image (`ee-random-image`), Reading Progress (`ltxe-reading-progress`), Scroll Indicator (`ee-scroll-indicator`), Search Form (`ee-search-form`), Slide Menu (`ee-slide-menu`), Social Share (`ltxe-social-share`), Star Rating (`ltxe-star-rating`), Sticky Wrapper (`ltxe-sticky-wrapper`), Switcher (`ee-switcher`), Table (`table`), Table of Contents (`ee-table-of-contents`), Tabs (`ee-tabs`), Team Members (`ltxe-team-members`), Testimonials (`ltxe-testimonials`), Text Divider (`text-divider`), Timeline (`timeline`), Toggle Element (`ee-toggle-element`), Unfold (`unfold`), Video Playlist (`ltxe-video-playlist`).
 
 **Editor extensions** (Advanced tab on Elementor elements): Display Conditions (free: time, day, URL/query vars including UTM presets, cookie, business hours; WooCommerce purchase history and membership rules ship in the separate **LandTech Extras Premium** add-on), Parallax Background, Parallax Elements, Portfolio Parallax, Sticky Elements, Tooltips.
 
@@ -31,7 +62,7 @@ Disable unused widgets under **Elementor → LandTech Extras → Widgets** to sp
 
 == Try It Live - Preview This Plugin Instantly ==
 
-Experience LandTech Extras for Elementor without installation: the blueprint installs **Elementor** and this plugin from **WordPress.org**, seeds **sample images and blog posts**, builds a **demo homepage** with links to every widget, creates a **dedicated demo page per feature** (gallery, search form, posts grid, maps, navigation widgets, and more), and registers a **navigation menu** grouping all demos. Log in as **admin** / **password** to edit pages with Elementor or open **Elementor → LandTech Extras** settings.
+Experience LandTech Extras for Elementor without installation: the blueprint installs **Elementor** and this plugin from **WordPress.org**, seeds **sample images and blog posts**, builds a **demo homepage** with links to every widget, and creates a **dedicated demo page per feature** — including the 2.9 set (testimonials, FAQ, team members, pricing, countdown, video playlist, social share, dark mode, and more) plus gallery, search, posts, maps, and navigation. Log in as **admin** / **password** to edit with Elementor or open **Elementor Extras** settings.
 
 [Preview on WordPress Playground](https://playground.wordpress.net/?blueprint-url=https://plugins.svn.wordpress.org/landtech-extras-for-elementor/assets/blueprints/blueprint.json)
 
@@ -68,6 +99,26 @@ Same as OpenAI above: credentials may be stored here; outbound **Anthropic API**
 **Google Gemini API (Google LLC) — optional bring-your-own-key (add-on AI workspace)**
 
 Same as OpenAI above: credentials may be stored here; outbound **Gemini** requests (e.g. `generativelanguage.googleapis.com`) occur only when the separate add-on AI workspace invokes them with your saved **Gemini API key**, prompts, and parameters. [Google AI / Gemini API Terms](https://ai.google.dev/gemini-api/terms) · [Google Privacy Policy](https://policies.google.com/privacy)
+
+**User-provided iCal / calendar feeds**
+
+When the Calendar widget source is **iCal / Google Calendar URL**, the site server requests the `.ics` URL you enter (`wp_safe_remote_get`). The request includes that URL and standard HTTP metadata. No Land Tech server is involved. Review the calendar host’s terms (Google, Microsoft, Apple, or your own feed) before publishing.
+
+**YouTube (Google LLC)**
+
+When a Gallery video tile or the Video Playlist widget uses a YouTube URL, visitors’ browsers load an embed iframe from `www.youtube.com` / `youtube.com`. Requests can include the video ID you configured and standard browser HTTP metadata. [Terms of Service](https://www.youtube.com/t/terms) · [Google Privacy Policy](https://policies.google.com/privacy)
+
+**Vimeo (Vimeo.com, Inc.)**
+
+When a Gallery video tile or the Video Playlist widget uses a Vimeo URL, visitors’ browsers load an embed iframe from `player.vimeo.com`. Requests can include the video ID you configured and standard browser HTTP metadata. [Terms of Service](https://vimeo.com/terms) · [Privacy Policy](https://vimeo.com/privacy)
+
+**WordPress AI Client (core Connectors)**
+
+When an editor clicks **Generate alt text** on an image control, this plugin calls `wp_ai_client_prompt()` if the WordPress AI Client is available. No provider API keys are stored by this plugin. Site admins configure providers under **Settings → Connectors**. The request can include a short prompt and the attachment image URL. If the AI Client is not available, the endpoint returns HTTP 503. Review the terms and privacy policy of the provider you connect in WordPress.
+
+**Social share destinations (user-initiated)**
+
+The Social Share widget only builds share URLs. A visitor click may open Facebook, X/Twitter, LinkedIn, WhatsApp, Telegram, Pinterest, Reddit, or a `mailto:` window. No third-party share SDK is loaded. Review each destination’s terms before enabling that button.
 
 **User-provided Lottie animation URLs (LottieFiles or other hosts)**
 
@@ -116,6 +167,14 @@ No. This is an independent fork of the original Elementor Extras plugin by Namog
 
 Yes. LandTech Extras for Elementor is an independent, GPLv3-maintained continuation of the Elementor Extras (Extras for Elementor) widget set. It is intended for sites that need those Elementor widgets and extensions without relying on the discontinued original distribution. Widget type slugs (`ee-calendar`, `posts-extra`, and similar) are preserved so existing Elementor JSON templates can load after you deactivate the old plugin and activate LandTech Extras.
 
+= Does this plugin require the Premium add-on? =
+
+No. Every widget and extension in this plugin works without Premium. The paid add-on is a separate plugin that adds extra capabilities. It does not unlock features that already ship here.
+
+= What does the Premium add-on add? =
+
+WooCommerce extras, multi-step forms, header/footer builder, AI workspace, booking, social feeds, and other lanes listed under **Optional Premium add-on** above. Details: [extrasforelementor.com/docs/premium](https://extrasforelementor.com/docs/premium/).
+
 = Can I migrate from Elementor Extras or Namogo Extras? =
 
 In most cases, yes. Export your Elementor templates, replace the old plugin with **LandTech Extras for Elementor**, and re-open pages in Elementor. Widgets should resolve under the LandTech Extras category. Re-save pages if Elementor prompts you to update data. Compare your widget list with the **Widgets and extensions** section above; optional API keys (Maps, Instagram) must be re-entered under **Elementor → LandTech Extras → APIs**.
@@ -160,6 +219,8 @@ Source: https://infinite-scroll.com — License notes: `assets/lib/infinite-scro
 Source: https://github.com/schedule-x/schedule-x — License notes: `assets/lib/schedule-x/README.txt`.
 **@lottiefiles/lottie-player** (MIT) — `assets/lib/lottie-player/lottie-player.js`
 Source: https://github.com/LottieFiles/lottie-player — License notes: `assets/lib/lottie-player/README.txt`.
+**lottie-web 5.13.0** (MIT) — `assets/lib/lottie-web/lottie.js`
+Source: https://github.com/airbnb/lottie-web — License notes: `assets/lib/lottie-web/README.txt`.
 **WaveSurfer.js 7.9.9** (BSD-3-Clause) — optional Audio Player waveform skin
 Source: https://github.com/kwavesurfer/wavesurfer.js — License notes: `assets/lib/wavesurfer/README.txt`.
 **GMAP3** (GPL-3.0+) — http://gmap3.net
@@ -188,6 +249,9 @@ Before publishing a public GitHub mirror, verify any **Repository** or **Source*
 
 == Upgrade Notice ==
 
+= 2.9.0 =
+Large free update: testimonials, FAQ, team, pricing, countdown, Lottie, calendar feeds, and more. This plugin stays complete. An optional separate Premium add-on is listed on Add-on features only when Premium is not active.
+
 = 2.5.5 =
 Playground Live Preview: new Tabs and Table of Contents demo pages; Search Form demo copy updated. No changes required on existing sites.
 
@@ -201,6 +265,50 @@ Maintenance release: Elementor 4.3.x compatibility headers and Plugin Check fixe
 Recommended update: new Tabs and Table of Contents widgets, plus Search Form **Include only** category restrictions and shorter custom search result URLs. Re-save Search Form widgets after updating if you use hidden category filters.
 
 == Changelog ==
+
+= 2.9.0 =
+* Add: Testimonials (`ltxe-testimonials`) — manual, WooCommerce review, or comment sources; carousel/grid/single; optional AggregateRating schema.
+* Add: FAQ Accordion (`ltxe-faq`) with keyboard navigation and optional FAQPage schema. Existing FAQ Schema (`ee-faq-schema`) is unchanged.
+* Add: Team Members, Icon Box, and Call to Action widgets (flip/hover effects respect reduced motion).
+* Add: Social Share, Back to Top, Cookie Consent, Sticky Wrapper, and Dark Mode Toggle.
+* Add: ACF Free dynamic tags, block patterns, editor SEO hints, and Generate alt text via the WordPress AI Client.
+* Add: Informational Premium catalog on **Add-on features** when the separate Premium plugin is not active (hidden after Premium is activated).
+* Add: Playground demo pages for the new widgets; public docs at extrasforelementor.com/docs.
+* Note: 2.6–2.8 work (Lottie, calendar feeds, pricing, progress, countdown, video playlist, gallery/tabs/SVG upgrades) is included in this directory release. See those version headings for detail.
+
+= 2.8.4 =
+* Fix: Tabs first panel is visible again (`hidden="false"` still hid it), and tab icons no longer render at full SVG size over the labels.
+
+= 2.8.3 =
+* Fix: Hotspots now bind click/hover tooltips when Elementor Improved Asset Loading prints LandTech scripts after `elementor/frontend/init`.
+
+= 2.8.2 =
+* Fix: Inline SVG now fetches and injects the SVG from `data-url` even when Elementor Improved Asset Loading prints scripts after `elementor/frontend/init`.
+* Fix: Calendar month grid paints days when Schedule-X leaves the wrapper empty, and Temporal date-only strings no longer abort month generation.
+* Fix: Multiple Popup widgets on one page no longer share a single GLightbox instance, so click triggers work after a delay popup.
+
+= 2.8.1 =
+* Fix: Print per-widget CSS/JS on pages that use Elementor Improved Asset Loading so Progress Bar, Calendar, Countdown, and other 2.8 widgets initialize on the frontend.
+* Fix: Calendar Schedule-X now self-boots without the legacy frontend.js bundle.
+
+= 2.8.0 =
+* Add: Pricing Table and Pricing Toggle widgets with monthly/annual switch (`ltxe_pricing_toggle_changed`) and optional WooCommerce add-to-cart when WooCommerce is active.
+* Add: Star Rating widget with half-star display, review count, and optional AggregateRating schema.
+* Add: Video Playlist widget (YouTube, Vimeo, self-hosted MP4) under the media-player module. Embeds are built with DOM APIs, not innerHTML.
+
+= 2.7.0 =
+* Add: Progress Bar, Countdown (fixed datetime), and Reading Progress widgets.
+* Add: Hotspot tooltip content types — Elementor template and image — alongside existing text.
+* Add: Tabs vertical orientation, mobile accordion, and hash / `?tab=` deep linking.
+* Add: Gallery video tiles (GLightbox) and client-side load more / infinite / numbered pagination for manual galleries.
+* Add: Inline SVG per-path colors and draw/fade/scale/rotate animations (respects reduced motion).
+* Add: Image Comparison vertical drag and start-position control.
+
+= 2.6.0 =
+* Add: Lottie playback triggers (scroll, scroll-scrub, hover, click), speed, direction, and segment play via bundled lottie-web, with the existing lottie-player path kept for simple autoplay.
+* Add: Calendar sources for iCal / Google Calendar URLs, The Events Calendar, and WooCommerce Bookings (when those plugins are active).
+* Add: Popup delay, scroll-percentage, inactivity triggers, and cookie/session suppression.
+* Add: Per-widget frontend script loading (`LTXE_FRONTEND_SPLIT`). Shared helpers live in `frontend-core.js`; the previous monolithic `frontend.js` stays registered for one major version and loads only when a widget still depends on it.
 
 = 2.5.13 =
 * Fix: Schema output kept camelCase schema.org property names intact. Property keys were passed through `sanitize_key()`, which lowercased them (`mainEntity` became `mainentity`), so the `EE FAQ Schema` widget never printed its FAQPage JSON-LD, and breadcrumb `itemListElement`, organization `sameAs` and event `startDate` / `endDate` / `eventStatus` / `eventAttendanceMode` properties were emitted with invalid names. Keys are now stripped to letters, digits, `_`, `-` and `@` without changing case.
@@ -549,7 +657,7 @@ Recommended update: new Tabs and Table of Contents widgets, plus Search Form **I
 
 == Support ==
 
-For add-on purchases, feature requests, and bug reports, email **sales@landtechwebdesigns.com** or use the contact options on [Land Tech Web Designs](https://landtechwebdesigns.com/).
+Full documentation for every widget, extension, and API is at [extrasforelementor.com/docs](https://extrasforelementor.com/docs/). For add-on purchases, feature requests, and bug reports, email **sales@landtechwebdesigns.com** or use the contact options on [Land Tech Web Designs](https://landtechwebdesigns.com/).
 
 == Credits ==
 

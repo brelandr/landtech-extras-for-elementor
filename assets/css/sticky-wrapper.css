@@ -1,0 +1,42 @@
+.ltxe-sticky {
+	--ltxe-sticky-top: 30px;
+	--ltxe-sticky-z: 100;
+	position: static;
+}
+
+/* CSS sticky is a no-JS fallback. Themes/Elementor often set overflow-x: clip
+   on body, which creates a containing block and prevents position:sticky from
+   pinning to the viewport. JS (.ltxe-sticky--js) uses position:fixed instead. */
+@media (max-width: 767px) {
+	.ltxe-sticky.ltxe-sticky--mobile:not(.ltxe-sticky--js) {
+		position: sticky;
+		top: var(--ltxe-sticky-top);
+		z-index: var(--ltxe-sticky-z);
+	}
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+	.ltxe-sticky.ltxe-sticky--tablet:not(.ltxe-sticky--js) {
+		position: sticky;
+		top: var(--ltxe-sticky-top);
+		z-index: var(--ltxe-sticky-z);
+	}
+}
+
+@media (min-width: 1025px) {
+	.ltxe-sticky.ltxe-sticky--desktop:not(.ltxe-sticky--js) {
+		position: sticky;
+		top: var(--ltxe-sticky-top);
+		z-index: var(--ltxe-sticky-z);
+	}
+}
+
+.ltxe-sticky__ph {
+	display: none;
+	pointer-events: none;
+}
+
+.ltxe-sticky__placeholder {
+	padding: 1rem;
+	border: 1px dashed #ccc;
+}

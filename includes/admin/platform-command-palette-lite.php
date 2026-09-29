@@ -51,7 +51,7 @@ final class Platform_Command_Palette_Lite {
 			'ltxCommandPaletteLite',
 			array(
 				'settingsUrl' => esc_url_raw( admin_url( 'admin.php?page=landtech-extras' ) ),
-				'docsUrl'     => esc_url_raw( 'https://landtechwebdesigns.com/' ),
+				'docsUrl'     => esc_url_raw( 'https://extrasforelementor.com/docs/' ),
 				'i18n'        => array(
 					'openSettings' => __( 'LandTech: Open LandTech Extras settings', 'landtech-extras-for-elementor' ),
 					'openDocs'     => __( 'LandTech: Open plugin documentation', 'landtech-extras-for-elementor' ),

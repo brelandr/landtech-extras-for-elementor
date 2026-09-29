@@ -1,0 +1,105 @@
+.ltxe-pricing-table {
+	position: relative;
+	padding: 1.5rem;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	background: #fff;
+}
+
+.ltxe-pricing-table--featured {
+	transform: scale(1.05);
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.ltxe-pricing-table__badge {
+	display: inline-block;
+	margin-bottom: 0.75rem;
+	padding: 0.25rem 0.6rem;
+	border-radius: 999px;
+	background: #2271b1;
+	color: #fff;
+	font-size: 0.75rem;
+}
+
+.ltxe-pricing-table__name {
+	margin: 0 0 0.35rem;
+}
+
+.ltxe-pricing-table__amount {
+	font-size: 2rem;
+	font-weight: 700;
+}
+
+.ltxe-pricing-table__original {
+	opacity: 0.65;
+	margin-right: 0.35rem;
+}
+
+.ltxe-pricing-table__features {
+	list-style: none;
+	margin: 1rem 0;
+	padding: 0;
+}
+
+.ltxe-pricing-table__feature {
+	padding: 0.35rem 0 0.35rem 1.4rem;
+	position: relative;
+}
+
+.ltxe-pricing-table__feature--included:before {
+	content: "✓";
+	position: absolute;
+	left: 0;
+}
+
+.ltxe-pricing-table__feature--excluded {
+	opacity: 0.55;
+	text-decoration: line-through;
+}
+
+.ltxe-pricing-table__feature--excluded:before {
+	content: "✗";
+	position: absolute;
+	left: 0;
+}
+
+.ltxe-pricing-table__feature--highlight:before {
+	content: "★";
+	position: absolute;
+	left: 0;
+}
+
+.ltxe-pricing-table__cta {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 44px;
+	padding: 0.5rem 1rem;
+	background: #2271b1;
+	color: #fff;
+	text-decoration: none;
+	border-radius: 4px;
+}
+
+.ltxe-pricing-toggle {
+	display: inline-flex;
+	gap: 0.25rem;
+	padding: 0.25rem;
+	border: 1px solid #ddd;
+	border-radius: 999px;
+}
+
+.ltxe-pricing-toggle__btn {
+	min-height: 44px;
+	min-width: 44px;
+	padding: 0.4rem 1rem;
+	border: 0;
+	background: transparent;
+	border-radius: 999px;
+	cursor: pointer;
+}
+
+.ltxe-pricing-toggle__btn.is-active {
+	background: #2271b1;
+	color: #fff;
+}

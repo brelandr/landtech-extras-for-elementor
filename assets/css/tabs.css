@@ -7,16 +7,38 @@
 	list-style: none;
 }
 
-.ltxe-tabs__tab {
+.ltxe-tabs__tab,
+.ltxe-tabs__accordion-title {
+	align-items: center;
+	gap: 0.5rem;
 	cursor: pointer;
 	border: 1px solid #ccc;
 	background: #f7f7f7;
 	padding: 0.5rem 0.85rem;
 	border-radius: 4px;
+	min-height: 44px;
+	min-width: 44px;
+}
+
+.ltxe-tabs__tab {
+	display: inline-flex;
+}
+
+.ltxe-tabs__tab .e-font-icon-svg,
+.ltxe-tabs__tab svg,
+.ltxe-tabs__accordion-title .e-font-icon-svg,
+.ltxe-tabs__accordion-title svg {
+	width: 1.15em;
+	height: 1.15em;
+	flex: 0 0 1.15em;
+	display: block;
+	overflow: visible;
+	fill: currentColor;
 }
 
 .ltxe-tabs__tab.is-active,
-.ltxe-tabs__tab[aria-selected="true"] {
+.ltxe-tabs__tab[aria-selected="true"],
+.ltxe-tabs__accordion-title.is-active {
 	background: #2271b1;
 	color: #fff;
 	border-color: #2271b1;
@@ -24,4 +46,84 @@
 
 .ltxe-tabs__panel[hidden] {
 	display: none !important;
+}
+
+.ltxe-tabs__accordion-title {
+	display: none;
+	width: 100%;
+	text-align: left;
+	margin: 0 0 0.35rem;
+}
+
+.ltxe-tabs--vertical,
+.ltxe-tabs--vertical-right {
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: flex-start;
+	gap: 1.5rem;
+}
+
+.ltxe-tabs--vertical .ltxe-tabs__list,
+.ltxe-tabs--vertical-right .ltxe-tabs__list {
+	flex-direction: column;
+	flex-shrink: 0;
+	width: 220px;
+	margin: 0;
+	border-right: 2px solid #2271b1;
+}
+
+.ltxe-tabs--vertical .ltxe-tabs__tab,
+.ltxe-tabs--vertical-right .ltxe-tabs__tab {
+	width: 100%;
+	justify-content: flex-start;
+}
+
+.ltxe-tabs--vertical .ltxe-tabs__panels,
+.ltxe-tabs--vertical-right .ltxe-tabs__panels {
+	flex: 1;
+}
+
+.ltxe-tabs--vertical-right .ltxe-tabs__list {
+	order: 2;
+	border-right: none;
+	border-left: 2px solid #2271b1;
+}
+
+.ltxe-tabs--vertical-right .ltxe-tabs__panels {
+	order: 1;
+}
+
+@media (max-width: 1024px) {
+	.ltxe-tabs--accordion-tablet.ltxe-tabs--vertical,
+	.ltxe-tabs--accordion-tablet.ltxe-tabs--vertical-right {
+		display: block;
+	}
+
+	.ltxe-tabs--accordion-tablet .ltxe-tabs__list {
+		display: none;
+	}
+
+	.ltxe-tabs--accordion-tablet .ltxe-tabs__accordion-title {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+}
+
+@media (max-width: 767px) {
+	.ltxe-tabs--accordion-mobile.ltxe-tabs--vertical,
+	.ltxe-tabs--accordion-mobile.ltxe-tabs--vertical-right,
+	.ltxe-tabs--accordion-mobile {
+		display: block;
+	}
+
+	.ltxe-tabs--accordion-mobile .ltxe-tabs__list {
+		display: none;
+	}
+
+	.ltxe-tabs--accordion-mobile .ltxe-tabs__accordion-title {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
 }

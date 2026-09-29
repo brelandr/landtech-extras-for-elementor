@@ -85,6 +85,7 @@ class Gallery_Slider extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
+			'landtech-extras-frontend',
 			'swiper',
 		];
 	}
