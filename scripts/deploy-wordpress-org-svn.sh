@@ -281,9 +281,14 @@ main() {
 
 	echo ""
 	echo "SVN status (summary):"
-	svn status | head -40
+	# Avoid pipefail + head closing the pipe (would abort before --commit).
+	local status_file
+	status_file="$(mktemp)"
+	svn status > "${status_file}"
+	head -40 "${status_file}"
 	local count
-	count="$(svn status | wc -l | tr -d ' ')"
+	count="$(wc -l < "${status_file}" | tr -d ' ')"
+	rm -f "${status_file}"
 	if [[ "${count}" -gt 40 ]]; then
 		echo "... (${count} lines total; run 'svn status' in ${SVN_DIR})"
 	fi
