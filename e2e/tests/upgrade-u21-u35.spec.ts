@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const base = process.env.LTXE_E2E_BASE_URL || 'http://localhost:8888';
+const base = process.env.LTXE_E2E_BASE_URL || process.env.BASE_URL || 'http://127.0.0.1:8888';
 
 test.describe('U21–U25 share, top, consent, sticky, dark mode', () => {
 	test('social share renders buttons', async ({ page }) => {
@@ -14,7 +14,17 @@ test.describe('U21–U25 share, top, consent, sticky, dark mode', () => {
 		await page.goto(`${base}/demo-back-to-top/`, { waitUntil: 'domcontentloaded' });
 		const btn = page.locator('.ltxe-btt').first();
 		await expect(btn).toHaveCount(1);
-		await page.evaluate(() => window.scrollTo(0, 800));
+		await page.evaluate(() => {
+			const doc = document.documentElement;
+			if ( doc.scrollHeight < window.innerHeight + 900 ) {
+				const spacer = document.createElement( 'div' );
+				spacer.style.minHeight = '1600px';
+				spacer.setAttribute( 'aria-hidden', 'true' );
+				document.body.appendChild( spacer );
+			}
+			window.scrollTo( 0, 800 );
+			window.dispatchEvent( new Event( 'scroll' ) );
+		});
 		await expect(btn).toHaveClass(/is-visible/);
 	});
 

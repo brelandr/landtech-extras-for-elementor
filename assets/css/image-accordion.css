@@ -1,0 +1,129 @@
+.ltxe-ia {
+	--ltxe-ia-collapsed: 80px;
+	--ltxe-ia-expanded: 500px;
+	--ltxe-ia-duration: 400ms;
+	display: flex;
+	height: 420px;
+	overflow: hidden;
+	width: 100%;
+}
+
+.ltxe-ia__panel {
+	position: relative;
+	flex: 0 0 var(--ltxe-ia-collapsed);
+	min-width: 44px;
+	background: #1a1a2e center / cover no-repeat;
+	transition: flex-basis var(--ltxe-ia-duration) ease;
+	cursor: pointer;
+	color: #fff;
+	outline: none;
+}
+
+.ltxe-ia__panel.is-open,
+.ltxe-ia--hover .ltxe-ia__panel:hover {
+	flex-basis: var(--ltxe-ia-expanded);
+	flex-grow: 1;
+}
+
+.ltxe-ia__overlay {
+	position: absolute;
+	inset: 0;
+	background: #1a1a2e;
+	opacity: 0.45;
+	pointer-events: none;
+}
+
+.ltxe-ia__content {
+	position: absolute;
+	inset: auto 16px 16px 16px;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.2s ease;
+}
+
+.ltxe-ia--center .ltxe-ia__content {
+	inset: 50% 16px auto 16px;
+	transform: translateY(-50%);
+	text-align: center;
+}
+
+.ltxe-ia--bottom-right .ltxe-ia__content {
+	text-align: right;
+}
+
+.ltxe-ia__panel.is-open .ltxe-ia__content,
+.ltxe-ia--hover .ltxe-ia__panel:hover .ltxe-ia__content {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+.ltxe-ia__title {
+	margin: 0 0 8px;
+	font-size: 1.25rem;
+}
+
+.ltxe-ia__desc {
+	margin: 0 0 12px;
+}
+
+.ltxe-ia a.ltxe-ia__btn,
+.ltxe-ia a.ltxe-ia__btn:link,
+.ltxe-ia a.ltxe-ia__btn:visited,
+.ltxe-ia a.ltxe-ia__btn:hover,
+.ltxe-ia a.ltxe-ia__btn:focus,
+.ltxe-ia a.ltxe-ia__btn:active,
+.ltxe-ia__btn {
+	display: none;
+	min-height: 44px;
+	align-items: center;
+	padding: 0 16px;
+	background: #e94560;
+	color: #fff;
+	-webkit-text-fill-color: #fff;
+	text-decoration: none;
+	border-radius: 4px;
+}
+
+.ltxe-ia__panel.is-open .ltxe-ia__btn,
+.ltxe-ia--hover .ltxe-ia__panel:hover .ltxe-ia__btn {
+	display: inline-flex;
+}
+
+@media (max-width: 767px) {
+	.ltxe-ia {
+		flex-direction: column;
+		height: auto;
+	}
+
+	.ltxe-ia__panel {
+		flex-basis: 72px;
+		min-height: 72px;
+	}
+
+	.ltxe-ia__panel.is-open,
+	.ltxe-ia--hover .ltxe-ia__panel:hover {
+		flex-basis: 220px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.ltxe-ia__panel,
+	.ltxe-ia__content {
+		transition: none;
+	}
+
+	.ltxe-ia--reduced .ltxe-ia__panel {
+		flex-basis: auto;
+		flex-grow: 1;
+		min-height: 160px;
+	}
+
+	.ltxe-ia--reduced .ltxe-ia__content {
+		opacity: 1;
+		pointer-events: auto;
+	}
+
+	.ltxe-ia--reduced .ltxe-ia__btn {
+		display: inline-flex;
+	}
+}

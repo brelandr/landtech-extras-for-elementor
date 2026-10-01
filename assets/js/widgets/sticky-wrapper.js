@@ -66,6 +66,7 @@
 		if ( isNaN( z ) ) {
 			z = 100;
 		}
+		el.style.setProperty( '--ltxe-sticky-z', String( z ) );
 
 		var container = findContainer( el );
 		if ( ! container ) {

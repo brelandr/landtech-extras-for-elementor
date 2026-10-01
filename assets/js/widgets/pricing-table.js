@@ -31,7 +31,9 @@
 				}
 				var period = btn.getAttribute( 'data-period' );
 				toggle.querySelectorAll( '.ltxe-pricing-toggle__btn' ).forEach( function ( b ) {
-					b.classList.toggle( 'is-active', b === btn );
+					var on = b === btn;
+					b.classList.toggle( 'is-active', on );
+					b.setAttribute( 'aria-pressed', on ? 'true' : 'false' );
 				} );
 				toggle.setAttribute( 'data-period', period );
 				document.dispatchEvent( new CustomEvent( 'ltxe_pricing_toggle_changed', { detail: { period: period } } ) );

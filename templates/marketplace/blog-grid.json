@@ -1,0 +1,61 @@
+{
+  "id": "tpl-blog-grid",
+  "title": "Blog Grid",
+  "category": "Layout",
+  "thumbnail": "https://extrasforelementor.com/template-thumbs/blog-grid.jpg",
+  "preview_url": "https://extrasforelementor.com/demo-blog-grid/",
+  "elementor_data": {
+    "id": "0000444",
+    "elType": "section",
+    "isInner": false,
+    "settings": {
+      "layout": "boxed",
+      "gap": "extended",
+      "content_width": {
+        "unit": "%",
+        "size": 100
+      }
+    },
+    "elements": [
+      {
+        "id": "0000443",
+        "elType": "column",
+        "isInner": false,
+        "settings": {
+          "_column_size": 100,
+          "_inline_size": 100
+        },
+        "elements": [
+          {
+            "id": "0000441",
+            "elType": "widget",
+            "widgetType": "heading-extended",
+            "settings": {
+              "title": "From the journal",
+              "header_size": "h1",
+              "size": "large",
+              "align": "center"
+            },
+            "elements": []
+          },
+          {
+            "id": "0000442",
+            "elType": "widget",
+            "widgetType": "posts-extra",
+            "settings": {
+              "_skin": "classic",
+              "posts_per_page": 6,
+              "columns": "3",
+              "columns_tablet": "2",
+              "columns_mobile": "1",
+              "classic_layout": "default",
+              "classic_pagination": "yes",
+              "classic_pagination_numbers": "yes"
+            },
+            "elements": []
+          }
+        ]
+      }
+    ]
+  }
+}

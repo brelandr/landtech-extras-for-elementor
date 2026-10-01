@@ -3,12 +3,16 @@
 	"private": true,
 	"scripts": {
 		"build:infinite-scroll": "node scripts/build-infinite-scroll.mjs",
-		"build:assets": "node scripts/build-infinite-scroll.mjs && node scripts/build-min.mjs"
+		"build:assets": "node scripts/build-infinite-scroll.mjs && node scripts/build-min.mjs",
+		"test:u30-axe": "node scripts/u30-axe.mjs",
+		"test:u32-csp": "node scripts/u32-csp-audit.mjs"
 	},
 	"devDependencies": {
+		"axe-core": "^4.13.0",
 		"esbuild": "^0.24.2",
 		"ev-emitter": "^2.1.2",
 		"fizzy-ui-utils": "^3.0.0",
-		"infinite-scroll": "^4.0.1"
+		"infinite-scroll": "^4.0.1",
+		"jsdom": "^26.1.0"
 	}
 }

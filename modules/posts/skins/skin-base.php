@@ -31,6 +31,35 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 	protected $ltx_loop_item_index = 0;
 
 	/**
+	 * Current loop post from get_the_ID() (Loop Builder safe).
+	 *
+	 * @since 2.9.1
+	 *
+	 * @return \WP_Post|null
+	 */
+	protected function ltxe_loop_post() {
+		$id = (int) get_the_ID();
+		if ( $id <= 0 ) {
+			return null;
+		}
+
+		$post = get_post( $id );
+
+		return ( $post instanceof \WP_Post ) ? $post : null;
+	}
+
+	/**
+	 * Current loop post ID from get_the_ID().
+	 *
+	 * @since 2.9.1
+	 *
+	 * @return int
+	 */
+	protected function ltxe_loop_post_id() {
+		return (int) get_the_ID();
+	}
+
+	/**
 	 * Register Controls Actions
 	 * 
 	 * Registers controls at specific points in the Controls Stack
@@ -307,11 +336,11 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 
 			$wp_query->the_post();
 
-			global $post;
+			$post = $this->ltxe_loop_post();
 
 			$query_id = $this->parent->get_settings( 'posts_query_id' );
 
-			if ( $query_id ) {
+			if ( $post && $query_id ) {
 				$post->query_id = $query_id;
 			}
 
@@ -511,7 +540,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 	 * @return void
 	 */
 	protected function render_post_start() {
-		global $post;
+		$post = $this->ltxe_loop_post();
 
 		$grid_item_key = 'grid-item-' . get_the_ID();
 		$loop_index    = (int) $this->ltx_loop_item_index;
@@ -567,7 +596,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 	 */
 	protected function render_post_header() {
 
-		global $post;
+		$post = $this->ltxe_loop_post();
 
 		$settings = $this->parent->get_settings_for_display();
 
@@ -580,7 +609,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param array 	$settings 	The current widget settings
 		 * @param int 		$post_id 	The post ID
 		 */
-		do_action( 'landtech_extras/widgets/posts/before_post_header', $settings, $post->ID );
+		do_action( 'landtech_extras/widgets/posts/before_post_header', $settings, $this->ltxe_loop_post_id() );
 
 		$area = 'header';
 
@@ -608,7 +637,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param array 	$settings 	The current widget settings
 		 * @param int 		$post_id 	The post ID
 		 */
-		do_action( 'landtech_extras/widgets/posts/after_post_header', $settings, $post->ID );
+		do_action( 'landtech_extras/widgets/posts/after_post_header', $settings, $this->ltxe_loop_post_id() );
 
 	}
 
@@ -620,7 +649,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 	 */
 	protected function render_post_media() {
 
-		global $post;
+		$post = $this->ltxe_loop_post();
 
 		$settings = $this->parent->get_settings_for_display();
 
@@ -633,12 +662,12 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param array 	$settings 	The current widget settings
 		 * @param int 		$post_id 	The post ID
 		 */
-		do_action( 'landtech_extras/widgets/posts/before_post_media', $settings, $post->ID );
+		do_action( 'landtech_extras/widgets/posts/before_post_media', $settings, $this->ltxe_loop_post_id() );
 
 		$area 				= 'media';
 		$media_tag 			= 'div';
-		$media_key 			= 'post-media-' . $post->ID;
-		$media_content_key 	= 'post-media-content-' . $post->ID;
+		$media_key 			= 'post-media-' . $this->ltxe_loop_post_id();
+		$media_content_key 	= 'post-media-content-' . $this->ltxe_loop_post_id();
 
 		// Option to not show media
 		if ( 'yes' !== $settings['post_media'] )
@@ -718,7 +747,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param array 	$settings 	The current widget settings
 		 * @param int 		$post_id 	The post ID
 		 */
-		do_action( 'landtech_extras/widgets/posts/after_post_media', $settings, $post->ID );
+		do_action( 'landtech_extras/widgets/posts/after_post_media', $settings, $this->ltxe_loop_post_id() );
 	}
 
 	/**
@@ -729,7 +758,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 	 */
 	protected function render_post_body() {
 
-		global $post;
+		$post = $this->ltxe_loop_post();
 
 		$settings = $this->parent->get_settings_for_display();
 
@@ -742,7 +771,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param array 	$settings 	The current widget settings
 		 * @param int 		$post_id 	The post ID
 		 */
-		do_action( 'landtech_extras/widgets/posts/before_post_body', $settings, $post->ID );
+		do_action( 'landtech_extras/widgets/posts/before_post_body', $settings, $this->ltxe_loop_post_id() );
 
 		$area = 'body';
 
@@ -771,7 +800,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param array 	$settings 	The current widget settings
 		 * @param int 		$post_id 	The post ID
 		 */
-		do_action( 'landtech_extras/widgets/posts/after_post_body', $settings, $post->ID );
+		do_action( 'landtech_extras/widgets/posts/after_post_body', $settings, $this->ltxe_loop_post_id() );
 	}
 
 	/**
@@ -782,7 +811,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 	 */
 	protected function render_post_footer() {
 
-		global $post;
+		$post = $this->ltxe_loop_post();
 
 		$settings = $this->parent->get_settings_for_display();
 
@@ -794,7 +823,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param array 	$settings 	The current widget settings
 		 * @param int 		$post_id 	The post ID
 		 */
-		do_action( "landtech_extras/widgets/posts/before_post_footer", $settings, $post->ID );
+		do_action( "landtech_extras/widgets/posts/before_post_footer", $settings, $this->ltxe_loop_post_id() );
 
 		$area = 'footer';
 		$footer_key = 'post-footer-' . get_the_ID();
@@ -822,7 +851,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param array 	$settings 	The current widget settings
 		 * @param int 		$post_id 	The post ID
 		 */
-		do_action( 'landtech_extras/widgets/posts/after_post_footer', $settings, $post->ID );
+		do_action( 'landtech_extras/widgets/posts/after_post_footer', $settings, $this->ltxe_loop_post_id() );
 	}
 
 	/**
@@ -836,7 +865,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 	 */
 	protected function render_post_parts( $area ) {
 
-		global $post;
+		$post = $this->ltxe_loop_post();
 
 		$_ordered_parts = $this->parent->get_ordered_post_parts( PostsModule::get_post_parts() );
 
@@ -850,7 +879,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param array 	$settings 	The current widget settings
 		 * @param int 		$post_id 	The post ID
 		 */
-		do_action( "landtech_extras/widgets/posts/after_{$area}_start", $this->parent->get_settings(), $post->ID );
+		do_action( "landtech_extras/widgets/posts/after_{$area}_start", $this->parent->get_settings(), $this->ltxe_loop_post_id() );
 
 		foreach ( $_ordered_parts as $part => $index ) {
 
@@ -865,7 +894,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			 * @param array 	$settings 	The current widget settings
 		 	 * @param int 		$post_id 	The post ID
 			 */
-			do_action( "landtech_extras/widgets/posts/before_{$area}_{$part}", $this->parent->get_settings(), $post->ID );
+			do_action( "landtech_extras/widgets/posts/before_{$area}_{$part}", $this->parent->get_settings(), $this->ltxe_loop_post_id() );
 
 			call_user_func( array( $this, 'render_post_' . $part ), $area );
 
@@ -880,7 +909,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			 * @param array 	$settings 	The current widget settings
 		 	 * @param int 		$post_id 	The post ID
 			 */
-			do_action( "landtech_extras/widgets/posts/after_{$area}_{$part}", $this->parent->get_settings(), $post->ID );
+			do_action( "landtech_extras/widgets/posts/after_{$area}_{$part}", $this->parent->get_settings(), $this->ltxe_loop_post_id() );
 		}
 
 		/**
@@ -893,7 +922,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param array 	$settings 	The current widget settings
 		 * @param int 		$post_id 	The post ID
 		 */
-		do_action( "landtech_extras/widgets/posts/before_{$area}_end", $this->parent->get_settings(), $post->ID );
+		do_action( "landtech_extras/widgets/posts/before_{$area}_end", $this->parent->get_settings(), $this->ltxe_loop_post_id() );
 	}
 
 	/**
@@ -905,7 +934,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 	 */
 	protected function render_post_metas( $area ) {
 
-		global $post;
+		$post = $this->ltxe_loop_post();
 
 		// Render any metas in an area
 		if ( $this->parent->metas_in_area( $area ) || $this->parent->is_in_area( 'avatar', $area ) ) {
@@ -956,7 +985,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 						 * @param array 	$settings 	The current widget settings
 		 				 * @param int 		$post_id 	The post ID
 						 */
-						do_action( "landtech_extras/widgets/posts/before_{$area}_metas", $this->parent->get_settings(), $post->ID );
+						do_action( "landtech_extras/widgets/posts/before_{$area}_metas", $this->parent->get_settings(), $this->ltxe_loop_post_id() );
 
 						foreach ( $_ordered_parts as $meta => $index ) {
 
@@ -971,7 +1000,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 					 * @param int 		$post_id 	The post ID
 							 * @param string 	$area 	The area the meta resides in
 							 */
-							do_action( "landtech_extras/widgets/posts/before_{$meta}", $this->parent->get_settings(), $post->ID, $area );
+							do_action( "landtech_extras/widgets/posts/before_{$meta}", $this->parent->get_settings(), $this->ltxe_loop_post_id(), $area );
 
 							call_user_func( array( $this, 'render_post_' . $meta ), $area );
 
@@ -986,7 +1015,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 					 * @param int 		$post_id 	The post ID
 							 * @param string 	$area 	The area the meta resides in
 							 */
-							do_action( "landtech_extras/widgets/posts/after_{$meta}", $this->parent->get_settings(), $post->ID, $area );
+							do_action( "landtech_extras/widgets/posts/after_{$meta}", $this->parent->get_settings(), $this->ltxe_loop_post_id(), $area );
 						}
 
 						/**
@@ -1000,7 +1029,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 						 * @param array 	$settings 	The current widget settings
 		 				 * @param int 		$post_id 	The post ID
 						 */
-						do_action( "landtech_extras/widgets/posts/after_{$area}_metas", $this->parent->get_settings(), $post->ID );
+						do_action( "landtech_extras/widgets/posts/after_{$area}_metas", $this->parent->get_settings(), $this->ltxe_loop_post_id() );
 
 					?></ul><?php
 
@@ -1018,7 +1047,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 	 */
 	protected function render_post_media_thumbnail() {
 
-		global $post;
+		$post = $this->ltxe_loop_post();
 
 		$settings = $this->parent->get_settings_for_display();
 
@@ -1180,7 +1209,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		if ( ! $this->parent->is_in_area( 'title', $area ) )
 			return;
 
-		global $post;
+		$post = $this->ltxe_loop_post();
 
 		$title_tag 		= 'div';
 		$heading_tag 	= $this->parent->get_settings( 'post_title_element' );
@@ -1362,7 +1391,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 	 * @return void
 	 */
 	protected function render_post_date( $area = 'footer' ) {
-		global $post;
+		$post = $this->ltxe_loop_post();
 
 		if ( ! $this->parent->is_in_area( 'date', $area ) )
 			return;
@@ -1456,7 +1485,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		if ( ! $this->parent->is_in_area( 'comments', $area ) )
 			return;
 
-		global $post;
+		$post = $this->ltxe_loop_post();
 
 		$post_comments = get_comments_number();
 		$post_comments_prefix = $this->parent->get_settings( 'post_comments_prefix' );
@@ -1528,7 +1557,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		if ( ! $this->parent->is_in_area( 'excerpt', $area ) || ! $this->landtech_extras_posts_excerpt_length( 0 ) )
 			return;
 
-		global $post;
+		$post = $this->ltxe_loop_post();
 
 		$post_excerpt_key = 'post-excerpt-' . get_the_ID();
 		$post_excerpt = get_the_excerpt();
@@ -1588,7 +1617,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 	 */
 	protected function render_button( $area = 'body' ) {
 
-		global $post;
+		$post = $this->ltxe_loop_post();
 
 		$button_tag 		= 'a';
 		$settings 			= $this->parent->get_settings();
@@ -1767,9 +1796,9 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 	 * @return void
 	 */
 	public function before_loop() {
-		global $post;
+		$post = $this->ltxe_loop_post();
 
-		$post_id = ( $post instanceof \WP_Post ) ? (int) $post->ID : 0;
+		$post_id = ( $post instanceof \WP_Post ) ? (int) $this->ltxe_loop_post_id() : 0;
 
 		/**
 		 * Before Loop
@@ -1792,7 +1821,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 	 * @return void
 	 */
 	public function before_grid_item() {
-		global $post;
+		$post = $this->ltxe_loop_post();
 
 		/**
 		 * Before Grid Item
@@ -1803,7 +1832,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param array 	$settings 	The current widget settings
 		 * @param int 		$post_id 	The post ID
 		 */
-		do_action( 'landtech_extras/widgets/posts/before_grid_item', $this->parent->get_settings(), $post->ID );
+		do_action( 'landtech_extras/widgets/posts/before_grid_item', $this->parent->get_settings(), $this->ltxe_loop_post_id() );
 	}
 
 	/**
@@ -1815,7 +1844,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 	 * @return void
 	 */
 	public function after_grid_item_start() {
-		global $post;
+		$post = $this->ltxe_loop_post();
 
 		$skin = $this->parent->get_settings( '_skin' );
 		
@@ -1828,7 +1857,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param array 	$settings 	The current widget settings
 		 * @param int 		$post_id 	The post ID
 		 */
-		do_action( 'landtech_extras/widgets/posts/after_grid_item_start', $this->parent->get_settings(), $post->ID );
+		do_action( 'landtech_extras/widgets/posts/after_grid_item_start', $this->parent->get_settings(), $this->ltxe_loop_post_id() );
 	}
 
 	/**
@@ -1840,7 +1869,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 	 * @return void
 	 */
 	public function before_grid_item_end() {
-		global $post;
+		$post = $this->ltxe_loop_post();
 
 		$skin = $this->parent->get_settings( '_skin' );
 		/**
@@ -1852,7 +1881,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param array 	$settings 	The current widget settings
 		 * @param int 		$post_id 	The post ID
 		 */
-		do_action( 'landtech_extras/widgets/posts/before_grid_item_end', $this->parent->get_settings(), $post->ID );
+		do_action( 'landtech_extras/widgets/posts/before_grid_item_end', $this->parent->get_settings(), $this->ltxe_loop_post_id() );
 	}
 
 	/**
@@ -1864,7 +1893,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 	 * @return void
 	 */
 	public function after_grid_item() {
-		global $post;
+		$post = $this->ltxe_loop_post();
 
 		/**
 		 * After Grid Item
@@ -1875,7 +1904,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		 * @param array 	$settings 	The current widget settings
 		 * @param int 		$post_id 	The post ID
 		 */
-		do_action( 'landtech_extras/widgets/posts/after_grid_item', $this->parent->get_settings(), $post->ID );
+		do_action( 'landtech_extras/widgets/posts/after_grid_item', $this->parent->get_settings(), $this->ltxe_loop_post_id() );
 	}
 
 	/**
@@ -1887,9 +1916,9 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 	 * @return void
 	 */
 	protected function after_loop() {
-		global $post;
+		$post = $this->ltxe_loop_post();
 
-		$post_id = ( $post instanceof \WP_Post ) ? (int) $post->ID : 0;
+		$post_id = ( $post instanceof \WP_Post ) ? (int) $this->ltxe_loop_post_id() : 0;
 
 		/**
 		 * After Loop

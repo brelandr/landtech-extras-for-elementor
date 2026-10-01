@@ -1,0 +1,256 @@
+{
+  "id": "tpl-pricing-page",
+  "title": "Pricing Page",
+  "category": "Marketing",
+  "thumbnail": "https://extrasforelementor.com/template-thumbs/pricing-page.jpg",
+  "preview_url": "https://extrasforelementor.com/demo-pricing-page/",
+  "elementor_data": [
+    {
+      "id": "0000401",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "layout": "boxed",
+        "gap": "extended",
+        "content_width": {
+          "unit": "%",
+          "size": 100
+        }
+      },
+      "elements": [
+        {
+          "id": "0000400",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 100,
+            "_inline_size": 100
+          },
+          "elements": [
+            {
+              "id": "00003fe",
+              "elType": "widget",
+              "widgetType": "heading-extended",
+              "settings": {
+                "title": "Simple pricing that scales with you",
+                "header_size": "h1",
+                "size": "xl",
+                "align": "center"
+              },
+              "elements": []
+            },
+            {
+              "id": "00003ff",
+              "elType": "widget",
+              "widgetType": "ltxe-pricing-toggle",
+              "settings": {
+                "monthly_label": "Monthly",
+                "annual_label": "Annual (save 20%)",
+                "default_period": "monthly"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "0000408",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "layout": "boxed",
+        "gap": "extended",
+        "content_width": {
+          "unit": "%",
+          "size": 100
+        }
+      },
+      "elements": [
+        {
+          "id": "0000403",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 33,
+            "_inline_size": 33
+          },
+          "elements": [
+            {
+              "id": "0000402",
+              "elType": "widget",
+              "widgetType": "ltxe-pricing-table",
+              "settings": {
+                "plan_name": "Starter",
+                "plan_description": "For a single site",
+                "show_badge": "",
+                "badge_label": "",
+                "currency": "$",
+                "price": "19",
+                "period": "/mo",
+                "annual_price": "182",
+                "annual_period": "/yr",
+                "features": [
+                  {
+                    "_id": "00003ef",
+                    "feature_text": "1 site license",
+                    "status": "included"
+                  },
+                  {
+                    "_id": "00003f0",
+                    "feature_text": "Core widgets",
+                    "status": "included"
+                  },
+                  {
+                    "_id": "00003f1",
+                    "feature_text": "Community support",
+                    "status": "included"
+                  },
+                  {
+                    "_id": "00003f2",
+                    "feature_text": "Priority support",
+                    "status": "excluded"
+                  },
+                  {
+                    "_id": "00003f3",
+                    "feature_text": "Premium add-ons",
+                    "status": "excluded"
+                  }
+                ],
+                "button_text": "Choose Starter",
+                "button_url": {
+                  "url": "#starter",
+                  "is_external": "",
+                  "nofollow": ""
+                }
+              },
+              "elements": []
+            }
+          ]
+        },
+        {
+          "id": "0000405",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 34,
+            "_inline_size": 34
+          },
+          "elements": [
+            {
+              "id": "0000404",
+              "elType": "widget",
+              "widgetType": "ltxe-pricing-table",
+              "settings": {
+                "plan_name": "Pro",
+                "plan_description": "For growing teams",
+                "show_badge": "yes",
+                "badge_label": "Most popular",
+                "currency": "$",
+                "price": "49",
+                "period": "/mo",
+                "annual_price": "470",
+                "annual_period": "/yr",
+                "features": [
+                  {
+                    "_id": "00003f4",
+                    "feature_text": "5 site licenses",
+                    "status": "highlight"
+                  },
+                  {
+                    "_id": "00003f5",
+                    "feature_text": "Core widgets",
+                    "status": "included"
+                  },
+                  {
+                    "_id": "00003f6",
+                    "feature_text": "Priority support",
+                    "status": "included"
+                  },
+                  {
+                    "_id": "00003f7",
+                    "feature_text": "Template marketplace",
+                    "status": "included"
+                  },
+                  {
+                    "_id": "00003f8",
+                    "feature_text": "WooCommerce extras",
+                    "status": "included"
+                  }
+                ],
+                "button_text": "Choose Pro",
+                "button_url": {
+                  "url": "#pro",
+                  "is_external": "",
+                  "nofollow": ""
+                }
+              },
+              "elements": []
+            }
+          ]
+        },
+        {
+          "id": "0000407",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 33,
+            "_inline_size": 33
+          },
+          "elements": [
+            {
+              "id": "0000406",
+              "elType": "widget",
+              "widgetType": "ltxe-pricing-table",
+              "settings": {
+                "plan_name": "Agency",
+                "plan_description": "For studios and clients",
+                "show_badge": "",
+                "badge_label": "",
+                "currency": "$",
+                "price": "99",
+                "period": "/mo",
+                "annual_price": "950",
+                "annual_period": "/yr",
+                "features": [
+                  {
+                    "_id": "00003f9",
+                    "feature_text": "Unlimited sites",
+                    "status": "highlight"
+                  },
+                  {
+                    "_id": "00003fa",
+                    "feature_text": "All widgets",
+                    "status": "included"
+                  },
+                  {
+                    "_id": "00003fb",
+                    "feature_text": "White-glove support",
+                    "status": "included"
+                  },
+                  {
+                    "_id": "00003fc",
+                    "feature_text": "Client handoff kits",
+                    "status": "included"
+                  },
+                  {
+                    "_id": "00003fd",
+                    "feature_text": "Custom onboarding",
+                    "status": "included"
+                  }
+                ],
+                "button_text": "Choose Agency",
+                "button_url": {
+                  "url": "#agency",
+                  "is_external": "",
+                  "nofollow": ""
+                }
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

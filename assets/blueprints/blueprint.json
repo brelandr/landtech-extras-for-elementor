@@ -42,7 +42,7 @@
 		},
 		{
 			"step": "runPHP",
-			"code": "<?php\nrequire_once '/wordpress/wp-load.php';\n$seeder = WP_PLUGIN_DIR . '/landtech-extras-for-elementor/includes/playground-demo-seeder.php';\nif ( is_readable( $seeder ) ) {\n\trequire_once $seeder;\n\tlandtech_extras_seed_playground_demos();\n}\necho 'landtech-extras-demos-seeded';"
+			"code": "<?php\nrequire_once '/wordpress/wp-load.php';\nif ( class_exists( '\\LandTechExtras\\LTXE_Playground_Demo_Seeder' ) ) {\n\t\\LandTechExtras\\LTXE_Playground_Demo_Seeder::seed( 'auto', true );\n}\necho 'landtech-extras-demos-seeded';"
 		}
 	]
 }

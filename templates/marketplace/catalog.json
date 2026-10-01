@@ -1,0 +1,1646 @@
+[
+  {
+    "id": "tpl-hero-section",
+    "title": "Hero Section",
+    "category": "Layout",
+    "thumbnail": "https://extrasforelementor.com/template-thumbs/hero-section.jpg",
+    "preview_url": "https://extrasforelementor.com/demo-hero-section/",
+    "elementor_data": {
+      "id": "00003ee",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "layout": "boxed",
+        "gap": "extended",
+        "content_width": {
+          "unit": "%",
+          "size": 100
+        },
+        "background_background": "classic",
+        "background_color": "#F5F3FF",
+        "padding": {
+          "unit": "px",
+          "top": "80",
+          "right": "24",
+          "bottom": "80",
+          "left": "24",
+          "isLinked": false
+        }
+      },
+      "elements": [
+        {
+          "id": "00003ea",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 50,
+            "_inline_size": 50
+          },
+          "elements": [
+            {
+              "id": "00003e9",
+              "elType": "widget",
+              "widgetType": "ee-lottie",
+              "settings": {
+                "source": "url",
+                "animation_url": {
+                  "url": "https://extrasforelementor.com/template-thumbs/lottie-hero.json",
+                  "is_external": "on",
+                  "nofollow": ""
+                },
+                "loop": "yes",
+                "autoplay": "yes",
+                "trigger": "autoplay"
+              },
+              "elements": []
+            }
+          ]
+        },
+        {
+          "id": "00003ed",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 50,
+            "_inline_size": 50
+          },
+          "elements": [
+            {
+              "id": "00003eb",
+              "elType": "widget",
+              "widgetType": "heading-extended",
+              "settings": {
+                "title": "Launch pages that feel finished",
+                "header_size": "h1",
+                "size": "xxl",
+                "align": "left"
+              },
+              "elements": []
+            },
+            {
+              "id": "00003ec",
+              "elType": "widget",
+              "widgetType": "ltxe-cta",
+              "settings": {
+                "eyebrow": "LandTech Extras",
+                "heading": "Motion, copy, and a clear next step",
+                "subtext": "Drop this hero on a landing page. The Lottie loop, heading, and dual CTAs are all LandTech widgets — no core Elementor button required.",
+                "btn1_text": "Start building",
+                "btn1_url": {
+                  "url": "#get-started",
+                  "is_external": "",
+                  "nofollow": ""
+                },
+                "btn1_style": "primary",
+                "btn2_text": "See widgets",
+                "btn2_url": {
+                  "url": "#widgets",
+                  "is_external": "",
+                  "nofollow": ""
+                }
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "tpl-pricing-page",
+    "title": "Pricing Page",
+    "category": "Marketing",
+    "thumbnail": "https://extrasforelementor.com/template-thumbs/pricing-page.jpg",
+    "preview_url": "https://extrasforelementor.com/demo-pricing-page/",
+    "elementor_data": [
+      {
+        "id": "0000401",
+        "elType": "section",
+        "isInner": false,
+        "settings": {
+          "layout": "boxed",
+          "gap": "extended",
+          "content_width": {
+            "unit": "%",
+            "size": 100
+          }
+        },
+        "elements": [
+          {
+            "id": "0000400",
+            "elType": "column",
+            "isInner": false,
+            "settings": {
+              "_column_size": 100,
+              "_inline_size": 100
+            },
+            "elements": [
+              {
+                "id": "00003fe",
+                "elType": "widget",
+                "widgetType": "heading-extended",
+                "settings": {
+                  "title": "Simple pricing that scales with you",
+                  "header_size": "h1",
+                  "size": "xl",
+                  "align": "center"
+                },
+                "elements": []
+              },
+              {
+                "id": "00003ff",
+                "elType": "widget",
+                "widgetType": "ltxe-pricing-toggle",
+                "settings": {
+                  "monthly_label": "Monthly",
+                  "annual_label": "Annual (save 20%)",
+                  "default_period": "monthly"
+                },
+                "elements": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "0000408",
+        "elType": "section",
+        "isInner": false,
+        "settings": {
+          "layout": "boxed",
+          "gap": "extended",
+          "content_width": {
+            "unit": "%",
+            "size": 100
+          }
+        },
+        "elements": [
+          {
+            "id": "0000403",
+            "elType": "column",
+            "isInner": false,
+            "settings": {
+              "_column_size": 33,
+              "_inline_size": 33
+            },
+            "elements": [
+              {
+                "id": "0000402",
+                "elType": "widget",
+                "widgetType": "ltxe-pricing-table",
+                "settings": {
+                  "plan_name": "Starter",
+                  "plan_description": "For a single site",
+                  "show_badge": "",
+                  "badge_label": "",
+                  "currency": "$",
+                  "price": "19",
+                  "period": "/mo",
+                  "annual_price": "182",
+                  "annual_period": "/yr",
+                  "features": [
+                    {
+                      "_id": "00003ef",
+                      "feature_text": "1 site license",
+                      "status": "included"
+                    },
+                    {
+                      "_id": "00003f0",
+                      "feature_text": "Core widgets",
+                      "status": "included"
+                    },
+                    {
+                      "_id": "00003f1",
+                      "feature_text": "Community support",
+                      "status": "included"
+                    },
+                    {
+                      "_id": "00003f2",
+                      "feature_text": "Priority support",
+                      "status": "excluded"
+                    },
+                    {
+                      "_id": "00003f3",
+                      "feature_text": "Premium add-ons",
+                      "status": "excluded"
+                    }
+                  ],
+                  "button_text": "Choose Starter",
+                  "button_url": {
+                    "url": "#starter",
+                    "is_external": "",
+                    "nofollow": ""
+                  }
+                },
+                "elements": []
+              }
+            ]
+          },
+          {
+            "id": "0000405",
+            "elType": "column",
+            "isInner": false,
+            "settings": {
+              "_column_size": 34,
+              "_inline_size": 34
+            },
+            "elements": [
+              {
+                "id": "0000404",
+                "elType": "widget",
+                "widgetType": "ltxe-pricing-table",
+                "settings": {
+                  "plan_name": "Pro",
+                  "plan_description": "For growing teams",
+                  "show_badge": "yes",
+                  "badge_label": "Most popular",
+                  "currency": "$",
+                  "price": "49",
+                  "period": "/mo",
+                  "annual_price": "470",
+                  "annual_period": "/yr",
+                  "features": [
+                    {
+                      "_id": "00003f4",
+                      "feature_text": "5 site licenses",
+                      "status": "highlight"
+                    },
+                    {
+                      "_id": "00003f5",
+                      "feature_text": "Core widgets",
+                      "status": "included"
+                    },
+                    {
+                      "_id": "00003f6",
+                      "feature_text": "Priority support",
+                      "status": "included"
+                    },
+                    {
+                      "_id": "00003f7",
+                      "feature_text": "Template marketplace",
+                      "status": "included"
+                    },
+                    {
+                      "_id": "00003f8",
+                      "feature_text": "WooCommerce extras",
+                      "status": "included"
+                    }
+                  ],
+                  "button_text": "Choose Pro",
+                  "button_url": {
+                    "url": "#pro",
+                    "is_external": "",
+                    "nofollow": ""
+                  }
+                },
+                "elements": []
+              }
+            ]
+          },
+          {
+            "id": "0000407",
+            "elType": "column",
+            "isInner": false,
+            "settings": {
+              "_column_size": 33,
+              "_inline_size": 33
+            },
+            "elements": [
+              {
+                "id": "0000406",
+                "elType": "widget",
+                "widgetType": "ltxe-pricing-table",
+                "settings": {
+                  "plan_name": "Agency",
+                  "plan_description": "For studios and clients",
+                  "show_badge": "",
+                  "badge_label": "",
+                  "currency": "$",
+                  "price": "99",
+                  "period": "/mo",
+                  "annual_price": "950",
+                  "annual_period": "/yr",
+                  "features": [
+                    {
+                      "_id": "00003f9",
+                      "feature_text": "Unlimited sites",
+                      "status": "highlight"
+                    },
+                    {
+                      "_id": "00003fa",
+                      "feature_text": "All widgets",
+                      "status": "included"
+                    },
+                    {
+                      "_id": "00003fb",
+                      "feature_text": "White-glove support",
+                      "status": "included"
+                    },
+                    {
+                      "_id": "00003fc",
+                      "feature_text": "Client handoff kits",
+                      "status": "included"
+                    },
+                    {
+                      "_id": "00003fd",
+                      "feature_text": "Custom onboarding",
+                      "status": "included"
+                    }
+                  ],
+                  "button_text": "Choose Agency",
+                  "button_url": {
+                    "url": "#agency",
+                    "is_external": "",
+                    "nofollow": ""
+                  }
+                },
+                "elements": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tpl-faq-section",
+    "title": "FAQ Section",
+    "category": "Layout",
+    "thumbnail": "https://extrasforelementor.com/template-thumbs/faq-section.jpg",
+    "preview_url": "https://extrasforelementor.com/demo-faq-section/",
+    "elementor_data": {
+      "id": "0000412",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "layout": "boxed",
+        "gap": "extended",
+        "content_width": {
+          "unit": "%",
+          "size": 100
+        }
+      },
+      "elements": [
+        {
+          "id": "0000411",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 100,
+            "_inline_size": 100
+          },
+          "elements": [
+            {
+              "id": "000040f",
+              "elType": "widget",
+              "widgetType": "heading-extended",
+              "settings": {
+                "title": "Frequently asked questions",
+                "header_size": "h2",
+                "size": "large",
+                "align": "center"
+              },
+              "elements": []
+            },
+            {
+              "id": "0000410",
+              "elType": "widget",
+              "widgetType": "ltxe-faq",
+              "settings": {
+                "items": [
+                  {
+                    "_id": "0000409",
+                    "question": "Which widgets can I use in marketplace templates?",
+                    "answer": "<p>Only widgets from LandTech Extras (free) and LandTech Extras Premium. This FAQ uses the FAQ Accordion widget with FAQPage JSON-LD enabled.</p>",
+                    "open_by_default": "yes"
+                  },
+                  {
+                    "_id": "000040a",
+                    "question": "Does the accordion output schema automatically?",
+                    "answer": "<p>Yes. Turn on FAQPage schema in the widget settings and the FAQPage structured data is printed with the questions and answers.</p>",
+                    "open_by_default": ""
+                  },
+                  {
+                    "_id": "000040b",
+                    "question": "Can more than one item stay open?",
+                    "answer": "<p>Accordion mode keeps a single item open. Turn accordion mode off if you want multiple answers visible at once.</p>",
+                    "open_by_default": ""
+                  },
+                  {
+                    "_id": "000040c",
+                    "question": "How do I restyle the questions?",
+                    "answer": "<p>Use the Style tab on the FAQ widget for typography, colors, icon position, and spacing. The markup stays accessible.</p>",
+                    "open_by_default": ""
+                  },
+                  {
+                    "_id": "000040d",
+                    "question": "Will this conflict with another FAQ schema plugin?",
+                    "answer": "<p>Disable the widget schema if another plugin already prints FAQPage JSON-LD on the same URL.</p>",
+                    "open_by_default": ""
+                  },
+                  {
+                    "_id": "000040e",
+                    "question": "Can I nest this inside a pricing or support page?",
+                    "answer": "<p>Yes. Import this section below a pricing table or contact block. The schema still describes the six questions on the page.</p>",
+                    "open_by_default": ""
+                  }
+                ],
+                "accordion_mode": "yes",
+                "faq_schema": "yes"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "tpl-team-page",
+    "title": "Team Page",
+    "category": "Layout",
+    "thumbnail": "https://extrasforelementor.com/template-thumbs/team-page.jpg",
+    "preview_url": "https://extrasforelementor.com/demo-team-page/",
+    "elementor_data": [
+      {
+        "id": "0000422",
+        "elType": "section",
+        "isInner": false,
+        "settings": {
+          "layout": "boxed",
+          "gap": "extended",
+          "content_width": {
+            "unit": "%",
+            "size": 100
+          }
+        },
+        "elements": [
+          {
+            "id": "0000421",
+            "elType": "column",
+            "isInner": false,
+            "settings": {
+              "_column_size": 100,
+              "_inline_size": 100
+            },
+            "elements": [
+              {
+                "id": "000041f",
+                "elType": "widget",
+                "widgetType": "heading-extended",
+                "settings": {
+                  "title": "Meet the team",
+                  "header_size": "h1",
+                  "size": "xl",
+                  "align": "center"
+                },
+                "elements": []
+              },
+              {
+                "id": "0000420",
+                "elType": "widget",
+                "widgetType": "ltxe-team-members",
+                "settings": {
+                  "members": [
+                    {
+                      "_id": "0000413",
+                      "name": "Ava Cole",
+                      "role": "Creative Director",
+                      "bio": "Leads brand systems and motion language for client launches.",
+                      "link": {
+                        "url": "#",
+                        "is_external": "",
+                        "nofollow": ""
+                      },
+                      "socials": [
+                        {
+                          "_id": "0000414",
+                          "icon": {
+                            "value": "fab fa-linkedin-in",
+                            "library": "fa-brands"
+                          },
+                          "url": {
+                            "url": "https://www.linkedin.com/",
+                            "is_external": "on",
+                            "nofollow": ""
+                          },
+                          "label": "LinkedIn"
+                        }
+                      ]
+                    },
+                    {
+                      "_id": "0000415",
+                      "name": "Noah Patel",
+                      "role": "Lead Engineer",
+                      "bio": "Builds Elementor widgets, REST routes, and performance budgets.",
+                      "link": {
+                        "url": "#",
+                        "is_external": "",
+                        "nofollow": ""
+                      },
+                      "socials": [
+                        {
+                          "_id": "0000416",
+                          "icon": {
+                            "value": "fab fa-linkedin-in",
+                            "library": "fa-brands"
+                          },
+                          "url": {
+                            "url": "https://www.linkedin.com/",
+                            "is_external": "on",
+                            "nofollow": ""
+                          },
+                          "label": "LinkedIn"
+                        }
+                      ]
+                    },
+                    {
+                      "_id": "0000417",
+                      "name": "Mia Alvarez",
+                      "role": "Product Designer",
+                      "bio": "Turns research into layouts that still feel like the brand.",
+                      "link": {
+                        "url": "#",
+                        "is_external": "",
+                        "nofollow": ""
+                      },
+                      "socials": [
+                        {
+                          "_id": "0000418",
+                          "icon": {
+                            "value": "fab fa-linkedin-in",
+                            "library": "fa-brands"
+                          },
+                          "url": {
+                            "url": "https://www.linkedin.com/",
+                            "is_external": "on",
+                            "nofollow": ""
+                          },
+                          "label": "LinkedIn"
+                        }
+                      ]
+                    },
+                    {
+                      "_id": "0000419",
+                      "name": "Eli Brooks",
+                      "role": "Support Lead",
+                      "bio": "Owns onboarding, docs, and the first-week success path.",
+                      "link": {
+                        "url": "#",
+                        "is_external": "",
+                        "nofollow": ""
+                      },
+                      "socials": [
+                        {
+                          "_id": "000041a",
+                          "icon": {
+                            "value": "fab fa-linkedin-in",
+                            "library": "fa-brands"
+                          },
+                          "url": {
+                            "url": "https://www.linkedin.com/",
+                            "is_external": "on",
+                            "nofollow": ""
+                          },
+                          "label": "LinkedIn"
+                        }
+                      ]
+                    },
+                    {
+                      "_id": "000041b",
+                      "name": "Jun Park",
+                      "role": "Motion Designer",
+                      "bio": "Crafts Lottie loops and micro-interactions for landing pages.",
+                      "link": {
+                        "url": "#",
+                        "is_external": "",
+                        "nofollow": ""
+                      },
+                      "socials": [
+                        {
+                          "_id": "000041c",
+                          "icon": {
+                            "value": "fab fa-linkedin-in",
+                            "library": "fa-brands"
+                          },
+                          "url": {
+                            "url": "https://www.linkedin.com/",
+                            "is_external": "on",
+                            "nofollow": ""
+                          },
+                          "label": "LinkedIn"
+                        }
+                      ]
+                    },
+                    {
+                      "_id": "000041d",
+                      "name": "Riley Chen",
+                      "role": "Account Manager",
+                      "bio": "Keeps timelines honest and stakeholders in the same thread.",
+                      "link": {
+                        "url": "#",
+                        "is_external": "",
+                        "nofollow": ""
+                      },
+                      "socials": [
+                        {
+                          "_id": "000041e",
+                          "icon": {
+                            "value": "fab fa-linkedin-in",
+                            "library": "fa-brands"
+                          },
+                          "url": {
+                            "url": "https://www.linkedin.com/",
+                            "is_external": "on",
+                            "nofollow": ""
+                          },
+                          "label": "LinkedIn"
+                        }
+                      ]
+                    }
+                  ],
+                  "card_style": "classic",
+                  "columns": "3",
+                  "columns_tablet": "2",
+                  "columns_mobile": "1",
+                  "image_shape": "circle"
+                },
+                "elements": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "0000425",
+        "elType": "section",
+        "isInner": false,
+        "settings": {
+          "layout": "boxed",
+          "gap": "extended",
+          "content_width": {
+            "unit": "%",
+            "size": 100
+          },
+          "background_background": "classic",
+          "background_color": "#0F172A"
+        },
+        "elements": [
+          {
+            "id": "0000424",
+            "elType": "column",
+            "isInner": false,
+            "settings": {
+              "_column_size": 100,
+              "_inline_size": 100
+            },
+            "elements": [
+              {
+                "id": "0000423",
+                "elType": "widget",
+                "widgetType": "ltxe-cta",
+                "settings": {
+                  "eyebrow": "We are hiring",
+                  "heading": "Want to build with us?",
+                  "subtext": "Tell us about the sites you ship and the widgets you wish existed.",
+                  "btn1_text": "View openings",
+                  "btn1_url": {
+                    "url": "#careers",
+                    "is_external": "",
+                    "nofollow": ""
+                  },
+                  "btn1_style": "primary",
+                  "btn2_text": "Say hello",
+                  "btn2_url": {
+                    "url": "#contact",
+                    "is_external": "",
+                    "nofollow": ""
+                  }
+                },
+                "elements": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tpl-testimonials-carousel",
+    "title": "Testimonials Carousel",
+    "category": "Marketing",
+    "thumbnail": "https://extrasforelementor.com/template-thumbs/testimonials-carousel.jpg",
+    "preview_url": "https://extrasforelementor.com/demo-testimonials-carousel/",
+    "elementor_data": {
+      "id": "000042d",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "layout": "boxed",
+        "gap": "extended",
+        "content_width": {
+          "unit": "%",
+          "size": 100
+        }
+      },
+      "elements": [
+        {
+          "id": "000042c",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 100,
+            "_inline_size": 100
+          },
+          "elements": [
+            {
+              "id": "000042a",
+              "elType": "widget",
+              "widgetType": "heading-extended",
+              "settings": {
+                "title": "What clients say",
+                "header_size": "h2",
+                "size": "large",
+                "align": "center"
+              },
+              "elements": []
+            },
+            {
+              "id": "000042b",
+              "elType": "widget",
+              "widgetType": "ltxe-testimonials",
+              "settings": {
+                "source": "manual",
+                "reviews": [
+                  {
+                    "_id": "0000426",
+                    "author_name": "Maya Chen",
+                    "author_role": "Studio owner",
+                    "rating": "5",
+                    "content": "Clear, fast, and easy to restyle. We dropped this on a client homepage the same afternoon.",
+                    "date": "2026-03-12"
+                  },
+                  {
+                    "_id": "0000427",
+                    "author_name": "Jordan Hale",
+                    "author_role": "WooCommerce lead",
+                    "rating": "5",
+                    "content": "Reviews pulled in without extra plugins. The carousel stays readable on a phone.",
+                    "date": "2026-04-02"
+                  },
+                  {
+                    "_id": "0000428",
+                    "author_name": "Priya Shah",
+                    "author_role": "Content strategist",
+                    "rating": "5",
+                    "content": "The quote skin is what I wanted for a case-study page. Schema toggle is a nice extra.",
+                    "date": "2026-04-18"
+                  },
+                  {
+                    "_id": "0000429",
+                    "author_name": "Chris Ortega",
+                    "author_role": "Agency partner",
+                    "rating": "4",
+                    "content": "Importing marketplace templates saved a day of layout work on the last campaign.",
+                    "date": "2026-05-09"
+                  }
+                ],
+                "skin": "cards",
+                "display": "carousel",
+                "columns": "1",
+                "show_avatar": "yes",
+                "show_rating": "yes",
+                "add_schema": "yes",
+                "schema_type": "Organization",
+                "schema_name": "LandTech Extras"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "tpl-event-calendar",
+    "title": "Event Calendar",
+    "category": "Layout",
+    "thumbnail": "https://extrasforelementor.com/template-thumbs/event-calendar.jpg",
+    "preview_url": "https://extrasforelementor.com/demo-event-calendar/",
+    "elementor_data": {
+      "id": "0000431",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "layout": "boxed",
+        "gap": "extended",
+        "content_width": {
+          "unit": "%",
+          "size": 100
+        }
+      },
+      "elements": [
+        {
+          "id": "0000430",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 100,
+            "_inline_size": 100
+          },
+          "elements": [
+            {
+              "id": "000042e",
+              "elType": "widget",
+              "widgetType": "heading-extended",
+              "settings": {
+                "title": "Upcoming events",
+                "header_size": "h1",
+                "size": "large",
+                "align": "center"
+              },
+              "elements": []
+            },
+            {
+              "id": "000042f",
+              "elType": "widget",
+              "widgetType": "ee-calendar",
+              "settings": {
+                "source": "ical",
+                "ical_url": {
+                  "url": "https://calendar.google.com/calendar/ical/example/public/basic.ics",
+                  "is_external": "on",
+                  "nofollow": ""
+                },
+                "ical_cache_ttl": "3600",
+                "ical_color": "#6D28D9"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "tpl-contact-map",
+    "title": "Contact + Map",
+    "category": "Marketing",
+    "thumbnail": "https://extrasforelementor.com/template-thumbs/contact-map.jpg",
+    "preview_url": "https://extrasforelementor.com/demo-contact-map/",
+    "elementor_data": [
+      {
+        "id": "0000434",
+        "elType": "section",
+        "isInner": false,
+        "settings": {
+          "layout": "boxed",
+          "gap": "extended",
+          "content_width": {
+            "unit": "%",
+            "size": 100
+          }
+        },
+        "elements": [
+          {
+            "id": "0000433",
+            "elType": "column",
+            "isInner": false,
+            "settings": {
+              "_column_size": 100,
+              "_inline_size": 100
+            },
+            "elements": [
+              {
+                "id": "0000432",
+                "elType": "widget",
+                "widgetType": "heading-extended",
+                "settings": {
+                  "title": "Visit or write us",
+                  "header_size": "h1",
+                  "size": "large",
+                  "align": "center"
+                },
+                "elements": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "000043c",
+        "elType": "section",
+        "isInner": false,
+        "settings": {
+          "layout": "boxed",
+          "gap": "extended",
+          "content_width": {
+            "unit": "%",
+            "size": 100
+          }
+        },
+        "elements": [
+          {
+            "id": "0000438",
+            "elType": "column",
+            "isInner": false,
+            "settings": {
+              "_column_size": 40,
+              "_inline_size": 40
+            },
+            "elements": [
+              {
+                "id": "0000435",
+                "elType": "widget",
+                "widgetType": "ltxe-icon-box",
+                "settings": {
+                  "icon_type": "icon",
+                  "selected_icon": {
+                    "value": "fas fa-map-marker-alt",
+                    "library": "fa-solid"
+                  },
+                  "icon_position": "left",
+                  "title": "Studio",
+                  "description": "120 Market Street, Suite 400\nAustin, TX 78701"
+                },
+                "elements": []
+              },
+              {
+                "id": "0000436",
+                "elType": "widget",
+                "widgetType": "ltxe-icon-box",
+                "settings": {
+                  "icon_type": "icon",
+                  "selected_icon": {
+                    "value": "fas fa-envelope",
+                    "library": "fa-solid"
+                  },
+                  "icon_position": "left",
+                  "title": "Email",
+                  "description": "hello@extrasforelementor.com",
+                  "link": {
+                    "url": "mailto:hello@extrasforelementor.com",
+                    "is_external": "",
+                    "nofollow": ""
+                  }
+                },
+                "elements": []
+              },
+              {
+                "id": "0000437",
+                "elType": "widget",
+                "widgetType": "ltxe-icon-box",
+                "settings": {
+                  "icon_type": "icon",
+                  "selected_icon": {
+                    "value": "fas fa-phone",
+                    "library": "fa-solid"
+                  },
+                  "icon_position": "left",
+                  "title": "Phone",
+                  "description": "+1 (512) 555-0148",
+                  "link": {
+                    "url": "tel:+15125550148",
+                    "is_external": "",
+                    "nofollow": ""
+                  }
+                },
+                "elements": []
+              }
+            ]
+          },
+          {
+            "id": "000043b",
+            "elType": "column",
+            "isInner": false,
+            "settings": {
+              "_column_size": 60,
+              "_inline_size": 60
+            },
+            "elements": [
+              {
+                "id": "000043a",
+                "elType": "widget",
+                "widgetType": "ee-google-map",
+                "settings": {
+                  "map_provider": "openstreetmap",
+                  "fit": "yes",
+                  "pins": [
+                    {
+                      "_id": "0000439",
+                      "name": "LandTech Studio",
+                      "lat": "30.2672",
+                      "lng": "-97.7431",
+                      "description": "<p>120 Market Street, Suite 400</p>",
+                      "trigger": "click"
+                    }
+                  ]
+                },
+                "elements": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "0000440",
+        "elType": "section",
+        "isInner": false,
+        "settings": {
+          "layout": "boxed",
+          "gap": "extended",
+          "content_width": {
+            "unit": "%",
+            "size": 100
+          }
+        },
+        "elements": [
+          {
+            "id": "000043f",
+            "elType": "column",
+            "isInner": false,
+            "settings": {
+              "_column_size": 100,
+              "_inline_size": 100
+            },
+            "elements": [
+              {
+                "id": "000043d",
+                "elType": "widget",
+                "widgetType": "heading-extended",
+                "settings": {
+                  "title": "Share this page",
+                  "header_size": "h3",
+                  "size": "medium",
+                  "align": "center"
+                },
+                "elements": []
+              },
+              {
+                "id": "000043e",
+                "elType": "widget",
+                "widgetType": "ltxe-social-share",
+                "settings": {
+                  "platforms": [
+                    "facebook",
+                    "x",
+                    "linkedin",
+                    "copy"
+                  ],
+                  "url_source": "current",
+                  "button_style": "icon_label",
+                  "button_shape": "rounded",
+                  "color_style": "brand"
+                },
+                "elements": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tpl-blog-grid",
+    "title": "Blog Grid",
+    "category": "Layout",
+    "thumbnail": "https://extrasforelementor.com/template-thumbs/blog-grid.jpg",
+    "preview_url": "https://extrasforelementor.com/demo-blog-grid/",
+    "elementor_data": {
+      "id": "0000444",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "layout": "boxed",
+        "gap": "extended",
+        "content_width": {
+          "unit": "%",
+          "size": 100
+        }
+      },
+      "elements": [
+        {
+          "id": "0000443",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 100,
+            "_inline_size": 100
+          },
+          "elements": [
+            {
+              "id": "0000441",
+              "elType": "widget",
+              "widgetType": "heading-extended",
+              "settings": {
+                "title": "From the journal",
+                "header_size": "h1",
+                "size": "large",
+                "align": "center"
+              },
+              "elements": []
+            },
+            {
+              "id": "0000442",
+              "elType": "widget",
+              "widgetType": "posts-extra",
+              "settings": {
+                "_skin": "classic",
+                "posts_per_page": 6,
+                "columns": "3",
+                "columns_tablet": "2",
+                "columns_mobile": "1",
+                "classic_layout": "default",
+                "classic_pagination": "yes",
+                "classic_pagination_numbers": "yes"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "tpl-cookie-dark-mode-bar",
+    "title": "Cookie + Dark Mode Bar",
+    "category": "Layout",
+    "thumbnail": "https://extrasforelementor.com/template-thumbs/cookie-dark-mode-bar.jpg",
+    "preview_url": "https://extrasforelementor.com/demo-cookie-dark-mode-bar/",
+    "elementor_data": {
+      "id": "0000449",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "layout": "boxed",
+        "gap": "extended",
+        "content_width": {
+          "unit": "%",
+          "size": 100
+        },
+        "_css_classes": "ltxe-mp-sticky-footer",
+        "background_background": "classic",
+        "background_color": "#111827",
+        "padding": {
+          "unit": "px",
+          "top": "12",
+          "right": "20",
+          "bottom": "12",
+          "left": "20",
+          "isLinked": false
+        }
+      },
+      "elements": [
+        {
+          "id": "0000446",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 70,
+            "_inline_size": 70
+          },
+          "elements": [
+            {
+              "id": "0000445",
+              "elType": "widget",
+              "widgetType": "ltxe-cookie-consent",
+              "settings": {
+                "message": "We use cookies to remember preferences and measure what helps. Accept all, or decline non-essential cookies.",
+                "policy_text": "Privacy Policy",
+                "policy_url": {
+                  "url": "/privacy-policy/",
+                  "is_external": "",
+                  "nofollow": ""
+                },
+                "accept_label": "Accept",
+                "decline_label": "Decline",
+                "show_decline": "yes",
+                "position": "bottom"
+              },
+              "elements": []
+            }
+          ]
+        },
+        {
+          "id": "0000448",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 30,
+            "_inline_size": 30
+          },
+          "elements": [
+            {
+              "id": "0000447",
+              "elType": "widget",
+              "widgetType": "ltxe-dark-mode",
+              "settings": {
+                "toggle_style": "switch",
+                "default_mode": "system",
+                "light_icon": {
+                  "value": "fas fa-sun",
+                  "library": "fa-solid"
+                },
+                "dark_icon": {
+                  "value": "fas fa-moon",
+                  "library": "fa-solid"
+                }
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "tpl-woocommerce-store-front",
+    "title": "WooCommerce Store Front",
+    "category": "WooCommerce",
+    "thumbnail": "https://extrasforelementor.com/template-thumbs/woocommerce-store-front.jpg",
+    "preview_url": "https://extrasforelementor.com/demo-woocommerce-store-front/",
+    "elementor_data": [
+      {
+        "id": "000044d",
+        "elType": "section",
+        "isInner": false,
+        "settings": {
+          "layout": "boxed",
+          "gap": "extended",
+          "content_width": {
+            "unit": "%",
+            "size": 100
+          }
+        },
+        "elements": [
+          {
+            "id": "000044c",
+            "elType": "column",
+            "isInner": false,
+            "settings": {
+              "_column_size": 100,
+              "_inline_size": 100
+            },
+            "elements": [
+              {
+                "id": "000044a",
+                "elType": "widget",
+                "widgetType": "heading-extended",
+                "settings": {
+                  "title": "Shop the collection",
+                  "header_size": "h1",
+                  "size": "large",
+                  "align": "center"
+                },
+                "elements": []
+              },
+              {
+                "id": "000044b",
+                "elType": "widget",
+                "widgetType": "ee-product-carousel",
+                "settings": {
+                  "slides_to_show": 4,
+                  "slides_to_show_tablet": 2,
+                  "slides_to_show_mobile": 1,
+                  "slides_to_scroll": 1,
+                  "slide_gap": {
+                    "size": 16,
+                    "unit": "px"
+                  },
+                  "enable_loop": "yes",
+                  "autoplay": "yes",
+                  "autoplay_ms": 4000,
+                  "pause_on_hover": "yes",
+                  "show_arrows": "yes",
+                  "show_dots": "yes"
+                },
+                "elements": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "0000451",
+        "elType": "section",
+        "isInner": false,
+        "settings": {
+          "layout": "boxed",
+          "gap": "extended",
+          "content_width": {
+            "unit": "%",
+            "size": 100
+          }
+        },
+        "elements": [
+          {
+            "id": "0000450",
+            "elType": "column",
+            "isInner": false,
+            "settings": {
+              "_column_size": 100,
+              "_inline_size": 100
+            },
+            "elements": [
+              {
+                "id": "000044e",
+                "elType": "widget",
+                "widgetType": "ee-marketing-button",
+                "settings": {
+                  "button_text": "Shop the sale",
+                  "button_link": {
+                    "url": "/shop/",
+                    "is_external": "",
+                    "nofollow": ""
+                  },
+                  "icon": {
+                    "value": "fas fa-arrow-right",
+                    "library": "fa-solid"
+                  },
+                  "icon_pos": "after"
+                },
+                "elements": []
+              },
+              {
+                "id": "000044f",
+                "elType": "widget",
+                "widgetType": "ltxe-back-to-top",
+                "settings": {
+                  "selected_icon": {
+                    "value": "fas fa-chevron-up",
+                    "library": "fa-solid"
+                  }
+                },
+                "elements": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tpl-login-gate",
+    "title": "Login Gate",
+    "category": "Premium",
+    "thumbnail": "https://extrasforelementor.com/template-thumbs/login-gate.jpg",
+    "preview_url": "https://extrasforelementor.com/demo-login-gate/",
+    "elementor_data": [
+      {
+        "id": "0000455",
+        "elType": "section",
+        "isInner": false,
+        "settings": {
+          "layout": "boxed",
+          "gap": "extended",
+          "content_width": {
+            "unit": "%",
+            "size": 100
+          }
+        },
+        "elements": [
+          {
+            "id": "0000454",
+            "elType": "column",
+            "isInner": false,
+            "settings": {
+              "_column_size": 100,
+              "_inline_size": 100
+            },
+            "elements": [
+              {
+                "id": "0000452",
+                "elType": "widget",
+                "widgetType": "heading-extended",
+                "settings": {
+                  "title": "Members area",
+                  "header_size": "h1",
+                  "size": "large",
+                  "align": "center"
+                },
+                "elements": []
+              },
+              {
+                "id": "0000453",
+                "elType": "widget",
+                "widgetType": "ee-login-form",
+                "settings": {
+                  "heading": "Sign in to continue",
+                  "redirect_url": {
+                    "url": "#members-only",
+                    "is_external": "",
+                    "nofollow": ""
+                  },
+                  "show_remember": "yes",
+                  "show_password_toggle": "yes",
+                  "show_lost": "yes",
+                  "lost_text": "Forgot your password?",
+                  "submit_label": "Sign in"
+                },
+                "elements": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "0000459",
+        "elType": "section",
+        "isInner": false,
+        "settings": {
+          "layout": "boxed",
+          "gap": "extended",
+          "content_width": {
+            "unit": "%",
+            "size": 100
+          },
+          "_css_classes": "ltxe-mp-login-gate",
+          "ltxe_cp_enable": "yes",
+          "ltxe_cp_password": "members",
+          "ltxe_cp_message": "This section is for members. Sign in above, then enter the section password to continue.",
+          "ltxe_cp_icon": {
+            "value": "fas fa-lock",
+            "library": "fa-solid"
+          }
+        },
+        "elements": [
+          {
+            "id": "0000458",
+            "elType": "column",
+            "isInner": false,
+            "settings": {
+              "_column_size": 100,
+              "_inline_size": 100
+            },
+            "elements": [
+              {
+                "id": "0000456",
+                "elType": "widget",
+                "widgetType": "heading-extended",
+                "settings": {
+                  "title": "Members-only brief",
+                  "header_size": "h2",
+                  "size": "large",
+                  "align": "center"
+                },
+                "elements": []
+              },
+              {
+                "id": "0000457",
+                "elType": "widget",
+                "widgetType": "ltxe-icon-box",
+                "settings": {
+                  "icon_type": "icon",
+                  "selected_icon": {
+                    "value": "fas fa-lock-open",
+                    "library": "fa-solid"
+                  },
+                  "icon_position": "top",
+                  "title": "Unlocked after sign-in",
+                  "description": "Replace this copy with the protected download, video, or pricing sheet. Content Protection sits on this section — visitors see the lock message until they enter the section password."
+                },
+                "elements": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tpl-social-wall",
+    "title": "Social Wall",
+    "category": "Premium",
+    "thumbnail": "https://extrasforelementor.com/template-thumbs/social-wall.jpg",
+    "preview_url": "https://extrasforelementor.com/demo-social-wall/",
+    "elementor_data": [
+      {
+        "id": "000045c",
+        "elType": "section",
+        "isInner": false,
+        "settings": {
+          "layout": "boxed",
+          "gap": "extended",
+          "content_width": {
+            "unit": "%",
+            "size": 100
+          }
+        },
+        "elements": [
+          {
+            "id": "000045b",
+            "elType": "column",
+            "isInner": false,
+            "settings": {
+              "_column_size": 100,
+              "_inline_size": 100
+            },
+            "elements": [
+              {
+                "id": "000045a",
+                "elType": "widget",
+                "widgetType": "heading-extended",
+                "settings": {
+                  "title": "Follow along",
+                  "header_size": "h1",
+                  "size": "large",
+                  "align": "center"
+                },
+                "elements": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "0000463",
+        "elType": "section",
+        "isInner": false,
+        "settings": {
+          "layout": "boxed",
+          "gap": "extended",
+          "content_width": {
+            "unit": "%",
+            "size": 100
+          }
+        },
+        "elements": [
+          {
+            "id": "000045f",
+            "elType": "column",
+            "isInner": false,
+            "settings": {
+              "_column_size": 50,
+              "_inline_size": 50
+            },
+            "elements": [
+              {
+                "id": "000045d",
+                "elType": "widget",
+                "widgetType": "heading-extended",
+                "settings": {
+                  "title": "Instagram",
+                  "header_size": "h3",
+                  "size": "medium",
+                  "align": "left"
+                },
+                "elements": []
+              },
+              {
+                "id": "000045e",
+                "elType": "widget",
+                "widgetType": "ee-instagram-feed",
+                "settings": {
+                  "source": "example",
+                  "layout": "grid",
+                  "columns": 2,
+                  "columns_tablet": 2,
+                  "columns_mobile": 1,
+                  "limit": 6
+                },
+                "elements": []
+              }
+            ]
+          },
+          {
+            "id": "0000462",
+            "elType": "column",
+            "isInner": false,
+            "settings": {
+              "_column_size": 50,
+              "_inline_size": 50
+            },
+            "elements": [
+              {
+                "id": "0000460",
+                "elType": "widget",
+                "widgetType": "heading-extended",
+                "settings": {
+                  "title": "X / Twitter",
+                  "header_size": "h3",
+                  "size": "medium",
+                  "align": "left"
+                },
+                "elements": []
+              },
+              {
+                "id": "0000461",
+                "elType": "widget",
+                "widgetType": "ee-twitter-feed",
+                "settings": {
+                  "source": "example",
+                  "layout": "grid",
+                  "columns": 2,
+                  "columns_tablet": 2,
+                  "columns_mobile": 1,
+                  "limit": 6
+                },
+                "elements": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

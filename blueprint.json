@@ -1,12 +1,6 @@
 {
 	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
-	"meta": {
-		"title": "LandTech Extras for Elementor 2.9",
-		"description": "Live preview with Elementor plus demo pages for every free widget, including testimonials, FAQ, team, pricing, countdown, and video playlist.",
-		"author": "brelandr",
-		"categories": ["elementor", "widgets"]
-	},
-	"landingPage": "/",
+	"landingPage": "/wp-admin/admin.php?page=elementor",
 	"preferredVersions": {
 		"php": "8.2",
 		"wp": "latest"
@@ -22,27 +16,38 @@
 		},
 		{
 			"step": "installPlugin",
+			"pluginZipFile": {
+				"resource": "wordpress.org/plugins",
+				"slug": "landtech-extras-for-elementor"
+			},
 			"options": {
 				"activate": true
-			},
-			"pluginData": {
-				"resource": "wordpress.org/plugins",
-				"slug": "elementor"
 			}
 		},
 		{
 			"step": "installPlugin",
+			"pluginZipFile": {
+				"resource": "wordpress.org/plugins",
+				"slug": "elementor"
+			},
 			"options": {
 				"activate": true
-			},
-			"pluginData": {
-				"resource": "wordpress.org/plugins",
-				"slug": "landtech-extras-for-elementor"
 			}
 		},
 		{
-			"step": "runPHP",
-			"code": "<?php\nrequire_once '/wordpress/wp-load.php';\n$seeder = WP_PLUGIN_DIR . '/landtech-extras-for-elementor/includes/playground-demo-seeder.php';\nif ( is_readable( $seeder ) ) {\n\trequire_once $seeder;\n\tlandtech_extras_seed_playground_demos();\n}\necho 'landtech-extras-demos-seeded';"
+			"step": "importWxr",
+			"file": {
+				"resource": "url",
+				"url": "https://extrasforelementor.com/playground-demo-content.xml"
+			}
+		},
+		{
+			"step": "setSiteOptions",
+			"options": {
+				"blogname": "LandTech Extras Demo",
+				"show_on_front": "page",
+				"page_on_front": "2"
+			}
 		}
 	]
 }

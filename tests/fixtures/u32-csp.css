@@ -1,0 +1,22 @@
+body {
+	font-family: system-ui, sans-serif;
+	background: #fff;
+	color: #111318;
+	margin: 1.5rem;
+}
+
+.ltxe-share__btn {
+	min-width: 44px;
+	min-height: 44px;
+	margin-right: 0.5rem;
+}
+
+.ltxe-cq-wrapper {
+	container-type: inline-size;
+}
+
+.ltxe-progress-bar__fill {
+	width: 0%;
+	height: 24px;
+	background: #2271b1;
+}

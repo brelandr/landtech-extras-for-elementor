@@ -11,8 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * Plugin Name:       LandTech Extras for Elementor
  * Plugin URI:        https://extrasforelementor.com/
- * Description:       50+ free Elementor widgets and extensions — fork of Elementor Extras. Testimonials, FAQ, pricing, gallery, calendar, maps, and editor tools.
- * Version:           2.9.0
+ * Description:       60+ free Elementor widgets and extensions — fork of Elementor Extras. Testimonials, FAQ, pricing, gallery, calendar, maps, and editor tools.
+ * Version:           3.0.0
  * Elementor tested up to: 4.3.2
  * Elementor Pro tested up to: 4.3.2
  *
@@ -103,7 +103,7 @@ if ( ! defined( 'LANDTECH_EXTRAS_ASSETS_URL' ) ) {
 	define( 'LANDTECH_EXTRAS_ASSETS_URL', LANDTECH_EXTRAS_URL . 'assets/' );
 }
 if ( ! defined( 'LANDTECH_EXTRAS_VERSION' ) ) {
-	define( 'LANDTECH_EXTRAS_VERSION', '2.9.0' );
+	define( 'LANDTECH_EXTRAS_VERSION', '3.0.0' );
 }
 if ( ! defined( 'LTXE_FRONTEND_SPLIT' ) ) {
 	define( 'LTXE_FRONTEND_SPLIT', true );
@@ -294,6 +294,12 @@ function landtech_extras_load() {
 	landtech_extras_include( 'includes/search-rest-controller.php' );
 	landtech_extras_include( 'includes/search-term-options-rest.php' );
 	landtech_extras_include( 'includes/rest/class-ai-alt-text-rest.php' );
+	landtech_extras_include( 'includes/rest/class-ai-widget-label-rest.php' );
+	landtech_extras_include( 'includes/rest/class-weather-rest.php' );
+	landtech_extras_include( 'includes/rest/class-shapes-rest.php' );
+	landtech_extras_include( 'includes/rest/class-newsletter-rest.php' );
+	landtech_extras_include( 'modules/newsletter-signup/settings.php' );
+	landtech_extras_include( 'includes/class-ltxe-playground-demo-seeder.php' );
 	landtech_extras_include( 'includes/block-patterns.php' );
 	landtech_extras_include( 'includes/editor/seo-hints.php' );
 	landtech_extras_include( 'includes/display-conditions/viewport-visibility-bootstrap.php' );

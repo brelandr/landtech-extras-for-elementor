@@ -635,10 +635,16 @@ class Testimonials extends Extras_Widget {
 		echo '</div>';
 		if ( 'carousel' === $display ) {
 			echo '</div>';
-			if ( isset( $settings['show_arrows'] ) && 'yes' === $settings['show_arrows'] ) {
+			$show_arrows = isset( $settings['show_arrows'] ) && 'yes' === $settings['show_arrows'];
+			if ( $show_arrows || ! empty( $config['autoplay'] ) ) {
 				echo '<div class="ltxe-testimonials__nav">';
-				echo '<button type="button" class="ltxe-testimonials__btn ltxe-testimonials__btn--prev" aria-label="' . esc_attr__( 'Previous review', 'landtech-extras-for-elementor' ) . '">' . esc_html__( 'Previous', 'landtech-extras-for-elementor' ) . '</button>';
-				echo '<button type="button" class="ltxe-testimonials__btn ltxe-testimonials__btn--next" aria-label="' . esc_attr__( 'Next review', 'landtech-extras-for-elementor' ) . '">' . esc_html__( 'Next', 'landtech-extras-for-elementor' ) . '</button>';
+				if ( $show_arrows ) {
+					echo '<button type="button" class="ltxe-testimonials__btn ltxe-testimonials__btn--prev" aria-label="' . esc_attr__( 'Previous review', 'landtech-extras-for-elementor' ) . '">' . esc_html__( 'Previous', 'landtech-extras-for-elementor' ) . '</button>';
+					echo '<button type="button" class="ltxe-testimonials__btn ltxe-testimonials__btn--next" aria-label="' . esc_attr__( 'Next review', 'landtech-extras-for-elementor' ) . '">' . esc_html__( 'Next', 'landtech-extras-for-elementor' ) . '</button>';
+				}
+				if ( ! empty( $config['autoplay'] ) ) {
+					echo '<button type="button" class="ltxe-testimonials__pause" aria-pressed="false" data-pause="' . esc_attr__( 'Pause', 'landtech-extras-for-elementor' ) . '" data-play="' . esc_attr__( 'Play', 'landtech-extras-for-elementor' ) . '" data-pause-label="' . esc_attr__( 'Pause carousel', 'landtech-extras-for-elementor' ) . '" data-play-label="' . esc_attr__( 'Play carousel', 'landtech-extras-for-elementor' ) . '" aria-label="' . esc_attr__( 'Pause carousel', 'landtech-extras-for-elementor' ) . '">' . esc_html__( 'Pause', 'landtech-extras-for-elementor' ) . '</button>';
+				}
 				echo '</div>';
 			}
 			if ( isset( $settings['show_dots'] ) && 'yes' === $settings['show_dots'] ) {

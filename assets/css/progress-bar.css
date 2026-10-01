@@ -23,6 +23,7 @@
 .ltxe-progress-bar__fill {
 	background: #2271b1;
 	height: 100%;
+	width: 0%;
 	min-height: 0;
 	display: flex;
 	align-items: center;
@@ -34,6 +35,7 @@
 
 .ltxe-progress-bar--vertical .ltxe-progress-bar__fill {
 	width: 100%;
+	height: 0%;
 	align-items: flex-end;
 	justify-content: center;
 }

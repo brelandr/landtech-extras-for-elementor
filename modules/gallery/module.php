@@ -38,6 +38,7 @@ class Module extends Module_Base {
 		return [
 			'Gallery',
 			'Gallery_Slider',
+			'Gallery_Filterable',
 		];
 	}
 

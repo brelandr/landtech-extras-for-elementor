@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>LandTech Extras U30 WCAG 2.2 fixture</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+		body { font-family: system-ui, sans-serif; background: #fff; color: #111318; margin: 1.5rem; }
+		button, a, input { font: inherit; }
+		.ee-popup__trigger,
+		.ee-popup__close,
+		.ltxe-tabs__tab,
+		.ltxe-faq__question,
+		.ltxe-pricing-toggle__btn,
+		.ltxe-testimonials__btn,
+		.ltxe-testimonials__pause,
+		.ee-unfold__trigger .ee-button {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			box-sizing: border-box;
+			min-width: 44px;
+			min-height: 44px;
+		}
+		.ltxe-tabs__panel[hidden],
+		.ltxe-faq__answer[hidden] { display: none; }
+		input.ltxe-ic__handle { width: 100%; height: 44px; }
+		.ee-popup__content[aria-hidden="true"] { display: none; }
+	</style>
+</head>
+<body>
+	<main>
+		<h1>Accessibility widget fixture</h1>
+
+		<section aria-labelledby="popup-heading">
+			<h2 id="popup-heading">Popup</h2>
+			<a class="ee-popup__trigger" href="#ltxe_popup__trigger-demo" aria-haspopup="dialog" aria-expanded="false" aria-controls="ltxe_popup__trigger-demo">Open modal</a>
+			<div class="ee-popup__content" id="ltxe_popup__trigger-demo" role="dialog" aria-modal="true" aria-labelledby="popup-title">
+				<h3 id="popup-title">A modal worth opening</h3>
+				<p>Focus stays inside this dialog until it is closed.</p>
+				<button type="button" class="ee-popup__close" aria-label="Close">Close</button>
+			</div>
+		</section>
+
+		<section aria-labelledby="tabs-heading">
+			<h2 id="tabs-heading">Tabs</h2>
+			<div class="ltxe-tabs">
+				<div class="ltxe-tabs__list" role="tablist">
+					<button type="button" class="ltxe-tabs__tab" id="ltxe-tab-demo-0-label" role="tab" aria-selected="true" aria-controls="ltxe-tab-demo-0-panel">Design</button>
+					<button type="button" class="ltxe-tabs__tab" id="ltxe-tab-demo-1-label" role="tab" aria-selected="false" aria-controls="ltxe-tab-demo-1-panel">Build</button>
+				</div>
+				<div class="ltxe-tabs__panel" id="ltxe-tab-demo-0-panel" role="tabpanel" aria-labelledby="ltxe-tab-demo-0-label">First panel</div>
+				<div class="ltxe-tabs__panel" id="ltxe-tab-demo-1-panel" role="tabpanel" aria-labelledby="ltxe-tab-demo-1-label" hidden>Second panel</div>
+			</div>
+		</section>
+
+		<section aria-labelledby="ic-heading">
+			<h2 id="ic-heading">Image comparison</h2>
+			<figure class="ee-image-comparison">
+				<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="Before image">
+				<div class="ee-image-comparison__image">
+					<img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="After image">
+				</div>
+				<input type="range" class="ltxe-ic__handle ee-image-comparison__handle" min="0" max="100" value="50" aria-label="Image comparison slider">
+			</figure>
+		</section>
+
+		<section aria-labelledby="tm-heading">
+			<h2 id="tm-heading">Testimonials</h2>
+			<div class="ltxe-testimonials ltxe-testimonials--carousel" role="region" aria-roledescription="carousel" aria-label="Testimonials">
+				<article class="ltxe-testimonial">Great work.</article>
+				<div class="ltxe-testimonials__nav">
+					<button type="button" class="ltxe-testimonials__btn ltxe-testimonials__btn--prev" aria-label="Previous review">Previous</button>
+					<button type="button" class="ltxe-testimonials__btn ltxe-testimonials__btn--next" aria-label="Next review">Next</button>
+					<button type="button" class="ltxe-testimonials__pause" aria-pressed="false" aria-label="Pause carousel">Pause</button>
+				</div>
+				<p class="ltxe-testimonials__status" aria-live="polite">1 / 1</p>
+			</div>
+		</section>
+
+		<section aria-labelledby="cd-heading">
+			<h2 id="cd-heading">Countdown</h2>
+			<div class="ltxe-countdown" aria-live="polite" aria-atomic="true">
+				<span>2 days 4 hours</span>
+			</div>
+		</section>
+
+		<section aria-labelledby="faq-heading">
+			<h2 id="faq-heading">FAQ</h2>
+			<div class="ltxe-faq">
+				<button type="button" class="ltxe-faq__question" id="faq-q1" aria-expanded="false" aria-controls="faq-a1">What is LandTech Extras?</button>
+				<div class="ltxe-faq__answer" id="faq-a1" role="region" aria-labelledby="faq-q1" hidden>An Elementor add-on.</div>
+			</div>
+		</section>
+
+		<section aria-labelledby="price-heading">
+			<h2 id="price-heading">Pricing toggle</h2>
+			<div class="ltxe-pricing-toggle" role="group" aria-label="Billing period">
+				<button type="button" class="ltxe-pricing-toggle__btn is-active" aria-pressed="true">Monthly</button>
+				<button type="button" class="ltxe-pricing-toggle__btn" aria-pressed="false">Annual</button>
+			</div>
+		</section>
+
+		<section aria-labelledby="unfold-heading">
+			<h2 id="unfold-heading">Unfold</h2>
+			<div class="ee-unfold">
+				<div class="ee-unfold__content" id="ltxe-unfold-content-demo">Hidden copy is revealed by the trigger.</div>
+				<div class="ee-unfold__trigger">
+					<span class="ee-button" role="button" tabindex="0" aria-expanded="false" aria-controls="ltxe-unfold-content-demo">Read more</span>
+				</div>
+			</div>
+		</section>
+	</main>
+</body>
+</html>

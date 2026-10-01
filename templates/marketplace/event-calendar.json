@@ -1,0 +1,61 @@
+{
+  "id": "tpl-event-calendar",
+  "title": "Event Calendar",
+  "category": "Layout",
+  "thumbnail": "https://extrasforelementor.com/template-thumbs/event-calendar.jpg",
+  "preview_url": "https://extrasforelementor.com/demo-event-calendar/",
+  "elementor_data": {
+    "id": "0000431",
+    "elType": "section",
+    "isInner": false,
+    "settings": {
+      "layout": "boxed",
+      "gap": "extended",
+      "content_width": {
+        "unit": "%",
+        "size": 100
+      }
+    },
+    "elements": [
+      {
+        "id": "0000430",
+        "elType": "column",
+        "isInner": false,
+        "settings": {
+          "_column_size": 100,
+          "_inline_size": 100
+        },
+        "elements": [
+          {
+            "id": "000042e",
+            "elType": "widget",
+            "widgetType": "heading-extended",
+            "settings": {
+              "title": "Upcoming events",
+              "header_size": "h1",
+              "size": "large",
+              "align": "center"
+            },
+            "elements": []
+          },
+          {
+            "id": "000042f",
+            "elType": "widget",
+            "widgetType": "ee-calendar",
+            "settings": {
+              "source": "ical",
+              "ical_url": {
+                "url": "https://calendar.google.com/calendar/ical/example/public/basic.ics",
+                "is_external": "on",
+                "nofollow": ""
+              },
+              "ical_cache_ttl": "3600",
+              "ical_color": "#6D28D9"
+            },
+            "elements": []
+          }
+        ]
+      }
+    ]
+  }
+}

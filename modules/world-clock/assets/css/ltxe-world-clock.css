@@ -1,0 +1,13 @@
+.ltxe-wclock { display: grid; gap: 1rem; }
+.ltxe-wclock--row { grid-auto-flow: column; overflow-x: auto; }
+.ltxe-wclock--stack { grid-auto-flow: row; }
+.ltxe-wclock--grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+.ltxe-wclock__item { text-align: center; padding: 1rem; border: 1px solid #e2e8f0; border-radius: 12px; background: #fff; color: #0b1020; }
+.ltxe-wclock__city { margin: 0 0 .4rem; font-weight: 700; }
+.ltxe-wclock__digital { margin: .4rem 0 0; font-variant-numeric: tabular-nums; font-size: 1.4rem; }
+.ltxe-wclock__date { margin: .2rem 0 0; font-size: .85rem; color: #475569; }
+.ltxe-wclock__analog { position: relative; width: 88px; height: 88px; margin: 0 auto; border: 3px solid #0b1020; border-radius: 50%; }
+.ltxe-wclock__hand { position: absolute; left: 50%; bottom: 50%; width: 2px; background: #0b1020; transform-origin: bottom center; }
+.ltxe-wclock__hand--h { height: 24px; }
+.ltxe-wclock__hand--m { height: 32px; }
+.ltxe-wclock__hand--s { height: 36px; background: #e11d48; }

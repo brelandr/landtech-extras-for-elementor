@@ -895,6 +895,157 @@ function landtech_extras_playground_get_demo_definitions( array $images ) {
 			),
 		),
 		array(
+			'title'   => 'Logo Carousel Demo',
+			'slug'    => 'demo-logo-carousel',
+			'group'   => 'Media & Galleries',
+			'intro'   => __( 'Client logos in a CSS marquee or a static grid. Reduced motion pauses the scroll.', 'landtech-extras-for-elementor' ),
+			'widgets' => array(
+				landtech_extras_playground_widget(
+					'ltxe-logo-carousel',
+					array(
+						'infinite'     => 'yes',
+						'grayscale'    => 'yes',
+						'speed'        => 'medium',
+						'pause_hover'  => 'yes',
+						'columns'      => 5,
+					)
+				),
+			),
+		),
+		array(
+			'title'   => 'Number Counter Demo',
+			'slug'    => 'demo-number-counter',
+			'group'   => 'Utilities',
+			'intro'   => __( 'Animated stats that count up when they enter the viewport. Reduced motion jumps to the final value.', 'landtech-extras-for-elementor' ),
+			'widgets' => array(
+				landtech_extras_playground_widget(
+					'ltxe-number-counter',
+					array(
+						'number'     => 500,
+						'suffix'     => '+',
+						'title'      => 'Happy Clients',
+						'duration'   => 2000,
+						'delimiter'  => 'comma',
+						'decimals'   => 0,
+						'trigger_once' => 'yes',
+					)
+				),
+			),
+		),
+		array(
+			'title'   => 'Form Styler Demo',
+			'slug'    => 'demo-form-styler',
+			'group'   => 'Forms',
+			'intro'   => __( 'Style Contact Form 7 and WPForms to match your design. Enable Preview form when those plugins are not active.', 'landtech-extras-for-elementor' ),
+			'widgets' => array(
+				landtech_extras_playground_widget(
+					'ltxe-cf7-styler',
+					array(
+						'layout'         => 'full',
+						'show_preview'   => 'yes',
+						'button_background' => '#e94560',
+						'button_color'   => '#ffffff',
+						'error_color'    => '#b91c1c',
+					)
+				),
+				landtech_extras_playground_widget(
+					'ltxe-wpforms-styler',
+					array(
+						'layout'         => 'full',
+						'show_preview'   => 'yes',
+						'button_background' => '#e94560',
+						'button_color'   => '#ffffff',
+					)
+				),
+			),
+		),
+		array(
+			'title'   => 'Posts Carousel Demo',
+			'slug'    => 'demo-posts-carousel',
+			'group'   => 'Content & Posts',
+			'intro'   => __( 'The Posts Extra carousel skin with autoplay, arrows, and card hover lift.', 'landtech-extras-for-elementor' ),
+			'widgets' => array(
+				landtech_extras_playground_widget(
+					'posts-extra',
+					array(
+						'_skin'                     => 'carousel',
+						'posts_per_page'            => 6,
+						'carousel_slides_per_view'  => '3',
+						'carousel_autoplay'         => 'yes',
+						'carousel_loop'             => 'yes',
+						'carousel_card_hover_effect'=> 'lift',
+					)
+				),
+			),
+		),
+		array(
+			'title'   => 'Animated Headline Demo',
+			'slug'    => 'demo-animated-headline',
+			'group'   => 'Content & Posts',
+			'intro'   => __( 'Typewriter and word-cycle headlines. Upgrade to Premium for Split Text and more effects.', 'landtech-extras-for-elementor' ),
+			'widgets' => array(
+				landtech_extras_playground_widget(
+					'ltxe-animated-headline',
+					array(
+						'before_text'   => 'We build',
+						'after_text'    => 'for you',
+						'effect'        => 'typewriter',
+						'hold_duration' => 2000,
+					)
+				),
+			),
+		),
+		array(
+			'title'   => 'One Page Nav Demo',
+			'slug'    => 'demo-one-page-nav',
+			'group'   => 'Navigation',
+			'intro'   => __( 'Fixed dots that scroll to page sections. Tooltip and smooth scroll included.', 'landtech-extras-for-elementor' ),
+			'widgets' => array(
+				landtech_extras_playground_widget(
+					'ltxe-one-page-nav',
+					array(
+						'target_selector' => '.ltxe-opn-demo-sec',
+						'position'        => 'right',
+						'tooltip'         => 'yes',
+						'smooth'          => 'yes',
+					)
+				),
+			),
+		),
+		array(
+			'title'   => 'Image Accordion Demo',
+			'slug'    => 'demo-image-accordion',
+			'group'   => 'Media & Galleries',
+			'intro'   => __( 'Expanding image panels for services and portfolios. Hover or click to open.', 'landtech-extras-for-elementor' ),
+			'widgets' => array(
+				landtech_extras_playground_widget(
+					'ltxe-image-accordion',
+					array(
+						'trigger'      => 'hover',
+						'default_open' => 0,
+						'show_button'  => 'yes',
+					)
+				),
+			),
+		),
+		array(
+			'title'   => 'News Ticker Demo',
+			'slug'    => 'demo-news-ticker',
+			'group'   => 'Content & Posts',
+			'intro'   => __( 'A scrolling announcement bar. Pause on hover; reduced motion lists items statically.', 'landtech-extras-for-elementor' ),
+			'widgets' => array(
+				landtech_extras_playground_widget(
+					'ltxe-news-ticker',
+					array(
+						'source'      => 'manual',
+						'label'       => 'Latest:',
+						'speed'       => 'medium',
+						'pause_hover' => 'yes',
+					)
+				),
+			),
+		),
+		array(
 			'title'   => 'FAQ Accordion Demo',
 			'slug'    => 'demo-faq',
 			'group'   => 'Content & Posts',
@@ -921,6 +1072,170 @@ function landtech_extras_playground_get_demo_definitions( array $images ) {
 						'card_style'  => 'classic',
 						'image_shape' => 'rounded',
 						'columns'     => '3',
+					)
+				),
+			),
+		),
+		array(
+			'title'   => 'Loop Builder Demo',
+			'slug'    => 'demo-loop-builder',
+			'group'   => 'Content & Posts',
+			'intro'   => __( 'Two instances of Posts, Gallery, Testimonials, and Team Members on one page. Each widget must initialize from frontend/element_ready so Loop Builder items do not collide.', 'landtech-extras-for-elementor' ),
+			'widgets' => array(
+				landtech_extras_playground_widget( 'posts-extra', landtech_extras_playground_posts_extra_settings() ),
+				landtech_extras_playground_widget( 'posts-extra', landtech_extras_playground_posts_extra_list_settings() ),
+				landtech_extras_playground_widget(
+					'gallery-extra',
+					array(
+						'gallery_type' => 'wordpress',
+						'wp_gallery'   => $wp_gallery,
+						'columns'      => '3',
+					)
+				),
+				landtech_extras_playground_widget(
+					'gallery-extra',
+					array(
+						'gallery_type' => 'wordpress',
+						'wp_gallery'   => $wp_gallery,
+						'columns'      => '2',
+					)
+				),
+				landtech_extras_playground_widget(
+					'ltxe-testimonials',
+					array(
+						'source'      => 'manual',
+						'display'     => 'carousel',
+						'skin'        => 'cards',
+						'show_dots'   => 'yes',
+						'show_arrows' => 'yes',
+						'add_schema'  => 'yes',
+					)
+				),
+				landtech_extras_playground_widget(
+					'ltxe-testimonials',
+					array(
+						'source'   => 'manual',
+						'display'  => 'grid',
+						'skin'     => 'cards',
+						'add_schema' => '',
+					)
+				),
+				landtech_extras_playground_widget(
+					'ltxe-team-members',
+					array(
+						'card_style'  => 'classic',
+						'image_shape' => 'rounded',
+						'columns'     => '3',
+					)
+				),
+				landtech_extras_playground_widget(
+					'ltxe-team-members',
+					array(
+						'card_style'  => 'flip',
+						'image_shape' => 'circle',
+						'columns'     => '2',
+					)
+				),
+			),
+		),
+		array(
+			'title'   => 'Accessibility Demo',
+			'slug'    => 'demo-accessibility',
+			'group'   => 'Content & Posts',
+			'intro'   => __( 'WCAG 2.2 audit page: Popup focus trap, Tabs keyboard nav, image comparison range handle, testimonials pause, and countdown live region.', 'landtech-extras-for-elementor' ),
+			'widgets' => array(
+				landtech_extras_playground_widget(
+					'ee-popup',
+					landtech_extras_playground_popup_settings()
+				),
+				landtech_extras_playground_widget(
+					'ee-tabs',
+					landtech_extras_playground_tabs_settings()
+				),
+				landtech_extras_playground_widget(
+					'image-comparison',
+					array(
+						'original_image' => $hero_image,
+						'modified_image' => $alt_image,
+					)
+				),
+				landtech_extras_playground_widget(
+					'ltxe-testimonials',
+					array(
+						'source'      => 'manual',
+						'display'     => 'carousel',
+						'skin'        => 'cards',
+						'show_dots'   => 'yes',
+						'show_arrows' => 'yes',
+						'autoplay'    => 'yes',
+					)
+				),
+				landtech_extras_playground_widget(
+					'ltxe-countdown',
+					array(
+						'end_datetime' => gmdate( 'Y-m-d H:i', time() + WEEK_IN_SECONDS ),
+					)
+				),
+				landtech_extras_playground_widget(
+					'ltxe-faq',
+					array(
+						'accordion_mode' => 'yes',
+						'faq_schema'     => 'yes',
+					)
+				),
+			),
+		),
+		array(
+			'title'   => 'CSP Safe Demo',
+			'slug'    => 'demo-csp-safe',
+			'group'   => 'Content & Posts',
+			'intro'   => __( 'Widgets on this page use data-ltxe-action and CSS classes instead of inline click handlers, script hrefs, or HTML style attributes.', 'landtech-extras-for-elementor' ),
+			'widgets' => array(
+				landtech_extras_playground_widget(
+					'ltxe-social-share',
+					array(
+						'platforms'    => array( 'facebook', 'x', 'linkedin', 'copy', 'print' ),
+						'button_style' => 'icon_label',
+					)
+				),
+				landtech_extras_playground_widget(
+					'ltxe-faq',
+					array(
+						'accordion_mode' => 'yes',
+						'faq_schema'     => '',
+					)
+				),
+				landtech_extras_playground_widget(
+					'ltxe-progress-bar',
+					array(
+						'label' => __( 'CSP-safe fill', 'landtech-extras-for-elementor' ),
+						'value' => 64,
+					)
+				),
+			),
+		),
+		array(
+			'title'   => 'AI Widget Labels Demo',
+			'slug'    => 'demo-ai-labels',
+			'group'   => 'Content & Posts',
+			'intro'   => __( 'Open this page in the Elementor editor. Each widget panel header has Generate CSS ID, which calls landtech-extras/v1/ai/widget-label and fills Advanced → CSS ID from the widget content.', 'landtech-extras-for-elementor' ),
+			'widgets' => array(
+				landtech_extras_playground_widget(
+					'heading',
+					array(
+						'title' => __( 'Welcome to our services', 'landtech-extras-for-elementor' ),
+					)
+				),
+				landtech_extras_playground_widget(
+					'ltxe-cta',
+					array(
+						'heading'  => __( 'Build the next page faster.', 'landtech-extras-for-elementor' ),
+						'btn1_url' => array(
+							'url' => '#',
+						),
+						'btn2_url' => array(
+							'url' => '#',
+						),
 					)
 				),
 			),
@@ -994,6 +1309,12 @@ function landtech_extras_playground_get_demo_definitions( array $images ) {
 					'heading-extended',
 					array(
 						'title' => __( 'More page height so the button can appear after the scroll threshold.', 'landtech-extras-for-elementor' ),
+					)
+				),
+				landtech_extras_playground_widget(
+					'html',
+					array(
+						'html' => '<div style="min-height:1600px" aria-hidden="true"></div>',
 					)
 				),
 				landtech_extras_playground_widget(
@@ -2037,13 +2358,13 @@ function landtech_extras_playground_build_homepage_html( array $groups, array $d
 		$widget_count += count( $items );
 	}
 
-	$hero_style = '';
+	$hero_attr = '';
 
 	if ( ! empty( $images[0] ) ) {
 		$hero_url = wp_get_attachment_url( (int) $images[0] );
 
 		if ( $hero_url ) {
-			$hero_style = ' style="background-image:linear-gradient(135deg,rgba(15,23,42,.88),rgba(30,64,175,.72)),url(' . esc_url( $hero_url ) . ');"';
+			$hero_attr = ' data-ltxe-hero-image="' . esc_url( $hero_url ) . '"';
 		}
 	}
 
@@ -2082,7 +2403,7 @@ function landtech_extras_playground_build_homepage_html( array $groups, array $d
 	$html .= '</style>';
 
 	$html .= '<div class="ltxe-playground-home">';
-	$html .= '<header class="ltxe-ph-hero"' . $hero_style . '>';
+	$html .= '<header class="ltxe-ph-hero"' . $hero_attr . '>';
 	$html .= '<div class="ltxe-ph-hero__inner">';
 	$html .= '<span class="ltxe-ph-badge">' . esc_html__( 'WordPress Playground', 'landtech-extras-for-elementor' ) . '</span>';
 	$html .= '<h1>' . esc_html__( 'LandTech Extras for Elementor', 'landtech-extras-for-elementor' ) . '</h1>';

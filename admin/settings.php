@@ -53,7 +53,7 @@ class Settings extends Settings_Page {
 		// (immediately after Elementor). This means the menu appears even when the
 		// premium add-on is not active — the premium plugin adds its own submenus
 		// under the same 'landtech-extras' parent slug.
-		add_menu_page(
+		$hook = add_menu_page(
 			$this->get_page_title(),
 			__( 'Elementor Extras', 'landtech-extras-for-elementor' ),
 			$capability,
@@ -62,6 +62,10 @@ class Settings extends Settings_Page {
 			$icon_svg,
 			26
 		);
+
+		if ( is_string( $hook ) && '' !== $hook ) {
+			add_action( 'load-' . $hook, array( $this, 'refresh_instagram_access_token' ) );
+		}
 
 		// Explicit first submenu entry labelled "Settings" so the sidebar shows
 		// a meaningful child label rather than the parent title repeated.
@@ -97,13 +101,6 @@ class Settings extends Settings_Page {
 
 	public function init() {
 		parent::init();
-
-		$page = isset( $_GET['page'] ) ? sanitize_key( wp_unslash( $_GET['page'] ) ) : '';
-		if ( self::PAGE_ID !== $page || ! current_user_can( 'manage_options' ) ) {
-			return;
-		}
-
-		$this->refresh_instagram_access_token();
 	}
 
 	/**
@@ -644,6 +641,14 @@ class Settings extends Settings_Page {
 				'type'		=> 'text',
 				'sanitize_callback' => array( __CLASS__, 'sanitize_api_secret_setting' ),
 			],
+			[
+				'name'              => 'mailchimp_api_key',
+				'label'             => __( 'Mailchimp API key (Newsletter widget)', 'landtech-extras-for-elementor' ),
+				'desc'              => __( 'Used by the Newsletter Signup widget. Format: key-dc. Stored encrypted. Never sent to the browser.', 'landtech-extras-for-elementor' ),
+				'type'              => 'password',
+				'size'              => 'large',
+				'sanitize_callback' => array( __CLASS__, 'sanitize_mailchimp_api_key_setting' ),
+			],
 		];
 
 		/**
@@ -660,7 +665,7 @@ class Settings extends Settings_Page {
 	/**
 	 * Refresh a long-lived Instagram access token via the Graph token endpoint.
 	 *
-	 * Runs only from the plugin settings screen. On HTTP 200 the new token is sanitized
+	 * Runs from the settings screen load hook. On HTTP 200 the new token is sanitized
 	 * and written back to `landtech_extras_apis`. Success is throttled for 30 days;
 	 * failures cache a short backoff.
 	 *
@@ -672,6 +677,10 @@ class Settings extends Settings_Page {
 	 * @return void
 	 */
 	public function refresh_instagram_access_token() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
 		$update_token_key = self::UPDATED_INSTA_ACCESS_TOKEN;
 		$api_endpoint     = self::REFRESH_INSTA_ACCESS_TOKEN_ENDPOINT;
 		$access_token     = trim( (string) $this->settings_api->get_option( 'instagram_access_token', 'landtech_extras_apis', false ) );
@@ -771,6 +780,29 @@ class Settings extends Settings_Page {
 		}
 
 		return (string) $value;
+	}
+
+	/**
+	 * Encrypt Mailchimp API key into ltxe_mailchimp_api_key.
+	 *
+	 * @param mixed $value Raw key.
+	 * @return string Empty string stored in the APIs array (ciphertext lives in its own option).
+	 */
+	public static function sanitize_mailchimp_api_key_setting( $value ) {
+		if ( ! is_scalar( $value ) ) {
+			return '';
+		}
+		$plain = trim( (string) $value );
+		if ( '' === $plain ) {
+			return '';
+		}
+		if ( function_exists( 'landtech_extras_newsletter_encrypt_key' ) ) {
+			$enc = landtech_extras_newsletter_encrypt_key( $plain );
+			if ( '' !== $enc ) {
+				update_option( 'ltxe_mailchimp_api_key', $enc, false );
+			}
+		}
+		return '';
 	}
 
 	/**

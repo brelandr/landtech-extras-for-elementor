@@ -1,0 +1,107 @@
+{
+  "id": "tpl-hero-section",
+  "title": "Hero Section",
+  "category": "Layout",
+  "thumbnail": "https://extrasforelementor.com/template-thumbs/hero-section.jpg",
+  "preview_url": "https://extrasforelementor.com/demo-hero-section/",
+  "elementor_data": {
+    "id": "00003ee",
+    "elType": "section",
+    "isInner": false,
+    "settings": {
+      "layout": "boxed",
+      "gap": "extended",
+      "content_width": {
+        "unit": "%",
+        "size": 100
+      },
+      "background_background": "classic",
+      "background_color": "#F5F3FF",
+      "padding": {
+        "unit": "px",
+        "top": "80",
+        "right": "24",
+        "bottom": "80",
+        "left": "24",
+        "isLinked": false
+      }
+    },
+    "elements": [
+      {
+        "id": "00003ea",
+        "elType": "column",
+        "isInner": false,
+        "settings": {
+          "_column_size": 50,
+          "_inline_size": 50
+        },
+        "elements": [
+          {
+            "id": "00003e9",
+            "elType": "widget",
+            "widgetType": "ee-lottie",
+            "settings": {
+              "source": "url",
+              "animation_url": {
+                "url": "https://extrasforelementor.com/template-thumbs/lottie-hero.json",
+                "is_external": "on",
+                "nofollow": ""
+              },
+              "loop": "yes",
+              "autoplay": "yes",
+              "trigger": "autoplay"
+            },
+            "elements": []
+          }
+        ]
+      },
+      {
+        "id": "00003ed",
+        "elType": "column",
+        "isInner": false,
+        "settings": {
+          "_column_size": 50,
+          "_inline_size": 50
+        },
+        "elements": [
+          {
+            "id": "00003eb",
+            "elType": "widget",
+            "widgetType": "heading-extended",
+            "settings": {
+              "title": "Launch pages that feel finished",
+              "header_size": "h1",
+              "size": "xxl",
+              "align": "left"
+            },
+            "elements": []
+          },
+          {
+            "id": "00003ec",
+            "elType": "widget",
+            "widgetType": "ltxe-cta",
+            "settings": {
+              "eyebrow": "LandTech Extras",
+              "heading": "Motion, copy, and a clear next step",
+              "subtext": "Drop this hero on a landing page. The Lottie loop, heading, and dual CTAs are all LandTech widgets — no core Elementor button required.",
+              "btn1_text": "Start building",
+              "btn1_url": {
+                "url": "#get-started",
+                "is_external": "",
+                "nofollow": ""
+              },
+              "btn1_style": "primary",
+              "btn2_text": "See widgets",
+              "btn2_url": {
+                "url": "#widgets",
+                "is_external": "",
+                "nofollow": ""
+              }
+            },
+            "elements": []
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,3 +1,9 @@
+a.ltxe-icon-box,
+a.ltxe-icon-box:link,
+a.ltxe-icon-box:visited,
+a.ltxe-icon-box:hover,
+a.ltxe-icon-box:focus,
+a.ltxe-icon-box:active,
 .ltxe-icon-box {
 	container-type: inline-size;
 	display: flex;
@@ -68,7 +74,7 @@
 	margin: 0 0 12px;
 }
 
-.ltxe-icon-box__btn {
+.ltxe-icon-box .ltxe-icon-box__btn {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
@@ -77,6 +83,7 @@
 	border-radius: 999px;
 	background: #1b2433;
 	color: #fff;
+	-webkit-text-fill-color: #fff;
 }
 
 .ltxe-icon-box--float:hover {

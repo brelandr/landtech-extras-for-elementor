@@ -124,6 +124,10 @@
 		var root = scope && scope.nodeType ? scope : document.body;
 		var wrappers = root.querySelectorAll( '.ee-gallery-wrapper' );
 		wrappers.forEach( function ( wrapper ) {
+			if ( wrapper.getAttribute( 'data-ltxe-gallery-init' ) ) {
+				return;
+			}
+			wrapper.setAttribute( 'data-ltxe-gallery-init', '1' );
 			initPagination( wrapper );
 			initVideoLightbox( wrapper );
 		} );

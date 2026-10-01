@@ -39,8 +39,13 @@ assets/src/
 
 # Test suites
 tests/
+e2e/
 phpunit.xml
 phpunit.xml.dist
+.phpunit.result.cache
+
+# Local zip output (never ship)
+DIST/
 
 # Markdown docs (not readme.txt)
 *.md
@@ -60,3 +65,7 @@ lmfwc-credentials.local.example
 .deploy-trigger
 .deploy-test
 .release
+
+# Apache CORS helper for Playground blueprint fetch. WP.org Plugin Check
+# flags .htaccess as hidden_files — set CORS on the host instead of shipping this.
+assets/blueprints/.htaccess

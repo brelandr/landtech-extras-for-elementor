@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Form Styler fixture</title>
+	<link rel="stylesheet" href="/wp-content/plugins/landtech-extras-for-elementor/assets/css/form-styler.css" />
+</head>
+<body>
+	<div class="elementor-widget-ltxe-cf7-styler">
+		<div class="ltxe-form-styler ltxe-form-styler--full" style="--ltxe-fs-btn-bg:#e94560;--ltxe-fs-error-color:#b91c1c;">
+			<p class="ltxe-form-styler__notice" role="status">Contact Form 7 is not installed or active.</p>
+			<form class="ltxe-form-styler__preview" novalidate>
+				<p class="ltxe-form-styler__field">
+					<label for="ltxe-fs-name">Name</label>
+					<input id="ltxe-fs-name" type="text" name="ltxe-fs-name" required />
+				</p>
+				<p class="ltxe-form-styler__field">
+					<label for="ltxe-fs-email">Email</label>
+					<input id="ltxe-fs-email" type="email" name="ltxe-fs-email" required />
+				</p>
+				<p class="ltxe-form-styler__error" hidden>Please fill in the required fields.</p>
+				<p class="ltxe-form-styler__success" hidden>Thanks — your message is ready to send.</p>
+				<p>
+					<button type="submit" class="ltxe-form-styler__submit">Send</button>
+				</p>
+			</form>
+		</div>
+	</div>
+	<script src="/wp-includes/js/jquery/jquery.min.js"></script>
+	<script src="/wp-content/plugins/landtech-extras-for-elementor/assets/js/form-styler.js"></script>
+</body>
+</html>

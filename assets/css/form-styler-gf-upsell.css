@@ -1,0 +1,39 @@
+/* Editor panel notice. White type on navy so it stays readable on Elementor's light panel. */
+.ltxe-gf-upsell {
+	margin: 8px;
+	padding: 12px;
+	background: #1a1a2e;
+	color: #ffffff;
+	border: 1px solid #e94560;
+	border-radius: 8px;
+}
+
+.ltxe-gf-upsell p {
+	margin: 0 0 10px;
+	color: #ffffff;
+	font-size: 13px;
+	line-height: 1.45;
+}
+
+.ltxe-gf-upsell a,
+.ltxe-gf-upsell a:hover,
+.ltxe-gf-upsell a:focus {
+	color: #ffffff;
+	text-decoration: underline;
+}
+
+.ltxe-gf-upsell__dismiss {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 44px;
+	min-width: 44px;
+	padding: 0 14px;
+	border: 0;
+	border-radius: 8px;
+	background: #ffffff;
+	color: #1a1a2e;
+	cursor: pointer;
+	font: inherit;
+	font-weight: 600;
+}

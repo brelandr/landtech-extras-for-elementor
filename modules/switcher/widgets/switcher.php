@@ -2569,6 +2569,9 @@ class Switcher extends Extras_Widget {
 					'ee-nav__item',
 					'elementor-repeater-item-' . $item['_id'],
 				]);
+				$this->add_render_attribute( $nav_item_key, 'role', 'button' );
+				$this->add_render_attribute( $nav_item_key, 'tabindex', '0' );
+				$this->add_render_attribute( $nav_item_key, 'aria-pressed', ( 0 === (int) $index ) ? 'true' : 'false' );
 			?>
 
 			<li <?php $this->print_render_attribute_string( $nav_item_key ); ?>><?php

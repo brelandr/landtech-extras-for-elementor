@@ -1,0 +1,136 @@
+{
+  "id": "tpl-social-wall",
+  "title": "Social Wall",
+  "category": "Premium",
+  "thumbnail": "https://extrasforelementor.com/template-thumbs/social-wall.jpg",
+  "preview_url": "https://extrasforelementor.com/demo-social-wall/",
+  "elementor_data": [
+    {
+      "id": "000045c",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "layout": "boxed",
+        "gap": "extended",
+        "content_width": {
+          "unit": "%",
+          "size": 100
+        }
+      },
+      "elements": [
+        {
+          "id": "000045b",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 100,
+            "_inline_size": 100
+          },
+          "elements": [
+            {
+              "id": "000045a",
+              "elType": "widget",
+              "widgetType": "heading-extended",
+              "settings": {
+                "title": "Follow along",
+                "header_size": "h1",
+                "size": "large",
+                "align": "center"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "0000463",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "layout": "boxed",
+        "gap": "extended",
+        "content_width": {
+          "unit": "%",
+          "size": 100
+        }
+      },
+      "elements": [
+        {
+          "id": "000045f",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 50,
+            "_inline_size": 50
+          },
+          "elements": [
+            {
+              "id": "000045d",
+              "elType": "widget",
+              "widgetType": "heading-extended",
+              "settings": {
+                "title": "Instagram",
+                "header_size": "h3",
+                "size": "medium",
+                "align": "left"
+              },
+              "elements": []
+            },
+            {
+              "id": "000045e",
+              "elType": "widget",
+              "widgetType": "ee-instagram-feed",
+              "settings": {
+                "source": "example",
+                "layout": "grid",
+                "columns": 2,
+                "columns_tablet": 2,
+                "columns_mobile": 1,
+                "limit": 6
+              },
+              "elements": []
+            }
+          ]
+        },
+        {
+          "id": "0000462",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 50,
+            "_inline_size": 50
+          },
+          "elements": [
+            {
+              "id": "0000460",
+              "elType": "widget",
+              "widgetType": "heading-extended",
+              "settings": {
+                "title": "X / Twitter",
+                "header_size": "h3",
+                "size": "medium",
+                "align": "left"
+              },
+              "elements": []
+            },
+            {
+              "id": "0000461",
+              "elType": "widget",
+              "widgetType": "ee-twitter-feed",
+              "settings": {
+                "source": "example",
+                "layout": "grid",
+                "columns": 2,
+                "columns_tablet": 2,
+                "columns_mobile": 1,
+                "limit": 6
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

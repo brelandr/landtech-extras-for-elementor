@@ -265,6 +265,9 @@ body.rtl .ee-count {
 .ee-count--error {
   background-color: #d9534f;
 }
+.ee-settings__wysiwyg {
+  max-width: 500px;
+}
 .ee-settings__group .form-table th {
   padding: 10px 10px 10px 0;
 }

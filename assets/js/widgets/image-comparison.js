@@ -3,14 +3,21 @@
 
 	function setVerticalPosition( el, pct ) {
 		var image = el.querySelector( '.ee-image-comparison__image' );
-		var handle = el.querySelector( '.ee-image-comparison__handle' );
-		if ( ! image || ! handle ) {
+		var handle = el.querySelector( '.ltxe-ic__handle, .ee-image-comparison__handle' );
+		if ( ! image ) {
 			return;
 		}
 		var clipped = Math.max( 10, Math.min( 90, pct ) );
 		image.style.clipPath = 'inset(0 0 ' + ( 100 - clipped ) + '% 0)';
 		image.style.height = '100%';
 		image.style.width = '100%';
+		if ( handle && 'INPUT' === handle.tagName ) {
+			handle.value = String( Math.round( clipped ) );
+			return;
+		}
+		if ( ! handle ) {
+			return;
+		}
 		handle.style.top = clipped + '%';
 		handle.style.left = '50%';
 		handle.style.transform = 'translate(-50%, -50%)';
@@ -56,33 +63,50 @@
 		el.addEventListener( 'pointercancel', onUp );
 	}
 
-	function applyStart( el ) {
-		if ( el.classList.contains( 'ltxe-img-comparison--vertical' ) ) {
-			initVertical( el );
-			return;
+	function applyPosition( el, pct ) {
+		var now = Math.max( 0, Math.min( 100, pct ) );
+		var handle = el.querySelector( '.ltxe-ic__handle, .ee-image-comparison__handle' );
+		if ( handle && 'INPUT' === handle.tagName ) {
+			handle.value = String( Math.round( now ) );
 		}
-		var start = parseFloat( el.getAttribute( 'data-start' ) || '' );
-		if ( isNaN( start ) ) {
+		if ( el.classList.contains( 'ltxe-img-comparison--vertical' ) ) {
+			setVerticalPosition( el, now );
 			return;
 		}
 		var image = el.querySelector( '.ee-image-comparison__image' );
-		var handle = el.querySelector( '.ee-image-comparison__handle' );
 		if ( image ) {
-			image.style.width = start + '%';
+			image.style.width = now + '%';
 		}
-		if ( handle ) {
-			handle.style.left = start + '%';
+		if ( handle && 'INPUT' !== handle.tagName ) {
+			handle.style.left = now + '%';
 		}
 	}
 
+	function applyStart( el ) {
+		if ( el.classList.contains( 'ltxe-img-comparison--vertical' ) ) {
+			initVertical( el );
+		}
+		var start = parseFloat( el.getAttribute( 'data-start' ) || '' );
+		if ( isNaN( start ) ) {
+			start = 50;
+		}
+		applyPosition( el, start );
+	}
+
 	function bindKeyboard( el ) {
-		var handle = el.querySelector( '.ee-image-comparison__handle' );
+		var handle = el.querySelector( '.ltxe-ic__handle, .ee-image-comparison__handle' );
 		if ( ! handle || handle.getAttribute( 'data-ltxe-keys' ) ) {
 			return;
 		}
 		handle.setAttribute( 'data-ltxe-keys', '1' );
+		handle.addEventListener( 'input', function () {
+			applyPosition( el, parseFloat( handle.value ) );
+		} );
 		handle.addEventListener( 'keydown', function ( ev ) {
-			var now = parseFloat( handle.getAttribute( 'aria-valuenow' ) || el.getAttribute( 'data-start' ) || '50' );
+			if ( 'INPUT' === handle.tagName && 'range' === handle.type ) {
+				return;
+			}
+			var now = parseFloat( handle.getAttribute( 'aria-valuenow' ) || handle.value || el.getAttribute( 'data-start' ) || '50' );
 			var step = 5;
 			if ( 'ArrowLeft' === ev.key || 'ArrowDown' === ev.key ) {
 				now -= step;
@@ -92,17 +116,7 @@
 				return;
 			}
 			ev.preventDefault();
-			now = Math.max( 10, Math.min( 90, now ) );
-			handle.setAttribute( 'aria-valuenow', String( Math.round( now ) ) );
-			if ( el.classList.contains( 'ltxe-img-comparison--vertical' ) ) {
-				setVerticalPosition( el, now );
-			} else {
-				var image = el.querySelector( '.ee-image-comparison__image' );
-				if ( image ) {
-					image.style.width = now + '%';
-				}
-				handle.style.left = now + '%';
-			}
+			applyPosition( el, Math.max( 10, Math.min( 90, now ) ) );
 		} );
 	}
 

@@ -1,0 +1,92 @@
+{
+  "id": "tpl-cookie-dark-mode-bar",
+  "title": "Cookie + Dark Mode Bar",
+  "category": "Layout",
+  "thumbnail": "https://extrasforelementor.com/template-thumbs/cookie-dark-mode-bar.jpg",
+  "preview_url": "https://extrasforelementor.com/demo-cookie-dark-mode-bar/",
+  "elementor_data": {
+    "id": "0000449",
+    "elType": "section",
+    "isInner": false,
+    "settings": {
+      "layout": "boxed",
+      "gap": "extended",
+      "content_width": {
+        "unit": "%",
+        "size": 100
+      },
+      "_css_classes": "ltxe-mp-sticky-footer",
+      "background_background": "classic",
+      "background_color": "#111827",
+      "padding": {
+        "unit": "px",
+        "top": "12",
+        "right": "20",
+        "bottom": "12",
+        "left": "20",
+        "isLinked": false
+      }
+    },
+    "elements": [
+      {
+        "id": "0000446",
+        "elType": "column",
+        "isInner": false,
+        "settings": {
+          "_column_size": 70,
+          "_inline_size": 70
+        },
+        "elements": [
+          {
+            "id": "0000445",
+            "elType": "widget",
+            "widgetType": "ltxe-cookie-consent",
+            "settings": {
+              "message": "We use cookies to remember preferences and measure what helps. Accept all, or decline non-essential cookies.",
+              "policy_text": "Privacy Policy",
+              "policy_url": {
+                "url": "/privacy-policy/",
+                "is_external": "",
+                "nofollow": ""
+              },
+              "accept_label": "Accept",
+              "decline_label": "Decline",
+              "show_decline": "yes",
+              "position": "bottom"
+            },
+            "elements": []
+          }
+        ]
+      },
+      {
+        "id": "0000448",
+        "elType": "column",
+        "isInner": false,
+        "settings": {
+          "_column_size": 30,
+          "_inline_size": 30
+        },
+        "elements": [
+          {
+            "id": "0000447",
+            "elType": "widget",
+            "widgetType": "ltxe-dark-mode",
+            "settings": {
+              "toggle_style": "switch",
+              "default_mode": "system",
+              "light_icon": {
+                "value": "fas fa-sun",
+                "library": "fa-solid"
+              },
+              "dark_icon": {
+                "value": "fas fa-moon",
+                "library": "fa-solid"
+              }
+            },
+            "elements": []
+          }
+        ]
+      }
+    ]
+  }
+}

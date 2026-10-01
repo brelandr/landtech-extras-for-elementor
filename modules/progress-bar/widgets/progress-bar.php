@@ -284,7 +284,7 @@ class Progress_Bar extends Extras_Widget {
 			echo '</div>';
 		}
 		echo '<div class="ltxe-progress-bar__track">';
-		echo '<div class="ltxe-progress-bar__fill" style="' . ( 'vertical' === $style ? 'height:0%' : 'width:0%' ) . '">';
+		echo '<div class="ltxe-progress-bar__fill">';
 		if ( $show && 'inside' === $pos ) {
 			echo '<span class="ltxe-progress-bar__value">' . esc_html( (string) $value ) . '</span>';
 		}

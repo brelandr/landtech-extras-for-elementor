@@ -1,0 +1,41 @@
+.ltxe-number-counter {
+	text-align: center;
+}
+
+.ltxe-number-counter__icon {
+	display: block;
+	margin: 0 auto 0.35em;
+	line-height: 1;
+}
+
+.ltxe-number-counter__icon svg,
+.ltxe-number-counter__icon i {
+	width: 1em;
+	height: 1em;
+	font-size: inherit;
+}
+
+.ltxe-number-counter__value {
+	font-size: 2.5rem;
+	font-weight: 700;
+	line-height: 1.15;
+	color: #1a1a2e;
+}
+
+.ltxe-number-counter__title {
+	margin-top: 0.35em;
+	font-size: 1rem;
+	color: #4b5563;
+}
+
+.ltxe-number-counter .screen-reader-text {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}

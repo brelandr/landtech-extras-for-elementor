@@ -102,11 +102,11 @@ class Pricing_Toggle extends Extras_Widget {
 		$settings = $this->get_settings_for_display();
 		$period   = isset( $settings['default_period'] ) && 'annual' === $settings['default_period'] ? 'annual' : 'monthly';
 
-		echo '<div class="ltxe-pricing-toggle" data-period="' . esc_attr( $period ) . '">';
-		echo '<button type="button" class="ltxe-pricing-toggle__btn' . ( 'monthly' === $period ? ' is-active' : '' ) . '" data-period="monthly">';
+		echo '<div class="ltxe-pricing-toggle" data-period="' . esc_attr( $period ) . '" role="group" aria-label="' . esc_attr__( 'Billing period', 'landtech-extras-for-elementor' ) . '">';
+		echo '<button type="button" class="ltxe-pricing-toggle__btn' . ( 'monthly' === $period ? ' is-active' : '' ) . '" data-period="monthly" aria-pressed="' . ( 'monthly' === $period ? 'true' : 'false' ) . '">';
 		echo esc_html( (string) ( $settings['monthly_label'] ?? '' ) );
 		echo '</button>';
-		echo '<button type="button" class="ltxe-pricing-toggle__btn' . ( 'annual' === $period ? ' is-active' : '' ) . '" data-period="annual">';
+		echo '<button type="button" class="ltxe-pricing-toggle__btn' . ( 'annual' === $period ? ' is-active' : '' ) . '" data-period="annual" aria-pressed="' . ( 'annual' === $period ? 'true' : 'false' ) . '">';
 		echo esc_html( (string) ( $settings['annual_label'] ?? '' ) );
 		echo '</button>';
 		echo '</div>';

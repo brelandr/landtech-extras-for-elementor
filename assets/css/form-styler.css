@@ -1,0 +1,229 @@
+.ltxe-form-styler {
+	--ltxe-fs-input-bg: #fff;
+	--ltxe-fs-input-border: #d1d5db;
+	--ltxe-fs-input-radius: 10px;
+	--ltxe-fs-input-pad: 0.7em 0.9em;
+	--ltxe-fs-input-size: 1rem;
+	--ltxe-fs-focus: #7c3aed;
+	--ltxe-fs-label-color: #0b1020;
+	--ltxe-fs-label-size: 0.95rem;
+	--ltxe-fs-label-weight: 600;
+	--ltxe-fs-label-mb: 0.35em;
+	--ltxe-fs-btn-bg: #e94560;
+	--ltxe-fs-btn-color: #fff;
+	--ltxe-fs-btn-hover: #c7364e;
+	--ltxe-fs-btn-radius: 10px;
+	--ltxe-fs-btn-pad: 0.75em 1.25em;
+	--ltxe-fs-error-color: #b91c1c;
+	--ltxe-fs-error-bg: #fef2f2;
+	--ltxe-fs-error-border: #fecaca;
+	--ltxe-fs-success-color: #166534;
+	--ltxe-fs-success-bg: #f0fdf4;
+}
+
+.ltxe-form-styler label,
+.ltxe-form-styler .wpcf7-form-control-wrap + br + span,
+.ltxe-form-styler .wpforms-field-label {
+	display: block;
+	color: var(--ltxe-fs-label-color);
+	font-size: var(--ltxe-fs-label-size);
+	font-weight: var(--ltxe-fs-label-weight);
+	margin-bottom: var(--ltxe-fs-label-mb);
+}
+
+.ltxe-form-styler input[type="text"],
+.ltxe-form-styler input[type="email"],
+.ltxe-form-styler input[type="url"],
+.ltxe-form-styler input[type="tel"],
+.ltxe-form-styler input[type="number"],
+.ltxe-form-styler input[type="date"],
+.ltxe-form-styler input[type="password"],
+.ltxe-form-styler select,
+.ltxe-form-styler textarea,
+.ltxe-form-styler .wpcf7-form-control,
+.ltxe-form-styler .wpforms-field-medium,
+.ltxe-form-styler .wpforms-field-large {
+	width: 100%;
+	max-width: 100%;
+	box-sizing: border-box;
+	background: var(--ltxe-fs-input-bg);
+	border: 1px solid var(--ltxe-fs-input-border);
+	border-radius: var(--ltxe-fs-input-radius);
+	padding: var(--ltxe-fs-input-pad);
+	font-size: var(--ltxe-fs-input-size);
+}
+
+.ltxe-form-styler input:focus,
+.ltxe-form-styler select:focus,
+.ltxe-form-styler textarea:focus,
+.ltxe-form-styler .wpcf7-form-control:focus,
+.ltxe-form-styler .wpforms-field input:focus,
+.ltxe-form-styler .wpforms-field textarea:focus {
+	outline: 2px solid var(--ltxe-fs-focus);
+	outline-offset: 2px;
+}
+
+.ltxe-form-styler textarea {
+	min-height: 8rem;
+}
+
+.ltxe-form-styler input[type="submit"],
+.ltxe-form-styler button[type="submit"],
+.ltxe-form-styler .wpcf7-submit,
+.ltxe-form-styler .wpforms-submit,
+.ltxe-form-styler .ltxe-form-styler__submit {
+	min-height: 44px;
+	min-width: 44px;
+	background: var(--ltxe-fs-btn-bg);
+	color: var(--ltxe-fs-btn-color);
+	border: 0;
+	border-radius: var(--ltxe-fs-btn-radius);
+	padding: var(--ltxe-fs-btn-pad);
+	font-size: 1rem;
+	font-weight: 600;
+	line-height: 1.2;
+	cursor: pointer;
+	appearance: none;
+	box-shadow: none;
+}
+
+.ltxe-form-styler input[type="submit"]:hover,
+.ltxe-form-styler button[type="submit"]:hover,
+.ltxe-form-styler .wpcf7-submit:hover,
+.ltxe-form-styler .wpforms-submit:hover,
+.ltxe-form-styler .ltxe-form-styler__submit:hover {
+	background: var(--ltxe-fs-btn-hover);
+}
+
+.ltxe-form-styler--btn-full input[type="submit"],
+.ltxe-form-styler--btn-full button[type="submit"],
+.ltxe-form-styler--btn-full .wpcf7-submit,
+.ltxe-form-styler--btn-full .wpforms-submit,
+.ltxe-form-styler--btn-full .ltxe-form-styler__submit {
+	width: 100%;
+}
+
+.ltxe-form-styler .wpcf7-not-valid-tip,
+.ltxe-form-styler .wpforms-error,
+.ltxe-form-styler .ltxe-form-styler__error {
+	color: var(--ltxe-fs-error-color);
+	background: var(--ltxe-fs-error-bg);
+	border: 1px solid var(--ltxe-fs-error-border);
+	border-radius: 4px;
+	padding: 0.5em 0.75em;
+	margin: 0.5em 0;
+}
+
+.ltxe-form-styler .wpcf7-mail-sent-ok,
+.ltxe-form-styler .wpforms-confirmation-container,
+.ltxe-form-styler .ltxe-form-styler__success {
+	color: var(--ltxe-fs-success-color);
+	background: var(--ltxe-fs-success-bg);
+	border-radius: 4px;
+	padding: 0.75em 1em;
+}
+
+.ltxe-form-styler__field {
+	margin: 0 0 0.9rem;
+}
+
+.ltxe-form-styler__preview input,
+.ltxe-form-styler__preview textarea {
+	box-shadow: 0 1px 2px rgba(76, 29, 149, 0.06);
+}
+
+.ltxe-form-styler .ltxe-form-styler__field--invalid input {
+	border-color: var(--ltxe-fs-error-border);
+	background: var(--ltxe-fs-error-bg);
+}
+
+.ltxe-form-styler__preview .ltxe-form-styler__submit {
+	box-shadow: 0 10px 18px -12px rgba(15, 23, 42, 0.45);
+}
+
+.ltxe-form-styler input[type="text"],
+.ltxe-form-styler input[type="email"],
+.ltxe-form-styler input[type="url"],
+.ltxe-form-styler input[type="tel"],
+.ltxe-form-styler input[type="number"],
+.ltxe-form-styler input[type="date"],
+.ltxe-form-styler input[type="password"],
+.ltxe-form-styler select,
+.ltxe-form-styler textarea {
+	color: #0b1020;
+	min-height: 44px;
+	line-height: 1.4;
+	box-shadow: none;
+}
+
+.ltxe-form-styler__notice {
+	background: transparent;
+	border: 0;
+	padding: 0;
+	margin: 0 0 0.85rem;
+	color: #64748b;
+	font-size: 0.8rem;
+	line-height: 1.4;
+}
+
+.ltxe-form-styler--inline .ltxe-form-styler__field,
+.ltxe-form-styler--inline .wpcf7-form p,
+.ltxe-form-styler--inline .wpforms-field {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5em 1em;
+}
+
+.ltxe-form-styler--inline label,
+.ltxe-form-styler--inline .wpforms-field-label {
+	min-width: 7rem;
+	margin-bottom: 0;
+}
+
+.ltxe-form-styler--inline input,
+.ltxe-form-styler--inline select,
+.ltxe-form-styler--inline textarea {
+	flex: 1 1 12rem;
+}
+
+.ltxe-form-styler--floating .ltxe-form-styler__field,
+.ltxe-form-styler--floating .wpcf7-form p,
+.ltxe-form-styler--floating .wpforms-field {
+	position: relative;
+}
+
+.ltxe-form-styler--floating label,
+.ltxe-form-styler--floating .wpforms-field-label {
+	position: absolute;
+	left: 0.85em;
+	top: 0.7em;
+	margin: 0;
+	pointer-events: none;
+	background: var(--ltxe-fs-input-bg);
+	padding: 0 0.25em;
+	transition: transform 0.15s ease, font-size 0.15s ease;
+}
+
+.ltxe-form-styler--floating .is-focused label,
+.ltxe-form-styler--floating .has-value label,
+.ltxe-form-styler--floating .wpforms-field.is-focused .wpforms-field-label,
+.ltxe-form-styler--floating .wpforms-field.has-value .wpforms-field-label {
+	transform: translateY(-1.15em);
+	font-size: 0.75rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.ltxe-form-styler--floating label,
+	.ltxe-form-styler .ltxe-form-styler__submit {
+		transition: none;
+	}
+}
+
+@media (max-width: 600px) {
+	.ltxe-form-styler--inline .ltxe-form-styler__field,
+	.ltxe-form-styler--inline .wpcf7-form p,
+	.ltxe-form-styler--inline .wpforms-field {
+		display: block;
+	}
+}

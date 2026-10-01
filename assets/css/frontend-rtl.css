@@ -9033,3 +9033,63 @@ body.ee-offcanvas--open [canvas] {
     max-width: calc(100% - 48px);
   }
 }
+
+/* U30 WCAG 2.2 — 44×44px targets + native range handle */
+.ee-popup__trigger,
+.ee-popup__footer__button,
+.ee-popup__close,
+.glightbox-container.ee-mfp-popup .gclose,
+.glightbox-container:has(.ee-popup__content) .gclose,
+.ee-unfold__trigger .ee-button,
+.ee-toggle-element .ee-toggle-element__controls__item,
+.ee-switcher__nav__item,
+.ee-age-gate .ee-button {
+  min-width: 44px;
+  min-height: 44px;
+  box-sizing: border-box;
+}
+
+input.ltxe-ic__handle,
+input.ee-image-comparison__handle[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 100%;
+  height: 44px;
+  margin: 0;
+  margin-top: -22px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  opacity: 1;
+  transform: none;
+  z-index: 4;
+  cursor: ew-resize;
+}
+
+input.ltxe-ic__handle::-webkit-slider-thumb,
+input.ee-image-comparison__handle[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid #111318;
+  cursor: ew-resize;
+}
+
+input.ltxe-ic__handle::-moz-range-thumb,
+input.ee-image-comparison__handle[type="range"]::-moz-range-thumb {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid #111318;
+  cursor: ew-resize;
+}
+
+.ltxe-cq-wrapper {
+  container-type: inline-size;
+}

@@ -3,11 +3,16 @@
 
 namespace LandTechExtras\Base;
 
+use Elementor\Controls_Manager;
 use Elementor\Widget_Base;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
+require_once __DIR__ . '/ltxe-container-query-support.php';
+
 abstract class Extras_Widget extends Widget_Base {
+
+	use LTXE_Container_Query_Support;
 
 	/**
 	 * Wether or not we are in edit mode
@@ -405,7 +410,7 @@ abstract class Extras_Widget extends Widget_Base {
 			return;
 		}
 		$cq = $name . '-' . sanitize_key( (string) $this->get_id() );
-		echo '<div class="ltxe-cq-wrapper" style="container-type:inline-size;container-name:' . esc_attr( $cq ) . ';">';
+		echo '<div class="ltxe-cq-wrapper" data-ltxe-cq="' . esc_attr( $cq ) . '">';
 	}
 
 	/**
@@ -421,4 +426,41 @@ abstract class Extras_Widget extends Widget_Base {
 		}
 		echo '</div>';
 	}
+
+	/**
+	 * Inject the Style-tab container-query toggle on Extras widgets only.
+	 *
+	 * Default remains off. Existing widget CSS is not converted to @container.
+	 *
+	 * @since 2.9.1
+	 *
+	 * @param \Elementor\Controls_Stack $element    Element stack.
+	 * @param string                    $section_id Section ID.
+	 * @param array                     $args       Section arguments.
+	 * @return void
+	 */
+	public static function ltxe_maybe_register_container_query_controls( $element, $section_id, $args ): void {
+		unset( $args );
+
+		if ( ! $element instanceof self ) {
+			return;
+		}
+
+		if ( $element->get_controls( 'section_ltxe_container_query' ) ) {
+			return;
+		}
+
+		$controls = $element->get_controls();
+		if ( ! isset( $controls[ $section_id ]['tab'] ) ) {
+			return;
+		}
+
+		if ( Controls_Manager::TAB_STYLE !== $controls[ $section_id ]['tab'] ) {
+			return;
+		}
+
+		$element->ltxe_register_container_query_style_controls();
+	}
 }
+
+add_action( 'elementor/element/after_section_end', array( Extras_Widget::class, 'ltxe_maybe_register_container_query_controls' ), 10, 3 );

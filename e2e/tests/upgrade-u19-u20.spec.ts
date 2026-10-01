@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const base = process.env.LTXE_E2E_BASE_URL || 'http://localhost:8888';
+const base = process.env.LTXE_E2E_BASE_URL || process.env.BASE_URL || 'http://127.0.0.1:8888';
 
 test.describe('U19–U20 Icon Box and CTA', () => {
 	test('icon box renders title and mark', async ({ page }) => {

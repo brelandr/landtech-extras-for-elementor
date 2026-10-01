@@ -1,0 +1,167 @@
+/**
+ * Widget CTA contrast
+ *
+ * Theme `a` / `a:visited` (and dark-mode link accents) beat a single-class
+ * `color` on `<a class="ltxe-*__btn">`. Lock designed label colors on the
+ * same element, including link/visited/hover/focus.
+ */
+
+.elementor a.ltxe-cmp__btn,
+.elementor a.ltxe-cmp__btn:link,
+.elementor a.ltxe-cmp__btn:visited,
+.elementor a.ltxe-cmp__btn:hover,
+.elementor a.ltxe-cmp__btn:focus,
+.elementor a.ltxe-cmp__btn:active {
+	background-color: #4f46e5;
+	color: #fff;
+	-webkit-text-fill-color: #fff;
+	text-decoration: none;
+}
+
+.elementor a.ltxe-icard__btn,
+.elementor a.ltxe-icard__btn:link,
+.elementor a.ltxe-icard__btn:visited,
+.elementor a.ltxe-icard__btn:hover,
+.elementor a.ltxe-icard__btn:focus,
+.elementor a.ltxe-icard__btn:active {
+	background-color: #4f46e5;
+	color: #fff;
+	-webkit-text-fill-color: #fff;
+	text-decoration: none;
+}
+
+.elementor a.ltxe-cta__btn--primary,
+.elementor a.ltxe-cta__btn--primary:link,
+.elementor a.ltxe-cta__btn--primary:visited,
+.elementor a.ltxe-cta__btn--primary:hover,
+.elementor a.ltxe-cta__btn--primary:focus,
+.elementor a.ltxe-cta__btn--primary:active {
+	color: #12203a;
+	-webkit-text-fill-color: #12203a;
+	text-decoration: none;
+}
+
+.elementor a.ltxe-cta__btn--secondary,
+.elementor a.ltxe-cta__btn--secondary:link,
+.elementor a.ltxe-cta__btn--secondary:visited,
+.elementor a.ltxe-cta__btn--secondary:hover,
+.elementor a.ltxe-cta__btn--secondary:focus,
+.elementor a.ltxe-cta__btn--secondary:active,
+.elementor a.ltxe-cta__btn--outline,
+.elementor a.ltxe-cta__btn--outline:link,
+.elementor a.ltxe-cta__btn--outline:visited,
+.elementor a.ltxe-cta__btn--outline:hover,
+.elementor a.ltxe-cta__btn--outline:focus,
+.elementor a.ltxe-cta__btn--outline:active,
+.elementor a.ltxe-cta__btn--ghost,
+.elementor a.ltxe-cta__btn--ghost:link,
+.elementor a.ltxe-cta__btn--ghost:visited,
+.elementor a.ltxe-cta__btn--ghost:hover,
+.elementor a.ltxe-cta__btn--ghost:focus,
+.elementor a.ltxe-cta__btn--ghost:active {
+	color: #fff;
+	-webkit-text-fill-color: #fff;
+	text-decoration: none;
+}
+
+.elementor a.ltxe-flip-box__btn,
+.elementor a.ltxe-flip-box__btn:link,
+.elementor a.ltxe-flip-box__btn:visited,
+.elementor a.ltxe-flip-box__btn:hover,
+.elementor a.ltxe-flip-box__btn:focus,
+.elementor a.ltxe-flip-box__btn:active {
+	color: #fff;
+	-webkit-text-fill-color: #fff;
+	text-decoration: none;
+}
+
+.elementor a.ltxe-ia__btn,
+.elementor a.ltxe-ia__btn:link,
+.elementor a.ltxe-ia__btn:visited,
+.elementor a.ltxe-ia__btn:hover,
+.elementor a.ltxe-ia__btn:focus,
+.elementor a.ltxe-ia__btn:active {
+	background-color: #e94560;
+	color: #fff;
+	-webkit-text-fill-color: #fff;
+	text-decoration: none;
+}
+
+.elementor a.ltxe-pricing-table__cta,
+.elementor a.ltxe-pricing-table__cta:link,
+.elementor a.ltxe-pricing-table__cta:visited,
+.elementor a.ltxe-pricing-table__cta:hover,
+.elementor a.ltxe-pricing-table__cta:focus,
+.elementor a.ltxe-pricing-table__cta:active {
+	background-color: #2271b1;
+	color: #fff;
+	-webkit-text-fill-color: #fff;
+	text-decoration: none;
+}
+
+.elementor a.ltxe-pdf__btn,
+.elementor a.ltxe-pdf__btn:link,
+.elementor a.ltxe-pdf__btn:visited,
+.elementor a.ltxe-pdf__btn:hover,
+.elementor a.ltxe-pdf__btn:focus,
+.elementor a.ltxe-pdf__btn:active {
+	color: #0b1020;
+	-webkit-text-fill-color: #0b1020;
+	text-decoration: none;
+}
+
+.elementor a.ltxe-mb__btn,
+.elementor a.ltxe-mb__btn:link,
+.elementor a.ltxe-mb__btn:visited,
+.elementor a.ltxe-mb__btn:hover,
+.elementor a.ltxe-mb__btn:focus,
+.elementor a.ltxe-mb__btn:active {
+	color: #fff;
+	-webkit-text-fill-color: #fff;
+	text-decoration: none;
+}
+
+.elementor a.ltxe-icon-box,
+.elementor a.ltxe-icon-box:link,
+.elementor a.ltxe-icon-box:visited,
+.elementor a.ltxe-icon-box:hover,
+.elementor a.ltxe-icon-box:focus,
+.elementor a.ltxe-icon-box:active {
+	color: #1b2433;
+	text-decoration: none;
+}
+
+.elementor a.ltxe-icon-box .ltxe-icon-box__btn {
+	color: #fff;
+	-webkit-text-fill-color: #fff;
+}
+
+/* HTML-widget fake Elementor buttons (no .elementor-button-link) inherit theme a:visited. */
+.elementor a.elementor-button:not(.elementor-button-link),
+.elementor a.elementor-button:not(.elementor-button-link):link,
+.elementor a.elementor-button:not(.elementor-button-link):visited,
+.elementor a.elementor-button:not(.elementor-button-link):hover,
+.elementor a.elementor-button:not(.elementor-button-link):focus,
+.elementor a.elementor-button:not(.elementor-button-link):active {
+	color: #fff;
+	-webkit-text-fill-color: #fff;
+	text-decoration: none;
+}
+
+/* Demo-hub CTAs already set white labels; keep visited from turning purple. */
+.ltxdh-section-hero a.ltxdh-btn,
+.ltxdh-section-hero a.ltxdh-btn:link,
+.ltxdh-section-hero a.ltxdh-btn:visited,
+.ltxdh-section-hero a.ltxdh-btn:hover,
+.ltxdh-section-hero a.ltxdh-btn:focus,
+.ltxdh-section-hero a.ltxdh-btn:active,
+.ltxdh-hero a.ltxdh-btn,
+.ltxdh-hero a.ltxdh-btn:link,
+.ltxdh-hero a.ltxdh-btn:visited,
+.ltxdh-hero a.ltxdh-btn:hover,
+.ltxdh-hero a.ltxdh-btn:focus,
+.ltxdh-hero a.ltxdh-btn:active {
+	color: #fff;
+	-webkit-text-fill-color: #fff;
+	text-decoration: none;
+}

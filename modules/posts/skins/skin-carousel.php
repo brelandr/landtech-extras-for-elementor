@@ -325,6 +325,20 @@ class Skin_Carousel extends Skin_Base {
 			);
 
 			$this->add_control(
+				'card_hover_effect',
+				[
+					'label'   => __( 'Card Hover Effect', 'landtech-extras-for-elementor' ),
+					'type'    => Controls_Manager::SELECT,
+					'default' => 'none',
+					'options' => [
+						'none'  => __( 'None', 'landtech-extras-for-elementor' ),
+						'lift'  => __( 'Lift', 'landtech-extras-for-elementor' ),
+						'scale' => __( 'Scale', 'landtech-extras-for-elementor' ),
+					],
+				]
+			);
+
+			$this->add_control(
 				'autoheight',
 				[
 					'type' 			=> Controls_Manager::SWITCHER,
@@ -1372,6 +1386,7 @@ class Skin_Carousel extends Skin_Base {
 			'swiper' => [
 				'class' => [
 					'ee-swiper',
+					'ltxe-pc',
 				],
 				'role' => 'region',
 				'aria-roledescription' => 'carousel',
@@ -1392,6 +1407,12 @@ class Skin_Carousel extends Skin_Base {
 				],
 			],
 		] );
+
+		$hover = $this->parent->get_settings( $this->get_control_id( 'card_hover_effect' ) );
+		$hover = is_string( $hover ) ? sanitize_key( $hover ) : 'none';
+		if ( in_array( $hover, array( 'lift', 'scale' ), true ) ) {
+			$this->parent->add_render_attribute( 'swiper', 'class', 'ltxe-pc--hover-' . $hover );
+		}
 
 		?>
 		<div <?php $this->parent->print_render_attribute_string( 'swiper' ); ?>>

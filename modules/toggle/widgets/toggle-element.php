@@ -1019,7 +1019,8 @@ class Toggle_Element extends Extras_Widget {
 							'class' => [
 								'ee-toggle-element__element',
 								'elementor-repeater-item-' . $item['_id'],
-							]
+							],
+							'id' => 'ltxe-toggle-panel-' . $this->get_id() . '-' . $index,
 						] );
 
 						?><div <?php $this->print_render_attribute_string( $element_key ); ?>><?php
@@ -1173,7 +1174,11 @@ class Toggle_Element extends Extras_Widget {
 							'class' => [
 								'ee-toggle-element__controls__item',
 								'elementor-repeater-item-' . $item['_id'],
-							]
+							],
+							'role'          => 'button',
+							'tabindex'      => '0',
+							'aria-pressed'  => ( 0 === (int) $index ) ? 'true' : 'false',
+							'aria-controls' => 'ltxe-toggle-panel-' . $this->get_id() . '-' . $index,
 						],
 						$control_text_key => [
 							'class' => 'ee-toggle-element__controls__text',

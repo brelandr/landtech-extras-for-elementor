@@ -101,6 +101,33 @@
 			}
 		},
 
+		/**
+		 * U30 Popup focus trap — exact FREE-PLUGIN-UPGRADE-PLAN.md snippet.
+		 *
+		 * @param {Element}  modal      Dialog root.
+		 * @param {Function} closePopup Close callback.
+		 * @return {void}
+		 */
+		ltxePopupFocusTrap : function( modal, closePopup ) {
+			if ( ! modal || modal.getAttribute( 'data-ltxe-popup-trap' ) ) {
+				return;
+			}
+			modal.setAttribute( 'data-ltxe-popup-trap', '1' );
+			modal.setAttribute( 'role', 'dialog' );
+			modal.setAttribute( 'aria-modal', 'true' );
+			const focusable = modal.querySelectorAll('button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])');
+			const first = focusable[0], last = focusable[ focusable.length - 1 ];
+			modal.addEventListener('keydown', (e) => {
+				if ( e.key === 'Escape' ) { closePopup(); return; }
+				if ( e.key !== 'Tab' ) return;
+				if ( e.shiftKey && document.activeElement === first ) { e.preventDefault(); last.focus(); }
+				else if ( ! e.shiftKey && document.activeElement === last ) { e.preventDefault(); first.focus(); }
+			});
+			if ( first && first.focus ) {
+				first.focus();
+			}
+		},
+
 		init : function( replayExisting ) {
 
 			if ( ee._ltxeHooksRegistered ) {
@@ -389,6 +416,38 @@
 			}
 
 			return $scope.data('id');
+		},
+
+		/**
+		 * Per-instance store (Loop Builder). Never keep Isotope/Swiper on a shared function property.
+		 */
+		ltxeInstanceStore : function( kind ) {
+			if ( ! ee._ltxeInstances ) {
+				ee._ltxeInstances = {};
+			}
+			if ( ! ee._ltxeInstances[ kind ] ) {
+				ee._ltxeInstances[ kind ] = ( typeof Map === 'function' ) ? new Map() : {};
+			}
+			return ee._ltxeInstances[ kind ];
+		},
+
+		ltxeSetInstance : function( kind, id, instance ) {
+			var store = ee.ltxeInstanceStore( kind );
+			var key = String( id );
+			if ( store.set ) {
+				store.set( key, instance );
+			} else {
+				store[ key ] = instance;
+			}
+		},
+
+		ltxeGetInstance : function( kind, id ) {
+			var store = ee.ltxeInstanceStore( kind );
+			var key = String( id );
+			if ( store.get ) {
+				return store.get( key );
+			}
+			return store[ key ];
 		},
 
 		getOffcanvasUniqueScopeId : function( $scope ) {
@@ -1872,8 +1931,8 @@
 						ee.bindEscapeClose( a11yNamespace, function() {
 							closeLightbox();
 						} );
-						var $dialog = $( '.glightbox-container .gslide.open' );
-						ee.focusTrap( $dialog, a11yNamespace );
+						var wrapEl = document.querySelector( '.glightbox-container.ee-mfp-popup-' + scopeId ) || document.querySelector( '.glightbox-container' );
+						ee.ltxePopupFocusTrap( wrapEl, closeLightbox );
 					},
 					beforeClose: function() {
 						ee.unmarkGlightboxPopupReady( scopeId );
@@ -2169,6 +2228,10 @@
 					},
 					afterOpen: function() {
 						ee.markGlightboxPopupReady( scopeId );
+						var wrapEl = document.querySelector( '.glightbox-container.ee-mfp-popup-' + scopeId ) || document.querySelector( '.glightbox-container' );
+						ee.ltxePopupFocusTrap( wrapEl, function() {
+							// Age Gate must stay open until the visitor confirms their age.
+						} );
 					},
 					beforeClose: function() {
 						ee.unmarkGlightboxPopupReady( scopeId );
@@ -2255,6 +2318,12 @@
 						}
 						
 						ee.fixSwipers( $currentElement );
+
+						$wrapper.find( '.ee-toggle-element__controls__item' ).each( function() {
+							var $item = $( this );
+							ee.makeFocusableControl( $item, $.trim( $item.text() ) || 'Toggle' );
+							$item.attr( 'aria-pressed', $item.hasClass( 'ee--is-active' ) ? 'true' : 'false' );
+						} );
 					},
 				};
 
@@ -2272,6 +2341,12 @@
 				}
 
 				$wrapper.toggleElement( toggleElementArgs );
+
+				$wrapper.find( '.ee-toggle-element__controls__item' ).each( function() {
+					var $item = $( this );
+					ee.makeFocusableControl( $item, $.trim( $item.text() ) || 'Toggle' );
+					$item.attr( 'aria-pressed', $item.hasClass( 'ee--is-active' ) ? 'true' : 'false' );
+				} );
 			};
 
 			ee.ToggleElement.init();
@@ -2382,6 +2457,18 @@
 				}
 
 				$scope.eeSwitcher( switcherArgs );
+
+				$scope.find( '.ee-switcher__nav__item' ).each( function() {
+					var $item = $( this );
+					ee.makeFocusableControl( $item, $.trim( $item.text() ) || 'Slide' );
+				} );
+				$scope.off( 'click.ltxeSwitcherA11y' ).on( 'click.ltxeSwitcherA11y', '.ee-switcher__nav__item', function() {
+					window.setTimeout( function() {
+						$scope.find( '.ee-switcher__nav__item' ).each( function() {
+							$( this ).attr( 'aria-pressed', $( this ).hasClass( 'is--active' ) ? 'true' : 'false' );
+						} );
+					}, 0 );
+				} );
 
 				var switcherInstance = $scope.data( 'eeSwitcher' );
 
@@ -2533,7 +2620,7 @@
 			if ( elementorFrontend.isEditMode() )
 				return;
 
-			ee.PostsClassic.elementSettings 	= ee.getElementSettings( $scope );
+			var elementSettings = ee.getElementSettings( $scope );
 
 			var skin 				= ee.getElementSkin( $scope ) || 'classic';
 			if ( 'carousel' === skin ) {
@@ -2542,7 +2629,7 @@
 
 			var sk 					= skin + '_',
 				layoutSettingKey 	= sk + 'layout',
-				layoutModeVal 		= ee.PostsClassic.elementSettings[ layoutSettingKey ];
+				layoutModeVal 		= elementSettings[ layoutSettingKey ];
 			if ( 'undefined' === typeof layoutModeVal || null === layoutModeVal || '' === layoutModeVal ) {
 				layoutModeVal = 'default';
 			}
@@ -2552,17 +2639,18 @@
 			} else if ( 'packery' === layoutModeVal ) {
 				isoLayoutMode = 'packery';
 			}
-			var scopeId 			= $scope.data('id'),
+			var uniqueId 			= ee.getUniqueLoopScopeId( $scope ),
+				scopeId 			= $scope.data('id'),
 				$loop 				= $scope.find('.ee-loop'),
 				$filters 			= $scope.find('.ee-filters'),
 				$currentFilter 		= null,
 				$triggers 			= $filters.find( '[data-filter]' ),
 
 				elementClass 		= '.elementor-element-' + scopeId,
-				isLayout 			= 'default' !== layoutModeVal && 1 < ee.PostsClassic.elementSettings.columns,
-				isInfinite 			= 'yes' === ee.PostsClassic.elementSettings[ sk + 'infinite_scroll' ],
-				isFiltered 			= 'yes' === ee.PostsClassic.elementSettings[ sk + 'filters' ],
-				hasHistory 			= 'yes' === ee.PostsClassic.elementSettings[ sk + 'infinite_scroll_history' ] ? 'replace' : false,
+				isLayout 			= 'default' !== layoutModeVal && 1 < elementSettings.columns,
+				isInfinite 			= 'yes' === elementSettings[ sk + 'infinite_scroll' ],
+				isFiltered 			= 'yes' === elementSettings[ sk + 'filters' ],
+				hasHistory 			= 'yes' === elementSettings[ sk + 'infinite_scroll_history' ] ? 'replace' : false,
 				isotopeInstance 	= null,
 				infScrollInstance 	= null;
 
@@ -2601,18 +2689,7 @@
 					isotopeArgs.packery = { columnWidth: elementClass + ' .ee-grid__item--sizer' };
 				}
 
-			ee.PostsClassic.init = function() {
-
-				ee.PostsClassic.infinitescroll();
-
-				if ( isFiltered && $triggers.length ) {
-					$currentFilter = $triggers.filter('.ee--active');
-
-					ee.PostsClassic.filters();
-				}
-			};
-
-			ee.PostsClassic.bindInfiniteScrollEvents = function( infScroll ) {
+			var bindInfiniteScrollEvents = function( infScroll ) {
 				if ( ! infScroll ) {
 					return;
 				}
@@ -2633,9 +2710,9 @@
 				} );
 			};
 
-			ee.PostsClassic.infinitescroll = function() {
+			var runInfiniteScroll = function() {
 				if ( isInfinite ) {
-					if ( 'yes' === ee.PostsClassic.elementSettings[ sk + 'infinite_scroll_button' ] ) {
+					if ( 'yes' === elementSettings[ sk + 'infinite_scroll_button' ] ) {
 						infiniteScrollArgs.loadOnScroll 	= false;
 						infiniteScrollArgs.scrollThreshold 	= false;
 						infiniteScrollArgs.button 			= '.ee-load-button__trigger--' + scopeId;
@@ -2645,7 +2722,8 @@
 				if ( isInfinite && ! isLayout ) {
 					if ( 'undefined' !== typeof window.InfiniteScroll ) {
 						infScrollInstance = new window.InfiniteScroll( $loop[0], infiniteScrollArgs );
-						ee.PostsClassic.bindInfiniteScrollEvents( infScrollInstance );
+						bindInfiniteScrollEvents( infScrollInstance );
+						ee.ltxeSetInstance( 'posts-infscroll', uniqueId, infScrollInstance );
 					}
 
 				} else if ( isLayout ) {
@@ -2674,6 +2752,7 @@
 					}
 
 					isotopeInstance = $loop.data( 'isotope' );
+					ee.ltxeSetInstance( 'posts-isotope', uniqueId, isotopeInstance );
 
 					if ( isInfinite ) {
 						if ( ! isFiltered || ! $triggers.length ) {
@@ -2682,7 +2761,8 @@
 
 						if ( 'undefined' !== typeof window.InfiniteScroll ) {
 							infScrollInstance = new window.InfiniteScroll( $loop[0], infiniteScrollArgs );
-							ee.PostsClassic.bindInfiniteScrollEvents( infScrollInstance );
+							bindInfiniteScrollEvents( infScrollInstance );
+							ee.ltxeSetInstance( 'posts-infscroll', uniqueId, infScrollInstance );
 
 							infScrollInstance.on( 'append', function( response, path, items ) {
 								$isotope.imagesLoaded().always( function() {
@@ -2694,7 +2774,7 @@
 				}
 			};
 
-			ee.PostsClassic.filters = function() {
+			var runFilters = function() {
 				if ( isLayout ) { // Masonry active
 
 					// Init isotope with filters
@@ -2744,7 +2824,16 @@
 				}
 			};
 
-			ee.PostsClassic.init();
+			var initPostsClassic = function() {
+				runInfiniteScroll();
+
+				if ( isFiltered && $triggers.length ) {
+					$currentFilter = $triggers.filter('.ee--active');
+					runFilters();
+				}
+			};
+
+			initPostsClassic();
 		},
 
 		////////////////////////////////////////////
@@ -2836,7 +2925,7 @@
 					},
 				};
 
-			ee.PostsCarousel.init = function() {
+			var initPostsCarousel = function() {
 				ee.makeFocusableControl( $scope.find( '.ee-swiper__button--prev' ), 'Previous slide' );
 				ee.makeFocusableControl( $scope.find( '.ee-swiper__button--next' ), 'Next slide' );
 
@@ -2846,10 +2935,12 @@
 					const asyncSwiper = elementorFrontend.utils.swiper;
 
 					new asyncSwiper( $swiper, swiperArgs ).then( function( newSwiperInstance ) {
+						ee.ltxeSetInstance( 'posts-swiper', uniqueId, newSwiperInstance );
 						ee.Carousel.onAfterInit( $swiper, newSwiperInstance, settings );
 					} );
 				} else {
 					swiper = new Swiper( $swiper, swiperArgs );
+					ee.ltxeSetInstance( 'posts-swiper', uniqueId, swiper );
 					ee.Carousel.onAfterInit( $swiper, swiper, settings );
 				}
 			};
@@ -2862,7 +2953,7 @@
 				});
 			});
 
-			ee.PostsCarousel.init();
+			initPostsCarousel();
 		},
 
 		////////////////////////////////////////////
@@ -3102,6 +3193,15 @@
 
 				$unfold.unfold( unfoldArgs );
 
+				var $triggerBtn = $unfold.find( '.ee-unfold__trigger .ee-button' );
+				var contentId = $unfold.find( '.ee-unfold__content' ).attr( 'id' );
+				ee.makeFocusableControl( $triggerBtn, $unfold_text.text() || 'Toggle content' );
+				ee.setAriaExpanded( $triggerBtn, false, contentId );
+				$triggerBtn.off( 'click.ltxeUnfoldA11y' ).on( 'click.ltxeUnfoldA11y', function() {
+					var expanded = 'true' === $triggerBtn.attr( 'aria-expanded' );
+					ee.setAriaExpanded( $triggerBtn, ! expanded, contentId );
+				} );
+
 				ee.onElementRemove( $scope, function() {
 					ee.Unfold.maybeDestroy();
 				});
@@ -3167,36 +3267,37 @@
 
 		GalleryExtra : function( $scope, $ ) {
 
-			ee.GalleryExtra.elementSettings 	= ee.getElementSettings( $scope );
+			var elementSettings = ee.getElementSettings( $scope );
+			var uniqueId = ee.getUniqueLoopScopeId( $scope );
 
 			var $gallery = $scope.find( '.ee-gallery' ),
 				parallaxGalleryArgs = {
-					columns : ee.GalleryExtra.elementSettings.columns,
+					columns : elementSettings.columns,
 				};
 
-			ee.GalleryExtra.parallax = function() {
-				if ( 'none' !== ee.GalleryExtra.elementSettings.parallax_disable_on ) {
-					parallaxGalleryArgs.responsive = ee.GalleryExtra.elementSettings.parallax_disable_on;
+			var runGalleryParallax = function() {
+				if ( 'none' !== elementSettings.parallax_disable_on ) {
+					parallaxGalleryArgs.responsive = elementSettings.parallax_disable_on;
 				}
 
-				if ( ee.GalleryExtra.elementSettings.columns_tablet ) {
-					parallaxGalleryArgs.columnsTablet = ee.GalleryExtra.elementSettings.columns_tablet;
+				if ( elementSettings.columns_tablet ) {
+					parallaxGalleryArgs.columnsTablet = elementSettings.columns_tablet;
 				}
 
-				if ( ee.GalleryExtra.elementSettings.columns_mobile ) {
-					parallaxGalleryArgs.columnsMobile = ee.GalleryExtra.elementSettings.columns_mobile;
+				if ( elementSettings.columns_mobile ) {
+					parallaxGalleryArgs.columnsMobile = elementSettings.columns_mobile;
 				}
 
-				if ( ee.GalleryExtra.elementSettings.parallax_speed.size ) {
-					parallaxGalleryArgs.speed = ee.GalleryExtra.elementSettings.parallax_speed.size;
+				if ( elementSettings.parallax_speed.size ) {
+					parallaxGalleryArgs.speed = elementSettings.parallax_speed.size;
 				}
 
-				if ( ee.GalleryExtra.elementSettings.parallax_speed_tablet.size ) {
-					parallaxGalleryArgs.speedTablet = ee.GalleryExtra.elementSettings.parallax_speed_tablet.size;
+				if ( elementSettings.parallax_speed_tablet.size ) {
+					parallaxGalleryArgs.speedTablet = elementSettings.parallax_speed_tablet.size;
 				}
 
-				if ( ee.GalleryExtra.elementSettings.parallax_speed_mobile.size ) {
-					parallaxGalleryArgs.speedMobile = ee.GalleryExtra.elementSettings.parallax_speed_mobile.size;
+				if ( elementSettings.parallax_speed_mobile.size ) {
+					parallaxGalleryArgs.speedMobile = elementSettings.parallax_speed_mobile.size;
 				}
 
 				if ( elementorFrontend.isEditMode() ) {
@@ -3206,7 +3307,7 @@
 				$gallery.parallaxGallery( parallaxGalleryArgs );
 			};
 
-			ee.GalleryExtra.masonry = function() {
+			var runGalleryMasonry = function() {
 				$gallery.imagesLoaded( function() {
 					var $isotope = $gallery.isotope({
 							itemSelector	: '.ee-gallery__item',
@@ -3217,35 +3318,29 @@
 						});
 
 					$isotope.masonry();
+					ee.ltxeSetInstance( 'gallery-isotope', uniqueId, $gallery.data( 'isotope' ) );
 				});
 			};
 
-			ee.GalleryExtra.tilt = function() {
+			var runGalleryTilt = function() {
 				$gallery.find( '.ee-gallery__tilt' ).tilt({
-					maxTilt 		: ee.GalleryExtra.elementSettings.tilt_amount.size,
-					scale 			: ee.GalleryExtra.elementSettings.tilt_scale.size,
-					speed 			: ee.GalleryExtra.elementSettings.tilt_speed.size,
-					axis 			: ee.GalleryExtra.elementSettings.tilt_axis,
+					maxTilt 		: elementSettings.tilt_amount.size,
+					scale 			: elementSettings.tilt_scale.size,
+					speed 			: elementSettings.tilt_speed.size,
+					axis 			: elementSettings.tilt_axis,
 					perspective 	: 1000,
 				});
 			};
 
-			ee.GalleryExtra.init = function() {
-				if ( 'yes' === ee.GalleryExtra.elementSettings.parallax_enable ) {
-					ee.GalleryExtra.parallax();
-				} else {
+			if ( 'yes' === elementSettings.parallax_enable ) {
+				runGalleryParallax();
+			} else if ( 'yes' === elementSettings.masonry_enable && ! elementorFrontend.isEditMode() ) {
+				runGalleryMasonry();
+			}
 
-					if ( 'yes' === ee.GalleryExtra.elementSettings.masonry_enable && ! elementorFrontend.isEditMode() ) {
-						ee.GalleryExtra.masonry();
-					}
-				}
-
-				if ( 'yes' === ee.GalleryExtra.elementSettings.tilt_enable ) {
-					ee.GalleryExtra.tilt();
-				}
-			};
-
-			ee.GalleryExtra.init();
+			if ( 'yes' === elementSettings.tilt_enable ) {
+				runGalleryTilt();
+			}
 		},
 
 		////////////////////////////////////////////
@@ -3955,6 +4050,10 @@
 		ImageComparison : function( $scope, $ ) {
 
 			ee.ImageComparison.elementSettings = ee.getElementSettings( $scope );
+
+			if ( $scope.find( 'input.ltxe-ic__handle, input.ee-image-comparison__handle[type="range"]' ).length ) {
+				return;
+			}
 
 			if ( $scope.hasClass( 'ltxe-img-comparison--vertical' ) || $scope.find( '.ltxe-img-comparison--vertical' ).length ) {
 				return;

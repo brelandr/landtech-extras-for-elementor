@@ -5,7 +5,16 @@
 	gap: 0.5rem;
 }
 
-.ltxe-share__btn {
+.ltxe-share a.ltxe-share__btn,
+.ltxe-share a.ltxe-share__btn:hover,
+.ltxe-share a.ltxe-share__btn:focus,
+.ltxe-share a.ltxe-share__btn:visited,
+.elementor .ltxe-share a.ltxe-share__btn,
+.elementor .ltxe-share a.ltxe-share__btn:hover,
+.elementor .ltxe-share a.ltxe-share__btn:focus,
+.elementor .ltxe-share a.ltxe-share__btn:visited,
+.ltxe-share__btn,
+button.ltxe-share__btn {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
@@ -17,8 +26,15 @@
 	text-decoration: none;
 	font: inherit;
 	cursor: pointer;
-	color: #fff;
+	color: #fff !important;
+	-webkit-text-fill-color: #fff !important;
 	background: #444;
+}
+
+.ltxe-share .ltxe-share__icon,
+.ltxe-share .ltxe-share__label {
+	color: inherit;
+	-webkit-text-fill-color: inherit;
 }
 
 .ltxe-share--square .ltxe-share__btn { border-radius: 0; }
@@ -36,9 +52,15 @@
 .ltxe-share--brand .ltxe-share__btn--copy,
 .ltxe-share--brand .ltxe-share__btn--print { background: #333; }
 
-.ltxe-share--minimal .ltxe-share__btn {
+.ltxe-share--minimal .ltxe-share__btn,
+.ltxe-share--minimal a.ltxe-share__btn,
+.ltxe-share--minimal a.ltxe-share__btn:hover,
+.ltxe-share--minimal a.ltxe-share__btn:focus,
+.ltxe-share--minimal a.ltxe-share__btn:visited,
+.ltxe-share--minimal button.ltxe-share__btn {
 	background: transparent;
 	color: inherit;
+	-webkit-text-fill-color: currentColor;
 	border: 1px solid currentColor;
 }
 

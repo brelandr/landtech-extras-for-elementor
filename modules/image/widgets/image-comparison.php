@@ -804,15 +804,13 @@ class Image_Comparison extends Extras_Widget {
 			'handle' => [
 				'class' => [
 					'ee-image-comparison__handle',
-					'nicon',
-					'nicon-resize-horizontal-filled',
+					'ltxe-ic__handle',
 				],
-				'role'           => 'slider',
-				'tabindex'       => '0',
-				'aria-label'     => __( 'Image comparison slider', 'landtech-extras-for-elementor' ),
-				'aria-valuemin'  => '0',
-				'aria-valuemax'  => '100',
-				'aria-valuenow'  => (string) (int) $start,
+				'type'       => 'range',
+				'min'        => '0',
+				'max'        => '100',
+				'value'      => (string) (int) $start,
+				'aria-label' => __( 'Image comparison slider', 'landtech-extras-for-elementor' ),
 			],
 		] );
 
@@ -859,7 +857,7 @@ class Image_Comparison extends Extras_Widget {
 				<span <?php $this->print_render_attribute_string( 'separator' ) ?>></span>
 			</div>
 		
-			<span <?php $this->print_render_attribute_string( 'handle' ) ?>></span>
+			<input <?php $this->print_render_attribute_string( 'handle' ); ?> />
 		</figure><?php
 	}
 
@@ -923,9 +921,13 @@ class Image_Comparison extends Extras_Widget {
 			'handle' : {
 				'class' : [
 					'ee-image-comparison__handle',
-					'nicon',
-					'nicon-resize-horizontal-filled',
+					'ltxe-ic__handle',
 				],
+				'type' : 'range',
+				'min' : '0',
+				'max' : '100',
+				'value' : settings.start_position.size || 50,
+				'aria-label' : '<?php echo esc_js( __( 'Image comparison slider', 'landtech-extras-for-elementor' ) ); ?>',
 			},
 			'original-image' : {
 				'src' : elementor.imagesManager.getImageUrl( original_image ),
@@ -969,7 +971,7 @@ class Image_Comparison extends Extras_Widget {
 			</div>
 		<# } #>
 
-			<span {{{ view.getRenderAttributeString( 'handle' ) }}}></span>
+			<input {{{ view.getRenderAttributeString( 'handle' ) }}} />
 		</figure><?php
 	}
 }

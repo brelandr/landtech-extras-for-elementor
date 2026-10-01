@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Weather fixture</title>
+</head>
+<body>
+	<div
+		class="ltxe-weather ltxe-weather--card"
+		data-ltxe-condition="sunny"
+		data-ltxe-weather='{"city":"London","lat":"","lon":"","units":"celsius","refresh":200,"geolocate":true,"forecast":true,"bgMode":"image"}'
+		data-ltxe-weather-rest="/wp-json/landtech-extras/v1/weather"
+		data-ltxe-refresh="200"
+		style="--ltxe-weather-bg-sunny:url(data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=);--ltxe-weather-bg-rain:url(data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==);"
+	>
+		<div class="ltxe-weather__bg" aria-hidden="true"></div>
+		<div class="ltxe-weather__inner">
+			<div class="ltxe-weather__head">
+				<p class="ltxe-weather__city">London</p>
+				<button type="button" class="ltxe-weather__geo">Use my location</button>
+			</div>
+			<div class="ltxe-weather__now">
+				<span class="ltxe-weather__icon" data-ltxe-icon="sunny" aria-hidden="true"></span>
+				<span class="ltxe-weather__temp">18°C</span>
+				<span class="ltxe-weather__desc">Clear sky</span>
+			</div>
+			<ul class="ltxe-weather__meta">
+				<li class="ltxe-weather__meta-item" data-field="humidity"><span>Humidity</span> <strong>50%</strong></li>
+			</ul>
+			<ol class="ltxe-weather__forecast">
+				<li class="ltxe-weather__day" data-ltxe-condition="sunny"><span class="ltxe-weather__day-date">2026-09-30</span><span class="ltxe-weather__day-range">10°C / 18°C</span></li>
+			</ol>
+		</div>
+	</div>
+</body>
+</html>

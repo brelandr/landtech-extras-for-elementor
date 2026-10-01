@@ -130,6 +130,7 @@
 		}
 
 		var events = [];
+		var calendars = {};
 		$calendar.find( '.ee-calendar-event' ).each( function( index ) {
 			var $event = $( this );
 			var startPart = ltxeDatePart( $event.data( 'start' ) );
@@ -138,13 +139,32 @@
 				return;
 			}
 			var end = ltxePlainDateFromSetting( ltxeDatePart( $event.data( 'end' ) ) || $event.data( 'end' ) ) || start;
-
-			events.push( {
+			var item = {
 				id: 'ltxe-' + index,
 				title: $.trim( $event.text() ) || $.trim( $event.html() ),
 				start: start,
 				end: end,
-			} );
+			};
+			var color = $event.attr( 'data-color' ) || $event.data( 'color' );
+			if ( color ) {
+				var calId = 'ltxe-cal-' + index;
+				item.calendarId = calId;
+				calendars[ calId ] = {
+					colorName: calId,
+					lightColors: {
+						main: color,
+						container: color,
+						onContainer: '#ffffff'
+					},
+					darkColors: {
+						main: color,
+						container: color,
+						onContainer: '#ffffff'
+					}
+				};
+			}
+
+			events.push( item );
 		} );
 
 		var $mount = $calendar.find( '.ee-calendar__mount' );
@@ -169,6 +189,9 @@
 			timezone: 'UTC',
 			isResponsive: false,
 		};
+		if ( Object.keys( calendars ).length ) {
+			config.calendars = calendars;
+		}
 
 		if ( '' === settings.default_current_month && settings.default_month ) {
 			var selectedDate = ltxePlainDateFromMonthSetting( settings.default_month );

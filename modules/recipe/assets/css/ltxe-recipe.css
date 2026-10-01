@@ -1,0 +1,103 @@
+/* Recipe widget — mobile first */
+
+.ltxe-recipe {
+	position: relative;
+	padding: 1.25rem;
+	border-radius: 16px;
+	background: #fff;
+	color: #0b1020;
+	box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+.ltxe-recipe__print {
+	min-height: 44px;
+	min-width: 44px;
+	margin-bottom: 0.75rem;
+	padding: 0.5rem 1rem;
+	border: 1px solid #cbd5e1;
+	border-radius: 999px;
+	background: #f8fafc;
+	color: #0b1020;
+	cursor: pointer;
+}
+
+.ltxe-recipe__image {
+	display: block;
+	width: 100%;
+	max-height: 16rem;
+	object-fit: cover;
+	border-radius: 12px;
+	margin-bottom: 1rem;
+}
+
+.ltxe-recipe__title {
+	margin: 0 0 0.5rem;
+	font-size: 1.5rem;
+}
+
+.ltxe-recipe__desc {
+	margin: 0 0 1rem;
+	color: #475569;
+}
+
+.ltxe-recipe__meta,
+.ltxe-recipe__ingredients,
+.ltxe-recipe__nutrition {
+	margin: 0 0 1rem;
+	padding: 0;
+	list-style: none;
+}
+
+.ltxe-recipe__meta {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 0.5rem;
+}
+
+.ltxe-recipe__heading {
+	margin: 1rem 0 0.5rem;
+	font-size: 1.125rem;
+}
+
+.ltxe-recipe__ingredients li,
+.ltxe-recipe__steps li,
+.ltxe-recipe__nutrition li {
+	margin: 0.35rem 0;
+}
+
+.ltxe-recipe__steps {
+	margin: 0;
+	padding-left: 1.25rem;
+}
+
+.ltxe-recipe--minimal {
+	box-shadow: none;
+	border: 1px solid #e2e8f0;
+}
+
+@media (min-width: 640px) {
+	.ltxe-recipe__meta {
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+	}
+}
+
+@media print {
+	body * {
+		visibility: hidden;
+	}
+
+	.ltxe-recipe,
+	.ltxe-recipe * {
+		visibility: visible;
+	}
+
+	.ltxe-recipe {
+		position: absolute;
+		inset: 0;
+		box-shadow: none;
+	}
+
+	.ltxe-recipe__print {
+		display: none;
+	}
+}

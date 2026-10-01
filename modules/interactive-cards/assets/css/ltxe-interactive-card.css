@@ -1,0 +1,17 @@
+.ltxe-icard { position: relative; overflow: hidden; padding: 1.5rem; border-radius: 16px; background: #fff; color: #0b1020; box-shadow: 0 10px 30px rgba(15,23,42,.08); transform-style: preserve-3d; }
+.ltxe-icard--float:hover { box-shadow: 0 22px 40px rgba(15,23,42,.16); transform: translateY(-6px); }
+.ltxe-icard__title { margin: 0 0 .5rem; font-size: 1.35rem; }
+.ltxe-icard__sub { margin: 0 0 .25rem; color: #6366f1; font-weight: 600; }
+.ltxe-icard__desc { margin: 0 0 1rem; color: #475569; }
+.ltxe-icard a.ltxe-icard__btn,
+.ltxe-icard a.ltxe-icard__btn:link,
+.ltxe-icard a.ltxe-icard__btn:visited,
+.ltxe-icard a.ltxe-icard__btn:hover,
+.ltxe-icard a.ltxe-icard__btn:focus,
+.ltxe-icard a.ltxe-icard__btn:active,
+.ltxe-icard__btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; padding: .45rem 1rem; border-radius: 999px; background: #4f46e5; color: #fff; -webkit-text-fill-color: #fff; text-decoration: none; }
+.ltxe-icard__glare { pointer-events: none; position: absolute; inset: 0; background: radial-gradient(circle at var(--ltxe-glare-x,50%) var(--ltxe-glare-y,50%), rgba(255,255,255,.45), transparent 45%); opacity: 0; }
+.ltxe-icard.is-tilting .ltxe-icard__glare { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+	.ltxe-icard, .ltxe-icard--float:hover { transform: none !important; transition: none; }
+}

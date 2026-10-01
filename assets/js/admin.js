@@ -5,6 +5,10 @@
 	// Initiate Color Picker
 	$('.wp-color-picker-field').wpColorPicker();
 
+	$( '[data-ltxe-style-max-width]' ).each( function () {
+		this.style.maxWidth = this.getAttribute( 'data-ltxe-style-max-width' );
+	} );
+
 	// Switches option sections
 	$('.ee-settings__group').hide();
 

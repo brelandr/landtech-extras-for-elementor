@@ -11,6 +11,9 @@
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
 	<exclude-pattern>*/assets/lib/*</exclude-pattern>
 	<exclude-pattern>*/scripts/*</exclude-pattern>
+	<exclude-pattern>*/.plugin-check/*</exclude-pattern>
+	<exclude-pattern>*/tests/bootstrap-unit.php</exclude-pattern>
+	<exclude-pattern>*/tests/bootstrap.php</exclude-pattern>
 
 	<config name="minimum_supported_wp_version" value="6.0"/>
 

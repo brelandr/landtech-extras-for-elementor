@@ -164,10 +164,11 @@ class Calendar extends Extras_Widget {
 			$this->add_control(
 				'ical_color',
 				[
-					'label'     => __( 'Calendar Color', 'landtech-extras-for-elementor' ),
-					'type'      => Controls_Manager::COLOR,
-					'default'   => '#4285F4',
-					'condition' => [
+					'label'       => __( 'Event Color', 'landtech-extras-for-elementor' ),
+					'description' => __( 'Tint for events from this iCal feed. Month titles, day names, and dates are under Style → Calendar.', 'landtech-extras-for-elementor' ),
+					'type'        => Controls_Manager::COLOR,
+					'default'     => '#4285F4',
+					'condition'   => [
 						'source' => 'ical',
 					],
 				]
@@ -688,8 +689,76 @@ class Calendar extends Extras_Widget {
 					'type' 		=> Controls_Manager::COLOR,
 					'default'	=> '',
 					'selectors' => [
+						'{{WRAPPER}} .ee-calendar' => '--sx-color-background: {{VALUE}}; background-color: {{VALUE}};',
 						'{{WRAPPER}} .ee-calendar__mount,
-					 {{WRAPPER}} .sx__calendar-wrapper' => 'background-color: {{VALUE}};',
+						 {{WRAPPER}} .sx__calendar-wrapper,
+						 {{WRAPPER}} .sx__calendar,
+						 {{WRAPPER}} .sx__view-container,
+						 {{WRAPPER}} .ltxe-cal-fallback' => 'background-color: {{VALUE}};',
+					],
+				]
+			);
+
+			$this->add_control(
+				'calendar_heading_color',
+				[
+					'label'     => __( 'Heading Color', 'landtech-extras-for-elementor' ),
+					'type'      => Controls_Manager::COLOR,
+					'selectors' => [
+						'{{WRAPPER}} .sx__range-heading,
+						 {{WRAPPER}} .sx__calendar-header' => 'color: {{VALUE}};',
+					],
+				]
+			);
+
+			$this->add_group_control(
+				Group_Control_Typography::get_type(),
+				[
+					'name'     => 'calendar_heading_typography',
+					'label'    => __( 'Heading Typography', 'landtech-extras-for-elementor' ),
+					'selector' => '{{WRAPPER}} .sx__range-heading',
+				]
+			);
+
+			$this->add_control(
+				'calendar_text_color',
+				[
+					'label'     => __( 'Text Color', 'landtech-extras-for-elementor' ),
+					'type'      => Controls_Manager::COLOR,
+					'selectors' => [
+						'{{WRAPPER}} .ee-calendar' => '--sx-internal-color-text: {{VALUE}}; --sx-color-on-background: {{VALUE}}; --sx-color-on-surface: {{VALUE}}; --sx-color-neutral: {{VALUE}}; color: {{VALUE}};',
+						'{{WRAPPER}} .sx__month-grid-day__header-day-name,
+						 {{WRAPPER}} .sx__month-grid-day__header-date,
+						 {{WRAPPER}} .sx__today-button,
+						 {{WRAPPER}} .sx__view-selection-selected-item,
+						 {{WRAPPER}} .sx__forward-backward-navigation,
+						 {{WRAPPER}} .ltxe-cal-fallback,
+						 {{WRAPPER}} .ltxe-cal-fallback__dow,
+						 {{WRAPPER}} .ltxe-cal-fallback__day' => 'color: {{VALUE}};',
+					],
+				]
+			);
+
+			$this->add_group_control(
+				Group_Control_Typography::get_type(),
+				[
+					'name'     => 'calendar_text_typography',
+					'label'    => __( 'Text Typography', 'landtech-extras-for-elementor' ),
+					'selector' => '{{WRAPPER}} .sx__month-grid-day__header-day-name, {{WRAPPER}} .sx__month-grid-day__header-date, {{WRAPPER}} .ltxe-cal-fallback__dow, {{WRAPPER}} .ltxe-cal-fallback__day',
+				]
+			);
+
+			$this->add_control(
+				'calendar_event_color',
+				[
+					'label'       => __( 'Event Color', 'landtech-extras-for-elementor' ),
+					'description' => __( 'Color for event titles on the grid. Content → Event Color still tints each iCal feed.', 'landtech-extras-for-elementor' ),
+					'type'        => Controls_Manager::COLOR,
+					'selectors'   => [
+						'{{WRAPPER}} .sx__month-grid-event,
+						 {{WRAPPER}} .sx__month-agenda-event,
+						 {{WRAPPER}} .sx__date-grid-event,
+						 {{WRAPPER}} .ltxe-cal-fallback__day.has-events' => 'color: {{VALUE}};',
 					],
 				]
 			);
@@ -1019,16 +1088,17 @@ class Calendar extends Extras_Widget {
 	 * Map a source event to the calendar row shape.
 	 *
 	 * @param array<string,mixed> $event Normalised event.
+	 * @param string              $color Optional event color (iCal feed tint).
 	 * @return array<string,mixed>
 	 */
-	protected function map_source_event( $event ) {
+	protected function map_source_event( $event, $color = '' ) {
 		$link = '';
 		if ( ! empty( $event['link'] ) ) {
 			$link = esc_url( $event['link'] );
 		} elseif ( ! empty( $event['url'] ) ) {
 			$link = esc_url( $event['url'] );
 		}
-		return array(
+		$mapped = array(
 			'title'   => isset( $event['title'] ) ? $event['title'] : '',
 			'start'   => isset( $event['start'] ) ? $event['start'] : '',
 			'end'     => isset( $event['end'] ) ? $event['end'] : '',
@@ -1037,6 +1107,12 @@ class Calendar extends Extras_Widget {
 			'rel'     => isset( $event['rel'] ) ? $event['rel'] : '',
 			'archive' => isset( $event['archive'] ) ? $event['archive'] : false,
 		);
+		$color = is_string( $color ) ? trim( $color ) : '';
+		if ( '' !== $color ) {
+			$mapped['color'] = $color;
+		}
+
+		return $mapped;
 	}
 
 	/**
@@ -1054,9 +1130,10 @@ class Calendar extends Extras_Widget {
 		if ( ! empty( $settings['ical_url']['url'] ) ) {
 			$primary = $settings['ical_url']['url'];
 		}
+		$primary_color = isset( $settings['ical_color'] ) ? (string) $settings['ical_color'] : '';
 		if ( $primary ) {
 			foreach ( $fetcher->get_events( $primary, $ttl ) as $event ) {
-				$events[] = $this->map_source_event( $event );
+				$events[] = $this->map_source_event( $event, $primary_color );
 			}
 		}
 
@@ -1069,8 +1146,9 @@ class Calendar extends Extras_Widget {
 				if ( ! $url ) {
 					continue;
 				}
+				$row_color = isset( $row['ical_color'] ) ? (string) $row['ical_color'] : $primary_color;
 				foreach ( $fetcher->get_events( $url, $ttl ) as $event ) {
-					$events[] = $this->map_source_event( $event );
+					$events[] = $this->map_source_event( $event, $row_color );
 				}
 			}
 		}
@@ -1200,6 +1278,9 @@ class Calendar extends Extras_Widget {
 					'data-before'		=> $this->get_before_title( $event ),
 					'data-after'		=> $this->get_after_title( $event ),
 				] );
+				if ( ! empty( $event['color'] ) ) {
+					$this->add_render_attribute( $event_key, 'data-color', $event['color'] );
+				}
 			?><div <?php $this->print_render_attribute_string( $event_key ); ?>><?php
 				echo esc_html( $title );
 			?></div><?php

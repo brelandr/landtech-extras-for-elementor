@@ -1,0 +1,128 @@
+{
+  "id": "tpl-login-gate",
+  "title": "Login Gate",
+  "category": "Premium",
+  "thumbnail": "https://extrasforelementor.com/template-thumbs/login-gate.jpg",
+  "preview_url": "https://extrasforelementor.com/demo-login-gate/",
+  "elementor_data": [
+    {
+      "id": "0000455",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "layout": "boxed",
+        "gap": "extended",
+        "content_width": {
+          "unit": "%",
+          "size": 100
+        }
+      },
+      "elements": [
+        {
+          "id": "0000454",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 100,
+            "_inline_size": 100
+          },
+          "elements": [
+            {
+              "id": "0000452",
+              "elType": "widget",
+              "widgetType": "heading-extended",
+              "settings": {
+                "title": "Members area",
+                "header_size": "h1",
+                "size": "large",
+                "align": "center"
+              },
+              "elements": []
+            },
+            {
+              "id": "0000453",
+              "elType": "widget",
+              "widgetType": "ee-login-form",
+              "settings": {
+                "heading": "Sign in to continue",
+                "redirect_url": {
+                  "url": "#members-only",
+                  "is_external": "",
+                  "nofollow": ""
+                },
+                "show_remember": "yes",
+                "show_password_toggle": "yes",
+                "show_lost": "yes",
+                "lost_text": "Forgot your password?",
+                "submit_label": "Sign in"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "0000459",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "layout": "boxed",
+        "gap": "extended",
+        "content_width": {
+          "unit": "%",
+          "size": 100
+        },
+        "_css_classes": "ltxe-mp-login-gate",
+        "ltxe_cp_enable": "yes",
+        "ltxe_cp_password": "members",
+        "ltxe_cp_message": "This section is for members. Sign in above, then enter the section password to continue.",
+        "ltxe_cp_icon": {
+          "value": "fas fa-lock",
+          "library": "fa-solid"
+        }
+      },
+      "elements": [
+        {
+          "id": "0000458",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 100,
+            "_inline_size": 100
+          },
+          "elements": [
+            {
+              "id": "0000456",
+              "elType": "widget",
+              "widgetType": "heading-extended",
+              "settings": {
+                "title": "Members-only brief",
+                "header_size": "h2",
+                "size": "large",
+                "align": "center"
+              },
+              "elements": []
+            },
+            {
+              "id": "0000457",
+              "elType": "widget",
+              "widgetType": "ltxe-icon-box",
+              "settings": {
+                "icon_type": "icon",
+                "selected_icon": {
+                  "value": "fas fa-lock-open",
+                  "library": "fa-solid"
+                },
+                "icon_position": "top",
+                "title": "Unlocked after sign-in",
+                "description": "Replace this copy with the protected download, video, or pricing sheet. Content Protection sits on this section — visitors see the lock message until they enter the section password."
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -121,6 +121,8 @@ class Posts extends Posts_Base {
 			array_splice( $deps, 2, 0, [ 'landtech-extras-isotope' ] );
 		}
 
+		$deps[] = 'landtech-extras-posts-carousel';
+
 		return $deps;
 	}
 
@@ -141,6 +143,7 @@ class Posts extends Posts_Base {
 		return [
 			'landtech-extras-nicons',
 			'landtech-extras-frontend',
+			'landtech-extras-posts-carousel',
 		];
 	}
 
@@ -5338,7 +5341,8 @@ class Posts extends Posts_Base {
 	 * @return array
 	 */
 	public function get_post_classes() {
-		global $post;
+		$post_id = (int) get_the_ID();
+		$post    = $post_id > 0 ? get_post( $post_id ) : null;
 
 		$settings = $this->get_settings();
 		$post_classes = [ 'ee-post' ];
@@ -5348,7 +5352,7 @@ class Posts extends Posts_Base {
 			$post_classes[] = 'ee-post--horizontal__' . $settings[ 'post_media_position' ];
 		}
 
-		if ( is_sticky( $post->ID ) ) {
+		if ( $post_id && is_sticky( $post_id ) ) {
 			$post_classes[] = 'sticky';
 		}
 

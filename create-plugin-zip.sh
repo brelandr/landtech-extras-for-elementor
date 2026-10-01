@@ -58,6 +58,7 @@ verify_pack_artifacts() {
 		"landtech-extras.php"
 		"includes/landtech-extras-bootstrap-guard.php"
 		"includes/playground-demo-seeder.php"
+		"includes/class-ltxe-playground-demo-seeder.php"
 		"readme.txt"
 		"assets/blueprints/blueprint.json"
 		"modules/posts/widgets/posts.php"
@@ -172,13 +173,13 @@ verify_zip_output() {
 		exit 1
 	fi
 	local r1
-	r1="$(unzip -Z1 "${z}" 2>/dev/null | awk -F/ 'NF >= 1 && $1 != "" { print $1; exit }')"
+	r1="$(unzip -Z1 "${z}" 2>/dev/null | awk -F/ 'NF >= 1 && $1 != "" { print $1; exit }' || true)"
 	if [[ "${r1}" != "${ZIP_PREFIX}" ]]; then
 		echo "Error: zip root folder is \"${r1}\", expected \"${ZIP_PREFIX}\" (set LANDTECH_EXTRAS_ZIP_INNER_FOLDER to match repo layout)." >&2
 		exit 1
 	fi
 	local hdr
-	hdr="$(unzip -p "${z}" "${main_relpath}" 2>/dev/null | head -n 45 || true)"
+	hdr="$(unzip -p "${z}" "${main_relpath}" 2>/dev/null | sed -n '1,45p' || true)"
 	if ! grep -q 'Plugin Name:' <<< "${hdr}"; then
 		echo "Error: ${main_relpath} has no Plugin Name header in zip (WordPress ignores such packages)." >&2
 		exit 1
@@ -202,6 +203,7 @@ verify_zip_forbidden_paths() {
 		"/${zip_prefix}/.cursor/"
 		"/${zip_prefix}/.github/"
 		"/${zip_prefix}/DIST/"
+		"${zip_prefix}/assets/blueprints/.htaccess"
 	)
 	local listing pattern hit
 	listing="$(unzip -Z1 "${z}" 2>/dev/null || true)"
@@ -290,6 +292,7 @@ rsync -a \
 	--exclude='.plugin-check/' \
 	--exclude='.distignore' \
 	--exclude='.release' \
+	--exclude='assets/blueprints/.htaccess' \
 	--exclude='e2e/' \
 	--exclude='node_modules/' \
 	--exclude='vendor/' \
@@ -393,7 +396,8 @@ if [[ "${LANDTECH_EXTRAS_ZIP_QUIET:-1}" != "0" ]]; then
 	ZIP_QUIET_FLAG=( -q )
 fi
 
-( cd "${TEMP_DIR}" && zip "${ZIP_QUIET_FLAG[@]}" -r "${OUT_ZIP}" "${ZIP_PREFIX}" \
+# "${arr[@]}" is unbound under `set -u` when the array is empty (Bash 3 / macOS).
+( cd "${TEMP_DIR}" && zip ${ZIP_QUIET_FLAG[@]+"${ZIP_QUIET_FLAG[@]}"} -r "${OUT_ZIP}" "${ZIP_PREFIX}" \
 	"${JUNK_EXCLUDES[@]}" \
 	-x "${ZIP_PREFIX}/.cursorrules" \
 	-x "${ZIP_PREFIX}/.cursor/*" \
@@ -437,6 +441,7 @@ fi
 	-x "${ZIP_PREFIX}/.gitignore" \
 	-x "${ZIP_PREFIX}/.distignore" \
 	-x "${ZIP_PREFIX}/.release" \
+	-x "${ZIP_PREFIX}/assets/blueprints/.htaccess" \
 	-x "${ZIP_PREFIX}/create-plugin-zip.sh" \
 	-x "${ZIP_PREFIX}/scripts/rebrand-to-landtech.py" \
 	-x "${ZIP_PREFIX}/*.sh" \

@@ -484,7 +484,7 @@ class Settings_API {
 		$value = $this->get_option( $args['id'], $args['section'], $args['std'] );
 		$size  = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : '500px';
 
-		printf( '<div style="max-width: %s;">', esc_attr( (string) $size ) );
+		printf( '<div class="ee-settings__wysiwyg" data-ltxe-style-max-width="%s">', esc_attr( (string) $size ) );
 
 		$editor_settings = array(
 			'teeny'         => true,
@@ -761,7 +761,7 @@ class Settings_API {
 					continue;
 
 				?>
-				<div id="<?php echo esc_attr( (string) $form['id'] ); ?>" class="ee-settings__group" style="display: none;">
+				<div id="<?php echo esc_attr( (string) $form['id'] ); ?>" class="ee-settings__group">
 					<form method="post" action="options.php" class="ee-settings__form">
 						<?php
 

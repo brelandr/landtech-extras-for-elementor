@@ -1,0 +1,93 @@
+{
+  "id": "tpl-faq-section",
+  "title": "FAQ Section",
+  "category": "Layout",
+  "thumbnail": "https://extrasforelementor.com/template-thumbs/faq-section.jpg",
+  "preview_url": "https://extrasforelementor.com/demo-faq-section/",
+  "elementor_data": {
+    "id": "0000412",
+    "elType": "section",
+    "isInner": false,
+    "settings": {
+      "layout": "boxed",
+      "gap": "extended",
+      "content_width": {
+        "unit": "%",
+        "size": 100
+      }
+    },
+    "elements": [
+      {
+        "id": "0000411",
+        "elType": "column",
+        "isInner": false,
+        "settings": {
+          "_column_size": 100,
+          "_inline_size": 100
+        },
+        "elements": [
+          {
+            "id": "000040f",
+            "elType": "widget",
+            "widgetType": "heading-extended",
+            "settings": {
+              "title": "Frequently asked questions",
+              "header_size": "h2",
+              "size": "large",
+              "align": "center"
+            },
+            "elements": []
+          },
+          {
+            "id": "0000410",
+            "elType": "widget",
+            "widgetType": "ltxe-faq",
+            "settings": {
+              "items": [
+                {
+                  "_id": "0000409",
+                  "question": "Which widgets can I use in marketplace templates?",
+                  "answer": "<p>Only widgets from LandTech Extras (free) and LandTech Extras Premium. This FAQ uses the FAQ Accordion widget with FAQPage JSON-LD enabled.</p>",
+                  "open_by_default": "yes"
+                },
+                {
+                  "_id": "000040a",
+                  "question": "Does the accordion output schema automatically?",
+                  "answer": "<p>Yes. Turn on FAQPage schema in the widget settings and the FAQPage structured data is printed with the questions and answers.</p>",
+                  "open_by_default": ""
+                },
+                {
+                  "_id": "000040b",
+                  "question": "Can more than one item stay open?",
+                  "answer": "<p>Accordion mode keeps a single item open. Turn accordion mode off if you want multiple answers visible at once.</p>",
+                  "open_by_default": ""
+                },
+                {
+                  "_id": "000040c",
+                  "question": "How do I restyle the questions?",
+                  "answer": "<p>Use the Style tab on the FAQ widget for typography, colors, icon position, and spacing. The markup stays accessible.</p>",
+                  "open_by_default": ""
+                },
+                {
+                  "_id": "000040d",
+                  "question": "Will this conflict with another FAQ schema plugin?",
+                  "answer": "<p>Disable the widget schema if another plugin already prints FAQPage JSON-LD on the same URL.</p>",
+                  "open_by_default": ""
+                },
+                {
+                  "_id": "000040e",
+                  "question": "Can I nest this inside a pricing or support page?",
+                  "answer": "<p>Yes. Import this section below a pricing table or contact block. The schema still describes the six questions on the page.</p>",
+                  "open_by_default": ""
+                }
+              ],
+              "accordion_mode": "yes",
+              "faq_schema": "yes"
+            },
+            "elements": []
+          }
+        ]
+      }
+    ]
+  }
+}

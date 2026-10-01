@@ -1,0 +1,218 @@
+{
+  "id": "tpl-contact-map",
+  "title": "Contact + Map",
+  "category": "Marketing",
+  "thumbnail": "https://extrasforelementor.com/template-thumbs/contact-map.jpg",
+  "preview_url": "https://extrasforelementor.com/demo-contact-map/",
+  "elementor_data": [
+    {
+      "id": "0000434",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "layout": "boxed",
+        "gap": "extended",
+        "content_width": {
+          "unit": "%",
+          "size": 100
+        }
+      },
+      "elements": [
+        {
+          "id": "0000433",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 100,
+            "_inline_size": 100
+          },
+          "elements": [
+            {
+              "id": "0000432",
+              "elType": "widget",
+              "widgetType": "heading-extended",
+              "settings": {
+                "title": "Visit or write us",
+                "header_size": "h1",
+                "size": "large",
+                "align": "center"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "000043c",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "layout": "boxed",
+        "gap": "extended",
+        "content_width": {
+          "unit": "%",
+          "size": 100
+        }
+      },
+      "elements": [
+        {
+          "id": "0000438",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 40,
+            "_inline_size": 40
+          },
+          "elements": [
+            {
+              "id": "0000435",
+              "elType": "widget",
+              "widgetType": "ltxe-icon-box",
+              "settings": {
+                "icon_type": "icon",
+                "selected_icon": {
+                  "value": "fas fa-map-marker-alt",
+                  "library": "fa-solid"
+                },
+                "icon_position": "left",
+                "title": "Studio",
+                "description": "120 Market Street, Suite 400\nAustin, TX 78701"
+              },
+              "elements": []
+            },
+            {
+              "id": "0000436",
+              "elType": "widget",
+              "widgetType": "ltxe-icon-box",
+              "settings": {
+                "icon_type": "icon",
+                "selected_icon": {
+                  "value": "fas fa-envelope",
+                  "library": "fa-solid"
+                },
+                "icon_position": "left",
+                "title": "Email",
+                "description": "hello@extrasforelementor.com",
+                "link": {
+                  "url": "mailto:hello@extrasforelementor.com",
+                  "is_external": "",
+                  "nofollow": ""
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "0000437",
+              "elType": "widget",
+              "widgetType": "ltxe-icon-box",
+              "settings": {
+                "icon_type": "icon",
+                "selected_icon": {
+                  "value": "fas fa-phone",
+                  "library": "fa-solid"
+                },
+                "icon_position": "left",
+                "title": "Phone",
+                "description": "+1 (512) 555-0148",
+                "link": {
+                  "url": "tel:+15125550148",
+                  "is_external": "",
+                  "nofollow": ""
+                }
+              },
+              "elements": []
+            }
+          ]
+        },
+        {
+          "id": "000043b",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 60,
+            "_inline_size": 60
+          },
+          "elements": [
+            {
+              "id": "000043a",
+              "elType": "widget",
+              "widgetType": "ee-google-map",
+              "settings": {
+                "map_provider": "openstreetmap",
+                "fit": "yes",
+                "pins": [
+                  {
+                    "_id": "0000439",
+                    "name": "LandTech Studio",
+                    "lat": "30.2672",
+                    "lng": "-97.7431",
+                    "description": "<p>120 Market Street, Suite 400</p>",
+                    "trigger": "click"
+                  }
+                ]
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "0000440",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "layout": "boxed",
+        "gap": "extended",
+        "content_width": {
+          "unit": "%",
+          "size": 100
+        }
+      },
+      "elements": [
+        {
+          "id": "000043f",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 100,
+            "_inline_size": 100
+          },
+          "elements": [
+            {
+              "id": "000043d",
+              "elType": "widget",
+              "widgetType": "heading-extended",
+              "settings": {
+                "title": "Share this page",
+                "header_size": "h3",
+                "size": "medium",
+                "align": "center"
+              },
+              "elements": []
+            },
+            {
+              "id": "000043e",
+              "elType": "widget",
+              "widgetType": "ltxe-social-share",
+              "settings": {
+                "platforms": [
+                  "facebook",
+                  "x",
+                  "linkedin",
+                  "copy"
+                ],
+                "url_source": "current",
+                "button_style": "icon_label",
+                "button_shape": "rounded",
+                "color_style": "brand"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

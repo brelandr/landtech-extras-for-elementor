@@ -1,0 +1,96 @@
+{
+  "id": "tpl-testimonials-carousel",
+  "title": "Testimonials Carousel",
+  "category": "Marketing",
+  "thumbnail": "https://extrasforelementor.com/template-thumbs/testimonials-carousel.jpg",
+  "preview_url": "https://extrasforelementor.com/demo-testimonials-carousel/",
+  "elementor_data": {
+    "id": "000042d",
+    "elType": "section",
+    "isInner": false,
+    "settings": {
+      "layout": "boxed",
+      "gap": "extended",
+      "content_width": {
+        "unit": "%",
+        "size": 100
+      }
+    },
+    "elements": [
+      {
+        "id": "000042c",
+        "elType": "column",
+        "isInner": false,
+        "settings": {
+          "_column_size": 100,
+          "_inline_size": 100
+        },
+        "elements": [
+          {
+            "id": "000042a",
+            "elType": "widget",
+            "widgetType": "heading-extended",
+            "settings": {
+              "title": "What clients say",
+              "header_size": "h2",
+              "size": "large",
+              "align": "center"
+            },
+            "elements": []
+          },
+          {
+            "id": "000042b",
+            "elType": "widget",
+            "widgetType": "ltxe-testimonials",
+            "settings": {
+              "source": "manual",
+              "reviews": [
+                {
+                  "_id": "0000426",
+                  "author_name": "Maya Chen",
+                  "author_role": "Studio owner",
+                  "rating": "5",
+                  "content": "Clear, fast, and easy to restyle. We dropped this on a client homepage the same afternoon.",
+                  "date": "2026-03-12"
+                },
+                {
+                  "_id": "0000427",
+                  "author_name": "Jordan Hale",
+                  "author_role": "WooCommerce lead",
+                  "rating": "5",
+                  "content": "Reviews pulled in without extra plugins. The carousel stays readable on a phone.",
+                  "date": "2026-04-02"
+                },
+                {
+                  "_id": "0000428",
+                  "author_name": "Priya Shah",
+                  "author_role": "Content strategist",
+                  "rating": "5",
+                  "content": "The quote skin is what I wanted for a case-study page. Schema toggle is a nice extra.",
+                  "date": "2026-04-18"
+                },
+                {
+                  "_id": "0000429",
+                  "author_name": "Chris Ortega",
+                  "author_role": "Agency partner",
+                  "rating": "4",
+                  "content": "Importing marketplace templates saved a day of layout work on the last campaign.",
+                  "date": "2026-05-09"
+                }
+              ],
+              "skin": "cards",
+              "display": "carousel",
+              "columns": "1",
+              "show_avatar": "yes",
+              "show_rating": "yes",
+              "add_schema": "yes",
+              "schema_type": "Organization",
+              "schema_name": "LandTech Extras"
+            },
+            "elements": []
+          }
+        ]
+      }
+    ]
+  }
+}

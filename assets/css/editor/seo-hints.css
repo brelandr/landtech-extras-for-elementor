@@ -36,6 +36,8 @@
 .ltxe-seo-hints__item--error::before { content: "🔴 "; }
 
 .ltxe-ai-alt-btn,
+.ltxe-ai-widget-label,
 .ltxe-label-suggest {
 	margin: 8px;
+	min-height: 44px;
 }

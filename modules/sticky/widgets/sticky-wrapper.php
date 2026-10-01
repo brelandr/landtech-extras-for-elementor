@@ -144,11 +144,11 @@ class Sticky_Wrapper extends Extras_Widget {
 				'z'   => $z,
 			)
 		);
-		echo '<div class="' . esc_attr( implode( ' ', $classes ) ) . '" style="--ltxe-sticky-z:' . esc_attr( (string) $z ) . ';" data-ltxe-sticky="' . esc_attr( $config ) . '">';
+		echo '<div class="' . esc_attr( implode( ' ', $classes ) ) . '" data-ltxe-sticky="' . esc_attr( $config ) . '">';
 		$template_id = isset( $settings['template_id'] ) ? absint( $settings['template_id'] ) : 0;
 		if ( $template_id && class_exists( '\Elementor\Plugin' ) ) {
 			echo \Elementor\Plugin::$instance->frontend->get_builder_content_for_display( $template_id, true ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Elementor builder HTML; already sanitized by Elementor at save.
-		} elseif ( $this->_is_edit_mode ) {
+		} else {
 			echo '<p class="ltxe-sticky__placeholder">' . esc_html__( 'Select an Elementor template to stick.', 'landtech-extras-for-elementor' ) . '</p>';
 		}
 		echo '</div>';

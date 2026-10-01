@@ -127,6 +127,23 @@
 			} );
 		}
 
+		var pauseBtn = el.querySelector( '.ltxe-testimonials__pause' );
+		if ( pauseBtn ) {
+			pauseBtn.addEventListener( 'click', function () {
+				if ( timer ) {
+					stopAuto();
+					pauseBtn.setAttribute( 'aria-pressed', 'true' );
+					pauseBtn.textContent = pauseBtn.getAttribute( 'data-play' ) || 'Play';
+					pauseBtn.setAttribute( 'aria-label', pauseBtn.getAttribute( 'data-play-label' ) || 'Play carousel' );
+				} else {
+					startAuto();
+					pauseBtn.setAttribute( 'aria-pressed', 'false' );
+					pauseBtn.textContent = pauseBtn.getAttribute( 'data-pause' ) || 'Pause';
+					pauseBtn.setAttribute( 'aria-label', pauseBtn.getAttribute( 'data-pause-label' ) || 'Pause carousel' );
+				}
+			} );
+		}
+
 		el.addEventListener( 'keydown', function ( e ) {
 			if ( 'ArrowLeft' === e.key ) {
 				e.preventDefault();

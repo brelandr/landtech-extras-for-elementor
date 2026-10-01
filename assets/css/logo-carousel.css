@@ -1,0 +1,113 @@
+.ltxe-logo-carousel {
+	--ltxe-lc-cols: 5;
+	--ltxe-lc-gap: 32px;
+	--ltxe-lc-height: 48px;
+	--ltxe-lc-op: 0.6;
+	--ltxe-lc-op-h: 1;
+	--ltxe-lc-speed: 30s;
+	overflow: hidden;
+}
+
+.ltxe-logo-carousel--slow {
+	--ltxe-lc-speed: 50s;
+}
+
+.ltxe-logo-carousel--fast {
+	--ltxe-lc-speed: 15s;
+}
+
+.ltxe-logo-carousel__track {
+	display: flex;
+	align-items: center;
+	gap: 0;
+	width: max-content;
+}
+
+.ltxe-logo-carousel__set {
+	display: flex;
+	align-items: center;
+	gap: var(--ltxe-lc-gap);
+	padding-right: var(--ltxe-lc-gap);
+}
+
+.ltxe-logo-carousel--static .ltxe-logo-carousel__track {
+	width: 100%;
+}
+
+.ltxe-logo-carousel--static .ltxe-logo-carousel__set {
+	display: grid;
+	grid-template-columns: repeat(var(--ltxe-lc-cols), minmax(0, 1fr));
+	width: 100%;
+	padding-right: 0;
+}
+
+.ltxe-logo-carousel--marquee .ltxe-logo-carousel__track {
+	animation: ltxe-lc-marquee var(--ltxe-lc-speed) linear infinite;
+}
+
+.ltxe-logo-carousel--rtl .ltxe-logo-carousel__track {
+	animation-direction: reverse;
+}
+
+.ltxe-logo-carousel--pause:hover .ltxe-logo-carousel__track {
+	animation-play-state: paused;
+}
+
+.ltxe-logo-carousel__item,
+.ltxe-logo-carousel__link {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 44px;
+	min-width: 44px;
+	text-decoration: none;
+}
+
+.ltxe-logo-carousel img {
+	max-height: var(--ltxe-lc-height);
+	width: auto;
+	max-width: 100%;
+	object-fit: contain;
+	opacity: var(--ltxe-lc-op);
+}
+
+.ltxe-logo-carousel--gray img {
+	filter: grayscale(1);
+}
+
+.ltxe-logo-carousel__item:hover img,
+.ltxe-logo-carousel__link:hover img {
+	opacity: var(--ltxe-lc-op-h);
+	filter: none;
+}
+
+.ltxe-logo-carousel--border .ltxe-logo-carousel__item,
+.ltxe-logo-carousel--border .ltxe-logo-carousel__link {
+	border-right: 1px solid #e5e7eb;
+	padding-right: calc(var(--ltxe-lc-gap) / 2);
+}
+
+.ltxe-logo-carousel__ph {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 7rem;
+	min-height: var(--ltxe-lc-height);
+	padding: 0 0.75em;
+	background: #1a1a2e;
+	color: #fff;
+	font-size: 0.85rem;
+	font-weight: 600;
+	opacity: var(--ltxe-lc-op);
+}
+
+@keyframes ltxe-lc-marquee {
+	from { transform: translateX(0); }
+	to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.ltxe-logo-carousel--marquee .ltxe-logo-carousel__track {
+		animation: none;
+	}
+}

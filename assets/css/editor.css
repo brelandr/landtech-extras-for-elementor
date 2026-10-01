@@ -63,3 +63,17 @@
   border-radius: 0;
   background-color: #fff;
 }
+
+.elementor-panel-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.ltxe-ai-widget-label,
+.ltxe-label-suggest .elementor-button {
+  min-height: 44px;
+  min-width: 44px;
+  margin: 0 8px 8px 0;
+}

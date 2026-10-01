@@ -1009,6 +1009,10 @@ class Unfold extends Extras_Widget {
 				'class' => [
 					'ee-button',
 				],
+				'role'          => 'button',
+				'tabindex'      => '0',
+				'aria-expanded' => 'false',
+				'aria-controls' => 'ltxe-unfold-content-' . $this->get_id(),
 			],
 			'button-wrapper' => [
 				'class' => 'ee-button-wrapper',
@@ -1018,6 +1022,7 @@ class Unfold extends Extras_Widget {
 			],
 			'content' => [
 				'class' => 'ee-unfold__content',
+				'id'    => 'ltxe-unfold-content-' . $this->get_id(),
 			],
 			'trigger' => [
 				'class' => 'ee-unfold__trigger',

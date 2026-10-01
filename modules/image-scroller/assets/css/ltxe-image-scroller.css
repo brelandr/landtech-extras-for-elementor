@@ -1,0 +1,10 @@
+.ltxe-iscroll { position: relative; overflow: hidden; height: 320px; border-radius: 12px; background: #0f172a; }
+.ltxe-iscroll__img { display: block; width: 100%; height: auto; transform: translate3d(0,0,0); will-change: transform; }
+.ltxe-iscroll--horizontal .ltxe-iscroll__img { width: auto; height: 100%; max-width: none; }
+.ltxe-iscroll__overlay { position: absolute; inset: 0; pointer-events: none; }
+.ltxe-iscroll__overlay--gradient { background: linear-gradient(to top, rgba(15,23,42,.45), transparent); }
+.ltxe-iscroll__overlay--color { background: rgba(15,23,42,.2); }
+@media (prefers-reduced-motion: reduce) {
+	.ltxe-iscroll { overflow: visible; height: auto !important; }
+	.ltxe-iscroll__img { transform: none !important; }
+}

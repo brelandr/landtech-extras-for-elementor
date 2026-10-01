@@ -69,6 +69,12 @@
 	left: 0;
 }
 
+.ltxe-pricing-table a.ltxe-pricing-table__cta,
+.ltxe-pricing-table a.ltxe-pricing-table__cta:link,
+.ltxe-pricing-table a.ltxe-pricing-table__cta:visited,
+.ltxe-pricing-table a.ltxe-pricing-table__cta:hover,
+.ltxe-pricing-table a.ltxe-pricing-table__cta:focus,
+.ltxe-pricing-table a.ltxe-pricing-table__cta:active,
 .ltxe-pricing-table__cta {
 	display: inline-flex;
 	align-items: center;
@@ -77,6 +83,7 @@
 	padding: 0.5rem 1rem;
 	background: #2271b1;
 	color: #fff;
+	-webkit-text-fill-color: #fff;
 	text-decoration: none;
 	border-radius: 4px;
 }

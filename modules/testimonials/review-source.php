@@ -46,12 +46,12 @@ class Review_Source {
 	public static function normalize( $row ) {
 		$row = is_array( $row ) ? $row : array();
 
-		$rating = isset( $row['rating'] ) ? (float) $row['rating'] : 0;
+		$rating = isset( $row['rating'] ) ? (float) $row['rating'] : 0.0;
 		if ( $rating < 0 ) {
-			$rating = 0;
+			$rating = 0.0;
 		}
 		if ( $rating > 5 ) {
-			$rating = 5;
+			$rating = 5.0;
 		}
 
 		$source = isset( $row['source'] ) ? sanitize_key( (string) $row['source'] ) : 'manual';

@@ -4,12 +4,12 @@ Contributors: brelandr
 Tags: elementor, page-builder, widgets, addons, extensions
 Requires at least: 6.2
 Tested up to: 7.1
-Stable tag: 2.9.0
+Stable tag: 3.0.0
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-50+ free Elementor widgets: gallery, testimonials, FAQ, pricing, calendar, maps, posts, plus display conditions and editor tools.
+60+ free Elementor widgets: gallery, testimonials, FAQ, pricing, calendar, maps, posts, plus display conditions and editor tools.
 
 == Description ==
 
@@ -19,7 +19,11 @@ License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 You do not need a paid product to use anything listed under **Widgets and extensions**. Optional API keys (Google Maps, Snazzy Maps, Instagram) live under **Elementor Extras → APIs**. Full documentation: [extrasforelementor.com/docs](https://extrasforelementor.com/docs/).
 
-= What’s new in 2.9 =
+Version 2.9 adds testimonials, FAQ, team members, pricing, Lottie, a video playlist, calendar sources, editor SEO hints, and alt text through the WordPress AI Client. See **What’s new in 2.9** below.
+
+This plugin is complete on its own. **LandTech Extras for Elementor Premium** is a separate paid plugin. It adds extra capabilities and does not unlock features that already ship here. See **Optional Premium add-on**.
+
+== What’s new in 2.9 ==
 
 This release is a large free-plugin update (work from 2.6 through 2.9, shipped together):
 
@@ -31,7 +35,7 @@ This release is a large free-plugin update (work from 2.6 through 2.9, shipped t
 * **Gallery, tabs, SVG, comparison:** Gallery video tiles and pagination; Tabs vertical + mobile accordion + deep links; Inline SVG path colors and reduced-motion-safe animations; Image Comparison vertical drag.
 * **Add-on features tab:** When the optional Premium plugin is not installed, this tab shows a read-only catalog of what that **separate** plugin adds. When Premium is active, the catalog is hidden and the live Enable checkboxes appear instead.
 
-= Optional Premium add-on (separate plugin) =
+== Optional Premium add-on ==
 
 This WordPress.org plugin is complete on its own. Nothing below is included here as a disabled or locked feature.
 
@@ -54,9 +58,9 @@ Add-on documentation: [extrasforelementor.com/docs/premium](https://extrasforele
 
 Find widgets in the Elementor panel under the **LandTech Extras for Elementor** category. Widget type slugs match the upstream Elementor Extras fork for easier migration.
 
-**Widgets:** Age Gate (`ee-age-gate`), Audio Player (`ee-audio-player`), Back to Top (`ltxe-back-to-top`), Breadcrumbs (`ee-breadcrumbs`, optional **BreadcrumbList** JSON-LD when **Structured data** is enabled), Buttons / Button Group (`button-group`), Calendar (`ee-calendar`), Circle Progress (`circle-progress`), Cookie Consent (`ltxe-cookie-consent`), Countdown (`ltxe-countdown`), Dark Mode Toggle (`ltxe-dark-mode`), Devices (`devices-extended`), FAQ Accordion (`ltxe-faq`), FAQ Schema (`ee-faq-schema`), Gallery (`gallery-extra`), Gallery Slider (`gallery-slider`), Google Map (`ee-google-map`), Heading Extra (`heading-extended`), Hotspots (`hotspots`), HTML5 Video Player (`html5-video`), Icon Box (`ltxe-icon-box`), Image Comparison (`image-comparison`), Inline SVG (`ee-inline-svg`), Lottie (`ee-lottie`), Call to Action (`ltxe-cta`), Offcanvas (`ee-offcanvas`), Popup (`ee-popup`), Posts Extra / Portfolio / Carousel layouts (`posts-extra`), Pricing Table (`ltxe-pricing-table`), Pricing Toggle (`ltxe-pricing-toggle`), Progress Bar (`ltxe-progress-bar`), Random Image (`ee-random-image`), Reading Progress (`ltxe-reading-progress`), Scroll Indicator (`ee-scroll-indicator`), Search Form (`ee-search-form`), Slide Menu (`ee-slide-menu`), Social Share (`ltxe-social-share`), Star Rating (`ltxe-star-rating`), Sticky Wrapper (`ltxe-sticky-wrapper`), Switcher (`ee-switcher`), Table (`table`), Table of Contents (`ee-table-of-contents`), Tabs (`ee-tabs`), Team Members (`ltxe-team-members`), Testimonials (`ltxe-testimonials`), Text Divider (`text-divider`), Timeline (`timeline`), Toggle Element (`ee-toggle-element`), Unfold (`unfold`), Video Playlist (`ltxe-video-playlist`).
+**Widgets:** Age Gate (`ee-age-gate`), Animated Headline (`ltxe-animated-headline`), Audio Player (`ee-audio-player`), Back to Top (`ltxe-back-to-top`), Breadcrumbs (`ee-breadcrumbs`, optional **BreadcrumbList** JSON-LD when **Structured data** is enabled), Buttons / Button Group (`button-group`), Calendar (`ee-calendar`), Circle Progress (`circle-progress`), Comparison Table (`ltxe-comparison-table`), Cookie Consent (`ltxe-cookie-consent`), Countdown (`ltxe-countdown`), Dark Mode Toggle (`ltxe-dark-mode`), Devices (`devices-extended`), FAQ Accordion (`ltxe-faq`), FAQ Schema (`ee-faq-schema`), Filterable Gallery (`gallery-filterable`), Flip Box (`ltxe-flip-box`), Form Styler (`ltxe-form-styler`), Gallery (`gallery-extra`), Gallery Slider (`gallery-slider`), Google Map (`ee-google-map`), Heading Extra (`heading-extended`), Hotspots (`hotspots`), HTML5 Video Player (`html5-video`), Icon Box (`ltxe-icon-box`), Image Accordion (`ltxe-image-accordion`), Image Comparison (`image-comparison`), Image Scroller (`ltxe-image-scroller`), Inline SVG (`ee-inline-svg`), Interactive Card (`ltxe-interactive-card`), Logo Carousel (`ltxe-logo-carousel`), Lottie (`ee-lottie`), Call to Action (`ltxe-cta`), News Ticker (`ltxe-news-ticker`), Newsletter Signup (`ltxe-newsletter-signup`), Number Counter (`ltxe-number-counter`), Offcanvas (`ee-offcanvas`), One Page Nav (`ltxe-dot-nav`), PDF Embed (`ltxe-pdf-embed`), Popup (`ee-popup`), Post Carousel (`posts-carousel`), Posts Extra / Portfolio / Carousel layouts (`posts-extra`), Pricing Table (`ltxe-pricing-table`), Pricing Toggle (`ltxe-pricing-toggle`), Progress Bar (`ltxe-progress-bar`), Random Image (`ee-random-image`), Reading Progress (`ltxe-reading-progress`), Recipe (`ltxe-recipe`), Scroll Indicator (`ee-scroll-indicator`), Search Form (`ee-search-form`), Slide Menu (`ee-slide-menu`), Social Share (`ltxe-social-share`), Star Rating (`ltxe-star-rating`), Sticky Wrapper (`ltxe-sticky-wrapper`), Switcher (`ee-switcher`), Table (`table`), Table of Contents (`ee-table-of-contents`), Tabs (`ee-tabs`), Tags Cloud Sphere (`ltxe-tags-cloud-sphere`), Team Members (`ltxe-team-members`), Testimonials (`ltxe-testimonials`), Text Divider (`text-divider`), Timeline (`timeline`), Toggle Element (`ee-toggle-element`), Unfold (`unfold`), Video Playlist (`ltxe-video-playlist`), Weather (`ltxe-weather`), World Clock (`ltxe-world-clock`).
 
-**Editor extensions** (Advanced tab on Elementor elements): Display Conditions (free: time, day, URL/query vars including UTM presets, cookie, business hours; WooCommerce purchase history and membership rules ship in the separate **LandTech Extras Premium** add-on), Parallax Background, Parallax Elements, Portfolio Parallax, Sticky Elements, Tooltips.
+**Editor extensions** (Advanced tab on Elementor elements): Display Conditions (free: time, day, URL/query vars including UTM presets, cookie, business hours; WooCommerce purchase history and membership rules ship in the separate **LandTech Extras Premium** add-on), Parallax Background, Parallax Elements, Portfolio Parallax, Shape Dividers (section/container Layout tab), Sticky Elements, Tooltips.
 
 Disable unused widgets under **Elementor → LandTech Extras → Widgets** to speed up the editor.
 
@@ -88,9 +92,9 @@ When you add a Snazzy Maps API key and search for map styles in the Elementor ed
 
 When you use Instagram-related options (Gallery widget Instagram source or an access token under Elementor → LandTech Extras → APIs), the plugin may request data from **Instagram Graph API** (`graph.instagram.com`, including token refresh in admin) and/or **instagram.com** endpoints used by the Gallery widget. Data sent can include the **access token** you configure, API parameters required by Instagram, and standard HTTP metadata. [Instagram Terms of Service](https://www.instagram.com/legal/terms/) · [Instagram Privacy Policy](https://privacycenter.instagram.com/policy/) · [Meta Privacy Policy](https://www.facebook.com/privacy/policy/) · Meta **Developer Terms** (API use): [Terms](https://developers.facebook.com/terms/)
 
-**OpenAI (OpenAI, LLC) — optional bring-your-own-key (separate LandTech Extras add-on AI workspace)**
+**OpenAI (OpenAI, LLC) — optional bring-your-own-key (add-on AI workspace)**
 
-This WordPress.org build may store optional API credentials in the `landtech_extras_apis` option when you save settings, but **does not** call OpenAI from this plugin alone. When the separate **LandTech Extras add-on** is active, AI workspace is enabled, and you choose **OpenAI**, that add-on may send HTTPS requests to **OpenAI’s API** (e.g. `api.openai.com`) with the **API key**, **prompt or content**, model parameters, and standard HTTP metadata. [Terms of Service](https://openai.com/policies/terms-of-use/) · [Privacy Policy](https://openai.com/policies/privacy-policy/)
+Credentials may be stored under Elementor Extras → APIs (`openai_api_key` / `ltxe_openai_key`) or as `LTXE_OPENAI_KEY` / `LANDTECH_EXTRAS_OPENAI_KEY`. This plugin does not call OpenAI. **Generate CSS ID** uses the WordPress AI Client when it is available, then a local slug. Outbound OpenAI requests happen only when the separate add-on AI workspace uses your saved key. [Terms of Service](https://openai.com/policies/terms-of-use/) · [Privacy Policy](https://openai.com/policies/privacy-policy/)
 
 **Anthropic (Anthropic, PBC) — optional bring-your-own-key (add-on AI workspace)**
 
@@ -106,19 +110,35 @@ When the Calendar widget source is **iCal / Google Calendar URL**, the site serv
 
 **YouTube (Google LLC)**
 
-When a Gallery video tile or the Video Playlist widget uses a YouTube URL, visitors’ browsers load an embed iframe from `www.youtube.com` / `youtube.com`. Requests can include the video ID you configured and standard browser HTTP metadata. [Terms of Service](https://www.youtube.com/t/terms) · [Google Privacy Policy](https://policies.google.com/privacy)
+When a Gallery video tile, the Media Gallery widget, or the Video Playlist widget uses a YouTube URL, visitors’ browsers load an embed iframe from `www.youtube.com` / `youtube.com`, and the gallery may request a poster image from `img.youtube.com` using the video ID. Requests can include the video ID you configured and standard browser HTTP metadata. No YouTube API key is stored. [Terms of Service](https://www.youtube.com/t/terms) · [Google Privacy Policy](https://policies.google.com/privacy)
 
 **Vimeo (Vimeo.com, Inc.)**
 
-When a Gallery video tile or the Video Playlist widget uses a Vimeo URL, visitors’ browsers load an embed iframe from `player.vimeo.com`. Requests can include the video ID you configured and standard browser HTTP metadata. [Terms of Service](https://vimeo.com/terms) · [Privacy Policy](https://vimeo.com/privacy)
+When a Gallery video tile, the Media Gallery widget, or the Video Playlist widget uses a Vimeo URL, visitors’ browsers load an embed iframe from `player.vimeo.com`. The Media Gallery also requests `https://vimeo.com/api/oembed.json` from the site server to read a thumbnail URL, which is cached for seven days. Requests can include the video URL you configured and standard HTTP metadata. No Vimeo API key is stored. [Terms of Service](https://vimeo.com/terms) · [Privacy Policy](https://vimeo.com/privacy)
 
 **WordPress AI Client (core Connectors)**
 
-When an editor clicks **Generate alt text** on an image control, this plugin calls `wp_ai_client_prompt()` if the WordPress AI Client is available. No provider API keys are stored by this plugin. Site admins configure providers under **Settings → Connectors**. The request can include a short prompt and the attachment image URL. If the AI Client is not available, the endpoint returns HTTP 503. Review the terms and privacy policy of the provider you connect in WordPress.
+When an editor clicks **Generate alt text** on an image control, or **Generate CSS ID** in a widget panel, this plugin calls `wp_ai_client_prompt()` if the WordPress AI Client is available. Site admins configure Connectors under **Settings → Connectors**. The request can include a short prompt and, for alt text, the attachment image URL. If the AI Client is not available, alt text returns HTTP 503 and CSS ID falls back to a local slug. Review the terms and privacy policy of the provider you connect in WordPress.
 
 **Social share destinations (user-initiated)**
 
 The Social Share widget only builds share URLs. A visitor click may open Facebook, X/Twitter, LinkedIn, WhatsApp, Telegram, Pinterest, Reddit, or a `mailto:` window. No third-party share SDK is loaded. Review each destination’s terms before enabling that button.
+
+**Playground demo WXR (extrasforelementor.com)**
+
+When a WordPress Playground blueprint (or an administrator calling `POST /wp-json/landtech-extras/v1/playground/seed`) imports demo content, this plugin may request `https://extrasforelementor.com/playground-demo-content.xml` via `wp_remote_get`. The request includes the WXR URL and standard HTTP metadata. No visitor data is sent. If that file is unavailable, the bundled in-plugin seeder creates demo pages locally instead. Documentation host: [extrasforelementor.com](https://extrasforelementor.com/).
+
+**Open-Meteo (open-meteo.com)**
+
+When a page includes the Weather widget, the site server requests forecast data from `https://api.open-meteo.com/v1/forecast` and, for city names, geocoding from `https://geocoding-api.open-meteo.com/v1/search` via `wp_remote_get`. Requests include the configured city name or latitude/longitude, unit preferences, and standard HTTP metadata. No API key is required or stored. Responses are cached for five minutes. Visitors’ browsers call only this site’s REST proxy (`/wp-json/landtech-extras/v1/weather`). [Terms](https://open-meteo.com/en/terms) · [License / attribution](https://open-meteo.com/en/license)
+
+**Mailchimp (Intuit Mailchimp Marketing API) — Newsletter Signup widget**
+
+When you save a **Mailchimp API key** under **Elementor → LandTech Extras → APIs** and a visitor submits the Newsletter Signup widget, the site server posts the subscriber **email address** plus optional first/last name, phone, and GDPR tag to `*.api.mailchimp.com`. The key is stored encrypted and is never printed in page HTML or REST responses. [Terms of Service](https://mailchimp.com/legal/terms/) · [Privacy Policy](https://www.intuit.com/privacy/statement/)
+
+**Mozilla PDF.js sample PDF (optional demo URL)**
+
+The PDF Embed widget can load a PDF you upload to the media library, or a URL you enter. The bundled demo may use Mozilla’s public sample at `https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf`. Visitors’ browsers request that file only when that URL is configured. [PDF.js project](https://mozilla.github.io/pdf.js/)
 
 **User-provided Lottie animation URLs (LottieFiles or other hosts)**
 
@@ -265,6 +285,23 @@ Maintenance release: Elementor 4.3.x compatibility headers and Plugin Check fixe
 Recommended update: new Tabs and Table of Contents widgets, plus Search Form **Include only** category restrictions and shorter custom search result URLs. Re-save Search Form widgets after updating if you use hidden category filters.
 
 == Changelog ==
+
+= 3.0.0 =
+* New: Recipe widget with Recipe schema JSON-LD
+* New: Comparison Table, Interactive Card, Image Scroller, PDF Embed, World Clock, Tags Cloud Sphere, Newsletter Signup
+* New: Shape Dividers extension on section/container Layout tab
+* New: Form Styler — style Contact Form 7 and WPForms without CSS
+* New: Number Counter — animated count-up widget with prefix, suffix, easing
+* New: Logo Carousel — infinite CSS marquee with grayscale hover
+* New: Flip Box — 3D and fade flip cards, hover and click triggers
+* New: Filterable Gallery — Isotope masonry with category filter pills
+* New: Post Carousel — autoplay Swiper carousel skin for the posts widget
+* New: Animated Headline — typewriter and word-cycle effects (free tier)
+* New: One Page Nav — dot navigation moved to free tier
+* New: Image Accordion — expanding image column panels
+* New: News Ticker — CSS marquee with manual items or live post feed
+* New: Weather — current conditions and 5-day outlook via Open-Meteo (no API key)
+* New: Media Gallery — photos and YouTube, Vimeo, or self-hosted video in one filterable lightbox grid
 
 = 2.9.0 =
 * Add: Testimonials (`ltxe-testimonials`) — manual, WooCommerce review, or comment sources; carousel/grid/single; optional AggregateRating schema.

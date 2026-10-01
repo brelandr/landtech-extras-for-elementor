@@ -1,0 +1,10 @@
+.ltxe-has-shape-divider { position: relative; overflow: hidden; }
+.ltxe-shape-divider { position: absolute; left: 0; overflow: hidden; line-height: 0; pointer-events: none; }
+.ltxe-shape-divider--top { top: 0; }
+.ltxe-shape-divider--bottom { bottom: 0; }
+.ltxe-shape-divider svg { display: block; width: 100%; height: 100%; }
+.ltxe-shape-divider.is-flip svg { transform: scaleX(-1); }
+.ltxe-shape-divider--top:not(.is-invert) svg { transform: scaleY(-1); }
+.ltxe-shape-divider--top.is-flip:not(.is-invert) svg { transform: scale(-1, -1); }
+.ltxe-shape-divider--bottom.is-invert svg { transform: scaleY(-1); }
+.ltxe-shape-divider--bottom.is-flip.is-invert svg { transform: scale(-1, -1); }

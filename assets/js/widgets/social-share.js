@@ -21,41 +21,41 @@
 		}, 2000 );
 	}
 
-	function onClick( ev ) {
-		var btn = ev.target.closest( '[data-ltxe-action]' );
+	window.ltxeActions = window.ltxeActions || {};
+
+	window.ltxeActions['share-popup'] = function ( ev, btn ) {
 		if ( ! btn || ! btn.closest( '.ltxe-share' ) ) {
 			return;
 		}
-		var action = btn.getAttribute( 'data-ltxe-action' );
-		if ( 'share-popup' === action ) {
-			ev.preventDefault();
-			popup( btn.href );
+		ev.preventDefault();
+		popup( btn.href );
+	};
+
+	window.ltxeActions['copy-link'] = function ( ev, btn ) {
+		if ( ! btn || ! btn.closest( '.ltxe-share' ) ) {
 			return;
 		}
-		if ( 'copy-link' === action ) {
-			ev.preventDefault();
-			var url = btn.getAttribute( 'data-ltxe-url' ) || window.location.href;
-			if ( navigator.clipboard && navigator.clipboard.writeText ) {
-				navigator.clipboard.writeText( url ).then( function () {
-					copiedTip( btn );
-				} );
-			}
+		ev.preventDefault();
+		var url = btn.getAttribute( 'data-ltxe-url' ) || window.location.href;
+		if ( navigator.clipboard && navigator.clipboard.writeText ) {
+			navigator.clipboard.writeText( url ).then( function () {
+				copiedTip( btn );
+			} );
+		}
+	};
+
+	window.ltxeActions.print = function ( ev, btn ) {
+		if ( ! btn || ! btn.closest( '.ltxe-share' ) ) {
 			return;
 		}
-		if ( 'print' === action ) {
-			ev.preventDefault();
-			window.print();
-		}
-	}
+		ev.preventDefault();
+		window.print();
+	};
 
 	function init( scope ) {
 		var root = scope && scope.querySelectorAll ? scope : document;
 		root.querySelectorAll( '.ltxe-share' ).forEach( function ( el ) {
-			if ( el.getAttribute( 'data-ltxe-share-init' ) ) {
-				return;
-			}
 			el.setAttribute( 'data-ltxe-share-init', '1' );
-			el.addEventListener( 'click', onClick );
 		} );
 	}
 

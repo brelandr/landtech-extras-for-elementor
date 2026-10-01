@@ -1,0 +1,270 @@
+{
+  "id": "tpl-team-page",
+  "title": "Team Page",
+  "category": "Layout",
+  "thumbnail": "https://extrasforelementor.com/template-thumbs/team-page.jpg",
+  "preview_url": "https://extrasforelementor.com/demo-team-page/",
+  "elementor_data": [
+    {
+      "id": "0000422",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "layout": "boxed",
+        "gap": "extended",
+        "content_width": {
+          "unit": "%",
+          "size": 100
+        }
+      },
+      "elements": [
+        {
+          "id": "0000421",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 100,
+            "_inline_size": 100
+          },
+          "elements": [
+            {
+              "id": "000041f",
+              "elType": "widget",
+              "widgetType": "heading-extended",
+              "settings": {
+                "title": "Meet the team",
+                "header_size": "h1",
+                "size": "xl",
+                "align": "center"
+              },
+              "elements": []
+            },
+            {
+              "id": "0000420",
+              "elType": "widget",
+              "widgetType": "ltxe-team-members",
+              "settings": {
+                "members": [
+                  {
+                    "_id": "0000413",
+                    "name": "Ava Cole",
+                    "role": "Creative Director",
+                    "bio": "Leads brand systems and motion language for client launches.",
+                    "link": {
+                      "url": "#",
+                      "is_external": "",
+                      "nofollow": ""
+                    },
+                    "socials": [
+                      {
+                        "_id": "0000414",
+                        "icon": {
+                          "value": "fab fa-linkedin-in",
+                          "library": "fa-brands"
+                        },
+                        "url": {
+                          "url": "https://www.linkedin.com/",
+                          "is_external": "on",
+                          "nofollow": ""
+                        },
+                        "label": "LinkedIn"
+                      }
+                    ]
+                  },
+                  {
+                    "_id": "0000415",
+                    "name": "Noah Patel",
+                    "role": "Lead Engineer",
+                    "bio": "Builds Elementor widgets, REST routes, and performance budgets.",
+                    "link": {
+                      "url": "#",
+                      "is_external": "",
+                      "nofollow": ""
+                    },
+                    "socials": [
+                      {
+                        "_id": "0000416",
+                        "icon": {
+                          "value": "fab fa-linkedin-in",
+                          "library": "fa-brands"
+                        },
+                        "url": {
+                          "url": "https://www.linkedin.com/",
+                          "is_external": "on",
+                          "nofollow": ""
+                        },
+                        "label": "LinkedIn"
+                      }
+                    ]
+                  },
+                  {
+                    "_id": "0000417",
+                    "name": "Mia Alvarez",
+                    "role": "Product Designer",
+                    "bio": "Turns research into layouts that still feel like the brand.",
+                    "link": {
+                      "url": "#",
+                      "is_external": "",
+                      "nofollow": ""
+                    },
+                    "socials": [
+                      {
+                        "_id": "0000418",
+                        "icon": {
+                          "value": "fab fa-linkedin-in",
+                          "library": "fa-brands"
+                        },
+                        "url": {
+                          "url": "https://www.linkedin.com/",
+                          "is_external": "on",
+                          "nofollow": ""
+                        },
+                        "label": "LinkedIn"
+                      }
+                    ]
+                  },
+                  {
+                    "_id": "0000419",
+                    "name": "Eli Brooks",
+                    "role": "Support Lead",
+                    "bio": "Owns onboarding, docs, and the first-week success path.",
+                    "link": {
+                      "url": "#",
+                      "is_external": "",
+                      "nofollow": ""
+                    },
+                    "socials": [
+                      {
+                        "_id": "000041a",
+                        "icon": {
+                          "value": "fab fa-linkedin-in",
+                          "library": "fa-brands"
+                        },
+                        "url": {
+                          "url": "https://www.linkedin.com/",
+                          "is_external": "on",
+                          "nofollow": ""
+                        },
+                        "label": "LinkedIn"
+                      }
+                    ]
+                  },
+                  {
+                    "_id": "000041b",
+                    "name": "Jun Park",
+                    "role": "Motion Designer",
+                    "bio": "Crafts Lottie loops and micro-interactions for landing pages.",
+                    "link": {
+                      "url": "#",
+                      "is_external": "",
+                      "nofollow": ""
+                    },
+                    "socials": [
+                      {
+                        "_id": "000041c",
+                        "icon": {
+                          "value": "fab fa-linkedin-in",
+                          "library": "fa-brands"
+                        },
+                        "url": {
+                          "url": "https://www.linkedin.com/",
+                          "is_external": "on",
+                          "nofollow": ""
+                        },
+                        "label": "LinkedIn"
+                      }
+                    ]
+                  },
+                  {
+                    "_id": "000041d",
+                    "name": "Riley Chen",
+                    "role": "Account Manager",
+                    "bio": "Keeps timelines honest and stakeholders in the same thread.",
+                    "link": {
+                      "url": "#",
+                      "is_external": "",
+                      "nofollow": ""
+                    },
+                    "socials": [
+                      {
+                        "_id": "000041e",
+                        "icon": {
+                          "value": "fab fa-linkedin-in",
+                          "library": "fa-brands"
+                        },
+                        "url": {
+                          "url": "https://www.linkedin.com/",
+                          "is_external": "on",
+                          "nofollow": ""
+                        },
+                        "label": "LinkedIn"
+                      }
+                    ]
+                  }
+                ],
+                "card_style": "classic",
+                "columns": "3",
+                "columns_tablet": "2",
+                "columns_mobile": "1",
+                "image_shape": "circle"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "0000425",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "layout": "boxed",
+        "gap": "extended",
+        "content_width": {
+          "unit": "%",
+          "size": 100
+        },
+        "background_background": "classic",
+        "background_color": "#0F172A"
+      },
+      "elements": [
+        {
+          "id": "0000424",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 100,
+            "_inline_size": 100
+          },
+          "elements": [
+            {
+              "id": "0000423",
+              "elType": "widget",
+              "widgetType": "ltxe-cta",
+              "settings": {
+                "eyebrow": "We are hiring",
+                "heading": "Want to build with us?",
+                "subtext": "Tell us about the sites you ship and the widgets you wish existed.",
+                "btn1_text": "View openings",
+                "btn1_url": {
+                  "url": "#careers",
+                  "is_external": "",
+                  "nofollow": ""
+                },
+                "btn1_style": "primary",
+                "btn2_text": "Say hello",
+                "btn2_url": {
+                  "url": "#contact",
+                  "is_external": "",
+                  "nofollow": ""
+                }
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
