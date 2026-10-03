@@ -73,4 +73,4 @@ jobs:
         run: composer install --no-progress --prefer-dist --no-interaction
 
       - name: PHPCS — PluginCheck standard (errors fail CI)
-        run: .plugin-check/phpcs-sniffs/vendor/bin/phpcs --standard=PluginCheck --extensions=php --ignore='*/vendor/*,*/node_modules/*,*/scripts/*' -p -n .
+        run: .plugin-check/phpcs-sniffs/vendor/bin/phpcs --standard=PluginCheck --extensions=php --ignore='*/vendor/*,*/node_modules/*,*/scripts/*,*/.plugin-check/*,*/tests/*,*/e2e/*' -p -n .

@@ -23,7 +23,10 @@ function landtech_extras_newsletter_rest_permission() {
 	if ( isset( $_SERVER['HTTP_X_WP_NONCE'] ) ) {
 		$nonce = sanitize_text_field( wp_unslash( $_SERVER['HTTP_X_WP_NONCE'] ) );
 	}
-	return (bool) wp_verify_nonce( $nonce, 'wp_rest' );
+	if ( ! wp_verify_nonce( $nonce, 'wp_rest' ) ) {
+		return false;
+	}
+	return true;
 }
 
 /**

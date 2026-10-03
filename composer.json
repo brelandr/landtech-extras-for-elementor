@@ -4,6 +4,7 @@
 	"type": "wordpress-plugin-support",
 	"license": "GPL-3.0-or-later",
 	"require-dev": {
+		"doctrine/instantiator": ">=2.0 <2.1",
 		"phpunit/phpunit": "^9.6",
 		"squizlabs/php_codesniffer": "^3.10",
 		"wp-coding-standards/wpcs": "^3.1"
