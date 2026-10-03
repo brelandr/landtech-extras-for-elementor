@@ -416,8 +416,12 @@ class Search_Form extends Extras_Widget {
 			if ( $fields_hidden ) {
 				if ( 'include' === $restrict_mode && ! empty( $include ) ) {
 					$this->set_static_query_restriction( $name, 'include', $include );
-				} elseif ( ( 'exclude' === $restrict_mode || ( '' === $restrict_mode && ! empty( $exclude ) ) ) && ! empty( $exclude ) ) {
+				} elseif ( 'exclude' === $restrict_mode && ! empty( $exclude ) ) {
 					$this->set_static_query_restriction( $name, 'exclude', $exclude );
+				} elseif ( '' === $restrict_mode && ! empty( $exclude ) ) {
+					// Elementor Extras and LTEE 2.5.0 saved Exclude with no restriction mode.
+					// Those widgets searched the other terms (IN), not a NOT IN clause.
+					// Leaving the static payload unset lets the loop below rebuild that list.
 				} else {
 					$this->set_static_query_restriction( $name, 'all', array() );
 				}

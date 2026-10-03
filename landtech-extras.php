@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Plugin Name:       LandTech Extras for Elementor
  * Plugin URI:        https://extrasforelementor.com/
  * Description:       60+ free Elementor widgets and extensions — fork of Elementor Extras. Testimonials, FAQ, pricing, gallery, calendar, maps, and editor tools.
- * Version:           3.0.0
+ * Version:           3.0.1
  * Elementor tested up to: 4.3.2
  * Elementor Pro tested up to: 4.3.2
  *
@@ -103,7 +103,7 @@ if ( ! defined( 'LANDTECH_EXTRAS_ASSETS_URL' ) ) {
 	define( 'LANDTECH_EXTRAS_ASSETS_URL', LANDTECH_EXTRAS_URL . 'assets/' );
 }
 if ( ! defined( 'LANDTECH_EXTRAS_VERSION' ) ) {
-	define( 'LANDTECH_EXTRAS_VERSION', '3.0.0' );
+	define( 'LANDTECH_EXTRAS_VERSION', '3.0.1' );
 }
 if ( ! defined( 'LTXE_FRONTEND_SPLIT' ) ) {
 	define( 'LTXE_FRONTEND_SPLIT', true );
