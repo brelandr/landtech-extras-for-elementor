@@ -4,7 +4,7 @@ Contributors: brelandr
 Tags: elementor, page-builder, widgets, addons, extensions
 Requires at least: 6.2
 Tested up to: 7.1
-Stable tag: 3.0.1
+Stable tag: 3.0.2
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -13,15 +13,33 @@ License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 == Description ==
 
-**Disclaimer:** Independent fork of the original **Elementor Extras** plugin (also known as **Extras for Elementor**, by Namogo). Not affiliated with or endorsed by Namogo or Elementor Ltd. Original credits: Namogo (Elementor Extras). Maintained by Land Tech Web Designs.
+**60+ free Elementor widgets and editor extensions — no upsells, no locked features.**
 
-**LandTech Extras for Elementor** is a free, complete Elementor addon. It is an actively maintained replacement for sites that relied on Elementor Extras / Extras for Elementor. Existing Elementor templates that used those widget slugs (for example `ee-calendar`, `posts-extra`, `ee-gallery`) continue to work after you switch to this plugin.
+LandTech Extras for Elementor is a complete, actively maintained Elementor addon. If you built pages with the original Elementor Extras (by Namogo) and lost access to those widgets, this is the drop-in replacement — existing templates using slugs like `ee-calendar`, `posts-extra`, and `ee-gallery` keep working after you switch.
 
-You do not need a paid product to use anything listed under **Widgets and extensions**. Optional API keys (Google Maps, Snazzy Maps, Instagram) live under **Elementor Extras → APIs**. Full documentation: [extrasforelementor.com/docs](https://extrasforelementor.com/docs/).
+**Everything listed below is free.** Optional API keys (Google Maps, Snazzy Maps, Instagram) live under Elementor Extras → APIs. Full documentation: [extrasforelementor.com/docs](https://extrasforelementor.com/docs/).
 
-Version 2.9 adds testimonials, FAQ, team members, pricing, Lottie, a video playlist, calendar sources, editor SEO hints, and alt text through the WordPress AI Client. See **What’s new in 2.9** below.
+**[Try it instantly — no install required →](https://playground.wordpress.net/?blueprint-url=https://plugins.svn.wordpress.org/landtech-extras-for-elementor/assets/blueprints/blueprint.json)**
+The WordPress Playground blueprint installs Elementor and this plugin, seeds demo content, and builds a live demo page per widget. Log in as admin / password to explore.
 
-This plugin is complete on its own. **LandTech Extras for Elementor Premium** is a separate paid plugin. It adds extra capabilities and does not unlock features that already ship here. See **Optional Premium add-on**.
+== Optional Premium add-on ==
+
+This plugin is complete on its own. **LandTech Extras for Elementor Premium** is a separate paid plugin that adds extra capabilities — it does not unlock anything already here.
+
+**[Upgrade to Premium →](https://landtechwebdesigns.com/product/extras-for-elementor/)**
+
+When Premium is not installed, **Elementor Extras → Add-on features** lists the add-on catalog (informational). After you activate Premium, that catalog is hidden.
+
+The premium add-on includes:
+
+* **WooCommerce & conversion:** shop extras, product page builder, product carousel, wishlist, 360 viewer, 3D viewer, smart countdown.
+* **Forms, popups & menus:** multi-step forms, smart popup triggers, popup A/B tests, mega menu, Gravity Forms styler, booking calendar, login/register, marketing button, business hours, calculator, experience builder.
+* **Dynamic data & loops:** remote content, AJAX facets, advanced loop query, masonry/metro, live data table, social feeds (Instagram / X / TikTok), external grid.
+* **Site chrome & motion:** header/footer builder, one-page dot nav, text animation, scroll story, evolutionary layouts.
+* **AI & accessibility:** Genius assistant, AI workspace (bring-your-own-key), alt-text batch, semantic search, voice search, WCAG scanner.
+* **Agency tools:** export/import package, CPT builder, content protection, white label, template marketplace, time machine, asset compiler, PWA builder, client feedback, conditional CSS classes.
+
+Add-on docs: [extrasforelementor.com/docs/premium](https://extrasforelementor.com/docs/premium/).
 
 == What’s new in 2.9 ==
 
@@ -35,25 +53,6 @@ This release is a large free-plugin update (work from 2.6 through 2.9, shipped t
 * **Gallery, tabs, SVG, comparison:** Gallery video tiles and pagination; Tabs vertical + mobile accordion + deep links; Inline SVG path colors and reduced-motion-safe animations; Image Comparison vertical drag.
 * **Add-on features tab:** When the optional Premium plugin is not installed, this tab shows a read-only catalog of what that **separate** plugin adds. When Premium is active, the catalog is hidden and the live Enable checkboxes appear instead.
 
-== Optional Premium add-on ==
-
-This WordPress.org plugin is complete on its own. Nothing below is included here as a disabled or locked feature.
-
-**LandTech Extras for Elementor Premium** is a **separate** paid plugin you may install beside this one. It adds extra capabilities. It does not unlock features that already ship here.
-
-When Premium is not installed, **Elementor Extras → Add-on features** lists the add-on catalog (informational). After you activate Premium, that catalog is hidden.
-
-The add-on currently includes:
-
-* **WooCommerce & conversion:** shop extras, product page builder, product carousel, wishlist, 360 viewer, 3D viewer, smart countdown.
-* **Forms, popups & menus:** multi-step forms, smart popup triggers, popup A/B tests, mega menu, Gravity Forms styler, booking calendar, login/register, marketing button, business hours, calculator, experience builder.
-* **Dynamic data & loops:** remote content, AJAX facets, advanced loop query, masonry/metro, live data table, social feeds (Instagram / X / TikTok), external grid.
-* **Site chrome & motion:** header/footer builder, one-page dot nav, text animation, scroll story, evolutionary layouts.
-* **AI & accessibility:** Genius assistant, AI workspace (bring-your-own-key), alt-text batch, semantic search, voice search, WCAG scanner.
-* **Agency tools:** export/import package, CPT builder, content protection, white label, template marketplace, time machine, asset compiler, PWA builder, client feedback, conditional CSS classes.
-
-Add-on documentation: [extrasforelementor.com/docs/premium](https://extrasforelementor.com/docs/premium/). Purchase and license support stay on [landtechwebdesigns.com](https://landtechwebdesigns.com/product/extras-for-elementor/).
-
 == Widgets and extensions ==
 
 Find widgets in the Elementor panel under the **LandTech Extras for Elementor** category. Widget type slugs match the upstream Elementor Extras fork for easier migration.
@@ -64,15 +63,20 @@ Find widgets in the Elementor panel under the **LandTech Extras for Elementor** 
 
 Disable unused widgets under **Elementor → LandTech Extras → Widgets** to speed up the editor.
 
-== Try It Live - Preview This Plugin Instantly ==
+== Screenshots ==
 
-Experience LandTech Extras for Elementor without installation: the blueprint installs **Elementor** and this plugin from **WordPress.org**, seeds **sample images and blog posts**, builds a **demo homepage** with links to every widget, and creates a **dedicated demo page per feature** — including the 2.9 set (testimonials, FAQ, team members, pricing, countdown, video playlist, social share, dark mode, and more) plus gallery, search, posts, maps, and navigation. Log in as **admin** / **password** to edit with Elementor or open **Elementor Extras** settings.
+1. Enable or disable individual LandTech Extras widgets from Elementor → LandTech Extras.
+2. Editor extensions such as display conditions, sticky elements, parallax, and tooltips.
+3. Optional API keys for Google Maps, Snazzy Maps, Instagram, and BYOK LLM credentials.
+4. LandTech Extras widgets appear in the Elementor panel under the LandTech Extras category.
 
-[Preview on WordPress Playground](https://playground.wordpress.net/?blueprint-url=https://plugins.svn.wordpress.org/landtech-extras-for-elementor/assets/blueprints/blueprint.json)
+== Installation ==
 
-The same blueprint ships in the plugin package as `blueprint.json` (repository root) and `assets/blueprints/blueprint.json`. WordPress.org serves the public copy from **plugin SVN** at `assets/blueprints/blueprint.json` for directory Live Preview integration.
+1. Install and activate **Elementor**.
+2. Install and activate **LandTech Extras for Elementor** from this directory or from WordPress.org once published.
+3. Edit pages with Elementor and use **LandTech Extras for Elementor** widgets and extensions.
 
-== External Services ==
+**External Services**
 
 This plugin may cause the site, the WordPress admin, or the Elementor editor to contact third-party services when you enable the related features or save API credentials. For each service below, direct links to its **Terms of Service** (or equivalent) and **Privacy Policy** are provided.
 
@@ -144,18 +148,48 @@ The PDF Embed widget can load a PDF you upload to the media library, or a URL yo
 
 When the Lottie widget is set to load an animation from an **External URL** (or from a JSON file in your media library served from another origin), visitors’ browsers request that JSON from the URL you configure. The Playground demo may load a sample file from **LottieFiles** (`assets*.lottiefiles.com`) when you preview the bundled demo page. No animation URL is transmitted to Land Tech servers. Review your animation host’s terms and privacy policy before publishing.
 
-== Screenshots ==
+**Third-party libraries**
 
-1. Enable or disable individual LandTech Extras widgets from Elementor → LandTech Extras.
-2. Editor extensions such as display conditions, sticky elements, parallax, and tooltips.
-3. Optional API keys for Google Maps, Snazzy Maps, Instagram, and BYOK LLM credentials.
-4. LandTech Extras widgets appear in the Elementor panel under the LandTech Extras category.
+This plugin bundles or references third-party scripts. Licenses and upstream sources for every bundled file are noted below. Full provenance details are in the matching `README.txt` files under `assets/lib/`.
 
-== Installation ==
+**anime.js 4.5.0** (MIT) — `assets/lib/anime/anime.js` / `anime.min.js`
+Source: https://github.com/juliangarnier/anime — License notes: `assets/lib/anime/README.txt`.
 
-1. Install and activate **Elementor**.
-2. Install and activate **LandTech Extras for Elementor** from this directory or from WordPress.org once published.
-3. Edit pages with Elementor and use **LandTech Extras for Elementor** widgets and extensions.
+**Splitting.js 1.0.6** (MIT) — `assets/lib/splitting/splitting.js` / `splitting.min.js` / `splitting.css`
+Source: https://github.com/shshaw/Splitting — License notes: `assets/lib/splitting/README.txt`.
+
+**GLightbox 3.3.1** (MIT) — `assets/lib/glightbox/js/glightbox.js` / `glightbox.min.js` and CSS under `assets/lib/glightbox/css/`
+Source: https://github.com/biati-digital/glightbox — License notes: `assets/lib/glightbox/README.txt`.
+
+**jquery-circle-progress** (MIT) — https://github.com/kottenator/jquery-circle-progress
+**jquery.appear** (MIT) — https://github.com/morr/jquery.appear/
+**LongShadow jQuery Plugin** (MIT) — https://github.com/dangvanthanh/jquery.longShadow
+**HC-Sticky** (MIT) — https://github.com/somewebmedia/hc-sticky
+**jQuery Mobile** (MIT/jquery.org) — https://jquerymobile.com/
+**jquery-visible** (MIT) — http://teamdf.com/jquery-plugins/license/
+**Parallax Background** (MIT) — https://github.com/erensuleymanoglu/parallax-background
+**TableSorter** v2.32.0 (MIT/GPL dual, Mottie fork) — https://github.com/Mottie/tablesorter
+**Isotope v3.0.6** (GPLv3) — `assets/lib/isotope/` standalone modules (WordPress core jQuery via jquery-bridget)
+**Metafizzy / Desandro layout dependencies** (MIT unless noted) — `assets/lib/jquery-bridget/`, `outlayer/`, `ev-emitter/`, `get-size/`, `fizzy-ui-utils/`, `matches-selector/`, `masonry-layout/` (each folder includes `README.txt`)
+**Packery v2.1.2** (GPLv3) — `assets/lib/packery/` standalone modules (WordPress core jQuery via jquery-bridget)
+**Infinite Scroll 4.0.1** (GPLv3) — `assets/lib/infinite-scroll/infinite-scroll.js` (core build; vanilla DOM API via `new InfiniteScroll()`; no jquery-bridget)
+Source: https://infinite-scroll.com — License notes: `assets/lib/infinite-scroll/README.txt`.
+**javascript-detect-element-resize** (MIT) — https://github.com/sdecima/javascript-detect-element-resize
+**tilt.js** (MIT) — https://github.com/gijsroge/tilt.js
+**Schedule-X Calendar 4.6.1** (MIT) — `assets/lib/schedule-x/` with Preact under `assets/lib/preact/` and `@js-temporal/polyfill` as `assets/lib/temporal-polyfill/js-temporal-schedule-x.min.js`
+Source: https://github.com/schedule-x/schedule-x — License notes: `assets/lib/schedule-x/README.txt`.
+**@lottiefiles/lottie-player** (MIT) — `assets/lib/lottie-player/lottie-player.js`
+Source: https://github.com/LottieFiles/lottie-player — License notes: `assets/lib/lottie-player/README.txt`.
+**lottie-web 5.13.0** (MIT) — `assets/lib/lottie-web/lottie.js`
+Source: https://github.com/airbnb/lottie-web — License notes: `assets/lib/lottie-web/README.txt`.
+**WaveSurfer.js 7.9.9** (BSD-3-Clause) — optional Audio Player waveform skin
+Source: https://github.com/kwavesurfer/wavesurfer.js — License notes: `assets/lib/wavesurfer/README.txt`.
+**GMAP3** (GPL-3.0+) — http://gmap3.net
+**Leaflet** v1.9.4 (BSD-2-Clause) — `assets/lib/leaflet/leaflet.js` / `leaflet.css` (OpenStreetMap map provider)
+Source: https://github.com/Leaflet/Leaflet — License notes: `assets/lib/leaflet/README.txt`.
+**Slidebars** (MIT) — http://www.adchsm.com/slidebars/
+
+Date/time formatting in the Calendar widget uses **Moment.js** registered by WordPress core when available.
 
 == Frequently Asked Questions ==
 
@@ -207,49 +241,6 @@ No. LandTech Extras adds **Elementor** widgets and Elementor editor extensions o
 
 PHP functions, hooks, options, and transients use the **`landtech_extras_`** or **`ltxe_`** prefix (four or more characters). Script/style handles use **`landtech-extras-`**. Namespaced PHP classes live under **`LandTechExtras\`**. Elementor widget type slugs (for example `ee-calendar` or `posts-extra`) are retained from the upstream Elementor Extras fork so existing Elementor templates keep working; they are Elementor element identifiers, not WordPress options or hooks.
 
-== Third-party libraries ==
-
-This plugin bundles or references third-party scripts. Licenses and upstream sources for every bundled file are noted below. Full provenance details are in the matching `README.txt` files under `assets/lib/`.
-
-**anime.js 4.5.0** (MIT) — `assets/lib/anime/anime.js` / `anime.min.js`
-Source: https://github.com/juliangarnier/anime — License notes: `assets/lib/anime/README.txt`.
-
-**Splitting.js 1.0.6** (MIT) — `assets/lib/splitting/splitting.js` / `splitting.min.js` / `splitting.css`
-Source: https://github.com/shshaw/Splitting — License notes: `assets/lib/splitting/README.txt`.
-
-**GLightbox 3.3.1** (MIT) — `assets/lib/glightbox/js/glightbox.js` / `glightbox.min.js` and CSS under `assets/lib/glightbox/css/`
-Source: https://github.com/biati-digital/glightbox — License notes: `assets/lib/glightbox/README.txt`.
-
-**jquery-circle-progress** (MIT) — https://github.com/kottenator/jquery-circle-progress
-**jquery.appear** (MIT) — https://github.com/morr/jquery.appear/
-**LongShadow jQuery Plugin** (MIT) — https://github.com/dangvanthanh/jquery.longShadow
-**HC-Sticky** (MIT) — https://github.com/somewebmedia/hc-sticky
-**jQuery Mobile** (MIT/jquery.org) — https://jquerymobile.com/
-**jquery-visible** (MIT) — http://teamdf.com/jquery-plugins/license/
-**Parallax Background** (MIT) — https://github.com/erensuleymanoglu/parallax-background
-**TableSorter** v2.32.0 (MIT/GPL dual, Mottie fork) — https://github.com/Mottie/tablesorter
-**Isotope v3.0.6** (GPLv3) — `assets/lib/isotope/` standalone modules (WordPress core jQuery via jquery-bridget)
-**Metafizzy / Desandro layout dependencies** (MIT unless noted) — `assets/lib/jquery-bridget/`, `outlayer/`, `ev-emitter/`, `get-size/`, `fizzy-ui-utils/`, `matches-selector/`, `masonry-layout/` (each folder includes `README.txt`)
-**Packery v2.1.2** (GPLv3) — `assets/lib/packery/` standalone modules (WordPress core jQuery via jquery-bridget)
-**Infinite Scroll 4.0.1** (GPLv3) — `assets/lib/infinite-scroll/infinite-scroll.js` (core build; vanilla DOM API via `new InfiniteScroll()`; no jquery-bridget)
-Source: https://infinite-scroll.com — License notes: `assets/lib/infinite-scroll/README.txt`.
-**javascript-detect-element-resize** (MIT) — https://github.com/sdecima/javascript-detect-element-resize
-**tilt.js** (MIT) — https://github.com/gijsroge/tilt.js
-**Schedule-X Calendar 4.6.1** (MIT) — `assets/lib/schedule-x/` with Preact under `assets/lib/preact/` and `@js-temporal/polyfill` as `assets/lib/temporal-polyfill/js-temporal-schedule-x.min.js`
-Source: https://github.com/schedule-x/schedule-x — License notes: `assets/lib/schedule-x/README.txt`.
-**@lottiefiles/lottie-player** (MIT) — `assets/lib/lottie-player/lottie-player.js`
-Source: https://github.com/LottieFiles/lottie-player — License notes: `assets/lib/lottie-player/README.txt`.
-**lottie-web 5.13.0** (MIT) — `assets/lib/lottie-web/lottie.js`
-Source: https://github.com/airbnb/lottie-web — License notes: `assets/lib/lottie-web/README.txt`.
-**WaveSurfer.js 7.9.9** (BSD-3-Clause) — optional Audio Player waveform skin
-Source: https://github.com/kwavesurfer/wavesurfer.js — License notes: `assets/lib/wavesurfer/README.txt`.
-**GMAP3** (GPL-3.0+) — http://gmap3.net
-**Leaflet** v1.9.4 (BSD-2-Clause) — `assets/lib/leaflet/leaflet.js` / `leaflet.css` (OpenStreetMap map provider)
-Source: https://github.com/Leaflet/Leaflet — License notes: `assets/lib/leaflet/README.txt`.
-**Slidebars** (MIT) — http://www.adchsm.com/slidebars/
-
-Date/time formatting in the Calendar widget uses **Moment.js** registered by WordPress core when available.
-
 == Development ==
 
 Human-readable source for bundled/minified assets (included in this plugin package):
@@ -269,6 +260,12 @@ Before publishing a public GitHub mirror, verify any **Repository** or **Source*
 
 == Upgrade Notice ==
 
+= 3.0.2 =
+Readme listing leads with the free widget set. External service and library notes moved to the Installation tab so the directory description is not cut off. A dismissible review reminder appears in wp-admin after 7 days.
+
+= 3.0.0 =
+Major free update: Media Gallery, Recipe, Comparison Table, Interactive Cards, Image Scroller, PDF Embed, World Clock, Tags Cloud Sphere, Form Styler (CF7 + WPForms), Newsletter Signup, Shape Dividers, Filterable Gallery, and more.
+
 = 2.9.0 =
 Large free update: testimonials, FAQ, team, pricing, countdown, Lottie, calendar feeds, and more. This plugin stays complete. An optional separate Premium add-on is listed on Add-on features only when Premium is not active.
 
@@ -285,6 +282,10 @@ Maintenance release: Elementor 4.3.x compatibility headers and Plugin Check fixe
 Recommended update: new Tabs and Table of Contents widgets, plus Search Form **Include only** category restrictions and shorter custom search result URLs. Re-save Search Form widgets after updating if you use hidden category filters.
 
 == Changelog ==
+
+= 3.0.2 =
+* Docs: WordPress.org description opens with the free widgets. External Services and third-party libraries are documented on the Installation tab so the directory description is not truncated.
+* Add: Dismissible review reminder on the Dashboard, Plugins screen, and LandTech admin pages after the plugin has been active for 7 days.
 
 = 3.0.1 =
 * Fix: Search Form widgets upgraded from Elementor Extras or 2.5.0 keep their saved Exclude lists as “search the other terms,” instead of switching those results to a not-in query.

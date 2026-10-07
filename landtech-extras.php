@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Plugin Name:       LandTech Extras for Elementor
  * Plugin URI:        https://extrasforelementor.com/
  * Description:       60+ free Elementor widgets and extensions — fork of Elementor Extras. Testimonials, FAQ, pricing, gallery, calendar, maps, and editor tools.
- * Version:           3.0.1
+ * Version:           3.0.2
  * Elementor tested up to: 4.3.2
  * Elementor Pro tested up to: 4.3.2
  *
@@ -103,7 +103,7 @@ if ( ! defined( 'LANDTECH_EXTRAS_ASSETS_URL' ) ) {
 	define( 'LANDTECH_EXTRAS_ASSETS_URL', LANDTECH_EXTRAS_URL . 'assets/' );
 }
 if ( ! defined( 'LANDTECH_EXTRAS_VERSION' ) ) {
-	define( 'LANDTECH_EXTRAS_VERSION', '3.0.1' );
+	define( 'LANDTECH_EXTRAS_VERSION', '3.0.2' );
 }
 if ( ! defined( 'LTXE_FRONTEND_SPLIT' ) ) {
 	define( 'LTXE_FRONTEND_SPLIT', true );
@@ -315,6 +315,8 @@ function landtech_extras_load() {
 		add_action( 'init', array( '\LandTechExtras\Admin\Platform_Command_Palette_Lite', 'init' ) );
 		landtech_extras_include( 'admin/settings-page.php' );
 		landtech_extras_include( 'admin/settings.php' );
+		landtech_extras_include( 'modules/admin/class-review-nudge.php' );
+		\LandTechExtras\Modules\Admin\Review_Nudge::init();
 	}
 }
 
@@ -360,6 +362,8 @@ function landtech_extras_update_option_no_autoload( $option, $value ) {
  */
 function landtech_extras_activate() {
 	add_option( 'landtech_extras_do_activation_redirect', true, '', 'no' );
+	landtech_extras_include( 'modules/admin/class-review-nudge.php' );
+	\LandTechExtras\Modules\Admin\Review_Nudge::on_activate();
 }
 
 /**
