@@ -4,7 +4,7 @@ Contributors: brelandr
 Tags: elementor, page-builder, widgets, addons, extensions
 Requires at least: 6.2
 Tested up to: 7.1
-Stable tag: 3.0.3
+Stable tag: 3.0.4
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -260,6 +260,9 @@ Before publishing a public GitHub mirror, verify any **Repository** or **Source*
 
 == Upgrade Notice ==
 
+= 3.0.4 =
+Changelog on this page now lists recent releases in full. No widget changes in this update.
+
 = 3.0.3 =
 Switcher widgets remain visible when an older layout has no saved animation speed. Update if a switcher disappeared after 2.5.5.
 
@@ -285,6 +288,9 @@ Maintenance release: Elementor 4.3.x compatibility headers and Plugin Check fixe
 Recommended update: new Tabs and Table of Contents widgets, plus Search Form **Include only** category restrictions and shorter custom search result URLs. Re-save Search Form widgets after updating if you use hidden category filters.
 
 == Changelog ==
+
+= 3.0.4 =
+* Docs: Changelog shortened so WordPress.org can show it in full. Notes for 2.3.3 and older are summarized under Earlier releases.
 
 = 3.0.3 =
 * Fix: Switcher widgets remain visible when an older layout has no saved animation speed or duration, and when the animation helper is unavailable.
@@ -460,247 +466,10 @@ Recommended update: new Tabs and Table of Contents widgets, plus Search Form **I
 * Improved: **Posts Extra grid** — equal-height cards and responsive column gaps (CSS only).
 * Improved: **Element HTML cache** — opt-in caching for Table, Inline SVG, and Text Divider static widgets.
 
-= 2.3.3 =
-
-* Fix: Audio Player widget no longer fatal-errors Elementor preview when reading `waveform_skin` in `get_script_depends()` before settings hydrate.
-* Add: `Extras_Widget::ltxe_try_get_settings()` helpers for safe asset dependency registration during preview bootstrap.
-
-= 2.3.2 =
-
-* Fix: Google Map widget no longer fatal-errors Elementor preview when settings are not hydrated yet (`get_style_depends` / `get_script_depends` use safe settings read).
-
-= 2.3.1 =
-
-* Fix: Register `landtech-extras-frontend` styles only when `elementor-frontend` is registered (WordPress 6.9.1+ dependency notice).
-* Fix: Search Form skin null-safe `trim()` on empty button label text.
-* Add: Add-on features tab shows Premium add-on version and feature toggle count when the add-on is active.
-* Add: `landtech_extras/acf_gallery_bridge_enabled` filter hook for Premium entitlement gating of ACF gallery controls.
-
-= 2.3.0 =
-
-* Phase 0: TableSorter v2.32.0; Isotope/Packery non-pkgd builds; Leaflet OpenStreetMap map provider; library metadata alignment.
-* Phase 1: Toggle FAQPage JSON-LD; display conditions (cookie, UTM presets, business hours); Table pagination and CSV paste import in the editor.
-* Phase 2: Calendar migrated to Schedule-X; anime.js v4 with updated animation helpers; Heading Extra entrance animation presets; Audio Player optional WaveSurfer waveform skin; video player native playback-rate support; audio-player header typo fix.
-* Phase 3: Posts Extra list, featured-grid, and timeline layout skins; Search Form live AJAX results via public REST route; new Lottie widget.
-* Playground: demo pages for Lottie, FAQ Schema, Posts list/featured-grid/timeline skins, paginated Table, OpenStreetMap map provider, and live search.
-
-= 2.2.101 =
-
-* Docs: Breadcrumbs widget documents optional **BreadcrumbList** structured data (microdata) when **Structured data** is enabled in widget settings.
-
-= 2.2.100 =
-
-* Fix: Devices widget scrollable portrait/landscape screens — CSS targeted non-existent class names; scrolling now works when enabled.
-* Fix: Devices orientation toggle no longer shows a blank landscape screen when no landscape screenshot is set (falls back to portrait image).
-* Fix: Playground Devices demo uses tall portrait and landscape screenshots so scroll and rotate are demonstrable.
-
-= 2.2.99 =
-
-* Fix: Shorten readme short description to meet WordPress.org 150-character limit.
-
-= 2.2.98 =
-
-* Fix: Playground Button Group demo ships fallback page CSS (padding, colors, effect backgrounds) so hover effects are visible when Elementor post CSS is incomplete.
-* Fix: Playground Switcher demo shows Design / Build / Launch on the frontend — entrance animation now falls back when the appear plugin does not fire; nav stays visible on all breakpoints.
-* Fix: Playground Devices demo seeds a phone screenshot, scrollable screen content, and orientation toggle instead of an empty mockup.
-
-= 2.2.97 =
-
-* Docs: readme SEO — short description, widget catalog, and FAQ entries for Elementor Extras / Extras for Elementor migration and replacement terminology.
-
-= 2.2.96 =
-
-* Add: Optional sanitized SVG uploads — Elementor → LandTech Extras → Advanced → Allow SVG uploads (admin opt-in; files sanitized on upload; works with Elementor media controls).
-* Add: Inline SVG widget **Source** control — choose Media Library or **Custom URL** so you can link to an .svg without uploading through WordPress.
-* Fix: Playground Inline SVG demo enables Override Color and uses the bundled SVG URL source.
-
-= 2.2.95 =
-
-* Fix: Buttons widget hover effects did not animate because transition CSS targeted the wrong pseudo-elements; base styles now apply transitions to `.ee-button:before` / `:after` with sensible defaults.
-* Fix: Buttons without a link now use a no-op `#` href (with preventDefault) so click and hover behave consistently on the frontend.
-* Fix: Custom button effect modifier classes (direction, entrance) fall back to control defaults when unset so Clone/Background effects are not stuck in a neutral state.
-* Fix: Button Group tooltip init no longer throws when tooltip delay settings are absent (non-tooltip buttons).
-* Fix: Playground demo pages regenerate Elementor post CSS after seeding so per-button effect colors and timing apply.
-
-= 2.2.94 =
-
-* Fix: Calendar event clicks did nothing on the Default skin because the events panel stayed `display: none` even when `show-events` was toggled; the panel now overlays the month view when a day with events is clicked.
-* Fix: Calendar event title links without a URL now open the events panel instead of doing nothing.
-* Fix: Playground Calendar demo seeds compact skin with sample manual events so click-to-reveal behavior is testable.
-
-= 2.2.93 =
-
-* Fix: Switcher widget stayed blank on the published frontend because entrance animation hides all slides until jQuery Appear fires; above-the-fold widgets now trigger appear immediately and nav/arrows opacity animations accept combined jQuery targets.
-* Fix: anime.js helper now resolves arrays of jQuery collections (nav + arrows) for TweenMax.set/to calls used by Switcher.
-
-= 2.2.92 =
-
-* Fix: Scroll Indicator progress never updated because jQuery `.data('start-offset')` / `.data('end-offset')` do not read HTML `data-start-offset` attributes (camelCase keys required); offsets are now read reliably and full-page body tracking uses document height.
-* Fix: Playground Scroll Indicator demo seeds three anchored sections (List skin) with matching heading CSS IDs and scrollable content between them.
-
-= 2.2.91 =
-
-* Fix: Age Gate and Popup modals showed a blank white box because legacy Magnific Popup animation CSS hides `.mfp-with-anim` until `.mfp-ready` is on the container; GLightbox now adds that class on open.
-* Fix: Playground Age Gate demo seeds title, description, required age, button label, and classic skin.
-
-= 2.2.90 =
-
-* Fix: Popup and Age Gate modals opened empty because inline content kept `mfp-hide` / `glightbox-hide` (`display: none !important`) after the GLightbox migration; hide classes are now stripped before inline slides load.
-* Fix: Playground Popup demo seeds title, body copy, classic skin, and an Open modal click trigger.
-
-= 2.2.89 =
-
-* Fix: Unfold open/close animation failed because the anime.js timeline shim did not return the timeline from chained `.to()` calls (GSAP-style `.add().to().to()`).
-* Fix: Playground Unfold demo now seeds multi-paragraph content, 35% visible height, and Read more / Read less labels.
-
-= 2.2.88 =
-
-* Fix: Switcher widget stayed invisible on the frontend because the anime.js timeline shim did not understand GSAP label positions (`animateAll`, `animateAll+=`, `-=`); Switcher and Unfold animations now resolve correctly.
-* Fix: Playground Switcher demo seeds three panels with images, classic skin, and entrance animation off for a reliable Live Preview.
-
-= 2.2.87 =
-
-* Fix: Playground Inline SVG demo now ships a bundled SVG URL plus color, sizing, and hover settings (empty settings previously rendered a blank frontend).
-
-= 2.2.86 =
-
-* Fix: Playground Button Group demo now seeds Clone, Flip, Background, 3D, and Cube hover effects (custom per-button styling was previously unset).
-
-= 2.2.85 =
-
-* Fix: Gallery Slider thumbnail clicks now use explicit slide indexes, Swiper loop/fade/RTL handling, and auto-height updates so the preview image stays visible when navigating.
-* Fix: Gallery Slider preview skips broken attachment URLs and falls back to the gallery item URL when needed.
-* Fix: Playground Gallery Slider demo enables Elementor lightbox on preview images.
-
-= 2.2.84 =
-
-* Fix: Playground critical error — store `_elementor_page_settings` as a PHP array (not JSON text) so Elementor page rendering does not fatal on PHP 8.
-* Fix: Playground seeder sets the admin user during blueprint runPHP so Elementor document saves succeed.
-
-= 2.2.83 =
-
-* Fix: Playground demo homepage rebuilt with styled CSS hero, category sections, and card links to all 28 free widget demos (Elementor HTML widget).
-* Fix: Demo pages use the Elementor header/footer template and hide the theme page title for cleaner previews.
-
-= 2.2.82 =
-
-* Fix: Timeline demo works on WordPress Playground — widget registers on free Elementor (custom items); Posts source still requires Elementor Pro.
-* Fix: Playground Timeline demo seeds custom milestone items with sample content and images.
-
-= 2.2.81 =
-
-* Fix: Posts Extra demo works on WordPress Playground (free Elementor) via a standard `WP_Query` fallback when Elementor Pro query controls are unavailable; demo seeder now includes full grid/query settings.
-* Fix: Posts Extra registers on free Elementor installs for basic post grids; advanced Query panel still requires Elementor Pro.
-
-= 2.2.80 =
-
-* Fix: Playground demo pages (including Switcher Demo) resolve at pretty permalinks after seeding via `flush_rewrite_rules()`.
-* Fix: Switcher and Toggle Element demo pages seed with default panel content instead of empty widget settings.
-* Fix: Demo pages save Elementor canvas data through the Elementor document API when available.
-
-= 2.2.79 =
-
-* Fix: Gallery Slider — initialize Swiper through Elementor's async loader, correct thumbnail `slideTo` / `slideToLoop` handling, and guard against uninitialized instances.
-* Fix: `anime.js` unminified build no longer throws `module is not defined` in the browser when `SCRIPT_DEBUG` is enabled.
-
-= 2.2.78 =
-
-* **Try It Live demos** — Playground blueprint seeds a demo homepage, one Elementor page per free widget (28 demos), sample media/posts, and a grouped navigation menu via `includes/playground-demo-seeder.php`.
-
-= 2.2.77 =
-
-* Fix: WordPress Playground **Try It Live** link uses the public WordPress.org SVN blueprint URL (GitHub source repo is private).
-
-= 2.2.76 =
-
-* **Try It Live** — WordPress Playground blueprint (`blueprint.json`, `assets/blueprints/blueprint.json`), readme **Try It Live - Preview This Plugin Instantly** section, and **Live demo** links on the Plugins screen.
-
-= 2.2.75 =
-
-* WordPress.org soft-warning remediation: standardized plugin prefixes on dismissible notice transients (`landtech-extras-*`), search-form action hooks (`landtech_extras/…`), Posts pagination query var (`ltxe-page`), and Elementor Select2 script handle (`landtech-extras-elementor-select2`); expanded **External Services** readme (browser vs server requests, exact hostnames); fixed search-form dynamic hook registration.
-
-= 2.2.74 =
-
-* WordPress.org review follow-up: removed unnecessary `wp-admin/includes/plugin.php` load from bootstrap guard; all `is_plugin_active()` call sites use guarded `landtech_extras_require_plugin_api()`; Infinite Scroll core build strips jQuery bridge code (vanilla DOM API only).
-
-= 2.2.73 =
-
-* WordPress.org review (T2): ACF Gallery bridge is fully enabled when Advanced Custom Fields is active (removed add-on entitlement gate); fixed PHP syntax error in template loop background-image module; removed unnecessary `wp-admin/includes/plugin.php` include; upgraded GLightbox to 3.3.1; Infinite Scroll build comment updated to avoid bundled-jQuery scanner false positive.
-
-= 2.2.72 =
-
-* WordPress.org review follow-up: Infinite Scroll rebuilt as core-only bundle (no jquery-bridget); Posts Classic uses `new InfiniteScroll()` API; Isotope/Packery register with WordPress core jQuery dependency; all plugin script handles prefixed with `landtech-extras-`.
-
-= 2.2.71 =
-
-* WordPress.org review remediation: replaced unmaintained Magnific Popup with GLightbox (MIT); removed GPL-incompatible GreenSock/GSAP, SplitText, and CustomEase in favor of anime.js + Splitting.js; Infinite Scroll now registers with WordPress core jQuery; template loop background CSS uses `wp_add_inline_style()` instead of inline `<style>` tags; prefixed admin dismiss notice keys; removed Load TweenMax setting.
-
-= 2.2.70 =
-
-* WordPress.org submission readiness: API key/token settings use identity sanitization (not `sanitize_text_field()`); expanded **Development** and third-party library documentation in readme; distribution zip output to `DIST/`; removed dead stub module folders.
-* Admin: dismissible notice AJAX hardened (nonce + capability).
-
-= 2.2.69 =
-
-* Posts Extra (Classic): Packery **second item width** control and `.ltxee-packery-second` span class for Metro tiles (Packery); default CSS in `assets/css/frontend.css` and `frontend-rtl.css`.
-* Build: `package.json` includes `npm run build:assets` to regenerate minified frontend CSS/JS (see **Development**).
-
-= 2.2.68 =
-
-* Posts Extra (Classic): responsive **Packery: first item width** when layout is Metro tiles (Packery); overrides default width for `.ltxee-packery-featured` per breakpoint.
-
-= 2.2.65 =
-
-* WordPress **6.7+**: when no `landtech-extras-for-elementor-{locale}.mo` exists, assign `NOOP_Translations` for the text domain so gettext on `plugins_loaded` does not hit just-in-time loading before `after_setup_theme`.
-
-= 2.2.64 =
-
-* WordPress **6.7+**: load first readable `.mo` via `load_textdomain()` on `plugins_loaded` (early priority) so add-on/embeddings hooks avoid "translation loading triggered too early".
-
-= 2.2.63 / 2.2.62 =
-
-* Superseded text-domain timing fixes for WordPress 6.7+ — use **2.2.64+**.
-
-= 2.2.61 =
-
-* Gallery widget: removed invalid `packery-mode` script dependency; cleaned redundant vendor stubs (Posts Packery stack unchanged).
-
-= 2.2.60 =
-
-* Metro tiles (**Packery**): Packery + Isotope wiring, `ltxee-packery-featured`, Phase 4 layout policy / grandfather scan updates.
-
-= 2.2.59 =
-
-* Posts Base: `landtech_extras/posts/advanced_query_args`, `query_paged`, `set_query_args` hooks before `set_query()` (add-on REST facets / advanced query).
-
-= 2.2.58 =
-
-* **`metro`** layout (Isotope fitRows), `landtech_extras/posts/grid_layout_mode_choices` filter, resize-safe Isotope relayout, Phase 4 `metro` handling.
-
-= 2.2.57 =
-
-* Posts Extra preset skins use Classic loop handler; editor loads Isotope only when the document needs it; `landtech_extras/settings/features_fields` for add-on settings.
-
-= 2.2.56 =
-
-* Devices widget: landscape/portrait and `Group_Control_Image_Size` guards; correct image URL validation for requested field.
-
-= 2.2.55 =
-
-* Posts Extra: defer Isotope until needed; Phase 4 opt-in filters for add-on masonry grandfather.
-
-= 2.2.54 =
-
-* ACF gallery bridge (**ACF** required): Gallery / Gallery Slider ACF Gallery source (`includes/gallery/acf-gallery-bridge.php`).
-
-= 2.2.53+ (fork) =
-
-* **LandTech Extras for Elementor** on WordPress.org: External Services / BYOK readme disclosure, org–add-on coexistence (`LANDTECH_EXTRAS_RUNTIME_FAMILY`), text domain `landtech-extras-for-elementor`, GPLv3, directory updates only (no custom org updater).
 
 = Earlier releases =
 
-* Releases **2.2.52 and older** inherit the historical **Elementor Extras** changelog (widgets, extensions, Elementor compatibility). The full line-by-line history is omitted here to satisfy WordPress.org's **5,000-character** Changelog limit; consult Git/SVN or shipped release archives for the complete record.
-
+* Releases **2.3.3 and older**, including the Elementor Extras history this plugin forked from, are in the Git repository: [github.com/brelandr/landtech-extras-for-elementor](https://github.com/brelandr/landtech-extras-for-elementor). They are omitted here so this Changelog stays under WordPress.org's 5,000-word limit.
 
 == Support ==
 
