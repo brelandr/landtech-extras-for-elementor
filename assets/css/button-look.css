@@ -1,0 +1,187 @@
+/**
+ * Button Look presets.
+ *
+ * Applied only when a widget's Look control is set. Color stays with the widget
+ * until the user changes it in the same style section.
+ */
+
+.elementor-widget.ltxe-btn-look-pill :is(
+	.ee-button,
+	.ee-post__read-more > a,
+	.ee-load-button__trigger,
+	.ee-switcher__nav__item,
+	.ltxe-cta__btn,
+	.ltxe-pricing-table__cta,
+	.ltxe-pricing-toggle__btn,
+	.ltxe-flip-box__btn,
+	.ltxe-icon-box__btn,
+	.ltxe-news__btn,
+	.ltxe-cmp__btn,
+	.ltxe-icard__btn,
+	.ltxe-gf__btn,
+	.ltxe-pdf__btn,
+	.ltxe-ia__btn,
+	.ltxe-team-card__flip-btn,
+	.ltxe-consent-accept,
+	.ltxe-consent-decline,
+	.ltxe-share__btn,
+	.ltxe-testimonials__btn,
+	.ltxe-dark-toggle,
+	.ltxe-btt,
+	.ltxe-mb__btn,
+	.ltxe-exp__btn,
+	.ltxe-vs__btn,
+	.ltxe-auth__submit,
+	.ltxe-bk__submit,
+	.ltxe-cb__place,
+	.ee-multi-step-form__submit,
+	.ltxe-atomic-gallery__filter-btn,
+	.ee-woo-compare-button__toggle,
+	.ee-woo-compare-button__view,
+	.ee-woo-compare-table__clear,
+	.ltxee-sticky-atc-bar__btn,
+	.ltxee-woo-quick-view__open,
+	.ee-calc__cta,
+	.ee-calc__reset,
+	.ltxe-form-styler__submit,
+	.gform_button,
+	.wpcf7-submit,
+	.wpforms-submit,
+	button[type="submit"],
+	input[type="submit"]
+) {
+	border-radius: 999px;
+	box-shadow: 0 8px 18px rgba(15, 23, 42, 0.12);
+}
+
+.elementor-widget.ltxe-btn-look-pill :is(
+	.ee-switcher__nav,
+	.ltxe-pricing-toggle,
+	.ltxe-gf__bar
+) {
+	display: inline-flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 6px;
+	width: auto;
+	max-width: 100%;
+	padding: 6px;
+	list-style: none;
+	background: linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
+	border: 1px solid #e2e8f0;
+	border-radius: 999px;
+	box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+.elementor-widget.ltxe-btn-look-pill :is(
+	.ee-switcher__nav__item.is--active,
+	.ltxe-pricing-toggle__btn.is-active,
+	.ltxe-gf__btn.is-active,
+	.ltxe-atomic-gallery__filter-btn.is-active
+) {
+	background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%);
+	color: #fff;
+	box-shadow: 0 8px 18px rgba(37, 99, 235, 0.35);
+}
+
+.elementor-widget.ltxe-btn-look-soft :is(
+	.ee-button,
+	.ee-post__read-more > a,
+	.ee-load-button__trigger,
+	.ee-switcher__nav__item,
+	.ltxe-cta__btn,
+	.ltxe-pricing-table__cta,
+	.ltxe-pricing-toggle__btn,
+	.ltxe-flip-box__btn,
+	.ltxe-icon-box__btn,
+	.ltxe-news__btn,
+	.ltxe-cmp__btn,
+	.ltxe-icard__btn,
+	.ltxe-gf__btn,
+	.ltxe-pdf__btn,
+	.ltxe-ia__btn,
+	.ltxe-team-card__flip-btn,
+	.ltxe-consent-accept,
+	.ltxe-consent-decline,
+	.ltxe-share__btn,
+	.ltxe-testimonials__btn,
+	.ltxe-mb__btn,
+	.ltxe-exp__btn,
+	.ltxe-auth__submit,
+	.ltxe-bk__submit,
+	.ltxe-cb__place,
+	.ee-multi-step-form__submit,
+	.ltxe-atomic-gallery__filter-btn,
+	.ee-woo-compare-button__toggle,
+	.ee-woo-compare-button__view,
+	.ee-woo-compare-table__clear,
+	.ltxee-sticky-atc-bar__btn,
+	.ltxee-woo-quick-view__open,
+	.ee-calc__cta,
+	.ee-calc__reset,
+	.ltxe-form-styler__submit,
+	.gform_button,
+	.wpcf7-submit,
+	.wpforms-submit,
+	button[type="submit"],
+	input[type="submit"]
+) {
+	border-radius: 12px;
+	box-shadow: 0 8px 18px rgba(15, 23, 42, 0.1);
+}
+
+.elementor-widget.ltxe-btn-look-outline :is(
+	.ee-button,
+	.ee-post__read-more > a,
+	.ee-load-button__trigger,
+	.ee-switcher__nav__item,
+	.ltxe-cta__btn,
+	.ltxe-pricing-table__cta,
+	.ltxe-flip-box__btn,
+	.ltxe-icon-box__btn,
+	.ltxe-news__btn,
+	.ltxe-cmp__btn,
+	.ltxe-icard__btn,
+	.ltxe-gf__btn,
+	.ltxe-pdf__btn,
+	.ltxe-ia__btn,
+	.ltxe-team-card__flip-btn,
+	.ltxe-consent-accept,
+	.ltxe-consent-decline,
+	.ltxe-share__btn,
+	.ltxe-testimonials__btn,
+	.ltxe-mb__btn,
+	.ltxe-exp__btn,
+	.ltxe-auth__submit,
+	.ltxe-bk__submit,
+	.ltxe-cb__place,
+	.ee-multi-step-form__submit,
+	.ltxe-atomic-gallery__filter-btn,
+	.ee-woo-compare-button__toggle,
+	.ee-woo-compare-button__view,
+	.ee-woo-compare-table__clear,
+	.ltxee-sticky-atc-bar__btn,
+	.ltxee-woo-quick-view__open,
+	.ee-calc__cta,
+	.ee-calc__reset,
+	.ltxe-form-styler__submit,
+	.gform_button,
+	.wpcf7-submit,
+	.wpforms-submit,
+	button[type="submit"],
+	input[type="submit"]
+) {
+	border-radius: 999px;
+	background: transparent;
+	box-shadow: none;
+	border: 2px solid currentColor;
+}
+
+.ltxe-btn-look-pill .ltxe-mb,
+.ltxe-btn-look-outline .ltxe-mb {
+	--ltxe-mb-radius: 999px;
+}
+
+.ltxe-btn-look-soft .ltxe-mb {
+	--ltxe-mb-radius: 12px;
+}

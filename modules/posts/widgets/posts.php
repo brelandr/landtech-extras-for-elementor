@@ -4786,6 +4786,45 @@ class Posts extends Posts_Base {
 			$this->end_controls_tab();
 			$this->end_controls_tabs();
 
+			$this->add_group_control(
+				Group_Control_Border::get_type(),
+				[
+					'name' 		=> 'read_more_border',
+					'selector' 	=> '{{WRAPPER}} .ee-post__read-more > *',
+					'separator' => 'before',
+					'condition' => [
+						'post_button_position!' => '',
+					],
+				]
+			);
+
+			$this->add_responsive_control(
+				'read_more_border_radius',
+				[
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
+					'type' 			=> Controls_Manager::DIMENSIONS,
+					'size_units' 	=> [ 'px', '%', 'em' ],
+					'selectors' 	=> [
+						'{{WRAPPER}} .ee-post__read-more > *' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					],
+					'condition' => [
+						'post_button_position!' => '',
+					],
+				]
+			);
+
+			$this->add_group_control(
+				Group_Control_Box_Shadow::get_type(),
+				[
+					'name' 		=> 'read_more_shadow',
+					'selector' 	=> '{{WRAPPER}} .ee-post__read-more > *',
+					'exclude'	=> [ 'box_shadow_position' ], // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor control schema.
+					'condition' => [
+						'post_button_position!' => '',
+					],
+				]
+			);
+
 		$this->end_controls_section();
 
 	}

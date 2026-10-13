@@ -4,7 +4,7 @@ Contributors: brelandr
 Tags: elementor, page-builder, widgets, addons, extensions
 Requires at least: 6.2
 Tested up to: 7.1
-Stable tag: 3.0.4
+Stable tag: 3.0.5
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -260,6 +260,9 @@ Before publishing a public GitHub mirror, verify any **Repository** or **Source*
 
 == Upgrade Notice ==
 
+= 3.0.5 =
+Update if a Switcher is still hidden after 3.0.4 and the console reports elementorFrontend is not defined. Optional Button Look presets are included and do not change existing buttons until you select one.
+
 = 3.0.4 =
 Changelog on this page now lists recent releases in full. No widget changes in this update.
 
@@ -288,6 +291,11 @@ Maintenance release: Elementor 4.3.x compatibility headers and Plugin Check fixe
 Recommended update: new Tabs and Table of Contents widgets, plus Search Form **Include only** category restrictions and shorter custom search result URLs. Re-save Search Form widgets after updating if you use hidden category filters.
 
 == Changelog ==
+
+= 3.0.5 =
+* Fix: Switcher stays visible when this plugin's script loads before Elementor. 3.0.4 could still hide the switcher and log "elementorFrontend is not defined."
+* Add: Button Look presets (Current, Pill, Soft, Outline) on Switcher, Button Group, Form Styler, and other buttons. Current is the default, so existing buttons stay as they are until you choose a look.
+* Add: Switcher menu bar, border, radius, and shadow controls, plus the same button chrome on widgets that did not already have it.
 
 = 3.0.4 =
 * Docs: Changelog shortened so WordPress.org can show it in full. Notes for 2.3.3 and older are summarized under Earlier releases.

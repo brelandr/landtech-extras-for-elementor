@@ -159,6 +159,14 @@ class Pdf_Embed extends Extras_Widget {
 			)
 		);
 		$this->end_controls_section();
+
+		$this->landtech_extras_register_button_style_controls(
+			array(
+				'id'       => 'ltxe_pdf_btn',
+				'label'    => __( 'Toolbar Buttons', 'landtech-extras-for-elementor' ),
+				'selector' => '.ltxe-pdf__btn',
+			)
+		);
 	}
 
 	/**

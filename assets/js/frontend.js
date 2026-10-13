@@ -2462,7 +2462,10 @@
 						switcherArgs.background = ee.getWidgetContentRoot( $scope );
 						break;
 					case 'section':
-						switcherArgs.background = $scope.parents('.elementor-section').first();
+						switcherArgs.background = $scope.parents( '.elementor-section' ).first();
+						if ( ! switcherArgs.background.length ) {
+							switcherArgs.background = $scope.parents( '.e-con, .elementor-element[data-element_type="container"]' ).first();
+						}
 						break;
 					default:
 						switcherArgs.background = elementorFrontend.isEditMode() ? switcherArgs.scope.find('body') : $('body');
@@ -4697,7 +4700,13 @@
 
 	var offcanvas = new LandTechExtrasOffcanvas();
 
-	elementorFrontend.eeOffcanvas = offcanvas;
+	ee.attachOffcanvas = function() {
+		if ( window.elementorFrontend ) {
+			window.elementorFrontend.eeOffcanvas = offcanvas;
+		}
+	};
+
+	ee.attachOffcanvas();
 
 	window.eeTooltips = function() {
 		var self = this;
@@ -4904,6 +4913,7 @@
 
 	$( window ).on( 'elementor/frontend/init', function() {
 		ltxeHeardFrontendInit = true;
+		ee.attachOffcanvas();
 		ee.init( false );
 		window.setTimeout( function() {
 			ee.replayReadyWidgets();
@@ -4913,6 +4923,7 @@
 	$( function() {
 		window.setTimeout( function() {
 			if ( window.elementorFrontend && elementorFrontend.hooks ) {
+				ee.attachOffcanvas();
 				ee.init( true );
 			}
 		}, 0 );
@@ -4921,6 +4932,7 @@
 	$( window ).on( 'load', function() {
 		window.setTimeout( function() {
 			if ( window.elementorFrontend && elementorFrontend.hooks ) {
+				ee.attachOffcanvas();
 				ee.init( true );
 			}
 		}, 0 );

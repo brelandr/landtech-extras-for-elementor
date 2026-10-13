@@ -250,6 +250,8 @@ abstract class Form_Styler_Widget extends Extras_Widget {
 			)
 		);
 
+		$this->landtech_extras_register_button_look_control( 'ltxe_fs_btn' );
+
 		$this->add_control(
 			'button_background',
 			array(

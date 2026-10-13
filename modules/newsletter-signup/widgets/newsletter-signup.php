@@ -179,6 +179,14 @@ class Newsletter_Signup extends Extras_Widget {
 			)
 		);
 		$this->end_controls_section();
+
+		$this->landtech_extras_register_button_style_controls(
+			array(
+				'id'       => 'ltxe_news_btn',
+				'label'    => __( 'Button', 'landtech-extras-for-elementor' ),
+				'selector' => '.ltxe-news__btn',
+			)
+		);
 	}
 
 	/**

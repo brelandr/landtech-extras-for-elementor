@@ -860,6 +860,8 @@ class Button_Group extends Extras_Widget {
 			]
 		);
 
+			$this->landtech_extras_register_button_look_control( 'ee_buttons' );
+
 			$this->add_responsive_control(
 				'vertical_align',
 				[

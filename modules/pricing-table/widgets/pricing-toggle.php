@@ -93,6 +93,16 @@ class Pricing_Toggle extends Extras_Widget {
 		);
 
 		$this->end_controls_section();
+
+		$this->landtech_extras_register_button_style_controls(
+			array(
+				'id'       => 'ltxe_price_toggle',
+				'label'    => __( 'Buttons', 'landtech-extras-for-elementor' ),
+				'selector' => '.ltxe-pricing-toggle__btn',
+				'active'   => true,
+				'bar'      => '.ltxe-pricing-toggle',
+			)
+		);
 	}
 
 	/**

@@ -169,6 +169,14 @@ class Cookie_Consent extends Extras_Widget {
 		);
 
 		$this->end_controls_section();
+
+		$this->landtech_extras_register_button_style_controls(
+			array(
+				'id'       => 'ltxe_cookie_btn',
+				'label'    => __( 'Buttons', 'landtech-extras-for-elementor' ),
+				'selector' => array( '.ltxe-consent-accept', '.ltxe-consent-decline' ),
+			)
+		);
 	}
 
 	/**

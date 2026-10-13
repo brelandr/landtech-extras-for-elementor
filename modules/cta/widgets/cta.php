@@ -323,6 +323,14 @@ class Cta extends Extras_Widget {
 		);
 
 		$this->end_controls_section();
+
+		$this->landtech_extras_register_button_style_controls(
+			array(
+				'id'       => 'ltxe_cta_btn',
+				'label'    => __( 'Buttons', 'landtech-extras-for-elementor' ),
+				'selector' => '.ltxe-cta__btn',
+			)
+		);
 	}
 
 	/**

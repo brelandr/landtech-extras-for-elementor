@@ -1959,11 +1959,38 @@ function landtech_extras_playground_switcher_settings( array $images ) {
  * @return string
  */
 function landtech_extras_playground_switcher_custom_css() {
-	return '.elementor-widget-ee-switcher .ee-switcher__nav__item{color:#0f172a;}'
-		. '.elementor-widget-ee-switcher .ee-switcher__nav__item.is--active{color:#2563eb;}'
+	return '.elementor-widget-ee-switcher .ee-switcher__nav{'
+		. 'display:inline-flex;flex-direction:row;flex-wrap:wrap;align-items:center;gap:6px;'
+		. 'width:auto;max-width:100%;margin:12px 0 0;padding:6px;list-style:none;'
+		. 'background:linear-gradient(180deg,#f8fafc 0%,#eef2f7 100%);'
+		. 'border:1px solid #e2e8f0;border-radius:999px;'
+		. 'box-shadow:0 10px 30px rgba(15,23,42,.06),inset 0 1px 0 rgba(255,255,255,.85);'
+		. '}'
+		. '.elementor-widget-ee-switcher .ee-switcher__nav__item{'
+		. 'flex:0 0 auto;margin:0 !important;padding:12px 26px !important;'
+		. 'border:0 !important;border-radius:999px;background:transparent;'
+		. 'color:#334155 !important;font-weight:600;letter-spacing:-.02em;line-height:1.2;'
+		. 'justify-content:center;overflow:hidden;cursor:pointer;'
+		. 'transition:background .22s ease,color .22s ease,box-shadow .22s ease;'
+		. '}'
+		. '.elementor-widget-ee-switcher .ee-switcher__nav__item:hover{'
+		. 'color:#0f172a !important;background:rgba(255,255,255,.9);'
+		. '}'
+		. '.elementor-widget-ee-switcher .ee-switcher__nav__item.is--active{'
+		. 'background:linear-gradient(180deg,#3b82f6 0%,#2563eb 100%) !important;'
+		. 'color:#fff !important;box-shadow:0 8px 18px rgba(37,99,235,.35);'
+		. '}'
+		. '.elementor-widget-ee-switcher .ee-switcher__nav__item:focus-visible{'
+		. 'outline:2px solid #2563eb;outline-offset:3px;'
+		. '}'
+		. '.elementor-widget-ee-switcher .ee-loader{display:none;}'
 		. '.elementor-widget-ee-switcher .ee-switcher__title{color:#0f172a;}'
 		. '.elementor-widget-ee-switcher .ee-switcher__descriptions__description{color:#475569;}'
-		. '.elementor-widget-ee-switcher .ee-switcher__wrapper{min-height:420px;}';
+		. '.elementor-widget-ee-switcher .ee-switcher__wrapper{min-height:420px;}'
+		. '@media (max-width:767px){'
+		. '.elementor-widget-ee-switcher .ee-switcher__nav{display:flex;width:100%;border-radius:18px;}'
+		. '.elementor-widget-ee-switcher .ee-switcher__nav__item{flex:1 1 0;padding:12px 10px !important;}'
+		. '}';
 }
 
 /**

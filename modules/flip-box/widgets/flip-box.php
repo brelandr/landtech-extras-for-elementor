@@ -414,6 +414,14 @@ class Flip_Box extends Extras_Widget {
 		);
 
 		$this->end_controls_section();
+
+		$this->landtech_extras_register_button_style_controls(
+			array(
+				'id'       => 'ltxe_flip_btn',
+				'label'    => __( 'Button', 'landtech-extras-for-elementor' ),
+				'selector' => '.ltxe-flip-box__btn',
+			)
+		);
 	}
 
 	/**

@@ -334,6 +334,14 @@ class Pricing_Table extends Extras_Widget {
 		);
 
 		$this->end_controls_section();
+
+		$this->landtech_extras_register_button_style_controls(
+			array(
+				'id'       => 'ltxe_price_cta',
+				'label'    => __( 'Button', 'landtech-extras-for-elementor' ),
+				'selector' => '.ltxe-pricing-table__cta',
+			)
+		);
 	}
 
 	/**

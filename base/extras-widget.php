@@ -4,6 +4,9 @@
 namespace LandTechExtras\Base;
 
 use Elementor\Controls_Manager;
+use Elementor\Group_Control_Border;
+use Elementor\Group_Control_Box_Shadow;
+use Elementor\Group_Control_Typography;
 use Elementor\Widget_Base;
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -460,6 +463,336 @@ abstract class Extras_Widget extends Widget_Base {
 		}
 
 		$element->ltxe_register_container_query_style_controls();
+	}
+
+	/**
+	 * One-click button shape. Current leaves the widget as it is.
+	 *
+	 * @param string $id Control prefix, unique inside the widget.
+	 * @return void
+	 */
+	protected function landtech_extras_register_button_look_control( $id ) {
+		$id = sanitize_key( (string) $id );
+		if ( '' === $id ) {
+			return;
+		}
+
+		$this->add_control(
+			$id . '_look',
+			array(
+				'label'        => __( 'Look', 'landtech-extras-for-elementor' ),
+				'type'         => Controls_Manager::SELECT,
+				'default'      => '',
+				'options'      => array(
+					''        => __( 'Current', 'landtech-extras-for-elementor' ),
+					'pill'    => __( 'Pill', 'landtech-extras-for-elementor' ),
+					'soft'    => __( 'Soft', 'landtech-extras-for-elementor' ),
+					'outline' => __( 'Outline', 'landtech-extras-for-elementor' ),
+				),
+				'prefix_class' => 'ltxe-btn-look-',
+			)
+		);
+	}
+
+	/**
+	 * Shared Style tab for a widget button.
+	 *
+	 * Color, background, padding, radius, border, and shadow. Nothing is filled in,
+	 * so an existing button keeps its current look until someone sets these.
+	 *
+	 * @param array $args id, label, selector, active, active_suffix, bar.
+	 * @return void
+	 */
+	protected function landtech_extras_register_button_style_controls( $args ) {
+		$id = isset( $args['id'] ) ? sanitize_key( (string) $args['id'] ) : '';
+		if ( '' === $id ) {
+			return;
+		}
+
+		$selectors = array();
+		if ( isset( $args['selector'] ) ) {
+			foreach ( (array) $args['selector'] as $selector ) {
+				$selector = trim( (string) $selector );
+				if ( '' !== $selector ) {
+					$selectors[] = $selector;
+				}
+			}
+		}
+		if ( empty( $selectors ) ) {
+			return;
+		}
+
+		$label         = isset( $args['label'] ) ? (string) $args['label'] : __( 'Button', 'landtech-extras-for-elementor' );
+		$active        = ! empty( $args['active'] );
+		$active_suffix = isset( $args['active_suffix'] ) ? (string) $args['active_suffix'] : '.is-active';
+		$bar           = isset( $args['bar'] ) ? trim( (string) $args['bar'] ) : '';
+		$target        = $this->ltxe_button_style_selector( $selectors, '' );
+
+		$this->start_controls_section(
+			$id . '_style',
+			array(
+				'label' => $label,
+				'tab'   => Controls_Manager::TAB_STYLE,
+			)
+		);
+
+		$this->landtech_extras_register_button_look_control( $id );
+
+		if ( '' !== $bar ) {
+			$bar_target = $this->ltxe_button_style_selector( array( $bar ), '' );
+
+			$this->add_control(
+				$id . '_bar_heading',
+				array(
+					'label' => __( 'Bar', 'landtech-extras-for-elementor' ),
+					'type'  => Controls_Manager::HEADING,
+				)
+			);
+
+			$this->add_control(
+				$id . '_bar_background',
+				array(
+					'label'     => __( 'Background Color', 'landtech-extras-for-elementor' ),
+					'type'      => Controls_Manager::COLOR,
+					'selectors' => array(
+						$bar_target => 'background-color: {{VALUE}};',
+					),
+				)
+			);
+
+			$this->add_responsive_control(
+				$id . '_bar_padding',
+				array(
+					'label'      => __( 'Padding', 'landtech-extras-for-elementor' ),
+					'type'       => Controls_Manager::DIMENSIONS,
+					'size_units' => array( 'px', 'em', '%' ),
+					'selectors'  => array(
+						$bar_target => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					),
+				)
+			);
+
+			$this->add_responsive_control(
+				$id . '_bar_radius',
+				array(
+					'label'      => __( 'Border Radius', 'landtech-extras-for-elementor' ),
+					'type'       => Controls_Manager::DIMENSIONS,
+					'size_units' => array( 'px', '%', 'em' ),
+					'selectors'  => array(
+						$bar_target => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					),
+				)
+			);
+
+			$this->add_group_control(
+				Group_Control_Box_Shadow::get_type(),
+				array(
+					'name'     => $id . '_bar_shadow',
+					'selector' => $bar_target,
+					'exclude'  => array( 'box_shadow_position' ), // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor control schema.
+				)
+			);
+
+			$this->add_control(
+				$id . '_items_heading',
+				array(
+					'label'     => __( 'Buttons', 'landtech-extras-for-elementor' ),
+					'type'      => Controls_Manager::HEADING,
+					'separator' => 'before',
+				)
+			);
+		}
+
+		$this->add_group_control(
+			Group_Control_Typography::get_type(),
+			array(
+				'name'     => $id . '_typo',
+				'selector' => $target,
+			)
+		);
+
+		$this->add_responsive_control(
+			$id . '_padding',
+			array(
+				'label'      => __( 'Padding', 'landtech-extras-for-elementor' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', 'em', '%' ),
+				'selectors'  => array(
+					$target => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->start_controls_tabs( $id . '_tabs' );
+
+		$this->start_controls_tab(
+			$id . '_tab_default',
+			array(
+				'label' => __( 'Default', 'landtech-extras-for-elementor' ),
+			)
+		);
+
+		$this->add_control(
+			$id . '_color',
+			array(
+				'label'     => __( 'Color', 'landtech-extras-for-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array(
+					$target => 'color: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->add_control(
+			$id . '_background',
+			array(
+				'label'     => __( 'Background Color', 'landtech-extras-for-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array(
+					$target => 'background-color: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			array(
+				'name'     => $id . '_shadow',
+				'selector' => $target,
+				'exclude'  => array( 'box_shadow_position' ), // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor control schema.
+			)
+		);
+
+		$this->end_controls_tab();
+
+		$this->start_controls_tab(
+			$id . '_tab_hover',
+			array(
+				'label' => __( 'Hover', 'landtech-extras-for-elementor' ),
+			)
+		);
+
+		$hover = $this->ltxe_button_style_selector( $selectors, ':hover' );
+
+		$this->add_control(
+			$id . '_color_hover',
+			array(
+				'label'     => __( 'Color', 'landtech-extras-for-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array(
+					$hover => 'color: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->add_control(
+			$id . '_background_hover',
+			array(
+				'label'     => __( 'Background Color', 'landtech-extras-for-elementor' ),
+				'type'      => Controls_Manager::COLOR,
+				'selectors' => array(
+					$hover => 'background-color: {{VALUE}};',
+				),
+			)
+		);
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			array(
+				'name'     => $id . '_shadow_hover',
+				'selector' => $hover,
+				'exclude'  => array( 'box_shadow_position' ), // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor control schema.
+			)
+		);
+
+		$this->end_controls_tab();
+
+		if ( $active ) {
+			$this->start_controls_tab(
+				$id . '_tab_active',
+				array(
+					'label' => __( 'Active', 'landtech-extras-for-elementor' ),
+				)
+			);
+
+			$active_target = $this->ltxe_button_style_selector( $selectors, $active_suffix );
+
+			$this->add_control(
+				$id . '_color_active',
+				array(
+					'label'     => __( 'Color', 'landtech-extras-for-elementor' ),
+					'type'      => Controls_Manager::COLOR,
+					'selectors' => array(
+						$active_target => 'color: {{VALUE}};',
+					),
+				)
+			);
+
+			$this->add_control(
+				$id . '_background_active',
+				array(
+					'label'     => __( 'Background Color', 'landtech-extras-for-elementor' ),
+					'type'      => Controls_Manager::COLOR,
+					'selectors' => array(
+						$active_target => 'background-color: {{VALUE}};',
+					),
+				)
+			);
+
+			$this->add_group_control(
+				Group_Control_Box_Shadow::get_type(),
+				array(
+					'name'     => $id . '_shadow_active',
+					'selector' => $active_target,
+					'exclude'  => array( 'box_shadow_position' ), // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor control schema.
+				)
+			);
+
+			$this->end_controls_tab();
+		}
+
+		$this->end_controls_tabs();
+
+		$this->add_group_control(
+			Group_Control_Border::get_type(),
+			array(
+				'name'      => $id . '_border',
+				'selector'  => $target,
+				'separator' => 'before',
+			)
+		);
+
+		$this->add_responsive_control(
+			$id . '_radius',
+			array(
+				'label'      => __( 'Border Radius', 'landtech-extras-for-elementor' ),
+				'type'       => Controls_Manager::DIMENSIONS,
+				'size_units' => array( 'px', '%', 'em' ),
+				'selectors'  => array(
+					$target => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				),
+			)
+		);
+
+		$this->end_controls_section();
+	}
+
+	/**
+	 * Build a wrapper-scoped selector list.
+	 *
+	 * @param array  $selectors Button selectors.
+	 * @param string $suffix    State suffix such as :hover or .is-active.
+	 * @return string
+	 */
+	private function ltxe_button_style_selector( $selectors, $suffix ) {
+		$parts = array();
+		foreach ( $selectors as $selector ) {
+			if ( false === strpos( $selector, '{{WRAPPER}}' ) ) {
+				$selector = '{{WRAPPER}} ' . $selector;
+			}
+			$parts[] = $selector . $suffix;
+		}
+		return implode( ', ', $parts );
 	}
 }
 

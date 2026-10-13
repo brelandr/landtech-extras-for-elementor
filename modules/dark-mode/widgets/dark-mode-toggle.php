@@ -149,6 +149,14 @@ class Dark_Mode_Toggle extends Extras_Widget {
 		);
 
 		$this->end_controls_section();
+
+		$this->landtech_extras_register_button_style_controls(
+			array(
+				'id'       => 'ltxe_dark_btn',
+				'label'    => __( 'Button', 'landtech-extras-for-elementor' ),
+				'selector' => '.ltxe-dark-toggle',
+			)
+		);
 	}
 
 	/**

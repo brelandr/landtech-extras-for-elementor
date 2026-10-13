@@ -1646,6 +1646,8 @@ class Switcher extends Extras_Widget {
 			]
 		);
 
+			$this->landtech_extras_register_button_look_control( 'ee_switcher_menu' );
+
 			$this->add_control(
 				'menu_layout_heading',
 				[
@@ -1751,6 +1753,59 @@ class Switcher extends Extras_Widget {
 			);
 
 			$this->add_control(
+				'menu_bar_heading',
+				[
+					'label' 	=> __( 'Bar', 'landtech-extras-for-elementor' ),
+					'type'		=> Controls_Manager::HEADING,
+					'separator' => 'before',
+				]
+			);
+
+			$this->add_control(
+				'menu_bar_background',
+				[
+					'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
+					'type' 		=> Controls_Manager::COLOR,
+					'selectors' => [
+						'{{WRAPPER}} .ee-switcher__nav' => 'background-color: {{VALUE}};',
+					],
+				]
+			);
+
+			$this->add_responsive_control(
+				'menu_bar_padding',
+				[
+					'label' 		=> __( 'Padding', 'landtech-extras-for-elementor' ),
+					'type' 			=> Controls_Manager::DIMENSIONS,
+					'size_units' 	=> [ 'px', 'em', '%' ],
+					'selectors' 	=> [
+						'{{WRAPPER}} .ee-switcher__nav' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					],
+				]
+			);
+
+			$this->add_responsive_control(
+				'menu_bar_border_radius',
+				[
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
+					'type' 			=> Controls_Manager::DIMENSIONS,
+					'size_units' 	=> [ 'px', '%', 'em' ],
+					'selectors' 	=> [
+						'{{WRAPPER}} .ee-switcher__nav' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					],
+				]
+			);
+
+			$this->add_group_control(
+				Group_Control_Box_Shadow::get_type(),
+				[
+					'name' 		=> 'menu_bar_shadow',
+					'selector' 	=> '{{WRAPPER}} .ee-switcher__nav',
+					'exclude'	=> [ 'box_shadow_position' ], // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor control schema.
+				]
+			);
+
+			$this->add_control(
 				'menu_items_heading',
 				[
 					'label' => __( 'Items', 'landtech-extras-for-elementor' ),
@@ -1834,9 +1889,18 @@ class Switcher extends Extras_Widget {
 					[
 						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
-						'selectors' => [
-							'{{WRAPPER}} .ee-switcher__nav__item' => 'background-color: {{VALUE}};',
-						],
+					'selectors' => [
+						'{{WRAPPER}} .ee-switcher__nav__item' => 'background-color: {{VALUE}};',
+					],
+				]
+			);
+
+				$this->add_group_control(
+					Group_Control_Box_Shadow::get_type(),
+					[
+						'name' 		=> 'menu_items_shadow',
+						'selector' 	=> '{{WRAPPER}} .ee-switcher__nav__item',
+						'exclude'	=> [ 'box_shadow_position' ], // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor control schema.
 					]
 				);
 
@@ -1860,9 +1924,18 @@ class Switcher extends Extras_Widget {
 					[
 						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
-						'selectors' => [
-							'{{WRAPPER}} .ee-switcher__nav__item:hover' => 'background-color: {{VALUE}};',
-						],
+					'selectors' => [
+						'{{WRAPPER}} .ee-switcher__nav__item:hover' => 'background-color: {{VALUE}};',
+					],
+				]
+			);
+
+				$this->add_group_control(
+					Group_Control_Box_Shadow::get_type(),
+					[
+						'name' 		=> 'menu_items_shadow_hover',
+						'selector' 	=> '{{WRAPPER}} .ee-switcher__nav__item:hover',
+						'exclude'	=> [ 'box_shadow_position' ], // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor control schema.
 					]
 				);
 
@@ -1886,15 +1959,45 @@ class Switcher extends Extras_Widget {
 					[
 						'label' 	=> __( 'Background Color', 'landtech-extras-for-elementor' ),
 						'type' 		=> Controls_Manager::COLOR,
-						'selectors' => [
-							'{{WRAPPER}} .ee-switcher__nav__item.is--active' => 'background-color: {{VALUE}};',
-						],
+					'selectors' => [
+						'{{WRAPPER}} .ee-switcher__nav__item.is--active' => 'background-color: {{VALUE}};',
+					],
+				]
+			);
+
+				$this->add_group_control(
+					Group_Control_Box_Shadow::get_type(),
+					[
+						'name' 		=> 'menu_items_shadow_active',
+						'selector' 	=> '{{WRAPPER}} .ee-switcher__nav__item.is--active',
+						'exclude'	=> [ 'box_shadow_position' ], // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- Elementor control schema.
 					]
 				);
 
 			$this->end_controls_tab();
 
 			$this->end_controls_tabs();
+
+			$this->add_group_control(
+				Group_Control_Border::get_type(),
+				[
+					'name' 		=> 'menu_items_border',
+					'selector' 	=> '{{WRAPPER}} .ee-switcher__nav__item',
+					'separator' => 'before',
+				]
+			);
+
+			$this->add_responsive_control(
+				'menu_items_border_radius',
+				[
+					'label' 		=> __( 'Border Radius', 'landtech-extras-for-elementor' ),
+					'type' 			=> Controls_Manager::DIMENSIONS,
+					'size_units' 	=> [ 'px', '%', 'em' ],
+					'selectors' 	=> [
+						'{{WRAPPER}} .ee-switcher__nav__item' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					],
+				]
+			);
 
 			$this->add_control(
 				'menu_style_loader',
