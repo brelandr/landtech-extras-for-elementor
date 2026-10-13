@@ -2358,7 +2358,17 @@
 
 		Switcher : function( $scope, $ ) {
 
-			ee.Switcher.elementSettings 	= ee.getElementSettings( $scope );
+			ee.Switcher.elementSettings 	= ee.getElementSettings( $scope ) || {};
+
+			// Slider controls are omitted from data-settings when unset. Reading .size
+			// on a missing object throws before eeSwitcher() can add is--loaded, and
+			// .ee-switcher stays display:none.
+			var switcherSliderSize = function( control ) {
+				if ( ! control || 'object' !== typeof control ) {
+					return '';
+				}
+				return control.size;
+			};
 
 			var $media 			= $scope.find( '.ee-switcher__media-wrapper' ),
 				$content 		= $scope.find( '.ee-switcher__titles' ),
@@ -2426,13 +2436,15 @@
 				}
 
 				if ( 'yes' === ee.Switcher.elementSettings.autoplay ) {
-					if ( ee.Switcher.elementSettings.duration.size ) {
-						switcherArgs.duration = ee.Switcher.elementSettings.duration.size;
+					var durationSize = switcherSliderSize( ee.Switcher.elementSettings.duration );
+					if ( durationSize ) {
+						switcherArgs.duration = durationSize;
 					}
 				}
 
-				if ( ee.Switcher.elementSettings.speed.size ) {
-					switcherArgs.speed = ee.Switcher.elementSettings.speed.size;
+				var speedSize = switcherSliderSize( ee.Switcher.elementSettings.speed );
+				if ( speedSize ) {
+					switcherArgs.speed = speedSize;
 				}
 
 				if ( 'yes' === ee.Switcher.elementSettings.parallax_enable ) {
@@ -2456,7 +2468,17 @@
 						switcherArgs.background = elementorFrontend.isEditMode() ? switcherArgs.scope.find('body') : $('body');
 				}
 
-				$scope.eeSwitcher( switcherArgs );
+				try {
+					if ( $.isFunction( $scope.eeSwitcher ) ) {
+						$scope.eeSwitcher( switcherArgs );
+					}
+				} catch ( ltxeSwitcherError ) {
+					$scope.find( '.ee-switcher' ).addClass( 'is--loaded' );
+				}
+
+				if ( ! $scope.find( '.ee-switcher.is--loaded' ).length ) {
+					$scope.find( '.ee-switcher' ).addClass( 'is--loaded' );
+				}
 
 				$scope.find( '.ee-switcher__nav__item' ).each( function() {
 					var $item = $( this );

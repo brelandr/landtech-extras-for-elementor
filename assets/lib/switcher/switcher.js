@@ -121,7 +121,9 @@
 
 				_effects 			= null,
 
-				_easing 			= CustomEase.create("custom", "M0,0 C0.446,0 0.034,1 1,1");
+				_easing 			= ( window.CustomEase && 'function' === typeof window.CustomEase.create )
+					? window.CustomEase.create( 'custom', 'M0,0 C0.446,0 0.034,1 1,1' )
+					: function( progress ) { return progress; };
 
 
 			plugin.init = function() {

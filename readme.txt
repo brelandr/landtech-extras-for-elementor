@@ -4,7 +4,7 @@ Contributors: brelandr
 Tags: elementor, page-builder, widgets, addons, extensions
 Requires at least: 6.2
 Tested up to: 7.1
-Stable tag: 3.0.2
+Stable tag: 3.0.3
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -260,6 +260,9 @@ Before publishing a public GitHub mirror, verify any **Repository** or **Source*
 
 == Upgrade Notice ==
 
+= 3.0.3 =
+Switcher widgets remain visible when an older layout has no saved animation speed. Update if a switcher disappeared after 2.5.5.
+
 = 3.0.2 =
 Readme listing leads with the free widget set. External service and library notes moved to the Installation tab so the directory description is not cut off. A dismissible review reminder appears in wp-admin after 7 days.
 
@@ -282,6 +285,9 @@ Maintenance release: Elementor 4.3.x compatibility headers and Plugin Check fixe
 Recommended update: new Tabs and Table of Contents widgets, plus Search Form **Include only** category restrictions and shorter custom search result URLs. Re-save Search Form widgets after updating if you use hidden category filters.
 
 == Changelog ==
+
+= 3.0.3 =
+* Fix: Switcher widgets remain visible when an older layout has no saved animation speed or duration, and when the animation helper is unavailable.
 
 = 3.0.2 =
 * Docs: WordPress.org description opens with the free widgets. External Services and third-party libraries are documented on the Installation tab so the directory description is not truncated.
