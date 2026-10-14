@@ -418,7 +418,7 @@ class Posts extends Posts_Base {
 	 * @since  1.6.0
 	 * @return void
 	 */
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		$this->register_layout_content_controls();
 		$this->register_query_content_controls();

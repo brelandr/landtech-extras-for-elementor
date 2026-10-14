@@ -96,7 +96,7 @@ class Gallery_Slider extends Extras_Widget {
 	 * @since  1.1.0
 	 * @return void
 	 */
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		$this->start_controls_section(
 			'section_gallery',

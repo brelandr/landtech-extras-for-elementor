@@ -124,7 +124,7 @@ class Switcher extends Extras_Widget {
 	 * @since  1.9.0
 	 * @return void
 	 */
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->register_content_controls();
 		$this->register_settings_controls();
 		$this->register_effects_controls();

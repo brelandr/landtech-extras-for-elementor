@@ -125,7 +125,7 @@ class Scroll_Indicator extends Extras_Widget {
 	 * @since  2.1.0
 	 * @return void
 	 */
-	protected function _register_controls() {
+	protected function register_controls() {
 		// Content tab
 		$this->register_settings_controls();
 		$this->register_content_controls();

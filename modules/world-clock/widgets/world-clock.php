@@ -86,7 +86,7 @@ class World_Clock extends Extras_Widget {
 	/**
 	 * @inheritDoc
 	 */
-	protected function _register_controls() {
+	protected function register_controls() {
 		$rep = new Repeater();
 		$rep->add_control(
 			'tz',

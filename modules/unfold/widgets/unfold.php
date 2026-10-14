@@ -83,7 +83,7 @@ class Unfold extends Extras_Widget {
 	 * @since  1.2.0
 	 * @return void
 	 */
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		$this->start_controls_section(
 			'section_content',

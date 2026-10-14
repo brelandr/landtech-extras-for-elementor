@@ -120,7 +120,7 @@ class Popup extends Extras_Widget {
 	 * @since  2.0.0
 	 * @return void
 	 */
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->register_content_controls();
 	}
 

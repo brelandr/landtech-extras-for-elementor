@@ -60,7 +60,7 @@ class Faq_Schema extends Extras_Widget {
 	/**
 	 * @inheritDoc
 	 */
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->start_controls_section(
 			'section_faq',
 			array(

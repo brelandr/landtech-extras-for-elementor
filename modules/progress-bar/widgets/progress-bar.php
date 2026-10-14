@@ -54,7 +54,7 @@ class Progress_Bar extends Extras_Widget {
 	/**
 	 * @inheritDoc
 	 */
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->start_controls_section(
 			'section_bar',
 			array(

@@ -7,8 +7,12 @@ on:
 
 jobs:
   php-l:
-    name: php -l (core + ACF gallery bridge)
+    name: php -l (PHP ${{ matrix.php }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['7.4', '8.2', '8.3']
 
     steps:
       - name: Checkout
@@ -17,12 +21,13 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: ${{ matrix.php }}
+          coverage: none
 
       - name: Syntax check
         run: |
-          php -l landtech-extras.php
-          php -l includes/plugin.php
-          php -l includes/gallery/acf-gallery-bridge.php
-          php -l modules/gallery/widgets/gallery.php
-          php -l modules/gallery/widgets/gallery-slider.php
+          find . -name '*.php' \
+            -not -path './vendor/*' \
+            -not -path './node_modules/*' \
+            -not -path './.plugin-check/*' \
+            -print0 | xargs -0 -n1 php -l

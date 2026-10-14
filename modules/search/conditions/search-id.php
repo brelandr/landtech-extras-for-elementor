@@ -31,7 +31,7 @@ class Search_Id extends Condition_Base {
 		return is_search() && get_query_var('ltxe_search_id') === $args['id'];
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 		$this->add_control(
 			'search_form_id',
 			[

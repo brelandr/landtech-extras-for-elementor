@@ -74,3 +74,15 @@ jobs:
 
       - name: PHPCS — PluginCheck standard (errors fail CI)
         run: .plugin-check/phpcs-sniffs/vendor/bin/phpcs --standard=PluginCheck --extensions=php --ignore='*/vendor/*,*/node_modules/*,*/scripts/*,*/.plugin-check/*,*/tests/*,*/e2e/*' -p -n .
+
+      - name: Ban deprecated _register_controls
+        run: |
+          if grep -R --include='*.php' -n 'function _register_controls(' \
+            --exclude-dir=vendor \
+            --exclude-dir=node_modules \
+            --exclude-dir=.plugin-check \
+            . ; then
+            echo 'function _register_controls() is banned. Use register_controls().'
+            exit 1
+          fi
+          echo 'No function _register_controls() declarations.'

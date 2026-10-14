@@ -65,7 +65,7 @@ class Comparison_Table extends Extras_Widget {
 	/**
 	 * @inheritDoc
 	 */
-	protected function _register_controls() {
+	protected function register_controls() {
 		$cols = new Repeater();
 		$cols->add_control(
 			'title',

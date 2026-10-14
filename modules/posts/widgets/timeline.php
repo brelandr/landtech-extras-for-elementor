@@ -771,7 +771,7 @@ class Timeline extends Posts_Base {
 		$this->end_controls_section();
 	}
 
-	protected function _register_controls() {
+	protected function register_controls() {
 
 		$posts_control_settings = [
 			'label' 		=> __( 'Source', 'landtech-extras-for-elementor' ),
