@@ -105,6 +105,9 @@ if ( ! defined( 'LANDTECH_EXTRAS_ASSETS_URL' ) ) {
 if ( ! defined( 'LANDTECH_EXTRAS_VERSION' ) ) {
 	define( 'LANDTECH_EXTRAS_VERSION', '3.0.6' );
 }
+if ( ! defined( 'LANDTECH_EXTRAS_CORE_API' ) ) {
+	define( 'LANDTECH_EXTRAS_CORE_API', 1 );
+}
 if ( ! defined( 'LTXE_FRONTEND_SPLIT' ) ) {
 	define( 'LTXE_FRONTEND_SPLIT', true );
 }
