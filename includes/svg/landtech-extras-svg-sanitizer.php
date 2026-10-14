@@ -25,7 +25,29 @@ class Landtech_Extras_Svg_Sanitizer {
 		'link',
 		'audio',
 		'video',
+		'style',
 	);
+
+	/**
+	 * SVG namespace. Elements in any other namespace are removed.
+	 *
+	 * @var string
+	 */
+	const SVG_NAMESPACE = 'http://www.w3.org/2000/svg';
+
+	/**
+	 * XLink namespace. Only the href attribute is kept, and only for fragments.
+	 *
+	 * @var string
+	 */
+	const XLINK_NAMESPACE = 'http://www.w3.org/1999/xlink';
+
+	/**
+	 * XML namespace (xml:space, xml:lang).
+	 *
+	 * @var string
+	 */
+	const XML_NAMESPACE = 'http://www.w3.org/XML/1998/namespace';
 
 	/**
 	 * Attribute prefixes that must be removed (event handlers, xlink:href kept when safe).
@@ -146,9 +168,9 @@ class Landtech_Extras_Svg_Sanitizer {
 		}
 
 		if ( XML_ELEMENT_NODE === $node->nodeType ) {
-			$tag = strtolower( $node->nodeName );
+			$tag = strtolower( $this->node_local_name( $node ) );
 
-			if ( in_array( $tag, self::$blocked_tags, true ) ) {
+			if ( in_array( $tag, self::$blocked_tags, true ) || $this->element_namespace_is_disallowed( $node ) ) {
 				if ( $node->parentNode ) {
 					$node->parentNode->removeChild( $node );
 				}
@@ -159,13 +181,13 @@ class Landtech_Extras_Svg_Sanitizer {
 				$remove = array();
 
 				foreach ( $node->attributes as $attribute ) {
-					if ( $this->should_remove_attribute( $attribute->nodeName, $attribute->nodeValue ) ) {
-						$remove[] = $attribute->nodeName;
+					if ( $this->should_remove_attribute_node( $attribute ) ) {
+						$remove[] = $attribute;
 					}
 				}
 
-				foreach ( $remove as $attribute_name ) {
-					$node->removeAttribute( $attribute_name );
+				foreach ( $remove as $attribute ) {
+					$this->remove_attribute_node( $node, $attribute );
 				}
 			}
 		}
@@ -185,6 +207,92 @@ class Landtech_Extras_Svg_Sanitizer {
 	}
 
 	/**
+	 * Local name without a namespace prefix.
+	 *
+	 * nodeName for a prefixed tag is "svg:script", which misses the "script" blocklist.
+	 *
+	 * @param DOMNode $node Element or attribute.
+	 * @return string
+	 */
+	private function node_local_name( $node ) {
+		if ( isset( $node->localName ) && is_string( $node->localName ) && '' !== $node->localName ) {
+			return $node->localName;
+		}
+
+		$name  = isset( $node->nodeName ) ? (string) $node->nodeName : '';
+		$colon = strrpos( $name, ':' );
+
+		if ( false !== $colon ) {
+			return substr( $name, $colon + 1 );
+		}
+
+		return $name;
+	}
+
+	/**
+	 * Drop elements that are not in the SVG namespace.
+	 *
+	 * An empty namespace is kept so legacy SVG without xmlns still sanitizes.
+	 *
+	 * @param DOMNode $node Element.
+	 * @return bool
+	 */
+	private function element_namespace_is_disallowed( $node ) {
+		$namespace = isset( $node->namespaceURI ) ? (string) $node->namespaceURI : '';
+
+		if ( '' === $namespace ) {
+			return false;
+		}
+
+		return self::SVG_NAMESPACE !== $namespace;
+	}
+
+	/**
+	 * Whether a parsed attribute should be stripped.
+	 *
+	 * XLink is limited to href. Any other foreign namespace is removed.
+	 *
+	 * @param DOMAttr $attribute Attribute node.
+	 * @return bool
+	 */
+	private function should_remove_attribute_node( $attribute ) {
+		$namespace = isset( $attribute->namespaceURI ) ? (string) $attribute->namespaceURI : '';
+		$local     = strtolower( $this->node_local_name( $attribute ) );
+
+		if ( self::XLINK_NAMESPACE === $namespace ) {
+			if ( 'href' !== $local ) {
+				return true;
+			}
+
+			return $this->is_unsafe_url_value( (string) $attribute->nodeValue );
+		}
+
+		if ( '' !== $namespace && self::SVG_NAMESPACE !== $namespace && self::XML_NAMESPACE !== $namespace ) {
+			return true;
+		}
+
+		return $this->should_remove_attribute( $attribute->nodeName, (string) $attribute->nodeValue );
+	}
+
+	/**
+	 * Remove an attribute, including namespaced ones.
+	 *
+	 * @param DOMElement $node      Element that owns the attribute.
+	 * @param DOMAttr    $attribute Attribute to remove.
+	 * @return void
+	 */
+	private function remove_attribute_node( $node, $attribute ) {
+		$namespace = isset( $attribute->namespaceURI ) ? (string) $attribute->namespaceURI : '';
+
+		if ( '' !== $namespace ) {
+			$node->removeAttributeNS( $namespace, $this->node_local_name( $attribute ) );
+			return;
+		}
+
+		$node->removeAttribute( $attribute->nodeName );
+	}
+
+	/**
 	 * Decide whether an attribute should be stripped.
 	 *
 	 * @param string $name  Attribute name.
@@ -193,14 +301,20 @@ class Landtech_Extras_Svg_Sanitizer {
 	 */
 	private function should_remove_attribute( $name, $value ) {
 		$name_lower = strtolower( $name );
+		$local      = $name_lower;
+		$colon      = strrpos( $local, ':' );
+
+		if ( false !== $colon ) {
+			$local = substr( $local, $colon + 1 );
+		}
 
 		foreach ( self::$blocked_attribute_prefixes as $prefix ) {
-			if ( 0 === strpos( $name_lower, $prefix ) ) {
+			if ( 0 === strpos( $local, $prefix ) ) {
 				return true;
 			}
 		}
 
-		if ( in_array( $name_lower, array( 'href', 'xlink:href' ), true ) ) {
+		if ( 'href' === $local || in_array( $name_lower, array( 'href', 'xlink:href' ), true ) ) {
 			return $this->is_unsafe_url_value( $value );
 		}
 

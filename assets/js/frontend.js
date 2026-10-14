@@ -2519,6 +2519,104 @@
 		// InlineSvg 							////
 		////////////////////////////////////////////
 
+		/**
+		 * Keep in sync with sanitizeSvgNode in assets/js/widgets/inline-svg.js.
+		 * Strips active content before the node is inserted into the page.
+		 */
+		sanitizeSvgNode : function( svg ) {
+			var svgNs = 'http://www.w3.org/2000/svg';
+			var xlinkNs = 'http://www.w3.org/1999/xlink';
+			var xmlNs = 'http://www.w3.org/XML/1998/namespace';
+			var blocked = {
+				script: 1,
+				style: 1,
+				foreignobject: 1,
+				iframe: 1,
+				embed: 1,
+				object: 1,
+				audio: 1,
+				video: 1,
+				link: 1
+			};
+
+			function localName( node ) {
+				return String( node.localName || node.nodeName || '' ).toLowerCase().split( ':' ).pop();
+			}
+
+			function hrefIsFragment( value ) {
+				var trimmed = String( value || '' ).replace( /^\s+|\s+$/g, '' );
+				return '#' === trimmed.charAt( 0 );
+			}
+
+			function elementAllowed( node ) {
+				var ns = node.namespaceURI || '';
+				if ( blocked[ localName( node ) ] ) {
+					return false;
+				}
+				if ( ns && ns !== svgNs ) {
+					return false;
+				}
+				return true;
+			}
+
+			function stripAttributes( node ) {
+				var attrs = node.attributes ? Array.prototype.slice.call( node.attributes ) : [];
+				var index, attr, name, ns, value;
+
+				for ( index = 0; index < attrs.length; index++ ) {
+					attr = attrs[ index ];
+					name = localName( attr );
+					ns = attr.namespaceURI || '';
+					value = attr.value || '';
+
+					if ( ns === xlinkNs && 'href' !== name ) {
+						node.removeAttributeNS( ns, attr.localName || name );
+						continue;
+					}
+					if ( ns && ns !== svgNs && ns !== xlinkNs && ns !== xmlNs ) {
+						node.removeAttributeNS( ns, attr.localName || name );
+						continue;
+					}
+					if ( 0 === name.indexOf( 'on' ) ) {
+						if ( ns ) {
+							node.removeAttributeNS( ns, attr.localName || name );
+						} else {
+							node.removeAttribute( attr.name );
+						}
+						continue;
+					}
+					if ( 'href' === name && ! hrefIsFragment( value ) ) {
+						if ( ns ) {
+							node.removeAttributeNS( ns, attr.localName || name );
+						} else {
+							node.removeAttribute( attr.name );
+						}
+					}
+				}
+			}
+
+			if ( ! svg || 1 !== svg.nodeType || ! elementAllowed( svg ) ) {
+				return null;
+			}
+
+			stripAttributes( svg );
+
+			var nodes = svg.querySelectorAll ? svg.querySelectorAll( '*' ) : [];
+			var nodeIndex;
+
+			for ( nodeIndex = nodes.length - 1; nodeIndex >= 0; nodeIndex-- ) {
+				if ( ! elementAllowed( nodes[ nodeIndex ] ) ) {
+					if ( nodes[ nodeIndex ].parentNode ) {
+						nodes[ nodeIndex ].parentNode.removeChild( nodes[ nodeIndex ] );
+					}
+					continue;
+				}
+				stripAttributes( nodes[ nodeIndex ] );
+			}
+
+			return svg;
+		},
+
 		InlineSvg : function( $scope, $ ) {
 
 			var elementSettings = ee.getElementSettings( $scope ),
@@ -2564,6 +2662,9 @@
 						$svgNode = $( rawSvg );
 					}
 				}
+				$svgNode = $svgNode.filter( function() {
+					return null !== ee.sanitizeSvgNode( this );
+				} );
 				if ( ! $svgNode.length ) {
 					return;
 				}
