@@ -97,6 +97,7 @@ class Calendar extends Extras_Widget {
 	public function get_style_depends() {
 		return array(
 			'landtech-extras-schedule-x-theme',
+			'landtech-extras-widget-calendar',
 		);
 	}
 

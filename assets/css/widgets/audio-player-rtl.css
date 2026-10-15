@@ -1,0 +1,9 @@
+/* LandTech audio-player */
+.ee-audio-player {
+  width: 100%;
+  overflow: visible;
+}
+
+.ee-audio-player__waveform {
+  margin-bottom: 12px;
+}

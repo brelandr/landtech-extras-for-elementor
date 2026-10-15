@@ -144,6 +144,7 @@ class Posts extends Posts_Base {
 		return [
 			'landtech-extras-nicons',
 			'landtech-extras-frontend',
+			'landtech-extras-widget-posts',
 			'landtech-extras-posts-carousel',
 		];
 	}

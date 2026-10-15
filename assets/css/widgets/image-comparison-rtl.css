@@ -1,0 +1,119 @@
+/* LandTech image-comparison */
+.ee-image-comparison {
+  position: relative;
+  width: 100%;
+  font-size: 1rem;
+}
+.ee-image-comparison img {
+  display: block;
+  max-width: 100%;
+  width: 100%;
+}
+.ee-image-comparison__image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  overflow: hidden;
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.ee-image-comparison__image .ee-image-comparison__label {
+  right: auto;
+  left: 0;
+}
+.is--visible .ee-image-comparison__image {
+  width: 50%;
+}
+.ee-image-comparison__image img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: block;
+  width: auto;
+  height: 100% !important;
+  max-width: none !important;
+}
+.ee-image-comparison__separator {
+  right: 0;
+  width: 1px;
+  height: 100%;
+  background-color: #FFFFFF;
+  transform: translateX(50%) translateY(-50%);
+}
+.ee-image-comparison__label {
+  position: absolute !important;
+  bottom: 0;
+  right: 0;
+  padding: 1em;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: transform .3s .7s, opacity .3s .7s;
+}
+.ee-image-comparison__label.is--hidden {
+  visibility: hidden;
+}
+.is--visible .ee-image-comparison__label {
+  opacity: 1;
+  transform: translateY(0);
+}
+.ee-image-comparison__label--empty {
+  display: none;
+}
+.ee-image-comparison__label--clickable {
+  cursor: pointer;
+}
+.ee-image-comparison__handle {
+  -ms-touch-action: none;
+  touch-action: none;
+  position: absolute;
+  height: 44px;
+  width: 44px;
+  left: 50%;
+  top: 50%;
+  margin-left: -22px;
+  margin-top: -22px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  color: #000000;
+  cursor: move;
+  opacity: 0;
+  transform: translate3d(0, 0, 0) scale(0);
+  color: #000000;
+}
+.ee-image-comparison__handle:before {
+  font-size: 0.4em;
+}
+.ee-image-comparison__handle.draggable {
+  background-color: #000000;
+  color: #FFFFFF;
+}
+.is--visible .ee-image-comparison__handle {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  transition: transform .3s .7s, opacity 0s .7s;
+}
+.ee-image-comparison--top .ee-image-comparison__label {
+  top: 0;
+  bottom: auto;
+}
+.ee-image-comparison--middle .ee-image-comparison__label {
+  top: 50%;
+  bottom: auto;
+  transform: translateY(-50%);
+}
+.ee-image-comparison--bottom .ee-image-comparison__label {
+  top: auto;
+  bottom: 0;
+}
+
+@media (max-width: 767px) {
+
+  .ee-image-comparison__image img {
+    width: 100% !important;
+    max-width: 100% !important;
+    object-fit: cover;
+    object-position: center;
+  }}

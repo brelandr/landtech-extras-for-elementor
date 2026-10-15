@@ -1,0 +1,31 @@
+/* LandTech calendar */
+.ee-calendar {
+  display: inline-block;
+  background: #f7f7f7;
+}
+.ee-calendar a {
+  cursor: default;
+}
+.ee-calendar a[href] {
+  cursor: pointer;
+}
+.ee-calendar-event {
+  display: none;
+}
+.ee-calendar__mount {
+  min-height: 420px;
+  overflow: hidden;
+}
+
+@media (max-width: 767px) {
+  .ee-calendar {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .ee-calendar .sx__date-picker-popover,
+  .ee-calendar .sx__event-modal {
+    max-width: min(20.75rem, calc(100vw - 32px));
+  }}

@@ -1,0 +1,50 @@
+/* LandTech heading */
+.ee-heading {
+  transform: translate(0, 0);
+  z-index: 0;
+}
+.ee-heading.elementor-size-small {
+  font-size: 15px;
+}
+.ee-heading.elementor-size-medium {
+  font-size: 19px;
+}
+.ee-heading.elementor-size-large {
+  font-size: 29px;
+}
+.ee-heading.elementor-size-xl {
+  font-size: 39px;
+}
+.ee-heading.elementor-size-xxl {
+  font-size: 59px;
+}
+.ee-heading--gradient .ee-heading__text {
+  background-clip: text;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.ee-heading__text > *,
+.ee-heading__text-shadow > *,
+.ee-heading__long-shadow > * {
+  display: block;
+}
+.ee-heading__text {
+  display: block;
+  position: relative;
+}
+.ee-heading__text-shadow {
+  display: inline-block;
+  color: rgba(0, 0, 0, 0);
+  z-index: -1;
+}
+.ee-heading__long-shadow {
+  color: rgba(0, 0, 0, 0);
+  z-index: -2;
+}
+
+.ee-heading__text--highlight-sweep {
+  background-image: linear-gradient(90deg, rgba(250, 204, 21, 0.45), rgba(250, 204, 21, 0.45));
+  background-repeat: no-repeat;
+  background-position: right center;
+}

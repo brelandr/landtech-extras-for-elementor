@@ -152,6 +152,17 @@ class Offcanvas extends Extras_Widget {
 	}
 
 	/**
+	 * Styles for this widget. The shared shell loads only as a dependency.
+	 *
+	 * @return string[]
+	 */
+	public function get_style_depends() {
+		return array(
+			'landtech-extras-widget-offcanvas',
+		);
+	}
+
+	/**
 	 * Register Widget Controls
 	 *
 	 * @since  2.0.0

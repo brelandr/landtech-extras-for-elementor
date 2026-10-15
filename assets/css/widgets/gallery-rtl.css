@@ -1,0 +1,118 @@
+/* LandTech gallery */
+.ee-gallery__item {
+  z-index: 1;
+}
+.ee-gallery__item:hover {
+  z-index: 2;
+}
+.ee-gallery__item.is--3d {
+  z-index: 1;
+}
+.ee-gallery__media-wrapper {
+  overflow: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+}
+.ee-gallery__tilt {
+  transform-style: preserve-3d;
+}
+.ee-gallery__tilt--depth {
+  overflow: visible !important;
+}
+.ee-gallery__tilt .ee-gallery__media__content {
+  transform: translateZ(20px);
+}
+.ee-gallery__tilt .ee-gallery__media__overlay {
+  transform: translateZ(10px);
+}
+.ee-media-align--stretch .ee-gallery .ee-gallery__media__content {
+  -ms-flex-pack: stretch;
+  justify-content: stretch;
+}
+.ee-gallery-slider {
+  display: -ms-flexbox;
+  display: flex;
+  margin-right: -24px;
+  -ms-flex-align: start;
+  align-items: flex-start;
+}
+.ee-gallery-slider__preview,
+.ee-gallery-slider__gallery {
+  position: relative;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  width: 50%;
+  padding-right: 24px;
+}
+.ee-gallery-slider__preview .ee-arrows,
+.ee-gallery-slider__gallery .ee-arrows {
+  margin-right: 24px;
+}
+.ee-gallery-slider__gallery .ee-gallery__item {
+  cursor: pointer;
+}
+.ee-gallery-slider__gallery .ee-gallery__media__caption {
+  font-size: 12px;
+}
+.ee-gallery-slider__gallery .swiper-container-vertical .ee-gallery__item,
+.ee-gallery-slider__gallery .swiper-vertical .ee-gallery__item {
+  overflow: hidden;
+}
+.ee-gallery-slider__carousel-wrapper,
+.ee-gallery-slider__slider-wrapper {
+  position: relative;
+}
+.ee-gallery-slider--left .ee-gallery-slider {
+  -ms-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+}
+.ee-gallery-slider--right .ee-gallery-slider {
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+.ee-gallery-slider--top .ee-gallery-slider {
+  -ms-flex-flow: row;
+  flex-flow: row;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-align: center;
+  align-items: center;
+}
+.ee-gallery-slider--top .ee-gallery-slider__gallery,
+.ee-gallery-slider--top .ee-gallery-slider__preview {
+  width: 100%;
+}
+.ee-gallery-slider--top .ee-gallery-slider__preview {
+  margin-bottom: 24px;
+}
+@media (min-width: 1025px) {
+  .ee-gallery-overflow--yes .ee-gallery-wrapper {
+    overflow: hidden;
+  }}
+
+@media (max-width: 1024px) {
+  .ee-gallery-slider--stack-tablet .ee-gallery-slider {
+    display: block;
+  }
+  .ee-gallery-slider--stack-tablet .ee-gallery-slider .ee-gallery-slider__preview,
+  .ee-gallery-slider--stack-tablet .ee-gallery-slider .ee-gallery-slider__gallery {
+    width: 100% !important;
+  }}
+
+@media (max-width: 767px) {
+  .ee-gallery-overflow-mobile--yes .ee-gallery-wrapper {
+    overflow: hidden;
+  }
+  .ee-gallery-slider--stack-mobile .ee-gallery-slider {
+    display: block;
+  }
+  .ee-gallery-slider--stack-mobile .ee-gallery-slider .ee-gallery-slider__preview,
+  .ee-gallery-slider--stack-mobile .ee-gallery-slider .ee-gallery-slider__gallery {
+    width: 100% !important;
+  }}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .ee-gallery-overflow-tablet--yes .ee-gallery-wrapper {
+    overflow: hidden;
+  }}

@@ -242,6 +242,17 @@ class Table extends Extras_Widget {
 	}
 
 	/**
+	 * Styles for this widget. The shared shell loads only as a dependency.
+	 *
+	 * @return string[]
+	 */
+	public function get_style_depends() {
+		return array(
+			'landtech-extras-widget-table',
+		);
+	}
+
+	/**
 	 * Register Widget Controls
 	 *
 	 * @since  1.5.0

@@ -1,0 +1,439 @@
+/* LandTech switcher */
+.ee-switcher {
+  display: none;
+  position: relative;
+}
+.ee-switcher.is--loaded {
+  display: block;
+}
+.ee-switcher__wrapper {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+.ee-switcher__media-wrapper {
+  min-width: 50%;
+  width: auto;
+}
+.ee-switcher__content-wrapper {
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  width: 100%;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+}
+.ee-switcher__content {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+}
+.ee-switcher__content-wrapper {
+  z-index: 2;
+}
+.ee-switcher__media:before {
+  content: none !important;
+}
+.ee-switcher__media picture,
+.ee-switcher__media img {
+  max-width: 100%;
+  margin: 0;
+}
+.ee-switcher__media__items {
+  transform: translate3d(0, 0, 0);
+  overflow: hidden;
+}
+.ee-switcher__media__item {
+  z-index: 0;
+  transition: none;
+  position: fixed;
+}
+.ee-switcher__media__item.is--last {
+  z-index: 1;
+}
+.ee-switcher__media__overlay {
+  display: none;
+}
+.ee-switcher__media.ee-effect--coverLeft .ee-switcher__media__item,
+.ee-switcher__media.ee-effect--coverRight .ee-switcher__media__item,
+.ee-switcher__media.ee-effect--coverBottom .ee-switcher__media__item,
+.ee-switcher__media.ee-effect--coverTop .ee-switcher__media__item,
+.ee-switcher__media.ee-effect--fade .ee-switcher__media__item,
+.ee-switcher__media.ee-effect--slideLeft .ee-switcher__media__item,
+.ee-switcher__media.ee-effect--slideRight .ee-switcher__media__item,
+.ee-switcher__media.ee-effect--slideTop .ee-switcher__media__item,
+.ee-switcher__media.ee-effect--slideBottom .ee-switcher__media__item,
+.ee-switcher__media.ee-effect--swipeLeft .ee-switcher__media__item,
+.ee-switcher__media.ee-effect--swipeRight .ee-switcher__media__item,
+.ee-switcher__media.ee-effect--swipeBottom .ee-switcher__media__item,
+.ee-switcher__media.ee-effect--swipeTop .ee-switcher__media__item,
+.ee-switcher__media.ee-effect--swipeLeft .ee-switcher__media__item,
+.ee-switcher__media.ee-effect--swipeRight .ee-switcher__media__item,
+.ee-switcher__media.ee-effect--swipeBottom .ee-switcher__media__item,
+.ee-switcher__media.ee-effect--swipeTop .ee-switcher__media__item,
+.ee-switcher__media.ee-effect--wink .ee-switcher__media__item {
+  overflow: hidden;
+}
+.ee-switcher__media.ee-effect--coverLeft .ee-switcher__media__item.is--active,
+.ee-switcher__media.ee-effect--coverLeft .ee-switcher__media__item.is--animating,
+.ee-switcher__media.ee-effect--coverRight .ee-switcher__media__item.is--active,
+.ee-switcher__media.ee-effect--coverRight .ee-switcher__media__item.is--animating,
+.ee-switcher__media.ee-effect--coverBottom .ee-switcher__media__item.is--active,
+.ee-switcher__media.ee-effect--coverBottom .ee-switcher__media__item.is--animating,
+.ee-switcher__media.ee-effect--coverTop .ee-switcher__media__item.is--active,
+.ee-switcher__media.ee-effect--coverTop .ee-switcher__media__item.is--animating,
+.ee-switcher__media.ee-effect--fade .ee-switcher__media__item.is--active,
+.ee-switcher__media.ee-effect--fade .ee-switcher__media__item.is--animating,
+.ee-switcher__media.ee-effect--slideLeft .ee-switcher__media__item.is--active,
+.ee-switcher__media.ee-effect--slideLeft .ee-switcher__media__item.is--animating,
+.ee-switcher__media.ee-effect--slideRight .ee-switcher__media__item.is--active,
+.ee-switcher__media.ee-effect--slideRight .ee-switcher__media__item.is--animating,
+.ee-switcher__media.ee-effect--slideTop .ee-switcher__media__item.is--active,
+.ee-switcher__media.ee-effect--slideTop .ee-switcher__media__item.is--animating,
+.ee-switcher__media.ee-effect--slideBottom .ee-switcher__media__item.is--active,
+.ee-switcher__media.ee-effect--slideBottom .ee-switcher__media__item.is--animating,
+.ee-switcher__media.ee-effect--swipeLeft .ee-switcher__media__item.is--active,
+.ee-switcher__media.ee-effect--swipeLeft .ee-switcher__media__item.is--animating,
+.ee-switcher__media.ee-effect--swipeRight .ee-switcher__media__item.is--active,
+.ee-switcher__media.ee-effect--swipeRight .ee-switcher__media__item.is--animating,
+.ee-switcher__media.ee-effect--swipeBottom .ee-switcher__media__item.is--active,
+.ee-switcher__media.ee-effect--swipeBottom .ee-switcher__media__item.is--animating,
+.ee-switcher__media.ee-effect--swipeTop .ee-switcher__media__item.is--active,
+.ee-switcher__media.ee-effect--swipeTop .ee-switcher__media__item.is--animating,
+.ee-switcher__media.ee-effect--swipeLeft .ee-switcher__media__item.is--active,
+.ee-switcher__media.ee-effect--swipeLeft .ee-switcher__media__item.is--animating,
+.ee-switcher__media.ee-effect--swipeRight .ee-switcher__media__item.is--active,
+.ee-switcher__media.ee-effect--swipeRight .ee-switcher__media__item.is--animating,
+.ee-switcher__media.ee-effect--swipeBottom .ee-switcher__media__item.is--active,
+.ee-switcher__media.ee-effect--swipeBottom .ee-switcher__media__item.is--animating,
+.ee-switcher__media.ee-effect--swipeTop .ee-switcher__media__item.is--active,
+.ee-switcher__media.ee-effect--swipeTop .ee-switcher__media__item.is--animating,
+.ee-switcher__media.ee-effect--wink .ee-switcher__media__item.is--active,
+.ee-switcher__media.ee-effect--wink .ee-switcher__media__item.is--animating {
+  z-index: 2;
+  overflow: hidden;
+}
+.ee-switcher__media.ee-effect--uncoverLeft .ee-switcher__media__item,
+.ee-switcher__media.ee-effect--uncoverRight .ee-switcher__media__item,
+.ee-switcher__media.ee-effect--uncoverTop .ee-switcher__media__item,
+.ee-switcher__media.ee-effect--uncoverBottom .ee-switcher__media__item {
+  overflow: hidden;
+}
+.ee-switcher__media.ee-effect--uncoverLeft .ee-switcher__media__item.is--animating,
+.ee-switcher__media.ee-effect--uncoverLeft .ee-switcher__media__item.is--active,
+.ee-switcher__media.ee-effect--uncoverRight .ee-switcher__media__item.is--animating,
+.ee-switcher__media.ee-effect--uncoverRight .ee-switcher__media__item.is--active,
+.ee-switcher__media.ee-effect--uncoverTop .ee-switcher__media__item.is--animating,
+.ee-switcher__media.ee-effect--uncoverTop .ee-switcher__media__item.is--active,
+.ee-switcher__media.ee-effect--uncoverBottom .ee-switcher__media__item.is--animating,
+.ee-switcher__media.ee-effect--uncoverBottom .ee-switcher__media__item.is--active {
+  overflow: hidden;
+}
+.ee-switcher__media.ee-effect--uncoverLeft .ee-switcher__media__item.is--active,
+.ee-switcher__media.ee-effect--uncoverRight .ee-switcher__media__item.is--active,
+.ee-switcher__media.ee-effect--uncoverTop .ee-switcher__media__item.is--active,
+.ee-switcher__media.ee-effect--uncoverBottom .ee-switcher__media__item.is--active {
+  z-index: 2;
+}
+.ee-switcher__media.ee-effect--flipHorizontal .ee-switcher__media__item picture,
+.ee-switcher__media.ee-effect--flipHorizontal .ee-switcher__media__item img,
+.ee-switcher__media.ee-effect--flipVertical .ee-switcher__media__item picture,
+.ee-switcher__media.ee-effect--flipVertical .ee-switcher__media__item img {
+  -webkit-backface-visibility: hidden !important;
+  backface-visibility: hidden !important;
+}
+.ee-switcher__title {
+  z-index: 1;
+}
+.ee-switcher__title > * {
+  direction: initial;
+}
+.ee-switcher__title__char {
+  vertical-align: top;
+}
+.is--animating .ee-switcher__title__char {
+  overflow: hidden;
+}
+.ee-switcher__title__char > * {
+  display: block;
+}
+.ee-switcher__titles {
+  position: relative;
+}
+.ee-switcher__titles__title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: block;
+  transition: none;
+}
+.ee-switcher__titles__title > * {
+  font-size: 5vw;
+  margin: 0px;
+}
+.ee-switcher__descriptions {
+  position: relative;
+}
+.ee-switcher__descriptions__description {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: block;
+  transition: none;
+}
+.ee-switcher__nav {
+  margin-top: 24px;
+}
+.ee-switcher__nav__item {
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -ms-flex-align: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  padding: 0 0 12px 0;
+}
+.ee-switcher__nav__item.is--active {
+  color: #000000;
+}
+.ee-switcher__arrows {
+  margin: 0;
+  margin-top: 24px;
+  display: -ms-flexbox;
+  display: flex;
+}
+.ee-switcher .ee-loader {
+  z-index: -1;
+  top: auto;
+}
+.ee-switcher .ee-arrow {
+  position: relative;
+  background-color: #eceeef;
+  color: #000000;
+  margin: 0px;
+}
+.ee-switcher .ee-arrow--next {
+  margin-left: 24px;
+}
+.ee-switcher-skin--overlay .ee-switcher__media-wrapper {
+  min-width: auto;
+  width: 100%;
+}
+.ee-switcher-skin--overlay .ee-switcher__content {
+  padding: 48px;
+}
+.ee-switcher-skin--overlay .ee-switcher__media {
+  height: 100%;
+}
+.ee-switcher-skin--overlay .ee-switcher__media__overlay {
+  z-index: 2;
+  display: block;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.ee-switcher-skin--overlay .ee-switcher__title,
+.ee-switcher-skin--overlay .ee-switcher__descriptions__description {
+  color: #ffffff;
+}
+.ee-switcher-skin--overlay .ee-switcher__nav__item {
+  color: rgba(255, 255, 255, 0.7);
+}
+.ee-switcher-skin--overlay .ee-switcher__nav__item.is--active {
+  color: #ffffff;
+}
+.ee-switcher-skin--overlay .ee-switcher .ee-arrow {
+  background-color: #ffffff;
+  color: #000000;
+}
+.ee-switcher-skin--overlay .ee-switcher .ee-loader {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+.ee-switcher-skin--default .ee-switcher__media {
+  min-height: 500px;
+}
+.ee-switcher-skin--default .ee-switcher__wrapper {
+  margin-left: -48px;
+}
+.ee-switcher-skin--default .ee-switcher__wrapper > * {
+  padding-left: 48px;
+}
+.ee-switcher-stack-desktop .ee-switcher__wrapper {
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+.ee-switcher-stack-desktop .ee-switcher__media-wrapper {
+  width: 100%;
+}
+.ee-switcher-arrows-align-center .ee-switcher__arrows {
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+.ee-switcher-arrows-align-right .ee-switcher__arrows {
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+}
+.ee-switcher-arrows-align-justify .ee-switcher__arrows {
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+.ee-switcher-menu-align--left .ee-switcher__nav {
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
+.ee-switcher-menu-align--left .ee-switcher__nav.ee-nav--stacked {
+  -ms-flex-align: start;
+  align-items: flex-start;
+}
+.ee-switcher-menu-align--center .ee-switcher__nav {
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+.ee-switcher-menu-align--center .ee-switcher__nav.ee-nav--stacked {
+  -ms-flex-align: center;
+  align-items: center;
+}
+.ee-switcher-menu-align--right .ee-switcher__nav {
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+}
+.ee-switcher-menu-align--right .ee-switcher__nav.ee-nav--stacked {
+  -ms-flex-align: end;
+  align-items: flex-end;
+}
+.ee-switcher-menu-align--justify .ee-switcher__nav {
+  -ms-flex-align: stretch;
+  align-items: stretch;
+}
+.ee-switcher-menu-align--justify .ee-switcher__nav__item {
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+}
+.ee-switcher-layout--reverse .ee-switcher__wrapper {
+  -ms-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+}
+@media (min-width: 1025px) {
+  .ee-switcher-arrows-hide .ee-switcher__arrows {
+    display: none;
+  }
+  .ee-switcher-menu-hide .ee-switcher__nav {
+    display: none;
+  }}
+
+@media (max-width: 1024px) {
+  .ee-switcher__titles {
+    text-align: center;
+  }
+  .ee-switcher__nav {
+    text-align: center;
+  }
+  .ee-switcher-stack-tablet .ee-switcher__wrapper {
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+  }
+  .ee-switcher-stack-tablet .ee-switcher__media-wrapper {
+    width: 100%;
+  }}
+
+@media (max-width: 767px) {
+  .ee-switcher-stack-mobile .ee-switcher__wrapper {
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+  }
+  .ee-switcher-stack-mobile .ee-switcher__media-wrapper {
+    width: 100%;
+  }
+  .ee-switcher-arrows-mobile-hide .ee-switcher__arrows {
+    display: none;
+  }
+  .ee-switcher-menu-mobile-hide .ee-switcher__nav {
+    display: none;
+  }
+  .ee-switcher-menu-mobile-align--left .ee-switcher__nav {
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+  }
+  .ee-switcher-menu-mobile-align--left .ee-switcher__nav.ee-nav--stacked {
+    -ms-flex-align: start;
+    align-items: flex-start;
+  }
+  .ee-switcher-menu-mobile-align--center .ee-switcher__nav {
+    -ms-flex-pack: center;
+    justify-content: center;
+  }
+  .ee-switcher-menu-mobile-align--center .ee-switcher__nav.ee-nav--stacked {
+    -ms-flex-align: center;
+    align-items: center;
+  }
+  .ee-switcher-menu-mobile-align--right .ee-switcher__nav {
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+  }
+  .ee-switcher-menu-mobile-align--right .ee-switcher__nav.ee-nav--stacked {
+    -ms-flex-align: end;
+    align-items: flex-end;
+  }
+  .ee-switcher-menu-mobile-align--justify .ee-switcher__nav {
+    -ms-flex-align: stretch;
+    align-items: stretch;
+  }
+  .ee-switcher-menu-mobile-align--justify .ee-switcher__nav__item {
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+  }}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .ee-switcher-arrows-tablet-hide .ee-switcher__arrows {
+    display: none;
+  }
+  .ee-switcher-menu-tablet-hide .ee-switcher__nav {
+    display: none;
+  }
+  .ee-switcher-menu-tablet-align--left .ee-switcher__nav {
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+  }
+  .ee-switcher-menu-tablet-align--left .ee-switcher__nav.ee-nav--stacked {
+    -ms-flex-align: start;
+    align-items: flex-start;
+  }
+  .ee-switcher-menu-tablet-align--center .ee-switcher__nav {
+    -ms-flex-pack: center;
+    justify-content: center;
+  }
+  .ee-switcher-menu-tablet-align--center .ee-switcher__nav.ee-nav--stacked {
+    -ms-flex-align: center;
+    align-items: center;
+  }
+  .ee-switcher-menu-tablet-align--right .ee-switcher__nav {
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+  }
+  .ee-switcher-menu-tablet-align--right .ee-switcher__nav.ee-nav--stacked {
+    -ms-flex-align: end;
+    align-items: flex-end;
+  }
+  .ee-switcher-menu-tablet-align--justify .ee-switcher__nav {
+    -ms-flex-align: stretch;
+    align-items: stretch;
+  }
+  .ee-switcher-menu-tablet-align--justify .ee-switcher__nav__item {
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+  }}
+
+
+@media (max-width: 767px) {
+
+  /* Switcher `--overlay` skin — 48 px inner padding wastes horizontal space on phones. */
+  .ee-switcher-skin--overlay .ee-switcher__content {
+    padding: 24px;
+  }}

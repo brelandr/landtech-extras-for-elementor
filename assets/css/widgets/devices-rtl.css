@@ -1,0 +1,344 @@
+/* LandTech devices */
+.elementor-widget-devices-extended .ee-device-wrapper {
+  margin: 0 auto;
+  display: inline-block;
+  max-width: 100%;
+  transition: 0.3s cubic-bezier(0.42, 0, 0.2, 1);
+  transition-property: width, padding-bottom;
+}
+.elementor-widget-devices-extended .ee-device {
+  position: relative;
+  display: inline-block;
+  height: 0;
+  max-width: 100%;
+  width: 100%;
+  transition: all 0.3s cubic-bezier(0.42, 0, 0.2, 1);
+}
+.elementor-widget-devices-extended .ee-device svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  font-size: 1rem;
+}
+.elementor-widget-devices-extended .ee-device svg .back-shape,
+.elementor-widget-devices-extended .ee-device svg .side-shape {
+  fill: #000000;
+}
+.elementor-widget-devices-extended .ee-device svg .overlay-shape {
+  fill-opacity: 0.2;
+  fill: #FFFFFF;
+}
+.elementor-widget-devices-extended .ee-device svg {
+  transition: all 0.3s cubic-bezier(0.42, 0, 0.2, 1);
+}
+.elementor-widget-devices-extended .ee-device__shape {
+  width: 100%;
+  transition: all 0.3s cubic-bezier(0.42, 0, 0.2, 1);
+}
+.elementor-widget-devices-extended .ee-device__media {
+  position: absolute;
+  left: 50%;
+  transition: all 0.3s cubic-bezier(0.42, 0, 0.2, 1);
+  border-radius: 3px;
+}
+.elementor-widget-devices-extended .ee-device__media__inner {
+  background-color: rgba(255, 255, 255, 0.2);
+  position: relative;
+  left: 0;
+  width: 100%;
+  height: 0px;
+  transition: all 0.3s cubic-bezier(0.42, 0, 0.2, 1);
+}
+.elementor-widget-devices-extended .ee-device__media__screen {
+  overflow: hidden;
+  display: -ms-flexbox;
+  display: flex;
+  border-radius: 3px;
+  transition: all 0.3s cubic-bezier(0.42, 0, 0.2, 1);
+  z-index: 2;
+}
+.elementor-widget-devices-extended .ee-device__media__screen__landscape {
+  z-index: 1;
+  opacity: 0;
+}
+.elementor-widget-devices-extended .ee-device__media__screen__inner {
+  left: 0;
+  right: 0;
+}
+.elementor-widget-devices-extended .ee-device__media__screen__inner,
+.elementor-widget-devices-extended .ee-device__media__screen__inner img {
+  width: 100%;
+}
+.elementor-widget-devices-extended .ee-device__media__screen__inner figure {
+  overflow: hidden;
+}
+.elementor-widget-devices-extended .ee-device__media__screen--video .ee-device__media__screen__inner,
+.elementor-widget-devices-extended .ee-device__media__screen--video .ee-video-player {
+  width: 100%;
+  height: 100%;
+}
+.elementor-widget-devices-extended .ee-device__media__screen--video .ee-device__media__screen__inner > video,
+.elementor-widget-devices-extended .ee-device__media__screen--video .ee-video-player > video {
+  height: auto;
+}
+.elementor-widget-devices-extended .ee-device-type-phone {
+  width: 277px;
+}
+.elementor-widget-devices-extended .ee-device-type-phone .ee-device {
+  width: 277px;
+  padding-bottom: 207.22022%;
+}
+.elementor-widget-devices-extended .ee-device-type-phone .ee-device__media {
+  top: 11.7%;
+  width: 88.80866%;
+  transform: translateX(-50%);
+}
+.elementor-widget-devices-extended .ee-device-type-phone .ee-device__media__inner {
+  padding-bottom: 177.77778%;
+}
+.elementor-widget-devices-extended .ee-device-type-tablet {
+  width: 430px;
+}
+.elementor-widget-devices-extended .ee-device-type-tablet .ee-device {
+  width: 430px;
+  padding-bottom: 138.37209%;
+}
+.elementor-widget-devices-extended .ee-device-type-tablet .ee-device__media {
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 90.69767%;
+}
+.elementor-widget-devices-extended .ee-device-type-tablet .ee-device__media__inner {
+  padding-bottom: 133.33333%;
+}
+.elementor-widget-devices-extended .ee-device-type-laptop {
+  width: 645px;
+}
+.elementor-widget-devices-extended .ee-device-type-laptop .ee-device {
+  width: 645px;
+  padding-bottom: 57.36434%;
+}
+.elementor-widget-devices-extended .ee-device-type-laptop .ee-device__media {
+  top: 47.9%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 76.43411%;
+}
+.elementor-widget-devices-extended .ee-device-type-laptop .ee-device__media__inner {
+  padding-bottom: 62.47465%;
+}
+.elementor-widget-devices-extended .ee-device-type-desktop {
+  width: 645px;
+}
+.elementor-widget-devices-extended .ee-device-type-desktop .ee-device {
+  width: 895px;
+  padding-bottom: 88.49162%;
+}
+.elementor-widget-devices-extended .ee-device-type-desktop .ee-device__media {
+  top: 33.5%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 92.2905%;
+}
+.elementor-widget-devices-extended .ee-device-type-desktop .ee-device__media__inner {
+  padding-bottom: 56.41646%;
+}
+.elementor-widget-devices-extended .ee-device-type-window {
+  width: 1000px;
+}
+.elementor-widget-devices-extended .ee-device-type-window .ee-video-player {
+  height: auto;
+}
+.elementor-widget-devices-extended .ee-device-type-window .ee-device {
+  width: 1000px;
+  height: auto;
+  padding-bottom: 0;
+}
+.elementor-widget-devices-extended .ee-device-type-window .ee-device__shape,
+.elementor-widget-devices-extended .ee-device-type-window .ee-device__media {
+  position: relative;
+  transform: none;
+  top: auto;
+  left: auto;
+  border-radius: 0px;
+}
+.elementor-widget-devices-extended .ee-device-type-window .ee-device__media {
+  width: 100%;
+}
+.elementor-widget-devices-extended .ee-device-type-window .ee-device__media__inner {
+  height: auto;
+  padding-bottom: 0;
+}
+.elementor-widget-devices-extended .ee-device-type-window .ee-device__media__screen {
+  overflow: visible;
+  position: relative;
+}
+.elementor-widget-devices-extended .ee-device-type-window .ee-device__media__screen__inner {
+  position: relative;
+  top: auto;
+  left: auto;
+  height: auto;
+  width: 100%;
+  overflow: visible;
+}
+.elementor-widget-devices-extended.ee-device-video-cover .ee-device__media__screen--video .ee-video-player > video {
+  object-fit: cover;
+  height: inherit;
+}
+.elementor-widget-devices-extended.ee-device-orientation-landscape .ee-device-wrapper .ee-device__shape svg {
+  transform: rotate(90deg);
+}
+.elementor-widget-devices-extended.ee-device-orientation-landscape .ee-device-wrapper .ee-device__media {
+  top: 50%;
+  transform: translateY(-50%) translateX(-50%);
+}
+.elementor-widget-devices-extended.ee-device-orientation-landscape .ee-device-wrapper .ee-device__orientation {
+  transform: translateY(calc(100% + 24px)) translateX(-50%) rotate(-90deg);
+}
+.elementor-widget-devices-extended.ee-device-orientation-landscape .ee-device-wrapper.ee-device-type-phone {
+  width: 574px;
+}
+.elementor-widget-devices-extended.ee-device-orientation-landscape .ee-device-wrapper.ee-device-type-phone .ee-device {
+  width: 574px;
+  padding-bottom: 48.25784%;
+}
+.elementor-widget-devices-extended.ee-device-orientation-landscape .ee-device-wrapper.ee-device-type-phone .ee-device__shape {
+  width: 48.25784%;
+}
+.elementor-widget-devices-extended.ee-device-orientation-landscape .ee-device-wrapper.ee-device-type-phone .ee-device__media {
+  width: 76.30662%;
+}
+.elementor-widget-devices-extended.ee-device-orientation-landscape .ee-device-wrapper.ee-device-type-phone .ee-device__media__inner {
+  padding-bottom: 56.25%;
+}
+.elementor-widget-devices-extended.ee-device-orientation-landscape .ee-device-wrapper.ee-device-type-tablet {
+  width: 595px;
+}
+.elementor-widget-devices-extended.ee-device-orientation-landscape .ee-device-wrapper.ee-device-type-tablet .ee-device {
+  width: 595px;
+  padding-bottom: 72.26891%;
+}
+.elementor-widget-devices-extended.ee-device-orientation-landscape .ee-device-wrapper.ee-device-type-tablet .ee-device__shape {
+  width: 72.26891%;
+}
+.elementor-widget-devices-extended.ee-device-orientation-landscape .ee-device-wrapper.ee-device-type-tablet .ee-device__media {
+  width: 87.39496%;
+}
+.elementor-widget-devices-extended.ee-device-orientation-landscape .ee-device-wrapper.ee-device-type-tablet .ee-device__media__inner {
+  padding-bottom: 75%;
+}
+.elementor-widget-devices-extended.ee-device-portrait-scrollable .ee-device__media__screen--image {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  align-items: flex-start;
+}
+.elementor-widget-devices-extended.ee-device-portrait-scrollable .ee-device__media__screen--image .ee-device__media__screen__inner {
+  margin-left: -100px;
+  padding-left: 100px;
+  height: auto;
+  min-height: 100%;
+}
+.elementor-widget-devices-extended.ee-device-portrait-scrollable .ee-device__media__screen--image .ee-device__media__screen__inner figure {
+  overflow: visible;
+}
+.elementor-widget-devices-extended.ee-device-landscape-scrollable .ee-device__media__screen__landscape {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  align-items: flex-start;
+}
+.elementor-widget-devices-extended.ee-device-landscape-scrollable .ee-device__media__screen__landscape .ee-device__media__screen__inner {
+  margin-left: -100px;
+  padding-left: 100px;
+  height: auto;
+  min-height: 100%;
+}
+.elementor-widget-devices-extended.ee-device-landscape-scrollable .ee-device__media__screen__landscape .ee-device__media__screen__inner figure {
+  overflow: visible;
+}
+.elementor-widget-devices-extended .ee-device__orientation {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  z-index: 99;
+  width: 28px;
+  height: 28px;
+  transform: translateY(calc(100% + 24px)) translateX(-50%);
+  font-size: 28px;
+  color: rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.42, 0, 0.2, 1);
+}
+.elementor-widget-devices-extended .ee-device__orientation:before {
+  display: block;
+}
+.elementor-widget-devices-extended .ee-device.has--orientation-control {
+  margin-bottom: 52px;
+}
+.elementor-widget-devices-extended.ee-device-orientation-landscape .ee-device.has--orientation-control .ee-device__media__screen {
+  opacity: 0;
+  z-index: 1;
+}
+.elementor-widget-devices-extended.ee-device-orientation-landscape .ee-device.has--orientation-control .ee-device__media__screen__landscape {
+  opacity: 1;
+  z-index: 2;
+}
+.elementor-widget-devices-extended.ee-device-skin-jetblack svg .overlay-shape {
+  fill: #FFFFFF;
+  fill-opacity: 0.2;
+}
+.elementor-widget-devices-extended.ee-device-skin-jetblack svg .back-shape,
+.elementor-widget-devices-extended.ee-device-skin-jetblack svg .side-shape {
+  fill: #000000;
+}
+.elementor-widget-devices-extended.ee-device-skin-black svg .overlay-shape {
+  fill: #FFFFFF;
+}
+.elementor-widget-devices-extended.ee-device-skin-black svg .back-shape,
+.elementor-widget-devices-extended.ee-device-skin-black svg .side-shape {
+  fill: #343639;
+}
+.elementor-widget-devices-extended.ee-device-skin-silver svg .overlay-shape {
+  fill: #000000;
+}
+.elementor-widget-devices-extended.ee-device-skin-silver svg .back-shape,
+.elementor-widget-devices-extended.ee-device-skin-silver svg .side-shape {
+  fill: #E4E6E7;
+}
+.elementor-widget-devices-extended.ee-device-skin-gold svg .overlay-shape {
+  fill: #000000;
+}
+.elementor-widget-devices-extended.ee-device-skin-gold svg .back-shape,
+.elementor-widget-devices-extended.ee-device-skin-gold svg .side-shape {
+  fill: #FBE6CF;
+}
+.elementor-widget-devices-extended.ee-device-skin-rosegold svg .overlay-shape {
+  fill: #000000;
+}
+.elementor-widget-devices-extended.ee-device-skin-rosegold svg .back-shape,
+.elementor-widget-devices-extended.ee-device-skin-rosegold svg .side-shape {
+  fill: #FDE4DC;
+}
+.elementor-widget-devices-extended.ee-device-controls-tone-dark svg .overlay-shape {
+  fill: #000000;
+  fill-opacity: 0.2;
+}
+.elementor-widget-devices-extended.ee-device-controls-tone-light svg .overlay-shape {
+  fill: #FFFFFF;
+  fill-opacity: 0.2;
+}
+@media (min-width: 1025px) {
+  .elementor-widget-devices-extended .ee-device__orientation:hover {
+    color: rgba(0, 0, 0, 0.7);
+  }}
+
+
+@media (max-width: 767px) {
+  /* Devices widget — cap oversized device frames to the column width on phones. */
+  .elementor-widget-devices-extended .ee-device-type-tablet,
+  .elementor-widget-devices-extended .ee-device-type-tablet .ee-device,
+  .elementor-widget-devices-extended .ee-device-type-laptop,
+  .elementor-widget-devices-extended .ee-device-type-laptop .ee-device,
+  .elementor-widget-devices-extended .ee-device-type-desktop,
+  .elementor-widget-devices-extended .ee-device-type-desktop .ee-device,
+  .elementor-widget-devices-extended .ee-device-type-window,
+  .elementor-widget-devices-extended .ee-device-type-window .ee-device {
+    max-width: 100%;
+  }}

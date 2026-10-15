@@ -138,6 +138,17 @@ class Slide_Menu extends Extras_Widget {
 	}
 
 	/**
+	 * Styles for this widget. The shared shell loads only as a dependency.
+	 *
+	 * @return string[]
+	 */
+	public function get_style_depends() {
+		return array(
+			'landtech-extras-widget-slide-menu',
+		);
+	}
+
+	/**
 	 * Register Widget Controls
 	 *
 	 * @since  2.0.0

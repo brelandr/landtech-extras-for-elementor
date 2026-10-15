@@ -1,0 +1,212 @@
+/* LandTech toggle */
+.ee-toggle-element__toggle {
+  display: block;
+  text-align: center;
+}
+.ee-toggle-element__controls-wrapper {
+  display: inline-block;
+  position: relative;
+  padding: 6px;
+  margin: 0;
+  background-color: #D4D4D4;
+}
+.ee-toggle-element__controls-wrapper--before {
+  margin-bottom: 24px;
+}
+.ee-toggle-element__controls-wrapper--after {
+  margin-top: 24px;
+}
+.ee-toggle-element ul.ee-toggle-element__controls {
+  position: relative;
+  cursor: pointer;
+  min-height: 44px;
+}
+.ee-toggle-element ul.ee-toggle-element__controls li {
+  padding: 0.5em 0.9em;
+  margin: 0;
+}
+.ee-toggle-element .ee-toggle-element__controls__item {
+  line-height: 1;
+  min-width: 44px;
+  height: 100%;
+  transition: all 0.3s linear;
+}
+.ee-toggle-element .ee-toggle-element__controls__item.ee--is-active {
+  color: #ffffff;
+}
+.ee-toggle-element .ee-toggle-element__controls__text {
+  display: block;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.ee-labels-align--start .ee-toggle-element .ee-toggle-element__controls {
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
+.ee-labels-align--center .ee-toggle-element .ee-toggle-element__controls {
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+.ee-labels-align--end .ee-toggle-element .ee-toggle-element__controls {
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+}
+.ee-labels-align--stretch .ee-toggle-element .ee-toggle-element__controls__item {
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+}
+.ee-labels-align-stacked--start .ee-toggle-element .ee-toggle-element__controls {
+  -ms-flex-align: start;
+  align-items: flex-start;
+}
+.ee-labels-align-stacked--center .ee-toggle-element .ee-toggle-element__controls {
+  -ms-flex-align: center;
+  align-items: center;
+}
+.ee-labels-align-stacked--end .ee-toggle-element .ee-toggle-element__controls {
+  -ms-flex-align: end;
+  align-items: flex-end;
+}
+.ee-labels-align-stacked--stretch .ee-toggle-element .ee-toggle-element__controls {
+  -ms-flex-align: stretch;
+  align-items: stretch;
+}
+.ee-toggle-element__indicator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  min-width: 44px;
+  margin: 6px;
+  opacity: 0;
+  transition: opacity 0.3s linear;
+}
+.ee--is-ready .ee-toggle-element__indicator {
+  opacity: 1;
+}
+.ee-toggle-element__elements {
+  text-align: left;
+}
+.ee-toggle-element__element {
+  display: none;
+}
+.ee-toggle-element__element p:last-child {
+  margin: 0px;
+}
+.ee-toggle-element--round .ee-toggle-element__controls-wrapper,
+.ee-toggle-element--round .ee-toggle-element__indicator {
+  border-radius: 2em;
+}
+.ee-toggle-element--square .ee-toggle-element__controls-wrapper {
+  border-radius: 4px;
+}
+.ee-toggle-element--square .ee-toggle-element__indicator {
+  border-radius: 2px;
+}
+.ee-toggle-element--stack-desktop.ee-toggle-element--round .ee-toggle-element__controls-wrapper,
+.ee-toggle-element--stack-tablet.ee-toggle-element--round .ee-toggle-element__controls-wrapper,
+.ee-toggle-element--stack-mobile.ee-toggle-element--round .ee-toggle-element__controls-wrapper {
+  border-radius: 1.3em;
+}
+.ee-toggle-element--stack-desktop .ee-toggle-element__controls {
+  margin-left: 0 !important;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+.ee-toggle-element--stack-desktop .ee-toggle-element__controls > li {
+  margin-left: 0 !important;
+}
+.ee-toggle-element--stack-desktop .ee-toggle-element__controls > li > a {
+  display: block;
+}
+@media (max-width: 1024px) {
+  .ee-labels-align-tablet--start .ee-toggle-element .ee-toggle-element__controls {
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+  }
+  .ee-labels-align-tablet--center .ee-toggle-element .ee-toggle-element__controls {
+    -ms-flex-pack: center;
+    justify-content: center;
+  }
+  .ee-labels-align-tablet--end .ee-toggle-element .ee-toggle-element__controls {
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+  }
+  .ee-labels-align-tablet--stretch .ee-toggle-element .ee-toggle-element__controls__item {
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+  }
+  .ee-labels-align-stacked-tablet--start .ee-toggle-element .ee-toggle-element__controls {
+    -ms-flex-align: start;
+    align-items: flex-start;
+  }
+  .ee-labels-align-stacked-tablet--center .ee-toggle-element .ee-toggle-element__controls {
+    -ms-flex-align: center;
+    align-items: center;
+  }
+  .ee-labels-align-stacked-tablet--end .ee-toggle-element .ee-toggle-element__controls {
+    -ms-flex-align: end;
+    align-items: flex-end;
+  }
+  .ee-labels-align-stacked-tablet--stretch .ee-toggle-element .ee-toggle-element__controls {
+    -ms-flex-align: stretch;
+    align-items: stretch;
+  }
+  .ee-toggle-element--stack-tablet .ee-toggle-element__controls {
+    margin-left: 0 !important;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+  .ee-toggle-element--stack-tablet .ee-toggle-element__controls > li {
+    margin-left: 0 !important;
+  }
+  .ee-toggle-element--stack-tablet .ee-toggle-element__controls > li > a {
+    display: block;
+  }}
+
+@media (max-width: 767px) {
+  .ee-labels-align-mobile--start .ee-toggle-element .ee-toggle-element__controls {
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+  }
+  .ee-labels-align-mobile--center .ee-toggle-element .ee-toggle-element__controls {
+    -ms-flex-pack: center;
+    justify-content: center;
+  }
+  .ee-labels-align-mobile--end .ee-toggle-element .ee-toggle-element__controls {
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+  }
+  .ee-labels-align-mobile--stretch .ee-toggle-element .ee-toggle-element__controls__item {
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+  }
+  .ee-labels-align-stacked-mobile--start .ee-toggle-element .ee-toggle-element__controls {
+    -ms-flex-align: start;
+    align-items: flex-start;
+  }
+  .ee-labels-align-stacked-mobile--center .ee-toggle-element .ee-toggle-element__controls {
+    -ms-flex-align: center;
+    align-items: center;
+  }
+  .ee-labels-align-stacked-mobile--end .ee-toggle-element .ee-toggle-element__controls {
+    -ms-flex-align: end;
+    align-items: flex-end;
+  }
+  .ee-labels-align-stacked-mobile--stretch .ee-toggle-element .ee-toggle-element__controls {
+    -ms-flex-align: stretch;
+    align-items: stretch;
+  }
+  .ee-toggle-element--stack-mobile .ee-toggle-element__controls {
+    margin-left: 0 !important;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+  .ee-toggle-element--stack-mobile .ee-toggle-element__controls > li {
+    margin-left: 0 !important;
+  }
+  .ee-toggle-element--stack-mobile .ee-toggle-element__controls > li > a {
+    display: block;
+  }}

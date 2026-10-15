@@ -2173,6 +2173,20 @@ class LandTechExtrasPlugin {
 			LANDTECH_EXTRAS_VERSION
 		);
 
+		foreach ( $this->get_widget_stylesheet_slugs() as $widget_slug ) {
+			$widget_rel = 'assets/css/widgets/' . $widget_slug . $direction_suffix . '.css';
+			$widget_abs = LANDTECH_EXTRAS_PATH . $widget_rel;
+			if ( ! is_readable( $widget_abs ) ) {
+				continue;
+			}
+			wp_register_style(
+				'landtech-extras-widget-' . $widget_slug,
+				plugins_url( '/' . $widget_rel, LANDTECH_EXTRAS__FILE__ ),
+				array( 'landtech-extras-frontend' ),
+				LANDTECH_EXTRAS_VERSION
+			);
+		}
+
 		wp_register_style(
 			'elementor-select2',
 			ELEMENTOR_ASSETS_URL . 'lib/e-select2/css/e-select2' . $suffix . '.css',
@@ -2231,11 +2245,87 @@ class LandTechExtrasPlugin {
 
 		$this->register_landtech_extras_frontend_style_handles();
 
-		// Enqueue styles
+		// Shared icon font and button presets. Widget CSS is a style dependency of that widget.
 		wp_enqueue_style( 'landtech-extras-nicons' );
-		wp_enqueue_style( 'landtech-extras-frontend' );
 		wp_enqueue_style( 'landtech-extras-widget-cta-contrast' );
 		wp_enqueue_style( 'landtech-extras-button-look' );
+
+		if ( $this->request_needs_extension_shell_styles() ) {
+			wp_enqueue_style( 'landtech-extras-frontend' );
+		}
+	}
+
+	/**
+	 * Stylesheet slugs split out of the shared frontend file.
+	 *
+	 * @return string[]
+	 */
+	private function get_widget_stylesheet_slugs() {
+		return array(
+			'circle-progress',
+			'image-comparison',
+			'scroll-indicator',
+			'slide-menu',
+			'age-gate',
+			'offcanvas',
+			'breadcrumbs',
+			'hotspots',
+			'heading',
+			'devices',
+			'timeline',
+			'unfold',
+			'gallery',
+			'switcher',
+			'calendar',
+			'popup',
+			'search',
+			'media-player',
+			'audio-player',
+			'toggle',
+			'table',
+			'posts',
+		);
+	}
+
+	/**
+	 * Extensions print classes without their own widget stylesheet.
+	 *
+	 * @return bool
+	 */
+	private function request_needs_extension_shell_styles() {
+		if ( $this->is_elementor_preview_iframe_request() ) {
+			return true;
+		}
+
+		$scan = $this->elementor_documents_for_frontend_styles();
+		if ( ! empty( $scan['uncertain'] ) || empty( $scan['ids'] ) ) {
+			return ! empty( $scan['uncertain'] );
+		}
+
+		$markers = array(
+			'"widgetType":"template"',
+			'"widgetType":"global"',
+			'"sticky_enable":"yes"',
+			'"tooltip_enable":"yes"',
+			'"parallax_enable":"yes"',
+			'"parallax_background_enable":"yes"',
+			'"parallax_element_enable":"yes"',
+			'"ltxe_shape_dividers"',
+		);
+
+		foreach ( $scan['ids'] as $post_id ) {
+			$raw = get_post_meta( (int) $post_id, '_elementor_data', true );
+			if ( ! is_string( $raw ) || '' === $raw ) {
+				return true;
+			}
+			foreach ( $markers as $marker ) {
+				if ( false !== strpos( $raw, $marker ) ) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	/**

@@ -1,0 +1,49 @@
+/* LandTech hotspots */
+.ee-hotspot {
+  position: absolute;
+  left: 48px;
+  top: 48px;
+}
+.ee-hotspot__wrapper {
+  box-sizing: content-box;
+  cursor: pointer;
+  text-align: center;
+  line-height: 40px;
+}
+.ee-hotspots:not(.ee-hotspots--no-pulse) .ee-hotspot__wrapper:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  transform: scale(1);
+  pointer-events: none;
+  animation: pulse-grow 2s infinite;
+}
+.ee-hotspot__wrapper,
+.ee-hotspot__wrapper:before {
+  min-width: 40px;
+  min-height: 40px;
+  display: block;
+  background-color: #000000;
+  color: #FFFFFF;
+  border-radius: 9999px;
+}
+.ee-hotspot:hover .ee-hotspot__wrapper:before {
+  animation: none;
+}
+.ee-hotspot__text {
+  width: 100%;
+  display: table;
+  padding: 0 12px;
+}
+.ee-hotspot__icon {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+@media (max-width: 767px) {
+
+  .ee-hotspot__wrapper {
+    min-width: 44px;
+    min-height: 44px;
+    box-sizing: border-box;
+  }}

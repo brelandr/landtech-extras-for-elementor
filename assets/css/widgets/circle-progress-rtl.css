@@ -1,0 +1,67 @@
+/* LandTech circle-progress */
+.ee-circle-progress {
+  position: relative;
+  display: inline-block;
+}
+.ee-circle-progress canvas {
+  display: block;
+  max-width: 100%;
+  height: auto !important;
+  margin: 0 auto;
+}
+.ee-circle-progress__value {
+  cursor: default;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+  justify-content: center;
+  font-size: 30px;
+  font-weight: bold;
+}
+.ee-circle-progress__value.is--hidden {
+  display: none;
+}
+.ee-circle-progress__value > .suffix {
+  text-align: left;
+  font-size: 0.5em;
+  margin-left: 0.2em;
+}
+.ee-circle-progress__icon {
+  font-size: 24px;
+}
+.ee-circle-progress__text {
+  display: block;
+  margin-top: 12px;
+}
+.ee-circle-progress-suffix--before .ee-circle-progress__value {
+  -ms-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+}
+.ee-circle-progress-suffix--before .ee-circle-progress__value > .suffix {
+  margin-right: 0.2em;
+  margin-left: 0;
+}
+.ee-circle-progress-suffix--top .ee-circle-progress__value {
+  -ms-flex-align: start;
+  align-items: flex-start;
+}
+.ee-circle-progress-suffix--middle .ee-circle-progress__value {
+  -ms-flex-align: center;
+  align-items: center;
+}
+.ee-circle-progress-suffix--bottom .ee-circle-progress__value {
+  -ms-flex-align: baseline;
+  align-items: baseline;
+}
+.ee-circle-progress-suffix--stretch .ee-circle-progress__value > .suffix {
+  font-size: inherit;
+  line-height: inherit;
+  margin: 0;
+}
+.ee-circle-progress-position--below .ee-circle-progress__value {
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+.ee-circle-progress-position--hide .ee-circle-progress__value {
+  display: none;
+}

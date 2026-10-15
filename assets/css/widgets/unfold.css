@@ -1,0 +1,28 @@
+/* LandTech unfold */
+.ee-unfold__mask {
+  overflow: hidden;
+  position: relative;
+}
+.ee-unfold__content {
+  float: left;
+  width: 100%;
+}
+.ee-unfold__separator {
+  width: 100%;
+  height: 24px;
+  max-height: 100%;
+  top: auto;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, white 100%);
+}
+.ee-unfold__trigger {
+  margin-top: 24px;
+}
+.ee-unfold__trigger .ee-button {
+  cursor: pointer;
+}
+.ee-unfold__icon {
+  display: inline-block;
+}
+.ee-unfold__icon--open {
+  display: none;
+}

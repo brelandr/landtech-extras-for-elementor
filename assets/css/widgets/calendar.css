@@ -1,0 +1,30 @@
+/* LandTech calendar */
+.ee-calendar {
+  display: inline-block;
+  background: #f7f7f7;
+}
+.ee-calendar a {
+  cursor: default;
+}
+.ee-calendar a[href] {
+  cursor: pointer;
+}
+.ee-calendar-event {
+  display: none;
+}
+.ee-calendar__mount {
+  min-height: 420px;
+  height: 560px;
+  overflow: hidden;
+}
+
+@media (max-width: 767px) {
+
+  /* Schedule-X pop-ups (date picker, event tooltip) declare a fixed rem width
+     that can slightly exceed a 320 px viewport. Clamp the popup so it never
+     escapes the visible area. Selectors match the vendor stylesheet under
+     assets/lib/schedule-x/. */
+  .ee-calendar .sx__date-picker-popover,
+  .ee-calendar .sx__event-modal {
+    max-width: min(20.75rem, calc(100vw - 32px));
+  }}

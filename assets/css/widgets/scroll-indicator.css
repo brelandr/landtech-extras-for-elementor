@@ -1,0 +1,192 @@
+/* LandTech scroll-indicator */
+.ee-scroll-indicator__element__link {
+  transition: none;
+}
+.ee-scroll-indicator__element__link:hover {
+  color: initial;
+}
+.ee-scroll-indicator__element__link.has--cursor {
+  cursor: pointer;
+}
+.ee-scroll-indicator--skin-bullets .ee-scroll-indicator__element__wrapper,
+.ee-scroll-indicator--skin-bar .ee-scroll-indicator__element__wrapper {
+  display: block;
+  position: relative;
+  background-color: #D4D4D4;
+}
+.ee-scroll-indicator--skin-bullets .ee-scroll-indicator__element__link.is--reading .ee-scroll-indicator__element__progress,
+.ee-scroll-indicator--skin-bar .ee-scroll-indicator__element__link.is--reading .ee-scroll-indicator__element__progress {
+  display: block;
+}
+.ee-scroll-indicator--skin-bullets .ee-scroll-indicator__element__link.is--read .ee-scroll-indicator__element__wrapper,
+.ee-scroll-indicator--skin-bar .ee-scroll-indicator__element__link.is--read .ee-scroll-indicator__element__wrapper {
+  display: block;
+  background-color: #0275d8;
+}
+.ee-scroll-indicator--skin-bullets .ee-scroll-indicator__element__progress,
+.ee-scroll-indicator--skin-bar .ee-scroll-indicator__element__progress {
+  width: 0%;
+  display: none;
+}
+.ee-scroll-indicator--skin-bullets {
+  height: 100%;
+}
+.ee-scroll-indicator--skin-bullets .ee-scroll-indicator__menu {
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 12px;
+  height: 100%;
+}
+.ee-scroll-indicator--skin-bullets .ee-scroll-indicator__element {
+  position: relative;
+  -ms-flex-positive: 0 !important;
+  flex-grow: 0 !important;
+}
+.ee-scroll-indicator--skin-bullets .ee-scroll-indicator__element__progress {
+  width: 100%;
+  height: 0%;
+}
+.ee-scroll-indicator--skin-bullets .ee-scroll-indicator__element__wrapper {
+  border-radius: 100%;
+  width: 12px;
+  height: 12px;
+  overflow: hidden;
+}
+.ee-scroll-indicator--skin-bullets .ee-scroll-indicator__element__link {
+  padding: 6px;
+}
+.ee-scroll-indicator--skin-bar .ee-scroll-indicator__element__wrapper {
+  position: relative;
+  height: 6px;
+}
+.ee-scroll-indicator--skin-list .ee-scroll-indicator__menu {
+  -ms-flex-align: stretch;
+  align-items: stretch;
+}
+.ee-scroll-indicator--skin-list .ee-scroll-indicator__element {
+  display: block;
+  width: 100%;
+}
+.ee-scroll-indicator--skin-list .ee-scroll-indicator__element__link {
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -ms-flex-align: center;
+  align-items: center;
+}
+.ee-scroll-indicator--skin-list .ee-scroll-indicator__element__link.is--read .ee-scroll-indicator__element__bullet {
+  color: #D4D4D4;
+}
+.ee-scroll-indicator--skin-list .ee-scroll-indicator__element__link.is--read .ee-scroll-indicator__element__title,
+.ee-scroll-indicator--skin-list .ee-scroll-indicator__element__link.is--read .ee-scroll-indicator__element__subtitle {
+  color: #0275d8;
+}
+.ee-scroll-indicator--skin-list .ee-scroll-indicator__element__link.is--reading .ee-scroll-indicator__element__title,
+.ee-scroll-indicator--skin-list .ee-scroll-indicator__element__link.is--reading .ee-scroll-indicator__element__subtitle {
+  color: #0275d8;
+}
+.ee-scroll-indicator--skin-list .ee-scroll-indicator__element__link.is--reading svg,
+.ee-scroll-indicator--skin-list .ee-scroll-indicator__element__link.is--read svg {
+  display: block;
+}
+.ee-scroll-indicator--skin-list .ee-scroll-indicator__element__link.is--read svg circle {
+  stroke-dasharray: 0;
+  stroke: #D4D4D4;
+}
+.ee-scroll-indicator--skin-list .ee-scroll-indicator__element__bullet {
+  display: block;
+  position: relative;
+  width: 4em;
+  height: 4em;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  border-radius: 100%;
+  margin-right: 12px;
+}
+.ee-scroll-indicator--skin-list .ee-scroll-indicator__element__number {
+  max-width: none;
+  display: block;
+  font-size: 18px;
+  font-weight: bold;
+}
+.ee-scroll-indicator--skin-list .ee-scroll-indicator__element__circle svg {
+  display: none;
+  stroke: #0275d8;
+  width: 100%;
+  height: auto;
+}
+.ee-scroll-indicator--skin-list .ee-scroll-indicator__element__text {
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+}
+.ee-scroll-indicator--skin-list .ee-scroll-indicator__element__title {
+  color: #373a3c;
+}
+.ee-scroll-indicator--skin-list .ee-scroll-indicator__element__subtitle {
+  color: #818a91;
+}
+.ee-scroll-indicator--skin-list .ee-scroll-indicator__element__title,
+.ee-scroll-indicator--skin-list .ee-scroll-indicator__element__subtitle {
+  margin: 0;
+}
+.ee-scroll-indicator--skin-list li:last-of-type a::after {
+  display: none;
+}
+.elementor-widget-ee-scroll-indicator.ee-scroll-indicator-direction--vertical {
+  height: 100%;
+}
+.ee-scroll-indicator-numbers--right .ee-scroll-indicator__element__bullet,
+.ee-scroll-indicator-numbers--top .ee-scroll-indicator__element__bullet,
+.ee-scroll-indicator-numbers--bottom .ee-scroll-indicator__element__bullet {
+  margin: 0;
+}
+.ee-scroll-indicator-numbers--top .ee-scroll-indicator__element__text,
+.ee-scroll-indicator-numbers--bottom .ee-scroll-indicator__element__text {
+  text-align: center;
+}
+.ee-scroll-indicator-numbers--right .ee-scroll-indicator__element__link {
+  -ms-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+}
+.ee-scroll-indicator-numbers--right .ee-scroll-indicator__element__bullet {
+  margin-left: 12px;
+}
+.ee-scroll-indicator-numbers--right .ee-scroll-indicator__element__text {
+  text-align: right;
+}
+.ee-scroll-indicator-numbers--top .ee-scroll-indicator__element__link {
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+.ee-scroll-indicator-numbers--top .ee-scroll-indicator__element__bullet {
+  margin-bottom: 12px;
+}
+.ee-scroll-indicator-numbers--bottom .ee-scroll-indicator__element__link {
+  -ms-flex-direction: column-reverse;
+  flex-direction: column-reverse;
+}
+.ee-scroll-indicator-numbers--bottom .ee-scroll-indicator__element__bullet {
+  margin-top: 12px;
+}
+.ee-scroll-indicator-show--numbers .ee-scroll-indicator__element__link {
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+.ee-scroll-indicator-show--numbers .ee-scroll-indicator__element__bullet {
+  margin: 0;
+}
+.ee-scroll-indicator-show--text .ee-scroll-indicator__number {
+  display: none;
+}
+
+@media (max-width: 767px) {
+
+  /* Scroll Indicator bar skin — the visible bar is 6 px tall (below WCAG 2.5.8 24×24 px
+     minimum). Expand only the click surface (the `<a>` wrapping the bar) with flex
+     centering so the 6 px bar stays visually unchanged. */
+  .ee-scroll-indicator--skin-bar .ee-scroll-indicator__element__link {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+  }}

@@ -771,6 +771,17 @@ class Timeline extends Posts_Base {
 		$this->end_controls_section();
 	}
 
+	/**
+	 * Styles for this widget. The shared shell loads only as a dependency.
+	 *
+	 * @return string[]
+	 */
+	public function get_style_depends() {
+		return array(
+			'landtech-extras-widget-timeline',
+		);
+	}
+
 	protected function register_controls() {
 
 		$posts_control_settings = [

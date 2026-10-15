@@ -98,6 +98,18 @@ class Audio_Player extends Extras_Widget {
 	}
 
 	/**
+	 * Styles for this widget. The shared shell loads only as a dependency.
+	 *
+	 * @return string[]
+	 */
+	public function get_style_depends() {
+		return array(
+			'landtech-extras-widget-media-player',
+			'landtech-extras-widget-audio-player',
+		);
+	}
+
+	/**
 	 * Register Widget Controls
 	 *
 	 * @since  2.0.0

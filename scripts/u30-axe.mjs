@@ -21,8 +21,33 @@ if ( existsSync( renderDir ) ) {
 	}
 }
 
+const widgetStyles = [
+	[ 'ee-circle-progress', 'circle-progress.css' ],
+	[ 'ee-image-comparison', 'image-comparison.css' ],
+	[ 'ee-scroll-indicator', 'scroll-indicator.css' ],
+	[ 'ee-slide-menu', 'slide-menu.css' ],
+	[ 'ee-age-gate', 'age-gate.css' ],
+	[ 'ee-offcanvas', 'offcanvas.css' ],
+	[ 'ee-breadcrumbs', 'breadcrumbs.css' ],
+	[ 'ee-hotspot', 'hotspots.css' ],
+	[ 'ee-heading', 'heading.css' ],
+	[ 'ee-device', 'devices.css' ],
+	[ 'ee-timeline', 'timeline.css' ],
+	[ 'ee-unfold', 'unfold.css' ],
+	[ 'ee-gallery', 'gallery.css' ],
+	[ 'ee-switcher', 'switcher.css' ],
+	[ 'ee-calendar', 'calendar.css' ],
+	[ 'ee-popup', 'popup.css' ],
+	[ 'ee-search', 'search.css' ],
+	[ 'ee-player', 'media-player.css' ],
+	[ 'ee-audio', 'audio-player.css' ],
+	[ 'ee-toggle', 'toggle.css' ],
+	[ 'ee-table', 'table.css' ],
+	[ 'ee-post', 'posts.css' ],
+];
+
 function inlineLocalStyles( html, htmlPath ) {
-	return html.replace( /<link\s+rel="stylesheet"\s+href="([^"]+)"\s*>/g, ( match, href ) => {
+	let styled = html.replace( /<link\s+rel="stylesheet"\s+href="([^"]+)"\s*>/g, ( match, href ) => {
 		if ( /^https?:/i.test( href ) ) {
 			return match;
 		}
@@ -32,6 +57,21 @@ function inlineLocalStyles( html, htmlPath ) {
 		}
 		return '<style>' + readFileSync( cssPath, 'utf8' ) + '</style>';
 	} );
+	const extra = [];
+	for ( const [ needle, file ] of widgetStyles ) {
+		if ( ! styled.includes( needle ) ) {
+			continue;
+		}
+		const cssPath = join( root, 'assets/css/widgets', file );
+		if ( existsSync( cssPath ) ) {
+			extra.push( readFileSync( cssPath, 'utf8' ) );
+		}
+	}
+	if ( extra.length ) {
+		// Widget rules originally lived above later shell rules such as .mfp-hide.
+		styled = styled.replace( '<style>', '<style>' + extra.join( '\n' ) + '</style><style>' );
+	}
+	return styled;
 }
 
 let failed = false;

@@ -1,0 +1,135 @@
+/* LandTech table */
+.ee-table {
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-spacing: 0;
+  border-color: inherit;
+  vertical-align: inherit;
+  text-align: left;
+  font-weight: inherit;
+  -webkit-border-horizontal-spacing: 0;
+  -webkit-border-vertical-spacing: 0;
+  cursor: default;
+}
+.ee-table.ee-table--rules {
+  border-collapse: collapse;
+}
+.ee-table__cell {
+  text-align: left;
+  vertical-align: middle;
+  padding: 0;
+}
+.ee-table__text {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 12px;
+}
+.ee-table__sort .ee-table__text {
+  cursor: pointer;
+}
+.ee-table__sort .ee-table__text .nicon-sort-up,
+.ee-table__sort .ee-table__text .nicon-sort-down {
+  display: none;
+}
+.ee-table__sort .ee-table__text .nicon {
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  text-align: right;
+}
+.ee-table__sort--up .ee-table__text .nicon-sort-up-down {
+  display: none;
+}
+.ee-table__sort--up .ee-table__text .nicon-sort-up {
+  display: block;
+}
+.ee-table__sort--down .ee-table__text .nicon-sort-up-down {
+  display: none;
+}
+.ee-table__sort--down .ee-table__text .nicon-sort-down {
+  display: block;
+}
+@media (max-width: 767px) {
+  .ee-table--responsive .ee-table thead {
+    display: none;
+  }
+  .ee-table--responsive .ee-table tr td,
+  .ee-table--responsive .ee-table tr th {
+    display: -ms-flexbox;
+    display: flex;
+  }
+  .ee-table--responsive .ee-table tr td > *,
+  .ee-table--responsive .ee-table tr td:before,
+  .ee-table--responsive .ee-table tr th > *,
+  .ee-table--responsive .ee-table tr th:before {
+    -ms-flex-preferred-size: 50%;
+    flex-basis: 50%;
+    width: 50%;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+  }
+  .ee-table--responsive .ee-table tr td[data-title]:before,
+  .ee-table--responsive .ee-table tr th[data-title]:before {
+    content: attr(data-title);
+    position: relative;
+    padding: 12px;
+  }
+  body.elementor-msie .ee-table__cell {
+    max-width: 1px;
+  }
+  .ee-table-mobile-header--hide .ee-table__cell[data-title]:before {
+    content: none !important;
+  }
+  .ee-table--responsive.ee-table-mobile-header--column .ee-table__cell[data-title] {
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+  .ee-table--responsive.ee-table-mobile-header--column .ee-table__cell[data-title] > *,
+  .ee-table--responsive.ee-table-mobile-header--column .ee-table__cell[data-title]:before {
+    -ms-flex-preferred-size: 100%;
+    flex-basis: 100%;
+    width: auto;
+  }}
+
+.ee-table-wrapper .ee-table-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+.ee-table-pagination__prev,
+.ee-table-pagination__next {
+  cursor: pointer;
+  border: 1px solid rgba(15, 23, 42, 0.15);
+  background: #fff;
+  border-radius: 6px;
+  padding: 6px 12px;
+}
+.ee-table-pagination__prev:disabled,
+.ee-table-pagination__next:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.ee-table-pagination__status {
+  font-size: 0.875rem;
+  color: rgba(15, 23, 42, 0.72);
+}
+
+/*
+ * Wave 3 — mobile responsiveness fixes for previously-audited widgets. See
+ * frontend.css for the LTR twin of this block; only the Swiper `--outside` prev/next
+ * offsets are direction-sensitive and swapped here for RTL layouts.
+ */
+
+/* WCAG 2.5.8 minimum tap-target size on Live Data Table pagination buttons. */
+.ee-table-pagination__prev,
+.ee-table-pagination__next {
+  min-width: 44px;
+  min-height: 44px;
+  box-sizing: border-box;
+}

@@ -1,0 +1,110 @@
+/* LandTech breadcrumbs */
+.ee-breadcrumbs {
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+.ee-breadcrumbs__item,
+.ee-breadcrumbs__separator {
+  cursor: default;
+  vertical-align: middle;
+}
+.ee-breadcrumbs__separator:last-child {
+  display: none;
+}
+.ee-breadcrumbs__crumb--home,
+.ee-breadcrumbs__separator {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-item-align: center;
+  align-self: center;
+}
+.ee-breadcrumbs-align-stretch .ee-breadcrumbs > .ee-breadcrumbs__separator {
+  -ms-flex-positive: 0;
+  flex-grow: 0;
+  text-align: center;
+}
+@media (max-width: 1024px) {
+  .ee-breadcrumbs-align-tablet-left .ee-breadcrumbs {
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+  }
+  .ee-breadcrumbs-align-tablet-left .ee-breadcrumbs > li {
+    -ms-flex-positive: 0;
+    flex-grow: 0;
+  }
+  .ee-breadcrumbs-align-tablet-center .ee-breadcrumbs {
+    -ms-flex-pack: center;
+    justify-content: center;
+  }
+  .ee-breadcrumbs-align-tablet-center .ee-breadcrumbs > li {
+    -ms-flex-positive: 0;
+    flex-grow: 0;
+  }
+  .ee-breadcrumbs-align-tablet-right .ee-breadcrumbs {
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+  }
+  .ee-breadcrumbs-align-tablet-right .ee-breadcrumbs > li {
+    -ms-flex-positive: 0;
+    flex-grow: 0;
+  }
+  .ee-breadcrumbs-align-tablet-stretch .ee-breadcrumbs {
+    -ms-flex-pack: stretch;
+    justify-content: stretch;
+  }
+  .ee-breadcrumbs-align-tablet-stretch .ee-breadcrumbs > li {
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+  }
+  .ee-breadcrumbs-align-tablet-stretch .ee-breadcrumbs > li > a {
+    display: block;
+  }
+  .ee-breadcrumbs-align-tablet-stretch .ee-breadcrumbs > .ee-breadcrumbs__separator {
+    -ms-flex-positive: 0;
+    flex-grow: 0;
+    text-align: center;
+  }}
+
+@media (max-width: 767px) {
+  .ee-breadcrumbs-align-mobile-left .ee-breadcrumbs {
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+  }
+  .ee-breadcrumbs-align-mobile-left .ee-breadcrumbs > li {
+    -ms-flex-positive: 0;
+    flex-grow: 0;
+  }
+  .ee-breadcrumbs-align-mobile-center .ee-breadcrumbs {
+    -ms-flex-pack: center;
+    justify-content: center;
+  }
+  .ee-breadcrumbs-align-mobile-center .ee-breadcrumbs > li {
+    -ms-flex-positive: 0;
+    flex-grow: 0;
+  }
+  .ee-breadcrumbs-align-mobile-right .ee-breadcrumbs {
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+  }
+  .ee-breadcrumbs-align-mobile-right .ee-breadcrumbs > li {
+    -ms-flex-positive: 0;
+    flex-grow: 0;
+  }
+  .ee-breadcrumbs-align-mobile-stretch .ee-breadcrumbs {
+    -ms-flex-pack: stretch;
+    justify-content: stretch;
+  }
+  .ee-breadcrumbs-align-mobile-stretch .ee-breadcrumbs > li {
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+  }
+  .ee-breadcrumbs-align-mobile-stretch .ee-breadcrumbs > li > a {
+    display: block;
+  }
+  .ee-breadcrumbs-align-mobile-stretch .ee-breadcrumbs > .ee-breadcrumbs__separator {
+    -ms-flex-positive: 0;
+    flex-grow: 0;
+    text-align: center;
+  }}

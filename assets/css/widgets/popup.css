@@ -1,0 +1,129 @@
+/* LandTech popup */
+.ee-popup {
+  display: block;
+  height: 0;
+}
+.elementor-editor-active .ee-popup,
+.ee-popup--trigger-text {
+  height: auto;
+}
+.ee-popup__trigger {
+  display: inline-block;
+}
+.ee-popup__trigger:empty {
+  height: 0;
+  display: inline;
+}
+.ee-popup__header__title {
+  margin-bottom: 5px;
+}
+.ee-popup__header__subtitle {
+  margin-bottom: 0px;
+}
+.ee-popup__content {
+  overflow: hidden;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  background-color: #ffffff;
+  max-width: 100%;
+  margin: 2em auto;
+  position: relative;
+}
+.ee-popup__content *:last-child {
+  margin-bottom: 0;
+}
+.ee-popup__footer__button {
+  cursor: pointer;
+  display: inline-block;
+}
+.ee-popup__header,
+.ee-popup__footer,
+.ee-popup__content__body {
+  padding: 20px;
+}
+.ee-popup__close {
+  padding: 0;
+  cursor: pointer;
+  border-radius: 0px;
+}
+.glightbox-container.ee-mfp-popup .ee-popup__content,
+.glightbox-container .ee-popup__content {
+  width: min(520px, calc(100vw - 2rem));
+  max-width: 520px;
+  margin: 0 auto;
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: 0 28px 80px rgba(15, 18, 32, 0.32);
+}
+.glightbox-container.ee-mfp-popup .ee-popup__header {
+  padding: 2rem 2rem 0.5rem;
+  background: linear-gradient(180deg, #f4f1ff 0%, #ffffff 72%);
+}
+.glightbox-container.ee-mfp-popup .ee-popup__header__title {
+  margin: 0;
+  color: #111318;
+  font-size: 1.7rem;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+.glightbox-container.ee-mfp-popup .ee-popup__content__body {
+  padding: 0.75rem 2rem 0.35rem;
+  color: #5b6170;
+  font-size: 1.02rem;
+  line-height: 1.65;
+}
+.glightbox-container.ee-mfp-popup .ee-popup__footer {
+  padding: 1rem 2rem 2rem;
+}
+.glightbox-container.ee-mfp-popup .ee-popup__footer__button .ee-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.7rem 1.25rem;
+  border-radius: 999px;
+  background: #111318;
+  color: #fff;
+  font-weight: 650;
+  text-decoration: none;
+}
+.glightbox-container.ee-mfp-popup .gclose.ee-popup__close,
+.glightbox-container:has(.ee-popup__content) .gclose {
+  top: 18px;
+  right: 18px;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: #fff;
+  color: #111318;
+  opacity: 1;
+  box-shadow: 0 8px 24px rgba(17, 19, 24, 0.16);
+}
+.glightbox-container:has(.ee-popup__content) .gprev,
+.glightbox-container:has(.ee-popup__content) .gnext {
+  display: none !important;
+}
+.mfp-figure .ee-popup__close.mfp-close {
+  width: auto;
+  height: auto;
+  right: 0;
+  padding: 10px;
+}
+.ee-mfp-popup.mfp-popup--valign-bottom .ee-popup__content,
+.ee-mfp-popup.mfp-popup--valign-top .ee-popup__content,
+.ee-mfp-popup.mfp-popup--valign-stretch .ee-popup__content {
+  margin: 0;
+}
+.ee-mfp-popup.mfp-popup--valign-bottom .ee-popup__content,
+.ee-mfp-popup.mfp-popup--valign-top .ee-popup__content,
+.ee-mfp-popup.mfp-popup--valign-stretch .ee-popup__content {
+  margin: 0;
+}
+
+.glightbox-container.ee-mfp-popup .gclose.ee-popup__close,
+.glightbox-container:has(.ee-popup__content) .gclose {
+  width: 44px;
+  height: 44px;
+}

@@ -1,0 +1,7 @@
+/* LandTech age-gate */
+.ee-age-gate__content .ee-notification {
+  display: none;
+}
+.elementor-editor-active .ee-age-gate__content .ee-notification {
+  display: block;
+}

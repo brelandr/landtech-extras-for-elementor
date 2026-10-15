@@ -105,6 +105,7 @@ class Switcher extends Extras_Widget {
 	public function get_style_depends() {
 		return [
 			'landtech-extras-splitting',
+			'landtech-extras-widget-switcher',
 		];
 	}
 
