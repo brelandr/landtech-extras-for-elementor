@@ -7,7 +7,17 @@
 		return 'ltxe_popup_' + id;
 	}
 
+	function consentAllows( category ) {
+		if ( ! document.querySelector( '.ltxe-cookie-consent' ) ) {
+			return true;
+		}
+		return !! ( window.ltxeConsent && window.ltxeConsent.allows && window.ltxeConsent.allows( category ) );
+	}
+
 	function trackPopup( eventName, config ) {
+		if ( ! consentAllows( 'analytics' ) ) {
+			return;
+		}
 		var api = window.ltxePopupAnalytics;
 		if ( ! api || ! api.rest ) {
 			return;
@@ -55,7 +65,7 @@
 
 	function onClose( config ) {
 		var id = config.id;
-		if ( config.suppress_cookie ) {
+		if ( config.suppress_cookie && consentAllows( 'functional' ) ) {
 			var days = config.suppress_cookie_days || 30;
 			var expires = new Date( Date.now() + days * 864e5 ).toUTCString();
 			document.cookie = cookieKey( id ) + '=1; expires=' + expires + '; path=/; SameSite=Lax';

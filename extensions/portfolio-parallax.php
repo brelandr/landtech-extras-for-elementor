@@ -24,6 +24,7 @@ class Extension_Portfolio_Parallax extends Extension_Base {
 	 **/
 	public function get_script_depends() {
 		return [
+			'landtech-extras-portfolio-parallax',
 			'landtech-extras-parallax-gallery',
 		];
 	}

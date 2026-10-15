@@ -49,3 +49,6 @@ jobs:
 
       - name: CSP audit
         run: npm run test:u32-csp
+
+      - name: No licensing code
+        run: sh scripts/assert-no-licensing.sh

@@ -102,6 +102,7 @@ class Posts extends Posts_Base {
 	 */
 	public function get_script_depends() {
 		$deps = [
+			'landtech-extras-posts-extra',
 			'landtech-extras-jquery-resize',
 			'landtech-extras-infinite-scroll',
 			'landtech-extras-filtery',

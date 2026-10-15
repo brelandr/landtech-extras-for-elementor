@@ -107,6 +107,8 @@ class Faq extends Extras_Widget {
 			)
 		);
 
+		$this->ltxe_add_heading_tag_control( 'title_html_tag', 'h3', __( 'Question HTML Tag', 'landtech-extras-for-elementor' ) );
+
 		$this->add_control(
 			'accordion_mode',
 			array(
@@ -272,8 +274,9 @@ class Faq extends Extras_Widget {
 			$panel   = 'ltxe-faq-' . sanitize_html_class( $uid ) . '-' . $i;
 			$button  = $panel . '-btn';
 
+			$heading_tag = $this->ltxe_sanitize_heading_tag( isset( $settings['title_html_tag'] ) ? $settings['title_html_tag'] : 'h3' );
 			echo '<div class="ltxe-faq__item' . ( $open ? ' is-open' : '' ) . '">';
-			echo '<h3 class="ltxe-faq__heading">';
+			echo '<' . esc_html( $heading_tag ) . ' class="ltxe-faq__heading">';
 			echo '<button type="button" class="ltxe-faq__question" id="' . esc_attr( $button ) . '" aria-expanded="' . ( $open ? 'true' : 'false' ) . '" aria-controls="' . esc_attr( $panel ) . '">';
 			echo '<span class="ltxe-faq__icon ltxe-faq__icon--closed" aria-hidden="true">';
 			$this->render_icon_or_fallback( isset( $settings['icon_closed'] ) ? $settings['icon_closed'] : array(), '+' );
@@ -283,7 +286,7 @@ class Faq extends Extras_Widget {
 			echo '</span>';
 			echo '<span class="ltxe-faq__label">' . esc_html( $question ) . '</span>';
 			echo '</button>';
-			echo '</h3>';
+			echo '</' . esc_html( $heading_tag ) . '>';
 			echo '<div class="ltxe-faq__answer" id="' . esc_attr( $panel ) . '" role="region" aria-labelledby="' . esc_attr( $button ) . '"' . ( $open ? '' : ' hidden' ) . '>';
 			echo wp_kses_post( $answer );
 			echo '</div>';

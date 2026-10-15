@@ -40,6 +40,31 @@
 		var trigger = settings.trigger || 'click_target';
 		var hide = settings._hide || 'click_out';
 
+		$hotspots.each( function () {
+			if ( 'A' !== this.tagName && ! this.hasAttribute( 'tabindex' ) ) {
+				this.setAttribute( 'tabindex', '0' );
+				this.setAttribute( 'role', 'button' );
+			}
+		} );
+		$hotspots.on( 'keydown.ltxeA11y', function ( event ) {
+			if ( 'Escape' === event.key ) {
+				$( this ).trigger( 'mouseleave' );
+				return;
+			}
+			if ( 'Enter' !== event.key && ' ' !== event.key ) {
+				return;
+			}
+			event.preventDefault();
+			$( this ).trigger( 'click' );
+			$( this ).trigger( 'mouseenter' );
+		} );
+		$hotspots.on( 'focus.ltxeA11y', function () {
+			$( this ).trigger( 'mouseenter' );
+		} );
+		$hotspots.on( 'blur.ltxeA11y', function () {
+			$( this ).trigger( 'mouseleave' );
+		} );
+
 		$hotspots.hotips( {
 			id: $scope.data( 'id' ),
 			position: settings.position || 'bottom',

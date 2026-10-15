@@ -74,10 +74,8 @@ class Image_Comparison extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
-			'landtech-extras-frontend',
 			'landtech-extras-image-comparison',
 			'landtech-extras-image-comparison-widget',
-			'landtech-extras-jquery-mobile',
 		];
 	}
 

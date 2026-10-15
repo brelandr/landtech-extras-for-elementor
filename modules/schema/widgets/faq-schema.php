@@ -106,6 +106,8 @@ class Faq_Schema extends Extras_Widget {
 			)
 		);
 
+		$this->ltxe_add_heading_tag_control( 'title_html_tag', 'h3', __( 'Question HTML Tag', 'landtech-extras-for-elementor' ) );
+
 		$this->add_control(
 			'output_json_ld',
 			array(
@@ -144,9 +146,10 @@ class Faq_Schema extends Extras_Widget {
 				$q_id = 'ee-faq-schema-q-' . $this->get_id() . '-' . absint( $index );
 				?>
 				<div class="ee-faq-schema__item">
-					<h3 class="ee-faq-schema__question" id="<?php echo esc_attr( $q_id ); ?>">
+					<?php $heading_tag = $this->ltxe_sanitize_heading_tag( isset( $settings['title_html_tag'] ) ? $settings['title_html_tag'] : 'h3' ); ?>
+					<<?php echo esc_html( $heading_tag ); ?> class="ee-faq-schema__question" id="<?php echo esc_attr( $q_id ); ?>">
 						<?php echo esc_html( $question ); ?>
-					</h3>
+					</<?php echo esc_html( $heading_tag ); ?>>
 					<div class="ee-faq-schema__answer" aria-labelledby="<?php echo esc_attr( $q_id ); ?>">
 						<?php echo wp_kses_post( $answer ); ?>
 					</div>

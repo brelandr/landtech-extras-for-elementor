@@ -45,10 +45,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  * LandTech Extras for Elementor incorporates code from:
 
  * — jquery-circle-progress v1.2.2, Copyright Rostyslav Bryzgunov Licenses: MIT Source: link http://kottenator.github.io/jquery-circle-progress/
- * — jQuery appear plugin v0.3.6, Copyright 2012 Andrey Sidorov Licenses: MIT Source: link https://github.com/morr/jquery.appear/
+ * — jQuery appear plugin v0.6.2, Copyright 2012 Andrey Sidorov Licenses: MIT Source: link https://github.com/morr/jquery.appear/
  * — LongShadow jQuery Plugin v1.1.0, Copyright 2013 - 2016 Dang Van Thanh Licenses: MIT Source: link git://github.com/dangvanthanh/jquery.longShadow.git
  * — HC-Sticky 2.2.3, Copyright Some Web Media License: MIT Source: link https://github.com/somewebmedia/hc-sticky
- * — jQuery Mobile v1.4.3, Copyright 2010, 2014 jQuery Foundation, Inc. Licenses: jquery.org/license
  * — jquery-visible, Copyright 2012, Digital Fusion, License: http://teamdf.com/jquery-plugins/license/ Source: http://teamdf.com/jquery-plugins/license/
  * — Parallax Background v1.2, by Eren Suleymanoglu Licenses: MIT Source: link https://github.com/erensuleymanoglu/parallax-background
  * — TableSorter v2.32.0 (Mottie fork), Copyright 2007 Christian Bach / Rob Garrison Licenses: Dual licensed under the MIT and GPL licenses Source: link https://github.com/Mottie/tablesorter

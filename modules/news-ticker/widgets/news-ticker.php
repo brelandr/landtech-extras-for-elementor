@@ -373,7 +373,7 @@ class News_Ticker extends Extras_Widget {
 		if ( ! empty( $settings['label'] ) ) {
 			echo '<span class="ltxe-nt__label">' . esc_html( (string) $settings['label'] ) . '</span>';
 		}
-		echo '<div class="ltxe-nt__viewport"><div class="ltxe-nt__track">';
+		echo '<div class="ltxe-nt__viewport"' . ( $pause ? ' tabindex="0"' : '' ) . '><div class="ltxe-nt__track">';
 		$this->render_set( $items, $sep );
 		$this->render_set( $items, $sep );
 		echo '</div></div></div>';

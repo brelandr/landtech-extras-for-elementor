@@ -156,8 +156,14 @@ class Image_Scroller extends Extras_Widget {
 		if ( '' === $url ) {
 			$url = 'https://extrasforelementor.com/wp-content/uploads/2024/01/placeholder.png';
 		}
-		echo '<div class="ltxe-iscroll ltxe-iscroll--' . esc_attr( $dir ) . '" data-scroll-trigger="' . esc_attr( $trig ) . '" data-ltxe-iscroll="' . esc_attr( wp_json_encode( array( 'trigger' => $trig, 'direction' => $dir, 'speed' => $speed ) ) ) . '">';
-		echo '<img class="ltxe-iscroll__img" src="' . esc_url( $url ) . '" alt="" />';
+		$alt = '';
+		if ( ! empty( $s['image']['alt'] ) && is_string( $s['image']['alt'] ) ) {
+			$alt = $s['image']['alt'];
+		} elseif ( ! empty( $s['image']['id'] ) ) {
+			$alt = (string) get_post_meta( absint( $s['image']['id'] ), '_wp_attachment_image_alt', true );
+		}
+		echo '<div class="ltxe-iscroll ltxe-iscroll--' . esc_attr( $dir ) . '" tabindex="0" data-scroll-trigger="' . esc_attr( $trig ) . '" data-ltxe-iscroll="' . esc_attr( wp_json_encode( array( 'trigger' => $trig, 'direction' => $dir, 'speed' => $speed ) ) ) . '">';
+		echo '<img class="ltxe-iscroll__img" src="' . esc_url( $url ) . '" alt="' . esc_attr( $alt ) . '" />';
 		if ( 'none' !== $over ) {
 			echo '<span class="ltxe-iscroll__overlay ltxe-iscroll__overlay--' . esc_attr( $over ) . '" aria-hidden="true"></span>';
 		}

@@ -59,3 +59,18 @@
 
 .ltxe-consent-accept { background: #fff; color: #111; }
 .ltxe-consent-decline { background: transparent; color: #fff; border: 1px solid #fff; }
+
+.ltxe-consent-manage {
+	position: fixed;
+	z-index: 9999;
+	left: 1rem;
+	bottom: 1rem;
+	min-height: 44px;
+	min-width: 44px;
+	padding: 0.5rem 1rem;
+	border: 1px solid #111;
+	background: #fff;
+	color: #111;
+	cursor: pointer;
+	font: inherit;
+}

@@ -76,6 +76,8 @@ class Pricing_Table extends Extras_Widget {
 			)
 		);
 
+		$this->ltxe_add_heading_tag_control( 'title_html_tag', 'h3' );
+
 		$this->add_control(
 			'plan_description',
 			array(
@@ -369,7 +371,8 @@ class Pricing_Table extends Extras_Widget {
 			echo '</div>';
 		}
 
-		echo '<h3 class="ltxe-pricing-table__name">' . esc_html( (string) ( $settings['plan_name'] ?? '' ) ) . '</h3>';
+		$heading_tag = $this->ltxe_sanitize_heading_tag( isset( $settings['title_html_tag'] ) ? $settings['title_html_tag'] : 'h3' );
+		echo '<' . esc_html( $heading_tag ) . ' class="ltxe-pricing-table__name">' . esc_html( (string) ( $settings['plan_name'] ?? '' ) ) . '</' . esc_html( $heading_tag ) . '>';
 		if ( ! empty( $settings['plan_description'] ) ) {
 			echo '<p class="ltxe-pricing-table__desc">' . esc_html( (string) $settings['plan_description'] ) . '</p>';
 		}

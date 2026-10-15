@@ -119,6 +119,7 @@ class Interactive_Card extends Extras_Widget {
 				'dynamic' => array( 'active' => true ),
 			)
 		);
+		$this->ltxe_add_heading_tag_control( 'title_html_tag', 'h3' );
 		$this->add_control(
 			'subtitle',
 			array(
@@ -230,7 +231,8 @@ class Interactive_Card extends Extras_Widget {
 			echo '</span>';
 		}
 		echo '<p class="ltxe-icard__sub">' . esc_html( isset( $s['subtitle'] ) ? (string) $s['subtitle'] : '' ) . '</p>';
-		echo '<h3 class="ltxe-icard__title">' . esc_html( isset( $s['title'] ) ? (string) $s['title'] : '' ) . '</h3>';
+		$heading_tag = $this->ltxe_sanitize_heading_tag( isset( $s['title_html_tag'] ) ? $s['title_html_tag'] : 'h3' );
+		echo '<' . esc_html( $heading_tag ) . ' class="ltxe-icard__title">' . esc_html( isset( $s['title'] ) ? (string) $s['title'] : '' ) . '</' . esc_html( $heading_tag ) . '>';
 		echo '<p class="ltxe-icard__desc">' . esc_html( isset( $s['description'] ) ? (string) $s['description'] : '' ) . '</p>';
 		echo '<a class="ltxe-icard__btn" href="' . esc_url( $url ) . '">' . esc_html( isset( $s['button_text'] ) ? (string) $s['button_text'] : '' ) . '</a>';
 		if ( isset( $s['glare'] ) && 'yes' === $s['glare'] ) {

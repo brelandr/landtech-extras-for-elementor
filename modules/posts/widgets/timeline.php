@@ -90,7 +90,7 @@ class Timeline extends Posts_Base {
 	 */
 	public function get_script_depends() {
 		return [
-			'landtech-extras-frontend',
+			'landtech-extras-timeline-widget',
 			'landtech-extras-timeline',
 		];
 	}

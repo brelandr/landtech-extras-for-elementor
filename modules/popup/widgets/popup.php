@@ -84,7 +84,7 @@ class Popup extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
-			'landtech-extras-frontend',
+			'landtech-extras-popup-lightbox',
 			'landtech-extras-glightbox',
 			'landtech-extras-popup',
 		];

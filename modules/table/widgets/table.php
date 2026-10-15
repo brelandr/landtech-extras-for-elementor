@@ -80,7 +80,7 @@ class Table extends Extras_Widget {
 	 * @return array
 	 */
 	public function get_script_depends() {
-		return [ 'landtech-extras-frontend', 'landtech-extras-tablesorter' ];
+		return [ 'landtech-extras-table-widget', 'landtech-extras-tablesorter' ];
 	}
 
 	/**
@@ -1348,7 +1348,15 @@ class Table extends Extras_Widget {
 			$this->add_render_attribute( 'table-wrapper', 'data-rows-per-page', absint( $settings['pagination_rows'] ?? 10 ) );
 		} else {
 			$this->add_render_attribute( 'table-wrapper', 'class', 'ee-table-wrapper' );
-		} ?>
+		}
+
+		$this->add_render_attribute( 'table-wrapper', 'tabindex', '0' );
+		$this->add_render_attribute(
+			'table-wrapper',
+			'aria-label',
+			__( 'Table', 'landtech-extras-for-elementor' )
+		);
+		?>
 		
 		<div <?php $this->print_render_attribute_string( 'table-wrapper' ); ?>>
 		<table <?php $this->print_render_attribute_string( 'table' ); ?>>

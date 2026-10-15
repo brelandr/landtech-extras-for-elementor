@@ -24,6 +24,7 @@ class Extension_Parallax_Background extends Extension_Base {
 	 **/
 	public function get_script_depends() {
 		return [
+			'landtech-extras-parallax-background-widget',
 			'landtech-extras-parallax-background',
 			'landtech-extras-jquery-resize',
 			'landtech-extras-jquery-visible',

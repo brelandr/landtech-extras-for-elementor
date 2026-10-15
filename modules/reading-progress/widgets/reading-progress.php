@@ -188,7 +188,7 @@ class Reading_Progress extends Extras_Widget {
 			$classes[] = 'ltxe-reading-progress--smooth';
 		}
 
-		echo '<div class="' . esc_attr( implode( ' ', $classes ) ) . '" data-ltxe-reading="' . esc_attr( $json ) . '" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">';
+		echo '<div class="' . esc_attr( implode( ' ', $classes ) ) . '" data-ltxe-reading="' . esc_attr( $json ) . '" role="progressbar" aria-label="' . esc_attr__( 'Reading progress', 'landtech-extras-for-elementor' ) . '" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">';
 		echo '<div class="ltxe-reading-progress__track"><div class="ltxe-reading-progress__bar"></div></div>';
 		echo '</div>';
 	}

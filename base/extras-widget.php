@@ -132,6 +132,40 @@ abstract class Extras_Widget extends Widget_Base {
 	}
 
 	/**
+	 * Heading-level control. The default matches the tag the widget used before the control existed.
+	 *
+	 * @param string $control_id Control id.
+	 * @param string $default    h1–h6, div, span, or p.
+	 * @param string $label      Control label.
+	 * @return void
+	 */
+	protected function ltxe_add_heading_tag_control( $control_id, $default = 'h3', $label = '' ) {
+		if ( '' === $label ) {
+			$label = __( 'HTML Tag', 'landtech-extras-for-elementor' );
+		}
+
+		$this->add_control(
+			$control_id,
+			array(
+				'label'   => $label,
+				'type'    => \Elementor\Controls_Manager::SELECT,
+				'default' => $default,
+				'options' => array(
+					'h1'   => 'H1',
+					'h2'   => 'H2',
+					'h3'   => 'H3',
+					'h4'   => 'H4',
+					'h5'   => 'H5',
+					'h6'   => 'H6',
+					'div'  => 'div',
+					'span' => 'span',
+					'p'    => 'p',
+				),
+			)
+		);
+	}
+
+	/**
 	 * Safe settings read for asset registration (preview may run before settings hydrate).
 	 *
 	 * @since 2.3.3

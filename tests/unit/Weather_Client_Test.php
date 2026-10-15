@@ -31,7 +31,14 @@ class Weather_Client_Test extends TestCase {
 	}
 
 	public function test_cache_key_city() {
-		$this->assertSame( 'ltxe_weather_london_celsius', Weather_Client::cache_key( 'London', '', '', 'celsius' ) );
+		$this->assertSame( 'ltxe_weather_' . md5( 'london|celsius' ), Weather_Client::cache_key( 'London', '', '', 'celsius' ) );
+	}
+
+	public function test_cache_key_caps_long_city() {
+		$long = str_repeat( 'Paris ', 40 );
+		$key  = Weather_Client::cache_key( $long, '', '', 'celsius' );
+		$this->assertLessThan( 172, strlen( $key ) );
+		$this->assertSame( $key, Weather_Client::cache_key( substr( strtolower( trim( $long ) ), 0, 80 ), '', '', 'celsius' ) );
 	}
 
 	public function test_map_sunny_day() {

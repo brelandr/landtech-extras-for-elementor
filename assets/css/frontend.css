@@ -135,11 +135,10 @@
   text-overflow: ellipsis;
   position: relative;
 }
-.ee-form__field__control,
-.ee-arrow,
-.ee-form__field__control:focus,
-.ee-arrow:focus {
-  outline: none;
+.ee-form__field__control:focus-visible,
+.ee-arrow:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
 }
 .ee-menu ul,
 .ee-audio-player .ee-player__playlist {
@@ -1562,8 +1561,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 24px;
-  min-height: 24px;
+  min-width: 44px;
+  min-height: 44px;
 }
 .ee-player__control--icon:before {
   display: block;
@@ -4148,7 +4147,7 @@ li:last-child .ee-post__terms__separator {
 .ee-toggle-element ul.ee-toggle-element__controls {
   position: relative;
   cursor: pointer;
-  min-height: 26px;
+  min-height: 44px;
 }
 .ee-toggle-element ul.ee-toggle-element__controls li {
   padding: 0.5em 0.9em;
@@ -4156,7 +4155,7 @@ li:last-child .ee-post__terms__separator {
 }
 .ee-toggle-element .ee-toggle-element__controls__item {
   line-height: 1;
-  min-width: 26px;
+  min-width: 44px;
   height: 100%;
   transition: all 0.3s linear;
 }
@@ -4207,7 +4206,7 @@ li:last-child .ee-post__terms__separator {
   left: 0;
   top: 0;
   bottom: 0;
-  min-width: 26px;
+  min-width: 44px;
   margin: 6px;
   opacity: 0;
   transition: opacity 0.3s linear;
@@ -8716,6 +8715,9 @@ body.ee-offcanvas--open [canvas] {
 }
 
 /* Legacy feature modernization — table pagination, search live results, posts layouts, heading animation */
+.ee-table-wrapper {
+  overflow-x: auto;
+}
 .ee-table-wrapper .ee-table-pagination {
   display: flex;
   align-items: center;
@@ -8912,8 +8914,8 @@ body.ee-offcanvas--open [canvas] {
    size is unchanged, only the interactive box is expanded. */
 .ee-table-pagination__prev,
 .ee-table-pagination__next {
-  min-width: 24px;
-  min-height: 24px;
+  min-width: 44px;
+  min-height: 44px;
   box-sizing: border-box;
 }
 
@@ -8950,7 +8952,7 @@ body.ee-offcanvas--open [canvas] {
   .ee-scroll-indicator--skin-bar .ee-scroll-indicator__element__link {
     display: flex;
     align-items: center;
-    min-height: 24px;
+    min-height: 44px;
   }
 
   /* Search Form `--expand` skin — expanded container is 300 px wide, which overflows
@@ -9015,8 +9017,8 @@ body.ee-offcanvas--open [canvas] {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 24px;
-  min-width: 24px;
+  min-height: 44px;
+  min-width: 44px;
   box-sizing: border-box;
 }
 
@@ -9089,8 +9091,8 @@ body.ee-offcanvas--open [canvas] {
      a 24 px minimum interactive box regardless of scale; the visual dot / label
      is unchanged because it uses transform: scale() rather than the hit box. */
   .ee-hotspot__wrapper {
-    min-width: 24px;
-    min-height: 24px;
+    min-width: 44px;
+    min-height: 44px;
     box-sizing: border-box;
   }
 

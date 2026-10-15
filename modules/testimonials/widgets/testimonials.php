@@ -683,7 +683,7 @@ class Testimonials extends Extras_Widget {
 
 		if ( $show_rating && ! empty( $item['rating'] ) ) {
 			$full = (int) floor( (float) $item['rating'] );
-			echo '<p class="ltxe-testimonial__stars" aria-label="' . esc_attr( sprintf( /* translators: %s: rating value */ __( 'Rated %s out of 5', 'landtech-extras-for-elementor' ), $item['rating'] ) ) . '">';
+			echo '<p class="ltxe-testimonial__stars" role="img" aria-label="' . esc_attr( sprintf( /* translators: %s: rating value */ __( 'Rated %s out of 5', 'landtech-extras-for-elementor' ), $item['rating'] ) ) . '">';
 			for ( $i = 0; $i < 5; $i++ ) {
 				echo '<span aria-hidden="true">' . ( $i < $full ? '★' : '☆' ) . '</span>';
 			}

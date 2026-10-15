@@ -104,7 +104,7 @@ function landtech_extras_weather_get_payload( $city, $lat, $lon, $units ) {
 		return new WP_Error( 'ltxe_weather_missing', __( 'Weather helper is unavailable.', 'landtech-extras-for-elementor' ), array( 'status' => 500 ) );
 	}
 
-	$city  = sanitize_text_field( (string) $city );
+	$city  = \LandTechExtras\Modules\Weather\Weather_Client::normalize_city( sanitize_text_field( (string) $city ) );
 	$lat   = sanitize_text_field( (string) $lat );
 	$lon   = sanitize_text_field( (string) $lon );
 	$units = \LandTechExtras\Modules\Weather\Weather_Client::sanitize_units( $units );
@@ -130,6 +130,14 @@ function landtech_extras_weather_get_payload( $city, $lat, $lon, $units ) {
 	$cached    = get_transient( $cache_key );
 	if ( is_array( $cached ) && isset( $cached['condition'] ) ) {
 		return $cached;
+	}
+
+	if ( ! landtech_extras_weather_consume_quota() ) {
+		return new WP_Error(
+			'ltxe_weather_rate_limited',
+			__( 'Too many weather requests. Please wait a minute and try again.', 'landtech-extras-for-elementor' ),
+			array( 'status' => 429 )
+		);
 	}
 
 	$label = $city;
@@ -234,4 +242,47 @@ function landtech_extras_weather_geocode( $city ) {
 		'lon'  => isset( $row['longitude'] ) ? (string) $row['longitude'] : '',
 		'name' => $name,
 	);
+}
+
+/**
+ * Count an uncached weather lookup against this visitor's per-minute quota.
+ *
+ * The raw IP is hashed and is not stored. Cached forecasts do not count.
+ * Return true when the request may continue.
+ *
+ * @return bool
+ */
+function landtech_extras_weather_consume_quota() {
+	/**
+	 * Maximum uncached weather lookups per visitor per minute.
+	 *
+	 * @param int $limit Default 30. Zero disables the cap.
+	 */
+	$limit = absint( apply_filters( 'landtech_extras/weather/rate_limit_per_minute', 30 ) );
+	if ( 0 === $limit ) {
+		return true;
+	}
+
+	$ip = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
+	$ip = filter_var( $ip, FILTER_VALIDATE_IP ) ? $ip : 'unknown';
+	$key = 'ltxe_wx_rl_' . substr( wp_hash( 'ltxe_weather|' . $ip ), 0, 32 );
+
+	$now   = time();
+	$state = get_transient( $key );
+	if ( ! is_array( $state ) || ! isset( $state['count'], $state['start'] ) || ( $now - (int) $state['start'] ) >= MINUTE_IN_SECONDS ) {
+		$state = array(
+			'count' => 0,
+			'start' => $now,
+		);
+	}
+
+	if ( (int) $state['count'] >= $limit ) {
+		return false;
+	}
+
+	$state['count'] = (int) $state['count'] + 1;
+	$remaining      = max( 1, MINUTE_IN_SECONDS - ( $now - (int) $state['start'] ) );
+	set_transient( $key, $state, $remaining );
+
+	return true;
 }

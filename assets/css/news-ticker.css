@@ -45,7 +45,8 @@
 	animation-direction: reverse;
 }
 
-.ltxe-nt--pause:hover .ltxe-nt__track {
+.ltxe-nt--pause:hover .ltxe-nt__track,
+.ltxe-nt--pause:focus-within .ltxe-nt__track {
 	animation-play-state: paused;
 }
 

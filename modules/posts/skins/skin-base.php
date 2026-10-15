@@ -706,6 +706,11 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			if ( '' !== $settings['post_media_blank'] ) {
 				$this->parent->add_render_attribute( $media_key, 'target', '_blank' );
 			}
+
+			$media_label = get_the_title( $this->ltxe_loop_post_id() );
+			if ( is_string( $media_label ) && '' !== $media_label ) {
+				$this->parent->add_render_attribute( $media_key, 'aria-label', $media_label );
+			}
 		}
 
 		if ( ! $this->parent->is_empty_area( $area ) ) {

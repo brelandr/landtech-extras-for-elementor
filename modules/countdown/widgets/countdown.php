@@ -261,7 +261,7 @@ class Countdown extends Extras_Widget {
 		);
 		$sep   = isset( $settings['separator'] ) ? (string) $settings['separator'] : ':';
 
-		echo '<div class="ltxe-countdown" data-ltxe-countdown="' . esc_attr( $json ) . '" aria-live="polite" aria-atomic="true">';
+		echo '<div class="ltxe-countdown" data-ltxe-countdown="' . esc_attr( $json ) . '">';
 		echo '<div class="ltxe-countdown__units">';
 		$first = true;
 		foreach ( $units as $key => $map ) {
@@ -278,7 +278,7 @@ class Countdown extends Extras_Widget {
 			echo '</div>';
 		}
 		echo '</div>';
-		echo '<div class="ltxe-countdown__expired" hidden></div>';
+		echo '<div class="ltxe-countdown__expired" hidden aria-live="polite"></div>';
 		echo '</div>';
 	}
 }

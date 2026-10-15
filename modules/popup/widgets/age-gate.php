@@ -82,7 +82,7 @@ class Age_Gate extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
-			'landtech-extras-frontend',
+			'landtech-extras-age-gate',
 			'landtech-extras-glightbox',
 		];
 	}
@@ -1287,7 +1287,8 @@ class Age_Gate extends Extras_Widget {
 					'ee-age-gate__trigger',
 					'ee-popup__trigger',
 				],
-				'href'	=> $content_link,
+				'href'       => $content_link,
+				'aria-label' => ! empty( $settings['title'] ) ? wp_strip_all_tags( (string) $settings['title'] ) : __( 'Age gate', 'landtech-extras-for-elementor' ),
 			],
 			'content' 	=> [
 				'id'	=> 'ee-age-gate__trigger-' . $this->get_id(),

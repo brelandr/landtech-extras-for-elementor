@@ -280,6 +280,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 			],
 			'type' 			=> 'search',
 			'name' 			=> 's',
+			'id'            => 'ltxe-search-input-' . $this->parent->get_id(),
 			'title' 		=> __( 'Search', 'landtech-extras-for-elementor' ),
 			'value' 		=> get_search_query(),
 		];
@@ -306,6 +307,7 @@ abstract class Skin_Base extends Elementor_Skin_Base {
 		] );
 
 		?><div <?php $this->parent->print_render_attribute_string( 'field' ); ?>>
+			<label class="elementor-screen-only" for="<?php echo esc_attr( 'ltxe-search-input-' . $this->parent->get_id() ); ?>"><?php echo esc_html__( 'Search', 'landtech-extras-for-elementor' ); ?></label>
 			<input <?php $this->parent->print_render_attribute_string( 'input' ); ?>>
 		</div><?php
 	}

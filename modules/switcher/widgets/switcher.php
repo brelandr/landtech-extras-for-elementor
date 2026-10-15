@@ -86,7 +86,7 @@ class Switcher extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
-			'landtech-extras-frontend',
+			'landtech-extras-switcher-widget',
 			'landtech-extras-switcher',
 			'landtech-extras-parallax-element',
 			'landtech-extras-splitting',

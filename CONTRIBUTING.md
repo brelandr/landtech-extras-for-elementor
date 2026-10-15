@@ -10,7 +10,7 @@ Every new interactive widget must pass this list before merge:
 - Dialogs use `role="dialog"`, `aria-modal="true"`, Escape to close, and a focus trap.
 - Tab interfaces use `role="tablist"`, `role="tab"`, `role="tabpanel"`, `aria-selected`, and arrow-key navigation.
 - Carousels expose `aria-roledescription="carousel"`, a pause control, and a live status.
-- Dynamic counters (countdown) use `aria-live="polite"` and `aria-atomic="true"`.
+- Dynamic counters (countdown) do not put `aria-live` on the ticking digits. Announce only the finished message with `aria-live="polite"`.
 - Drag handles (image comparison) use `<input type="range" class="ltxe-ic__handle">` so arrow keys work natively; JS listens to the `input` event.
 - No inline `onclick`, `onmouseover`, or `javascript:` hrefs (CSP-safe).
 - Loop Builder: init with `elementorFrontend.hooks.addAction('frontend/element_ready/WIDGET.default', …)` — never a single `document.querySelector()`.

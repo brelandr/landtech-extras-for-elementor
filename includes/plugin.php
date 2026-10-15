@@ -397,6 +397,14 @@ class LandTechExtrasPlugin {
 	 * @access public
 	 */
 	public function register_scripts() {
+		static $registered = false;
+
+		if ( $registered ) {
+			$this->attach_elementor_frontend_script_dependency();
+			return;
+		}
+
+		$registered = true;
 
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
@@ -409,6 +417,14 @@ class LandTechExtrasPlugin {
 			[ 'jquery', ],
 			'1.0.0',
 			true );
+
+		wp_register_script(
+			'landtech-extras-audio-player-widget',
+			plugins_url( '/assets/js/widgets/audio-player.js', LANDTECH_EXTRAS__FILE__ ),
+			array( 'jquery', 'landtech-extras-frontend-core', 'landtech-extras-audio-player', 'landtech-extras-jquery-appear' ),
+			LANDTECH_EXTRAS_VERSION,
+			true
+		);
 
 		wp_register_script(
 			'landtech-extras-wavesurfer',
@@ -426,11 +442,27 @@ class LandTechExtrasPlugin {
 			true );
 
 		wp_register_script(
+			'landtech-extras-sticky-elements',
+			plugins_url( '/assets/js/widgets/sticky-elements.js', LANDTECH_EXTRAS__FILE__ ),
+			array( 'jquery', 'landtech-extras-frontend-core', 'landtech-extras-hc-sticky', 'landtech-extras-jquery-resize' ),
+			LANDTECH_EXTRAS_VERSION,
+			true
+		);
+
+		wp_register_script(
 			'landtech-extras-parallax-gallery',
 			plugins_url( '/assets/lib/parallax-gallery/parallax-gallery' . $suffix . '.js', LANDTECH_EXTRAS__FILE__ ),
 			[ 'jquery', 'landtech-extras-anime-helpers' ],
 			'1.0.0',
 			true );
+
+		wp_register_script(
+			'landtech-extras-portfolio-parallax',
+			plugins_url( '/assets/js/widgets/portfolio-parallax.js', LANDTECH_EXTRAS__FILE__ ),
+			array( 'jquery', 'landtech-extras-frontend-core', 'landtech-extras-parallax-gallery' ),
+			LANDTECH_EXTRAS_VERSION,
+			true
+		);
 
 		wp_register_script(
 			'landtech-extras-parallax-element',
@@ -440,11 +472,27 @@ class LandTechExtrasPlugin {
 			true );
 
 		wp_register_script(
+			'landtech-extras-parallax-elements',
+			plugins_url( '/assets/js/widgets/parallax-elements.js', LANDTECH_EXTRAS__FILE__ ),
+			array( 'jquery', 'landtech-extras-frontend-core', 'landtech-extras-parallax-element', 'landtech-extras-jquery-visible' ),
+			LANDTECH_EXTRAS_VERSION,
+			true
+		);
+
+		wp_register_script(
 			'landtech-extras-parallax-background',
 			plugins_url( '/assets/lib/parallax-background/parallax-background' . $suffix . '.js', LANDTECH_EXTRAS__FILE__ ),
 			[ 'jquery', ],
 			'1.2.0',
 			true );
+
+		wp_register_script(
+			'landtech-extras-parallax-background-widget',
+			plugins_url( '/assets/js/widgets/parallax-background.js', LANDTECH_EXTRAS__FILE__ ),
+			array( 'jquery', 'landtech-extras-frontend-core', 'landtech-extras-parallax-background', 'landtech-extras-jquery-resize', 'landtech-extras-jquery-visible' ),
+			LANDTECH_EXTRAS_VERSION,
+			true
+		);
 
 		// Custom widget scripts
 		wp_register_script(
@@ -462,11 +510,35 @@ class LandTechExtrasPlugin {
 			true );
 
 		wp_register_script(
+			'landtech-extras-global-tooltip',
+			plugins_url( '/assets/js/widgets/global-tooltip.js', LANDTECH_EXTRAS__FILE__ ),
+			array( 'jquery', 'landtech-extras-frontend-core', 'landtech-extras-hotips', 'resize' ),
+			LANDTECH_EXTRAS_VERSION,
+			true
+		);
+
+		wp_register_script(
+			'landtech-extras-tooltips',
+			plugins_url( '/assets/js/widgets/tooltips.js', LANDTECH_EXTRAS__FILE__ ),
+			array( 'jquery', 'landtech-extras-frontend-core', 'landtech-extras-hotips' ),
+			LANDTECH_EXTRAS_VERSION,
+			true
+		);
+
+		wp_register_script(
 			'landtech-extras-unfold',
 			plugins_url( '/assets/lib/unfold/unfold' . $suffix . '.js', LANDTECH_EXTRAS__FILE__ ),
 			[ 'jquery', 'landtech-extras-anime-helpers' ],
 			'1.0.0',
 			true );
+
+		wp_register_script(
+			'landtech-extras-unfold-widget',
+			plugins_url( '/assets/js/widgets/unfold.js', LANDTECH_EXTRAS__FILE__ ),
+			array( 'jquery', 'landtech-extras-frontend-core', 'landtech-extras-unfold', 'landtech-extras-jquery-visible' ),
+			LANDTECH_EXTRAS_VERSION,
+			true
+		);
 
 		wp_register_script(
 			'landtech-extras-temporal-polyfill',
@@ -588,6 +660,14 @@ class LandTechExtrasPlugin {
 		);
 
 		wp_register_script(
+			'landtech-extras-popup-lightbox',
+			plugins_url( '/assets/js/widgets/popup-lightbox.js', LANDTECH_EXTRAS__FILE__ ),
+			array( 'jquery', 'landtech-extras-frontend-core', 'landtech-extras-glightbox', 'landtech-extras-popup' ),
+			LANDTECH_EXTRAS_VERSION,
+			true
+		);
+
+		wp_register_script(
 			'landtech-extras-hotspots',
 			plugins_url( '/assets/js/widgets/hotspots.js', LANDTECH_EXTRAS__FILE__ ),
 			[ 'jquery', 'landtech-extras-hotips' ],
@@ -611,11 +691,27 @@ class LandTechExtrasPlugin {
 			true );
 
 		wp_register_script(
+			'landtech-extras-circle-progress-widget',
+			plugins_url( '/assets/js/widgets/circle-progress.js', LANDTECH_EXTRAS__FILE__ ),
+			array( 'jquery', 'landtech-extras-frontend-core', 'landtech-extras-circle-progress', 'landtech-extras-jquery-appear', 'landtech-extras-jquery-easing' ),
+			LANDTECH_EXTRAS_VERSION,
+			true
+		);
+
+		wp_register_script(
 			'landtech-extras-scroll-indicator',
 			plugins_url( '/assets/lib/scroll-indicator/scroll-indicator' . $suffix . '.js', LANDTECH_EXTRAS__FILE__ ),
 			[ 'jquery' ],
 			'1.0.0',
 			true );
+
+		wp_register_script(
+			'landtech-extras-scroll-indicator-widget',
+			plugins_url( '/assets/js/widgets/scroll-indicator.js', LANDTECH_EXTRAS__FILE__ ),
+			array( 'jquery', 'landtech-extras-frontend-core', 'landtech-extras-scroll-indicator', 'landtech-extras-tooltips' ),
+			LANDTECH_EXTRAS_VERSION,
+			true
+		);
 
 		if ( 'no' !== $this->settings->get_option( 'load_google_maps_api', 'landtech_extras_apis', false ) ) {
 		wp_register_script(
@@ -687,11 +783,27 @@ class LandTechExtrasPlugin {
 		);
 
 		wp_register_script(
+			'landtech-extras-google-map',
+			plugins_url( '/assets/js/widgets/google-map.js', LANDTECH_EXTRAS__FILE__ ),
+			array( 'jquery', 'landtech-extras-frontend-core', 'landtech-extras-jquery-resize' ),
+			LANDTECH_EXTRAS_VERSION,
+			true
+		);
+
+		wp_register_script(
 			'landtech-extras-timeline',
 			plugins_url( '/assets/lib/timeline/timeline' . $suffix . '.js', LANDTECH_EXTRAS__FILE__ ),
 			[ 'jquery', ],
 			'1.0.0',
 			true );
+
+		wp_register_script(
+			'landtech-extras-timeline-widget',
+			plugins_url( '/assets/js/widgets/timeline.js', LANDTECH_EXTRAS__FILE__ ),
+			array( 'jquery', 'landtech-extras-frontend-core', 'landtech-extras-timeline' ),
+			LANDTECH_EXTRAS_VERSION,
+			true
+		);
 
 		wp_register_script(
 			'landtech-extras-switcher',
@@ -708,11 +820,35 @@ class LandTechExtrasPlugin {
 			true );
 
 		wp_register_script(
+			'landtech-extras-switcher-widget',
+			plugins_url( '/assets/js/widgets/switcher.js', LANDTECH_EXTRAS__FILE__ ),
+			array( 'jquery', 'landtech-extras-frontend-core', 'landtech-extras-switcher', 'landtech-extras-parallax-element' ),
+			LANDTECH_EXTRAS_VERSION,
+			true
+		);
+
+		wp_register_script(
 			'landtech-extras-toggle-element',
 			plugins_url( '/assets/lib/toggle-element/toggle-element' . $suffix . '.js', LANDTECH_EXTRAS__FILE__ ),
 			[ 'jquery', 'landtech-extras-anime-helpers' ],
 			'1.2.0',
 			true );
+
+		wp_register_script(
+			'landtech-extras-toggle-element-widget',
+			plugins_url( '/assets/js/widgets/toggle-element.js', LANDTECH_EXTRAS__FILE__ ),
+			array( 'jquery', 'landtech-extras-frontend-core', 'landtech-extras-toggle-element', 'landtech-extras-jquery-resize' ),
+			LANDTECH_EXTRAS_VERSION,
+			true
+		);
+
+		wp_register_script(
+			'landtech-extras-age-gate',
+			plugins_url( '/assets/js/widgets/age-gate.js', LANDTECH_EXTRAS__FILE__ ),
+			array( 'jquery', 'landtech-extras-frontend-core', 'landtech-extras-glightbox' ),
+			LANDTECH_EXTRAS_VERSION,
+			true
+		);
 
 		wp_register_style(
 			'landtech-extras-tabs',
@@ -738,9 +874,25 @@ class LandTechExtrasPlugin {
 		);
 
 		wp_register_script(
+			'landtech-extras-gallery-extra',
+			plugins_url( '/assets/js/widgets/gallery-extra.js', LANDTECH_EXTRAS__FILE__ ),
+			array( 'jquery', 'landtech-extras-frontend-core', 'landtech-extras-gallery', 'landtech-extras-glightbox', 'landtech-extras-tilt', 'landtech-extras-parallax-gallery', 'landtech-extras-jquery-resize', 'landtech-extras-isotope', 'imagesloaded' ),
+			LANDTECH_EXTRAS_VERSION,
+			true
+		);
+
+		wp_register_script(
+			'landtech-extras-gallery-slider',
+			plugins_url( '/assets/js/widgets/gallery-slider.js', LANDTECH_EXTRAS__FILE__ ),
+			array( 'jquery', 'landtech-extras-frontend-core', 'swiper' ),
+			LANDTECH_EXTRAS_VERSION,
+			true
+		);
+
+		wp_register_script(
 			'landtech-extras-image-comparison-widget',
 			plugins_url( '/assets/js/widgets/image-comparison.js', LANDTECH_EXTRAS__FILE__ ),
-			[ 'jquery', 'landtech-extras-frontend-core' ],
+			[ 'jquery', 'landtech-extras-frontend-core', 'landtech-extras-image-comparison' ],
 			LANDTECH_EXTRAS_VERSION,
 			true
 		);
@@ -980,6 +1132,14 @@ class LandTechExtrasPlugin {
 			'landtech-extras-posts-carousel',
 			plugins_url( '/assets/js/posts-carousel.js', LANDTECH_EXTRAS__FILE__ ),
 			[ 'landtech-extras-frontend-core' ],
+			LANDTECH_EXTRAS_VERSION,
+			true
+		);
+
+		wp_register_script(
+			'landtech-extras-posts-extra',
+			plugins_url( '/assets/js/widgets/posts-extra.js', LANDTECH_EXTRAS__FILE__ ),
+			array( 'jquery', 'landtech-extras-frontend-core', 'landtech-extras-posts-carousel', 'landtech-extras-jquery-resize', 'landtech-extras-infinite-scroll', 'landtech-extras-filtery' ),
 			LANDTECH_EXTRAS_VERSION,
 			true
 		);
@@ -1230,11 +1390,27 @@ class LandTechExtrasPlugin {
 			true );
 
 		wp_register_script(
+			'landtech-extras-offcanvas-widget',
+			plugins_url( '/assets/js/widgets/offcanvas.js', LANDTECH_EXTRAS__FILE__ ),
+			array( 'jquery', 'landtech-extras-frontend-core', 'landtech-extras-slidebars', 'landtech-extras-jquery-resize' ),
+			LANDTECH_EXTRAS_VERSION,
+			true
+		);
+
+		wp_register_script(
 			'landtech-extras-slide-menu',
 			plugins_url( '/assets/lib/slide-menu/slide-menu' . $suffix . '.js', LANDTECH_EXTRAS__FILE__ ),
 			[ 'jquery', ],
 			'1.0.1',
 			true );
+
+		wp_register_script(
+			'landtech-extras-slide-menu-widget',
+			plugins_url( '/assets/js/widgets/slide-menu.js', LANDTECH_EXTRAS__FILE__ ),
+			array( 'jquery', 'landtech-extras-frontend-core', 'landtech-extras-slide-menu' ),
+			LANDTECH_EXTRAS_VERSION,
+			true
+		);
 
 		wp_register_script(
 			'landtech-extras-tilt',
@@ -1247,7 +1423,7 @@ class LandTechExtrasPlugin {
 			'landtech-extras-jquery-appear',
 			plugins_url( '/assets/lib/jquery-appear/jquery.appear' . $suffix . '.js', LANDTECH_EXTRAS__FILE__ ),
 			[ 'jquery', ],
-			'0.3.6',
+			'0.6.2',
 			true );
 
 		wp_register_script(
@@ -1265,11 +1441,12 @@ class LandTechExtrasPlugin {
 			true );
 
 		wp_register_script(
-			'landtech-extras-jquery-mobile',
-			plugins_url( '/assets/lib/jquery-mobile/jquery-mobile' . $suffix . '.js', LANDTECH_EXTRAS__FILE__ ),
-			[ 'jquery', ],
-			'1.4.3',
-			true );
+			'landtech-extras-heading-extended',
+			plugins_url( '/assets/js/widgets/heading-extended.js', LANDTECH_EXTRAS__FILE__ ),
+			array( 'jquery', 'landtech-extras-frontend-core', 'landtech-extras-jquery-long-shadow', 'landtech-extras-anime-helpers' ),
+			LANDTECH_EXTRAS_VERSION,
+			true
+		);
 
 		wp_register_script(
 			'landtech-extras-jquery-long-shadow',
@@ -1286,6 +1463,22 @@ class LandTechExtrasPlugin {
 			true );
 
 		wp_register_script(
+			'landtech-extras-html5-video',
+			plugins_url( '/assets/js/widgets/html5-video.js', LANDTECH_EXTRAS__FILE__ ),
+			array( 'jquery', 'landtech-extras-frontend-core', 'landtech-extras-video-player', 'landtech-extras-jquery-appear', 'landtech-extras-iphone-inline-video' ),
+			LANDTECH_EXTRAS_VERSION,
+			true
+		);
+
+		wp_register_script(
+			'landtech-extras-devices-extended',
+			plugins_url( '/assets/js/widgets/devices.js', LANDTECH_EXTRAS__FILE__ ),
+			array( 'jquery', 'landtech-extras-frontend-core', 'landtech-extras-html5-video' ),
+			LANDTECH_EXTRAS_VERSION,
+			true
+		);
+
+		wp_register_script(
 			'landtech-extras-iphone-inline-video',
 			plugins_url( '/assets/lib/iphone-inline-video/iphone-inline-video' . $suffix . '.js', LANDTECH_EXTRAS__FILE__ ),
 			[],
@@ -1298,6 +1491,14 @@ class LandTechExtrasPlugin {
 			[ 'jquery' ],
 			'2.32.0',
 			true );
+
+		wp_register_script(
+			'landtech-extras-table-widget',
+			plugins_url( '/assets/js/widgets/table.js', LANDTECH_EXTRAS__FILE__ ),
+			array( 'jquery', 'landtech-extras-frontend-core', 'landtech-extras-tablesorter' ),
+			LANDTECH_EXTRAS_VERSION,
+			true
+		);
 
 		wp_register_script(
 			'landtech-extras-ev-emitter',
@@ -1484,13 +1685,7 @@ class LandTechExtrasPlugin {
 			LANDTECH_EXTRAS_VERSION,
 			true );
 
-		if ( wp_script_is( 'elementor-frontend', 'registered' ) ) {
-			$landtech_extras_scripts = wp_scripts();
-			if ( isset( $landtech_extras_scripts->registered['landtech-extras-frontend'] )
-				&& ! in_array( 'elementor-frontend', $landtech_extras_scripts->registered['landtech-extras-frontend']->deps, true ) ) {
-				$landtech_extras_scripts->registered['landtech-extras-frontend']->deps[] = 'elementor-frontend';
-			}
-		}
+		$this->attach_elementor_frontend_script_dependency();
 
 		wp_register_script(
 			'landtech-extras-elementor-select2',
@@ -1499,6 +1694,14 @@ class LandTechExtrasPlugin {
 				'jquery',
 			],
 			'4.0.6-rc.1',
+			true
+		);
+
+		wp_register_script(
+			'landtech-extras-search-form',
+			plugins_url( '/assets/js/widgets/search-form.js', LANDTECH_EXTRAS__FILE__ ),
+			array( 'jquery', 'landtech-extras-frontend-core', 'landtech-extras-elementor-select2' ),
+			LANDTECH_EXTRAS_VERSION,
 			true
 		);
 
@@ -1589,14 +1792,20 @@ class LandTechExtrasPlugin {
 		$raw = get_post_meta( $post_id, '_elementor_data', true );
 		if ( is_string( $raw ) && '' !== $raw ) {
 			$map = array(
-				'ee-lottie'                     => array( 'landtech-extras-lottie-web', 'landtech-extras-lottie', 'landtech-extras-lottie-player' ),
+				// ee-lottie is omitted. The widget get_script_depends() loads lottie-web or lottie-player, not both.
 				'ee-calendar'                   => array( 'landtech-extras-schedule-x-calendar', 'landtech-extras-calendar-schedule-x' ),
-				'ee-popup'                      => array( 'landtech-extras-frontend', 'landtech-extras-glightbox', 'landtech-extras-popup' ),
+				'ee-search-form'                => array( 'landtech-extras-search-form', 'landtech-extras-elementor-select2' ),
+				'ee-offcanvas'                  => array( 'landtech-extras-offcanvas-widget', 'landtech-extras-slidebars', 'landtech-extras-jquery-resize' ),
+				'ee-popup'                      => array( 'landtech-extras-popup-lightbox', 'landtech-extras-glightbox', 'landtech-extras-popup' ),
 				'ee-tabs'                       => array( 'landtech-extras-tabs' ),
-				'gallery-extra'                 => array( 'landtech-extras-gallery', 'landtech-extras-glightbox' ),
+				'gallery-extra'                 => array( 'landtech-extras-gallery-extra', 'landtech-extras-gallery', 'landtech-extras-glightbox', 'landtech-extras-tilt', 'landtech-extras-parallax-gallery', 'landtech-extras-jquery-resize', 'landtech-extras-isotope' ),
+				'gallery-slider'                => array( 'landtech-extras-gallery-slider' ),
 				'ee-inline-svg'                 => array( 'landtech-extras-inline-svg' ),
 				'image-comparison'              => array( 'landtech-extras-image-comparison-widget' ),
-				'hotspots'                      => array( 'landtech-extras-frontend', 'landtech-extras-hotips', 'landtech-extras-hotspots' ),
+				'hotspots'                      => array( 'landtech-extras-tooltips', 'landtech-extras-hotips', 'landtech-extras-hotspots' ),
+				'button-group'                  => array( 'landtech-extras-tooltips', 'landtech-extras-hotips' ),
+				'circle-progress'               => array( 'landtech-extras-circle-progress-widget', 'landtech-extras-circle-progress' ),
+				'ee-scroll-indicator'           => array( 'landtech-extras-scroll-indicator-widget', 'landtech-extras-scroll-indicator', 'landtech-extras-tooltips' ),
 				'ltxe-progress-bar'             => array( 'landtech-extras-progress-bar' ),
 				'ltxe-countdown'                => array( 'landtech-extras-countdown' ),
 				'ltxe-reading-progress'         => array( 'landtech-extras-reading-progress' ),
@@ -1619,7 +1828,12 @@ class LandTechExtrasPlugin {
 				'ltxe-logo-carousel'            => array( 'landtech-extras-logo-carousel' ),
 				'ltxe-flip-box'                 => array( 'landtech-extras-flip-box' ),
 				'ltxe-gallery-filterable'       => array( 'landtech-extras-gallery-filterable' ),
-				'posts-extra'                   => array( 'landtech-extras-posts-carousel' ),
+				'posts-extra'                   => array( 'landtech-extras-posts-extra', 'landtech-extras-posts-carousel', 'landtech-extras-jquery-resize', 'landtech-extras-infinite-scroll', 'landtech-extras-filtery', 'landtech-extras-isotope' ),
+				'"widgetType":"portfolio"'      => array( 'landtech-extras-portfolio-parallax', 'landtech-extras-parallax-gallery' ),
+				'"sticky_enable":"yes"'         => array( 'landtech-extras-sticky-elements', 'landtech-extras-hc-sticky', 'landtech-extras-jquery-resize' ),
+				'"parallax_element_enable":"yes"' => array( 'landtech-extras-parallax-elements', 'landtech-extras-parallax-element', 'landtech-extras-jquery-visible' ),
+				'"parallax_background_enable":"yes"' => array( 'landtech-extras-parallax-background-widget', 'landtech-extras-parallax-background', 'landtech-extras-jquery-resize', 'landtech-extras-jquery-visible' ),
+				'"tooltip_enable":"yes"'        => array( 'landtech-extras-global-tooltip', 'landtech-extras-hotips' ),
 				'ltxe-animated-headline'        => array( 'landtech-extras-animated-headline' ),
 				'ltxe-one-page-nav'             => array( 'landtech-extras-one-page-nav' ),
 				'ltxe-image-accordion'          => array( 'landtech-extras-image-accordion' ),
@@ -1634,6 +1848,17 @@ class LandTechExtrasPlugin {
 				'ltxe-tags-cloud-sphere'        => array( 'landtech-extras-tags-cloud-sphere' ),
 				'ltxe-newsletter-signup'        => array( 'landtech-extras-newsletter-signup' ),
 				'ltxe-media-gallery'            => array( 'landtech-extras-media-gallery' ),
+				'ee-slide-menu'                 => array( 'landtech-extras-slide-menu-widget', 'landtech-extras-slide-menu' ),
+				'ee-audio-player'               => array( 'landtech-extras-audio-player-widget', 'landtech-extras-audio-player' ),
+				'"widgetType":"table"'          => array( 'landtech-extras-table-widget', 'landtech-extras-tablesorter' ),
+				'"widgetType":"unfold"'         => array( 'landtech-extras-unfold-widget', 'landtech-extras-unfold' ),
+				'html5-video'                   => array( 'landtech-extras-html5-video', 'landtech-extras-video-player' ),
+				'devices-extended'              => array( 'landtech-extras-devices-extended', 'landtech-extras-html5-video' ),
+				'ee-switcher'                   => array( 'landtech-extras-switcher-widget', 'landtech-extras-switcher' ),
+				'ee-toggle-element'             => array( 'landtech-extras-toggle-element-widget', 'landtech-extras-toggle-element' ),
+				'ee-age-gate'                   => array( 'landtech-extras-age-gate', 'landtech-extras-glightbox' ),
+				'"widgetType":"timeline"'       => array( 'landtech-extras-timeline-widget', 'landtech-extras-timeline' ),
+				'heading-extended'              => array( 'landtech-extras-heading-extended', 'landtech-extras-jquery-long-shadow', 'landtech-extras-anime-helpers' ),
 			);
 			/**
 			 * Extra widget-type → script-handle pairs (Premium registers its own).
@@ -1705,6 +1930,28 @@ class LandTechExtrasPlugin {
 					$styles = array_merge( $styles, $widget_styles );
 				}
 			}
+			if ( false !== strpos( $raw, '"widgetType":"ee-lottie"' ) || false !== strpos( $raw, '"widgetType": "ee-lottie"' ) ) {
+				$handles = array_merge( $handles, $this->lottie_handles_from_elementor_data( $raw ) );
+			}
+			if ( false !== strpos( $raw, 'ee-google-map' ) ) {
+				$handles = array_merge(
+					$handles,
+					array(
+						'landtech-extras-google-map',
+						'landtech-extras-jquery-resize',
+					)
+				);
+				$has_osm    = false !== strpos( $raw, '"map_provider":"openstreetmap"' ) || false !== strpos( $raw, '"map_provider": "openstreetmap"' );
+				$has_google = false !== strpos( $raw, '"map_provider":"google"' ) || false !== strpos( $raw, '"map_provider": "google"' );
+				if ( $has_osm ) {
+					$handles[] = 'landtech-extras-leaflet';
+					$styles[]  = 'landtech-extras-leaflet';
+				}
+				if ( $has_google || ! $has_osm ) {
+					$handles[] = 'landtech-extras-gmap3';
+					$handles[] = 'landtech-extras-google-maps';
+				}
+			}
 		}
 
 		foreach ( array_unique( $handles ) as $handle ) {
@@ -1736,6 +1983,76 @@ class LandTechExtrasPlugin {
 			}
 			if ( ! empty( $style_handles ) ) {
 				wp_print_styles( $style_handles );
+			}
+		}
+	}
+
+	/**
+	 * Script handles for Lottie widgets in one Elementor document.
+	 *
+	 * Default playback uses lottie-player. Advanced playback uses lottie-web.
+	 * A document that cannot be read still loads both.
+	 *
+	 * @param string $raw Elementor document JSON.
+	 * @return string[]
+	 */
+	private function lottie_handles_from_elementor_data( $raw ) {
+		$decoded = json_decode( $raw, true );
+		if ( ! is_array( $decoded ) || ! class_exists( '\LandTechExtras\Modules\Lottie\Widgets\Lottie' ) ) {
+			return array( 'landtech-extras-lottie-web', 'landtech-extras-lottie', 'landtech-extras-lottie-player' );
+		}
+
+		$needs = array(
+			'web'     => false,
+			'player'  => false,
+			'unknown' => false,
+		);
+		$this->walk_lottie_elements( $decoded, $needs );
+		if ( $needs['unknown'] ) {
+			return array( 'landtech-extras-lottie-web', 'landtech-extras-lottie', 'landtech-extras-lottie-player' );
+		}
+
+		$handles = array();
+		if ( $needs['web'] ) {
+			$handles[] = 'landtech-extras-lottie-web';
+			$handles[] = 'landtech-extras-lottie';
+		}
+		if ( $needs['player'] ) {
+			$handles[] = 'landtech-extras-lottie-player';
+		}
+		return $handles;
+	}
+
+	/**
+	 * Record which Lottie library each widget in a document needs.
+	 *
+	 * @param array<int|string, mixed> $elements Elementor elements.
+	 * @param array<string, bool>      $needs    web, player, and unknown flags.
+	 * @return void
+	 */
+	private function walk_lottie_elements( $elements, &$needs ) {
+		if ( ! is_array( $elements ) || ! empty( $needs['unknown'] ) ) {
+			return;
+		}
+
+		foreach ( $elements as $element ) {
+			if ( ! is_array( $element ) ) {
+				continue;
+			}
+			if ( isset( $element['widgetType'] ) && 'ee-lottie' === $element['widgetType'] ) {
+				$settings = ( isset( $element['settings'] ) && is_array( $element['settings'] ) ) ? $element['settings'] : array();
+				if ( empty( $settings ) ) {
+					$needs['unknown'] = true;
+					return;
+				}
+				if ( \LandTechExtras\Modules\Lottie\Widgets\Lottie::settings_need_lottie_web( $settings ) ) {
+					$needs['web'] = true;
+				} else {
+					$needs['player'] = true;
+				}
+			}
+			if ( ! empty( $element['elements'] ) && is_array( $element['elements'] ) ) {
+				$this->walk_lottie_elements( $element['elements'], $needs );
 			}
 		}
 	}
@@ -1908,6 +2225,10 @@ class LandTechExtrasPlugin {
 			return;
 		}
 
+		if ( ! $this->request_needs_frontend_shell_styles() ) {
+			return;
+		}
+
 		$this->register_landtech_extras_frontend_style_handles();
 
 		// Enqueue styles
@@ -1915,6 +2236,204 @@ class LandTechExtrasPlugin {
 		wp_enqueue_style( 'landtech-extras-frontend' );
 		wp_enqueue_style( 'landtech-extras-widget-cta-contrast' );
 		wp_enqueue_style( 'landtech-extras-button-look' );
+	}
+
+	/**
+	 * Keep the Elementor frontend script ahead of the legacy frontend bundle.
+	 *
+	 * The first registration can run before Elementor registers its handle.
+	 *
+	 * @return void
+	 */
+	private function attach_elementor_frontend_script_dependency() {
+		if ( ! wp_script_is( 'elementor-frontend', 'registered' ) || ! wp_script_is( 'landtech-extras-frontend', 'registered' ) ) {
+			return;
+		}
+
+		$scripts = wp_scripts();
+		if ( ! isset( $scripts->registered['landtech-extras-frontend'] ) ) {
+			return;
+		}
+
+		if ( ! in_array( 'elementor-frontend', $scripts->registered['landtech-extras-frontend']->deps, true ) ) {
+			$scripts->registered['landtech-extras-frontend']->deps[] = 'elementor-frontend';
+		}
+	}
+
+	/**
+	 * Whether this front-end request needs the shared LandTech stylesheet.
+	 *
+	 * Editor preview always loads it. A request with no Elementor document does not.
+	 * A document that cannot be read, or that embeds another template, still loads it.
+	 *
+	 * @return bool
+	 */
+	private function request_needs_frontend_shell_styles() {
+		if ( $this->is_elementor_preview_iframe_request() ) {
+			$needed = true;
+		} else {
+			$scan = $this->elementor_documents_for_frontend_styles();
+			if ( ! empty( $scan['uncertain'] ) ) {
+				$needed = true;
+			} elseif ( empty( $scan['ids'] ) ) {
+				$needed = false;
+			} else {
+				$needed = false;
+				foreach ( $scan['ids'] as $post_id ) {
+					if ( $this->elementor_document_needs_shell_styles( $post_id ) ) {
+						$needed = true;
+						break;
+					}
+				}
+			}
+		}
+
+		/**
+		 * Whether the shared front-end stylesheet should print.
+		 *
+		 * @param bool $needed True to enqueue the shell styles.
+		 */
+		return (bool) apply_filters( 'landtech_extras/frontend_shell_styles_needed', $needed );
+	}
+
+	/**
+	 * Elementor document IDs that can print on this request.
+	 *
+	 * @return array{ids: int[], uncertain: bool}
+	 */
+	private function elementor_documents_for_frontend_styles() {
+		$ids        = array();
+		$uncertain  = false;
+
+		if ( is_singular() && class_exists( '\Elementor\Plugin' ) && isset( \Elementor\Plugin::$instance ) && \Elementor\Plugin::$instance ) {
+			$post_id = (int) get_queried_object_id();
+			$plugin  = \Elementor\Plugin::$instance;
+			if ( $post_id > 0 && isset( $plugin->db ) && method_exists( $plugin->db, 'is_built_with_elementor' ) && $plugin->db->is_built_with_elementor( $post_id ) ) {
+				$ids[] = $post_id;
+			}
+		}
+
+		if ( class_exists( '\ElementorPro\Modules\ThemeBuilder\Module' ) ) {
+			$module = \ElementorPro\Modules\ThemeBuilder\Module::instance();
+			if ( ! is_object( $module ) || ! method_exists( $module, 'get_conditions_manager' ) ) {
+				$uncertain = true;
+			} else {
+				$manager = $module->get_conditions_manager();
+				if ( ! is_object( $manager ) || ! method_exists( $manager, 'get_documents_for_location' ) ) {
+					$uncertain = true;
+				} else {
+					foreach ( array( 'header', 'footer', 'single', 'archive', 'popup' ) as $location ) {
+						$documents = $manager->get_documents_for_location( $location );
+						if ( ! is_array( $documents ) ) {
+							continue;
+						}
+						foreach ( $documents as $document ) {
+							if ( is_numeric( $document ) ) {
+								$ids[] = (int) $document;
+							} elseif ( is_object( $document ) && method_exists( $document, 'get_main_id' ) ) {
+								$ids[] = (int) $document->get_main_id();
+							}
+						}
+					}
+				}
+			}
+		}
+
+		if ( ! $uncertain && class_exists( '\ElementorPro\Modules\Popup\Module' ) ) {
+			$popups = get_posts(
+				array(
+					'post_type'              => 'elementor_library',
+					'post_status'            => 'publish',
+					'posts_per_page'         => 21,
+					'fields'                 => 'ids',
+					'no_found_rows'          => true,
+					'update_post_meta_cache' => false,
+					'update_post_term_cache' => false,
+					'meta_query'             => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- capped lookup so popup widgets keep their styles.
+						array(
+							'key'   => '_elementor_template_type',
+							'value' => 'popup',
+						),
+					),
+				)
+			);
+
+			if ( is_array( $popups ) && count( $popups ) > 20 ) {
+				$uncertain = true;
+			} elseif ( is_array( $popups ) ) {
+				foreach ( $popups as $popup_id ) {
+					$ids[] = (int) $popup_id;
+				}
+			}
+		}
+
+		$ids = array_values( array_unique( array_filter( $ids ) ) );
+
+		return array(
+			'ids'        => $ids,
+			'uncertain'  => $uncertain,
+		);
+	}
+
+	/**
+	 * Whether one Elementor document uses a LandTech widget, extension, or nested template.
+	 *
+	 * @param int $post_id Document ID.
+	 * @return bool
+	 */
+	private function elementor_document_needs_shell_styles( $post_id ) {
+		$raw = get_post_meta( (int) $post_id, '_elementor_data', true );
+		if ( ! is_string( $raw ) || '' === $raw ) {
+			return true;
+		}
+
+		$markers = array(
+			'"widgetType":"ee-',
+			'"widgetType": "ee-',
+			'"widgetType":"ltxe-',
+			'"widgetType": "ltxe-',
+			'"widgetType":"global"',
+			'"widgetType":"template"',
+			'"widgetType":"posts-extra"',
+			'"widgetType":"gallery-extra"',
+			'"widgetType":"gallery-slider"',
+			'"widgetType":"hotspots"',
+			'"widgetType":"image-comparison"',
+			'"widgetType":"heading-extended"',
+			'"widgetType":"devices-extended"',
+			'"widgetType":"text-divider"',
+			'"widgetType":"button-group"',
+			'"widgetType":"circle-progress"',
+			'"widgetType":"html5-video"',
+			'"widgetType":"timeline"',
+			'"widgetType":"unfold"',
+			'"widgetType":"table"',
+			'"sticky_enable":"yes"',
+			'"tooltip_enable":"yes"',
+			'"parallax_enable":"yes"',
+			'"parallax_background_enable":"yes"',
+			'"parallax_element_enable":"yes"',
+			'"ltxe_shape_dividers"',
+		);
+
+		/**
+		 * Strings that mean the shared stylesheet is required for this document.
+		 *
+		 * @param string[] $markers Needles matched against Elementor JSON.
+		 * @param int      $post_id Document ID.
+		 */
+		$markers = apply_filters( 'landtech_extras/frontend_shell_style_markers', $markers, (int) $post_id );
+		if ( ! is_array( $markers ) ) {
+			return true;
+		}
+
+		foreach ( $markers as $marker ) {
+			if ( is_string( $marker ) && '' !== $marker && false !== strpos( $raw, $marker ) ) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**

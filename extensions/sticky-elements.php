@@ -36,6 +36,7 @@ class Extension_Sticky_Elements extends Extension_Base {
 	 **/
 	public function get_script_depends() {
 		return [
+			'landtech-extras-sticky-elements',
 			'landtech-extras-hc-sticky',
 			'landtech-extras-jquery-resize',
 		];

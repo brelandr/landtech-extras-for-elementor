@@ -163,6 +163,8 @@ class Team_Members extends Extras_Widget {
 			)
 		);
 
+		$this->ltxe_add_heading_tag_control( 'title_html_tag', 'h3' );
+
 		$this->end_controls_section();
 
 		$this->start_controls_section(
@@ -505,7 +507,8 @@ class Team_Members extends Extras_Widget {
 			if ( '' !== $link ) {
 				echo '<a class="ltxe-team-card__name" href="' . esc_url( $link ) . '">' . esc_html( $name ) . '</a>';
 			} else {
-				echo '<h3 class="ltxe-team-card__name">' . esc_html( $name ) . '</h3>';
+				$heading_tag = $this->ltxe_sanitize_heading_tag( $this->get_settings_for_display( 'title_html_tag' ) ? $this->get_settings_for_display( 'title_html_tag' ) : 'h3' );
+				echo '<' . esc_html( $heading_tag ) . ' class="ltxe-team-card__name">' . esc_html( $name ) . '</' . esc_html( $heading_tag ) . '>';
 			}
 		}
 		if ( $show_role && '' !== $role ) {

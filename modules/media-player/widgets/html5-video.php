@@ -75,7 +75,7 @@ class HTML5_Video extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
-			'landtech-extras-frontend',
+			'landtech-extras-html5-video',
 			'landtech-extras-video-player',
 			'landtech-extras-jquery-appear',
 			'landtech-extras-iphone-inline-video',
@@ -351,6 +351,43 @@ class HTML5_Video extends Extras_Widget {
 			$this->end_controls_tab();
 
 			$this->end_controls_tabs();
+
+			$this->add_control(
+				'video_captions',
+				[
+					'label'       => __( 'Captions', 'landtech-extras-for-elementor' ),
+					'type'        => Controls_Manager::URL,
+					'dynamic'     => [
+						'active' => true,
+					],
+					'placeholder' => __( 'https://example.com/captions.vtt', 'landtech-extras-for-elementor' ),
+					'description' => __( 'Optional WebVTT captions file.', 'landtech-extras-for-elementor' ),
+				]
+			);
+
+			$this->add_control(
+				'video_captions_label',
+				[
+					'label'     => __( 'Captions label', 'landtech-extras-for-elementor' ),
+					'type'      => Controls_Manager::TEXT,
+					'default'   => __( 'English', 'landtech-extras-for-elementor' ),
+					'condition' => [
+						'video_captions[url]!' => '',
+					],
+				]
+			);
+
+			$this->add_control(
+				'video_captions_srclang',
+				[
+					'label'     => __( 'Captions language code', 'landtech-extras-for-elementor' ),
+					'type'      => Controls_Manager::TEXT,
+					'default'   => 'en',
+					'condition' => [
+						'video_captions[url]!' => '',
+					],
+				]
+			);
 
 			$this->add_control(
 				'video_cover',
@@ -1518,6 +1555,31 @@ class HTML5_Video extends Extras_Widget {
 				] );
 			?><source <?php $this->print_render_attribute_string( 'source-webm' ); ?>><?php } ?>
 
+			<?php
+			$caption_url = ( ! empty( $settings['video_captions']['url'] ) && is_string( $settings['video_captions']['url'] ) ) ? $settings['video_captions']['url'] : '';
+			if ( '' !== $caption_url ) {
+				$caption_label = isset( $settings['video_captions_label'] ) ? (string) $settings['video_captions_label'] : '';
+				$caption_lang  = isset( $settings['video_captions_srclang'] ) ? strtolower( (string) $settings['video_captions_srclang'] ) : 'en';
+				$caption_lang  = preg_replace( '/[^a-z0-9-]/', '', $caption_lang );
+				if ( '' === $caption_lang ) {
+					$caption_lang = 'en';
+				}
+				$this->add_render_attribute(
+					'track-captions',
+					array(
+						'kind'    => 'captions',
+						'src'     => $caption_url,
+						'srclang' => $caption_lang,
+						'label'   => '' !== $caption_label ? $caption_label : 'English',
+						'default' => 'default',
+					)
+				);
+				?>
+				<track <?php $this->print_render_attribute_string( 'track-captions' ); ?>>
+				<?php
+			}
+			?>
+
 		</video><?php
 	}
 
@@ -1877,6 +1939,16 @@ class HTML5_Video extends Extras_Widget {
 					'type' : 'video/webm',
 				} );
 			#><source {{{ view.getRenderAttributeString( 'source-webm' ) }}}><# } #>
+
+			<# if ( settings.video_captions && settings.video_captions.url ) {
+				view.addRenderAttribute( 'track-captions', {
+					'kind' : 'captions',
+					'src' : settings.video_captions.url,
+					'srclang' : settings.video_captions_srclang || 'en',
+					'label' : settings.video_captions_label || 'English',
+					'default' : 'default',
+				} );
+			#><track {{{ view.getRenderAttributeString( 'track-captions' ) }}}><# } #>
 
 		</video>
 		<?php

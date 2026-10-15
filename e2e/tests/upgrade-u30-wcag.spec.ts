@@ -49,8 +49,8 @@ test.describe( 'U30 WCAG 2.2 audit', () => {
 
 		await expect( page.locator( '[aria-roledescription="carousel"]' ) ).toBeVisible();
 		await expect( page.locator( '.ltxe-testimonials__pause' ) ).toHaveAttribute( 'aria-pressed', 'false' );
-		await expect( page.locator( '.ltxe-countdown' ) ).toHaveAttribute( 'aria-live', 'polite' );
-		await expect( page.locator( '.ltxe-countdown' ) ).toHaveAttribute( 'aria-atomic', 'true' );
+		await expect( page.locator( '.ltxe-countdown' ) ).not.toHaveAttribute( 'aria-live', 'polite' );
+		await expect( page.locator( '.ltxe-countdown__expired' ) ).toHaveAttribute( 'aria-live', 'polite' );
 		await expect( page.locator( '.ltxe-faq__question' ) ).toHaveAttribute( 'aria-expanded', 'false' );
 		await expect( page.locator( '.ltxe-pricing-toggle__btn.is-active' ) ).toHaveAttribute( 'aria-pressed', 'true' );
 
@@ -100,6 +100,6 @@ test.describe( 'U30 WCAG 2.2 audit', () => {
 			await expect( pause ).toHaveAttribute( 'aria-pressed', /true|false/ );
 		}
 
-		await expect( page.locator( '.ltxe-countdown[aria-live="polite"]' ).first() ).toBeVisible();
+		await expect( page.locator( '.ltxe-countdown__expired[aria-live="polite"]' ).first() ).toHaveCount( 1 );
 	} );
 } );

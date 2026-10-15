@@ -123,7 +123,7 @@ class Offcanvas extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
-			'landtech-extras-frontend',
+			'landtech-extras-offcanvas-widget',
 			'landtech-extras-slidebars',
 			'landtech-extras-jquery-resize',
 		];
@@ -1806,7 +1806,8 @@ class Offcanvas extends Extras_Widget {
 	public function render_trigger() {
 		$settings = $this->get_settings_for_display();
 		$panel_id = 'oc' . $this->get_id();
-		$trigger_label = '' !== $settings['trigger_text'] ? $settings['trigger_text'] : __( 'Menu', 'landtech-extras-for-elementor' );
+		$trigger_text  = isset( $settings['trigger_text'] ) ? trim( (string) $settings['trigger_text'] ) : '';
+		$trigger_label = '' !== $trigger_text ? $trigger_text : __( 'Menu', 'landtech-extras-for-elementor' );
 
 		$this->add_render_attribute( [
 			'button-wrapper' => [

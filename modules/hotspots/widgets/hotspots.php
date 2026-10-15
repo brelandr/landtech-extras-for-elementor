@@ -75,7 +75,7 @@ class Hotspots extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
-			'landtech-extras-frontend',
+			'landtech-extras-tooltips',
 			'landtech-extras-hotips',
 			'landtech-extras-hotspots',
 			'resize',
@@ -1430,6 +1430,9 @@ class Hotspots extends Extras_Widget {
 						if ( ! empty( $item['link']['nofollow'] ) ) {
 							$this->add_render_attribute( $hotspot_key, 'rel', 'nofollow' );
 						}
+					} elseif ( 'a' !== $hotspot_tag ) {
+						$this->add_render_attribute( $hotspot_key, 'tabindex', '0' );
+						$this->add_render_attribute( $hotspot_key, 'role', 'button' );
 					}
 
 					?><<?php echo esc_html( $hotspot_tag ); ?> <?php $this->print_render_attribute_string( $hotspot_key ); ?>>
@@ -1654,6 +1657,9 @@ class Hotspots extends Extras_Widget {
 						if ( '' !== item.link.url ) {
 							hotspotTag = 'a';
 							view.addRenderAttribute( hotspotKey, 'href', item.link.url );
+						} else {
+							view.addRenderAttribute( hotspotKey, 'tabindex', '0' );
+							view.addRenderAttribute( hotspotKey, 'role', 'button' );
 						}
 
 					#><{{ hotspotTag }} {{{ view.getRenderAttributeString( hotspotKey ) }}}>

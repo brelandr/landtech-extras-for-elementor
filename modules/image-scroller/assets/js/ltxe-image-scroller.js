@@ -17,6 +17,24 @@
 			if (el.getAttribute('data-ready') === '1') { return; }
 			el.setAttribute('data-ready', '1');
 			var c = cfg(el);
+			el.addEventListener('keydown', function (ev) {
+				var step = 0;
+				if (ev.key === 'ArrowDown' || ev.key === 'ArrowRight') { step = 0.1; }
+				else if (ev.key === 'ArrowUp' || ev.key === 'ArrowLeft') { step = -0.1; }
+				else if (ev.key === 'Home') { step = 'start'; }
+				else if (ev.key === 'End') { step = 'end'; }
+				else if ((ev.key === 'Enter' || ev.key === ' ') && c.trigger === 'click') { step = 'toggle'; }
+				else { return; }
+				ev.preventDefault();
+				var pct = parseFloat(el.getAttribute('data-ltxe-iscroll-pct') || '0');
+				if (isNaN(pct)) { pct = 0; }
+				if (step === 'start') { pct = 0; }
+				else if (step === 'end') { pct = 1; }
+				else if (step === 'toggle') { pct = pct > 0.5 ? 0 : 1; }
+				else { pct = Math.min(1, Math.max(0, pct + step)); }
+				el.setAttribute('data-ltxe-iscroll-pct', String(pct));
+				offset(el, c, pct);
+			});
 			if (c.trigger === 'hover') {
 				el.addEventListener('mousemove', function (ev) {
 					var r = el.getBoundingClientRect();

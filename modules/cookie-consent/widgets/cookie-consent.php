@@ -117,9 +117,19 @@ class Cookie_Consent extends Extras_Widget {
 			'show_decline',
 			array(
 				'label'        => __( 'Show Decline Button', 'landtech-extras-for-elementor' ),
+				'description'  => __( 'Decline stays on the banner so visitors can refuse non-essential cookies.', 'landtech-extras-for-elementor' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default'      => 'yes',
+			)
+		);
+
+		$this->add_control(
+			'manage_label',
+			array(
+				'label'   => __( 'Change Choice Label', 'landtech-extras-for-elementor' ),
+				'type'    => Controls_Manager::TEXT,
+				'default' => __( 'Cookie settings', 'landtech-extras-for-elementor' ),
 			)
 		);
 
@@ -198,6 +208,8 @@ class Cookie_Consent extends Extras_Widget {
 		);
 		$policy_url = ( ! empty( $settings['policy_url']['url'] ) ) ? esc_url_raw( (string) $settings['policy_url']['url'] ) : '';
 
+		$manage = isset( $settings['manage_label'] ) ? (string) $settings['manage_label'] : __( 'Cookie settings', 'landtech-extras-for-elementor' );
+		echo '<button type="button" class="ltxe-consent-manage" hidden>' . esc_html( $manage ) . '</button>';
 		echo '<div class="ltxe-cookie-consent ltxe-cookie-consent--' . esc_attr( $pos ) . '" hidden data-ltxe-consent="' . esc_attr( $config ) . '" role="dialog" aria-live="polite">';
 		echo '<p class="ltxe-cookie-consent__msg">' . esc_html( isset( $settings['message'] ) ? (string) $settings['message'] : '' ) . '</p>';
 		if ( '' !== $policy_url && ! empty( $settings['policy_text'] ) ) {
@@ -205,15 +217,13 @@ class Cookie_Consent extends Extras_Widget {
 		}
 		if ( isset( $settings['granular'] ) && 'yes' === $settings['granular'] ) {
 			echo '<div class="ltxe-cookie-consent__cats">';
-			echo '<label><input type="checkbox" class="ltxe-consent-cat" value="analytics" checked /> ' . esc_html__( 'Analytics', 'landtech-extras-for-elementor' ) . '</label>';
+			echo '<label><input type="checkbox" class="ltxe-consent-cat" value="analytics" /> ' . esc_html__( 'Analytics', 'landtech-extras-for-elementor' ) . '</label>';
 			echo '<label><input type="checkbox" class="ltxe-consent-cat" value="marketing" /> ' . esc_html__( 'Marketing', 'landtech-extras-for-elementor' ) . '</label>';
 			echo '</div>';
 		}
 		echo '<div class="ltxe-cookie-consent__actions">';
 		echo '<button type="button" class="ltxe-consent-accept">' . esc_html( isset( $settings['accept_label'] ) ? (string) $settings['accept_label'] : __( 'Accept', 'landtech-extras-for-elementor' ) ) . '</button>';
-		if ( isset( $settings['show_decline'] ) && 'yes' === $settings['show_decline'] ) {
-			echo '<button type="button" class="ltxe-consent-decline">' . esc_html( isset( $settings['decline_label'] ) ? (string) $settings['decline_label'] : __( 'Decline', 'landtech-extras-for-elementor' ) ) . '</button>';
-		}
+		echo '<button type="button" class="ltxe-consent-decline">' . esc_html( isset( $settings['decline_label'] ) ? (string) $settings['decline_label'] : __( 'Decline', 'landtech-extras-for-elementor' ) ) . '</button>';
 		echo '</div></div>';
 	}
 }

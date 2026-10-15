@@ -68,11 +68,11 @@ class Inline_Svg extends Extras_Widget {
 	 * @return array
 	 */
 	public function get_script_depends() {
-		return [ 'landtech-extras-frontend', 'landtech-extras-inline-svg', 'landtech-extras-anime-helpers' ];
+		return [ 'landtech-extras-inline-svg', 'landtech-extras-anime-helpers' ];
 	}
 
 	/**
-	 * Wrapper HTML (data-url shell) is static at render time; SVG fetch/injection runs via frontend.js.
+	 * Wrapper HTML (data-url shell) is static at render time; SVG fetch/injection runs via inline-svg.js.
 	 *
 	 * @inheritDoc
 	 */

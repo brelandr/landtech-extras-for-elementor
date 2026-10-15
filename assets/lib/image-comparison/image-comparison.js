@@ -176,8 +176,24 @@
 				$element.find('.ee-image-comparison__handle').removeClass('draggable');
 			};
 
+			function pointerPageX( e ) {
+				var original = e.originalEvent;
+
+				if ( original && original.touches && original.touches.length ) {
+					return original.touches[ 0 ].pageX;
+				}
+
+				if ( original && original.changedTouches && original.changedTouches.length ) {
+					return original.changedTouches[ 0 ].pageX;
+				}
+
+				return e.pageX;
+			}
+
 			plugin.drags = function( dragElement, resizeElement, container, labelOriginal, labelModified ) {
-				dragElement.on( "mousedown vmousedown", function( e ) {
+				dragElement.on( "mousedown touchstart", function( e ) {
+
+					e.pageX = pointerPageX( e );
 
 					dragElement.addClass('draggable');
 					resizeElement.addClass('resizable');
@@ -189,7 +205,9 @@
 						minLeft 			= containerOffset - dragWidth / 2,
 						maxLeft 			= containerOffset + containerWidth - dragWidth / 2;
 					
-					dragElement.parents().on("mousemove vmousemove", function(e) {
+					dragElement.parents().on("mousemove touchmove", function(e) {
+
+						e.pageX = pointerPageX( e );
 
 						if( ! dragging ) {
 							dragging = true;
@@ -203,14 +221,14 @@
 								} );
 						}
 
-					}).on("mouseup vmouseup", function( e ) {
+					}).on("mouseup touchend touchcancel", function( e ) {
 						dragElement.removeClass('draggable');
 						resizeElement.removeClass('resizable');
 					});
 
 					e.preventDefault();
 
-				}).on( "mouseup vmouseup", function( e ) {
+				}).on( "mouseup touchend touchcancel", function( e ) {
 					dragElement.removeClass('draggable');
 					resizeElement.removeClass('resizable');
 				});				
@@ -228,7 +246,7 @@
 
 				var widthValue = (leftValue + dragWidth / 2 - containerOffset) * 100 / containerWidth + '%';
 				
-				$element.find('.draggable').css( 'left', widthValue).on( "mouseup vmouseup", function() {
+				$element.find('.draggable').css( 'left', widthValue).on( "mouseup touchend touchcancel", function() {
 					$(this).removeClass('draggable');
 					resizeElement.removeClass('resizable');
 				});

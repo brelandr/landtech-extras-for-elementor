@@ -46,6 +46,7 @@ class Extension_Tooltip extends Extension_Base {
 	 **/
 	public function get_script_depends() {
 		return [
+			'landtech-extras-global-tooltip',
 			'landtech-extras-hotips',
 			'resize',
 		];

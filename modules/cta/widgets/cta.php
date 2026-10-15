@@ -182,6 +182,8 @@ class Cta extends Extras_Widget {
 			)
 		);
 
+		$this->ltxe_add_heading_tag_control( 'title_html_tag', 'h2' );
+
 		$this->add_control(
 			'subtext',
 			array(
@@ -380,7 +382,8 @@ class Cta extends Extras_Widget {
 			echo '<p class="ltxe-cta__eyebrow">' . esc_html( (string) $settings['eyebrow'] ) . '</p>';
 		}
 		if ( ! empty( $settings['heading'] ) ) {
-			echo '<h2 class="ltxe-cta__heading">' . esc_html( (string) $settings['heading'] ) . '</h2>';
+			$heading_tag = $this->ltxe_sanitize_heading_tag( isset( $settings['title_html_tag'] ) ? $settings['title_html_tag'] : 'h2' );
+			echo '<' . esc_html( $heading_tag ) . ' class="ltxe-cta__heading">' . esc_html( (string) $settings['heading'] ) . '</' . esc_html( $heading_tag ) . '>';
 		}
 		if ( ! empty( $settings['subtext'] ) ) {
 			echo '<p class="ltxe-cta__sub">' . esc_html( (string) $settings['subtext'] ) . '</p>';

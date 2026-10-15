@@ -270,7 +270,9 @@ class Progress_Bar extends Extras_Widget {
 			$json = '{}';
 		}
 
+		$progress_name = '' !== trim( $label ) ? $label : __( 'Progress', 'landtech-extras-for-elementor' );
 		echo '<div class="' . esc_attr( implode( ' ', $classes ) ) . '" role="progressbar"';
+		echo ' aria-label="' . esc_attr( $progress_name ) . '"';
 		echo ' aria-valuenow="' . esc_attr( (string) $value ) . '"';
 		echo ' aria-valuemin="0"';
 		echo ' aria-valuemax="' . esc_attr( (string) $max ) . '"';

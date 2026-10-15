@@ -103,7 +103,7 @@ class Gallery extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
-			'landtech-extras-frontend',
+			'landtech-extras-gallery-extra',
 			'landtech-extras-gallery',
 			'landtech-extras-glightbox',
 			'landtech-extras-tilt',

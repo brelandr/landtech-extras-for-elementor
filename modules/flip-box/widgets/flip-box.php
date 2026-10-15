@@ -129,6 +129,8 @@ class Flip_Box extends Extras_Widget {
 			)
 		);
 
+		$this->ltxe_add_heading_tag_control( 'title_html_tag', 'h3' );
+
 		$this->add_control(
 			'front_desc',
 			array(
@@ -446,9 +448,14 @@ class Flip_Box extends Extras_Widget {
 			$classes[] = 'ltxe-flip-box--equal';
 		}
 
-		$tabindex = ( 'click' === $trigger ) ? '0' : '-1';
+		$tabindex  = ( 'click' === $trigger ) ? '0' : '-1';
+		$has_link  = ! empty( $settings['button_text'] );
 
-		echo '<div class="' . esc_attr( implode( ' ', $classes ) ) . '" tabindex="' . esc_attr( $tabindex ) . '" role="button" aria-label="' . esc_attr( $label ) . '">';
+		if ( $has_link ) {
+			echo '<div class="' . esc_attr( implode( ' ', $classes ) ) . '">';
+		} else {
+			echo '<div class="' . esc_attr( implode( ' ', $classes ) ) . '" tabindex="' . esc_attr( $tabindex ) . '" role="button" aria-label="' . esc_attr( $label ) . '">';
+		}
 		echo '<div class="ltxe-flip-box__inner">';
 		echo '<div class="ltxe-flip-box__face ltxe-flip-box__front">';
 		$this->render_front( $settings );
@@ -472,8 +479,9 @@ class Flip_Box extends Extras_Widget {
 		} elseif ( 'image' === $graphic && ! empty( $settings['front_image']['url'] ) ) {
 			echo '<img class="ltxe-flip-box__graphic" src="' . esc_url( $settings['front_image']['url'] ) . '" alt="" />';
 		}
+		$heading_tag = $this->ltxe_sanitize_heading_tag( isset( $settings['title_html_tag'] ) ? $settings['title_html_tag'] : 'h3' );
 		if ( ! empty( $settings['front_title'] ) ) {
-			echo '<h3 class="ltxe-flip-box__front-title">' . esc_html( (string) $settings['front_title'] ) . '</h3>';
+			echo '<' . esc_html( $heading_tag ) . ' class="ltxe-flip-box__front-title">' . esc_html( (string) $settings['front_title'] ) . '</' . esc_html( $heading_tag ) . '>';
 		}
 		if ( ! empty( $settings['front_desc'] ) ) {
 			echo '<p class="ltxe-flip-box__front-desc">' . esc_html( (string) $settings['front_desc'] ) . '</p>';
@@ -485,8 +493,9 @@ class Flip_Box extends Extras_Widget {
 	 * @return void
 	 */
 	private function render_back( $settings ) {
+		$heading_tag = $this->ltxe_sanitize_heading_tag( isset( $settings['title_html_tag'] ) ? $settings['title_html_tag'] : 'h3' );
 		if ( ! empty( $settings['back_title'] ) ) {
-			echo '<h3 class="ltxe-flip-box__back-title">' . esc_html( (string) $settings['back_title'] ) . '</h3>';
+			echo '<' . esc_html( $heading_tag ) . ' class="ltxe-flip-box__back-title">' . esc_html( (string) $settings['back_title'] ) . '</' . esc_html( $heading_tag ) . '>';
 		}
 		if ( ! empty( $settings['back_desc'] ) ) {
 			echo '<p class="ltxe-flip-box__back-desc">' . esc_html( (string) $settings['back_desc'] ) . '</p>';

@@ -36,6 +36,7 @@ class Extension_Parallax_Elements extends Extension_Base {
 	 **/
 	public function get_script_depends() {
 		return [
+			'landtech-extras-parallax-elements',
 			'landtech-extras-parallax-element',
 			'landtech-extras-jquery-visible',
 		];

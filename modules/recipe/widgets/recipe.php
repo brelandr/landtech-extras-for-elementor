@@ -87,6 +87,8 @@ class Recipe extends Extras_Widget {
 			)
 		);
 
+		$this->ltxe_add_heading_tag_control( 'title_html_tag', 'h3' );
+
 		$this->add_control(
 			'recipe_description',
 			array(
@@ -581,7 +583,17 @@ class Recipe extends Extras_Widget {
 		if ( '' !== $image ) {
 			echo '<img class="ltxe-recipe__image" src="' . esc_url( $image ) . '" alt="' . esc_attr( $name ) . '" />';
 		}
-		echo '<h3 class="ltxe-recipe__title">' . esc_html( $name ) . '</h3>';
+		$title_tag   = $this->ltxe_sanitize_heading_tag( isset( $s['title_html_tag'] ) ? $s['title_html_tag'] : 'h3' );
+		$section_map = array(
+			'h1' => 'h2',
+			'h2' => 'h3',
+			'h3' => 'h4',
+			'h4' => 'h5',
+			'h5' => 'h6',
+			'h6' => 'h6',
+		);
+		$section_tag = isset( $section_map[ $title_tag ] ) ? $section_map[ $title_tag ] : 'h4';
+		echo '<' . esc_html( $title_tag ) . ' class="ltxe-recipe__title">' . esc_html( $name ) . '</' . esc_html( $title_tag ) . '>';
 		if ( '' !== $desc ) {
 			echo '<p class="ltxe-recipe__desc">' . esc_html( $desc ) . '</p>';
 		}
@@ -598,7 +610,7 @@ class Recipe extends Extras_Widget {
 		echo '</ul>';
 
 		if ( ! empty( $ingredients ) ) {
-			echo '<h4 class="ltxe-recipe__heading">' . esc_html__( 'Ingredients', 'landtech-extras-for-elementor' ) . '</h4>';
+			echo '<' . esc_html( $section_tag ) . ' class="ltxe-recipe__heading">' . esc_html__( 'Ingredients', 'landtech-extras-for-elementor' ) . '</' . esc_html( $section_tag ) . '>';
 			echo '<ul class="ltxe-recipe__ingredients">';
 			foreach ( $ingredients as $line ) {
 				echo '<li>' . esc_html( $line ) . '</li>';
@@ -607,7 +619,7 @@ class Recipe extends Extras_Widget {
 		}
 
 		if ( ! empty( $steps ) ) {
-			echo '<h4 class="ltxe-recipe__heading">' . esc_html__( 'Instructions', 'landtech-extras-for-elementor' ) . '</h4>';
+			echo '<' . esc_html( $section_tag ) . ' class="ltxe-recipe__heading">' . esc_html__( 'Instructions', 'landtech-extras-for-elementor' ) . '</' . esc_html( $section_tag ) . '>';
 			echo '<ol class="ltxe-recipe__steps">';
 			foreach ( $steps as $step ) {
 				echo '<li><span>' . esc_html( $step['text'] ) . '</span>';
@@ -620,7 +632,7 @@ class Recipe extends Extras_Widget {
 		}
 
 		if ( ! empty( $nutrition ) ) {
-			echo '<h4 class="ltxe-recipe__heading">' . esc_html__( 'Nutrition', 'landtech-extras-for-elementor' ) . '</h4>';
+			echo '<' . esc_html( $section_tag ) . ' class="ltxe-recipe__heading">' . esc_html__( 'Nutrition', 'landtech-extras-for-elementor' ) . '</' . esc_html( $section_tag ) . '>';
 			echo '<ul class="ltxe-recipe__nutrition">';
 			foreach ( $nutrition as $row ) {
 				echo '<li><span>' . esc_html( $row['label'] ) . '</span> <strong>' . esc_html( trim( $row['value'] . ' ' . $row['unit'] ) ) . '</strong></li>';

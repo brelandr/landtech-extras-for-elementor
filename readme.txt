@@ -162,11 +162,10 @@ Source: https://github.com/shshaw/Splitting — License notes: `assets/lib/split
 Source: https://github.com/biati-digital/glightbox — License notes: `assets/lib/glightbox/README.txt`.
 
 **jquery-circle-progress** (MIT) — https://github.com/kottenator/jquery-circle-progress
-**jquery.appear** (MIT) — https://github.com/morr/jquery.appear/
-**LongShadow jQuery Plugin** (MIT) — https://github.com/dangvanthanh/jquery.longShadow
-**HC-Sticky** (MIT) — https://github.com/somewebmedia/hc-sticky
-**jQuery Mobile** (MIT/jquery.org) — https://jquerymobile.com/
-**jquery-visible** (MIT) — http://teamdf.com/jquery-plugins/license/
+**jquery.appear 0.6.2** (MIT) — https://github.com/morr/jquery.appear/ — `assets/lib/jquery-appear/README.txt`
+**LongShadow jQuery Plugin** (MIT) — https://github.com/dangvanthanh/jquery.longShadow — `assets/lib/jquery-long-shadow/README.txt`
+**HC-Sticky** (MIT) — https://github.com/somewebmedia/hc-sticky — `assets/lib/hc-sticky/README.txt`
+**jquery-visible** (MIT) — http://teamdf.com/jquery-plugins/license/ — `assets/lib/jquery-visible/README.txt`
 **Parallax Background** (MIT) — https://github.com/erensuleymanoglu/parallax-background
 **TableSorter** v2.32.0 (MIT/GPL dual, Mottie fork) — https://github.com/Mottie/tablesorter
 **Isotope v3.0.6** (GPLv3) — `assets/lib/isotope/` standalone modules (WordPress core jQuery via jquery-bridget)

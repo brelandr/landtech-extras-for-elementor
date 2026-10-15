@@ -131,6 +131,8 @@ class Image_Accordion extends Extras_Widget {
 			)
 		);
 
+		$this->ltxe_add_heading_tag_control( 'title_html_tag', 'h3' );
+
 		$this->add_control(
 			'trigger',
 			array(
@@ -365,12 +367,18 @@ class Image_Accordion extends Extras_Widget {
 			$is_open = ( (int) $index === $open );
 			$title   = isset( $panel['title'] ) ? (string) $panel['title'] : '';
 			$bg      = ! empty( $panel['image']['url'] ) ? esc_url( (string) $panel['image']['url'] ) : '';
-			$tab     = ( 'click' === $trigger ) ? '0' : '-1';
-			echo '<div class="ltxe-ia__panel' . ( $is_open ? ' is-open' : '' ) . '" tabindex="' . esc_attr( $tab ) . '" role="button" aria-expanded="' . ( $is_open ? 'true' : 'false' ) . '" aria-label="' . esc_attr( $title ) . '"' . ( $bg ? ' style="background-image:url(' . esc_url( $bg ) . ')"' : '' ) . '>';
+			$tab      = ( 'click' === $trigger ) ? '0' : '-1';
+			$has_link = $show_btn && ! empty( $panel['button_text'] );
+			if ( $has_link ) {
+				echo '<div class="ltxe-ia__panel' . ( $is_open ? ' is-open' : '' ) . '"' . ( $bg ? ' style="background-image:url(' . esc_url( $bg ) . ')"' : '' ) . '>';
+			} else {
+				echo '<div class="ltxe-ia__panel' . ( $is_open ? ' is-open' : '' ) . '" tabindex="' . esc_attr( $tab ) . '" role="button" aria-expanded="' . ( $is_open ? 'true' : 'false' ) . '" aria-label="' . esc_attr( $title ) . '"' . ( $bg ? ' style="background-image:url(' . esc_url( $bg ) . ')"' : '' ) . '>';
+			}
 			echo '<span class="ltxe-ia__overlay"></span>';
 			echo '<div class="ltxe-ia__content">';
 			if ( '' !== $title ) {
-				echo '<h3 class="ltxe-ia__title">' . esc_html( $title ) . '</h3>';
+				$heading_tag = $this->ltxe_sanitize_heading_tag( isset( $settings['title_html_tag'] ) ? $settings['title_html_tag'] : 'h3' );
+				echo '<' . esc_html( $heading_tag ) . ' class="ltxe-ia__title">' . esc_html( $title ) . '</' . esc_html( $heading_tag ) . '>';
 			}
 			if ( ! empty( $panel['description'] ) ) {
 				echo '<p class="ltxe-ia__desc">' . esc_html( (string) $panel['description'] ) . '</p>';

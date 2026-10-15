@@ -71,10 +71,11 @@ class Devices extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
-			'landtech-extras-frontend',
+			'landtech-extras-devices-extended',
+			'landtech-extras-html5-video',
 			'landtech-extras-video-player',
 			'landtech-extras-iphone-inline-video',
-			'landtech-extras-jquery-appear'
+			'landtech-extras-jquery-appear',
 		];
 	}
 

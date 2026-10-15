@@ -128,9 +128,38 @@
 		} );
 	}
 
+	function initHorizontal( $scope ) {
+		var settings = window.ee.getElementSettings( $scope );
+		var $ = window.jQuery;
+
+		if ( $scope.find( 'input.ltxe-ic__handle, input.ee-image-comparison__handle[type="range"]' ).length ) {
+			return;
+		}
+
+		if ( $scope.hasClass( 'ltxe-img-comparison--vertical' ) || $scope.find( '.ltxe-img-comparison--vertical' ).length ) {
+			return;
+		}
+
+		var $images = $scope.find( '.ee-image-comparison' );
+		var imageComparisonArgs = {
+			animation: 'yes' === settings.entrance_animation,
+			clickToMove: 'yes' === settings.click_to_move,
+			clickLabels: 'yes' === settings.click_labels,
+			animateClick: 'yes' === settings.click_animate,
+		};
+
+		if ( elementorFrontend.isEditMode() ) {
+			imageComparisonArgs.scope = window.elementor.$previewContents;
+			imageComparisonArgs.editMode = true;
+		}
+
+		$images.imageComparison( imageComparisonArgs );
+	}
+
 	if ( window.jQuery ) {
 		window.jQuery( window ).on( 'elementor/frontend/init', function () {
 			elementorFrontend.hooks.addAction( 'frontend/element_ready/image-comparison.default', function ( $scope ) {
+				initHorizontal( $scope );
 				init( $scope[ 0 ] );
 			} );
 		} );

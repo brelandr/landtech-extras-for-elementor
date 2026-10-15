@@ -202,6 +202,8 @@ class Icon_Box extends Extras_Widget {
 			)
 		);
 
+		$this->ltxe_add_heading_tag_control( 'title_html_tag', 'h3' );
+
 		$this->add_control(
 			'description',
 			array(
@@ -338,7 +340,8 @@ class Icon_Box extends Extras_Widget {
 		echo '</div>';
 		echo '<div class="ltxe-icon-box__body">';
 		if ( '' !== $title ) {
-			echo '<h3 class="ltxe-icon-box__title">' . esc_html( $title ) . '</h3>';
+			$heading_tag = $this->ltxe_sanitize_heading_tag( isset( $settings['title_html_tag'] ) ? $settings['title_html_tag'] : 'h3' );
+			echo '<' . esc_html( $heading_tag ) . ' class="ltxe-icon-box__title">' . esc_html( $title ) . '</' . esc_html( $heading_tag ) . '>';
 		}
 		if ( '' !== $desc ) {
 			echo '<p class="ltxe-icon-box__desc">' . esc_html( $desc ) . '</p>';

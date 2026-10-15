@@ -521,6 +521,13 @@ class Settings extends Settings_Page {
 					'no' 	=> __( 'No', 'landtech-extras-for-elementor' ),
 				]
 			],
+			[
+				'name'    => 'delete_data_on_uninstall',
+				'label'   => __( 'Delete data on uninstall', 'landtech-extras-for-elementor' ),
+				'desc'    => __( 'When this plugin is deleted, remove its settings, cached weather and search data, and saved API keys. Leave this off to keep that data for a later reinstall. The Premium add-on is not removed.', 'landtech-extras-for-elementor' ),
+				'type'    => 'checkbox',
+				'default' => 'off',
+			],
 		];
 
 		return $fields;

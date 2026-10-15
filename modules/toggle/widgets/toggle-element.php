@@ -86,7 +86,7 @@ class Toggle_Element extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
-			'landtech-extras-frontend',
+			'landtech-extras-toggle-element-widget',
 			'landtech-extras-toggle-element',
 			'landtech-extras-jquery-resize',
 		];
@@ -992,6 +992,7 @@ class Toggle_Element extends Extras_Widget {
 				'class' => [
 					'ee-toggle-element__controls',
 				],
+				'role'  => 'presentation',
 			],
 			'elements' => [
 				'class' => [
@@ -1185,6 +1186,16 @@ class Toggle_Element extends Extras_Widget {
 							'unselectable' => 'on',
 						],
 					] );
+
+					$item_label = isset( $item['text'] ) ? trim( wp_strip_all_tags( (string) $item['text'] ) ) : '';
+					if ( '' === $item_label ) {
+						$item_label = sprintf(
+							/* translators: %d: toggle item number */
+							__( 'Item %d', 'landtech-extras-for-elementor' ),
+							(int) $index + 1
+						);
+					}
+					$this->add_render_attribute( $control_key, 'aria-label', $item_label );
 
 					if ( '' !== $item['hash'] ) {
 						$hash = $item['hash'];

@@ -33,7 +33,24 @@ class Weather_Client {
 	}
 
 	/**
+	 * Lowercase a city name and cap it at 80 characters.
+	 *
+	 * @param string $city City name.
+	 * @return string
+	 */
+	public static function normalize_city( $city ) {
+		$city = strtolower( trim( (string) $city ) );
+		if ( function_exists( 'mb_substr' ) ) {
+			return mb_substr( $city, 0, 80 );
+		}
+		return substr( $city, 0, 80 );
+	}
+
+	/**
 	 * Transient / cache key for a location.
+	 *
+	 * The key is a hash so a long or unusual city name cannot create an oversized
+	 * transient name or a distinct database row for every character variation.
 	 *
 	 * @param string $city  City name.
 	 * @param string $lat   Latitude.
@@ -43,20 +60,18 @@ class Weather_Client {
 	 */
 	public static function cache_key( $city, $lat, $lon, $units ) {
 		$units = self::sanitize_units( $units );
-		$city  = strtolower( trim( (string) $city ) );
+		$city  = self::normalize_city( $city );
 		$lat   = trim( (string) $lat );
 		$lon   = trim( (string) $lon );
 		if ( '' !== $lat && '' !== $lon ) {
-			$slug = $lat . '_' . $lon;
+			$material = $lat . '_' . $lon;
 		} else {
-			$slug = $city;
+			$material = $city;
 		}
-		$slug = preg_replace( '/[^a-z0-9._-]+/i', '_', $slug );
-		$slug = trim( (string) $slug, '_' );
-		if ( '' === $slug ) {
-			$slug = 'unknown';
+		if ( '' === $material ) {
+			$material = 'unknown';
 		}
-		return 'ltxe_weather_' . $slug . '_' . $units;
+		return 'ltxe_weather_' . md5( $material . '|' . $units );
 	}
 
 	/**

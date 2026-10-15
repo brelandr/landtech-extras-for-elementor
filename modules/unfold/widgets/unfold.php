@@ -71,7 +71,7 @@ class Unfold extends Extras_Widget {
 	 */
 	public function get_script_depends() {
 		return [
-			'landtech-extras-frontend',
+			'landtech-extras-unfold-widget',
 			'landtech-extras-unfold',
 			'landtech-extras-jquery-visible',
 		];

@@ -44,7 +44,7 @@ class Lottie extends Extras_Widget {
 		if ( ! is_array( $settings ) || empty( $settings ) ) {
 			return array( 'landtech-extras-lottie-web', 'landtech-extras-lottie', 'landtech-extras-lottie-player' );
 		}
-		if ( $this->uses_lottie_web( $settings ) ) {
+		if ( self::settings_need_lottie_web( $settings ) ) {
 			return array( 'landtech-extras-lottie-web', 'landtech-extras-lottie' );
 		}
 		return array( 'landtech-extras-lottie-player' );
@@ -57,6 +57,16 @@ class Lottie extends Extras_Widget {
 	 * @return bool
 	 */
 	public function uses_lottie_web( $settings ) {
+		return self::settings_need_lottie_web( $settings );
+	}
+
+	/**
+	 * Whether advanced playback needs the lottie-web API.
+	 *
+	 * @param array<string,mixed> $settings Widget settings.
+	 * @return bool
+	 */
+	public static function settings_need_lottie_web( $settings ) {
 		if ( ! is_array( $settings ) ) {
 			return false;
 		}
