@@ -2,6 +2,7 @@
 	'use strict';
 
 	var ee = {
+		ParallaxBackground: {},
 		getElementSettings: function ( $scope ) {
 			return window.ee.getElementSettings( $scope );
 		},

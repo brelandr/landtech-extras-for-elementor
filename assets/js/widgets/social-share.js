@@ -10,11 +10,19 @@
 	}
 
 	function copiedTip( btn ) {
-		var tip = document.createElement( 'span' );
-		tip.className = 'ltxe-share__copied';
+		var tip = btn.querySelector( '.ltxe-share__copied' );
+		if ( ! tip ) {
+			tip = document.createElement( 'span' );
+			tip.className = 'ltxe-share__copied';
+			tip.setAttribute( 'role', 'status' );
+			tip.setAttribute( 'aria-live', 'polite' );
+			btn.appendChild( tip );
+		}
 		tip.textContent = 'Copied!';
-		btn.appendChild( tip );
-		window.setTimeout( function () {
+		if ( tip.hideTimer ) {
+			window.clearTimeout( tip.hideTimer );
+		}
+		tip.hideTimer = window.setTimeout( function () {
 			if ( tip.parentNode ) {
 				tip.parentNode.removeChild( tip );
 			}

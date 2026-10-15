@@ -5,6 +5,24 @@
 	gap: 0.5rem;
 }
 
+/*
+ * The wrapper is the container. Buttons stack when that column is narrow,
+ * even if the browser window is still wide.
+ */
+@container (max-width: 420px) {
+	.ltxe-share {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.ltxe-share .ltxe-share__btn,
+	.ltxe-share a.ltxe-share__btn,
+	.ltxe-share button.ltxe-share__btn {
+		width: 100%;
+		box-sizing: border-box;
+	}
+}
+
 .ltxe-share a.ltxe-share__btn,
 .ltxe-share a.ltxe-share__btn:hover,
 .ltxe-share a.ltxe-share__btn:focus,
@@ -15,6 +33,7 @@
 .elementor .ltxe-share a.ltxe-share__btn:visited,
 .ltxe-share__btn,
 button.ltxe-share__btn {
+	position: relative;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
@@ -68,8 +87,19 @@ button.ltxe-share__btn {
 
 .ltxe-share__copied {
 	position: absolute;
-	margin-top: -2rem;
+	top: -2rem;
+	left: 50%;
+	z-index: 2;
+	margin: 0;
+	padding: 0.15rem 0.4rem;
+	transform: translateX( -50% );
+	border-radius: 4px;
+	background: #111;
+	color: #fff;
 	font-size: 0.8rem;
+	line-height: 1.2;
+	white-space: nowrap;
+	pointer-events: none;
 }
 
 .screen-reader-text {

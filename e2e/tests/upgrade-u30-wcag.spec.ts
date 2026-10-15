@@ -88,6 +88,7 @@ test.describe( 'U30 WCAG 2.2 audit', () => {
 			await tabs.first().focus();
 			await page.keyboard.press( 'ArrowRight' );
 			await expect( tabs.nth( 1 ) ).toHaveAttribute( 'aria-selected', 'true' );
+			await expect( tabs.nth( 1 ) ).toBeFocused();
 		}
 
 		const range = page.locator( 'input.ltxe-ic__handle, input.ee-image-comparison__handle[type="range"]' ).first();

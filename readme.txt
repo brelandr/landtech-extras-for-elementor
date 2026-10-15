@@ -1,23 +1,23 @@
 === LandTech Extras for Elementor ===
 
 Contributors: brelandr
-Tags: elementor, page-builder, widgets, addons, extensions
+Tags: elementor, pdf, accessibility, gallery, comparison-table
 Requires at least: 6.2
 Tested up to: 7.1
-Stable tag: 3.0.6
+Stable tag: 3.0.7
 Requires PHP: 7.4
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-60+ free Elementor widgets: gallery, testimonials, FAQ, pricing, calendar, maps, posts, plus display conditions and editor tools.
+Free Elementor widgets for PDF embed, comparison tables, FAQ and recipe schema, filterable galleries, and a table of contents.
 
 == Description ==
 
-**60+ free Elementor widgets and editor extensions — no upsells, no locked features.**
+**Embed a PDF, compare plans, add FAQ and recipe schema, filter a gallery, and build a table of contents. Every widget here is free — nothing on this list is locked.**
 
 LandTech Extras for Elementor is a complete, actively maintained Elementor addon. If you built pages with the original Elementor Extras (by Namogo) and lost access to those widgets, this is the drop-in replacement — existing templates using slugs like `ee-calendar`, `posts-extra`, and `ee-gallery` keep working after you switch.
 
-**Everything listed below is free.** Optional API keys (Google Maps, Snazzy Maps, Instagram) live under Elementor Extras → APIs. Full documentation: [extrasforelementor.com/docs](https://extrasforelementor.com/docs/).
+**Everything listed below is free.** Optional API keys (Google Maps, Snazzy Maps, Instagram) live under Elementor Extras → APIs. Full documentation: [extrasforelementor.com/docs](https://extrasforelementor.com/docs/?utm_source=wordpress.org&utm_medium=readme&utm_campaign=3.0.7).
 
 **[Try it instantly — no install required →](https://playground.wordpress.net/?blueprint-url=https://plugins.svn.wordpress.org/landtech-extras-for-elementor/assets/blueprints/blueprint.json)**
 The WordPress Playground blueprint installs Elementor and this plugin, seeds demo content, and builds a live demo page per widget. Log in as admin / password to explore.
@@ -26,7 +26,7 @@ The WordPress Playground blueprint installs Elementor and this plugin, seeds dem
 
 This plugin is complete on its own. **LandTech Extras for Elementor Premium** is a separate paid plugin that adds extra capabilities — it does not unlock anything already here.
 
-**[Upgrade to Premium →](https://landtechwebdesigns.com/product/extras-for-elementor/)**
+**[Upgrade to Premium →](https://landtechwebdesigns.com/product/extras-for-elementor/?utm_source=wordpress.org&utm_medium=readme&utm_campaign=3.0.7)**
 
 When Premium is not installed, **Elementor Extras → Add-on features** lists the add-on catalog (informational). After you activate Premium, that catalog is hidden.
 
@@ -39,7 +39,7 @@ The premium add-on includes:
 * **AI & accessibility:** Genius assistant, AI workspace (bring-your-own-key), alt-text batch, semantic search, voice search, WCAG scanner.
 * **Agency tools:** export/import package, CPT builder, content protection, white label, template marketplace, time machine, asset compiler, PWA builder, client feedback, conditional CSS classes.
 
-Add-on docs: [extrasforelementor.com/docs/premium](https://extrasforelementor.com/docs/premium/).
+Add-on docs: [extrasforelementor.com/docs/premium](https://extrasforelementor.com/docs/premium/?utm_source=wordpress.org&utm_medium=readme&utm_campaign=3.0.7).
 
 == What’s new in 2.9 ==
 
@@ -57,7 +57,7 @@ This release is a large free-plugin update (work from 2.6 through 2.9, shipped t
 
 Find widgets in the Elementor panel under the **LandTech Extras for Elementor** category. Widget type slugs match the upstream Elementor Extras fork for easier migration.
 
-**Widgets:** Age Gate (`ee-age-gate`), Animated Headline (`ltxe-animated-headline`), Audio Player (`ee-audio-player`), Back to Top (`ltxe-back-to-top`), Breadcrumbs (`ee-breadcrumbs`, optional **BreadcrumbList** JSON-LD when **Structured data** is enabled), Buttons / Button Group (`button-group`), Calendar (`ee-calendar`), Circle Progress (`circle-progress`), Comparison Table (`ltxe-comparison-table`), Cookie Consent (`ltxe-cookie-consent`), Countdown (`ltxe-countdown`), Dark Mode Toggle (`ltxe-dark-mode`), Devices (`devices-extended`), FAQ Accordion (`ltxe-faq`), FAQ Schema (`ee-faq-schema`), Filterable Gallery (`gallery-filterable`), Flip Box (`ltxe-flip-box`), Form Styler (`ltxe-form-styler`), Gallery (`gallery-extra`), Gallery Slider (`gallery-slider`), Google Map (`ee-google-map`), Heading Extra (`heading-extended`), Hotspots (`hotspots`), HTML5 Video Player (`html5-video`), Icon Box (`ltxe-icon-box`), Image Accordion (`ltxe-image-accordion`), Image Comparison (`image-comparison`), Image Scroller (`ltxe-image-scroller`), Inline SVG (`ee-inline-svg`), Interactive Card (`ltxe-interactive-card`), Logo Carousel (`ltxe-logo-carousel`), Lottie (`ee-lottie`), Call to Action (`ltxe-cta`), News Ticker (`ltxe-news-ticker`), Newsletter Signup (`ltxe-newsletter-signup`), Number Counter (`ltxe-number-counter`), Offcanvas (`ee-offcanvas`), One Page Nav (`ltxe-dot-nav`), PDF Embed (`ltxe-pdf-embed`), Popup (`ee-popup`), Post Carousel (`posts-carousel`), Posts Extra / Portfolio / Carousel layouts (`posts-extra`), Pricing Table (`ltxe-pricing-table`), Pricing Toggle (`ltxe-pricing-toggle`), Progress Bar (`ltxe-progress-bar`), Random Image (`ee-random-image`), Reading Progress (`ltxe-reading-progress`), Recipe (`ltxe-recipe`), Scroll Indicator (`ee-scroll-indicator`), Search Form (`ee-search-form`), Slide Menu (`ee-slide-menu`), Social Share (`ltxe-social-share`), Star Rating (`ltxe-star-rating`), Sticky Wrapper (`ltxe-sticky-wrapper`), Switcher (`ee-switcher`), Table (`table`), Table of Contents (`ee-table-of-contents`), Tabs (`ee-tabs`), Tags Cloud Sphere (`ltxe-tags-cloud-sphere`), Team Members (`ltxe-team-members`), Testimonials (`ltxe-testimonials`), Text Divider (`text-divider`), Timeline (`timeline`), Toggle Element (`ee-toggle-element`), Unfold (`unfold`), Video Playlist (`ltxe-video-playlist`), Weather (`ltxe-weather`), World Clock (`ltxe-world-clock`).
+**Widgets:** Age Gate (`ee-age-gate`), Animated Headline (`ltxe-animated-headline`), Audio Player (`ee-audio-player`), Back to Top (`ltxe-back-to-top`), Breadcrumbs (`ee-breadcrumbs`, optional **BreadcrumbList** JSON-LD when **Structured data** is enabled), Buttons / Button Group (`button-group`), Calendar (`ee-calendar`), Circle Progress (`circle-progress`), Comparison Table (`ltxe-comparison-table`), Cookie Consent (`ltxe-cookie-consent`), Countdown (`ltxe-countdown`), Dark Mode Toggle (`ltxe-dark-mode`), Devices (`devices-extended`), FAQ Accordion (`ltxe-faq`), FAQ Schema (`ee-faq-schema`), Filterable Gallery (`ltxe-gallery-filterable`), Flip Box (`ltxe-flip-box`), Form Styler (`ltxe-cf7-styler`, `ltxe-wpforms-styler`), Gallery (`gallery-extra`), Gallery Slider (`gallery-slider`), Google Map (`ee-google-map`), Heading Extra (`heading-extended`), Hotspots (`hotspots`), HTML5 Video Player (`html5-video`), Icon Box (`ltxe-icon-box`), Image Accordion (`ltxe-image-accordion`), Image Comparison (`image-comparison`), Image Scroller (`ltxe-image-scroller`), Inline SVG (`ee-inline-svg`), Interactive Card (`ltxe-interactive-card`), Logo Carousel (`ltxe-logo-carousel`), Lottie (`ee-lottie`), Media Gallery (`ltxe-media-gallery`), Call to Action (`ltxe-cta`), News Ticker (`ltxe-news-ticker`), Newsletter Signup (`ltxe-newsletter-signup`), Number Counter (`ltxe-number-counter`), Offcanvas (`ee-offcanvas`), One Page Nav (`ltxe-one-page-nav`), PDF Embed (`ltxe-pdf-embed`), Popup (`ee-popup`), Post Carousel (a skin of `posts-extra`), Posts Extra / Portfolio / Carousel layouts (`posts-extra`), Pricing Table (`ltxe-pricing-table`), Pricing Toggle (`ltxe-pricing-toggle`), Progress Bar (`ltxe-progress-bar`), Random Image (`ee-random-image`), Reading Progress (`ltxe-reading-progress`), Recipe (`ltxe-recipe`), Scroll Indicator (`ee-scroll-indicator`), Search Form (`ee-search-form`), Slide Menu (`ee-slide-menu`), Social Share (`ltxe-social-share`), Star Rating (`ltxe-star-rating`), Sticky Wrapper (`ltxe-sticky-wrapper`), Switcher (`ee-switcher`), Table (`table`), Table of Contents (`ee-table-of-contents`), Tabs (`ee-tabs`), Tags Cloud Sphere (`ltxe-tags-cloud-sphere`), Team Members (`ltxe-team-members`), Testimonials (`ltxe-testimonials`), Text Divider (`text-divider`), Timeline (`timeline`), Toggle Element (`ee-toggle-element`), Unfold (`unfold`), Video Playlist (`ltxe-video-playlist`), Weather (`ltxe-weather`), World Clock (`ltxe-world-clock`).
 
 **Editor extensions** (Advanced tab on Elementor elements): Display Conditions (free: time, day, URL/query vars including UTM presets, cookie, business hours; WooCommerce purchase history and membership rules ship in the separate **LandTech Extras Premium** add-on), Parallax Background, Parallax Elements, Portfolio Parallax, Shape Dividers (section/container Layout tab), Sticky Elements, Tooltips.
 
@@ -226,7 +226,7 @@ No. Every widget and extension in this plugin works without Premium. The paid ad
 
 = What does the Premium add-on add? =
 
-WooCommerce extras, multi-step forms, header/footer builder, AI workspace, booking, social feeds, and other lanes listed under **Optional Premium add-on** above. Details: [extrasforelementor.com/docs/premium](https://extrasforelementor.com/docs/premium/).
+WooCommerce extras, multi-step forms, header/footer builder, AI workspace, booking, social feeds, and other lanes listed under **Optional Premium add-on** above. Details: [extrasforelementor.com/docs/premium](https://extrasforelementor.com/docs/premium/?utm_source=wordpress.org&utm_medium=readme&utm_campaign=3.0.7).
 
 = Can I migrate from Elementor Extras or Namogo Extras? =
 
@@ -258,6 +258,9 @@ From the plugin root, after **`npm install`**, run **`npm run build:assets`** to
 Before publishing a public GitHub mirror, verify any **Repository** or **Source** URL in this readme returns HTTP 200 (WordPress.org reviewers check linked URLs).
 
 == Upgrade Notice ==
+
+= 3.0.7 =
+The bundled TableSorter file is a real script again. Update if a table on your site does not sort.
 
 = 3.0.6 =
 Security fix for SVG handling. Please update.
@@ -293,6 +296,17 @@ Maintenance release: Elementor 4.3.x compatibility headers and Plugin Check fixe
 Recommended update: new Tabs and Table of Contents widgets, plus Search Form **Include only** category restrictions and shorter custom search result URLs. Re-save Search Form widgets after updating if you use hidden category filters.
 
 == Changelog ==
+
+= 3.0.7 =
+* Fix: TableSorter ships as a real script again. The 3.0.6 file was a 14-byte "404: Not Found" response.
+* Fix: Gallery and Media Gallery YouTube posters use hqdefault.jpg so older videos no longer 404.
+* Fix: PDF Embed rewrites a same-site http PDF address to https, and the plugin includes a sample PDF.
+* Fix: Circle Progress default caption is a real sentence instead of placeholder text.
+* Fix: Posts Extra carousels clip the slide track so the page does not grow wider than the screen.
+* Fix: The Devices shape SVG loads after the frontend config is printed.
+* Fix: Tabs move focus with the arrow keys, and the social-share copy confirmation is announced.
+* Fix: Offcanvas, parallax, tooltip, and sticky scripts no longer throw when their config is missing.
+* Docs: Widget slugs in this readme match the registered widget names, including Media Gallery.
 
 = 3.0.6 =
 * Security: Hardened SVG handling for uploads and the Inline SVG widget.
@@ -486,7 +500,7 @@ Recommended update: new Tabs and Table of Contents widgets, plus Search Form **I
 
 == Support ==
 
-Full documentation for every widget, extension, and API is at [extrasforelementor.com/docs](https://extrasforelementor.com/docs/). For add-on purchases, feature requests, and bug reports, email **sales@landtechwebdesigns.com** or use the contact options on [Land Tech Web Designs](https://landtechwebdesigns.com/).
+Full documentation for every widget, extension, and API is at [extrasforelementor.com/docs](https://extrasforelementor.com/docs/?utm_source=wordpress.org&utm_medium=readme&utm_campaign=3.0.7). For add-on purchases, feature requests, and bug reports, email **sales@landtechwebdesigns.com** or use the contact options on [Land Tech Web Designs](https://landtechwebdesigns.com/).
 
 == Credits ==
 

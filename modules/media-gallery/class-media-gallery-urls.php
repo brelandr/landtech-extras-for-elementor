@@ -37,7 +37,10 @@ class Media_Gallery_Urls {
 	}
 
 	/**
-	 * YouTube poster image. Uses maxresdefault as specified for the free gallery.
+	 * YouTube poster image.
+	 *
+	 * hqdefault exists for every public video. maxresdefault 404s on older
+	 * uploads, including the gallery demo video.
 	 *
 	 * @since 3.0.0
 	 * @param string $url Video URL.
@@ -48,7 +51,7 @@ class Media_Gallery_Urls {
 		if ( '' === $id ) {
 			return '';
 		}
-		return 'https://img.youtube.com/vi/' . $id . '/maxresdefault.jpg';
+		return 'https://img.youtube.com/vi/' . $id . '/hqdefault.jpg';
 	}
 
 	/**

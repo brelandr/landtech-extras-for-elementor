@@ -17,7 +17,7 @@
 
 		var duration = parseInt( el.getAttribute( 'data-svg-duration' ), 10 ) || 1200;
 		var svg = el.querySelector( 'svg' ) || el;
-		var paths = svg.querySelectorAll ? svg.querySelectorAll( 'path' ) : [];
+		var paths = svg.querySelectorAll ? svg.querySelectorAll( 'path, circle, ellipse, line, polyline, polygon, rect' ) : [];
 
 		function run() {
 			if ( typeof window.ltxeAnime !== 'function' && ( ! window.anime || typeof window.anime.animate !== 'function' ) ) {
@@ -228,6 +228,22 @@
 		}
 	}
 
+	function fileExtension( url ) {
+		var path = String( url || '' ).split( '?' )[ 0 ].split( '#' )[ 0 ];
+		return path.split( '.' ).pop().toLowerCase();
+	}
+
+	function upgradeSameOriginUrl( url ) {
+		if ( ! url || ! window.location || 'https:' !== window.location.protocol ) {
+			return url;
+		}
+		var httpHost = 'http://' + window.location.host;
+		if ( 0 === url.indexOf( httpHost ) ) {
+			return 'https://' + url.slice( 'http://'.length );
+		}
+		return url;
+	}
+
 	function resolveUrl( el, settings ) {
 		var url = el.getAttribute( 'data-url' ) || '';
 		if ( settings && 'url' === settings.svg_source && settings.svg_custom_url && settings.svg_custom_url.url ) {
@@ -235,7 +251,7 @@
 		} else if ( settings && settings.svg && settings.svg.url ) {
 			url = settings.svg.url;
 		}
-		return url;
+		return upgradeSameOriginUrl( url );
 	}
 
 	function applySvgOptions( el, settings ) {
@@ -292,7 +308,7 @@
 		if ( ! url ) {
 			return false;
 		}
-		if ( url.split( '.' ).pop().toLowerCase() !== 'svg' ) {
+		if ( 'svg' !== fileExtension( url ) ) {
 			if ( ! el.getAttribute( 'data-ltxe-svg-alerted' ) ) {
 				el.setAttribute( 'data-ltxe-svg-alerted', '1' );
 				window.alert( 'Please select a SVG file format.' );
@@ -314,8 +330,11 @@
 		if ( el.getAttribute( 'data-ltxe-svg-loaded' ) || el.querySelector( 'svg' ) ) {
 			return;
 		}
-		var url = el.getAttribute( 'data-url' ) || '';
-		if ( ! url || url.split( '.' ).pop().split( '?' )[ 0 ].toLowerCase() !== 'svg' ) {
+		var url = upgradeSameOriginUrl( el.getAttribute( 'data-url' ) || '' );
+		if ( url && url !== ( el.getAttribute( 'data-url' ) || '' ) ) {
+			el.setAttribute( 'data-url', url );
+		}
+		if ( ! url || 'svg' !== fileExtension( url ) ) {
 			return;
 		}
 		el.setAttribute( 'data-ltxe-svg-loaded', '1' );

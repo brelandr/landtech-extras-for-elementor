@@ -179,8 +179,9 @@ class Pdf_Embed extends Extras_Widget {
 			$url = esc_url_raw( (string) $s['pdf_url'] );
 		}
 		if ( '' === $url ) {
-			$url = 'https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf';
+			$url = plugins_url( 'assets/demo/landtech-extras-sample.pdf', LANDTECH_EXTRAS__FILE__ );
 		}
+		$url  = $this->landtech_extras_match_request_scheme( $url );
 		$page = isset( $s['initial_page'] ) ? max( 1, absint( $s['initial_page'] ) ) : 1;
 		$src  = $url . '#page=' . $page;
 		echo '<div class="ltxe-pdf" data-ltxe-pdf="' . esc_attr( wp_json_encode( array( 'url' => $url, 'page' => $page ) ) ) . '">';
@@ -203,5 +204,30 @@ class Pdf_Embed extends Extras_Widget {
 		echo '</div>';
 		echo '<iframe class="ltxe-pdf__frame" src="' . esc_url( $src ) . '" title="' . esc_attr__( 'PDF document', 'landtech-extras-for-elementor' ) . '"></iframe>';
 		echo '</div>';
+	}
+
+	/**
+	 * Keep a same-site PDF on https when the page is https.
+	 *
+	 * A URL saved from WP-CLI is http, and the browser blocks that iframe.
+	 *
+	 * @param string $url PDF URL.
+	 * @return string
+	 */
+	protected function landtech_extras_match_request_scheme( $url ) {
+		if ( ! is_string( $url ) || '' === $url ) {
+			return $url;
+		}
+
+		$home_parts = wp_parse_url( home_url() );
+		$host       = wp_parse_url( $url, PHP_URL_HOST );
+		$home_host  = isset( $home_parts['host'] ) ? $home_parts['host'] : '';
+		$scheme     = isset( $home_parts['scheme'] ) ? $home_parts['scheme'] : '';
+
+		if ( 'https' !== $scheme || ! is_string( $host ) || '' === $home_host || strtolower( $home_host ) !== strtolower( $host ) ) {
+			return $url;
+		}
+
+		return set_url_scheme( $url, 'https' );
 	}
 }

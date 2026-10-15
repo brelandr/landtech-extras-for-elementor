@@ -1,8 +1,17 @@
+.elementor-widget-ltxe-news-ticker,
 .ltxe-nt {
 	--ltxe-nt-speed: 30s;
+	min-width: 0;
+	max-width: 100%;
+	overflow: hidden;
+	overflow: clip;
+}
+
+.ltxe-nt {
 	display: flex;
 	align-items: stretch;
 	overflow: hidden;
+	overflow: clip;
 	min-height: 48px;
 	background: #1a1a2e;
 	color: #fff;
@@ -31,8 +40,11 @@
 .ltxe-nt__viewport {
 	flex: 1;
 	overflow: hidden;
+	overflow: clip;
 	display: flex;
 	align-items: center;
+	min-width: 0;
+	max-width: 100%;
 }
 
 .ltxe-nt__track {

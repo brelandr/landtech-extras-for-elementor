@@ -6,6 +6,7 @@
 
 .ltxe-flip-box--equal {
 	height: 100%;
+	min-height: var(--ltxe-fb-height);
 }
 
 .ltxe-flip-box__inner {

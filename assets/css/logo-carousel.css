@@ -1,3 +1,4 @@
+.elementor-widget-ltxe-logo-carousel,
 .ltxe-logo-carousel {
 	--ltxe-lc-cols: 5;
 	--ltxe-lc-gap: 32px;
@@ -5,7 +6,15 @@
 	--ltxe-lc-op: 0.6;
 	--ltxe-lc-op-h: 1;
 	--ltxe-lc-speed: 30s;
+	min-width: 0;
+	max-width: 100%;
 	overflow: hidden;
+	overflow: clip;
+}
+
+.ltxe-logo-carousel {
+	overflow: hidden;
+	overflow: clip;
 }
 
 .ltxe-logo-carousel--slow {

@@ -450,7 +450,7 @@ class Circle_Progress extends Extras_Widget {
 				[
 					'label' => '',
 					'type' => Controls_Manager::WYSIWYG,
-					'default' => __( 'I am text block. Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.', 'landtech-extras-for-elementor' ),
+					'default' => __( 'Circle Progress draws a number as a ring. Set the percent, colors, and this caption on the widget.', 'landtech-extras-for-elementor' ),
 				]
 			);
 

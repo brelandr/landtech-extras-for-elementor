@@ -355,7 +355,7 @@ class Tabs extends Extras_Widget {
 
 		?>
 		<div <?php $this->print_render_attribute_string( 'wrapper' ); ?>>
-			<div class="ltxe-tabs__list" role="tablist">
+			<div class="ltxe-tabs__list" role="tablist" aria-label="<?php echo esc_attr__( 'Tabs', 'landtech-extras-for-elementor' ); ?>">
 				<?php
 				foreach ( $tabs as $index => $item ) {
 					$tab_id = 'ltxe-tab-' . $this->get_id() . '-' . $index;
@@ -363,12 +363,14 @@ class Tabs extends Extras_Widget {
 						$tab_id = sanitize_title( (string) $item['tab_slug'] );
 					}
 					$selected = 0 === (int) $index ? 'true' : 'false';
+					$tabindex = 0 === (int) $index ? '0' : '-1';
 					?>
 					<button
 						type="button"
 						class="ltxe-tabs__tab"
 						id="<?php echo esc_attr( $tab_id ); ?>-label"
 						role="tab"
+						tabindex="<?php echo esc_attr( $tabindex ); ?>"
 						aria-selected="<?php echo esc_attr( $selected ); ?>"
 						aria-controls="<?php echo esc_attr( $tab_id ); ?>-panel"
 						data-tab-index="<?php echo esc_attr( (string) $index ); ?>"

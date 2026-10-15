@@ -2,6 +2,7 @@
 	'use strict';
 
 	var ee = {
+		Sticky: {},
 		getElementSettings: function ( $scope ) {
 			return window.ee.getElementSettings( $scope );
 		},

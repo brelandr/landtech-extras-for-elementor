@@ -397,14 +397,27 @@ class LandTechExtrasPlugin {
 	 * @access public
 	 */
 	public function register_scripts() {
-		static $registered = false;
+		static $registered  = false;
+		static $registering = false;
 
-		if ( $registered ) {
+		// A nested call during this pass must not start a second registration.
+		if ( $registering ) {
+			return;
+		}
+
+		/*
+		 * Elementor can replace the script registry after the first pass, and tests
+		 * do the same. The handles have to be registered again or widget scripts
+		 * never print. Skip only when this pass already finished and the registry
+		 * still has the foundation handle.
+		 */
+		if ( $registered && wp_script_is( 'landtech-extras-frontend-core', 'registered' ) ) {
 			$this->attach_elementor_frontend_script_dependency();
 			return;
 		}
 
-		$registered = true;
+		$registering = true;
+		$registered  = true;
 
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
@@ -1705,6 +1718,7 @@ class LandTechExtrasPlugin {
 			true
 		);
 
+		$registering = false;
 	}
 
 	/**
@@ -1714,7 +1728,37 @@ class LandTechExtrasPlugin {
 	 */
 	public function print_document_landtech_assets() {
 		$this->register_scripts();
+		$this->localize_frontend_script_config();
 		$this->enqueue_document_landtech_assets();
+	}
+
+	/**
+	 * Attach landtechExtrasFrontendConfig before any frontend script can print.
+	 *
+	 * @return void
+	 */
+	protected function localize_frontend_script_config() {
+		$landtech_extras_frontend_config = array(
+			'urls'               => array(
+				'assets'       => LANDTECH_EXTRAS_ASSETS_URL,
+				'leafletIcons' => LANDTECH_EXTRAS_ASSETS_URL . 'lib/leaflet/images/',
+			),
+			'restSearchUrl'      => rest_url( 'landtech-extras/v1/search' ),
+			'refreshableWidgets' => apply_filters(
+				'landtech_extras/widgets/refreshable',
+				array(
+					'ee-offcanvas.classic',
+					'ee-popup.classic',
+					'gallery-slider.default',
+					'media-carousel.default',
+					'image-carousel.default',
+					'slides.default',
+				)
+			),
+		);
+
+		wp_localize_script( 'landtech-extras-frontend-core', 'landtechExtrasFrontendConfig', $landtech_extras_frontend_config );
+		wp_localize_script( 'landtech-extras-frontend', 'landtechExtrasFrontendConfig', $landtech_extras_frontend_config );
 	}
 
 	/**
@@ -1729,26 +1773,14 @@ class LandTechExtrasPlugin {
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
 		$this->register_scripts();
+		/*
+		 * Elementor prints queued scripts from wp_footer before this callback
+		 * returns. Localize first so a dependency printed inside
+		 * enqueue_document_landtech_assets() already has its extra data.
+		 */
+		$this->localize_frontend_script_config();
 		$this->enqueue_document_landtech_assets();
 
-		$landtech_extras_frontend_config = [
-			'urls' => [
-				'assets'       => LANDTECH_EXTRAS_ASSETS_URL,
-				'leafletIcons' => LANDTECH_EXTRAS_ASSETS_URL . 'lib/leaflet/images/',
-			],
-			'restSearchUrl' => rest_url( 'landtech-extras/v1/search' ),
-			'refreshableWidgets' => apply_filters( 'landtech_extras/widgets/refreshable', [
-				'ee-offcanvas.classic',
-				'ee-popup.classic',
-				'gallery-slider.default',
-				'media-carousel.default',
-				'image-carousel.default',
-				'slides.default',
-			] ),
-		];
-
-		wp_localize_script( 'landtech-extras-frontend-core', 'landtechExtrasFrontendConfig', $landtech_extras_frontend_config );
-		wp_localize_script( 'landtech-extras-frontend', 'landtechExtrasFrontendConfig', $landtech_extras_frontend_config );
 		wp_enqueue_script( 'landtech-extras-frontend-core' );
 		if ( ! defined( 'LTXE_FRONTEND_SPLIT' ) || ! LTXE_FRONTEND_SPLIT ) {
 			wp_enqueue_script( 'landtech-extras-frontend' );

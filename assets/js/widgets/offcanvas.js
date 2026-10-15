@@ -156,7 +156,14 @@
 				$trigger.attr( 'data-slidebar-id', slidebarId );
 				$trigger.each( function() {
 					var $el = $( this );
-					ee.setAriaExpanded( $el, offcanvas.controller.isActiveSlidebar( slidebarId ), slidebarId );
+					var expanded = false;
+
+					// setTriggers() runs before slidebars creates the controller.
+					if ( offcanvas.controller && 'function' === typeof offcanvas.controller.isActiveSlidebar ) {
+						expanded = offcanvas.controller.isActiveSlidebar( slidebarId );
+					}
+
+					ee.setAriaExpanded( $el, expanded, slidebarId );
 					ee.makeFocusableControl( $el, $el.attr( 'aria-label' ) || 'Menu' );
 				} );
 

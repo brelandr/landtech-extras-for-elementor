@@ -10,11 +10,16 @@
 			settings.device_type = 'phone';
 		}
 
-		url = landtechExtrasFrontendConfig.urls.assets + 'shapes/' + settings.device_type + '.svg';
+		var config = window.landtechExtrasFrontendConfig;
+		var assetsUrl = ( config && config.urls && config.urls.assets ) ? config.urls.assets : '';
 
-		jQuery.get( url, function ( data ) {
-			$shape.html( data.childNodes[ 0 ] );
-		} );
+		if ( assetsUrl ) {
+			url = assetsUrl + 'shapes/' + settings.device_type + '.svg';
+
+			jQuery.get( url, function ( data ) {
+				$shape.html( data.childNodes[ 0 ] );
+			} );
+		}
 
 		if ( 'yes' === settings.device_orientation_control ) {
 			$scope.find( '.ee-device__orientation' ).on( 'click', function () {

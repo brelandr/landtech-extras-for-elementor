@@ -25,10 +25,10 @@ class Media_Gallery_Urls_Test extends TestCase {
 		}
 	}
 
-	public function test_youtube_thumbnail_uses_maxresdefault() {
+	public function test_youtube_thumbnail_uses_hqdefault() {
 		$url = 'https://www.youtube.com/watch?v=XHOmBV4js_E';
 		$this->assertSame(
-			'https://img.youtube.com/vi/XHOmBV4js_E/maxresdefault.jpg',
+			'https://img.youtube.com/vi/XHOmBV4js_E/hqdefault.jpg',
 			Media_Gallery_Urls::youtube_thumb( $url )
 		);
 	}

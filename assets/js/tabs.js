@@ -1,12 +1,12 @@
 ( function ( $ ) {
 	'use strict';
 
-	function activateTab( $root, index, updateHash ) {
+	function activateTab( $root, index, updateHash, moveFocus ) {
 		var $tabs = $root.find( '.ltxe-tabs__tab' );
 		var $panels = $root.find( '.ltxe-tabs__panel' );
 		var $accordion = $root.find( '.ltxe-tabs__accordion-title' );
 
-		$tabs.attr( 'aria-selected', 'false' ).removeClass( 'is-active' );
+		$tabs.attr( 'aria-selected', 'false' ).attr( 'tabindex', '-1' ).removeClass( 'is-active' );
 		$panels.attr( 'hidden', 'true' ).removeClass( 'is-active' );
 		$accordion.attr( 'aria-expanded', 'false' ).removeClass( 'is-active' );
 
@@ -14,7 +14,10 @@
 		var $panel = $panels.filter( '[data-tab-index="' + index + '"]' );
 		var $acc = $accordion.filter( '[data-tab-index="' + index + '"]' );
 
-		$tab.attr( 'aria-selected', 'true' ).addClass( 'is-active' );
+		$tab.attr( 'aria-selected', 'true' ).attr( 'tabindex', '0' ).addClass( 'is-active' );
+		if ( moveFocus && $tab.length ) {
+			$tab.trigger( 'focus' );
+		}
 		$panel.removeAttr( 'hidden' ).addClass( 'is-active' );
 		$acc.attr( 'aria-expanded', 'true' ).addClass( 'is-active' );
 
@@ -58,14 +61,16 @@
 			$root.on( 'keydown', '.ltxe-tabs__tab', function ( e ) {
 				var $tabs = $root.find( '.ltxe-tabs__tab' );
 				var idx = $tabs.index( this );
+				var next = idx;
 				if ( 37 === e.which || 38 === e.which ) {
-					e.preventDefault();
-					activateTab( $root, idx > 0 ? idx - 1 : $tabs.length - 1, true );
+					next = idx > 0 ? idx - 1 : $tabs.length - 1;
+				} else if ( 39 === e.which || 40 === e.which ) {
+					next = idx < $tabs.length - 1 ? idx + 1 : 0;
+				} else {
+					return;
 				}
-				if ( 39 === e.which || 40 === e.which ) {
-					e.preventDefault();
-					activateTab( $root, idx < $tabs.length - 1 ? idx + 1 : 0, true );
-				}
+				e.preventDefault();
+				activateTab( $root, next, true, true );
 			} );
 
 			resolveDeepLink( $root );

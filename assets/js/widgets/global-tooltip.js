@@ -2,6 +2,7 @@
 	'use strict';
 
 	var ee = {
+		GlobalTooltip: {},
 		getElementSettings: function ( $scope ) {
 			return window.ee.getElementSettings( $scope );
 		},
